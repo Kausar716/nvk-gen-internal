@@ -140,69 +140,10 @@ const PlantTable=(props)=> {
                                         })}
                                 
 
-
-                                            {/* <tr>
-                                                <td>Active</td>
-                                                <td>11</td>
-                                                <td>Test Category</td>
-                                                <td></td>
-                                                <td class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                        <label class="custom-control-label" for="customCheck1"></label>
-                                                    </div>
-                                                </td>
-                                                <td>Not Archived</td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Active</td>
-                                                <td>11</td>
-                                                <td>Test Category</td>
-                                                <td></td>
-                                                <td class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                        <label class="custom-control-label" for="customCheck1"></label>
-                                                    </div>
-                                                </td>
-                                                <td>Not Archived</td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr> */}
                                         </tbody>
                                     </table>
+                                    <p style={{textAlign:"center",color:"red"}}>{plantData.length==0?"No Plant Found ":""}</p>
+
                                 </div>
                             </div>
         </div>
