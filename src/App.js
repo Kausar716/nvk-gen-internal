@@ -12,6 +12,7 @@ import Dashboard from "./components/Dashboard";
 import PlantManager from "./components/PlantManager/Index.js";
 import ProductManager from "./components/ProductManager/Index.js";
 import {createBrowserHistory} from 'history';
+import CommingSoon from './components/commingSoon'
 export const history = createBrowserHistory({forceRefresh: true})
 
 function App() {
@@ -32,6 +33,9 @@ function App() {
               </Route>
               <Route path="/productManager">
                 <ProductManager/>
+              </Route>
+              <Route path="/commingsoon">
+                <CommingSoon/>
               </Route>
             </Switch>
           </div>
