@@ -41,8 +41,8 @@ import {
 } from '../actions/types';
 let minMonth = new Date().getMonth()
 let minDate = new Date().getDate()
-let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
-let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
+let minDateFormate = minDate.toString().length===1?"0"+minDate:minDate
+let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
 
 
 
@@ -288,8 +288,8 @@ export default function(state = initialSatate, action){
             return{
                 ...state,
                 productData:state.productData.filter(product=>
-                    (product.category_id == action.categoryId) &&  
-                    (product.subcategory_id ==  action.subCategoryId))
+                    (product.category_id === action.categoryId) &&  
+                    (product.subcategory_id ===  action.subCategoryId))
             
                 }
         case FILTER_GET_ALL_CATEGORY_DATA:
@@ -302,13 +302,13 @@ export default function(state = initialSatate, action){
         case FILTER_GET_SLECTED_CATEGORY_DATA:
             return{
                 ...state,
-                productData:state.backupData.filter(product=>product.category_id ==action.categoryId)
+                productData:state.backupData.filter(product=>product.category_id ===action.categoryId)
             }
         case FILTER_GET_SLECTED_CATEGORY_SUB_DATA:
             console.log("cat sub cat")
             return{
                 ...state,
-                productData:state.productData.filter(product=>(product.category_id==action.categoryId&&product.subcategory_id ==  action.subCategoryId))
+                productData:state.productData.filter(product=>(product.category_id===action.categoryId&&product.subcategory_id ===  action.subCategoryId))
             }
         case ERROR_HANDLE:
             return{

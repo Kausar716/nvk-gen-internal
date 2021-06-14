@@ -39,7 +39,7 @@ const contactReducer=(state=defaultState, action)=>{
             return {...state, error:action.payload};
 
         case EDIT_SUPPLIER_CONTACT_SUCCESS:
-            const updatedContactSupplier = state.contactsSuppliers.filter(contactsSupplier=>contactsSupplier.id != action.payload.id)
+            const updatedContactSupplier = state.contactsSuppliers.filter(contactsSupplier=>contactsSupplier.id !== action.payload.id)
             return {...state, contactsSuppliers:[...updatedContactSupplier,action.payload]};
 
         case FETCH_SUPPLIER_CONTACT_SUCCESS:
