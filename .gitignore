@@ -10,6 +10,7 @@
 
 # production
 /build
+/nvk-build
 /package-lock.json
 
 # misc
