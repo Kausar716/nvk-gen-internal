@@ -1,17 +1,18 @@
+/* eslint-disable no-dupe-keys */
 // import {v4 as v4} from 'uuid';
 import {
         //Plant ACTION
-        CREATE_PLANT_ACTION,
-        UPDATE_PLANT_ACTION,
+        // CREATE_PLANT_ACTION,
+        // UPDATE_PLANT_ACTION,
         DELETE_PLANT_ACTION,
         GET_ALL_PLANT_ACTION,
         GET_SPECIFIED_PLANT_ACTION,
-        DUPLICTE_PLANT,
+        // DUPLICTE_PLANT,
     
         // Plant SKU ACTION
-        CREATE_PLANT_SKU_ACTION,
-        UPDATE_PLANT_SKU_ACTION,
-        DELETE_PLANT_SKU_ACTION,
+        // CREATE_PLANT_SKU_ACTION,
+        // UPDATE_PLANT_SKU_ACTION,
+        // DELETE_PLANT_SKU_ACTION,
         GET_ALL_PLANT_SKU_ACTION,
         GET_PLANT_SPECIFIED_SKU_ACTION,
     
@@ -22,7 +23,7 @@ import {
     
         // Plant INPUT HANDLE
         HANDLE_PLANT_INPUT_DATA,
-        HANDLE_PLANT_TAG_INPUT_DATA,
+       // HANDLE_PLANT_TAG_INPUT_DATA,
         HANDLE_PLANT_SKU_INPUT_DATA,
 
         // pagination
@@ -39,7 +40,7 @@ import {
         HANDLE_RADIO_TOGGLE,
         HANDLE_CATEGORY_SEARCH,
 
-        GET_ALL_ATTRIBUtTES
+        //GET_ALL_ATTRIBUtTES
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
@@ -96,6 +97,7 @@ const initialSatate = {
 
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
     console.log(action)
     
@@ -194,9 +196,9 @@ export default function(state = initialSatate, action){
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
-            if(action.itemValue == "None"){
+            if(action.itemValue === "None"){
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
-                let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id != action.itemId)
+                let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
                 return{
                     ...state,
                     plantSkuDataById:{...state.plantSkuDataById,attributes_subattributes:filteredAttribute},
@@ -207,7 +209,7 @@ export default function(state = initialSatate, action){
 
                 let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
-                let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id != action.itemId)
+                let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
                 filteredAttribute.push(attibuteData)
                 return{
                     ...state,
@@ -268,7 +270,7 @@ export default function(state = initialSatate, action){
             
                     // filterData.patent==action.payload
                 // })
-                if(action.payload.trim() ==""){
+                if(action.payload.trim() ===""){
                     return{
                         ...state,
                         plantData:state.backupData
@@ -278,27 +280,27 @@ export default function(state = initialSatate, action){
                 }else{
                     return{
                         ...state,
-                        plantData:state.backupData.filter(filterData=>filterData.patent==action.payload.trim())
+                        plantData:state.backupData.filter(filterData=>filterData.patent===action.payload.trim())
                     }
 
                 }
             case HANDLE_RADIO_TOGGLE:
-                if(action.payload =="active"){
+                if(action.payload ==="active"){
                     return{
                         ...state,
-                        plantData:state.backupData.filter(filterData=>filterData.archived==0)
+                        plantData:state.backupData.filter(filterData=>filterData.archived===0)
     
                     }
 
                 }
-                if(action.payload =="archive"){
+                if(action.payload ==="archive"){
                     return{
                         ...state,
-                        plantData:state.backupData.filter(filterData=>filterData.archived==1)
+                        plantData:state.backupData.filter(filterData=>filterData.archived===1)
     
                     }
                 }
-                if(action.payload =="all"){
+                if(action.payload ==="all"){
                     return{
                         ...state,
                         plantData:state.backupData
@@ -307,24 +309,14 @@ export default function(state = initialSatate, action){
                     
                     
                 }
+                break;
             case HANDLE_CATEGORY_SEARCH:
                 return{
                     ...state,
-                    plantData:state.backupData.filter(filterData=>filterData.category_id ==action.payload)
+                    plantData:state.backupData.filter(filterData=>filterData.category_id ===action.payload)
                 }
+                
            
-
-            
-              
-
-        
-     
-
-
-
-
-
-
   
             default:
                 return state

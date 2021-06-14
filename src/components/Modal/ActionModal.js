@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {} from "../../actions/productAction";
@@ -19,9 +19,9 @@ import {} from "../../actions/productAction";
   
 
  
-  const toggle = () => {
+  // const toggle = () => {
     
-  }
+  // }
 
   return (
     <div>

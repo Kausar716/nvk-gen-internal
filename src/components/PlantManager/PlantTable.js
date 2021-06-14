@@ -1,5 +1,5 @@
-import React,  { Component,useState } from 'react' ;
-import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table} from 'reactstrap'
+import React,  { useState } from 'react' ;
+//import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table} from 'reactstrap'
 import {connect} from "react-redux";
 // import ReactPaginate from 'react-paginate'
 import ActionModal from '../Modal/ActionModal'
@@ -33,7 +33,7 @@ const PlantTable=(props)=> {
          
      }
      const confirm = ()=>{
-         if(type=="delete"){
+         if(type==="delete"){
             props.deletePlantAction(id)
 
          }else{
@@ -45,19 +45,19 @@ const PlantTable=(props)=> {
         setType("")
         setMessage("")
     }
-    const confirmAction = (id,type)=>{
-        if(type=="delete"){
-            setType(type)
-            setMessage("Are you sure you want to delete this product and its related SKUs?")
+    // const confirmAction = (id,type)=>{
+    //     if(type=="delete"){
+    //         setType(type)
+    //         setMessage("Are you sure you want to delete this product and its related SKUs?")
 
-        }else{
-            setType(type)
-            setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+    //     }else{
+    //         setType(type)
+    //         setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
 
-        }
-        setOpen(true)
-        setId(id)
-    }
+    //     }
+    //     setOpen(true)
+    //     setId(id)
+    // }
     
     const paginationChange =(event, page)=>{
         props.setPlantPageNumber(page-1)
@@ -98,10 +98,10 @@ const PlantTable=(props)=> {
                                         {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, Discontinued, archived, patent,category_id,plant_id})=>{
                                              return(     
                                             <tr>
-                                                <td>{status == 1 ?"Active":"Inactive"}</td>
+                                                <td>{status === 1 ?"Active":"Inactive"}</td>
                                                 <td>{plant_id}</td>
                                                 <td>{patent}</td>
-                                                <td>{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id==category_id)[0]["name"]:""}</td>
+                                                <td>{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""}</td>
                                                 <td></td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1">
@@ -121,17 +121,17 @@ const PlantTable=(props)=> {
 
                                                 <td class="text-center">
                                                     <span>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript;">
                                                             <img src="assets/img/edit.svg" alt=""/>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript;">
                                                             <img src="assets/img/duplicate.svg" alt=""/>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript;">
                                                             <img src="assets/img/delete.svg" alt=""/>
                                                         </a>
                                                     </span>
@@ -142,7 +142,7 @@ const PlantTable=(props)=> {
 
                                         </tbody>
                                     </table>
-                                    <p style={{textAlign:"center",color:"red"}}>{plantData.length==0?"No Plant Found ":""}</p>
+                                    <p style={{textAlign:"center",color:"red"}}>{plantData.length===0?"No Plant Found ":""}</p>
 
                                 </div>
                             </div>

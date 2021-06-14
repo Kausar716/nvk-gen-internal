@@ -1,11 +1,11 @@
 import {combineReducers} from 'redux';
-import itemReducer from './itemReducer';
-import sideMenuItemReducer from './sideMenuItemReducer';
+//import itemReducer from './itemReducer';
+//import sideMenuItemReducer from './sideMenuItemReducer';
 import authReducer from './authReducer';
 import productReducer from './productReducer'
 import { reducer as formReducer } from 'redux-form';
-import usersReducer from './userReduser'
-import plantSettingReducer from './plantSettingsReducers'
+//import usersReducer from './userReduser'
+//import plantSettingReducer from './plantSettingsReducers'
 import categoryReducer from './categoryReducer'
 import  plantManagerReducer from './plantManagerReducer'
 import dashboardReducer from './dashboardReducer'

@@ -1,9 +1,10 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React,  { Component, useEffect,useState } from 'react' ;
+import React,  {  useEffect,useState } from 'react' ;
 import {connect} from "react-redux";
-import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table, Row,Col} from 'reactstrap'
+//import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table, Row,Col} from 'reactstrap'
 //import {getAllImageAssets} from "../Utility/Utility";
 //import '../ProductManagement/index.css'
 
@@ -41,7 +42,7 @@ import {
 
 const  PlantManager=(props)=> {
 
-    const [disable,setDisable] = useState(false)
+    //const [disable,setDisable] = useState(false)
     const [id,setId] = useState(0)
     const [selectedRadio,setRadio] =useState("all")
     const [open,setOpen] = useState(false)
@@ -49,22 +50,22 @@ const  PlantManager=(props)=> {
     const [type, setType] = useState("")
     const [categoryId,setCategoryId] = useState(0)
 
-const productFormAction = ()=>{
-        this.props.getProductPage("general")
-        this.setState({plantPageToOpen:"general"})
+// const productFormAction = ()=>{
+//         this.props.getProductPage("general")
+//         this.setState({plantPageToOpen:"general"})
         
-    }
-    const pageRenderAction = (pageType) =>{
-        props.getProductPage(pageType)
-    }
+//     }
+//     const pageRenderAction = (pageType) =>{
+//         props.getProductPage(pageType)
+//     }
     useEffect(()=>{
         props.getAllPlantAction()
         props.getAllPlantCategories()
     },[])
-    const addPlant =()=>{
-        console.log("working")
-        props.createPlantAction()
-    }
+    // const addPlant =()=>{
+    //     console.log("working")
+    //     props.createPlantAction()
+    // }
     const cancel = ()=>{
         setOpen(false)
         setId(0)
@@ -73,7 +74,7 @@ const productFormAction = ()=>{
          
      }
      const confirm = ()=>{
-         if(type=="delete"){
+         if(type==="delete"){
             props.deletePlantAction(id)
 
          }else{
@@ -85,19 +86,19 @@ const productFormAction = ()=>{
         setType("")
         setMessage("")
     }
-    const confirmAction = (id,type)=>{
-        if(type=="delete"){
-            setType(type)
-            setMessage("Are you sure you want to delete this plant and its related SKUs?")
+    // const confirmAction = (id,type)=>{
+    //     if(type=="delete"){
+    //         setType(type)
+    //         setMessage("Are you sure you want to delete this plant and its related SKUs?")
 
-        }else{
-            setType(type)
-            setMessage("Are you sure you want to duplicate this plant and all its related SKU and plant information?")
+    //     }else{
+    //         setType(type)
+    //         setMessage("Are you sure you want to duplicate this plant and all its related SKU and plant information?")
 
-        }
-        setOpen(true)
-        setId(id)
-    }
+    //     }
+    //     setOpen(true)
+    //     setId(id)
+    // }
         const getValue = (e)=>{
             console.log(e.target.value)
             props.serachPlant(e.target.value)
@@ -114,13 +115,13 @@ const productFormAction = ()=>{
             setCategoryId(e.target.value)
 
         }
-        const searchCategoryApply = () =>{
-            if(categoryId == 0)
-            return
-            // console.log(categoryId)
-            props.searchCategoryApplyAction(categoryId)
+        // const searchCategoryApply = () =>{
+        //     if(categoryId === 0)
+        //     return
+        //     // console.log(categoryId)
+        //     props.searchCategoryApplyAction(categoryId)
 
-        }
+        // }
         const resetData = () =>{
             props.getAllPlantAction()
             setRadio("all")
@@ -131,7 +132,7 @@ const productFormAction = ()=>{
     
 
 
-    const {plantPageToOpen,plantData,actionType,plantDataById} = props.plantData
+    const {plantData} = props.plantData
     const {plantCategoryData} =  props.categoryData
     console.log(plantData)
 
@@ -183,7 +184,7 @@ const productFormAction = ()=>{
                                         <option value={0}>None</option>
                                     {plantCategoryData.map(plantCategory=>{
                                         return(
-                                            <option value={plantCategory.id}  selected={categoryId ==plantCategory.id?"selected":""} >{plantCategory.name} </option>
+                                            <option value={plantCategory.id}  selected={categoryId ===plantCategory.id?"selected":""} >{plantCategory.name} </option>
                                         )
                                     })
                                         
@@ -199,17 +200,17 @@ const productFormAction = ()=>{
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <div class="form-check form-check-inline">
-                                    <input class="form-check-input"  type="radio" checked={selectedRadio =="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
+                                    <input class="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
                                         {/* <input class="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
                                         <label class="form-check-label" for="activePlants">Active Plants</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="radio1" checked={selectedRadio =="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                    <input class="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
                                         {/* <input class="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
                                         <label class="form-check-label" for="archivedPlants">Archived Plants</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                    <input type="radio" name="radio1"checked={selectedRadio =="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
+                                    <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
                                         {/* <input class="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
                                         <label class="form-check-label" for="allPlants">All Plants</label>
                                     </div>

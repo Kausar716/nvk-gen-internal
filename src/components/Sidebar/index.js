@@ -9,7 +9,7 @@ import {
 import PlantManager from "../PlantManager/Index";
 import ProductManager from "../ProductManager/Index.js";
 import SignIn from '../SignIn/index'
-import {authEmailPassword,checkLogin} from "../../actions/authAction";
+import {checkLogin} from "../../actions/authAction";
 
 
 class Sidebar extends Component {

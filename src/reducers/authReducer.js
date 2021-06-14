@@ -11,6 +11,7 @@ const initialSatate = {
         error:false
     
 }
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
     switch(action.type){
 
@@ -25,8 +26,8 @@ export default function(state = initialSatate, action){
                 console.log(action.payload)
                 return {
                     ...state,
-                    loggedIn:(action.payload.emailId == state.emailId && action.payload.password == state.password),
-                    error:(action.payload.emailId != state.emailId && !action.payload.password != state.password)
+                    loggedIn:(action.payload.emailId === state.emailId && action.payload.password === state.password),
+                    error:(action.payload.emailId !== state.emailId && !action.payload.password !== state.password)
                    
                    
                 }

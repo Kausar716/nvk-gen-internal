@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React,  { Component } from 'react' ;
 // import {v4 as uuidv4} from 'uuid';
-import {Button,Badge,Form,Input,FormGroup,Label} from 'reactstrap'
+import {Button,Form,Input,FormGroup,Label} from 'reactstrap'
 import {authEmailPassword,checkLogin} from "../../actions/authAction";
 import {connect} from "react-redux";
 //import {getAllImageAssets} from "../Utility/Utility";
@@ -37,7 +38,7 @@ class SignIn extends Component{
         
     }
     render(){
-        const authKey = this.props.authKey
+        //const authKey = this.props.authKey
         // alert(authKey.loggedIn)
         return(
             <div style={{backgroundColor:"white"}}>
