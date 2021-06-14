@@ -15,7 +15,8 @@ import ProductManager from "./components/ProductManager/Index.js";
 import {createBrowserHistory} from 'history';
 import {authEmailPassword,checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/index'
-import Sidebar from "./components/Sidebar";
+//import Sidebar from "./components/Sidebar";
+import CommingSoon from './components/commingSoon'
 export const history = createBrowserHistory({forceRefresh: true})
 
 function App(props) {
@@ -55,6 +56,12 @@ function App(props) {
                   <Left />
                     <ProductManager/>
                   </Route>
+
+                  <Route path="/commingsoon">
+                  <Nav />
+                  <Left />
+                <CommingSoon/>
+              </Route>
 
                 </Switch>
                
