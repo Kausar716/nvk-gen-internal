@@ -4,13 +4,14 @@ import {SIGN_IN_AUTH,CHECK_LOGIN} from '../actions/types';
 
 const initialSatate = {
    
-        emailId:"nvk@gmail.com",
-        password:"password123",
+        emailId:"richard@nvknurseries.com",
+        password:"zvky123",
         loading:false,
         loggedIn:false,
         error:false
     
 }
+
 export default function(state = initialSatate, action){
     switch(action.type){
 
@@ -25,8 +26,8 @@ export default function(state = initialSatate, action){
                 console.log(action.payload)
                 return {
                     ...state,
-                    loggedIn:(action.payload.emailId == state.emailId && action.payload.password == state.password),
-                    error:(action.payload.emailId != state.emailId && !action.payload.password != state.password)
+                    loggedIn:(action.payload.emailId === state.emailId && action.payload.password === state.password),
+                    error:(action.payload.emailId !== state.emailId && !action.payload.password !== state.password)
                    
                    
                 }

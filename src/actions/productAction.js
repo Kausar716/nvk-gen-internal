@@ -6,13 +6,13 @@ import {
     DELETE_PRODUCT_ACTION,
     GET_ALL_PRODUCT_ACTION,
     GET_SPECIFIED_PRODUCT_ACTION,
-    DUPLICTE_PRODUCT,
+    //DUPLICTE_PRODUCT,
 
 
     // SKU ACTION
-    CREATE_SKU_ACTION,
+    //CREATE_SKU_ACTION,
     UPDATE_SKU_ACTION,
-    DELETE_SKU_ACTION,
+    //DELETE_SKU_ACTION,
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
@@ -53,11 +53,11 @@ import {
 
 export const createProductAction = (product,tags) => dispatch => {
     let errorArray=[];
-    if(product.manufacturer_id==0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
-    if(product.category_id ==0||product.category_id == null) errorArray.push(" Select Category")
-    if(product.name.trim().length ==0 ) errorArray.push("Add Product Name")
-    if(errorArray.length==0){
-        product["common_name"] = tags.length==0?["Tag"]:tags
+    if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
+    if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
+    if(product.name.trim().length ===0 ) errorArray.push("Add Product Name")
+    if(errorArray.length===0){
+        product["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/create-product`,product
         , config).then(res=>{
             errorArray.push("Producted Added successfully")
@@ -177,12 +177,12 @@ export const createSkuAction = (id) => dispatch => {
 }
 export const updateSkuAction = (id, data, actionType="edit") => dispatch => {
     let error = []
-    if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
-    if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
-    if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
-    if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
-    if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
-    if(error.length==0){
+    if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
+    if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
+    if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+    if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
+    if(error.length===0){
         delete data["id"]
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
@@ -224,12 +224,12 @@ export const updateSkuAction = (id, data, actionType="edit") => dispatch => {
 export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
     delete data["id"]
     let error  = []
-    if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
-    if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
-    if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
-    if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
-    if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
-    if(error.length==0){
+    if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
+    if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
+    if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+    if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
+    if(error.length===0){
     axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
         dispatch(getAllProductAction())
         // dispatch(showSpecifiedSkuAction(id))
@@ -379,7 +379,7 @@ export const modalAction =() =>dispatch=>{
 //handle category Filter action
 export const handleCategory = (category,subCategory) =>dispatch=>{
     console.log(category,subCategory)
-    if(category =="All"){
+    if(category ==="All"){
         // console.log("only all")
         dispatch({
             type:FILTER_GET_ALL_CATEGORY_DATA,
@@ -387,7 +387,7 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
             subCategoryId:subCategory
         })
 
-    }else if(category!="All" && subCategory =="0"){
+    }else if(category!=="All" && subCategory ==="0"){
         console.log("all")
         dispatch({
             type:FILTER_GET_SLECTED_CATEGORY_DATA,
@@ -395,7 +395,7 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
             subCategoryId:subCategory
         })
 
-    }else if(category!="All" && subCategory !="0"){
+    }else if(category!=="All" && subCategory !=="0"){
         console.log("both")
         dispatch({
             type:FILTER_GET_SLECTED_CATEGORY_SUB_DATA,

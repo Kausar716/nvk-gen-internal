@@ -2,16 +2,16 @@
 import {
     //Plant ACTION
     CREATE_PLANT_ACTION,
-    UPDATE_PLANT_ACTION,
+    //UPDATE_PLANT_ACTION,
     DELETE_PLANT_ACTION,
     GET_ALL_PLANT_ACTION,
     GET_SPECIFIED_PLANT_ACTION,
-    DUPLICTE_PLANT,
+    //DUPLICTE_PLANT,
 
     // Plant SKU ACTION
-    CREATE_PLANT_SKU_ACTION,
+    //CREATE_PLANT_SKU_ACTION,
     UPDATE_PLANT_SKU_ACTION,
-    DELETE_PLANT_SKU_ACTION,
+    //DELETE_PLANT_SKU_ACTION,
     GET_ALL_PLANT_SKU_ACTION,
 
     GET_PLANT_SPECIFIED_SKU_ACTION,
@@ -23,13 +23,13 @@ import {
 
     // Plant INPUT HANDLE
     HANDLE_PLANT_INPUT_DATA,
-    HANDLE_PLANT_TAG_INPUT_DATA,
+    //HANDLE_PLANT_TAG_INPUT_DATA,
     HANDLE_PLANT_SKU_INPUT_DATA,
 
     // axios config
     config,
     axios,
-    SUB_PAGE_REDIRECT_ACTION,
+    //SUB_PAGE_REDIRECT_ACTION,
 
     ERROR_HANDLE,
 
@@ -95,10 +95,10 @@ import {
 // "attributes[2][subattributes][2][id]":4,
 export const createPlantAction = (plantData,tags) => dispatch => {
     let errorArray=[];
-    if(plantData.genus.trim().length ==0 ) errorArray.push("Add plant genus")
-    if(plantData.species.trim().length ==0 ) errorArray.push("Add plant species")
-    if(errorArray.length==0){
-        plantData["common_name"] = tags.length==0?["Tag"]:tags
+    if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+    if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
+    if(errorArray.length===0){
+        plantData["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/add-plant`,plantData,config).then(res=>{
             errorArray.push("Producted Added successfully")
             dispatch(getAllPlantAction())
@@ -211,7 +211,7 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     // if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
     // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
-    if(error.length==0){
+    if(error.length===0){
         delete data["id"]
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())

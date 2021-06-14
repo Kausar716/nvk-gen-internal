@@ -11,9 +11,9 @@ import {
 
     // SKU ACTION
 
-    CREATE_SKU_ACTION,
+    //CREATE_SKU_ACTION,
     UPDATE_SKU_ACTION,
-    DELETE_SKU_ACTION,
+    //DELETE_SKU_ACTION,
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
@@ -27,7 +27,7 @@ import {
     
     // INPUT HANDLE
     HANDLE_INPUT_DATA,
-    HANDLE_TAG_INPUT_DATA,
+    //HANDLE_TAG_INPUT_DATA,
     HANDLE_SKU_INPUT_DATA,
     ERROR_HANDLE,
 
@@ -84,6 +84,7 @@ const initialSatate = {
 
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
 
    
@@ -247,6 +248,7 @@ export default function(state = initialSatate, action){
         
         
             },
+            // eslint-disable-next-line no-dupe-keys
             actionType:"add",
             needAction:false,
             tagsData:[]

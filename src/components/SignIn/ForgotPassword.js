@@ -1,6 +1,6 @@
 import React,  { Component } from 'react' ;
 // import {v4 as uuidv4} from 'uuid';
-import {Button,Badge,Form,Input,FormGroup,Label} from 'reactstrap'
+import {Button,Form,Input,FormGroup,Label} from 'reactstrap'
 // import { Left } from 'react-bootstrap/lib/Media';
 
 

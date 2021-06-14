@@ -55,11 +55,11 @@ const  ProductManagement = (props) =>{
             props.getAllSubCategoriesAction()
             props.getAllManufactureAction()
 
-        },[])
+        },[props])
         const handleCategoryData =(e)=>{
             console.log(e.target.value)
-            if(e.target.id =="category"){
-                if(e.target.value=="All"){
+            if(e.target.id ==="category"){
+                if(e.target.value==="All"){
                     setDisable(true)
                     
                 }else{
@@ -69,16 +69,16 @@ const  ProductManagement = (props) =>{
 
                 
             }
-            else if(e.target.id =="subcategory"){
+            else if(e.target.id ==="subcategory"){
                 setsubCategory(e.target.value)
 
             }
         }
-        const handleFilter  = ()=>{
-            console.log(category,subCategory)
-            props.handleCategory(category,subCategory) 
+        // const handleFilter  = ()=>{
+        //     console.log(category,subCategory)
+        //     props.handleCategory(category,subCategory) 
 
-        }
+        // }
         const resetFilter = () =>{
             setCategory("All")
             setsubCategory("0")
@@ -88,9 +88,9 @@ const  ProductManagement = (props) =>{
 
    
    
-        const paginationChange =(event, page)=>{
-            props.setPageNumber(page-1)
-        }
+        // const paginationChange =(event, page)=>{
+        //     props.setPageNumber(page-1)
+        // }
         const cancel = ()=>{
            setOpen(false)
            setId(0)
@@ -99,7 +99,7 @@ const  ProductManagement = (props) =>{
             
         }
         const confirm = ()=>{
-            if(type=="delete"){
+            if(type==="delete"){
                props.deleteProductAction(id)
    
             }else{
@@ -111,21 +111,21 @@ const  ProductManagement = (props) =>{
            setType("")
            setMessage("")
        }
-       const confirmAction = (id,type)=>{
-           if(type=="delete"){
-               setType(type)
-               setMessage("Are you sure you want to delete this product and its related SKUs?")
+    //    const confirmAction = (id,type)=>{
+    //        if(type=="delete"){
+    //            setType(type)
+    //            setMessage("Are you sure you want to delete this product and its related SKUs?")
    
-           }else{
-               setType(type)
-               setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+    //        }else{
+    //            setType(type)
+    //            setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
    
-           }
-           setOpen(true)
-           setId(id)
-       }
+    //        }
+    //        setOpen(true)
+    //        setId(id)
+    //    }
        
-        const {pageToOpen,actionType,productDataById} = props.productData
+        //const {pageToOpen,actionType,productDataById} = props.productData
         const {categoryData,subCategoryData} = props.categoryData
     return (
         <div>
@@ -156,9 +156,9 @@ const  ProductManagement = (props) =>{
                                         <option>None</option>
                                     </select> */}
                                     <select class="form-control" style={{fontWeight:"200", color:"#606060"}}  id="category" onChange={handleCategoryData} onClick={handleCategoryData}>
-                                    <option value="All" selected={category=="All"?"selected":""}>All</option>
+                                    <option value="All" selected={category==="All"?"selected":""}>All</option>
                                     {categoryData.map(categoryData=>{
-                                        return(<option value={categoryData.id} key={categoryData.id} selected={category==categoryData.id?"selected":""}>{categoryData.name}</option>)
+                                        return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
                                     })
                                     }
         
@@ -171,9 +171,9 @@ const  ProductManagement = (props) =>{
                                         <option>None</option>
                                     </select> */}
                                      <select class="form-control" disabled={disable?true:false} style={{fontWeight:"200",  color:"#606060"}}  id="subcategory" onChange={handleCategoryData}  onClick={handleCategoryData}>
-                                <option  value="0" selected={subCategory=="0"?"selected":""}>None</option>
+                                <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {subCategoryData.map(subCategoryData=>{
-                                        return(<option selected={subCategory==subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
+                                        return(<option selected={subCategory===subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
                                     })
                                     }
                                         

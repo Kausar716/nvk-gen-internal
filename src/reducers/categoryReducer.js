@@ -23,6 +23,7 @@ const initialSatate = {
     plantCategoryData:[]
 }
 
+
 export default function(state = initialSatate, action){
     console.log(action)
    

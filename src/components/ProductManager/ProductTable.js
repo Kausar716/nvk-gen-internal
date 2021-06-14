@@ -1,5 +1,5 @@
-import React,  { Component,useEffect,useState } from 'react' ;
-import {Table} from 'reactstrap'
+import React,  {useState } from 'react' ;
+// import {Table} from 'reactstrap'
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal'
 import {
@@ -25,7 +25,7 @@ import {
 import TablePagination from '../Pagination'
 
 const ProductTable  = (props) => {
-    const {productData,pageNumber,productDataById} = props.productData
+    const {productData,pageNumber} = props.productData
    
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
@@ -44,7 +44,7 @@ const ProductTable  = (props) => {
         
     }
     const confirm = ()=>{
-        if(type=="delete"){
+        if(type==="delete"){
            props.deleteProductAction(id)
 
         }else{
@@ -56,19 +56,19 @@ const ProductTable  = (props) => {
        setType("")
        setMessage("")
    }
-   const confirmAction = (id,type)=>{
-       if(type=="delete"){
-           setType(type)
-           setMessage("Are you sure you want to delete this product and its related SKUs?")
+//    const confirmAction = (id,type)=>{
+//        if(type=="delete"){
+//            setType(type)
+//            setMessage("Are you sure you want to delete this product and its related SKUs?")
 
-       }else{
-           setType(type)
-           setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+//        }else{
+//            setType(type)
+//            setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
 
-       }
-       setOpen(true)
-       setId(id)
-   }
+//        }
+//        setOpen(true)
+//        setId(id)
+//    }
    
    
     const productPerPage = 5;
@@ -106,11 +106,11 @@ const ProductTable  = (props) => {
                                         {displayProductList.map(product=>{
                                              return(
                                             <tr  key={product.product_id}>
-                                                <td>{product.archived==0?"Active":"Archived"}</td>
+                                                <td>{product.archived===0?"Active":"Archived"}</td>
                                                 <td>{product.product_id}</td>
                                                 <td>{product.name}</td>
                                                 <td>--</td>
-                                                <td>{categoryData.length>0?categoryData.filter(cat=>cat.id==product.category_id)[0]["name"]:""}</td>
+                                                <td>{categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:""}</td>
                                                 <td  class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" class="custom-control-input" id="onwebsite1"/>
@@ -119,17 +119,17 @@ const ProductTable  = (props) => {
                                                 </td>
                                                 <td class="text-center">
                                                     <span>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript;">
                                                             <img src="assets/img/edit.svg" alt=""/>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript;">
                                                             <img src="assets/img/duplicate.svg" alt=""/>
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="javascript:;">
+                                                        <a href="javascript;">
                                                             <img src="assets/img/delete.svg" alt=""/>
                                                         </a>
                                                     </span>
@@ -141,7 +141,7 @@ const ProductTable  = (props) => {
                                             
                                         </tbody>
                                     </table>
-                                    <p style={{textAlign:"center",color:"red"}}>{productData.length==0?"No Product Found ":""}</p>
+                                    <p style={{textAlign:"center",color:"red"}}>{productData.length===0?"No Product Found ":""}</p>
                                 </div>
                             </div>
         </>

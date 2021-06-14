@@ -1,4 +1,5 @@
 import "./App.css";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -13,7 +14,7 @@ import Dashboard from "./components/Dashboard";
 import PlantManager from "./components/PlantManager/Index.js";
 import ProductManager from "./components/ProductManager/Index.js";
 import {createBrowserHistory} from 'history';
-import {authEmailPassword,checkLogin} from "./actions/authAction";
+import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/index'
 //import Sidebar from "./components/Sidebar";
 import CommingSoon from './components/commingSoon'
@@ -26,20 +27,26 @@ function App(props) {
   console.log("authKey", authKey)
   console.log("loggedIn", authKey.loggedIn)
   return (
-    <div>
+    <div >
     
     <Router>
     <Provider store={store}>
-    {/* {authKey.loggedIn ? <> */}
-      <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
-       
-          <div id="content" class="content">
-                <Switch>
 
-                <Route path="/" exact>
+    <Route path="/" exact>
                     <SignIn />
                   </Route>
             
+    {/* {authKey.loggedIn ? <> */}
+      <div id="page-container" className="fade page-sidebar-fixed page-header-fixed">
+       
+
+
+          <div id="content" className="content">
+
+
+                <Switch>
+
+                
 
                   <Route path="/Dashboard" exact>
                   <Nav />
