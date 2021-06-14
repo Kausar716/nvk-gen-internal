@@ -9,6 +9,9 @@ function TablePagination(props) {
         "& .MuiPaginationItem-root": {
           color: "#629c44",
           backgroundColor: "",
+          height:"25px",
+          width:"25px",
+          // max-width:"25px"
           // border: "1px solid #629c44"
         },
   

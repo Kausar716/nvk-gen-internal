@@ -1,11 +1,136 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { Component } from 'react'
+import React, { useEffect, useState } from 'react' ;
+import {connect} from "react-redux";
+//import {getAllImageAssets} from "../Utility/Utility";
+// import '../ProductManagement/index.css'
+// import GeneralSettings from './GeneralSettings'
+// import SkuList from './SkuList'
+import ProductTable from './ProductTable'
+import ActionModal from '../Modal/ActionModal'
 
-export class ProductManager extends Component {  
-    render() {
+import {
+    //product actions
+    createProductAction ,
+    updateProductAction ,
+    deleteProductAction ,
+    getAllProductAction,
+    getSpecifiedProductAction,
+    duplicateProduct,
+
+    //page Redirects action
+    pageReDirectAction,
+    subPageReDirectAction,
+
+    //category Filter
+    handleCategory
+
+} from "../../actions/productAction";
+import {
+    getAllCategoriesAction,
+    getAllSubCategoriesAction,
+
+    //manufacture actions
+    getAllManufactureAction
+
+} from '../../actions/categoryAction'
+//import './index.css'
+//import * as BsIcons from "react-icons/bs";
+//import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import ModalData from '../Modal'
+//const IconAssets =  getAllImageAssets();
+
+
+const  ProductManagement = (props) =>{
+    const [category,setCategory] = useState("All")
+    const [subCategory,setsubCategory] = useState(0)
+    const [disable,setDisable] = useState(false)
+    const [id,setId] = useState(0)
+    const [open,setOpen] = useState(false)
+    const [message,setMessage] = useState("")
+    const [type, setType] = useState("")
+        useEffect(()=>{
+            props.getAllProductAction()
+            props.getAllCategoriesAction()
+            props.getAllSubCategoriesAction()
+            props.getAllManufactureAction()
+
+        },[])
+        const handleCategoryData =(e)=>{
+            console.log(e.target.value)
+            if(e.target.id =="category"){
+                if(e.target.value=="All"){
+                    setDisable(true)
+                    
+                }else{
+                    setDisable(false)
+                }
+                setCategory(e.target.value)
+
+                
+            }
+            else if(e.target.id =="subcategory"){
+                setsubCategory(e.target.value)
+
+            }
+        }
+        const handleFilter  = ()=>{
+            console.log(category,subCategory)
+            props.handleCategory(category,subCategory) 
+
+        }
+        const resetFilter = () =>{
+            setCategory("All")
+            setsubCategory("0")
+            props.getAllProductAction()
+
+        }
+
+   
+   
+        const paginationChange =(event, page)=>{
+            props.setPageNumber(page-1)
+        }
+        const cancel = ()=>{
+           setOpen(false)
+           setId(0)
+           setType("")
+           setMessage("")
+            
+        }
+        const confirm = ()=>{
+            if(type=="delete"){
+               props.deleteProductAction(id)
+   
+            }else{
+                props.duplicateProduct(id)
+            }
+      
+           setOpen(false)
+           setId(0)
+           setType("")
+           setMessage("")
+       }
+       const confirmAction = (id,type)=>{
+           if(type=="delete"){
+               setType(type)
+               setMessage("Are you sure you want to delete this product and its related SKUs?")
+   
+           }else{
+               setType(type)
+               setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+   
+           }
+           setOpen(true)
+           setId(id)
+       }
+       
+        const {pageToOpen,actionType,productDataById} = props.productData
+        const {categoryData,subCategoryData} = props.categoryData
     return (
         <div>
+            <ModalData/>
+             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
             <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0">Product Manager</h1>
 				<div class="">
@@ -27,127 +152,42 @@ export class ProductManager extends Component {
                             <div class="form-group row">
                                 <div class="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
-                                    <select class="form-control">
+                                    {/* <select class="form-control">
                                         <option>None</option>
-                                    </select>
+                                    </select> */}
+                                    <select class="form-control" style={{fontWeight:"200", color:"#606060"}}  id="category" onChange={handleCategoryData} onClick={handleCategoryData}>
+                                    <option value="All" selected={category=="All"?"selected":""}>All</option>
+                                    {categoryData.map(categoryData=>{
+                                        return(<option value={categoryData.id} key={categoryData.id} selected={category==categoryData.id?"selected":""}>{categoryData.name}</option>)
+                                    })
+                                    }
+        
+                
+                                </select>
                                 </div>
                                 <div class="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Sub Category</label>
-                                    <select class="form-control">
+                                    {/* <select class="form-control">
                                         <option>None</option>
-                                    </select>
+                                    </select> */}
+                                     <select class="form-control" disabled={disable?true:false} style={{fontWeight:"200",  color:"#606060"}}  id="subcategory" onChange={handleCategoryData}  onClick={handleCategoryData}>
+                                <option  value="0" selected={subCategory=="0"?"selected":""}>None</option>
+                                    {subCategoryData.map(subCategoryData=>{
+                                        return(<option selected={subCategory==subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
+                                    })
+                                    }
+                                        
+                                </select>
                                 </div>
                                 <div class="col-md-2 col-lg-2">
-                                    <a href="javascript:;" class="d-block topSpace">Reset</a>
+                                    <a href="javascript:;" onClick={resetFilter} class="d-block topSpace">Reset</a>
                                 </div>
                             </div>
                              <hr/>
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <table id="plantDetails" class="table table-striped w-100">
-                                        <thead>
-                                            <tr>
-                                                <th class="text-nowrap">Status</th>
-                                                <th class="text-nowrap">Product Name</th>
-                                                <th class="text-nowrap">Location</th>
-                                                <th class="text-nowrap">Category</th>
-                                                <th class="text-nowrap text-center">On Website</th>
-                                                <th class="text-nowrap text-center">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>Active</td>
-                                                <td>11</td>
-                                                <td>Test Location</td>
-                                                <td>Test Category</td>
-                                                <td  class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="onwebsite1"/>
-                                                        <label class="custom-control-label" for="onwebsite1"></label>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Active</td>
-                                                <td>11</td>
-                                                <td>Test Location</td>
-                                                <td>Test Category</td>
-                                                <td  class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="onwebsite2"/>
-                                                        <label class="custom-control-label" for="onwebsite2"></label>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Active</td>
-                                                <td>11</td>
-                                                <td>Test Location</td>
-                                                <td>Test Category</td>
-                                                <td  class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="onwebsite3"/>
-                                                        <label class="custom-control-label" for="onwebsite3"></label>
-                                                    </div>
-                                                </td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                                    <ProductTable />
+                            
+
+
 						</div>
 					</div>
 				</div>
@@ -155,6 +195,38 @@ export class ProductManager extends Component {
         </div>
         )
     }
-}
 
-export default ProductManager  
+
+
+const mapStateToProps = (state)=> ({
+    productData : state.productData,
+    categoryData: state.categoryData
+})
+
+export default connect(mapStateToProps,
+{
+//product actions
+createProductAction ,
+updateProductAction ,
+deleteProductAction ,
+getAllProductAction,
+getSpecifiedProductAction,
+duplicateProduct,
+
+//page Redirects action
+pageReDirectAction,
+subPageReDirectAction,
+
+//category Data
+getAllCategoriesAction,
+
+//sub category Data
+getAllSubCategoriesAction,
+
+// manufacture data
+getAllManufactureAction,
+
+//filter catgeory
+handleCategory
+}
+)(ProductManagement)

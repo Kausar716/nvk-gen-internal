@@ -17,7 +17,8 @@ import {
     
 
 }from "../../actions/plantManagerAction";
-import TablePagination from '../Pagination'
+import TablePagination from '../Pagination';
+import './index.css';
 
 const PlantTable=(props)=> {
     const [id,setId] = useState(0)
@@ -75,7 +76,7 @@ const PlantTable=(props)=> {
               <div className="pagination_area">
             <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
             </div>
-            <label className="greenText">Showing 1-1000 of 4555 plants</label>
+            <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  ((( plantPageNumber+1)*5)>plantCategoryData.length ?plantCategoryData.length:(( plantPageNumber+1)*5))  + "  of   "  +   plantCategoryData.length }</label>
            
                             <div class="form-group row mt-3">
                                 <div class="col-md-12">
@@ -88,7 +89,7 @@ const PlantTable=(props)=> {
                                                 <th class="text-nowrap">Category</th>
                                                 <th class="text-nowrap">In Production</th>
                                                 <th class="text-nowrap text-center">Discontinued</th>
-                                                <th class="text-nowrap">Archived</th>
+                                                <th class="text-nowrap text-center">Archived</th>
                                                 <th class="text-nowrap text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -110,7 +111,7 @@ const PlantTable=(props)=> {
                                                 </td>
 
 
-                                                <td>
+                                                <td class="text-center">
                                                 <div class="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" class="custom-control-input" id="customCheck1"/>
                                                         <label class="custom-control-label" for="customCheck1"></label>
