@@ -8,11 +8,20 @@ import CommingSoon from './commingSoon'
 export default function Left() {
   const [selectedMainBar,setSelectedMainBar] = useState("Dashboard")
   const [selectedSubBar , setSelectedSubBar] = useState("")
+  const [initialSelect,setInitialSelect] = useState(true)
  const handleMainSelection= (id) => {
   setSelectedMainBar(id)
  }
  const handleSubSelection= (id) => {
+   if( id.includes("1")){
+    setInitialSelect(true)
+   
+   }
+   else {
+    setInitialSelect(false)
+   }
   setSelectedSubBar(id)
+
  }
 
   return (
@@ -44,15 +53,17 @@ export default function Left() {
               </Link>
             </li>
             <li  
-            class={selectedMainBar === "Inventory"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("Inventory")}} 
+            class={selectedMainBar === "inventoryM"?"has-sub active":""} onClick={()=>{handleMainSelection("inventoryM")}} 
             >
-              <a href="javascript:;">
-                <b class="caret"></b>
+              <Link>
+              <b class="caret"></b>
                 <img src="assets/img/inventory.svg" alt=""/>
                 <span>Inventory</span> 
-              </a>
+              </Link>
+               
+            
               <ul class="sub-menu">
-                <li class= {(selectedSubBar === "inventory1")?"active":""} onClick={()=>{handleSubSelection("inventory1")}}><Link to="/commingsoon">Inventory Lists</Link></li>
+                <li class= {(selectedSubBar === "inventory1" || initialSelect)?"active":""} onClick={()=>{handleSubSelection("inventory1")}}><Link to="/commingsoon">Inventory Lists</Link></li>
                 <li class= {(selectedSubBar === "inventory2")?"active":""} onClick={()=>{handleSubSelection("inventory2")}}><Link to="/commingsoon">Master Inventory</Link></li>
                 <li class= {(selectedSubBar === "inventory3")?"active":""} onClick={()=>{handleSubSelection("inventory3")}}><Link to="/commingsoon">Task Queue</Link></li>
                 <li class= {(selectedSubBar === "inventory4")?"active":""} onClick={()=>{handleSubSelection("inventory4")}}><Link to="/plantManager">Plant Manager</Link></li>
