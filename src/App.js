@@ -26,20 +26,26 @@ function App(props) {
   console.log("authKey", authKey)
   console.log("loggedIn", authKey.loggedIn)
   return (
-    <div>
+    <div style={{backgroundColor:"white"}}>
     
     <Router>
     <Provider store={store}>
-    {/* {authKey.loggedIn ? <> */}
-      <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
-       
-          <div id="content" class="content">
-                <Switch>
 
-                <Route path="/" exact>
+    <Route path="/" exact>
                     <SignIn />
                   </Route>
             
+    {/* {authKey.loggedIn ? <> */}
+      <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+       
+
+
+          <div id="content" class="content">
+
+
+                <Switch>
+
+                
 
                   <Route path="/Dashboard" exact>
                   <Nav />
