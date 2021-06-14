@@ -3,12 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import 'bootstrap/dist/css/bootstrap.min.css';
-// import '../public/assets/css/dataTables.bootstrap4.min.css'
-// import '../public/assets/css/main.css'
-// import '../public/assets/css/responsive.bootstrap4.min.css'
-
-
 
 ReactDOM.render(
   <React.StrictMode>
