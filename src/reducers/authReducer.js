@@ -4,14 +4,14 @@ import {SIGN_IN_AUTH,CHECK_LOGIN} from '../actions/types';
 
 const initialSatate = {
    
-        emailId:"nvk@gmail.com",
-        password:"password123",
+        emailId:"richard@nvknurseries.com",
+        password:"zvky123",
         loading:false,
         loggedIn:false,
         error:false
     
 }
-// eslint-disable-next-line import/no-anonymous-default-export
+
 export default function(state = initialSatate, action){
     switch(action.type){
 

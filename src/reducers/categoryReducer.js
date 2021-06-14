@@ -23,7 +23,7 @@ const initialSatate = {
     plantCategoryData:[]
 }
 
-// eslint-disable-next-line import/no-anonymous-default-export
+
 export default function(state = initialSatate, action){
     console.log(action)
    

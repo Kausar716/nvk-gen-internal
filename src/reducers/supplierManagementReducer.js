@@ -1,3 +1,4 @@
+/* eslint-disable no-case-declarations */
 import {
     ADD_SUPPLIER,
     // ADD_SUPPLIER_DELIVERY_LOCATION,
@@ -79,7 +80,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
 
             case GET_ALL_SUPPLIER:
                 return {...state, supplierInfo:action.payload};
-
+                    
 
             case ADD_SUPPLIER:
                 const suppliers = state.suppliers.concat(action.payload);

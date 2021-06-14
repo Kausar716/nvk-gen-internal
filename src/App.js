@@ -27,7 +27,7 @@ function App(props) {
   console.log("authKey", authKey)
   console.log("loggedIn", authKey.loggedIn)
   return (
-    <div style={{backgroundColor:"white"}}>
+    <div >
     
     <Router>
     <Provider store={store}>
@@ -37,11 +37,11 @@ function App(props) {
                   </Route>
             
     {/* {authKey.loggedIn ? <> */}
-      <div id="page-container" class="fade page-sidebar-fixed page-header-fixed">
+      <div id="page-container" className="fade page-sidebar-fixed page-header-fixed">
        
 
 
-          <div id="content" class="content">
+          <div id="content" className="content">
 
 
                 <Switch>

@@ -27,7 +27,7 @@ import {} from "../../actions/productAction";
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={props.open}  >
-        <ModalHeader style={{color:"red",fontSize:20,fontWeight:"bold",borderBottom:"white"}} >   <i class="fa fa-exclamation-triangle" aria-hidden="true" style={{fontSize:40,color:"red"}}></i> WARNING !</ModalHeader>
+        <ModalHeader style={{color:"red",fontSize:20,fontWeight:"bold",borderBottom:"white"}} >   <i className="fa fa-exclamation-triangle" aria-hidden="true" style={{fontSize:40,color:"red"}}></i> WARNING !</ModalHeader>
         <ModalBody>
         {/* <img  src={IconAssets["Quote-&-Order-Management"]} alt=""/> */}
       

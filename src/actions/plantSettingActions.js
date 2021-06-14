@@ -291,18 +291,18 @@ export const handlePlantInputAction = (id, value) =>dispatch=>{
     })
 
 }
-export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
+// export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
 
 
-}
-export const handlePlantTagAction = (id, value) =>dispatch=>{
+// }
+// export const handlePlantTagAction = (id, value) =>dispatch=>{
 
-}
+// }
 
 //handle category Filter action
-export const handlePlantCategory = (category,subCategory) =>dispatch=>{
+// export const handlePlantCategory = (category,subCategory) =>dispatch=>{
 
-}
+// }
 
 
 

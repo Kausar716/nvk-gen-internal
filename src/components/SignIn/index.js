@@ -101,12 +101,14 @@ class SignIn extends Component{
                     <p className="logincontactInfo" style={{color:"gray"}}>Contact <span  style={{color:"#4f91f7"}}>webmaster@nvknurseries.com</span></p>
                 </div>
             </Form>
-   
+            <p>version:0.0.0.1</p>
             </div>
                 </div>
                 <footer>
                     <p>NVKGENESYS.COM | TERMS OF USE | PRIVACY <br></br>&copy; Nurseries. All Rights Reserved</p>
+                   
                     {/* <p>&copy; Nurseries. All Rights Reserved</p> */}
+                   
 
                 </footer>
             </div>
