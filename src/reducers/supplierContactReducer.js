@@ -39,6 +39,7 @@ const contactReducer=(state=defaultState, action)=>{
             return {...state, error:action.payload};
 
         case EDIT_SUPPLIER_CONTACT_SUCCESS:
+            // eslint-disable-next-line no-case-declarations
             const updatedContactSupplier = state.contactsSuppliers.filter(contactsSupplier=>contactsSupplier.id !== action.payload.id)
             return {...state, contactsSuppliers:[...updatedContactSupplier,action.payload]};
 

@@ -12,7 +12,7 @@ import Nav from "./components/Nav";
 import {connect} from "react-redux";
 import Dashboard from "./components/Dashboard";
 import PlantManager from "./components/PlantManager/Index.js";
-import ProductManager from "./components/ProductManager/Index.js";
+import ProductManager from "./components/ProductManager/Index";
 import {createBrowserHistory} from 'history';
 import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/index'
