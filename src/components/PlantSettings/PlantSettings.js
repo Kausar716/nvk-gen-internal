@@ -3,26 +3,36 @@
 import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import BloomFoliageColors from './BloomFoliageColors';
+import Caliper from './Caliper';
+import Categories from './Categories';
+import Characterstics from './Characterstics';
+import Form from './Form';
+import Height from './Height';
+import InventoryReasons from './InventoryReasons';
+import Packaging from './Packaging';
+import VolumeTiers from './VolumeTiers';
+import Zones from './Zones';
 
 export class PlantSettings extends Component {  
     render() {
     return (
         <div>
-            <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0">Plant Settings</h1>
-				<div class="">
+            <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
+				<h1 className="page-header mb-0">Plant Settings</h1>
+				<div className="">
 					<a href="javascript:;">
 						<img src="assets/img/add.svg" alt=""/>
 					</a>
-					<a href="javascript:;" class="ml-2">
+					<a href="javascript:;" className="ml-2">
 						<img src="assets/img/preview.svg" alt=""/>
 					</a>
-					<a href="javascript:;" class="ml-2">
+					<a href="javascript:;" className="ml-2">
 						<img src="assets/img/print.svg" alt=""/>
 					</a>
 				</div>
 			</div>
-            <div class="px-md-3 mt-3">
+            <div className="px-md-3 mt-3">
                 <Tabs>
                     <TabList>
                         <Tab>Categories</Tab>
@@ -37,298 +47,43 @@ export class PlantSettings extends Component {
                         <Tab>Packaging</Tab>
                     </TabList>
                     <TabPanel>
-                        <div class="bg-white">
-                            <h4 class="p-15 mb-0">Categories</h4>
-                        </div>
+                        <Categories/>
                     </TabPanel>
+
                     <TabPanel>
-                        <div class="bg-white">
-                            <h4 class="p-15 mb-0">Bloom &amp; Foliage Colors</h4>
-                        </div>
+                        <BloomFoliageColors/>
                     </TabPanel>
+
                     <TabPanel>
-                    <div class="bg-white">
-                            <h4 class="p-15 mb-0">Zones</h4>
-                            <hr class="m-0"/>
-                            <div class="ContentSection p-15">
-                                <div class="row">
-                                    <div class="col-md-12 col-lg-12">
-                                        <p>Hardiness Zone</p>
-                                        <div class="row d-flex align-items-center">
-                                            <div class="col-md-6 col-lg-9">  
-                                                <input type="text" class="form-control" placeholder=""/>
-                                            </div>
-                                            <div class="col-md-6 col-lg-3">
-                                                <a href="javascript:;" class="d-flex align-items-center">
-                                                    <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-5 mb-4">
-                                    <div class="col">
-                                        <div class="card zoneCard">
-                                            <div class="card-header">
-                                                Inactive
-                                            </div>
-                                            <div class="card-body cardBg">
-                                               <ul class="list-unstyled">
-                                                   <li class="active">
-                                                        <a href="javascript:;" class="">
-                                                            <span>Christmas Trees</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                               </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <div class="midControls d-flex flex-column justify-content-around">
-                                            <div>
-                                                <a href="javascript:;">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="javascript:;">
-                                                    <i class="fas fa-arrows-alt"></i>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="javascript:;" class="icDelete">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card zoneCard">
-                                            <div class="card-header">
-                                                Active
-                                            </div>
-                                            <div class="card-body cardBg">
-                                            <ul class="list-unstyled">
-                                                   <li class="active">
-                                                        <a href="javascript:;" class="">
-                                                            <span>Broadleaf Evergrens</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Bulbs</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Evergreens</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Frems</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Fruits</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Grasses</span>
-                                                        </a>
-                                                   </li>
-                                               </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Zones/>
                     </TabPanel>
+
                     <TabPanel>
-                    <div class="bg-white">
-                            <h4 class="p-15 mb-0">Hardiness Zones</h4>
-                            <hr class="m-0"/>
-                            <div class="ContentSection p-15">
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        <p>Characteristics</p>
-                                        <div>
-                                            <input type="text" class="form-control" placeholder=""/>
-                                        </div>
-                                        <div class="d-flex justify-content-md-end mt-2">
-                                            <a href="javascript:;" class="d-flex align-items-center">
-                                                <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <p>Feature Name</p>
-                                        <div>
-                                            <input type="text" class="form-control" placeholder=""/>
-                                        </div>
-                                        <div class="d-flex justify-content-md-end mt-2">
-                                            <a href="javascript:;" class="d-flex align-items-center">
-                                                <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Feature
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-5">
-                                    <div class="col">
-                                        <div class="card midCard">
-                                            <div class="card-header">
-                                                Inactive
-                                            </div>
-                                            <div class="card-body cardBg">
-                                               <ul class="list-unstyled">
-                                                   <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                            <span>Attracts Birds 01</span>
-                                                            <i class="fa fa-th"></i>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                            <span>Attracts Birds 02</span>
-                                                            <i class="fa fa-th"></i>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                            <span>Attracts Birds 03</span>
-                                                            <i class="fa fa-th"></i>
-                                                        </a>
-                                                   </li>
-                                               </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-1">
-                                        <div class="midControls d-flex flex-column justify-content-around">
-                                            <div>
-                                                <a href="javascript:;">
-                                                    <i class="fas fa-angle-double-right"></i>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="javascript:;">
-                                                    <i class="fas fa-arrows-alt"></i>
-                                                </a>
-                                            </div>
-                                            <div>
-                                                <a href="javascript:;" class="icDelete">
-                                                    <i class="fas fa-trash"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="card midCard">
-                                            <div class="card-header">
-                                                Active
-                                            </div>
-                                            <div class="card-body cardBg">
-                                               <ul class="list-unstyled">
-                                                   <li class="hasChild">
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                            <span>Attracts Birds 01</span>
-                                                            <i class="fa fa-th"></i>
-                                                        </a>
-                                                        <ul class="list-unstyled childUl">
-                                                            <li>
-                                                                <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                                    <span>Attracts Birds 01</span>
-                                                                    <i class="fa fa-th"></i>
-                                                                </a>
-                                                            </li>
-                                                            <li>
-                                                                <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                                    <span>Attracts Birds 01</span>
-                                                                    <i class="fa fa-th"></i>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                            <span>Attracts Birds 02</span>
-                                                            <i class="fa fa-th"></i>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                            <span>Attracts Birds 03</span>
-                                                            <i class="fa fa-th"></i>
-                                                        </a>
-                                                   </li>
-                                               </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <Characterstics/>
                     </TabPanel>
+
                     <TabPanel>
-                        
+                        <VolumeTiers/>
                     </TabPanel>
+
                     <TabPanel>
-                        
+                        <InventoryReasons />
                     </TabPanel>
+
                     <TabPanel>
-                        
+                        <Form />
                     </TabPanel>
+
                     <TabPanel>
-                        
+                        <Caliper/>
                     </TabPanel>
+
                     <TabPanel>
-                        
+                        <Height/>
                     </TabPanel>
+
                     <TabPanel>
-                        
+                        <Packaging/>
                     </TabPanel>
                 </Tabs>
             </div>

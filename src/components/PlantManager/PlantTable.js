@@ -78,19 +78,19 @@ const PlantTable=(props)=> {
             </div>
             <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  ((( plantPageNumber+1)*5)>plantCategoryData.length ?plantCategoryData.length:(( plantPageNumber+1)*5))  + "  of   "  +   plantCategoryData.length }</label>
            
-                            <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <table id="plantDetails" class="table table-striped w-100">
+                            <div className="form-group row mt-3">
+                                <div className="col-md-12">
+                                    <table id="plantDetails" className="table table-striped w-100">
                                         <thead>
                                             <tr>
-                                                <th class="text-nowrap">Status</th>
-                                                <th class="text-nowrap">Plant ID</th>
-                                                <th class="text-nowrap">Plant Name</th>
-                                                <th class="text-nowrap">Category</th>
-                                                <th class="text-nowrap">In Production</th>
-                                                <th class="text-nowrap text-center">Discontinued</th>
-                                                <th class="text-nowrap text-center">Archived</th>
-                                                <th class="text-nowrap text-center">Actions</th>
+                                                <th className="text-nowrap">Status</th>
+                                                <th className="text-nowrap">Plant ID</th>
+                                                <th className="text-nowrap">Plant Name</th>
+                                                <th className="text-nowrap">Category</th>
+                                                <th className="text-nowrap">In Production</th>
+                                                <th className="text-nowrap text-center">Discontinued</th>
+                                                <th className="text-nowrap text-center">Archived</th>
+                                                <th className="text-nowrap text-center">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -108,23 +108,23 @@ const PlantTable=(props)=> {
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
                                                     </td>
                                                 <td></td>
-                                                <td class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id={id2.concat(plant_id)} />
-                                                        <label class="custom-control-label" for={id2.concat(plant_id)}></label>
+                                                <td className="text-center">
+                                                    <div className="custom-control custom-checkbox mb-1">
+                                                        <input type="checkbox" className="custom-control-input" id={id2.concat(plant_id)} />
+                                                        <label className="custom-control-label" for={id2.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 
 
-                                                <td class="text-center">
-                                                <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id={id3.concat(plant_id)}/>
-                                                        <label class="custom-control-label" for={id3.concat(plant_id)}></label>
+                                                <td className="text-center">
+                                                <div className="custom-control custom-checkbox mb-1">
+                                                        <input type="checkbox" className="custom-control-input" id={id3.concat(plant_id)}/>
+                                                        <label className="custom-control-label" for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 
 
-                                                <td class="text-center">
+                                                <td className="text-center">
                                                     <span>
                                                         <a href="javascript;">
                                                             <img src="assets/img/edit.svg" alt=""/>
