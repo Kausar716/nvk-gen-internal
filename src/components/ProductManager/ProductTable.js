@@ -107,7 +107,8 @@ const ProductTable  = (props) => {
                                             console.log("Product data", product)
                                             console.log("cacategoryData",categoryData)
                                             console.log("categoryDatacategoryDataLENGTH", categoryData.length)
-
+                                            let id2 ="onwebsite1"
+                                            
                                             // var categryFData = categoryData.filter(function(categoryData) {
                                             //     return cat=>cat.id===product.category_id
                                             // })
@@ -132,8 +133,8 @@ const ProductTable  = (props) => {
                                                     </td>
                                                 <td  class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="onwebsite1"/>
-                                                        <label class="custom-control-label" for="onwebsite1"></label>
+                                                        <input type="checkbox" class="custom-control-input" id={id2.concat(product.product_id)}/>
+                                                        <label class="custom-control-label" for={id2.concat(product.product_id)}></label>
                                                     </div>
                                                 </td>
                                                 <td class="text-center">
