@@ -209,7 +209,7 @@ const  PlantManager=(props)=> {
                                     <div className="form-check form-check-inline">
                                     <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
                                         {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
-                                        <label className="form-check-label" for="allPlants">All Plants</label>
+                                        <label className="form-check-label" for="allPlants"> &nbsp;All Plants</label>
                                     </div>
                                 </div>
                             </div>
