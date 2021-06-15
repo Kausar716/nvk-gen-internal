@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import Dashboard from "./components/Dashboard";
 import PlantManager from "./components/PlantManager/Index.js";
 import ProductManager from "./components/ProductManager/Index";
+import ProductSettings from './components/ProductSettings/index'
 import {createBrowserHistory} from 'history';
 import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/index'
@@ -64,6 +65,13 @@ function App(props) {
                   <Left />
                     <PlantManager/>
                   </Route>
+                  <Route path="/productsettings">
+                  <Nav />
+                  <Left />
+                    <ProductSettings/>
+                  </Route>
+
+                  
                   <Route path="/productManager">
                   <Nav />
                   <Left />
