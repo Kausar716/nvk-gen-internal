@@ -96,6 +96,8 @@ const PlantTable=(props)=> {
                                         <tbody>
 
                                         {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, Discontinued, archived, patent,category_id,plant_id})=>{
+                                             let id2 ="discontinue"
+                                             let id3 ="Archived"
                                              return(     
                                             <tr>
                                                 <td>{status === 1 ?"Active":"Inactive"}</td>
@@ -108,16 +110,16 @@ const PlantTable=(props)=> {
                                                 <td></td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                        <input type="checkbox" class="custom-control-input" id={id2.concat(plant_id)} />
+                                                        <label class="custom-control-label" for={id2.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 
 
                                                 <td class="text-center">
                                                 <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                        <input type="checkbox" class="custom-control-input" id={id3.concat(plant_id)}/>
+                                                        <label class="custom-control-label" for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 
