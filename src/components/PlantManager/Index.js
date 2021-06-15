@@ -28,9 +28,6 @@ import {
     serachPlant,
     radioSearch,
     searchCategoryApplyAction
-
-
-
     
 
 }from "../../actions/plantManagerAction";
