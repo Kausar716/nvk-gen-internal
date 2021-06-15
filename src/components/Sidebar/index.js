@@ -8,6 +8,7 @@ import {
   import Dashboard from "../Dashboard";
 import PlantManager from "../PlantManager/Index";
 import ProductManager from "../ProductManager/Index.js";
+import ProductSettings from '../ProductSettings/index'
 import SignIn from '../SignIn/index'
 import {checkLogin} from "../../actions/authAction";
 
@@ -30,6 +31,11 @@ class Sidebar extends Component {
                         <Route path="/productManager">
                             <ProductManager/>
                         </Route>
+                        <Route path="/productsettings">
+                            <ProductSettings/>
+                        </Route>
+
+
                     </Switch>
                 </Router>
 
