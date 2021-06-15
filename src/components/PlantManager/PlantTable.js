@@ -101,7 +101,10 @@ const PlantTable=(props)=> {
                                                 <td>{status === 1 ?"Active":"Inactive"}</td>
                                                 <td>{plant_id}</td>
                                                 <td>{patent}</td>
-                                                <td>{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""}</td>
+                                                <td>
+                                                    {/* {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
+                                                    {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
+                                                    </td>
                                                 <td></td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1">

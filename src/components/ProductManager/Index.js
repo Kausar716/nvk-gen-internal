@@ -49,13 +49,16 @@ const  ProductManagement = (props) =>{
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
+
+    const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
             props.getAllProductAction()
             props.getAllCategoriesAction()
             props.getAllSubCategoriesAction()
             props.getAllManufactureAction()
 
-        },[props])
+        },[])
+
         const handleCategoryData =(e)=>{
             console.log(e.target.value)
             if(e.target.id ==="category"){
@@ -126,7 +129,7 @@ const  ProductManagement = (props) =>{
     //    }
        
         //const {pageToOpen,actionType,productDataById} = props.productData
-        const {categoryData,subCategoryData} = props.categoryData
+        // const {categoryData,subCategoryData} = props.categoryData
     return (
         <div>
             <ModalData/>
