@@ -66,7 +66,7 @@ export default function Left() {
                 <li class= {(selectedSubBar === "inventory3")?"active":""} onClick={()=>{handleSubSelection("inventory3")}}><Link to="/commingsoon">Task Queue</Link></li>
                 <li class= {(selectedSubBar === "inventory4")?"active":""} onClick={()=>{handleSubSelection("inventory4")}}><Link to="/plantManager">Plant Manager</Link></li>
                 <li class= {(selectedSubBar === "inventory5")?"active":""} onClick={()=>{handleSubSelection("inventory5")}}><Link to="/productManager">Product Manager</Link></li>
-                <li class= {(selectedSubBar === "inventory6")?"active":""} onClick={()=>{handleSubSelection("inventory6")}}><Link to="/commingsoon">Plant Settings</Link></li>
+                <li class= {(selectedSubBar === "inventory6")?"active":""} onClick={()=>{handleSubSelection("inventory6")}}><Link to="/plantSettings">Plant Settings</Link></li>
                 <li class= {(selectedSubBar === "inventory7")?"active":""} onClick={()=>{handleSubSelection("inventory7")}}><Link to="/commingsoon">Product Settings</Link></li>
                 <li class= {(selectedSubBar === "inventory8")?"active":""} onClick={()=>{handleSubSelection("inventory8")}}><Link to="/commingsoon">Inventory Settings</Link></li>
               </ul>

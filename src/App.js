@@ -18,7 +18,9 @@ import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/index'
 //import Sidebar from "./components/Sidebar";
 import CommingSoon from './components/commingSoon'
+import PlantSettings from './components/PlantSettings/PlantSettings';
 export const history = createBrowserHistory({forceRefresh: true})
+
 
 function App(props) {
   
@@ -46,7 +48,11 @@ function App(props) {
 
                 <Switch>
 
-                
+                <Route path="/plantSettings">
+                  <Nav />
+                  <Left />
+                    <PlantSettings/>
+                  </Route>
 
                   <Route path="/Dashboard" exact>
                   <Nav />
