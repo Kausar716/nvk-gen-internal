@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React ,{useState} from "react";
 import { Link } from "react-router-dom";
-import CommingSoon from './commingSoon'
+
 
 
 export default function Left() {
@@ -35,7 +35,7 @@ export default function Left() {
               </a>
             </li>
             <li class={selectedMainBar === "Dashboard"?"active":""} onClick={()=>{handleMainSelection("Dashboard")}} >
-              <Link to="/">
+              <Link to="/Dashboard">
                 <img src="assets/img/dashboard.svg" alt=""/>
                 <span>Dashboard</span>
               </Link>
@@ -53,15 +53,13 @@ export default function Left() {
               </Link>
             </li>
             <li  
-            class={selectedMainBar === "inventoryM"?"has-sub active":""} onClick={()=>{handleMainSelection("inventoryM")}} 
+            class={(selectedMainBar === "inventoryM")?"has-sub active":""} onClick={()=>{handleMainSelection("inventoryM")}} 
             >
-              <Link>
+              <a href="javascript:void(0)">
               <b class="caret"></b>
                 <img src="assets/img/inventory.svg" alt=""/>
                 <span>Inventory</span> 
-              </Link>
-               
-            
+              </a>
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "inventory1" || initialSelect)?"active":""} onClick={()=>{handleSubSelection("inventory1")}}><Link to="/commingsoon">Inventory Lists</Link></li>
                 <li class= {(selectedSubBar === "inventory2")?"active":""} onClick={()=>{handleSubSelection("inventory2")}}><Link to="/commingsoon">Master Inventory</Link></li>
@@ -73,7 +71,8 @@ export default function Left() {
                 <li class= {(selectedSubBar === "inventory8")?"active":""} onClick={()=>{handleSubSelection("inventory8")}}><Link to="/commingsoon">Inventory Settings</Link></li>
               </ul>
             </li>
-            <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}} class="" activeClassName="active">
+            <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>
+            {/* activeClassName="active" */}
             <Link to="/commingsoon">
                 <img src="assets/img/Customer-management.svg" alt=""/>
                 <span>Customer Management</span>
