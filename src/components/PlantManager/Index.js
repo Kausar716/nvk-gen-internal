@@ -125,8 +125,7 @@ const  PlantManager=(props)=> {
         const resetData = () =>{
             props.getAllPlantAction()
             setRadio("all")
-            setCategoryId(0)
-            
+            setCategoryId(0)           
 
         }
     

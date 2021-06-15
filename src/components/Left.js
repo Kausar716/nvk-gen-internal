@@ -74,7 +74,7 @@ export default function Left() {
             <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>
             {/* activeClassName="active" */}
             <Link to="/commingsoon">
-                <img src="assets/img/Customer-management.svg" alt=""/>
+                <img src="assets/img/customermanagement.svg" alt=""/>
                 <span>Customer Management</span>
               </Link>
             </li>
