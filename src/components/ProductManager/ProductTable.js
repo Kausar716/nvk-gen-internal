@@ -86,19 +86,19 @@ const ProductTable  = (props) => {
          <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
          </div>
          <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " +  ((( pageNumber+1)*5)>productData.length ?productData.length:(( pageNumber+1)*5))  + "  of   "  +   productData.length }</label>
-                      <div class="form-group row mt-3">
-                                <div class="col-md-12">
-                                    <table id="plantDetails" class="table table-striped w-100">
+                      <div className="form-group row mt-3">
+                                <div className="col-md-12">
+                                    <table id="plantDetails" className="table table-striped w-100">
                                         <thead>
                                             <tr>
-                                                <th class="text-nowrap">Status</th>
-                                                <th class="text-nowrap">Product ID</th>
-                                                <th class="text-nowrap">Product Name</th>
+                                                <th className="text-nowrap">Status</th>
+                                                <th className="text-nowrap">Product ID</th>
+                                                <th className="text-nowrap">Product Name</th>
 
-                                                <th class="text-nowrap">Location</th>
-                                                <th class="text-nowrap">Category</th>
-                                                <th class="text-nowrap text-center">On Website</th>
-                                                <th class="text-nowrap text-center">Actions</th>
+                                                <th className="text-nowrap">Location</th>
+                                                <th className="text-nowrap">Category</th>
+                                                <th className="text-nowrap text-center">On Website</th>
+                                                <th className="text-nowrap text-center">Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -131,13 +131,13 @@ const ProductTable  = (props) => {
                                                     {categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:"":""}
                                                     {/* {abcd[0].name} */}
                                                     </td>
-                                                <td  class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" class="custom-control-input" id={id2.concat(product.product_id)}/>
-                                                        <label class="custom-control-label" for={id2.concat(product.product_id)}></label>
+                                                <td  className="text-center">
+                                                    <div className="custom-control custom-checkbox mb-1">
+                                                        <input type="checkbox" className="custom-control-input" id={id2.concat(product.product_id)}/>
+                                                        <label className="custom-control-label" for={id2.concat(product.product_id)}></label>
                                                     </div>
                                                 </td>
-                                                <td class="text-center">
+                                                <td className="text-center">
                                                     <span>
                                                         <a href="javascript;">
                                                             <img src="assets/img/edit.svg" alt=""/>
