@@ -104,13 +104,32 @@ const ProductTable  = (props) => {
                                         <tbody>
 
                                         {displayProductList.map(product=>{
+                                            console.log("Product data", product)
+                                            console.log("cacategoryData",categoryData)
+                                            console.log("categoryDatacategoryDataLENGTH", categoryData.length)
+
+                                            // var categryFData = categoryData.filter(function(categoryData) {
+                                            //     return cat=>cat.id===product.category_id
+                                            // })
+
+                                            // var abcd =categoryData.filter(cat=>cat.id===product.category_id)
+                                            // console.log("abcd,", abcd);
+
+
+
                                              return(
                                             <tr  key={product.product_id}>
                                                 <td>{product.archived===0?"Active":"Archived"}</td>
                                                 <td>{product.product_id}</td>
                                                 <td>{product.name}</td>
                                                 <td>--</td>
-                                                <td>{categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:""}</td>
+                                                <td>
+                                              
+                                                    {/* {categoryData.length>0 ? categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:""} */}
+                                                    {/* {categoryData.length>0 ? categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:""} */}
+                                                    {categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:"":""}
+                                                    {/* {abcd[0].name} */}
+                                                    </td>
                                                 <td  class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" class="custom-control-input" id="onwebsite1"/>
