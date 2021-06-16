@@ -1,5 +1,5 @@
-import React,  { useState } from 'react' ;
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import React, {useState} from 'react' ;
+// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 
@@ -11,6 +11,21 @@ import 'react-tabs/style/react-tabs.css';
 
 
 const Manufacturer=(props)=> {
+    const [name,setName] = useState("")
+    const [selectedItem,setSelectedItem] = useState("")
+
+    const handleName = (e) => {
+        setName(e.target.value)
+    }
+
+    const handleAddManufacturer = (e) => {
+        e.preventDefault()
+        console.log(name)
+    }
+    const handleitemSelect= (e)=> {
+        setSelectedItem(e.target.id)
+    }
+    
     return(
         <>       <div class="bg-white">
                             <h4 class="p-15 mb-0">Manufacturers</h4>
@@ -21,10 +36,10 @@ const Manufacturer=(props)=> {
                                         <p>Manufacturer Name</p>
                                         <div class="row d-flex align-items-center">
                                             <div class="col-md-6 col-lg-9">  
-                                                <input type="text" class="form-control" placeholder=""/>
+                                                <input type="text" class="form-control" placeholder="" onChange={handleName}/>
                                             </div>
-                                            <div class="col-md-6 col-lg-3">
-                                                <a href="javascript:;" class="d-flex align-items-center">
+                                            <div class="col-md-6 col-lg-3" onClick={handleAddManufacturer}>
+                                                <a href="javascript;" class="d-flex align-items-center">
                                                     <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Manufacturer
                                                 </a>
                                             </div>
@@ -40,48 +55,48 @@ const Manufacturer=(props)=> {
                                             </div>
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
-                                                   <li class="active">
-                                                        <a href="javascript:;" class="">
+                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
+                                                        <a href="javascript:void(0)" class="" id="Christmas Trees">
                                                             <span>Christmas Trees</span>
                                                         </a>
                                                    </li>
-                                                   <li>
-                                                        <a href="javascript:;" class="">
-                                                            <span>Wheathers</span>
+                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
+                                                        <a href="javascript:void(0)" id="Wheathers"  class="">
+                                                            <span id="Wheathers">Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript:void(0)" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript:void(0)" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
@@ -92,17 +107,17 @@ const Manufacturer=(props)=> {
                                     <div class="col-lg-1">
                                         <div class="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript:;">
+                                                <a href="javascript;">
                                                     <i class="fas fa-angle-double-right"></i>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="javascript:;">
+                                                <a href="javascript;">
                                                     <i class="fas fa-arrows-alt"></i>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="javascript:;" class="icDelete">
+                                                <a href="javascript;" class="icDelete">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
@@ -116,32 +131,32 @@ const Manufacturer=(props)=> {
                                             <div class="card-body cardBg">
                                             <ul class="list-unstyled">
                                                    <li class="active">
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Broadleaf Evergrens</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Bulbs</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Evergreens</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Frems</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Fruits</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="">
+                                                        <a href="javascript;" class="">
                                                             <span>Grasses</span>
                                                         </a>
                                                    </li>
