@@ -1,8 +1,9 @@
-import React,  { useState } from 'react' ;
+import React,  { useState , useEffect} from 'react' ;
 //import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table} from 'reactstrap'
 import {connect} from "react-redux";
 // import ReactPaginate from 'react-paginate'
 import ActionModal from '../Modal/ActionModal'
+//import { useTable, usePagination } from 'react-table'
 import {
     //plant actions
     createPlantAction ,
@@ -17,6 +18,8 @@ import {
     
 
 }from "../../actions/plantManagerAction";
+
+import {dPageNumberList} from '../../reducers/listOfNumbers'
 import TablePagination from '../Pagination';
 import './index.css';
 
@@ -25,6 +28,10 @@ const PlantTable=(props)=> {
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
+
+    const [plantPageNum, setPlantPageNum]=useState([])
+
+    const [pageSize, setPageSize] =useState(15)
     const cancel = ()=>{
         setOpen(false)
         setId(0)
@@ -45,39 +52,120 @@ const PlantTable=(props)=> {
         setType("")
         setMessage("")
     }
-    // const confirmAction = (id,type)=>{
-    //     if(type=="delete"){
-    //         setType(type)
-    //         setMessage("Are you sure you want to delete this product and its related SKUs?")
 
-    //     }else{
-    //         setType(type)
-    //         setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
-
-    //     }
-    //     setOpen(true)
-    //     setId(id)
-    // }
     
     const paginationChange =(event, page)=>{
         props.setPlantPageNumber(page-1)
     }
 
+
+
+    var displayDropDownList=(()=>{
+        let arr=[]
+        for(let i=plantPageNum;i<=totalLength;i++){
+          if(i%plantPageNum === 0){
+       arr.push(i)
+          }
+        }
+        setPlantPageNum(arr)
+        console.log("arra", arr)
+    }, []);
+
+    console.log("displayDropDownList",displayDropDownList)
+    
+    // var displayDropDownList =()=>{
+    //     let arr=[]
+    //             for(let i=plantPageNum;i<=totalLength;i++){
+    //               if(i%plantPageNum === 0){
+    //            arr.push(i)
+    //               }
+    //             }
+    //             setPlantPageNum(arr)
+    // }
+
+    // function displayDropDownList(props){
+              
+    //     let arr=[]
+    //             for(let i=plantPageNum;i<=totalLength;i++){
+    //               if(i%plantPageNum === 0){
+    //            arr.push(i)
+    //               }
+    //             }
+    //             setPlantPageNum(arr)
+    
+    // }
+
+
     const {plantData,plantPageNumber} = props.plantData
-    const plantPerPage = 5;
+    const totalLength = plantData.length
+    const plantPerPage = pageSize;
     const pagesVisited = plantPageNumber*5;
     const displayPlantList = plantData.slice(pagesVisited,pagesVisited+plantPerPage)
     const pageCount = Math.ceil(plantData.length/plantPerPage)
-    console.log(plantPageNumber)
+    console.log("plantData.length",plantData.length)
+    console.log("pageCountpageCount", pageCount)
     const {plantCategoryData} =  props.categoryData
+
+   const abcd = props.dPageNumberList
+   console.log("abcd", abcd)
+
     return (
+
         <div>
-              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
-              <div className="pagination_area">
-            <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
+            {/* <div>
+            <div >
+                   
+                        <select className="form-control2"
+                            value={pageSize}
+                            onChange={e => {
+                                setPageSize(Number(e.target.value))
+                            }}
+                            >
+                            {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                <option key={pageSize} value={pageSize}>
+                                {pageSize} 
+                                </option>
+                            ))}
+                        </select>
+                </div>
             </div>
-            <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  ((( plantPageNumber+1)*5)>plantCategoryData.length ?plantCategoryData.length:(( plantPageNumber+1)*5))  + "  of   "  +   plantCategoryData.length }</label>
-           
+             <div className="pagination_area">
+             <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
+            </div> */}
+            
+              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
+
+
+              <div className="row_1">
+
+                    <div>
+                    <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  pageSize + "  of   "  +   plantCategoryData.length }</label>
+                    </div>
+                                <div >
+                                <label className="greenText">Show</label>
+                                <select
+                                        value={pageSize}
+                                        onChange={e => {
+                                            setPageSize(Number(e.target.value))
+                                        }}
+                                        >
+                                        {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                            <option key={pageSize} value={pageSize}>
+                                            {pageSize} 
+                                            </option>
+                                        ))}
+                                    </select>
+                                </div>
+
+
+
+                    <div >
+                    <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
+                    </div>
+                </div>
+             
+            {/* <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  ((( plantPageNumber+1)*5)>plantCategoryData.length ?plantCategoryData.length:(( plantPageNumber+1)*5))  + "  of   "  +   plantCategoryData.length }</label> */}
+            {/* <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  pageSize + "  of   "  +   plantCategoryData.length }</label> */}
                             <div className="form-group row mt-3">
                                 <div className="col-md-12">
                                     <table id="plantDetails" className="table table-striped w-100">
@@ -158,6 +246,7 @@ const PlantTable=(props)=> {
 const mapStateToProps = (state)=> ({
     plantData:state.plantData,
     categoryData: state.categoryData
+
 })
 export default connect(mapStateToProps,{  //plant actions
     createPlantAction ,
@@ -166,6 +255,7 @@ export default connect(mapStateToProps,{  //plant actions
      getAllPlantAction,
      getSpecifiedPlantAction,
      duplicatePlant,
-     setPlantPageNumber
+     setPlantPageNumber,
+     dPageNumberList,
     
     })(PlantTable)

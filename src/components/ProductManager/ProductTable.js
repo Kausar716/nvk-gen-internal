@@ -31,7 +31,7 @@ const ProductTable  = (props) => {
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
-
+    const [pageSize, setPageSize] =useState(15)
 
     const paginationChange =(event, page)=>{
         props.setPageNumber(page-1)
@@ -71,7 +71,7 @@ const ProductTable  = (props) => {
 //    }
    
    
-    const productPerPage = 5;
+    const productPerPage = pageSize;
     const pagesVisited = pageNumber*5;
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
@@ -82,10 +82,36 @@ const ProductTable  = (props) => {
     return (
         <>
          <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
-         <div className="pagination_area">
-         <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+         <div className="row_1">
+
+                            <div>
+                            <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " + pageSize  + "  of   "  +   productData.length }</label>
+                            </div>
+                    <div >
+                        <label className="greenText">Show</label>
+                                    <select 
+                                        value={pageSize}
+                                        onChange={e => {
+                                            setPageSize(Number(e.target.value))
+                                        }}
+                                        >
+                                        {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                            <option key={pageSize} value={pageSize}>
+                                             {pageSize}
+                                            </option>
+                                        ))}
+                                    </select>
+                            </div>
+
+                
+                          
+                <div >
+                    <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+                </div>
          </div>
-         <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " +  ((( pageNumber+1)*5)>productData.length ?productData.length:(( pageNumber+1)*5))  + "  of   "  +   productData.length }</label>
+                
+         {/* <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " +  ((( pageNumber+1)*5)>productData.length ?productData.length:(( pageNumber+1)*5))  + "  of   "  +   productData.length }</label> */}
+         {/* <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " + pageSize  + "  of   "  +   productData.length }</label> */}
                       <div className="form-group row mt-3">
                                 <div className="col-md-12">
                                     <table id="plantDetails" className="table table-striped w-100">

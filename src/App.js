@@ -16,10 +16,12 @@ import ProductManager from "./components/ProductManager/Index";
 import ProductSettings from './components/ProductSettings/index'
 import {createBrowserHistory} from 'history';
 import {checkLogin} from "./actions/authAction";
-import SignIn from './components/SignIn/index'
+import SignIn from './components/SignIn/SignInPage'
+
 //import Sidebar from "./components/Sidebar";
 import CommingSoon from './components/commingSoon'
 import PlantSettings from './components/PlantSettings/PlantSettings';
+import ForgotPassword from "./components/SignIn/ForgotPassword";
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -38,6 +40,10 @@ function App(props) {
     <Route path="/" exact>
                     <SignIn />
                   </Route>
+
+    <Route exact path="/forgot" >
+                    <ForgotPassword />
+    </Route>
             
     {/* {authKey.loggedIn ? <> */}
       <div id="page-container" className="fade page-sidebar-fixed page-header-fixed">
