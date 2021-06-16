@@ -14,6 +14,7 @@ import supplierManagementReducer from './supplierManagementReducer'
 import  attributesReducer from './attributesReducer'
 import contactsSuppliers from './supplierContactReducer';
 import AddressManagementReducerSM from './contactManagementReducerSM';
+import dlistOfNumberReducer from './listOfNumbers';
 
 
 
@@ -28,5 +29,6 @@ export default combineReducers({
     contactsData:contactsSuppliers,
     addressSM: AddressManagementReducerSM,
     attributeData:attributesReducer,
+    dlistOfNumber:dlistOfNumberReducer,
     
 })
