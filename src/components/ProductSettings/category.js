@@ -1,5 +1,5 @@
-import React,  { useState } from 'react' ;
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import React, {useState} from 'react' ;
+// import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 
 
@@ -11,6 +11,28 @@ import 'react-tabs/style/react-tabs.css';
 
 
 const Category=(props)=> {
+    const [category,setCategory] = useState("")
+    const [subCategory,setSubCategory] = useState("")
+
+    const handleCategory = (e) => {
+        setCategory(e.target.value)
+    }
+    const handleSubCategory = (e) => {
+        setSubCategory(e.target.value)
+    }
+
+    const handleAddCategory = (e) => {
+        e.preventDefault()
+        console.log(category)
+      
+    }
+    const handleAddSubCategory = (e) => {
+        e.preventDefault()
+        console.log(subCategory)
+      
+    }
+
+
     return(
         <>       
          <div class="bg-white">
@@ -21,10 +43,10 @@ const Category=(props)=> {
                                     <div class="col-md-6">
                                         <p>Main Category Name</p>
                                         <div>
-                                            <input type="text" class="form-control" placeholder=""/>
+                                            <input type="text" class="form-control" placeholder=""  onChange={handleCategory}/>
                                         </div>
-                                        <div class="d-flex justify-content-md-end mt-2">
-                                            <a href="javascript:;" class="d-flex align-items-center">
+                                        <div class="d-flex justify-content-md-end mt-2" onClick={handleAddCategory}>
+                                            <a href="javascript;" class="d-flex align-items-center">
                                                 <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                             </a>
                                         </div>
@@ -32,10 +54,10 @@ const Category=(props)=> {
                                     <div class="col-md-6">
                                         <p>Sub-category Name</p>
                                         <div>
-                                            <input type="text" class="form-control" placeholder=""/>
+                                            <input type="text" class="form-control" placeholder="" onChange={handleSubCategory}/>
                                         </div>
-                                        <div class="d-flex justify-content-md-end mt-2">
-                                            <a href="javascript:;" class="d-flex align-items-center">
+                                        <div class="d-flex justify-content-md-end mt-2" onClick={handleAddSubCategory} >
+                                            <a href="javascript;" class="d-flex align-items-center">
                                                 <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Sub-category
                                             </a>
                                         </div>
@@ -50,19 +72,19 @@ const Category=(props)=> {
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
                                                    <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                        <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                             <span>Attracts Birds 01</span>
                                                             <i class="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                        <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                             <span>Attracts Birds 02</span>
                                                             <i class="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                        <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                             <span>Attracts Birds 03</span>
                                                             <i class="fa fa-th"></i>
                                                         </a>
@@ -74,17 +96,17 @@ const Category=(props)=> {
                                     <div class="col-lg-1">
                                         <div class="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript:;">
+                                                <a href="javascript;">
                                                     <i class="fas fa-angle-double-right"></i>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="javascript:;">
+                                                <a href="javascript;">
                                                     <i class="fas fa-arrows-alt"></i>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="javascript:;" class="icDelete">
+                                                <a href="javascript;" class="icDelete">
                                                     <i class="fas fa-trash"></i>
                                                 </a>
                                             </div>
@@ -98,19 +120,19 @@ const Category=(props)=> {
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
                                                    <li class="hasChild">
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                        <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                             <span>Attracts Birds 01</span>
                                                             <i class="fa fa-th"></i>
                                                         </a>
                                                         <ul class="list-unstyled childUl">
                                                             <li>
-                                                                <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                                <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                                     <span>Attracts Birds 01</span>
                                                                     <i class="fa fa-th"></i>
                                                                 </a>
                                                             </li>
                                                             <li>
-                                                                <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                                <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                                     <span>Attracts Birds 01</span>
                                                                     <i class="fa fa-th"></i>
                                                                 </a>
@@ -118,13 +140,13 @@ const Category=(props)=> {
                                                         </ul>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                        <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                             <span>Attracts Birds 02</span>
                                                             <i class="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:;" class="d-flex justify-content-between align-items-center">
+                                                        <a href="javascript;" class="d-flex justify-content-between align-items-center">
                                                             <span>Attracts Birds 03</span>
                                                             <i class="fa fa-th"></i>
                                                         </a>
