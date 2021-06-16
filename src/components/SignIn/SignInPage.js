@@ -84,6 +84,7 @@ const validate = values => {
   )
 
     const successFullLogin=()=>{
+        //setRenderPage(false)
         // alert("Login Success full")
     }
 
@@ -92,6 +93,7 @@ const validate = values => {
 const SignInPage = (props) => {
 
   //const { handleSubmit, pristine, reset, submitting } = props;
+  //const [renderPage , setRenderPage] = useState()
   const { error, handleSubmit, pristine, reset, submitting } = props
 
   return (
@@ -157,8 +159,7 @@ const SignInPage = (props) => {
                     
                    
                     <Link to="/Dashboard">
-                    <Button className="loginbutton" type="submit" onClick={successFullLogin} disabled={submitting} style={{backgroundColor:"#d07510",border:"1px solid white",marginLeft:22,position:"relative",paddingRight:25, borderBottom:"4px solid #ad4902"}} ><span >SIGN IN</span> <span class='bx bxs-right-arrow-circle' style={{fontSize:"15px",verticalAlign:"middle",position:"absolute",top:11,left:75}}></span></Button>
-
+                    <Button className="loginbutton" type="submit" onClick={successFullLogin} disabled={pristine || submitting}  style={{backgroundColor:"#d07510",border:"1px solid white",marginLeft:22,position:"relative",paddingRight:25, borderBottom:"4px solid #ad4902"}} ><span >SIGN IN</span> <span class='bx bxs-right-arrow-circle' style={{fontSize:"15px",verticalAlign:"middle",position:"absolute",top:11,left:75}}></span></Button>
                     </Link>
                     </Label>
                 </FormGroup>

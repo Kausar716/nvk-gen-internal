@@ -41,7 +41,10 @@ const validate = values => {
     return warnings
   }
   
-
+  const onSubmit = (values) =>{
+    console.log(values);
+  }
+  
   const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
     <div>
       {/* <label>{label}</label> */}
@@ -81,7 +84,7 @@ const ForgotPassword = (props) => {
                     <a href="#" ><img src={process.env.PUBLIC_URL + "/images/signin.png"} alt="no iamge" id="logo" style={{display: "block",marginLeft:"34.8%", marginRight:"auto",marginTop:10,width:"28%",height:"25%"}}/></a>
                     <div className="signin">
            
-             <form className="signin_form" onSubmit={handleSubmit(submit)} >
+             <form className="signin_form" >
              <p style={{color:"#787d82",fontWeight:"bold",padding:0,margin:0}}>Returning User</p>
                  <p style={{color:"#787d82",fontSize:12}}>Please enter your email id</p>
                  <hr style={{borderTop:"1px dotted #787d82"}}></hr>
@@ -108,7 +111,7 @@ const ForgotPassword = (props) => {
                 <FormGroup >
                     <Label>
                     <Link to="/" > 
-                      <Button className="loginbutton" type="submit" onClick={successFullLogin} disabled={submitting} style={{backgroundColor:"#d07510",border:"1px solid white",marginLeft:22,position:"relative",paddingRight:25, borderBottom:"4px solid #ad4902"}} ><span >ENTER</span> <span class='bx bxs-right-arrow-circle' style={{fontSize:"15px",verticalAlign:"middle",position:"absolute",top:11,left:75}}></span></Button>
+                      <Button className="loginbutton" type="submit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  style={{backgroundColor:"#d07510",border:"1px solid white",marginLeft:22,position:"relative",paddingRight:25, borderBottom:"4px solid #ad4902"}} ><span >Click Here</span> <span class='bx bxs-right-arrow-circle' style={{fontSize:"15px",verticalAlign:"middle",position:"absolute",top:11,left:75}}></span></Button>
                     </Link>
                     </Label>
                 </FormGroup>
