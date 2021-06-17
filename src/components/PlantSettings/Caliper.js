@@ -1,6 +1,33 @@
 import React from 'react'
+import { Field, reduxForm } from 'redux-form';
+import { Collapse, Button, CardBody, Card , Row, Col,Form, FormGroup, Input, Label} from 'reactstrap';
 
-function Caliper() {
+
+
+const required = value => value ? undefined : 'Required'
+const maxLength = max => value =>
+  value && value.length > max ? `Must be ${max} characters or less` : undefined
+const maxLength15 = maxLength(15)
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
+const minValue = min => value =>
+  value && value < min ? `Must be at least ${min}` : undefined
+const minValue2 = minValue(2)
+
+
+const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+  <div>
+    {/* <label>{label}</label> */}
+    <div>
+      <input {...input}  className="form-control" placeholder={label}  type={type}/>
+      <Row>
+      {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
+      </Row>
+      
+    </div>
+  </div>
+)
+
+const  Caliper=()=> {
     return (
         <>
             <div className="bg-white">
@@ -8,7 +35,7 @@ function Caliper() {
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
                                 <div className="row">
-                                        <div className="col-md-6">
+                                        <div className="col-md-4">
                                             <p>Caliper Name</p>
                                             <div>
                                                 <input type="text" className="form-control" placeholder=""/>
@@ -19,23 +46,29 @@ function Caliper() {
                                                 </a> */}
                                             </div>
                                         </div>
-                                        <div className="col-md-6">
+
+                                        <div className="col-md-4">
                                             <p>Imperial<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                <input type="text" className="form-control" placeholder=""/>
+                                                {/* <input type="text" className="form-control" placeholder=""/> */}
+                                                <Field
+                                                        name="Imperial"
+                                                        component={renderField}
+                                                        type="text"
+                                                        validate={[ required]}
+                                                    />
                                             </div>
-                                            {/* <div className="d-flex justify-content-md-end mt-2">
-                                                <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Form
-                                                </a>
-                                            </div> */}
                                         </div>
-                                    </div>
-                                    <div className="row">
-                                        <div className="col-md-6" style={{marginTop:"0.5em"}}>
+                                        <div className="col-md-4">
                                             <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                <input type="text" className="form-control" placeholder=""/>
+                                                {/* <input type="text" className="form-control" placeholder=""/> */}
+                                                <Field
+                                                        name="SKUValueCaliper"
+                                                        component={renderField}
+                                                        type="text"
+                                                        validate={[ required ]}
+                                                    />
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 <a href="javascript;" className="d-flex align-items-center">
@@ -43,18 +76,8 @@ function Caliper() {
                                                 </a>
                                             </div>
                                         </div>
-                                        {/* <div className="col-md-6">
-                                            <p>Imperial<span style={{color:"red"}}>*</span></p>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder=""/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Form
-                                                </a>
-                                            </div>
-                                        </div> */}
                                     </div>
+                                   
                                 <div className="row mt-5 mb-4">
                                     <div className="col">
                                         <div className="card zoneCard">
@@ -179,4 +202,6 @@ function Caliper() {
     )
 }
 
-export default Caliper
+export default reduxForm({
+    form: 'Caliper',
+  })(Caliper);

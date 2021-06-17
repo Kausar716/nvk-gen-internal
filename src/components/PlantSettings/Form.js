@@ -1,6 +1,35 @@
 import React from 'react'
+import { Field, reduxForm } from 'redux-form';
+import { Collapse, Button, CardBody, Card , Row, Col,Form, FormGroup, Input, Label} from 'reactstrap';
 
-export default function Form() {
+
+
+const required = value => value ? undefined : 'Required'
+const maxLength = max => value =>
+  value && value.length > max ? `Must be ${max} characters or less` : undefined
+const maxLength15 = maxLength(15)
+const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
+const minValue = min => value =>
+  value && value < min ? `Must be at least ${min}` : undefined
+const minValue2 = minValue(2)
+
+
+const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+  <div>
+    {/* <label>{label}</label> */}
+    <div>
+      <input {...input}  className="form-control" placeholder={label}  type={type}/>
+      <Row>
+      {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
+      </Row>
+      
+    </div>
+  </div>
+)
+
+
+
+ const  PlantSettingForm=()=> {
     return (
         <>
             <div className="bg-white">
@@ -22,7 +51,15 @@ export default function Form() {
                                     <div className="col-md-6">
                                         <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                         <div>
-                                            <input type="text" className="form-control" placeholder=""/>
+
+                                            {/* <input type="text" className="form-control" placeholder=""/> */}
+
+                                            <Field
+                                            name="SKUValue"
+                                            component={renderField}
+                                            type="text"
+                                            validate={[ required]}
+                                        />
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2">
                                             <a href="javascript;" className="d-flex align-items-center">
@@ -154,3 +191,8 @@ export default function Form() {
         </>
     )
 }
+
+
+export default reduxForm({
+    form: 'PlantSettingForm',
+  })(PlantSettingForm);
