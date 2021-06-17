@@ -149,7 +149,7 @@ export default function Left() {
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("AdminSetting1")}}><Link to="/comingsoon">Organization</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/comingsoon">User Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/comingsoon">Customer Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/comingsoon">Supplier Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting5")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting5")}}><Link to="/comingsoon">Tags & Labels</Link></li>
