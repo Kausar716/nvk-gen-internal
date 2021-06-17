@@ -111,10 +111,10 @@ export default function Left() {
                   handleSubSelection("inventory3")}}><Link to="/commingsoon">Task Queue</Link></li>
                 <li class= {(selectedSubBar === "inventory4")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory4")}}><Link to="/commingsoon">Plant Manager</Link></li>
+                  handleSubSelection("inventory4")}}><Link to="/plantManager">Plant Manager</Link></li>
                 <li class= {(selectedSubBar === "inventory5")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory5")}}><Link to="/commingsoon">Product Manager</Link></li>
+                  handleSubSelection("inventory5")}}><Link to="/productManager">Product Manager</Link></li>
                 <li class= {(selectedSubBar === "inventory6")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("inventory6")}}><Link to="/plantSettings">Plant Settings</Link></li>
@@ -149,7 +149,7 @@ export default function Left() {
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("AdminSetting1")}}><Link to="/commingsoon">Organization</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/commingsoon">User Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/commingsoon">Customer Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/commingsoon">Supplier Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting5")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting5")}}><Link to="/commingsoon">Tags & Labels</Link></li>

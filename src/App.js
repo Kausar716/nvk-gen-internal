@@ -22,6 +22,9 @@ import SignIn from './components/SignIn/SignInPage'
 import CommingSoon from './components/commingSoon'
 import PlantSettings from './components/PlantSettings/PlantSettings';
 import ForgotPassword from "./components/SignIn/ForgotPassword";
+import RegisterNewUser from "./components/SignIn/RegisterNewUser";
+import UserSettings from "./components/UserSettings/UserSettings";
+import SubmitValidationForm from "./components/Testings/SubmitValidationForm";
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -43,6 +46,10 @@ function App(props) {
 
     <Route exact path="/forgot" >
                     <ForgotPassword />
+    </Route>
+
+    <Route exact path="/registerNewUser" >
+                    <RegisterNewUser />
     </Route>
             
     {/* {authKey.loggedIn ? <> */}
@@ -83,6 +90,20 @@ function App(props) {
                   <Left />
                     <ProductManager/>
                   </Route>
+
+
+                  <Route path="/userSetting">
+                  <Nav />
+                  <Left />
+                    <UserSettings/>
+                  </Route>
+
+                  <Route path="/testings">
+                  <Nav />
+                  <Left />
+                    <SubmitValidationForm/>
+                  </Route>
+
 
                   <Route path="/commingsoon">
                   <Nav />
