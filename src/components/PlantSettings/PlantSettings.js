@@ -19,7 +19,8 @@ export class PlantSettings extends Component {
     return (
         <div>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
-				<h1 className="page-header mb-0">Plant Settings</h1>
+            <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>		<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Settings</h1></div> 
+			
 				<div className="">
 					<a href="javascript:;">
 						<img src="assets/img/add.svg" alt=""/>

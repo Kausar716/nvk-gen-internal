@@ -65,7 +65,7 @@ const  Packaging=()=> {
                                         </div>
                                     </div>
                           
-                                <div className="row mt-5 mb-4">
+                                    <div className="row mt-5 mb-4">
                                     <div className="col">
                                         <div className="card zoneCard">
                                             <div className="card-header">
@@ -126,17 +126,20 @@ const  Packaging=()=> {
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                                 <a href="javascript;">
-                                                    <i className="fas fa-angle-double-right"></i>
+                                                    {/* <i className="fas fa-angle-double-right"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
-                                                    <i className="fas fa-arrows-alt"></i>
+                                                    {/* <i className="fas fa-arrows-alt"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;" className="icDelete">
-                                                    <i className="fas fa-trash"></i>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                    {/* <i className="fas fa-trash"></i> */}
                                                 </a>
                                             </div>
                                         </div>

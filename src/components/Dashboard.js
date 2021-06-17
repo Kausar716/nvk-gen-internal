@@ -63,7 +63,7 @@ export class Dashboard extends Component {
                 </div>
                 <div class="col-md-6 col-lg-4">
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
-                        <h3 class="text-center">Settings</h3>
+                        <h3 class="text-center">Tools & Settings</h3>
                         <div class="text-center my-4">
                             <img src="./assets/img/settings-lg.svg" alt="Settings"/>
                         </div>
