@@ -1,4 +1,4 @@
-import {} from './types';
+import {GET_PATH,UPDATE_PATH} from './types';
 
 
 
@@ -7,3 +7,22 @@ import {} from './types';
 //         type : GET_MENU_ITEMS
 //     }
 // }
+
+export const getMenuItems = () => dispatch => {
+
+        dispatch({
+                type:GET_PATH,
+                payload:"Dashboard"    
+            })
+        
+
+}
+export const updateMenuItems = (path) => dispatch => {
+
+    dispatch({
+            type:UPDATE_PATH,
+            payload:path    
+        })
+    
+
+}
