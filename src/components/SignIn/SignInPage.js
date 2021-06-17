@@ -85,6 +85,8 @@ const SignInPage = (props) => {
   //const [renderPage , setRenderPage] = useState()
   const { error, handleSubmit, pristine, reset, submitting } = props
 
+
+  console.log("error", error);
   const successFullLogin=()=>{
        
 
