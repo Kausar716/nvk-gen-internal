@@ -17,9 +17,10 @@ import ProductSettings from './components/ProductSettings/index'
 import {createBrowserHistory} from 'history';
 import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/SignInPage'
+import UserManagement from './components/userManagement/index'
 
 //import Sidebar from "./components/Sidebar";
-import CommingSoon from './components/commingSoon'
+import ComingSoon from './components/commingSoon'
 import PlantSettings from './components/PlantSettings/PlantSettings';
 import ForgotPassword from "./components/SignIn/ForgotPassword";
 export const history = createBrowserHistory({forceRefresh: true})
@@ -76,6 +77,11 @@ function App(props) {
                   <Left />
                     <ProductSettings/>
                   </Route>
+                  <Route path="/usermanagement">
+                  <Nav />
+                  <Left />
+                    <UserManagement/>
+                  </Route>
 
                   
                   <Route path="/productManager">
@@ -84,10 +90,10 @@ function App(props) {
                     <ProductManager/>
                   </Route>
 
-                  <Route path="/commingsoon">
+                  <Route path="/comingsoon">
                   <Nav />
                   <Left />
-                <CommingSoon/>
+                <ComingSoon/>
               </Route>
 
                 </Switch>

@@ -52,32 +52,32 @@ export default function Left() {
                 <ul class="sub-menu">
                 <li class= {(selectedSubBar === "orderList1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList1")}}><Link to="/commingsoon">Order List</Link></li>
+                  handleSubSelection("orderList1")}}><Link to="/comingsoon">Order List</Link></li>
                 <li class= {(selectedSubBar === "orderList2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList2")}}><Link to="/commingsoon">New Order</Link></li>
+                  handleSubSelection("orderList2")}}><Link to="/comingsoon">New Order</Link></li>
                 <li class= {(selectedSubBar === "orderList3")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList3")}}><Link to="/commingsoon">Quick Pick</Link></li>
+                  handleSubSelection("orderList3")}}><Link to="/comingsoon">Quick Pick</Link></li>
                 <li class= {(selectedSubBar === "orderList4")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList4")}}><Link to="/commingsoon">Reserve</Link></li>
+                  handleSubSelection("orderList4")}}><Link to="/comingsoon">Reserve</Link></li>
                 <li class= {(selectedSubBar === "orderList5")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList5")}}><Link to="/commingsoon">Invoices & Adjustments</Link></li>
+                  handleSubSelection("orderList5")}}><Link to="/comingsoon">Invoices & Adjustments</Link></li>
                 <li class= {(selectedSubBar === "orderList6")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList6")}}><Link to="/commingsoon">Requests</Link></li>
+                  handleSubSelection("orderList6")}}><Link to="/comingsoon">Requests</Link></li>
                 <li class= {(selectedSubBar === "orderList7")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList7")}}><Link to="/commingsoon">Quote List</Link></li>
+                  handleSubSelection("orderList7")}}><Link to="/comingsoon">Quote List</Link></li>
                 <li class= {(selectedSubBar === "orderList8")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList8")}}><Link to="/commingsoon">New Quote</Link></li>
+                  handleSubSelection("orderList8")}}><Link to="/comingsoon">New Quote</Link></li>
               </ul>          
             </li>
             <li class={selectedMainBar === "purchaseOrder"?"has-sub active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/purchase-orders.svg" alt=""/>
                 <span>Purchase Orders</span>
@@ -85,10 +85,10 @@ export default function Left() {
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "purchaseOrder1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("purchaseOrder1")}}><Link to="/commingsoon">P.O.List</Link></li>
+                  handleSubSelection("purchaseOrder1")}}><Link to="/comingsoon">P.O.List</Link></li>
                 <li class= {(selectedSubBar === "purchaseOrder2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("purchaseOrder2")}}><Link to="/commingsoon">New P.O</Link></li>
+                  handleSubSelection("purchaseOrder2")}}><Link to="/comingsoon">New P.O</Link></li>
               </ul>  
             </li>
             <li  
@@ -102,13 +102,13 @@ export default function Left() {
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "inventory1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory1")}}><Link to="/commingsoon">Inventory Lists</Link></li>
+                  handleSubSelection("inventory1")}}><Link to="/comingsoon">Inventory Lists</Link></li>
                 <li class= {(selectedSubBar === "inventory2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory2")}}><Link to="/commingsoon">Master Inventory</Link></li>
+                  handleSubSelection("inventory2")}}><Link to="/comingsoon">Master Inventory</Link></li>
                 <li class= {(selectedSubBar === "inventory3")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory3")}}><Link to="/commingsoon">Task Queue</Link></li>
+                  handleSubSelection("inventory3")}}><Link to="/comingsoon">Task Queue</Link></li>
                 <li class= {(selectedSubBar === "inventory4")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("inventory4")}}><Link to="/plantManager">Plant Manager</Link></li>
@@ -123,24 +123,24 @@ export default function Left() {
                   handleSubSelection("inventory7")}}><Link to="/productsettings">Product Settings</Link></li>
                 <li class= {(selectedSubBar === "inventory8")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory8")}}><Link to="/commingsoon">Inventory Settings</Link></li>
+                  handleSubSelection("inventory8")}}><Link to="/comingsoon">Inventory Settings</Link></li>
               </ul>
             </li>
             <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>
             {/* activeClassName="active" */}
-            <Link to="/commingsoon">
+            <Link to="/comingsoon">
                 <img src="assets/img/customermanagement.svg" alt=""/>
                 <span>Customer Management</span>
               </Link>
             </li>
             <li class={selectedMainBar === "SupplierManagement"?"active":""} onClick={()=>{handleMainSelection("SupplierManagement")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
                 <img src="assets/img/supplier.svg" alt=""/>
                 <span>Supplier Management</span>
               </Link>
             </li>
             <li class={selectedMainBar === "ToolsAndSettings"?"has-sub active":""} onClick={()=>{handleMainSelection("ToolsAndSettings")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/settings.svg" alt=""/>
                 <span>Tools &amp; Settings</span>
@@ -148,41 +148,41 @@ export default function Left() {
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("AdminSetting1")}}><Link to="/commingsoon">Organization</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/commingsoon">User Settings</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/commingsoon">Customer Settings</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/commingsoon">Supplier Settings</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting5")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting5")}}><Link to="/commingsoon">Tags & Labels</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting6")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting6")}}><Link to="/commingsoon">Image Management</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting7")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting7")}}><Link to="/commingsoon">User Management</Link></li>
+                  handleSubSelection("AdminSetting1")}}><Link to="/comingsoon">Organization</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/comingsoon">User Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/comingsoon">Customer Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/comingsoon">Supplier Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting5")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting5")}}><Link to="/comingsoon">Tags & Labels</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting6")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting6")}}><Link to="/comingsoon">Image Management</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting7")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting7")}}><Link to="/usermanagement">User Management</Link></li>
               </ul>
             </li>
             <li class={selectedMainBar === "Reports"?"active":""} onClick={()=>{handleMainSelection("Reports")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
                 <img src="assets/img/reports.svg" alt=""/>
                 <span>Reports</span>
               </Link>
             </li>
             <li class={selectedMainBar === "StaffDirectory"?"active":""} onClick={()=>{handleMainSelection("StaffDirectory")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
                 <img src="assets/img/staff.svg" alt=""/>
                 <span>Staff Directory</span>
               </Link>
             </li>
             <li class={selectedMainBar === "MessageCenter"?"has-sub active":""} onClick={()=>{handleMainSelection("MessageCenter")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/message-center.svg" alt=""/>
                 <span>Message Center</span>
               </Link>
               <ul class="sub-menu">
-                <li class= {(selectedSubBar === "messageCentre1"|| initialSelect)?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("messageCentre1")}}><Link to="/commingsoon">Inbox</Link></li>
-                <li class= {(selectedSubBar === "messageCentre2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("messageCentre2")}}><Link to="/commingsoon">Sent Items</Link></li>
-                <li class= {(selectedSubBar === "messageCentre3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("messageCentre3")}}><Link to="/commingsoon">Compose Message</Link></li>
+                <li class= {(selectedSubBar === "messageCentre1"|| initialSelect)?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("messageCentre1")}}><Link to="/comingsoon">Inbox</Link></li>
+                <li class= {(selectedSubBar === "messageCentre2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("messageCentre2")}}><Link to="/comingsoon">Sent Items</Link></li>
+                <li class= {(selectedSubBar === "messageCentre3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("messageCentre3")}}><Link to="/comingsoon">Compose Message</Link></li>
               </ul>
             </li>
             <li class={selectedMainBar === "MapLocator"?"active":""} onClick={()=>{handleMainSelection("MapLocator")}}>
-              <Link to="/commingsoon">
+              <Link to="/comingsoon">
                 <img src="assets/img/location.svg" alt=""/>
                 <span>Map Locator</span>
               </Link>
