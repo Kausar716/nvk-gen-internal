@@ -141,7 +141,7 @@ const  PlantManager=(props)=> {
              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
            <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>	<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Manager</h1></div> 
-				<div className="">
+				{/* <div className="">
 
 					<Link to="/addPlant">
                     <img src="assets/img/add.svg" alt=""/>
@@ -154,6 +154,28 @@ const  PlantManager=(props)=> {
 					<a href="javascript:;" className="ml-2">
 						<img src="assets/img/print.svg" alt=""/>
 					</a>
+				</div> */}
+                	<div class="topbarCtrls mt-3 mt-md-0">
+                    {/* <a href="#" class="btn active"> */}
+                        <Link to="/addPlant" class="btn active">
+                        <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/plant-ic-btn.svg" alt=""/>
+                            <span class="ml-2"><b>Add Plant</b></span>
+                        </span>
+                        </Link>
+                    {/* </a> */}
+                    <a href="#" class="btn ml-2">
+                        <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/search-ic-btn.svg" alt=""/>
+                            <span class="ml-2"><b>Preview</b></span>
+                        </span>
+                    </a>
+                    <a href="#" class="btn ml-2 mt-3 mt-md-0">
+                        <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/print-ic-btn.svg" alt=""/>
+                            <span class="ml-2"><b>Print</b></span>
+                        </span>
+                    </a>
 				</div>
 			</div>
 			<div className="contentWrapper">

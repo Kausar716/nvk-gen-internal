@@ -147,7 +147,7 @@ export class CreateUserProfile extends Component {
                                         </div>
                                     </div> */}
                                     <div class="row mt-3">
-                                        {/* <div class="col-md-4 col-lg-3">
+                                        <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-4 py-4">
                                                 <div class="profImg">
                                                     <img src="assets/img/profile-img.png" />
@@ -165,12 +165,12 @@ export class CreateUserProfile extends Component {
                                                     </span>
                                                     <img src="assets/img/bin-ic-red.svg" alt=""/>
                                                 </a>
-                                                <div class="text-left mt-2">
+                                                {/* <div class="text-left mt-2">
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
-                                                </div>
+                                                </div> */}
                                             </div>
-                                        </div> */}
+                                        </div>
                                         <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                             <div class="row form-group">
                                                 <div class="col-md-6">
@@ -219,34 +219,34 @@ export class CreateUserProfile extends Component {
                                                             </li>
                                                             <li class="active">
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm B <span>1105 HWY5, Dundas, CN</span></label>
+                                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"/>
+                                                                    <label class="custom-control-label pl-2" for="customCheck2">Farm B <span>1105 HWY5, Dundas, CN</span></label>
                                                                 </div> 
                                                             </li>
                                                             <li>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm C <span>1105 HWY5, Dundas, CN</span></label>
+                                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"/>
+                                                                    <label class="custom-control-label pl-2" for="customCheck3">Farm C <span>1105 HWY5, Dundas, CN</span></label>
                                                                 </div> 
                                                             </li>
                                                             <li>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm D <span>1105 HWY5, Dundas, CN</span></label>
+                                                                    <input type="checkbox" class="custom-control-input" id="customCheck4"/>
+                                                                    <label class="custom-control-label pl-2" for="customCheck4">Farm D <span>1105 HWY5, Dundas, CN</span></label>
                                                                 </div> 
                                                             </li>
                                                             <li>
                                                                 <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label>
+                                                                    <input type="checkbox" class="custom-control-input" id="customCheck5"/>
+                                                                    <label class="custom-control-label pl-2" for="customCheck5">Farm E <span>1105 HWY5, Dundas, CN</span></label>
                                                                 </div> 
                                                             </li>
                                                         </ul>
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                            <label class="custom-control-label pl-2" for="customCheck1">User has access to all locations </label>
+                                                            <input type="checkbox" class="custom-control-input" id="customCheck6"/>
+                                                            <label class="custom-control-label pl-2" for="customCheck6">User has access to all locations </label>
                                                         </div> 
                                                     </div>
                                                 </div>

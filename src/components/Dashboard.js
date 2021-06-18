@@ -82,21 +82,28 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                     </Link>
                 </div>
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("ToolsAndSettings")}}>
-                <Link to="/comingsoon">
+                <Link to="/comingsoon" >
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Tools & Settings</h3>
-                        <div class="text-center my-4">
+                        <div class="text-center my-4 dashIcon">
                             <img src="./assets/img/settings-lg.svg" alt="Settings"/>
+                        </div>
+                        <div class="row">
+                             &nbsp;
                         </div>
                     </div>
                     </Link>
                 </div>
+          
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("Reports")}}>
-                <Link to="/comingsoon">
+                <Link to="/comingsoon" >
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Reports</h3>
-                        <div class="text-center my-4">
-                        <img src="./assets/img/reports-lg.svg" alt="Reports"/>
+                        <div class="text-center my-4 dashIcon">
+                            <img src="./assets/img/reports-lg.svg" alt="Reports"/>
+                        </div>
+                        <div class="row">
+                          &nbsp;
                         </div>
                     </div>
                     </Link>
