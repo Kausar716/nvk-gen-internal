@@ -1,31 +1,66 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React ,{useState} from "react";
+import React ,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
+import {connect} from "react-redux";
+import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
 
 
 
-export default function Left() {
-  const [selectedMainBar,setSelectedMainBar] = useState("Dashboard")
-  const [selectedSubBar , setSelectedSubBar] = useState("")
-  const [initialSelect,setInitialSelect] = useState(true)
- const handleMainSelection= (id) => {
-    console.log(id)
-   console.log(selectedSubBar)
-  if(!selectedSubBar.includes(id))setInitialSelect(true)
-  if(selectedSubBar.includes(id))setInitialSelect(false)
+const Left = (props)=>{
+  // const [selectedMainBar,setSelectedMainBar] = useState("Dashboard")
+  // const [selectedSubBar , setSelectedSubBar] = useState("")
+  // const [initialSelect,setInitialSelect] = useState(true)
+  const useEffect =(() =>{    
+   props.getMenuItems()
+  },[])
+  
+//  const handleMainSelection= (id) => {
+//     console.log(id)
+//    console.log(selectedSubBar)
+//   if(!selectedSubBar.includes(id))setInitialSelect(true)
+//   if(selectedSubBar.includes(id))setInitialSelect(false)
 
-  setSelectedMainBar(id)
- }
+//   setSelectedMainBar(id)
+//  }
+const handleMainSelection= (id) => {
+  let updateObject={}
+  let reduxObject = props.updateObject
+  props.getMenuItems()
+  console.log(props)
+  
+  if(!reduxObject.submenu.includes(id)){
+    updateObject.initialSelect=true
+  }
+  if(reduxObject.submenu.includes(id)){
+    updateObject.initialSelect=false
+  }
+  updateObject.mainMenu=id
+  props.updateMenuItems(updateObject)
+}
+
+ 
+
  const handleSubSelection= (id) => {
+  let updateObject={}
    if( id.includes("1")){
-    setInitialSelect(true)   
+    // setInitialSelect(true)   
+    updateObject.initialSelect=true
    }
    else {
-    setInitialSelect(false)
+    // setInitialSelect(false)
+    updateObject.initialSelect=false
    }
-  setSelectedSubBar(id)
+   updateObject.submenu=id
+  // setSelectedSubBar(id)
+  props.updateMenuItems(updateObject)
  }
+ console.log(props)
+ let reduxObject = props.updateObject
+ let selectedMainBar=reduxObject.mainMenu
+ let initialSelect = reduxObject.initialSelect
+ let selectedSubBar = reduxObject.submenu
+ console.log(reduxObject.mainMenu)
 
   return (
     <div>
@@ -193,4 +228,14 @@ export default function Left() {
       <div class="sidebar-bg"></div>
     </div>
   );
+  
 }
+const mapStateToProps = (state)=> (
+  // console.log(state)
+
+  {
+  updateObject : state.sideMenu
+}
+)
+
+export default connect(mapStateToProps,{getMenuItems,updateMenuItems})(Left)

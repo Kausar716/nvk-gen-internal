@@ -5,17 +5,18 @@ import {UPDATE_PATH,GET_PATH} from '../actions/types';
 
 
 const initialSatate = {
- path:"Dashboard"
+    mainMenu:"Dashboard",
+    submenu:"",
+    initialSelect:true
 }
 
-
-
 const sideReducer =(state=initialSatate, action)=>{
+    console.log(action)
     switch(action.type){
         case GET_PATH:
-            return {...state, path:action.payload}
+            return {...state}
         case UPDATE_PATH:
-             return {...state, path:action.payload}
+             return {...state, ...action.payload}
         default:return state
 
     }
