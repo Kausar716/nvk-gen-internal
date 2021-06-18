@@ -13,7 +13,7 @@ function AddProduct() {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/plant-ic-lg-green.svg" alt=""/> Add Product</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
-                    {/* <a href="#" class="btn active">
+                    <a href="#" class="btn active">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/plant-ic-btn.svg" alt=""/>
                             <span class="ml-2"><b>Add Product</b></span>
@@ -30,7 +30,7 @@ function AddProduct() {
                             <img src="assets/img/print-ic-btn.svg" alt=""/>
                             <span class="ml-2"><b>Print</b></span>
                         </span>
-                    </a> */}
+                    </a>
 				</div>
 			</div>
             <div class="px-md-3 mt-3">

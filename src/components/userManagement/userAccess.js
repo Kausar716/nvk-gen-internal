@@ -82,33 +82,35 @@ export  default class UserAccess extends React.Component{
     handleSelect= (e) => {
         let checkBoxGroup = e.target.id
         let name = e.target.name
+        console.log(e.target.checked)
 
         console.log(checkBoxGroup)
         console.log(name)
         
+        
 
 
-        if(checkBoxGroup === "QuotesPermissionAll" ||checkBoxGroup === "QuotesPermissionNone" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="allPermissionOn"){            
+        if(checkBoxGroup === "QuotesPermissionAll" ||checkBoxGroup === "QuotesPermissionNone" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){            
             this.setState({
-                supervisorRole: name === "selectAll"?true:false,
-                quotes:name === "selectAll"?true:false,
-                openOrder:name === "selectAll"?true:false,
-                actionDeleteOrder:name === "selectAll"?true:false,
-                actionCreateQuotes:name === "selectAll"?true:false,
-                closedAndCancledOrder:name === "selectAll"?true:false,
-                pickingOrder:name === "selectAll"?true:false,
-                readyOrder:name === "selectAll"?true:false,
-                actionReturnToOrder:name === "selectAll"?true:false,
-                reservations:name === "selectAll"?true:false,
-                shippedInvoicesAdjustment:name === "selectAll"?true:false,
-                receiveInvoice:name === "selectAll"?true:false,
-                quickPicks:name === "selectAll"?true:false,
-                actionOveride:name === "selectAll"?true:false,
-                digAndPlantRequest1:name === "selectAll"?true:false,
+                supervisorRole: checkBoxGroup.includes("All")?e.target.checked:false,
+                quotes:checkBoxGroup.includes("All")?e.target.checked:false,
+                openOrder:checkBoxGroup.includes("All")?e.target.checked:false,
+                actionDeleteOrder:checkBoxGroup.includes("All")?e.target.checked:false,
+                actionCreateQuotes:checkBoxGroup.includes("All")?e.target.checked:false,
+                closedAndCancledOrder:checkBoxGroup.includes("All")?e.target.checked:false,
+                pickingOrder:checkBoxGroup.includes("All")?e.target.checked:false,
+                readyOrder:checkBoxGroup.includes("All")?e.target.checked:false,
+                actionReturnToOrder:checkBoxGroup.includes("All")?e.target.checked:false,
+                reservations:checkBoxGroup.includes("All")?e.target.checked:false,
+                shippedInvoicesAdjustment:checkBoxGroup.includes("All")?e.target.checked:false,
+                receiveInvoice:checkBoxGroup.includes("All")?e.target.checked:false,
+                quickPicks:checkBoxGroup.includes("All")?e.target.checked:false,
+                actionOveride:checkBoxGroup.includes("All")?e.target.checked:false,
+                digAndPlantRequest1:checkBoxGroup.includes("All")?e.target.checked:false,
             })
 
         }
-        //  if(checkBoxGroup==="additionalPermission"|| checkBoxGroup==="allPermissionOff" || checkBoxGroup==="allPermissionOn"){
+        //  if(checkBoxGroup==="additionalPermission"|| checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
         //     this.setState({
         //     supervisorRolePurchase: name === "selectAll"?true:false,
         //     createAndModifyDraftPurchase: name === "selectAll"?true:false,
@@ -118,7 +120,7 @@ export  default class UserAccess extends React.Component{
         //     actionClosedOpenOrder: name === "selectAll"?true:false,
         //     })
         // }
-        // if(checkBoxGroup==="purchaseOrderPermission"|| checkBoxGroup==="allPermissionOff" || checkBoxGroup==="allPermissionOn"){
+        // if(checkBoxGroup==="purchaseOrderPermission"|| checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
         //     this.setState({
         //     supervisorRolePurchase: name === "selectAll"?true:false,
         //     createAndModifyDraftPurchase: name === "selectAll"?true:false,
@@ -128,7 +130,7 @@ export  default class UserAccess extends React.Component{
         //     actionClosedOpenOrder: name === "selectAll"?true:false,
         //     })
         // }
-         if(checkBoxGroup === "inventoryManagementPermission" || checkBoxGroup==="allPermissionOff"|| checkBoxGroup==="allPermissionOn"){
+         if(checkBoxGroup === "inventoryManagementPermission" || checkBoxGroup==="allPermissionOff"|| checkBoxGroup==="PermissionOnAll"){
             this.setState({
             supervisorRole: name === "selectAll"?true:false,
             PlantManager: name === "selectAll"?true:false,
@@ -143,7 +145,7 @@ export  default class UserAccess extends React.Component{
             taskQueueModify: name === "selectAll"?true:false,
             })
         }
-         if(checkBoxGroup === "additionalPermissionAll"|| checkBoxGroup === "additionalPermissionNone" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="allPermissionOn"){
+         if(checkBoxGroup === "additionalPermissionAll"|| checkBoxGroup === "additionalPermissionNone" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
             this.setState({
                ToolsAndsettings: name === "selectAll"?true:false,
                TagsAndLabels: name === "selectAll"?true:false,
@@ -327,8 +329,8 @@ export  default class UserAccess extends React.Component{
                             <div class="row">
                                 <div class="col-md-12 d-flex justify-content-md-end">
                                     <div class="custom-control custom-checkbox" >
-                                        <input type="checkbox" class="custom-control-input" id="allPermissionOn" onChange={this.handleSelect} name="selectAll"/>
-                                        <label class="custom-control-label pl-2" for="allPermissionOn"> Turn All Permissions On</label>
+                                        <input type="checkbox" class="custom-control-input" id="PermissionAll" chec onChange={this.handleSelect} name="selectAll"/>
+                                        <label class="custom-control-label pl-2" for="PermissionOnAll"> Turn All Permissions On</label>
                                     </div>
                                     <div class="custom-control custom-checkbox ml-2">
                                         <input type="checkbox" class="custom-control-input" id="allPermissionOff"  onClick={this.handleSelect} name="unSelect"/>
