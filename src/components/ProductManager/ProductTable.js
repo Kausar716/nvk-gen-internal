@@ -25,13 +25,17 @@ import {
 import TablePagination from '../Pagination'
 
 const ProductTable  = (props) => {
-  
+    const [pageSize, setPageSize] =useState(15)
+
+
+   
+    
    
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
-    const [pageSize, setPageSize] =useState(15)
+
 
     const paginationChange =(event, page)=>{
         props.setPageNumber(page-1)
@@ -56,9 +60,22 @@ const ProductTable  = (props) => {
        setType("")
        setMessage("")
    }
+   const confirmAction = (id,type)=>{
+       if(type==="delete"){
+           setType(type)
+           setMessage("Are you sure you want to delete this product and its related SKUs?")
 
+       }else{
+           setType(type)
+           setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+
+       }
+       setOpen(true)
+       setId(id)
+   }
    
-   const {productData,pageNumber} = props.productData
+   const {productData,pageNumber,productDataById} = props.productData
+  // const {productData,pageNumber} = props.productData
     const productPerPage = pageSize;
     const totalLength = productData.length
     const pagesVisited = pageNumber*5;
@@ -153,19 +170,19 @@ const ProductTable  = (props) => {
                                                 </td>
                                                 <td className="text-center">
                                                     <span>
-                                                        <a href="javascript;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
+                                                       
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>props.getSpecifiedProductAction(product.product_id)}/>
+                                                       
                                                     </span>
                                                     <span>
-                                                        <a href="javascript;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
-                                                        </a>
+                                                        {/* <a href="javascript;"> */}
+                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>confirmAction(product.product_id,"duplicate")}/>
+                                                        {/* </a> */}
                                                     </span>
                                                     <span>
-                                                        <a href="javascript;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
+                                                       
+                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(product.product_id,"delete")} />
+                                                       
                                                     </span>
                                                 </td>
                                             </tr>
