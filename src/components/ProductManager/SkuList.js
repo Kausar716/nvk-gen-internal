@@ -202,11 +202,12 @@ const SkuList=(props)=> {
                                             <label>Sales Expiry Date:</label>
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <div>
+                                                    <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>
+                                                    {/* <div>
                                                         <DatePicker onChange={handleChange1} value={value} 
                                                         min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} 
                                                         value={skuDataById.sale_expiry_date}/>
-                                                    </div>
+                                                    </div> */}
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
                                                         Active
                                                         <div class="switcher switcher-sm ml-2 pr-2">
