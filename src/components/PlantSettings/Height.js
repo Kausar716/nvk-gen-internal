@@ -1,17 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react' ;
 import { Field, reduxForm } from 'redux-form';
-import { Collapse, Button, CardBody, Card , Row, Col,Form, FormGroup, Input, Label} from 'reactstrap';
+import { Row} from 'reactstrap';
 
 
 
 const required = value => value ? undefined : 'Required'
-const maxLength = max => value =>
-  value && value.length > max ? `Must be ${max} characters or less` : undefined
-const maxLength15 = maxLength(15)
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
-const minValue = min => value =>
-  value && value < min ? `Must be at least ${min}` : undefined
-const minValue2 = minValue(2)
+// const maxLength = max => value =>
+//   value && value.length > max ? `Must be ${max} characters or less` : undefined
+// const maxLength15 = maxLength(15)
+// const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
+// const minValue = min => value =>
+//   value && value < min ? `Must be at least ${min}` : undefined
+// const minValue2 = minValue(2)
 
 
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
@@ -28,6 +28,20 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
 )
 
 const Height=()=> {
+    //const [name,setName] = useState("")
+    const [selectedItem,setSelectedItem] = useState("")
+
+    // const handleName = (e) => {
+    //     setName(e.target.value)
+    // }
+
+    // const handleAddManufacturer = (e) => {
+    //     e.preventDefault()
+    //     console.log(name)
+    // }
+    const handleitemSelect= (e)=> {
+        setSelectedItem(e.target.id)
+    }
     return (
         <>
             <div className="bg-white">
@@ -75,56 +89,56 @@ const Height=()=> {
                                         </div>
                                     </div>
                             
-                                <div className="row mt-5 mb-4">
-                                    <div className="col">
-                                        <div className="card zoneCard">
-                                            <div className="card-header">
+                                    <div class="row mt-5 mb-4">
+                                    <div class="col">
+                                        <div class="card zoneCard">
+                                            <div class="card-header">
                                                 Inactive
                                             </div>
-                                            <div className="card-body cardBg">
-                                               <ul className="list-unstyled">
-                                                   <li className="active">
-                                                        <a href="javascript;" className="">
+                                            <div class="card-body cardBg">
+                                               <ul class="list-unstyled">
+                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
+                                                        <a href="/" class="" id="Christmas Trees">
                                                             <span>Christmas Trees</span>
                                                         </a>
                                                    </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Wheathers</span>
+                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
+                                                        <a href="/" id="Wheathers"  class="">
+                                                            <span id="Wheathers">Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="/" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="/" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
@@ -136,55 +150,58 @@ const Height=()=> {
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                                 <a href="javascript;">
-                                                    <i className="fas fa-angle-double-right"></i>
+                                                    {/* <i className="fas fa-angle-double-right"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
-                                                    <i className="fas fa-arrows-alt"></i>
+                                                    {/* <i className="fas fa-arrows-alt"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;" className="icDelete">
-                                                    <i className="fas fa-trash"></i>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                    {/* <i className="fas fa-trash"></i> */}
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="col">
-                                        <div className="card zoneCard">
-                                            <div className="card-header">
+                                    <div class="col">
+                                        <div class="card zoneCard">
+                                            <div class="card-header">
                                                 Active
                                             </div>
-                                            <div className="card-body cardBg">
-                                            <ul className="list-unstyled">
-                                                   <li className="active">
-                                                        <a href="javascript;" className="">
+                                            <div class="card-body cardBg">
+                                            <ul class="list-unstyled">
+                                                   <li class="active">
+                                                        <a href="javascript;" class="">
                                                             <span>Broadleaf Evergrens</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Bulbs</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Evergreens</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Frems</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Fruits</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
+                                                        <a href="javascript;" class="">
                                                             <span>Grasses</span>
                                                         </a>
                                                    </li>
@@ -193,6 +210,7 @@ const Height=()=> {
                                         </div>
                                     </div>
                                 </div>
+                               
                             </div>
                         </div>
         </>

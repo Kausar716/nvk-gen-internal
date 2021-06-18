@@ -9,7 +9,7 @@ function Characterstics() {
                             <div className="ContentSection p-15">
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <p>Characterstics</p>
+                                        <p>Section Name</p>
                                         <div>
                                             <input type="text" className="form-control" placeholder=""/>
                                         </div>
@@ -65,17 +65,20 @@ function Characterstics() {
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                                 <a href="javascript;">
-                                                    <i className="fas fa-angle-double-right"></i>
+                                                    {/* <i className="fas fa-angle-double-right"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
-                                                    <i className="fas fa-arrows-alt"></i>
+                                                    {/* <i className="fas fa-arrows-alt"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;" className="icDelete">
-                                                    <i className="fas fa-trash"></i>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                    {/* <i className="fas fa-trash"></i> */}
                                                 </a>
                                             </div>
                                         </div>

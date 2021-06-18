@@ -188,11 +188,11 @@ const PlantTable=(props)=> {
                                              let id3 ="Archived"
                                              return(     
                                             <tr>
-                                                <td>{status === 1 ?"Active":"Inactive"}</td>
+                                                <td style={{color:status===1 ? "black" :"red"}}>{status === 1 ?"Active":"Inactive"}</td>
                                                 <td>{plant_id}</td>
                                                 <td>{patent}</td>
                                                 <td>
-                                                    {/* {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
+                                                    {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
                                                     </td>
                                                 <td></td>
