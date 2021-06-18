@@ -59212,6 +59212,65 @@ form label {
 .switcher.switcher-sm input:checked+label:after {
     left: 18px;
 }
+ul.list-unstyled.searchAlpha li a {
+    padding: 4px 10px;
+    display: block;
+    border: 1px solid #629C44;
+    color: #629C44;
+    min-width: 34px;
+    text-align: center;
+}
+ul.list-unstyled.searchAlpha li a.active,
+ul.list-unstyled.searchAlpha li a:hover {
+    border: 1px solid #629C44;
+    background: #629C44;
+    color: #fff;
+}
+.staffCard {
+    box-shadow: 0 0 5px rgba(0,0,0,0.25);
+    -webkit-box-shadow: 0 0 5px rgba(0,0,0,0.25);
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 4px;
+    position: relative;
+    margin-bottom: 20px;
+}
+.staffCard:hover {
+    box-shadow: 0 0 8px rgba(0,0,0,0.5);
+    -webkit-box-shadow: 0 0 8px rgba(0,0,0,0.3);
+}
+.staffCard h5 {
+    font-size: 16px;
+}
+.staffCard p {
+    margin: 0;
+}
+.staffCard p span {
+    color: #8A8A8A;
+    margin-left: 4px;
+}
+.staffCard .media-left {
+    width: 80px;
+    height: 80px;
+    display: inline-block;
+    padding: 0;
+    margin-right: 10px;
+}
+.staffCard .media-left img {
+    width: 100%;
+}
+.likeIc {
+    position: absolute;
+    right:10px;
+    top:10px;
+}
+.likeIc i {
+    font-size: 18px;
+    color: #B4B4B4;
+}
+.likeIc.stsLiked i {
+    color: #FF8D8D;
+}
 
 @media (min-width:990px) {
     .btn.btn-lg {

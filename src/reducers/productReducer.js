@@ -214,7 +214,7 @@ export default function(state = initialSatate, action){
        
         return{
             ...state,
-            skuData:[...action.payload.data.data]
+            skuData:[...action.payload.data]
         
         }
     case UPDATE_SKU_ACTION:

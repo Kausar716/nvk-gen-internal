@@ -122,8 +122,8 @@ const SkuList=(props)=> {
       
 //    window.addEventListener('scroll', this.listenToScroll)
 
-    const skuPerPAge = 5;
-    const pagesVisited = skuPageNumber*5;
+    const skuPerPAge = pageSize;
+    const pagesVisited = skuPageNumber*pageSize;
     const displaySkuList = skuData.slice(pagesVisited,pagesVisited+skuPerPAge)
     const pageCount = Math.ceil(skuData.length/skuPerPAge)
     let minMonth = new Date().getMonth()
@@ -232,8 +232,13 @@ const SkuList=(props)=> {
                                 </form>
                             </div>
                             <div className="row_1">
+                            <div>
+                            <label className="greenText">{"Showing " + (( skuPageNumber)+1 )+  "  to  " +  ((( pageSize+1)*5)>skuData.length?skuData.length:( skuPageNumber+1)*5)  + "  of   "  +   skuData.length }</label>
+                            </div>
+
 
                     <div >
+
                     <label className="greenText">Show</label>
                             <select 
                                 value={pageSize}
@@ -252,10 +257,13 @@ const SkuList=(props)=> {
 
 
 
-                    <div >
+                    <div className="skuPagination" style={{marginRight:"26em"}}>
                     <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={skuPageNumber+1}/>
                     </div>
                     </div>
+
+
+                    
                             <div class="bg-white px-3 py-3 my-3">
                                 <table id="plantDetails" class="table table-striped w-100 table-responsive">
                                     <thead>
