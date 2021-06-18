@@ -139,7 +139,7 @@ const PlantTable=(props)=> {
               <div className="row_1">
 
                     <div>
-                    <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  pageSize + "  of   "  +   plantCategoryData.length }</label>
+                    <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  (pageSize) + "  of   "  +  totalLength }</label>
                     </div>
                                 <div >
                                 <label className="greenText">Show</label>

@@ -25,7 +25,7 @@ import {
 import TablePagination from '../Pagination'
 
 const ProductTable  = (props) => {
-    const {productData,pageNumber} = props.productData
+  
    
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
@@ -56,27 +56,16 @@ const ProductTable  = (props) => {
        setType("")
        setMessage("")
    }
-//    const confirmAction = (id,type)=>{
-//        if(type=="delete"){
-//            setType(type)
-//            setMessage("Are you sure you want to delete this product and its related SKUs?")
 
-//        }else{
-//            setType(type)
-//            setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
-
-//        }
-//        setOpen(true)
-//        setId(id)
-//    }
    
-   
+   const {productData,pageNumber} = props.productData
     const productPerPage = pageSize;
+    const totalLength = productData.length
     const pagesVisited = pageNumber*5;
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
     const {categoryData} = props.categoryData
-    console.log(productData)
+    console.log("productDataproductData", props.productData)
 
      
     return (
@@ -85,7 +74,7 @@ const ProductTable  = (props) => {
          <div className="row_1">
 
                             <div>
-                            <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " + pageSize  + "  of   "  +   productData.length }</label>
+                            <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " + pageSize  + "  of   "  +   totalLength }</label>
                             </div>
                     <div >
                         <label className="greenText">Show</label>
@@ -110,8 +99,7 @@ const ProductTable  = (props) => {
                 </div>
          </div>
                 
-         {/* <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " +  ((( pageNumber+1)*5)>productData.length ?productData.length:(( pageNumber+1)*5))  + "  of   "  +   productData.length }</label> */}
-         {/* <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " + pageSize  + "  of   "  +   productData.length }</label> */}
+      
                       <div className="form-group row mt-3">
                                 <div className="col-md-12">
                                     <table id="plantDetails" className="table table-striped w-100">
