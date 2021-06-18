@@ -22,14 +22,13 @@ import {
 import {dPageNumberList} from '../../reducers/listOfNumbers'
 import TablePagination from '../Pagination';
 import './index.css';
+//import GeneralSettings from './GeneralSettings';
 
 const PlantTable=(props)=> {
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
-
-    const [plantPageNum, setPlantPageNum]=useState([])
 
     const [pageSize, setPageSize] =useState(15)
     const cancel = ()=>{
@@ -59,43 +58,6 @@ const PlantTable=(props)=> {
     }
 
 
-
-    var displayDropDownList=(()=>{
-        let arr=[]
-        for(let i=plantPageNum;i<=totalLength;i++){
-          if(i%plantPageNum === 0){
-       arr.push(i)
-          }
-        }
-        setPlantPageNum(arr)
-        console.log("arra", arr)
-    }, []);
-
-    console.log("displayDropDownList",displayDropDownList)
-    
-    // var displayDropDownList =()=>{
-    //     let arr=[]
-    //             for(let i=plantPageNum;i<=totalLength;i++){
-    //               if(i%plantPageNum === 0){
-    //            arr.push(i)
-    //               }
-    //             }
-    //             setPlantPageNum(arr)
-    // }
-
-    // function displayDropDownList(props){
-              
-    //     let arr=[]
-    //             for(let i=plantPageNum;i<=totalLength;i++){
-    //               if(i%plantPageNum === 0){
-    //            arr.push(i)
-    //               }
-    //             }
-    //             setPlantPageNum(arr)
-    
-    // }
-
-
     const {plantData,plantPageNumber} = props.plantData
     const totalLength = plantData.length
     const plantPerPage = pageSize;
@@ -112,26 +74,6 @@ const PlantTable=(props)=> {
     return (
 
         <div>
-            {/* <div>
-            <div >
-                   
-                        <select className="form-control2"
-                            value={pageSize}
-                            onChange={e => {
-                                setPageSize(Number(e.target.value))
-                            }}
-                            >
-                            {[15, 25, 50, 100, 250,500].map(pageSize => (
-                                <option key={pageSize} value={pageSize}>
-                                {pageSize} 
-                                </option>
-                            ))}
-                        </select>
-                </div>
-            </div>
-             <div className="pagination_area">
-             <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
-            </div> */}
             
               <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
 
@@ -139,7 +81,7 @@ const PlantTable=(props)=> {
               <div className="row_1">
 
                     <div>
-                    <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  pageSize + "  of   "  +   plantCategoryData.length }</label>
+                    <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  (pageSize) + "  of   "  +  totalLength }</label>
                     </div>
                                 <div >
                                 <label className="greenText">Show</label>
@@ -156,16 +98,11 @@ const PlantTable=(props)=> {
                                         ))}
                                     </select>
                                 </div>
-
-
-
                     <div >
                     <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
                     </div>
+
                 </div>
-             
-            {/* <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  ((( plantPageNumber+1)*5)>plantCategoryData.length ?plantCategoryData.length:(( plantPageNumber+1)*5))  + "  of   "  +   plantCategoryData.length }</label> */}
-            {/* <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  pageSize + "  of   "  +   plantCategoryData.length }</label> */}
                             <div className="form-group row mt-3">
                                 <div className="col-md-12">
                                     <table id="plantDetails" className="table table-striped w-100">
@@ -175,7 +112,7 @@ const PlantTable=(props)=> {
                                                 <th className="text-nowrap">Plant ID</th>
                                                 <th className="text-nowrap">Plant Name</th>
                                                 <th className="text-nowrap">Category</th>
-                                                <th className="text-nowrap">In Production</th>
+                                                <th className="text-nowrap text-center">In Production</th>
                                                 <th className="text-nowrap text-center">Discontinued</th>
                                                 <th className="text-nowrap text-center">Archived</th>
                                                 <th className="text-nowrap text-center">Actions</th>
@@ -186,6 +123,7 @@ const PlantTable=(props)=> {
                                         {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, Discontinued, archived, patent,category_id,plant_id})=>{
                                              let id2 ="discontinue"
                                              let id3 ="Archived"
+                                             let id4 ="Production"
                                              return(     
                                             <tr>
                                                 <td style={{color:status===1 ? "black" :"red"}}>{status === 1 ?"Active":"Inactive"}</td>
@@ -195,7 +133,12 @@ const PlantTable=(props)=> {
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
                                                     </td>
-                                                <td></td>
+                                                <td className="text-center">
+                                                <div className="custom-control custom-checkbox mb-1">
+                                                        <input type="checkbox" className="custom-control-input" id={id4.concat(plant_id)} />
+                                                        <label className="custom-control-label" for={id4.concat(plant_id)}></label>
+                                                    </div>
+                                                </td>
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" className="custom-control-input" id={id2.concat(plant_id)} />

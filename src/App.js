@@ -26,6 +26,8 @@ import ForgotPassword from "./components/SignIn/ForgotPassword";
 import RegisterNewUser from "./components/SignIn/RegisterNewUser";
 import UserSettings from "./components/UserSettings/UserSettings";
 
+import AddPlant from './components/PlantManager/AddPlant'
+import AddProduct from "./components/ProductManager/AddProduct";
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -53,6 +55,8 @@ function App(props) {
                     <RegisterNewUser />
     </Route>
             
+
+    
     {/* {authKey.loggedIn ? <> */}
       <div id="page-container" className="fade page-sidebar-fixed page-header-fixed">
        
@@ -104,7 +108,18 @@ function App(props) {
                     <UserSettings/>
                   </Route>
 
-               
+              <Route path="/addPlant">
+              <Nav />
+                  <Left />
+                <AddPlant/>
+              </Route>
+
+
+              <Route path="/addProduct">
+              <Nav />
+                  <Left />
+                <AddProduct/>
+              </Route>
 
                   <Route path="/comingsoon">
                   <Nav />
