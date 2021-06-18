@@ -170,6 +170,9 @@ export const HANDLE_CATEGORY_SEARCH = "HANDLE_CATEGORY_SEARCH"
 export const GET_DASHBOARD_PAGE ="GET_DASHBOARD_PAGE"
 export const SET_DASHBOARD_PAGE ="SET_DASHBOARD_PAGE"
 
+//SIDEBAR PATH
+export const GET_PATH = "GET_PATH" 
+export const UPDATE_PATH = "UPDATE_PATH"
 
 
 export const qs = require('qs');
