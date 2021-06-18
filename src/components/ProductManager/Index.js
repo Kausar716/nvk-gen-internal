@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react' ;
 import {connect} from "react-redux";
+import { Link } from "react-router-dom";
 //import {getAllImageAssets} from "../Utility/Utility";
 // import '../ProductManagement/index.css'
 // import GeneralSettings from './GeneralSettings'
@@ -138,9 +139,9 @@ const  ProductManagement = (props) =>{
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
 				<h1 className="page-header mb-0">Product Manager</h1>
 				<div className="">
-					<a href="javascript:;">
-						<img src="assets/img/add.svg" alt=""/>
-					</a>
+                    <Link to="/addProduct">
+                    <img src="assets/img/add.svg" alt=""/>
+                    </Link>
 					<a href="javascript:;" className="ml-2">
 						<img src="assets/img/preview.svg" alt=""/>
 					</a>

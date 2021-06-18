@@ -4,6 +4,7 @@
 
 import React,  {  useEffect,useState } from 'react' ;
 import {connect} from "react-redux";
+import { Link } from "react-router-dom";
 //import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table, Row,Col} from 'reactstrap'
 //import {getAllImageAssets} from "../Utility/Utility";
 //import '../ProductManagement/index.css'
@@ -141,9 +142,12 @@ const  PlantManager=(props)=> {
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
            <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>	<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Manager</h1></div> 
 				<div className="">
-					<a href="javascript:;">
-						<img src="assets/img/add.svg" alt=""/>
-					</a>
+
+					<Link to="/addPlant">
+                    <img src="assets/img/add.svg" alt=""/>
+                    </Link>
+						
+				
 					<a href="javascript:;" className="ml-2">
 						<img src="assets/img/preview.svg" alt=""/>
 					</a>
