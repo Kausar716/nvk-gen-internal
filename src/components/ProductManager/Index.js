@@ -138,16 +138,25 @@ const  ProductManagement = (props) =>{
              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
 				<h1 className="page-header mb-0">Product Manager</h1>
-				<div className="">
-                    <Link to="/addProduct">
-                    <img src="assets/img/add.svg" alt=""/>
-                    </Link>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/preview.svg" alt=""/>
-					</a>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/print.svg" alt=""/>
-					</a>
+				<div class="topbarCtrls mt-3 mt-md-0">
+                <Link to="/addProduct"> <a href="#" class="btn active">
+                   <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/plant-ic-btn.svg" alt=""/>
+                         <span class="ml-2"><b>Add Product</b></span>
+                        </span>
+                    </a></Link> 
+                    <a href="#" class="btn ml-2">
+                        <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/search-ic-btn.svg" alt=""/>
+                            <span class="ml-2"><b>Preview</b></span>
+                        </span>
+                    </a>
+                    <a href="#" class="btn ml-2 mt-3 mt-md-0">
+                        <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/print-ic-btn.svg" alt=""/>
+                            <span class="ml-2"><b>Print</b></span>
+                        </span>
+                    </a>
 				</div>
 			</div>
 			<div className="contentWrapper">

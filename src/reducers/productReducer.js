@@ -11,9 +11,9 @@ import {
 
     // SKU ACTION
 
-    //CREATE_SKU_ACTION,
+    CREATE_SKU_ACTION,
     UPDATE_SKU_ACTION,
-    //DELETE_SKU_ACTION,
+    DELETE_SKU_ACTION,
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
@@ -27,7 +27,7 @@ import {
     
     // INPUT HANDLE
     HANDLE_INPUT_DATA,
-    //HANDLE_TAG_INPUT_DATA,
+    HANDLE_TAG_INPUT_DATA,
     HANDLE_SKU_INPUT_DATA,
     ERROR_HANDLE,
 
@@ -41,8 +41,8 @@ import {
 } from '../actions/types';
 let minMonth = new Date().getMonth()
 let minDate = new Date().getDate()
-let minDateFormate = minDate.toString().length===1?"0"+minDate:minDate
-let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
+let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
+let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
 
 
 
@@ -56,7 +56,8 @@ const initialSatate = {
         manufacturer_id:null,
         archived:0,
         internal_notes:"",
-        discontinued:0
+        discontinued:0,
+        status:1
     },
     skuDataById         :   {
         each_cost:0,
@@ -83,7 +84,6 @@ const initialSatate = {
     backupData          :[]
 
 }
-
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
@@ -211,9 +211,10 @@ export default function(state = initialSatate, action){
             }
     //sku action
     case GET_ALL_SKU_ACTION:
+       
         return{
             ...state,
-            skuData:[...action.payload.data]
+            skuData:[...action.payload.data.data]
         
         }
     case UPDATE_SKU_ACTION:
@@ -249,7 +250,6 @@ export default function(state = initialSatate, action){
         
         
             },
-            // eslint-disable-next-line no-dupe-keys
             actionType:"add",
             needAction:false,
             tagsData:[]
@@ -311,7 +311,7 @@ export default function(state = initialSatate, action){
             console.log("cat sub cat")
             return{
                 ...state,
-                productData:state.productData.filter(product=>(product.category_id===action.categoryId&&product.subcategory_id ===  action.subCategoryId))
+                productData:state.productData.filter(product=>(product.category_id===action.categoryId&&product.subcategory_id ==  action.subCategoryId))
             }
         case ERROR_HANDLE:
             return{
