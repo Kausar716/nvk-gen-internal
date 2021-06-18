@@ -25,7 +25,7 @@ import PlantSettings from './components/PlantSettings/PlantSettings';
 import ForgotPassword from "./components/SignIn/ForgotPassword";
 import RegisterNewUser from "./components/SignIn/RegisterNewUser";
 import UserSettings from "./components/UserSettings/UserSettings";
-import SubmitValidationForm from "./components/Testings/SubmitValidationForm";
+
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -104,12 +104,7 @@ function App(props) {
                     <UserSettings/>
                   </Route>
 
-                  <Route path="/testings">
-                  <Nav />
-                  <Left />
-                    <SubmitValidationForm/>
-                  </Route>
-
+               
 
                   <Route path="/comingsoon">
                   <Nav />

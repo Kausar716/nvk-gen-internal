@@ -15573,6 +15573,7 @@ pre code {
     }
     .contentHeader a img {
         width: 32px;
+        height: 32px;
     }
     table.dataTable>tbody>tr.child ul.dtr-details {
         display: block;
@@ -15589,6 +15590,12 @@ pre code {
     }
     .sidebar .sidebar-minify-btn {
         display: none !important;
+    }
+    .btn-group-lg>.btn, .btn-lg {
+        padding: .5rem 0.75rem !important;
+    }
+    h1.page-header img {
+        max-height: 40px;
     }
 }
 
@@ -15671,7 +15678,8 @@ pre code {
 .form-control {
     display: block;
     width: 100%;
-    height: calc(2em + .875rem + 2px);
+    /* height: calc(2em + .875rem + 2px); */
+    height: calc(1.75em + .875rem);
     padding: .4375rem .75rem;
     font-size: 1rem;
     font-weight: 400;
@@ -15680,6 +15688,18 @@ pre code {
     background-color: #fff;
     background-clip: padding-box;
     border: 1px solid #d5dbe0;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+.react-date-picker__wrapper {
+    height: calc(1.75em + .875rem);
+    padding: 4px 8px;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #2d353c;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d5dbe0 !important;
     border-radius: 4px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
@@ -17619,6 +17639,7 @@ input[type=submit].btn-block {
         right: 0;
         left: auto
     }
+    
 }
 
 @media (min-width:1660px) {
@@ -18115,11 +18136,11 @@ input[type=submit].btn-block {
 
 .custom-control-label::before {
     position: absolute;
-    top: .0625rem;
+    top: .25rem;
     left: -1.5rem;
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     pointer-events: none;
     content: "";
     background-color: #fff;
@@ -18128,11 +18149,11 @@ input[type=submit].btn-block {
 
 .custom-control-label::after {
     position: absolute;
-    top: .0625rem;
+    top: .25rem;
     left: -1.5rem;
     display: block;
-    width: 24px;
-    height: 24px;
+    width: 18px;
+    height: 18px;
     content: "";
     background: no-repeat 50%/50% 50%
 }
@@ -28771,7 +28792,7 @@ a:focus {
 }
 
 .sidebar .sub-menu>li>a {
-    padding: 15px 40px;
+    padding: 8px 40px;
     display: block;
     color: rgba(255, 255, 255, .6);
     text-decoration: none;
@@ -58910,6 +58931,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
 }
 .cursorPointer { cursor: pointer;}
 .dashCards {
+    position: relative;
     border-radius: 12px;
     margin-bottom: 20px;
     background-color: #fff;
@@ -58932,7 +58954,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
 }
 .dashCards h3 {
     margin-bottom: 0;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 600;
 }
 .dashCards h4 {
@@ -58942,18 +58964,33 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
     font-weight: 600;
 }
 .dashCards .dashIcon {
-    height: 120px;
+    height: 96px;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 32px 0 !important;
 }
 .helpCard p span {
     color: #629C44;
     display: block;
 }
-
+span.lockIcon {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+}
+span.editIcon {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+}
 .react-tabs__tab-list {
     border: none;
     margin: 0 0 10px;
     padding: 0;
     background: #fff;
+    display: inline-block;
+    border: 1px solid #5287F5 !important;
 }
 .react-tabs__tab {
     display: inline-block;
@@ -58967,7 +59004,6 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
     line-height: 24px;
 }
 .react-tabs__tab-list {
-    border: none !important;
     margin: 0 0 10px;
     padding: 0;
     background: #fff;   
@@ -58985,6 +59021,9 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
     top: 0;
     height: 100%;
     right: -1px;
+}
+.react-tabs__tab:focus:after {
+    background: none !important;
 }
 .card-header {
     background-color: #629C44;
@@ -59089,4 +59128,105 @@ ul.list-unstyled.childUl a {
 }
 .card.zoneCard li.active a, .card.zoneCard li:hover a {
     color: #fff;
+}
+.topbarCtrls a.btn {
+    border: 2px solid #5287F5;
+    color: #5287F5;
+    font-size: 16px;
+    font-weight: 400 !important;
+}
+.topbarCtrls a.btn:hover, .topbarCtrls a.btn.active {
+    border: 2px solid #5287F5;
+    background-color: #5287F2;
+    color: #fff;
+}
+.topbarCtrls a.btn:hover img,
+.topbarCtrls a.btn.active img {
+   filter: brightness(0) invert(1);
+   -webkit-filter: brightness(0) invert(1);
+}
+.userManagementSection .react-tabs__tab-list {
+    display: inline-block !important;
+}
+.locAssignBox .custom-control span {
+    display: block;
+    font-size: 12px;
+}
+.locAssignBox {
+    border: 1px solid #CECECE;
+    border-radius: 4px;
+    height: 188px;
+    overflow: auto;
+}
+.locAssignBox li {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+}
+.locAssignBox li.active, .locAssignBox li:hover {
+    background-color: #F1F1F1;
+}
+
+.profImg img {
+    height: 100%;
+    width: 100%;
+}
+.btnGroup {
+    position: relative;
+}
+.btnGroup img {
+    position: absolute;
+    right: 12px;
+    top: 8px;
+}
+.deleteRoleLink {
+    margin-bottom: 12px;
+    display: block;
+}
+.midDash {
+    line-height: 2.4;
+    padding: 0 4px;
+}
+form label {
+    font-size: 16px;
+    font-weight: 500;
+}
+.cardShadow {
+    box-shadow: 0px 0px 6px rgb(0 0 0 / 16%);
+    -webkit-box-shadow: 0px 0px 6px rgb(0 0 0 / 16%);
+}
+.switcher-sm.switcher label {
+    display: block;
+    margin: 0;
+    width: 40px;
+    height: 24px;
+    position: relative;
+}
+.switcher-sm.switcher label:before {
+    width: 40px;
+    height: 24px;
+}
+.switcher-sm.switcher label:after {
+    height: 20px;
+    width: 20px;
+}
+.switcher.switcher-sm input:checked+label:after {
+    left: 18px;
+}
+
+@media (min-width:990px) {
+    .btn.btn-lg {
+        font-size: 18px;
+        min-width: 160px;
+        padding: 4px 12px;
+    }
+}
+
+@media (min-width:1200px) {
+    .profImg {
+        height: 160px;
+        width: 160px;
+        border-radius: 80px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
 }
