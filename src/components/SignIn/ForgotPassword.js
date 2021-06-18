@@ -1,20 +1,21 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { useState } from 'react';
+import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from "react-router-dom";
 import './index.css'
-import {Button,Form,Input,FormGroup,Label,Row} from 'reactstrap'
-import submit from './submit'
+import {Button,FormGroup,Label,Row} from 'reactstrap'
+// import submit from './submit'
 //   const required = value => value ? undefined : 'Required'
 //   const maxLength = max => value =>
 //     value && value.length > max ? `Must be ${max} characters or less` : undefined
 //   const maxLength15 = maxLength(15)
 //   const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
 // 
-  const required = value => value ? undefined : 'Required'
-  const minValue = min => value =>
-  value && value < min ? `Must be at least ${min}` : undefined
-  const minValue2 = minValue(4)
+  // const required = value => value ? undefined : 'Required'
+  // const minValue = min => value =>
+  // value && value < min ? `Must be at least ${min}` : undefined
+  // const minValue2 = minValue(4)
 
 
 const validate = values => {
@@ -58,16 +59,16 @@ const validate = values => {
     </div>
   )
 
-    const successFullLogin=()=>{
-        alert("Login Success full")
-    }
+    // const successFullLogin=()=>{
+    //     alert("Login Success full")
+    // }
 
 
 
 const ForgotPassword = (props) => {
 
   //const { handleSubmit, pristine, reset, submitting } = props;
-  const { error, handleSubmit, pristine, reset, submitting } = props
+  const {  handleSubmit, pristine,  submitting } = props
 
   return (
     <>

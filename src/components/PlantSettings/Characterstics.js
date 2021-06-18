@@ -9,7 +9,7 @@ function Characterstics() {
                             <div className="ContentSection p-15">
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <p>Characterstics</p>
+                                        <p>Section Name</p>
                                         <div>
                                             <input type="text" className="form-control" placeholder=""/>
                                         </div>
@@ -31,57 +31,30 @@ function Characterstics() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="row mt-5 mb-4">
+                                <div className="row mt-5">
                                     <div className="col">
-                                        <div className="card zoneCard">
+                                        <div className="card midCard">
                                             <div className="card-header">
                                                 Inactive
                                             </div>
                                             <div className="card-body cardBg">
                                                <ul className="list-unstyled">
-                                                   <li className="active">
-                                                        <a href="javascript;" className="">
-                                                            <span>Christmas Trees</span>
+                                                   <li>
+                                                        <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                            <span>Attracts Birds 01</span>
+                                                            <i className="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Wheathers</span>
+                                                        <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                            <span>Attracts Birds 02</span>
+                                                            <i className="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Attracts Birds</span>
+                                                        <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                            <span>Attracts Birds 03</span>
+                                                            <i className="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                </ul>
@@ -111,40 +84,42 @@ function Characterstics() {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="card zoneCard">
+                                        <div className="card midCard">
                                             <div className="card-header">
                                                 Active
                                             </div>
                                             <div className="card-body cardBg">
-                                            <ul className="list-unstyled">
-                                                   <li className="active">
-                                                        <a href="javascript;" className="">
-                                                            <span>Broadleaf Evergrens</span>
+                                               <ul className="list-unstyled">
+                                                   <li className="hasChild">
+                                                        <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                            <span>Attracts Birds 01</span>
+                                                            <i className="fa fa-th"></i>
+                                                        </a>
+                                                        <ul className="list-unstyled childUl">
+                                                            <li>
+                                                                <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                                    <span>Attracts Birds 01</span>
+                                                                    <i className="fa fa-th"></i>
+                                                                </a>
+                                                            </li>
+                                                            <li>
+                                                                <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                                    <span>Attracts Birds 01</span>
+                                                                    <i className="fa fa-th"></i>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                   </li>
+                                                   <li>
+                                                        <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                            <span>Attracts Birds 02</span>
+                                                            <i className="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Bulbs</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Evergreens</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Frems</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Fruits</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" className="">
-                                                            <span>Grasses</span>
+                                                        <a href="javascript;" className="d-flex justify-content-between align-items-center">
+                                                            <span>Attracts Birds 03</span>
+                                                            <i className="fa fa-th"></i>
                                                         </a>
                                                    </li>
                                                </ul>

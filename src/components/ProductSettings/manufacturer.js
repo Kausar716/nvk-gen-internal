@@ -1,3 +1,4 @@
+/* eslint-disable no-script-url */
 import React, {useState} from 'react' ;
 // import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -56,22 +57,22 @@ const Manufacturer=(props)=> {
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
                                                    <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
-                                                        <a href="javascript:void(0)" class="" id="Christmas Trees">
+                                                        <a href="/" class="" id="Christmas Trees">
                                                             <span>Christmas Trees</span>
                                                         </a>
                                                    </li>
                                                    <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
-                                                        <a href="javascript:void(0)" id="Wheathers"  class="">
+                                                        <a href="/" id="Wheathers"  class="">
                                                             <span id="Wheathers">Wheathers</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:void(0)" class="">
+                                                        <a href="/" class="">
                                                             <span>Attracts Birds</span>
                                                         </a>
                                                    </li>
                                                    <li>
-                                                        <a href="javascript:void(0)" class="">
+                                                        <a href="/" class="">
                                                             <span>Wheathers</span>
                                                         </a>
                                                    </li>
@@ -104,21 +105,24 @@ const Manufacturer=(props)=> {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-1">
-                                        <div class="midControls d-flex flex-column justify-content-around">
+                                    <div className="col-lg-1">
+                                        <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                                 <a href="javascript;">
-                                                    <i class="fas fa-angle-double-right"></i>
+                                                    {/* <i className="fas fa-angle-double-right"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
-                                                    <i class="fas fa-arrows-alt"></i>
+                                                    {/* <i className="fas fa-arrows-alt"></i> */}
+                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
-                                                <a href="javascript;" class="icDelete">
-                                                    <i class="fas fa-trash"></i>
+                                                <a href="javascript;" className="icDelete">
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                    {/* <i className="fas fa-trash"></i> */}
                                                 </a>
                                             </div>
                                         </div>

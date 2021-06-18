@@ -46,7 +46,7 @@ const  PlantManager=(props)=> {
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
     const [categoryId,setCategoryId] = useState(0)
-
+    const [inputValue, setInputValue] = useState("");
 // const productFormAction = ()=>{
 //         this.props.getProductPage("general")
 //         this.setState({plantPageToOpen:"general"})
@@ -99,7 +99,7 @@ const  PlantManager=(props)=> {
         const getValue = (e)=>{
             console.log(e.target.value)
             props.serachPlant(e.target.value)
-
+            setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
             console.log(e.target.id)
@@ -122,8 +122,8 @@ const  PlantManager=(props)=> {
         const resetData = () =>{
             props.getAllPlantAction()
             setRadio("all")
-            setCategoryId(0)           
-
+            setCategoryId(0)
+            setInputValue("");
         }
     
 
@@ -167,7 +167,9 @@ const  PlantManager=(props)=> {
                                         <input className="form-control" 
                                                 type="text" 
                                                 autocomplete={"off"}
-                                                placeholder="Search" onChange={getValue} id="search"/>
+                                                placeholder="Search" 
+                                                value={inputValue}
+                                                onChange={getValue} id="search"/>
                                     </div>
                                 </div>
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
