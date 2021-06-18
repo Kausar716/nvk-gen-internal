@@ -28,6 +28,8 @@ import UserSettings from "./components/UserSettings/UserSettings";
 
 import AddPlant from './components/PlantManager/AddPlant'
 import AddProduct from "./components/ProductManager/AddProduct";
+
+import StaffDirectory from './components/StaffDirectory'
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -119,6 +121,13 @@ function App(props) {
               <Nav />
                   <Left />
                 <AddProduct/>
+              </Route>
+
+
+              <Route path="/staffDirectory">
+              <Nav />
+                  <Left />
+                <StaffDirectory/>
               </Route>
 
                   <Route path="/comingsoon">
