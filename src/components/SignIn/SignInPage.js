@@ -88,12 +88,7 @@ const SignInPage = (props) => {
 
   console.log("error", error);
   const successFullLogin=()=>{
-       
-          // if(error===false){
             history.push("/Dashboard")
-          // }
-         
-        
    
 }
 
