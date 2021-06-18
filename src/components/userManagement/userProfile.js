@@ -183,9 +183,9 @@ export class UserProfile extends Component {
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-6">
-                                                    <label>Location<span class="text-danger">*</span></label>
+                                                    <label>Position<span class="text-danger">*</span></label>
                                                     <select class="form-control">
-                                                        <option>Select Location</option>
+                                                        <option>Select Position</option>
                                                         <option>Option 1</option>
                                                         <option>Option 2</option>
                                                     </select>
@@ -262,7 +262,7 @@ export class UserProfile extends Component {
                                 </div>
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>update</button>
+                                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Update</button>
                                 </div>
                             </div>
                         </div>
