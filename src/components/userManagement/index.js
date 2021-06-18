@@ -6,6 +6,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import UserProfile from './userProfile'
 import 'react-tabs/style/react-tabs.css';
 import CreateUserProfile from './createprofile'
+import UserAccess from './userAccess'
 
 export class UserManagement extends Component {  
 constructor(){
@@ -72,7 +73,7 @@ handleCancle = () => {
                     </TabList>
                     <TabPanel>
                     <div class="bg-white">
-                        <h4 class="p-15 mb-0">Add, Edit or Remove User</h4>
+                         <div class="f-s-24 px-3 py-3 f-w-500">User Profile - <span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span></div>
                         <hr class="m-0"/>
                         <div class="ContentSection p-15">
                             <div class="row">
@@ -118,9 +119,7 @@ handleCancle = () => {
                   
 
                     <TabPanel>
-                    <div class="bg-white">
-                        <h4 class="p-15 mb-0">User Access</h4>
-                    </div>
+                    <UserAccess/>
                     </TabPanel>
                 </Tabs>
                
