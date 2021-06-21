@@ -159,12 +159,12 @@ export class CreateUserProfile extends Component {
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg" alt="" />
                                                 </a>
-                                                <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
+                                                {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
                                                     <span class="d-flex align-items-center justify-content-around">
                                                         <span class="f-s-20 text-danger">Remove</span>
                                                     </span>
                                                     <img src="assets/img/bin-ic-red.svg" alt=""/>
-                                                </a>
+                                                </a> */}
                                                 {/* <div class="text-left mt-2">
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
