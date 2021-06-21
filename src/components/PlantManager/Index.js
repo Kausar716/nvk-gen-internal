@@ -177,6 +177,8 @@ const  PlantManager=(props)=> {
                         </span>
                     </a>
 				</div>
+
+
 			</div>
 			<div className="contentWrapper">
 				<div className="row">

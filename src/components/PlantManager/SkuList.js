@@ -30,6 +30,7 @@ const SkuList = (props)=>{
     const [startDate,setStartDate] = useState(new Date())
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
+    const [pageSize, setPageSize] =useState(15)
     const handleChange=(date)=> {
         setStartDate(date)
       }
@@ -46,8 +47,7 @@ const SkuList = (props)=>{
         props.setPlantSkuPageNumber(page-1)
     }
     const handleChange1 = (e) =>{
-        // alert(data)
-        console.log(e.target.value)
+        console.log(e.target);
         let dateInformate = e.target.value
         props.handlePlantSkuInputAction("sale_expiry_date",dateInformate)
 
@@ -93,9 +93,10 @@ const SkuList = (props)=>{
    }
 
 
+   console.log(props.plantData);
       const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById} = props.plantData
-      const plantPerPage = 5;
-      const pagesVisited = plantSkuPageNumber*5;
+      const plantPerPage = pageSize;
+      const pagesVisited = plantSkuPageNumber*pageSize;
       const displayPlantSkuList = plantSkuData.slice(pagesVisited,pagesVisited+plantPerPage)
       const pageCount = Math.ceil(plantSkuData.length/plantPerPage)
         const {allAttributes} = props.attributeData
@@ -108,18 +109,20 @@ const SkuList = (props)=>{
         console.log(plantSkuDataById)
         return(
         <div>
+            <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
                 <div>
                             <div class="bg-white px-3 py-3 mt-3">
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU:</h3>
+                                            <h3>GENERATED SKU:</h3>{plantSkuDataById.sku_code}
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
                                                 <div class="switcher ml-2">
-                                                    <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2"/>
+                                                    <input type="checkbox" name="switcher_checkbox_2" 
+                                                     id="archived" onChange={handleInput} value={plantSkuDataById.archived} checked={plantSkuDataById.archived===0?false:true}/>
                                                     <label for="switcher_checkbox_2"></label>
                                                 </div>
                                             </div>
@@ -128,56 +131,76 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Form:</label>
-                                            <select class="form-control">
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Form")[0]["id"]:"form"} onChange={handleInput}>
+                                                 <option>None</option>
+                                                {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
+                                                    return (filterData.sub_attributes.map(subData=>{
+                                                        return(<option value={subData.id}>{subData.value}</option>)
+                                                    }))
+                                                })                          
+                                                :""}
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Caliper:</label>
-                                            <select class="form-control">
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}>
+                                            <option>None</option>
+                                            {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
+                                                    return (filterData.sub_attributes.map(subData=>{
+                                                        return(<option value={subData.id}>{subData.value}</option>)
+                                                    }))
+                                                })                          
+                                                :""}
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Height:</label>
-                                            <select class="form-control">
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            <select class="form-control" id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}>
+                                            <option>None</option>
+                                            {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
+                                                    return (filterData.sub_attributes.map(subData=>{
+                                                        return(<option value={subData.id}>{subData.value}</option>)
+                                                    }))
+                                                })                          
+                                                :""}
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Packaging: <span class="text-danger">*</span></label>
-                                            <select class="form-control">
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Packaging")[0]["id"]:"packaging"} onChange={handleInput}>
+                                            <option>None</option>
+                                            {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Packaging").map(filterData=>{
+                                                    return (filterData.sub_attributes.map(subData=>{
+                                                    
+                                                        return(<option value={subData.id} selected={plantSkuDataById.attributes_subattributes.filter(filter=>filter.subattribute_id == subData.id).length==0?"selected":""}>{subData.value}</option>)
+                                                    }))
+                                                })                          
+                                                :""}
                                             </select>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost: <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" value="$1.25"/>
+                                            <input type="text" class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price: <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" value="$1.25"/>
+                                            <input type="text" class="form-control text-right" placeholder="" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price: <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" value="$1.25"/>
+                                            <input type="text" class="form-control text-right" placeholder="" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date:</label>
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
                                                     <div>
-                                                        <DatePicker value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={plantSkuDataById.sale_expiry_date}/>
+                                                        {/* <DatePicker value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate}
+                                                         onChange={handleChange1}/> */}
+                                                    <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} />
+
                                                     </div>
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
                                                         Active
@@ -193,31 +216,63 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality: <span class="text-danger">*</span></label>
-                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} >
+                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} >
                                             <option>None</option>
-                                        {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
-                                return (filterData.sub_attributes.map(subData=>{
-                                    return(<option value={subData.id}>{subData.value}</option>)
-                                }))
-                            })                          
-                            :""}
-                                                </select>
+                                            {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
+                                                    return (filterData.sub_attributes.map(subData=>{
+                                                        return(<option value={subData.id}>{subData.value}</option>)
+                                                    }))
+                                                })                          
+                                                :""}
+                                            </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit:</label> 
-                                            <input type="checkbox" id="volume_price_per_unit" onChange={handleInput}/>
+                                            {/* <input type="checkbox"  /> */}
+                                            <input type="text" class="form-control text-right" placeholder="" id="volume_price_per_unit" onChange={handleInput}/>
+
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
                                         </div>
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction==true?false:true} onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)}>Add SKU &amp; Clear</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)} >Add SKU &amp; Clear</button>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
+                               <div className="row_1">
+                            <div>
+                            <label className="greenText">{"Showing " + (( plantSkuPageNumber)+1 )+  "  to  " +  ((( pageSize+1)*5)>plantSkuData.length?plantSkuData.length:( plantSkuPageNumber+1)*5)  + "  of   "  +   plantSkuData.length }</label>
+                            </div>
+
+
+                    <div >
+
+                    <label className="greenText">Show</label>
+                            <select 
+                                value={pageSize}
+                                onChange={e => {
+                                    setPageSize(Number(e.target.value))
+                                }}
+                                >
+
+                                {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                    <option key={pageSize} value={pageSize}>
+                                    {pageSize}
+                                    </option>
+                                ))}
+                            </select>
+                    </div>
+
+
+
+                    <div className="skuPagination" style={{marginRight:"26em"}}>
+                    <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantSkuPageNumber+1}/>
+                    </div>
+                    </div>
                             <div class="bg-white px-3 py-3 my-3">
                                 <table id="plantDetails" class="table table-striped w-100 table-responsive">
                                     <thead>
@@ -239,7 +294,7 @@ const SkuList = (props)=>{
                     displayPlantSkuList.map(skuData=>{
                         return(
                                         <tr>
-                                            <td>{skuData.archived ==0?"Active":"Inactive"}</td>
+                                            <td>{skuData.archived ===0?"Active":"Inactive"}</td>
                                             <td>{skuData.sku_code}</td>
                                             <td>{skuData.each_cost}</td>
                                             <td>{skuData.each_price}</td>
@@ -254,19 +309,19 @@ const SkuList = (props)=>{
                                             <td>{skuData.volume_quantity}</td>
                                             <td class="text-center">
                                                 <span>
-                                                    <a href="javascript:;">
-                                                        <img src="assets/img/edit.svg" alt=""/>
-                                                    </a>
+                                                    {/* <a href="javascript:;"> */}
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedplant(skuData.plant_id,"edit","sku")}/>
+                                                    {/* </a> */}
                                                 </span>
                                                 <span>
-                                                    <a href="javascript:;">
+                                                    {/* <a href="javascript:;"> */}
                                                         <img src="assets/img/duplicate.svg" alt=""/>
-                                                    </a>
+                                                    {/* </a> */}
                                                 </span>
                                                 <span>
-                                                    <a href="javascript:;">
-                                                        <img src="assets/img/delete.svg" alt=""/>
-                                                    </a>
+                                                    {/* <a href="javascript:;"> */}
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(skuData.plant_id)}/>
+                                                    {/* </a> */}
                                                 </span>
                                             </td>
                                         </tr>                                       

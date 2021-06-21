@@ -274,6 +274,7 @@ export const deleteSkuAction = (id) => dispatch => {
 }
 export const getAllSkuAction = (id) => dispatch => {
     axios.get("/api/skus/products",config).then(res=>{ 
+        console.log(res.data)
         dispatch({
                 type:GET_ALL_SKU_ACTION,
                 payload:res.data
