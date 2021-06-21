@@ -11,7 +11,7 @@ export class ProductSettings extends Component {
     return (
         <div>
             <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0">Product Settings</h1>
+				<h1 class="page-header mb-0"> <img src="assets/img/product-green.svg" alt=""/> Product Settings</h1>
 				{/* <div class="">
 					<a href="javascript:;">
 						<img src="assets/img/add.svg" alt=""/>

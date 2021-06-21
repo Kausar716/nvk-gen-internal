@@ -58923,13 +58923,13 @@ span.editIcon {
     padding: 0;
     background: #fff;
     display: inline-block;
-    border: 1px solid #5287F5 !important;
+    border: 1px solid #414244 !important;
 }
 .react-tabs__tab {
     display: inline-block;
     border: 1px solid transparent;
     border-bottom: none;
-    bottom: -1px;
+    bottom: 0px;
     position: relative;
     list-style: none;
     padding: 8px 12px 12px 12px !important;
