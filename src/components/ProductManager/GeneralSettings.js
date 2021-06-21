@@ -123,11 +123,11 @@ const GeneralSettings=(props)=> {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                        <label>Item Name: <span class="text-danger">*</span></label>
+                                        <label>Item Name <span class="text-danger">*</span></label>
                                         <input type="text" id="name" value={productDataById.name} onChange={handleInput} class="form-control" placeholder=""/>
                                     </div>
                                     <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
-                                        <label>Common Name(s):</label>
+                                        <label>Common Name(s)</label>
                                         {/* <input type="text" class="form-control" placeholder=""/> */}
                                         <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
                                             {tagsData.map(tagData=>{
@@ -141,7 +141,7 @@ const GeneralSettings=(props)=> {
                                
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                        <label>Category: <span class="text-danger">*</span></label>
+                                        <label>Category <span class="text-danger">*</span></label>
                                         <select class="form-control" id="category_id" onChange={handleInput}>
                                         <option value="0" selected>Select...</option>
                                             <option>Option 1</option>
@@ -153,7 +153,7 @@ const GeneralSettings=(props)=> {
                                     </div>
                                    
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Manufacturer: <span class="text-danger">*</span></label>
+                                        <label>Manufacturer <span class="text-danger">*</span></label>
                                         <select class="form-control"  id="manufacturer_id"  onChange={handleInput}>
                                         <option value="0" selected>None</option>
                                             {manufactureData.map(manufacture=>{
@@ -167,7 +167,7 @@ const GeneralSettings=(props)=> {
 
                                 <div class="row mt-3">
                                     <div class="col-md-12">
-                                        <label>Internal Notes <small>(Not shown to customer)</small> :</label>
+                                        <label>Internal Notes <small>(Not shown to customer)</small> </label>
                                         <textarea class="form-control" rows="4" id="internal_notes" value={productDataById.internal_notes} onChange={handleInput} ></textarea>
                                     </div>
                                 </div>
