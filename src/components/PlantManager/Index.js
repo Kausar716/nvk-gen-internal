@@ -155,13 +155,15 @@ const  PlantManager=(props)=> {
 						<img src="assets/img/print.svg" alt=""/>
 					</a>
 				</div> */}
-                		<div class="topbarCtrls mt-3 mt-md-0">
-                        <Link to="/addPlant"> <a href="#" class="btn active">
-                   <span class="d-flex align-items-center text-left">
+                	<div class="topbarCtrls mt-3 mt-md-0">
+                    {/* <a href="#" class="btn active"> */}
+                        <Link to="/addPlant" class="btn active">
+                        <span class="d-flex align-items-center text-left">
                             <img src="assets/img/plant-ic-btn.svg" alt=""/>
-                         <span class="ml-2"><b>Add Plant</b></span>
+                            <span class="ml-2"><b>Add Plant</b></span>
                         </span>
-                    </a></Link> 
+                        </Link>
+                    {/* </a> */}
                     <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/search-ic-btn.svg" alt=""/>
