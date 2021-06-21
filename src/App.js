@@ -18,18 +18,17 @@ import {createBrowserHistory} from 'history';
 import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/SignInPage'
 import UserManagement from './components/userManagement/index'
-
 //import Sidebar from "./components/Sidebar";
 import ComingSoon from './components/commingSoon'
 import PlantSettings from './components/PlantSettings/PlantSettings';
 import ForgotPassword from "./components/SignIn/ForgotPassword";
 import RegisterNewUser from "./components/SignIn/RegisterNewUser";
 import UserSettings from "./components/UserSettings/UserSettings";
-
 import AddPlant from './components/PlantManager/AddPlant'
 import AddProduct from "./components/ProductManager/AddProduct";
-
+import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'
 import StaffDirectory from './components/StaffDirectory'
+
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -56,6 +55,7 @@ function App(props) {
     <Route exact path="/registerNewUser" >
                     <RegisterNewUser />
     </Route>
+
             
 
     
@@ -126,8 +126,14 @@ function App(props) {
 
               <Route path="/staffDirectory">
               <Nav />
-                  <Left />
+                <Left />
                 <StaffDirectory/>
+              </Route>
+
+              <Route  path="/organizationSettings" >
+              <Nav />
+              <Left />
+              <OrganizationSettings />
               </Route>
 
                   <Route path="/comingsoon">
