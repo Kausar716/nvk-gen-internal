@@ -121,7 +121,7 @@ const SkuList=(props)=> {
 
       
 //    window.addEventListener('scroll', this.listenToScroll)
-
+   console.log(props.productData)
     const skuPerPAge = pageSize;
     const pagesVisited = skuPageNumber*pageSize;
     const displaySkuList = skuData.slice(pagesVisited,pagesVisited+skuPerPAge)

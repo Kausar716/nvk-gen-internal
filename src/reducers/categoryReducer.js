@@ -33,14 +33,14 @@ export default function(state = initialSatate, action){
         case GET_ALL_PRODUCT_CATEGORIES_ACTION:
             return{
                 ...state,
-                categoryData:[...action.payload.data.active.data,...action.payload.data.inactive.data]
+                categoryData:[...action.payload.data.active,...action.payload.data.inactive]
             }
 
            //sub category data
         case GET_ALL_PRODUCT_SUB_CATEGORIES_ACTION:
             return{
                 ...state,
-                subCategoryData:[...action.payload.data.active.data,...action.payload.data.inactive.data]
+                subCategoryData:[...action.payload.data.active,...action.payload.data.inactive]
             }
 
         // manufacture data
@@ -48,7 +48,7 @@ export default function(state = initialSatate, action){
            
             return{
                 ...state,
-                manufactureData:[...action.payload.data.active.data,...action.payload.data.inactive.data]
+                manufactureData:[...action.payload.data.active,...action.payload.data.inactive]
 
             }
             default:
@@ -56,7 +56,7 @@ export default function(state = initialSatate, action){
         case GET_ALL_PLANT_CATEGORIES:
             return{
                 ...state,
-                plantCategoryData:[...action.payload.data.active.data,...action.payload.data.inactive.data]
+                plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive]
 
             }
     }

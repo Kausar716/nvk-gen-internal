@@ -63,12 +63,12 @@ import {
       
      }
      const submitAction = (e) =>{
-        if(submitCount == 0){
+        if(submitCount === 0){
            if(needAction){
-               if(actionType =="add")
+               if(actionType ==="add")
                props.createPlantAction(plantDataById,tagsData)
   
-               if(actionType =="edit")
+               if(actionType ==="edit")
                props.updatePlantAction(plantDataById,plantDataById.plant_id,tagsData)
                setSubmitCount(1)
            }
@@ -163,7 +163,13 @@ import {
                                     </div>
                                     <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                         <label>Common Name(s):</label>
-                                        <input type="text" class="form-control" placeholder=""/>
+                                        {/* <input type="text" class="form-control" placeholder=""/> */}
+                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
+                                            {tagsData.map(tagData=>{
+                                            return (<a className="subtag">{tagData}</a>)
+                                            }) }
+
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -179,17 +185,17 @@ import {
                             </select>
 
                                     </div>
-                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                    {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Bloom Color:</label>
                                         <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Follage Color:</label>
                                         <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-3">
+                                    {/* <div class="col-md-6 col-lg-3">
                                         <label>Height:</label>
                                         <div class="d-flex">
                                             <input type="text" class="form-control" placeholder="MIN"/>
@@ -244,7 +250,7 @@ import {
                                                 <option>Option 2</option>
                                             </select>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
@@ -286,7 +292,7 @@ import {
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
                                         <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount==0?needAction==true?false:true:true} onClick={submitAction} >{actionType=="add"?"Add Product":"Update Product"}</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add Product":"Update Product"}</button>
                                     </div>
                                 </div>
                             </form>

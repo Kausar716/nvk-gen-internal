@@ -78,7 +78,7 @@ const handleMainSelection= (id) => {
                 <span>Dashboard</span>
               </Link>
             </li>
-            <li class={selectedMainBar === "orderList"?"has-sub active":""} onClick={()=>{handleMainSelection("orderList")}}>             
+            <li class={selectedMainBar === "orderList"?"has-sub active":"has-sub "} onClick={()=>{handleMainSelection("orderList")}}>             
             <a href="javascript:void(0)">
               <b class="caret"></b>
                 <img src="assets/img/customer-quotes.svg" alt=""/>
@@ -111,7 +111,7 @@ const handleMainSelection= (id) => {
                   handleSubSelection("orderList8")}}><Link to="/comingsoon">New Quote</Link></li>
               </ul>          
             </li>
-            <li class={selectedMainBar === "purchaseOrder"?"has-sub active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>
+            <li class={selectedMainBar === "purchaseOrder"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("purchaseOrder")}}>
               <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/purchase-orders.svg" alt=""/>
@@ -127,7 +127,7 @@ const handleMainSelection= (id) => {
               </ul>  
             </li>
             <li  
-            class={(selectedMainBar === "inventory")?"has-sub active":""} onClick={()=>{handleMainSelection("inventory")}} 
+            class={(selectedMainBar === "inventory")?"has-sub active":"has-sub "} onClick={()=>{handleMainSelection("inventory")}} 
             >
               <a href="javascript:void(0)">
               <b class="caret"></b>
@@ -174,7 +174,7 @@ const handleMainSelection= (id) => {
                 <span>Supplier Management</span>
               </Link>
             </li>
-            <li class={selectedMainBar === "ToolsAndSettings"?"has-sub active":""} onClick={()=>{handleMainSelection("ToolsAndSettings")}}>
+            <li class={selectedMainBar === "ToolsAndSettings"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("ToolsAndSettings")}}>
               <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/settings.svg" alt=""/>
@@ -183,7 +183,7 @@ const handleMainSelection= (id) => {
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("AdminSetting1")}}><Link to="/comingsoon">Organization</Link></li>
+                  handleSubSelection("AdminSetting1")}}><Link to="/organizationSettings">Organization</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/comingsoon">Customer Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/comingsoon">Supplier Settings</Link></li>
@@ -204,7 +204,7 @@ const handleMainSelection= (id) => {
                 <span>Staff Directory</span>
               </Link>
             </li>
-            <li class={selectedMainBar === "MessageCenter"?"has-sub active":""} onClick={()=>{handleMainSelection("MessageCenter")}}>
+            <li class={selectedMainBar === "MessageCenter"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("MessageCenter")}}>
               <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/message-center.svg" alt=""/>
