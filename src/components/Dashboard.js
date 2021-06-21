@@ -82,7 +82,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                     </Link>
                 </div>
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("ToolsAndSettings")}}>
-                <Link to="/comingsoon" >
+                <Link to="/organizationSettings" >
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Tools & Settings</h3>
                         <div class="text-center my-4 dashIcon">
