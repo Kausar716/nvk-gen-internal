@@ -9,29 +9,10 @@ function AddProduct() {
     const [value, onChange] = useState(new Date());
     return (
         <div>
-            <div>
+            <div> 
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/plant-ic-lg-green.svg" alt=""/> Add Product</h1>
-				<div class="topbarCtrls mt-3 mt-md-0">
-                    <a href="#" class="btn active">
-                        <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/plant-ic-btn.svg" alt=""/>
-                            <span class="ml-2"><b>Add Product</b></span>
-                        </span>
-                    </a>
-                    <a href="#" class="btn ml-2">
-                        <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/search-ic-btn.svg" alt=""/>
-                            <span class="ml-2"><b>Preview</b></span>
-                        </span>
-                    </a>
-                    <a href="#" class="btn ml-2 mt-3 mt-md-0">
-                        <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/print-ic-btn.svg" alt=""/>
-                            <span class="ml-2"><b>Print</b></span>
-                        </span>
-                    </a>
-				</div>
+				<h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add Product</h1>
+	
 			</div>
             <div class="px-md-3 mt-3">
                 <div class="px-3 py-3 mb-3 bg-white">
