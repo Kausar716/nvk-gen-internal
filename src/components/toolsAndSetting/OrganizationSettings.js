@@ -80,11 +80,11 @@ export class OrganizationSettings extends React.Component {
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <label>Main Title (Body)</label>
+                                            <label>Main (Body)</label>
                                             <textarea class="form-control" rows="5">Address 01</textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Secondary Title (Body)</label>
+                                            <label>Secondary (Body)</label>
                                             <textarea class="form-control" rows="5">Address 02</textarea>
                                         </div>
                                     </div>
