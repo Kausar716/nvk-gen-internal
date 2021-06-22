@@ -62,7 +62,8 @@ const  ProductManagement = (props) =>{
         },[])
 
         const handleCategoryData =(e)=>{
-            console.log(e.target.value)
+            console.log(e.target.id)
+
             if(e.target.id ==="category"){
                 if(e.target.value==="All"){
                     setDisable(true)

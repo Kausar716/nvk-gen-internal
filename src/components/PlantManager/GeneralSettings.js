@@ -136,33 +136,33 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                        <label>Genus: <span class="text-danger">*</span></label>
+                                        <label>Genus <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" placeholder="" id="genus" value={plantDataById.genus} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Species: <span class="text-danger">*</span></label>
+                                        <label>Species <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" placeholder="" id="species" value={plantDataById.species} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Cultivar:</label>
+                                        <label>Cultivar</label>
                                         <input type="text" class="form-control" placeholder="" id="cultivar1" value={plantDataById.cultivar1} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Cultivar 2:</label>
+                                        <label>Cultivar 2</label>
                                         <input type="text" class="form-control" placeholder="" id="cultivar2" value={plantDataById.cultivar2} onChange={handleInput}/>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                        <label>Alternate Genus:</label>
+                                        <label>Alternate Genus</label>
                                         <input type="text" class="form-control" placeholder="" id="alternate_genus" value={plantDataById.alternate_genus} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Series:</label>
+                                        <label>Series</label>
                                         <input type="text" class="form-control" placeholder=""  id="series" value={plantDataById.series} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
-                                        <label>Common Name(s):</label>
+                                        <label>Common Name(s)</label>
                                         {/* <input type="text" class="form-control" placeholder=""/> */}
                                         <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
                                             {tagsData.map(tagData=>{
@@ -174,7 +174,7 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                        <label>Category: <span class="text-danger">*</span></label>
+                                        <label>Category <span class="text-danger">*</span></label>
                                         <select class="form-control">
                                         {plantCategoryData.map(plantCategory=>{
                                                     return(
@@ -254,15 +254,15 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                        <label>Patent:</label>
+                                        <label>Patent</label>
                                         <input type="text" class="form-control" placeholder="" id="patent" value={plantDataById.patent} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Royalty:</label>
+                                        <label>Royalty</label>
                                         <input type="text" class="form-control" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Hardiness:</label>
+                                        <label>Hardiness</label>
                                         {/* <select class="form-control">
                                             <option>Select</option>
                                             <option>Option 1</option>
@@ -272,7 +272,7 @@ import {
                                         
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Introduction Year:</label>
+                                        <label>Introduction Year</label>
                                         <select class="form-control" id="introduction_year" onChange={handleInput}>
                                         {
                                         indents.map(year=>{
@@ -285,14 +285,14 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12">
-                                        <label>Internal Notes <small>(Not shown to customer)</small> :</label>
+                                        <label>Internal Notes <small>(Not shown to customer)</small> </label>
                                         <textarea class="form-control" rows="4" value={plantDataById.notes} id="notes" onChange={handleInput}></textarea>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
                                         <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add Product":"Update Product"}</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add Plant":"Update Plant"}</button>
                                     </div>
                                 </div>
                             </form>

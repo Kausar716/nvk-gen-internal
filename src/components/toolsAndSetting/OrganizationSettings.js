@@ -21,7 +21,7 @@ export class OrganizationSettings extends React.Component {
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
-                                        <p class="m-0">The following details will appear on all printed items inclusing invoices, orders, bills of loading, etc.</p>
+                                        <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of loading, etc.</p>
                                     </div>
                                 </div>
                             </div>
@@ -54,8 +54,8 @@ export class OrganizationSettings extends React.Component {
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            <label>Sending Email Adress</label>
-                                            <input type="text" placeholder="Dispatch Email Adress" class="form-control" />
+                                            <label>Sending Email Address</label>
+                                            <input type="text" placeholder="Dispatch Email Address" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row form-group">
@@ -75,17 +75,17 @@ export class OrganizationSettings extends React.Component {
                                         </div>
                                         <div class="col-md-6">
                                             <label>Secondary Title (Body)</label>
-                                            <input type="text" placeholder="Adress 01" class="form-control" />
+                                            <input type="text" placeholder="Address 01" class="form-control" />
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <label>Main Title (Body)</label>
-                                            <textarea class="form-control" rows="5">Adress 01</textarea>
+                                            <label>Main (Body)</label>
+                                            <textarea class="form-control" rows="5">Address 01</textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Secondary Title (Body)</label>
-                                            <textarea class="form-control" rows="5">Adress 02</textarea>
+                                            <label>Secondary (Body)</label>
+                                            <textarea class="form-control" rows="5">Address 02</textarea>
                                         </div>
                                     </div>
                                 </div>

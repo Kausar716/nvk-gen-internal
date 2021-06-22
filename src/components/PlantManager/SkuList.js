@@ -115,7 +115,7 @@ const SkuList = (props)=>{
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU:</h3>{plantSkuDataById.sku_code}
+                                            <h3>GENERATED SKU</h3>{plantSkuDataById.sku_code}
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
@@ -130,7 +130,7 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Form:</label>
+                                            <label>Form</label>
                                             <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Form")[0]["id"]:"form"} onChange={handleInput}>
                                                  <option>None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
@@ -142,7 +142,7 @@ const SkuList = (props)=>{
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Caliper:</label>
+                                            <label>Caliper</label>
                                             <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
@@ -154,7 +154,7 @@ const SkuList = (props)=>{
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Height:</label>
+                                            <label>Height</label>
                                             <select class="form-control" id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
@@ -166,7 +166,7 @@ const SkuList = (props)=>{
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Packaging: <span class="text-danger">*</span></label>
+                                            <label>Packaging <span class="text-danger">*</span></label>
                                             <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Packaging")[0]["id"]:"packaging"} onChange={handleInput}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Packaging").map(filterData=>{
@@ -181,19 +181,19 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Each Cost: <span class="text-danger">*</span></label>
+                                            <label>Each Cost <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Each Price: <span class="text-danger">*</span></label>
+                                            <label>Each Price <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Sale Price: <span class="text-danger">*</span></label>
+                                            <label>Sale Price <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Sales Expiry Date:</label>
+                                            <label>Sales Expiry Date</label>
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
                                                     <div>
@@ -215,7 +215,7 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Volume Quality: <span class="text-danger">*</span></label>
+                                            <label>Volume Quality <span class="text-danger">*</span></label>
                                             <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} >
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
@@ -227,7 +227,7 @@ const SkuList = (props)=>{
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Volume Price per unit:</label> 
+                                            <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
                                             <input type="text" class="form-control text-right" placeholder="" id="volume_price_per_unit" onChange={handleInput}/>
 
@@ -342,13 +342,13 @@ const mapStateToProps = (state)=> ({
 })
 export default connect(mapStateToProps,{
     createPlantSkuAction ,
-   updatePlantSkuAction ,
-deletePlantSkuAction ,
-  getAllPlantSkuAction ,
-   showSpecifiedPlantSkuAction ,
-   getAllAttributesAction,
-   setPlantSkuPageNumber,
-   handlePlantSkuInputAction,
-   deletePlantAction,
-   getSpecifiedPlantAction
+    updatePlantSkuAction ,
+    deletePlantSkuAction ,
+    getAllPlantSkuAction ,
+    showSpecifiedPlantSkuAction ,
+    getAllAttributesAction,
+    setPlantSkuPageNumber,
+    handlePlantSkuInputAction,
+    deletePlantAction,
+    getSpecifiedPlantAction
 })(SkuList)

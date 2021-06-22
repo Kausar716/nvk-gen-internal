@@ -70,11 +70,11 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                         </div>
                         <div class="row">
                             <div class="col-6 col-md-6">
-                                <p>Tasks Availble</p>
+                                <p>Tasks Available</p>
                                 <h4>72</h4>
                             </div>
                             <div class="col-6 col-md-6 text-right">
-                                <p>Requests Availble</p>
+                                <p>Requests Available</p>
                                 <h4>50</h4>
                             </div>
                         </div>
@@ -82,7 +82,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                     </Link>
                 </div>
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("ToolsAndSettings")}}>
-                <Link to="/comingsoon" >
+                <Link to="/organizationSettings" >
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Tools & Settings</h3>
                         <div class="text-center my-4 dashIcon">

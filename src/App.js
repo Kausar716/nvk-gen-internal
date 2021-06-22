@@ -60,7 +60,7 @@ function App(props) {
 
     
     {/* {authKey.loggedIn ? <> */}
-      <div id="page-container" className="fade page-sidebar-fixed page-header-fixed">
+      <div id="page-container" className=" page-sidebar-fixed page-header-fixed">
        
 
 

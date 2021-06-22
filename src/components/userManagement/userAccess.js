@@ -305,7 +305,7 @@ export  default class UserAccess extends React.Component{
                                                         </select>
                                                     </div>
                                                     <div class="mt-2">
-                                                        <h5>Load Exesting Role</h5>
+                                                        <h5>Load Existing Role</h5>
                                                         <select class="form-control">
                                                             <option>User</option>
                                                             <option>Option 1</option>
@@ -334,7 +334,7 @@ export  default class UserAccess extends React.Component{
                                     </div>
                                     <div class="custom-control custom-checkbox ml-2">
                                         <input type="checkbox" class="custom-control-input" id="allPermissionOff"  onClick={this.handleSelect} name="unSelect"/>
-                                        <label class="custom-control-label pl-2" for="allPermissionOff"> Turn All Permission Off</label>
+                                        <label class="custom-control-label pl-2" for="allPermissionOff"> Turn All Permissions Off</label>
                                     </div>
                                 </div>
                             </div>

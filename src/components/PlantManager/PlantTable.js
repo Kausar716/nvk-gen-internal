@@ -73,11 +73,11 @@ const PlantTable=(props)=> {
    const confirmAction = (id,type)=>{
     if(type==="delete"){
         setType(type)
-        setMessage("Are you sure you want to delete this product and its related SKUs?")
+        setMessage("Are you sure you want to delete this plant and its related SKUs?")
 
     }else{
         setType(type)
-        setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+        setMessage("Are you sure you want to duplicate this plant and all its related SKU and plant information?")
 
     }
     setOpen(true)
