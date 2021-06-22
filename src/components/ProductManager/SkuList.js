@@ -69,6 +69,8 @@ const SkuList=(props)=> {
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
     const {subCategoryData} = props.categoryData
+    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0  })
+    const [errorCount,setErrorCount] = useState(0)
 
     useEffect(()=>{
         props.getAllSkuAction()
@@ -81,6 +83,22 @@ const SkuList=(props)=> {
     }
     const handleInput =(e)=>{
         console.log(e.target.id,e.target.value)
+        let errorcount =errorCount
+        let errorobj =errorObj
+        if(e.target.id  === "each_cost" ){
+            errorobj.each_cost=0
+            errorcount--
+        }
+        if(e.target.id  === "each_price" ){
+            errorobj.each_price=0
+            errorcount--
+        }
+        if(e.target.id  === "sale_price" ){
+            errorobj.sale_price=0
+            errorcount--
+        }
+        setErrorObj(errorobj)
+       setErrorCount(errorcount)
         if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)

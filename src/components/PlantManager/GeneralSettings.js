@@ -34,13 +34,30 @@ import {
     const [submitCount, setSubmitCount] = useState(0)
     const [count, setCount] = useState(0)
     const [toggleForTagInput,setToggle] = useState(true)
+    const [errorObj,setErrorObj] = useState({ genus:0,species:0  })
+    const [errorCount,setErrorCount] = useState(0)
+ 
     const handleInput =(e)=>{
         setSubmitCount(0)
+        let errorcount =errorCount
+        let errorobj =errorObj
+        if(e.target.id  === "genus" ){
+            errorobj.genus=0
+            errorcount--
+        }
+        if(e.target.id  === "species" ){
+            errorobj.species=0
+            errorcount--
+        }
+        setErrorObj(errorobj)
+       setErrorCount(errorcount)
         if(e.target.id ==="archived") props.handlePlantInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="discontinued") props.handlePlantInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handlePlantInputAction(e.target.id,e.target.value)
 
     }
+
+
 
     const childAdd = (e) =>{
         let commonArray = tagsData
@@ -58,11 +75,35 @@ import {
          setCount(count+1)
             setToggle(true)
         }
-       
+     }
+     const handleValidation =()=>{
+         let returnValue=true
+         let errorcount =errorCount
+         let errorobj =errorObj
+       if(plantDataById.genus.length === 0){
+        returnValue= false
+        errorobj.genus=1
+        errorcount++
+       }
+       if(plantDataById.species.length === 0){
+        returnValue= false
+        errorobj.species=1
+        errorcount++
+       }
+    //    if(plantDataById.categoryData.length === 0){
+    //     returnValue= false
+    //     errorobj.categoryData=1
+    //     errorcount++
+    //    }
+       setErrorObj(errorobj)
+       setErrorCount(errorcount)
 
-      
      }
      const submitAction = (e) =>{
+         console.log(plantDataById.genus)
+         console.log(errorObj);
+         let validate = handleValidation()  
+         if(validate)
         if(submitCount === 0){
            if(needAction){
                if(actionType ==="add")
@@ -138,10 +179,13 @@ import {
                                     <div class="col-md-6 col-lg-3">
                                         <label>Genus <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" placeholder="" id="genus" value={plantDataById.genus} onChange={handleInput}/>
+                                        {errorObj.genus!==0?<span style={{fontSize:"small",color:"red"}}>Required</span>:""}
+                                        
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Species <span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" placeholder="" id="species" value={plantDataById.species} onChange={handleInput}/>
+                                        {errorObj.species!==0?<span style={{fontSize:"small",color:"red"}}>Required</span>:""}
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Cultivar</label>
@@ -175,14 +219,14 @@ import {
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
                                         <label>Category <span class="text-danger">*</span></label>
-                                        <select class="form-control">
+                                        <select class="form-control"  onChange={handleInput}>
                                         {plantCategoryData.map(plantCategory=>{
                                                     return(
                                                         <option value={plantCategory.id}>{plantCategory.name} </option>
                                                     )
                                                 })                                       
-                            }
-                            </select>
+                                        }
+                                        </select>
 
                                     </div>
                                     {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">

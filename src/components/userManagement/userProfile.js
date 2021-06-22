@@ -66,10 +66,15 @@ export class UserProfile extends Component {
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
+        let nameReg = /^[a-zA-Z]+$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
         if(this.state.firstName.length === 0){
            errorObj.firstNameError=1
+           errorCount++
+        }
+        if(!nameReg.test(this.state.firstName)){
+            errorObj.firstNameError=1
            errorCount++
         }
         else{
@@ -184,12 +189,12 @@ export class UserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>First Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="First Name" class="form-control" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
-                                                    {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter First Name</span>:""}
+                                                    {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Last Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="Last Name" class="form-control" name="lastName" value={this.state.lastName} onChange={this.handleInput} />
-                                                    {this.state.errorObj.lastNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Last Name</span>:""}
+                                                    {this.state.errorObj.lastNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                                 </div>
                                             </div>
                                             <div class="row form-group">
