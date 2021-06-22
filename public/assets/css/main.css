@@ -58923,13 +58923,13 @@ span.editIcon {
     padding: 0;
     background: #fff;
     display: inline-block;
-    border: 1px solid #414244 !important;
+    border: 1px solid #5287F5 !important;
 }
 .react-tabs__tab {
     display: inline-block;
     border: 1px solid transparent;
     border-bottom: none;
-    bottom: 0px;
+    bottom: -1px;
     position: relative;
     list-style: none;
     padding: 8px 12px 12px 12px !important;
@@ -59203,6 +59203,33 @@ ul.list-unstyled.searchAlpha li a:hover {
 }
 .likeIc.stsLiked i {
     color: #FF8D8D;
+}
+.signInContent .form-control {
+    height: 50px;
+}
+.signInContent .btn-pwd{
+    font-size: 24px;
+    color: grey;
+}
+.btnSignIn {
+    background-color: #7EBB03;
+    color: #fff;
+    font-size:24px;
+    font-weight: 400;
+}
+.btnSignIn:hover {
+    color: #fff;
+}
+.textGrey {
+    color: #8A8A8A;
+}
+.footerBar, .footerBar a {
+    background-color: #629C44;
+    color: #fff;
+}
+.react-tabs__tab {
+    bottom: 0px !important;
+    margin-top: -1px !important;
 }
 
 @media (min-width:990px) {
