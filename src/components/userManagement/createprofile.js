@@ -12,6 +12,7 @@ export class CreateUserProfile extends Component {
             lastName:"",
             phone:"",
             email:"",
+            position:"",
             locationAccess:false,
             displayDeletedRecords:false,
             profileImage:"",
@@ -20,7 +21,8 @@ export class CreateUserProfile extends Component {
                 firstNameError:0,
                 lastNameError:0,
                 phoneError:0,
-                emailError:0,                
+                emailError:0,     
+                positionError:0           
             },
             errorCount:0,
             display:false,
@@ -54,6 +56,10 @@ export class CreateUserProfile extends Component {
             errorObj.emailError=0
             errorCount--
         }
+        else if(name === "postiton"){
+            errorObj.positionError=0
+            errorCount--
+        }
         this.setState({errorObj,errorCount})
     }
     handleUpdate = () => {
@@ -61,8 +67,8 @@ export class CreateUserProfile extends Component {
     }
     validate = () =>{
         let {errorObj,errorCount}=this.state
-        // let phoneReg=/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-        let phoneReg = new RegExp('^[0-9]+$');
+        let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        // let phoneReg = new RegExp('^[0-9]+$');
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
         if(this.state.firstName.length === 0){
@@ -85,6 +91,10 @@ export class CreateUserProfile extends Component {
         }
         if(this.state.phone.length>13){
             errorObj.phoneError=1
+            errorCount++
+        }
+        if(this.state.position.length === 0){
+            errorObj.positionError=1
             errorCount++
         }
          if(! emailReg.test(this.state.email)){
@@ -159,12 +169,12 @@ export class CreateUserProfile extends Component {
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg" alt="" />
                                                 </a>
-                                                <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
+                                                {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
                                                     <span class="d-flex align-items-center justify-content-around">
                                                         <span class="f-s-20 text-danger">Remove</span>
                                                     </span>
                                                     <img src="assets/img/bin-ic-red.svg" alt=""/>
-                                                </a>
+                                                </a> */}
                                                 {/* <div class="text-left mt-2">
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
@@ -192,10 +202,12 @@ export class CreateUserProfile extends Component {
                                                         <option>Option 1</option>
                                                         <option>Option 2</option>
                                                     </select>
+                                                    {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
+
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="XXX - XXXXXXXXXX" class="form-control"  value={this.state.phone} onChange={this.handleInput} name="phone"/>
+                                                    <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"  value={this.state.phone} onChange={this.handleInput} name="phone"/>
                                                     {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                                 </div>
                                             </div>
@@ -257,11 +269,11 @@ export class CreateUserProfile extends Component {
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 col-lg-4 d-flex align-items-center">
-                                    Restore User
-                                    <div class="switcher ml-2 pr-md-3">
+                                    {/* Restore User */}
+                                    {/* <div class="switcher ml-2 pr-md-3">
                                         <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2"/>
                                         <label for="switcher_checkbox_2"></label>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
