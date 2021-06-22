@@ -28,9 +28,9 @@ const validate = values => {
       errors.username = 'Must be 15 characters or less'
     }
     if (!values.email) {
-      errors.email = 'Required'
+      errors.email = 'Please enter a valid email address'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Invalid email address'
+      errors.email = 'Please enter a valid email address'
     }
  
     return errors
@@ -52,7 +52,7 @@ const validate = values => {
     <div>
       {/* <label>{label}</label> */}
       <div>
-        <input {...input} class="input-field1" placeholder={label}  type={type}/>
+        <input {...input} class="form-control" placeholder={label}  type={type}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
         </Row>
@@ -89,9 +89,9 @@ const ForgotPassword = (props) => {
                 </div>
             </div>
             <div class="container">
-                <div class="row justify-content-center mt-md-5">
+                <div class="row justify-content-center mt-md-8">
                     <div class="col-md-6">
-                        <div class="bg-white px-4 py-4 signInContent">
+                        <div class="bg-white px-3 py-3 signInContent">
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
                                     <div class="col-md-12 text-center">
@@ -103,7 +103,7 @@ const ForgotPassword = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <label for="plantSearch">Email</label>
+                                        <label for="plantSearch">Email <span class="text-danger">*</span></label>
                                         {/* <input type="text" class="form-control" placeholder="Email" /> */}
                                         <Field name="email" type="email" component={renderField} label="Email" />
                                     </div>
@@ -122,7 +122,7 @@ const ForgotPassword = (props) => {
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-3">
+                <div class="row justify-content-center mt-1">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12 text-center">
@@ -133,7 +133,7 @@ const ForgotPassword = (props) => {
                     </div>
                 </div>
             </div>
-            <div class="footerBar py-3 mt-md-5">
+            <div class="footerBar py-3 mt-md-8">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">

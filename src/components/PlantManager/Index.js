@@ -48,6 +48,7 @@ const  PlantManager=(props)=> {
     const [type, setType] = useState("")
     const [categoryId,setCategoryId] = useState(0)
     const [inputValue, setInputValue] = useState("");
+    const [errorObj,setErrorObj] = useState({ genusError:0,lastNameError:0,phoneError:0,emailError:0,positionError:0})
 // const productFormAction = ()=>{
 //         this.props.getProductPage("general")
 //         this.setState({plantPageToOpen:"general"})
