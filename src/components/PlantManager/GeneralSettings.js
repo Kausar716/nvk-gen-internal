@@ -36,15 +36,15 @@ import {
     const [toggleForTagInput,setToggle] = useState(true)
     const handleInput =(e)=>{
         setSubmitCount(0)
-        if(e.target.id =="archived") props.handlePlantInputAction(e.target.id,e.target.value ==1?0:1)
-        else if(e.target.id =="discontinued") props.handlePlantInputAction(e.target.id,e.target.value ==1?0:1)
+        if(e.target.id ==="archived") props.handlePlantInputAction(e.target.id,e.target.value ===1?0:1)
+        else if(e.target.id ==="discontinued") props.handlePlantInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handlePlantInputAction(e.target.id,e.target.value)
 
     }
 
     const childAdd = (e) =>{
         let commonArray = tagsData
-        if(commonArray.length == 0){
+        if(commonArray.length === 0){
          commonArray[count] =e.target.value
          var elem = document.getElementById(count);
          elem.parentNode.removeChild(elem);
@@ -77,7 +77,7 @@ import {
     }
 
     const addTag = (e) =>{
-        if(e.target.id=="tags" && toggleForTagInput){
+        if(e.target.id==="tags" && toggleForTagInput){
             var inputTag = document.createElement('input');
             inputTag.id = count
             inputTag.className= "input_tag_edit"

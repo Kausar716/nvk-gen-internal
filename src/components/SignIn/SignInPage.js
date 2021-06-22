@@ -19,7 +19,7 @@ import submit from './submit'
 //   const maxLength15 = maxLength(15)
 //   const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
 // 
-  const required = value => value ? undefined : 'Required'
+  const required = value => value ? undefined : 'Please enter a valid password'
   const minValue = min => value =>
   value && value < min ? `Must be at least ${min}` : undefined
   const minValue2 = minValue(4)
@@ -41,19 +41,20 @@ import submit from './submit'
 
 const validate = values => {
     const errors = {}
+    if (!values.password || values.password === 'undefined') {
+        errors.password = 'Please enter a valid password'
+    }
     if (!values.username) {
-      errors.username = 'Required Password'
+      errors.username = 'Please enter a valid email address'
     } else if (values.username.length > 15) {
       errors.username = 'Must be 15 characters or less'
     }
     if (!values.email) {
-      errors.email = 'Required Email Address'
+      errors.email = 'Please enter a valid email address'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Invalid email address'
+      errors.email = 'Please enter a valid email address'
     }
-    if (!values.password) {
-        errors.password = 'Required Password'
-    } 
+     
     return errors
   }
   
@@ -119,28 +120,28 @@ const SignInPage = (props) => {
                 </div>
             </div>
             <div class="container">
-                <div class="row justify-content-center mt-md-5">
+                <div class="row justify-content-center mt-md-8">
                     <div class="col-md-6">
-                        <div class="bg-white px-4 py-4 signInContent">
+                        <div class="bg-white px-3 py-3 signInContent">
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
                                     <div class="col-md-12 text-center">
                                         <div class="">
                                             <img src="./assets/img/nvk-logo.png" alt="" class="img-fluid" />
                                         </div>
-                                        <h1 class="f-w-400 mt-4">Sign in to continue</h1>
+                                        <h1 class="f-w-400 mt-8">Sign in to continue</h1>
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <label for="plantSearch">Email</label>
+                                        <label for="plantSearch">Email <span class="text-danger">*</span></label>
                                         {/* <input type="text" class="form-control" placeholder="Email" /> */}
                                         <Field name="email" type="email" component={renderField} label="Email" />
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <label for="plantSearch">Password</label>
+                                        <label for="plantSearch">Password <span class="text-danger">*</span></label>
                                         <div class="passwordInput">
                                             {/* <input type="text" class="form-control" placeholder="Password" /> */}
                                             <Field
@@ -182,7 +183,7 @@ const SignInPage = (props) => {
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center mt-3">
+                <div class="row justify-content-center mt-1">
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12 text-center">
@@ -193,7 +194,7 @@ const SignInPage = (props) => {
                     </div>
                 </div>
             </div>
-            <div class="footerBar py-3 mt-md-5">
+            <div class="footerBar py-3 mt-md-8">
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
