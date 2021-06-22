@@ -36,16 +36,16 @@ export class PlantSettings extends Component {
             <div className="px-md-3 mt-3">
                 <Tabs>
                     <TabList>
-                        <Tab>Categories</Tab>
-                        <Tab>Bloom &amp; Foliage Colors</Tab>
-                        <Tab>Zones</Tab>
-                        <Tab>Characteristics</Tab>
-                        <Tab>Volume Tiers</Tab>
-                        <Tab>Inventory Reasons</Tab>
-                        <Tab>Form</Tab>
-                        <Tab>Caliper</Tab>
-                        <Tab>Height</Tab>
-                        <Tab>Packaging</Tab>
+                        <Tab style={{bottom:"0px"}}>Categories</Tab>
+                        <Tab style={{bottom:"0px"}}>Bloom &amp; Foliage Colors</Tab>
+                        <Tab style={{bottom:"0px"}}>Zones</Tab>
+                        <Tab style={{bottom:"0px"}}>Characteristics</Tab>
+                        <Tab style={{bottom:"0px"}}>Volume Tiers</Tab>
+                        <Tab style={{bottom:"0px"}}>Inventory Reasons</Tab>
+                        <Tab style={{bottom:"0px"}}>Form</Tab>
+                        <Tab style={{bottom:"0px"}}>Caliper</Tab>
+                        <Tab style={{bottom:"0px"}}>Height</Tab>
+                        <Tab style={{bottom:"0px"}}>Packaging</Tab>
                     </TabList>
                     <TabPanel>
                         <Categories/>

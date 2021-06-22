@@ -67,9 +67,9 @@ handleCancle = () => {
 			</div>
             <div class="px-md-3 mt-3">
                 <Tabs>
-                    <TabList class="d-inline-block bg-white pl-0">
-                        <Tab>User Profile</Tab>
-                        <Tab>User Access</Tab>
+                    <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}>
+                        <Tab style={{bottom:"0px"}}>User Profile</Tab>
+                        <Tab style={{bottom:"0px"}}>User Access</Tab>
                     </TabList>
                     <TabPanel>
                     <div class="bg-white">

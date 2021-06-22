@@ -27,8 +27,8 @@ export class ProductSettings extends Component {
             <div class="px-md-3 mt-3">
                 <Tabs>
                     <TabList>
-                        <Tab>Categories</Tab>
-                        <Tab>Manufacturer</Tab>                        
+                        <Tab style={{bottom:"0px"}}>Categories</Tab>
+                        <Tab style={{bottom:"0px"}}>Manufacturer</Tab>                        
                     </TabList>
                   
                     <TabPanel>
