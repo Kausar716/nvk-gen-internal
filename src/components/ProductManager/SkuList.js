@@ -1,3 +1,8 @@
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+/* eslint-disable react/jsx-no-duplicate-props */
 import React, { useEffect, useState} from "react"
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -69,8 +74,6 @@ const SkuList=(props)=> {
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
     const {subCategoryData} = props.categoryData
-    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0  })
-    const [errorCount,setErrorCount] = useState(0)
 
     useEffect(()=>{
         props.getAllSkuAction()
@@ -83,22 +86,6 @@ const SkuList=(props)=> {
     }
     const handleInput =(e)=>{
         console.log(e.target.id,e.target.value)
-        let errorcount =errorCount
-        let errorobj =errorObj
-        if(e.target.id  === "each_cost" ){
-            errorobj.each_cost=0
-            errorcount--
-        }
-        if(e.target.id  === "each_price" ){
-            errorobj.each_price=0
-            errorcount--
-        }
-        if(e.target.id  === "sale_price" ){
-            errorobj.sale_price=0
-            errorcount--
-        }
-        setErrorObj(errorobj)
-       setErrorCount(errorcount)
         if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)
@@ -141,6 +128,7 @@ const SkuList=(props)=> {
 //    window.addEventListener('scroll', this.listenToScroll)
    console.log(props.productData)
     const skuPerPAge = pageSize;
+    const totalLength = skuData.length;
     const pagesVisited = skuPageNumber*pageSize;
     const displaySkuList = skuData.slice(pagesVisited,pagesVisited+skuPerPAge)
     const pageCount = Math.ceil(skuData.length/skuPerPAge)
@@ -251,7 +239,7 @@ const SkuList=(props)=> {
                             </div>
                             <div className="row_1">
                             <div>
-                            <label className="greenText">{"Showing " + (( skuPageNumber)+1 )+  "  to  " +  ((( pageSize+1)*5)>skuData.length?skuData.length:( skuPageNumber+1)*5)  + "  of   "  +   skuData.length }</label>
+                            <label className="greenText">{"Showing " + (skuPageNumber>0 ? (pageSize*((skuPageNumber)))+1 : ((skuPageNumber)+1))+  "  to  " +  (skuPageNumber>0 ? (((pageSize*((skuPageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((skuPageNumber)))+pageSize)) : ((((skuPageNumber)+1)*pageSize)>totalLength?totalLength:(((skuPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label>
                             </div>
 
 
@@ -275,15 +263,15 @@ const SkuList=(props)=> {
 
 
 
-                    <div className="skuPagination" style={{marginRight:"26em"}}>
+                    <div className="skuPagination">
                     <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={skuPageNumber+1}/>
                     </div>
                     </div>
 
 
-                    
-                            <div class="bg-white px-3 py-3 my-3">
-                                <table id="plantDetails" class="table table-striped w-100 table-responsive">
+                            <div className="form-group row mt-3">
+                            <div className="col-md-12">
+                                <table id="plantDetails" class="table table-striped w-100 ">
                                     <thead>
                                         <tr>
                                             <th class="text-nowrap">Status</th>
@@ -339,6 +327,7 @@ const SkuList=(props)=> {
                     })}
                                     </tbody>
                                 </table>
+                            </div>
                             </div>
                         </div>
         </div>
