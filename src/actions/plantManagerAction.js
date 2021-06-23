@@ -366,7 +366,7 @@ export const handlePlantCategory = (category,subCategory) =>dispatch=>{
 
 //search plant
 export const serachPlant = (data) =>dispatch=>{
-    
+    //console.log(data)
     dispatch({
         type:HANDLE_SEARCH_INPUT,
         payload:data,
