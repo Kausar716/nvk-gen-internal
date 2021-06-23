@@ -41,8 +41,8 @@ import {
 } from '../actions/types';
 let minMonth = new Date().getMonth()
 let minDate = new Date().getDate()
-let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
-let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
+let minDateFormate = minDate.toString().length===1?"0"+minDate:minDate
+let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
 
 
 
