@@ -3,6 +3,7 @@ import React,  {useState } from 'react' ;
 // import {Table} from 'reactstrap'
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal'
+import {useHistory} from "react-router-dom"
 import {
     //product actions
     createProductAction ,
@@ -26,6 +27,8 @@ import {
 import TablePagination from '../Pagination'
 
 const ProductTable  = (props) => {
+
+    let history = useHistory();
     const [pageSize, setPageSize] =useState(15)
 
 
@@ -54,6 +57,10 @@ const ProductTable  = (props) => {
 
         }else{
             props.duplicateProduct(id)
+            history.push({
+                pathname:`/addProduct/${id}`,
+    
+            })
         }
   
        setOpen(false)
@@ -61,7 +68,7 @@ const ProductTable  = (props) => {
        setType("")
        setMessage("")
    }
-   const confirmAction = (id,type)=>{
+   const confirmAction = (id,type,product)=>{
        if(type==="delete"){
            setType(type)
            setMessage("Are you sure you want to delete this product and its related SKUs?")
@@ -69,11 +76,28 @@ const ProductTable  = (props) => {
        }else{
            setType(type)
            setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
-
+      
        }
        setOpen(true)
        setId(id)
    }
+
+
+   const handleEdit=(product)=>{
+        history.push({
+            pathname:`/addProduct/${product.product_id}`,
+
+        })
+   }
+
+//    const handleDuplicate=(product)=>{
+//     history.push({
+//         pathname:`/addProduct/${product.product_id}`,
+
+
+//     })
+
+//    }
    
    const {productData,pageNumber,productDataById} = props.productData
   // const {productData,pageNumber} = props.productData
@@ -136,9 +160,9 @@ const ProductTable  = (props) => {
                                         <tbody>
 
                                         {displayProductList.map(product=>{
-                                            console.log("Product data", product)
-                                            console.log("cacategoryData",categoryData)
-                                            console.log("categoryDatacategoryDataLENGTH", categoryData.length)
+                                           // console.log("Product data", product)
+                                            //console.log("cacategoryData",categoryData)
+                                            //console.log("categoryDatacategoryDataLENGTH", categoryData.length)
                                             let id2 ="onwebsite1"
                                             
                                             // var categryFData = categoryData.filter(function(categoryData) {
@@ -170,14 +194,15 @@ const ProductTable  = (props) => {
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
+
                                                     <span>
                                                        
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>props.getSpecifiedProductAction(product.product_id)}/>
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>{props.getSpecifiedProductAction(product.product_id); handleEdit(product);}}/>
                                                        
                                                     </span>
                                                     <span>
                                                         {/* <a href="javascript;"> */}
-                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>confirmAction(product.product_id,"duplicate")}/>
+                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>{confirmAction(product.product_id,"duplicate"); }}/>
                                                         {/* </a> */}
                                                     </span>
                                                     <span>
