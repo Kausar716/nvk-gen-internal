@@ -69,6 +69,8 @@ const SkuList=(props)=> {
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
     const {subCategoryData} = props.categoryData
+    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0  })
+    const [errorCount,setErrorCount] = useState(0)
 
     useEffect(()=>{
         props.getAllSkuAction()
@@ -81,6 +83,22 @@ const SkuList=(props)=> {
     }
     const handleInput =(e)=>{
         console.log(e.target.id,e.target.value)
+        let errorcount =errorCount
+        let errorobj =errorObj
+        if(e.target.id  === "each_cost" ){
+            errorobj.each_cost=0
+            errorcount--
+        }
+        if(e.target.id  === "each_price" ){
+            errorobj.each_price=0
+            errorcount--
+        }
+        if(e.target.id  === "sale_price" ){
+            errorobj.sale_price=0
+            errorcount--
+        }
+        setErrorObj(errorobj)
+       setErrorCount(errorcount)
         if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)
@@ -139,7 +157,7 @@ const SkuList=(props)=> {
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU: {skuDataById.sku_code}</h3>
+                                            <h3>GENERATED SKU {skuDataById.sku_code}</h3>
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
@@ -153,7 +171,7 @@ const SkuList=(props)=> {
                                     </div>
                                     <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
-                                            <label>SKU Item Name: <span class="text-danger">*</span></label>
+                                            <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                             id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} />
                                         </div>
@@ -161,7 +179,7 @@ const SkuList=(props)=> {
                                            
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Sub-Category: <span class="text-danger">*</span></label>
+                                            <label>Sub-Category <span class="text-danger">*</span></label>
                                             <select class="form-control"  id="subcategory" onChange={handleInput}>
                                             <option value="0">None</option>
                                             <option value="0">None</option>
@@ -174,7 +192,7 @@ const SkuList=(props)=> {
                                         </div>
 
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Location: <span class="text-danger">*</span></label>
+                                            <label>Location <span class="text-danger">*</span></label>
                                             <select class="form-control">
                                                 <option>Select</option>
                                                 <option>Option 1</option>
@@ -184,22 +202,22 @@ const SkuList=(props)=> {
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Each Cost: <span class="text-danger">*</span></label>
+                                            <label>Each Cost <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                              id="each_cost" onChange={handleInput} value={skuDataById.each_cost} min="0" />
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Each Price: <span class="text-danger">*</span></label>
+                                            <label>Each Price <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                             id="each_price"  onChange={handleInput} value={skuDataById.each_price} min="0"/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Sale Price: <span class="text-danger">*</span></label>
+                                            <label>Sale Price <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                              id="sale_price" onChange={handleInput} value={skuDataById.sale_price} min="0"/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                            <label>Sales Expiry Date:</label>
+                                            <label>Sales Expiry Date</label>
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
                                                     <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>

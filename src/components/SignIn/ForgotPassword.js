@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-unused-vars */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React from 'react';
@@ -26,9 +28,9 @@ const validate = values => {
       errors.username = 'Must be 15 characters or less'
     }
     if (!values.email) {
-      errors.email = 'Required'
+      errors.email = 'Please enter a valid email address'
     } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-      errors.email = 'Invalid email address'
+      errors.email = 'Please enter a valid email address'
     }
  
     return errors
@@ -50,7 +52,7 @@ const validate = values => {
     <div>
       {/* <label>{label}</label> */}
       <div>
-        <input {...input} class="input-field1" placeholder={label}  type={type}/>
+        <input {...input} class="form-control" placeholder={label}  type={type}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
         </Row>
@@ -73,67 +75,89 @@ const ForgotPassword = (props) => {
   return (
     <>
       
-      <div style={{backgroundColor:"white"}}>
-                <header>
-                <div>
-                    <a href="#" style={{float:"left"}}><img  src={process.env.PUBLIC_URL + "/images/logo.png"} alt="no iamge" id="logo1"/></a>
+      <div>
+            <div id="header" class="header navbar-default align-items-center">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand" style={{float:"left"}}>
+                        <img src="assets/img/logo.svg" alt="" />
+                    </a>
+                    <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
                 </div>
-                <div style={{clear:"both"}}></div>
-
-                </header>
-                <div >
-                    <a href="#" ><img src={process.env.PUBLIC_URL + "/images/signin.png"} alt="no iamge" id="logo" style={{display: "block",marginLeft:"34.8%", marginRight:"auto",marginTop:10,width:"28%",height:"25%"}}/></a>
-                    <div className="signin">
-           
-             <form className="signin_form" >
-             <p style={{color:"#787d82",fontWeight:"bold",padding:0,margin:0}}>Returning User</p>
-                 <p style={{color:"#787d82",fontSize:12}}>Please enter your email id</p>
-                 <hr style={{borderTop:"1px dotted #787d82"}}></hr>
-             {/* <p style={{textAlign:"center",color:"red"}}>Wrong email and password</p> */}
-                    <div class="input-icons1">
-                    <i class="fa fa-user icon1">
-                </i>
-
-                     <Field name="email" type="email" component={renderField} label="Email" />
-
-                </div>
-
-                <br/>
-                <div style={{float:"left"}}>
-                <FormGroup check >
-                        
-                    </FormGroup>
-                    <Link to="/">
-                    <p className="infostyle" style={{marginTop:25}}><span style={{color:"#FF8C00"}}>Click here to </span> <span className="infostyle" style={{color:"#4f91f7"}}>Go Back</span></p>
-                    </Link>
-                   
-                </div>
-                <div style={{float:"right",marginTop:7}}>
-                <FormGroup >
-                    <Label>
-                    <Link to="/" > 
-                      <Button className="loginbutton" type="submit" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  style={{backgroundColor:"#d07510",border:"1px solid white",marginLeft:22,position:"relative",paddingRight:25, borderBottom:"4px solid #ad4902"}} ><span >Click Here</span> <span class='bx bxs-right-arrow-circle' style={{fontSize:"15px",verticalAlign:"middle",position:"absolute",top:11,left:75}}></span></Button>
-                    </Link>
-                    </Label>
-                </FormGroup>
-                    
-                </div>
-                <hr style={{marginTop:90}}/>
-                <div className="infostyle" style={{textAlign:"center"}}>
-                    <p className="logincontactInfo" style={{color:"gray"}}>Trouble accessing your account or registering ?</p>
-                    <p className="logincontactInfo" style={{color:"gray"}}>Contact <span  style={{color:"#4f91f7"}}>webmaster@nvknurseries.com</span></p>
-                </div>
-            </form>
-            <p>version:0.0.0.1</p>
-          
             </div>
-          
+            <div class="container">
+                <div class="row justify-content-center mt-md-8">
+                    <div class="col-md-6">
+                        <div class="bg-white px-3 py-3 signInContent">
+                            <form action="/" method="POST">
+                                <div class="form-group row my-4">
+                                    <div class="col-md-12 text-center">
+                                        <div class="">
+                                            <img src="./assets/img/nvk-logo.png" alt="" class="img-fluid" />
+                                        </div>
+                                        <h1 class="f-w-400 mt-4">Forgot Password</h1>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <label for="plantSearch">Email <span class="text-danger">*</span></label>
+                                        {/* <input type="text" class="form-control" placeholder="Email" /> */}
+                                        <Field name="email" type="email" component={renderField} label="Email" />
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-12">
+                                        <button type="submit" className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                            Click Here <img src="./assets/img/signin-ic.svg" />
+                                        </button>
+                                        <Link to="/">
+                                            <p className="infostyle" style={{marginTop:25}}><span style={{color:"#FF8C00"}}>Click here to </span> <span className="infostyle" style={{color:"#4f91f7"}}>Go Back</span></p>
+                                        </Link>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-               
-                <footer>
-                    <p>NVKGENESYS.COM | TERMS OF USE | PRIVACY <br></br>&copy; Nurseries. All Rights Reserved</p>
-                </footer>
+                <div class="row justify-content-center mt-1">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12 text-center">
+                            <p class="textGrey">Trouble accessing your account or registering?<br/>
+                                Contact <a href="#">webmaster@nvknurseries.com</a> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="footerBar py-3 mt-md-8">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <ul class="list-unstyled list-inline mb-0">
+                                <li class="list-inline-item">
+                                    NVKGENESYS.COM
+                                </li>
+                                <li class="list-inline-item"> | 
+                                    <a href="">TERMS OF USE</a>
+                                </li>
+                                <li class="list-inline-item"> | 
+                                    <a href="">PRIVACY</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 text-center">
+                            <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </>

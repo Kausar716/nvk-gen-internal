@@ -175,14 +175,13 @@ const handleMainSelection= (id) => {
               </Link>
             </li>
             <li class={selectedMainBar === "ToolsAndSettings"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("ToolsAndSettings")}}>
-              <Link to="/comingsoon">
+              <Link to="/organizationSettings">
               <b class="caret"></b>
                 <img src="assets/img/settings.svg" alt=""/>
                 <span>Tools &amp; Settings</span>
               </Link>
               <ul class="sub-menu">
-                <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{
-                  e.stopPropagation()
+                <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{e.stopPropagation()
                   handleSubSelection("AdminSetting1")}}><Link to="/organizationSettings">Organization</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/comingsoon">Customer Settings</Link></li>

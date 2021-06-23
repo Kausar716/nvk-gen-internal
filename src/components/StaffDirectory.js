@@ -247,7 +247,7 @@ import React from 'react'
                             </div>
                             <div class="row">
                                 <div class="col-md-12 text-md-right">
-                                    <button type="button" class="btn btn-primary btn-lg ml-3">Load More</button>
+                                    {/* <button type="button" class="btn btn-primary btn-lg ml-3">Load More</button> */}
                                 </div>
                             </div>
 						</div>

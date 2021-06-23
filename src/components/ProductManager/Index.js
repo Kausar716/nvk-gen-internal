@@ -62,7 +62,8 @@ const  ProductManagement = (props) =>{
         },[])
 
         const handleCategoryData =(e)=>{
-            console.log(e.target.value)
+            console.log(e.target.id)
+
             if(e.target.id ==="category"){
                 if(e.target.value==="All"){
                     setDisable(true)
@@ -137,14 +138,17 @@ const  ProductManagement = (props) =>{
             <ModalData/>
              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
-				<h1 className="page-header mb-0">Product Manager</h1>
-				<div class="topbarCtrls mt-3 mt-md-0">
-                <Link to="/addProduct"> <a href="#" class="btn active">
-                   <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/plant-ic-btn.svg" alt=""/>
-                         <span class="ml-2"><b>Add Product</b></span>
+				<h1 className="page-header mb-0">
+                <img src="assets/img/product-green.svg" alt=""/>
+                    Product Manager</h1>
+			    <div class="topbarCtrls mt-3 mt-md-0">
+                    <Link to="/addProduct"> <a href="#" class="btn active">
+                        <span class="d-flex align-items-center text-left">
+                            <img src="assets/img/Product_small-white.svg" alt=""/>
+                            <span class="ml-2"><b>Add Product</b></span>
                         </span>
-                    </a></Link> 
+                    </a>
+                    </Link>
                     <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/search-ic-btn.svg" alt=""/>
@@ -157,7 +161,8 @@ const  ProductManagement = (props) =>{
                             <span class="ml-2"><b>Print</b></span>
                         </span>
                     </a>
-				</div>
+				</div> 
+                		
 			</div>
 			<div className="contentWrapper">
 				<div className="row">

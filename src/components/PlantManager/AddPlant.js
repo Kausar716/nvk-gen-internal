@@ -10,7 +10,7 @@ export default function AddPlant() {
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/plant-ic-lg-green.svg" alt=""/> Add Plant</h1>
+				<h1 class="page-header mb-0"><img src="assets/img/plant-ic-lg-green.svg" alt=""/><img src="assets/img/PlantManagerIcon.svg" alt=""/> Add Plant</h1>
 				{/* <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn active">
                         <span class="d-flex align-items-center text-left">

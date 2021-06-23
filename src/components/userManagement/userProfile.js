@@ -12,6 +12,7 @@ export class UserProfile extends Component {
             lastName:"",
             phone:"",
             email:"",
+            position:"",
             locationAccess:false,
             displayDeletedRecords:false,
             profileImage:"",
@@ -20,7 +21,8 @@ export class UserProfile extends Component {
                 firstNameError:0,
                 lastNameError:0,
                 phoneError:0,
-                emailError:0,                
+                emailError:0,    
+                positionError:0            
             },
             errorCount:0,
             display:false,
@@ -54,16 +56,25 @@ export class UserProfile extends Component {
             errorObj.emailError=0
             errorCount--
         }
+        else if(name === "position"){
+            errorObj.positionError=0
+            errorCount--
+        }
         this.setState({errorObj,errorCount})
     }
     validate = () =>{
         let {errorObj,errorCount}=this.state
-        // let phoneReg=/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
-        let phoneReg = new RegExp('^[0-9]+$');
+        let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        // let phoneReg = new RegExp('^[0-9]+$');
+        let nameReg = /^[a-zA-Z]+$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
         if(this.state.firstName.length === 0){
            errorObj.firstNameError=1
+           errorCount++
+        }
+        if(!nameReg.test(this.state.firstName)){
+            errorObj.firstNameError=1
            errorCount++
         }
         else{
@@ -82,6 +93,11 @@ export class UserProfile extends Component {
         }
         if(this.state.phone.length>13){
             errorObj.phoneError=1
+            errorCount++
+        }
+        if(this.state.position.length === 0){
+            console.log(this.state.position)
+            errorObj.positionError=1
             errorCount++
         }
          if(! emailReg.test(this.state.email)){
@@ -173,26 +189,27 @@ export class UserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>First Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="First Name" class="form-control" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
-                                                    {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter First Name</span>:""}
+                                                    {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Last Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="Last Name" class="form-control" name="lastName" value={this.state.lastName} onChange={this.handleInput} />
-                                                    {this.state.errorObj.lastNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Last Name</span>:""}
+                                                    {this.state.errorObj.lastNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                                 </div>
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger">*</span></label>
-                                                    <select class="form-control">
-                                                        <option>Select Position</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
+                                                    <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position} >
+                                                        <option name="position" >Select Position</option>
+                                                        <option name="position"  >Option 1</option>
+                                                        <option name="position" >Option 2</option>
                                                     </select>
+                                                    {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="XXX - XXXXXXXXXX" class="form-control" value={this.state.phone} onChange={this.handleInput} name="phone"/>
+                                                    <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control" value={this.state.phone} onChange={this.handleInput} name="phone"/>
                                                     {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                                 </div>
                                             </div>
