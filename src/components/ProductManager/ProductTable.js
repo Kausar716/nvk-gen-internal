@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React,  {useState } from 'react' ;
 // import {Table} from 'reactstrap'
 import {connect} from "react-redux";
@@ -78,7 +79,7 @@ const ProductTable  = (props) => {
   // const {productData,pageNumber} = props.productData
     const productPerPage = pageSize;
     const totalLength = productData.length
-    const pagesVisited = pageNumber*5;
+    const pagesVisited = pageNumber*pageSize;
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
     const {categoryData} = props.categoryData
@@ -91,7 +92,7 @@ const ProductTable  = (props) => {
          <div className="row_1">
 
                             <div>
-                            <label className="greenText">{"Showing " + (( pageNumber*5)+1 )+  "  to  " + pageSize  + "  of   "  +   totalLength }</label>
+                            <label className="greenText">{"Showing " + (pageNumber>0 ? (pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((pageSize*((pageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((pageNumber)))+pageSize)) : ((((pageNumber)+1)*pageSize)>totalLength?totalLength:(((pageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label>
                             </div>
                     <div >
                         <label className="greenText">Show</label>

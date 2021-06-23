@@ -61,7 +61,7 @@ const PlantTable=(props)=> {
     const {plantData,plantPageNumber} = props.plantData
     const totalLength = plantData.length
     const plantPerPage = pageSize;
-    const pagesVisited = plantPageNumber*5;
+    const pagesVisited = plantPageNumber*pageSize;
     const displayPlantList = plantData.slice(pagesVisited,pagesVisited+plantPerPage)
     const pageCount = Math.ceil(plantData.length/plantPerPage)
     console.log("plantData.length",plantData.length)
@@ -94,7 +94,7 @@ const PlantTable=(props)=> {
               <div className="row_1">
 
                     <div>
-                    <label className="greenText">{"Showing " + (( plantPageNumber*5)+1 )+  "  to  " +  (pageSize) + "  of   "  +  totalLength }</label>
+                    <label className="greenText">{"Showing " + (plantPageNumber>0 ? (pageSize*((plantPageNumber)))+1 : ((plantPageNumber)+1))+  "  to  " +  (plantPageNumber>0 ? (((pageSize*((plantPageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((plantPageNumber)))+pageSize)) : ((((plantPageNumber)+1)*pageSize)>totalLength?totalLength:(((plantPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label>
                     </div>
                                 <div >
                                 <label className="greenText">Show</label>
