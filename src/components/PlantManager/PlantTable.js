@@ -70,6 +70,19 @@ const PlantTable=(props)=> {
 
    const abcd = props.dPageNumberList
    console.log("abcd", abcd)
+   const confirmAction = (id,type)=>{
+    if(type==="delete"){
+        setType(type)
+        setMessage("Are you sure you want to delete this product and its related SKUs?")
+
+    }else{
+        setType(type)
+        setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+
+    }
+    setOpen(true)
+    setId(id)
+}
 
     return (
 
@@ -157,19 +170,19 @@ const PlantTable=(props)=> {
 
                                                 <td className="text-center">
                                                     <span>
-                                                        <a href="javascript;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
+                                                        {/* <a href="javascript;"> */}
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>props.getSpecifiedPlantAction(plant_id)}/>
+                                                        {/* </a> */}
                                                     </span>
                                                     <span>
                                                         <a href="javascript;">
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
+                                                            <img src="assets/img/duplicate.svg" alt="" />
                                                         </a>
                                                     </span>
                                                     <span>
-                                                        <a href="javascript;">
-                                                            <img src="assets/img/delete.svg" alt=""/>
-                                                        </a>
+                                                        {/* <a href="javascript;"> */}
+                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(plant_id,"delete")}/>
+                                                        {/* </a> */}
                                                     </span>
                                                 </td>
                                             </tr>)

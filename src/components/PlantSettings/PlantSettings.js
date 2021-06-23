@@ -21,7 +21,7 @@ export class PlantSettings extends Component {
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
             <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>		<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Settings</h1></div> 
 			
-				<div className="">
+				{/* <div className="">
 					<a href="javascript:;">
 						<img src="assets/img/add.svg" alt=""/>
 					</a>
@@ -31,7 +31,7 @@ export class PlantSettings extends Component {
 					<a href="javascript:;" className="ml-2">
 						<img src="assets/img/print.svg" alt=""/>
 					</a>
-				</div>
+				</div> */}
 			</div>
             <div className="px-md-3 mt-3">
                 <Tabs>

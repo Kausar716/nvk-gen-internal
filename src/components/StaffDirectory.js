@@ -1,6 +1,8 @@
 import React from 'react'
 
-export default function StaffDirectory() {
+
+ export class StaffDirectory extends React.Component {  
+     render(){
     return (
         <div>
             <div class="contentHeader bg-white d-flex align-items-center">
@@ -255,3 +257,5 @@ export default function StaffDirectory() {
         </div>
     )
 }
+ }
+ export default StaffDirectory
