@@ -97,34 +97,37 @@ const  PlantManager=(props)=> {
     //     }
     //     setOpen(true)
     //     setId(id)
-    // }
+    // } selectedRadio
         const getValue = (e)=>{
             console.log(e.target.value)
-            props.serachPlant(e.target.value)
+            props.serachPlant({plant: e.target.value, option: selectedRadio, category: categoryId})
             setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
             console.log(e.target.id)
-            props.radioSearch(e.target.id)
+            //props.radioSearch(e.target.id)
+            props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
             setRadio(e.target.id)
 
         }
         const searchBasedOnCategory = (e) =>{
-            // console.log(e.target.value)
+            //console.log(e.target.value)
+            //props.searchCategoryApplyAction(e.target.value)
+            props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
             setCategoryId(e.target.value)
-
+            // searchCategoryApply()
         }
         // const searchCategoryApply = () =>{
         //     if(categoryId === 0)
         //     return
-        //     // console.log(categoryId)
+        //      console.log(categoryId)
         //     props.searchCategoryApplyAction(categoryId)
 
         // }
         const resetData = () =>{
             props.getAllPlantAction()
             setRadio("all")
-            setCategoryId(0)
+            setCategoryId(0);
             setInputValue("");
         }
     
@@ -211,7 +214,7 @@ const  PlantManager=(props)=> {
                                         <option value={0}>None</option>
                                     {plantCategoryData.map(plantCategory=>{
                                         return(
-                                            <option value={plantCategory.id}  selected={categoryId ===plantCategory.id?"selected":""} >{plantCategory.name} </option>
+                                            <option value={plantCategory.id}  selected={Number(categoryId) ===plantCategory.id?"selected":""} >{plantCategory.name} </option>
                                         )
                                     })
                                         
@@ -229,17 +232,17 @@ const  PlantManager=(props)=> {
                                     <div className="form-check form-check-inline">
                                     <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
                                         {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
-                                        <label className="form-check-label" for="activePlants">Active Plants</label>
+                                        <label className="form-check-label" for="activePlants">Active</label>
                                     </div>
                                     <div className="form-check form-check-inline">
                                     <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
                                         {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
-                                        <label className="form-check-label" for="archivedPlants">Archived Plants</label>
+                                        <label className="form-check-label" for="archivedPlants">Archived</label>
                                     </div>
                                     <div className="form-check form-check-inline">
                                     <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
                                         {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
-                                        <label className="form-check-label" for="allPlants"> &nbsp;All Plants</label>
+                                        <label className="form-check-label" for="allPlants"> &nbsp;All</label>
                                     </div>
                                 </div>
                             </div>

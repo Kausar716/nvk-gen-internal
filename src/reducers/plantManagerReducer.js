@@ -264,57 +264,62 @@ export default function(state = initialSatate, action){
 
             //search plant 
             case HANDLE_SEARCH_INPUT:
-                // console.log(action.payload)
-                // let a = state.plantData.filter(filterData=>filterData.patent==action.payload)
-                // console.log(a)
-            
-                    // filterData.patent==action.payload
-                // })
-                if(action.payload.trim() ===""){
+                var optionVal = -1;
+                var categoryVal = "";
+                if(action.payload.option ==="active"){
+                    optionVal = 0;
+                }
+                if(action.payload.option ==="archive"){
+                    optionVal = 1;
+                }
+                categoryVal = action.payload.category;
+                if(action.payload.plant.trim() ==="" && optionVal === -1 && categoryVal === "0"){
                     return{
                         ...state,
                         plantData:state.backupData
-
                     }
-
                 }else{
                     return{
                         ...state,
-                        plantData:state.backupData.filter(filterData=>filterData.patent===action.payload.trim())
+                        plantData:state.backupData.filter(
+                            filterData=>(filterData.genus===action.payload.plant.trim() || action.payload.plant.trim()==="") &&
+                            (filterData.archived===optionVal || optionVal===-1) &&
+                            (filterData.category_id === Number(categoryVal) || categoryVal === "0")
+                            )
                     }
 
                 }
-            case HANDLE_RADIO_TOGGLE:
-                if(action.payload ==="active"){
-                    return{
-                        ...state,
-                        plantData:state.backupData.filter(filterData=>filterData.archived===0)
+            // case HANDLE_RADIO_TOGGLE:
+            //     if(action.payload ==="active"){
+            //         return{
+            //             ...state,
+            //             plantData:state.backupData.filter(filterData=>filterData.archived===0)
     
-                    }
+            //         }
 
-                }
-                if(action.payload ==="archive"){
-                    return{
-                        ...state,
-                        plantData:state.backupData.filter(filterData=>filterData.archived===1)
+            //     }
+            //     if(action.payload ==="archive"){
+            //         return{
+            //             ...state,
+            //             plantData:state.backupData.filter(filterData=>filterData.archived===1)
     
-                    }
-                }
-                if(action.payload ==="all"){
-                    return{
-                        ...state,
-                        plantData:state.backupData
+            //         }
+            //     }
+            //     if(action.payload ==="all"){
+            //         return{
+            //             ...state,
+            //             plantData:state.backupData
     
-                    }
+            //         }
                     
                     
-                }
-                break;
-            case HANDLE_CATEGORY_SEARCH:
-                return{
-                    ...state,
-                    plantData:state.backupData.filter(filterData=>filterData.category_id ===action.payload)
-                }
+            //     }
+            //     break;
+            // case HANDLE_CATEGORY_SEARCH:
+            //     return{
+            //         ...state,
+            //         plantData:state.backupData.filter(filterData=>filterData.category_id === Number(action.payload))
+            //     }
                 
            
   

@@ -174,6 +174,12 @@ export const SET_DASHBOARD_PAGE ="SET_DASHBOARD_PAGE"
 export const GET_PATH = "GET_PATH" 
 export const UPDATE_PATH = "UPDATE_PATH"
 
+//user settings
+export const GET_USERS_LIST = "GET_USERS_LIST"
+export const ADD_USER = "ADD_USER"
+export const SHOW_USER = "SHOW_USER"
+export const UPDATE_USER = "UPDATE_USER"
+export const DELETE_USER = "DELETE_USER"
 
 export const qs = require('qs');
 export const axios = require('axios');

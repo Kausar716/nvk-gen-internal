@@ -133,15 +133,15 @@ const PlantTable=(props)=> {
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, Discontinued, archived, patent,category_id,plant_id})=>{
+                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, Discontinued, archived, patent,category_id,plant_id,genus})=>{
                                              let id2 ="discontinue"
                                              let id3 ="Archived"
                                              let id4 ="Production"
                                              return(     
                                             <tr>
-                                                <td style={{color:status===1 ? "black" :"red"}}>{status === 1 ?"Active":"Inactive"}</td>
+                                                <td style={{color:status==="1" ? "black" :"red"}}>{status === "1" ?"Active":"Inactive"}</td>
                                                 <td>{plant_id}</td>
-                                                <td>{patent}</td>
+                                                <td>{genus}</td>
                                                 <td>
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
@@ -162,7 +162,7 @@ const PlantTable=(props)=> {
 
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" className="custom-control-input" id={id3.concat(plant_id)}/>
+                                                        <input type="checkbox" className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
                                                         <label className="custom-control-label" for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
