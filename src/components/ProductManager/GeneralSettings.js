@@ -67,7 +67,7 @@ const GeneralSettings=(props)=> {
      }
      const submitAction = (e) =>{
         e.preventDefault();
-        e.target.reset();
+       // e.target.reset();
 
          if(submitCount === 0){
             if(needAction){

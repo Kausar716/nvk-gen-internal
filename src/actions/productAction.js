@@ -175,7 +175,8 @@ export const duplicateProduct = (id) =>dispatch=>{
 export const createSkuAction = (id) => dispatch => {
 
 }
-export const updateSkuAction = (id,product_id, data, actionType="edit") => dispatch => {
+export const updateSkuAction = (product_id, data, actionType="edit") =>async dispatch => {
+   // debugger;
     let error = []
     //debugger;
     console.log("DATADATA", data);
@@ -185,13 +186,14 @@ export const updateSkuAction = (id,product_id, data, actionType="edit") => dispa
     if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     if(data.sku_item_name==null ||data.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
-        delete data["id"]
+        delete data["product_id"]
+     
         axios.post(`/api/update-sku/${product_id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
-            dispatch(showSpecifiedSkuAction(id))
+            dispatch(showSpecifiedSkuAction(product_id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
             // dispatch(pageReDirectAction("sku",actionType))
-            dispatch(getAllSkuAction(id))
+            dispatch(getAllSkuAction(product_id))
             dispatch({
                 type:UPDATE_SKU_ACTION
             })
@@ -219,11 +221,10 @@ export const updateSkuAction = (id,product_id, data, actionType="edit") => dispa
 
     }
 
-    
-   
-
 }
-export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
+
+
+export const updateSkuActionClear = (product_id,data,actionType="add") => async dispatch=>{
     delete data["id"]
     let error  = []
     if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
@@ -232,7 +233,7 @@ export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
     if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
-    axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
+    axios.post(`/api/update-sku/${product_id}`,data,config).then(res=>{ 
         dispatch(getAllProductAction())
         // dispatch(showSpecifiedSkuAction(id))
         // dispatch(getSpecifiedProductAction(id,"add","sku"))
@@ -268,13 +269,13 @@ export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
     }
 
 }
-export const deleteSkuAction = (id) => dispatch => {
-    axios.post(` /api/delete-sku/${id}?type=product`,null,config).then(res=>{ 
+export const deleteSkuAction = (product_id) => dispatch => {
+    axios.post(` /api/delete-sku/${product_id}?type=product`,null,config).then(res=>{ 
         })
 
 
 }
-export const getAllSkuAction = (id) => dispatch => {
+export const getAllSkuAction = (product_id) => dispatch => {
     axios.get("/api/skus/products",config).then(res=>{ 
         console.log(res.data)
         dispatch({
@@ -285,8 +286,8 @@ export const getAllSkuAction = (id) => dispatch => {
         })
 
 }
-export const showSpecifiedSkuAction = (id) => dispatch => {
-    axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
+export const showSpecifiedSkuAction = (product_id) => dispatch => {
+    axios.get(`/api/sku/${product_id}?type=product`,config).then(res=>{ 
         console.log(res.data)
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
