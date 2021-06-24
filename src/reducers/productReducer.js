@@ -57,8 +57,7 @@ const initialSatate = {
         archived:0,
         internal_notes:"",
         discontinued:0,
-        status:1,
-        product_id:null,
+        status:1
     },
     skuDataById         :   {
         each_cost:0,
@@ -68,9 +67,8 @@ const initialSatate = {
         sku_item_name:"",
         subcategory:null,
         discontinued:0,
-        status:1,
         archived:0,
-        product_id:null,
+        status:1,
 
 
     },
@@ -105,7 +103,8 @@ export default function(state = initialSatate, action){
                     manufacturer_id:null,
                     archived:0,
                     internal_notes:"",
-                    discontinued:0
+                    discontinued:0,
+                    status:1,
                 },
                 skuDataById         :   {
                     each_cost:0,
@@ -116,8 +115,7 @@ export default function(state = initialSatate, action){
                     subcategory:0,
                     discontinued:0,
                     status:1,
-                    archived:0,
-                    product_id:null,
+                    archived:0
             
             
                 },
@@ -205,8 +203,7 @@ export default function(state = initialSatate, action){
                     subcategory:null,
                     discontinued:0,
                     status:1,
-                    archived:0,
-                    product_id:null,
+                    archived:0
             
             
                 },
@@ -250,8 +247,7 @@ export default function(state = initialSatate, action){
                 subcategory:null,
                 discontinued:0,
                 status:1,
-                archived:0,
-                product_id:'',
+                archived:0
         
         
             },

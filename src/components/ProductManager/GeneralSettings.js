@@ -33,7 +33,7 @@ const GeneralSettings=(props)=> {
     const {productData,productDataById,tagsData,actionType,needAction} = props.productData
     const {categoryData,manufactureData} = props.categoryData
     const [toggleForTagInput,setToggle] = useState(true)
-    // console.log("abcdefg",tagsData)
+     console.log("abcdefg",productDataById)
 
 
 
@@ -68,7 +68,8 @@ const GeneralSettings=(props)=> {
      const submitAction = (e) =>{
         e.preventDefault();
        // e.target.reset();
-
+       //debugger;
+console.log("TAGDATA", tagsData)
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add")
@@ -100,7 +101,6 @@ const GeneralSettings=(props)=> {
 }
 
    
-
     return (
         <div>
             <div class="bg-white px-3 py-3 mt-3">
@@ -176,9 +176,19 @@ const GeneralSettings=(props)=> {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
-                                        <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={goToParentPage}>Cancel</button>
-                                        <button type="reset" class="btn btn-primary btn-lg ml-3"  
-                                        disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} > {actionType==="add"?"Add Product":"Update Product"}</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-lg"  
+                                       onClick={()=>props.pageReDirectAction("product","add")}
+                                        // onClick={goToParentPage}
+                                        
+                                        >Cancel</button>
+                                        {/* <button type="reset" class="btn btn-primary btn-lg ml-3"  
+                                        disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} > 
+                                        {actionType==="add"?"Add Product":"Update Product"}</button> */}
+
+                                        <button className={needAction===true?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
+                                            disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction}>
+                                            {actionType==="add"?"Add Product":"Update Product"}
+                                        </button>
                                     </div>
                                 </div>
                             </form>
