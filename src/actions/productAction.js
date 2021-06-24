@@ -175,16 +175,18 @@ export const duplicateProduct = (id) =>dispatch=>{
 export const createSkuAction = (id) => dispatch => {
 
 }
-export const updateSkuAction = (id, data, actionType="edit") => dispatch => {
+export const updateSkuAction = (id,product_id, data, actionType="edit") => dispatch => {
     let error = []
+    //debugger;
+    console.log("DATADATA", data);
     if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
     if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
     if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
     if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
-    if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
+    if(data.sku_item_name==null ||data.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete data["id"]
-        axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
+        axios.post(`/api/update-sku/${product_id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
             dispatch(showSpecifiedSkuAction(id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))

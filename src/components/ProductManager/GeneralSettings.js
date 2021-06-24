@@ -66,6 +66,9 @@ const GeneralSettings=(props)=> {
       
      }
      const submitAction = (e) =>{
+        e.preventDefault();
+        e.target.reset();
+
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add")
@@ -174,7 +177,7 @@ const GeneralSettings=(props)=> {
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
                                         <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={goToParentPage}>Cancel</button>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3"  
+                                        <button type="reset" class="btn btn-primary btn-lg ml-3"  
                                         disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} > {actionType==="add"?"Add Product":"Update Product"}</button>
                                     </div>
                                 </div>
