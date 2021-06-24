@@ -87,18 +87,18 @@ else {
         let userProfiles = []  
         console.log(this.props.users)
         if(this.props.users && (this.state.displatDeletedRecord === "off")){
-             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
-             console.log(userProfiles)
-            // this.setState({userProfiles})
+            //  userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+            //  console.log(userProfiles)
+            // // this.setState({userProfiles})
         }  
         if(this.props.users && (this.state.displatDeletedRecord === "on")){
-            userProfiles =  [...this.props.users.active,...this.props.users.inactive]
-            let userWithDeletedRecords = userProfiles.filter(user=>{
-                return (user.deleted_at!== null)
-                console.log(user.deleted_at)
+            // userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+            // let userWithDeletedRecords = userProfiles.filter(user=>{
+            //     return (user.deleted_at!== null)
+            //     console.log(user.deleted_at)
                
-            })
-            userProfiles = userWithDeletedRecords
+            // })
+            // userProfiles = userWithDeletedRecords
             console.log(userProfiles)
            // this.setState({userProfiles})
        } 
@@ -138,9 +138,9 @@ else {
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option>Select</option>
-                                            {userProfiles.length>0?userProfiles.map(userObj=>{
+                                            {/* {userProfiles.length>0?userProfiles.map(userObj=>{
                                                 return  <option value={userObj.id}>{userObj.name}</option>
-                                            }):null}
+                                            }):null} */}
                                             </select>
                                         </div>
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0">  

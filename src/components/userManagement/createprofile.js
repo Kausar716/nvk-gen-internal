@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,addUser} from "../../actions/userAction";
+import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
 export class CreateUserProfile extends Component {  
@@ -352,4 +353,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getUsersList,showUser,updateUser,addUser})(CreateUserProfile)
+export default connect(mapStateToProps,{getRolesList,getUsersList,showUser,updateUser,addUser})(CreateUserProfile)

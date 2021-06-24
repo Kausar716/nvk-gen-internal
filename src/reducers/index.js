@@ -17,6 +17,7 @@ import AddressManagementReducerSM from './contactManagementReducerSM';
 import dlistOfNumberReducer from './listOfNumbers';
 import sideReducer from './sideMenuItemReducer'
 import userReduser from './userReduser'
+import userAccessReduser from './userAccessReduser'
 
 
 export default combineReducers({
@@ -32,7 +33,8 @@ export default combineReducers({
     attributeData:attributesReducer,
     dlistOfNumber:dlistOfNumberReducer,
     sideMenu:sideReducer,
-    userReduser:userReduser
+    userReduser:userReduser,
+    userAccessReduser:userAccessReduser
 
     
 })
