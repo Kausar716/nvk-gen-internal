@@ -45,6 +45,7 @@ export class UserProfile extends Component {
     }
     componentDidMount(){
            let selectedUser = this.props.selectedUser
+          
            this.setState({
                firstName:selectedUser.name,
                lastName:selectedUser.last_name,
@@ -152,11 +153,10 @@ export class UserProfile extends Component {
     
                 userObject['name'] = userStateObject.firstName
                 userObject['id'] = userStateObject.id
-
-                // userObject['last_name'] = userStateObject.lastName
-                // userObject['role'] = userStateObject.position
-                // userObject['email'] = userStateObject.email
-                // userObject['phone'] = userStateObject.phone
+                userObject['last_name'] = userStateObject.lastName
+                userObject['role'] = userStateObject.position
+                userObject['email'] = userStateObject.email
+                userObject['phone'] = userStateObject.phone
                 // userObject['password']
                 // userObject['status'] = 
     

@@ -40,7 +40,8 @@ constructor(){
         selectedProfile:"",
         displayUpdateProfile:false,
         displayCreate:false,
-        selectedUser:{}
+        selectedUser:{},
+        displatDeletedRecord:"off"
     }
 }
 
@@ -70,18 +71,38 @@ handleCancle = () => {
 componentDidMount(){
     this.props.getUsersList()
 }
+ hanleCheckBox = (e) => {
+if( e.target.value === "off"){
+    this.setState({displatDeletedRecord:"on"})
+}
+else {
+    this.setState({displatDeletedRecord:"off"})
+}
+}
 
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
+           
         let userProfiles = []  
         console.log(this.props.users)
-        if(this.props.users){
-             userProfiles =  this.props.users.active
+        if(this.props.users && (this.state.displatDeletedRecord === "off")){
+             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+             console.log(userProfiles)
+            // this.setState({userProfiles})
+        }  
+        if(this.props.users && (this.state.displatDeletedRecord === "on")){
+            userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+            let userWithDeletedRecords = userProfiles.filter(user=>{
+                return (user.deleted_at!== null)
+                console.log(user.deleted_at)
+               
+            })
+            userProfiles = userWithDeletedRecords
             console.log(userProfiles)
-        }
-       
-   
+           // this.setState({userProfiles})
+       } 
+
         
     return (
         <div clas="userManagementSection">
@@ -124,7 +145,7 @@ componentDidMount(){
                                         </div>
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0">  
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1"/>
+                                                <input type="checkbox" class="custom-control-input" id="customCheck1" value={this.state.displatDeletedRecord} checked={(this.state.displatDeletedRecord === "on")? true:false} onChange={this.hanleCheckBox}/>
                                                 <label class="custom-control-label pl-2" for="customCheck1"> Display deleted records</label>
                                             </div>
                                         </div>
@@ -135,7 +156,7 @@ componentDidMount(){
                                             </a>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} />:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} />:null}
                                     {displayCreate?<CreateUserProfile cancle={this.handleCancle}/>:null}
                                 </div>
                             </div>

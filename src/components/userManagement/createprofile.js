@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,addUser} from "../../actions/userAction";
+import ActionModal from '../Modal/ActionModal'
 
 export class CreateUserProfile extends Component {  
     constructor(){
@@ -34,7 +35,10 @@ export class CreateUserProfile extends Component {
             modalMessage2:"",
             userList:[],
             dropdownList:[],
-            clickedCreate:false
+            clickedCreate:false,
+            message:"",
+            open:false,
+            cancel:false
         }
     }
 
@@ -144,6 +148,11 @@ export class CreateUserProfile extends Component {
             let res = this.props.addUser(userObject)
             res.then(result=>{
                 console.log(result)
+                  
+                console.log(this.props.users)
+                if(this.props.users.payload.status === "Success"){
+                    this.setState({open:true,message:this.props.users.payload.message})
+                }
             })
             console.log(res)
         }
@@ -156,6 +165,8 @@ export class CreateUserProfile extends Component {
      
     return (
         <>
+         <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
+
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">
@@ -334,10 +345,10 @@ export class CreateUserProfile extends Component {
 
 
 const mapStateToProps = (state)=> (
-    console.log(state)
-    // {
-    // users:state.users
-// }
+    // console.log(state)
+    {
+        users:state.userReduser.users
+}
 
 )
 
