@@ -3,6 +3,9 @@
 import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
+import {getUsersList,showUser,updateUser} from "../../actions/userAction";
+import ActionModal from '../Modal/ActionModal'
 
 export class UserProfile extends Component {  
     constructor(){
@@ -32,8 +35,26 @@ export class UserProfile extends Component {
             modalMessage2:"",
             userList:[],
             dropdownList:[],
-            clickedCreate:false
+            clickedCreate:false,
+            status:"",
+            setSuccessPop:false,
+            message:"",
+            open:false,
+            cancel:false
         }
+    }
+    componentDidMount(){
+           let selectedUser = this.props.selectedUser
+           this.setState({
+               firstName:selectedUser.name,
+               lastName:selectedUser.last_name,
+               phone:selectedUser.phone,
+               email:selectedUser.email,
+               position:selectedUser.position,
+               status:selectedUser.status,
+               id:selectedUser.id
+            })
+
     }
 
     handleInput = (e) => {
@@ -41,25 +62,35 @@ export class UserProfile extends Component {
         let {errorObj,errorCount} = this.state
         this.setState({[name]:value})
         if(name === "firstName" ){
-            errorObj.firstNameError=0
-            errorCount--
+            if(errorObj.firstNameError>0){
+                errorObj.firstNameError=0
+                errorCount--
+            }           
         }
         else if(name === "lastName" ){
-            errorObj.lastNameError=0
-            errorCount--
+            if(errorObj.lastNameError>0){
+                errorObj.lastNameError=0
+                errorCount--
+            }            
         }
         else if(name === "phone" ){
-            errorObj.phoneError=0
-            errorCount--
+            if(errorObj.phoneError>0){
+                errorObj.phoneError=0
+                errorCount--
+            }            
         }
         else if(name === "email" ){
-            errorObj.emailError=0
-            errorCount--
+            if(errorObj.emailError>0){
+                errorObj.emailError=0
+                errorCount-- 
+            }            
         }
-        else if(name === "position"){
-            errorObj.positionError=0
-            errorCount--
-        }
+        else if(name === "postiton"){
+            if(errorObj.positionError>0){
+                errorObj.positionError=0
+                errorCount--
+            }   
+        }  
         this.setState({errorObj,errorCount})
     }
     validate = () =>{
@@ -109,19 +140,52 @@ export class UserProfile extends Component {
     }
     handleSubmit = (e) => {
         let count= this.validate()
+        console.log(count)
          if(count === 0){
              console.log(this.state)
              console.log("success")
+             if(count === 0){
+                console.log(this.state)
+                let userStateObject = this.state
+                let userObject={}
+                
+    
+                userObject['name'] = userStateObject.firstName
+                userObject['id'] = userStateObject.id
+
+                // userObject['last_name'] = userStateObject.lastName
+                // userObject['role'] = userStateObject.position
+                // userObject['email'] = userStateObject.email
+                // userObject['phone'] = userStateObject.phone
+                // userObject['password']
+                // userObject['status'] = 
+    
+                console.log("success")
+                console.log(userObject)
+                let res = this.props.updateUser(userObject)
+                res.then(result=>{
+                  
+                    console.log(this.props.users)
+                    if(this.props.users.payload.status === "Success"){
+                        this.setState({open:true,message:this.props.users.payload.message})
+                    }
+                
+
+                })
+                console.log(res)
+            }
          }
-         console.log(this.state)
+      
  
  
      }
     render() {
-
+      
+   
      
     return (
         <>
+         <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">
@@ -296,4 +360,13 @@ export class UserProfile extends Component {
     )
 }}
 
-export default UserProfile
+
+const mapStateToProps = (state)=> (
+    // console.log(state.users.payload)
+    {
+    users:state.userReduser.users
+}
+
+)
+
+export default connect(mapStateToProps,{getUsersList,showUser,updateUser})(UserProfile)

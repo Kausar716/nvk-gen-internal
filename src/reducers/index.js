@@ -16,6 +16,7 @@ import contactsSuppliers from './supplierContactReducer';
 import AddressManagementReducerSM from './contactManagementReducerSM';
 import dlistOfNumberReducer from './listOfNumbers';
 import sideReducer from './sideMenuItemReducer'
+import userReduser from './userReduser'
 
 
 export default combineReducers({
@@ -30,6 +31,8 @@ export default combineReducers({
     addressSM: AddressManagementReducerSM,
     attributeData:attributesReducer,
     dlistOfNumber:dlistOfNumberReducer,
-    sideMenu:sideReducer
+    sideMenu:sideReducer,
+    userReduser:userReduser
+
     
 })
