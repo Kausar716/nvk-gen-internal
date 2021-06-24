@@ -7,6 +7,8 @@ import UserProfile from './userProfile'
 import 'react-tabs/style/react-tabs.css';
 import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
+import {connect} from "react-redux";
+import {getUsersList} from "../../actions/userAction";
 
 export class UserManagement extends Component {  
 constructor(){
@@ -37,13 +39,24 @@ constructor(){
         clickedCreate:false,
         selectedProfile:"",
         displayUpdateProfile:false,
-        displayCreate:false
+        displayCreate:false,
+        selectedUser:{}
     }
 }
 
    
  handleProfileChange = (e) => {
-this.setState({selectedProfile:e.target.value,displayUpdateProfile:true})
+     console.log(e)
+     console.log(e.target.value)
+     let userList = this.props.users.active
+     let id = e.target.value
+     console.log(id)
+       let selectedUser  =  userList.filter(obj=>{
+         return (parseInt(obj.id) === parseInt(id))
+     })
+     console.log(selectedUser)
+     this.setState({selectedUser:selectedUser[0]})
+     this.setState({displayUpdateProfile:true})
 }
 handleCreate = (e) => {
     this.setState({displayCreate:true})
@@ -54,10 +67,22 @@ handleSubmit = ()=> {
 handleCancle = () => {
     this.setState({displayUpdateProfile:false,displayCreate:false})
 }
+componentDidMount(){
+    this.props.getUsersList()
+}
 
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
+        let userProfiles = []  
+        console.log(this.props.users)
+        if(this.props.users){
+             userProfiles =  this.props.users.active
+            console.log(userProfiles)
+        }
+       
+   
+        
     return (
         <div clas="userManagementSection">
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
@@ -91,9 +116,10 @@ handleCancle = () => {
                                         <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
-                                                <option>Select</option>
-                                                <option value={"option1"}>Option 1</option>
-                                                <option value={"option2"}>Option 2</option>
+                                            <option>Select</option>
+                                            {userProfiles.length>0?userProfiles.map(userObj=>{
+                                                return  <option value={userObj.id}>{userObj.name}</option>
+                                            }):null}
                                             </select>
                                         </div>
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0">  
@@ -109,7 +135,7 @@ handleCancle = () => {
                                             </a>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} />:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} />:null}
                                     {displayCreate?<CreateUserProfile cancle={this.handleCancle}/>:null}
                                 </div>
                             </div>
@@ -128,4 +154,13 @@ handleCancle = () => {
     )
 }}
 
-export default UserManagement
+
+const mapStateToProps = (state)=> (
+    // console.log(state)
+    {
+    users:state.userReduser.users.payload
+}
+
+)
+
+export default connect(mapStateToProps,{getUsersList})(UserManagement)

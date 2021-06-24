@@ -3,6 +3,8 @@
 import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
+import {getUsersList,showUser,updateUser,addUser} from "../../actions/userAction";
 
 export class CreateUserProfile extends Component {  
     constructor(){
@@ -37,28 +39,39 @@ export class CreateUserProfile extends Component {
     }
 
     handleInput = (e) => {
+        console.log(e.target.value)
         const {target:{name,value}} =e
         let {errorObj,errorCount} = this.state
         this.setState({[name]:value})
         if(name === "firstName" ){
-            errorObj.firstNameError=0
-            errorCount--
+            if(errorObj.firstNameError>0){
+                errorObj.firstNameError=0
+                errorCount--
+            }           
         }
         else if(name === "lastName" ){
-            errorObj.lastNameError=0
-            errorCount--
+            if(errorObj.lastNameError>0){
+                errorObj.lastNameError=0
+                errorCount--
+            }            
         }
         else if(name === "phone" ){
-            errorObj.phoneError=0
-            errorCount--
+            if(errorObj.phoneError>0){
+                errorObj.phoneError=0
+                errorCount--
+            }            
         }
         else if(name === "email" ){
-            errorObj.emailError=0
-            errorCount--
+            if(errorObj.emailError>0){
+                errorObj.emailError=0
+                errorCount-- 
+            }            
         }
         else if(name === "postiton"){
-            errorObj.positionError=0
-            errorCount--
+            if(errorObj.positionError>0){
+                errorObj.positionError=0
+                errorCount--
+            }            
         }
         this.setState({errorObj,errorCount})
     }
@@ -94,10 +107,10 @@ export class CreateUserProfile extends Component {
             errorObj.phoneError=1
             errorCount++
         }
-        if(this.state.phone.length>13){
-            errorObj.phoneError=1
-            errorCount++
-        }
+        // if(this.state.phone.length>13){
+        //     errorObj.phoneError=1
+        //     errorCount++
+        // }
         if(this.state.position.length === 0){
             errorObj.positionError=1
             errorCount++
@@ -111,11 +124,30 @@ export class CreateUserProfile extends Component {
     }
     handleSubmit = (e) => {
        let count= this.validate()
+       console.log(count)
         if(count === 0){
             console.log(this.state)
+            let userStateObject = this.state
+            let userObject={}
+            
+
+            userObject['name'] = userStateObject.firstName
+            userObject['last_name'] = userStateObject.lastName
+            userObject['role'] = userStateObject.position
+            userObject['email'] = userStateObject.email
+            userObject['phone'] = userStateObject.phone
+            // userObject['password']
+            // userObject['status'] = 
+
             console.log("success")
+            console.log(userObject)
+            let res = this.props.addUser(userObject)
+            res.then(result=>{
+                console.log(result)
+            })
+            console.log(res)
         }
-        console.log(this.state)
+       
 
 
     }
@@ -201,11 +233,11 @@ export class CreateUserProfile extends Component {
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-6">
-                                                    <label>Position<span class="text-danger">*</span></label>
-                                                    <select class="form-control">
-                                                        <option>Select Position</option>
-                                                        <option>Option 1</option>
-                                                        <option>Option 2</option>
+                                                    <label>Position<span class="text-danger" >*</span></label>
+                                                    <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
+                                                        <option  >Select Position</option>
+                                                        <option >Option 1</option>
+                                                        <option >Option 2</option>
                                                     </select>
                                                     {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
 
@@ -300,4 +332,13 @@ export class CreateUserProfile extends Component {
     )
 }}
 
-export default CreateUserProfile
+
+const mapStateToProps = (state)=> (
+    console.log(state)
+    // {
+    // users:state.users
+// }
+
+)
+
+export default connect(mapStateToProps,{getUsersList,showUser,updateUser,addUser})(CreateUserProfile)
