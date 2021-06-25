@@ -3,10 +3,11 @@
 import React, { useEffect, useState } from 'react' ;
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 //import {getAllImageAssets} from "../Utility/Utility";
 // import '../ProductManagement/index.css'
-// import GeneralSettings from './GeneralSettings'
-// import SkuList from './SkuList'
+ import GeneralSettings from './GeneralSettings'
+ import SkuList from './SkuList'
 import ProductTable from './ProductTable'
 import ActionModal from '../Modal/ActionModal'
 
@@ -51,14 +52,13 @@ const  ProductManagement = (props) =>{
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
 
-    const {categoryData,subCategoryData} = props.categoryData
+    //const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
             props.getAllProductAction()
             props.getAllCategoriesAction()
             props.getAllSubCategoriesAction()
             props.getAllManufactureAction()
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
         },[])
 
         const handleCategoryData =(e)=>{
@@ -80,11 +80,21 @@ const  ProductManagement = (props) =>{
 
             }
         }
-        // const handleFilter  = ()=>{
-        //     console.log(category,subCategory)
-        //     props.handleCategory(category,subCategory) 
 
+
+        // const searchBasedOnCategory = (e) =>{
+          
+        //     props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
+        //     setCategoryId(e.target.value)
+           
         // }
+
+
+        const handleFilter  = ()=>{
+            console.log(category,subCategory)
+            props.handleCategory(category,subCategory) 
+
+        }
         const resetFilter = () =>{
             setCategory("All")
             setsubCategory("0")
@@ -117,38 +127,42 @@ const  ProductManagement = (props) =>{
            setType("")
            setMessage("")
        }
-    //    const confirmAction = (id,type)=>{
-    //        if(type=="delete"){
-    //            setType(type)
-    //            setMessage("Are you sure you want to delete this product and its related SKUs?")
+
+       const confirmAction = (id,type)=>{
+           if(type==="delete"){
+               setType(type)
+               setMessage("Are you sure you want to delete this product and its related SKUs?")
    
-    //        }else{
-    //            setType(type)
-    //            setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+           }else{
+               setType(type)
+               setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
    
-    //        }
-    //        setOpen(true)
-    //        setId(id)
-    //    }
+           }
+           setOpen(true)
+           setId(id)
+       }
        
-        //const {pageToOpen,actionType,productDataById} = props.productData
-        // const {categoryData,subCategoryData} = props.categoryData
+        const {pageToOpen,actionType,productDataById} = props.productData
+        const {categoryData,subCategoryData} = props.categoryData
     return (
         <div>
             <ModalData/>
              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
+             {pageToOpen === "product" &&
+             <div>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
 				<h1 className="page-header mb-0">
                 <img src="assets/img/product-green.svg" alt=""/>
                     Product Manager</h1>
 			    <div class="topbarCtrls mt-3 mt-md-0">
-                    <Link to="/addProduct"> <a href="#" class="btn active">
-                        <span class="d-flex align-items-center text-left">
+                    {/* <Link to="/addProduct">  */}
+                    <a href="#" class="btn active">
+                        <span class="d-flex align-items-center text-left" onClick={()=>props.pageReDirectAction("general","add")}>
                             <img src="assets/img/Product_small-white.svg" alt=""/>
                             <span class="ml-2"><b>Add Product</b></span>
                         </span>
                     </a>
-                    </Link>
+                    {/* </Link> */}
                     <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/search-ic-btn.svg" alt=""/>
@@ -171,25 +185,23 @@ const  ProductManagement = (props) =>{
                             <div className="form-group row">
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
-                                    {/* <select className="form-control">
-                                        <option>None</option>
-                                    </select> */}
-                                    <select className="form-control" style={{fontWeight:"200", color:"#606060"}}  id="category" onChange={handleCategoryData} onClick={handleCategoryData}>
+                              
+                                <select className="form-control"  id="category" onChange={handleCategoryData} onClick={handleCategoryData}>
                                     <option value="All" selected={category==="All"?"selected":""}>All</option>
                                     {categoryData.map(categoryData=>{
-                                        return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
+                                        return(<option value={categoryData.id} key={categoryData.id}
+                                             selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
                                     })
                                     }
-        
-                
                                 </select>
                                 </div>
+
+
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Sub Category</label>
-                                    {/* <select className="form-control">
-                                        <option>None</option>
-                                    </select> */}
-                                     <select className="form-control" disabled={disable?true:false} style={{fontWeight:"200",  color:"#606060"}}  id="subcategory" onChange={handleCategoryData}  onClick={handleCategoryData}>
+
+                                <select className="form-control"  disabled={disable?true:false}
+                                 id="subcategory" onChange={handleCategoryData}  >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {subCategoryData.map(subCategoryData=>{
                                         return(<option selected={subCategory===subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
@@ -200,6 +212,7 @@ const  ProductManagement = (props) =>{
                                 </div>
                                 <div className="col-md-2 col-lg-2">
                                     <a href="javascript:;" onClick={resetFilter} className="d-block topSpace">Reset</a>
+                                    <a href="javascript:;" onClick={handleFilter} className="d-block topSpace">Search</a>
                                 </div>
                             </div>
                              <hr/>
@@ -207,11 +220,69 @@ const  ProductManagement = (props) =>{
                             
 
 
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                </div>}
+            {(pageToOpen === "general" || pageToOpen === "sku") &&
+                    <div className={`show_add_product, add_product_page`}>
+
+                        {/* <p className="headerbar1">Add Product</p>
+
+                        <div className="action_buttons_area2">
+                            <span style={{textDecoration:"none",cursor:"pointer"}} className="left_float" ><p className="textNumberBold" style={{marginLeft:"1em"}}>PRODUCT  ID: <span className="textNumberBold2">{productDataById.product_id} </span> </p> </span>
+                            <span  className="right_float icons_small"  style={{display:actionType==="add"?"none":"block",cursor:"pointer"}} onClick={()=>confirmAction(productDataById.product_id,"delete")}><i class='bx bxs-trash-alt'></i> <label className="deleteIcon">Delete</label></span>
+                            <span  className="right_float icons_small" style={{display:actionType==="add"?"none":"block",cursor:"pointer"}} onClick={()=>confirmAction(productDataById.product_id,"duplicate")}><i class='bx bx-copy' ></i><label className="trashIcon" style={{marginLeft:"-59px"}}>Duplicate</label></span>
+                            <span onClick={()=>props.pageReDirectAction("product","add")} style={{textDecoration:"none",cursor:"pointer"}}  className="right_float"><i class='bx bx-arrow-back' ></i><label className="trashIcon" style={{marginLeft:"-49px"}}>Back</label></span>
+                        </div>
+
+                        <div style={{clear:"both"}}></div> */}
+
+                            <div> 
+                                <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
+                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add Product</h1>
+                        
+                                </div>
+                                    <div class="px-md-3 mt-3">
+                                        <div class="px-3 py-3 mb-3 bg-white">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6">
+                                                    <h2>Product ID</h2>
+                                                </div>
+                                                
+                                                <div class="col-md-6 d-flex justify-content-md-end">
+                                                <span onClick={()=>props.pageReDirectAction("product","add")} 
+                                                style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
+                                                    <i class='bx bx-arrow-back' ></i><label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label></span>
+                                                    <a href="" class="mx-2">
+                                                        <img src="assets/img/copy-ic.svg" alt=""/>
+                                                    </a>
+                                                    <a href="" class="mx-2">
+                                                        <img src="assets/img/trash-ic.svg" alt=""/>
+                                                    </a>
+                                                    <a href="" class="mx-2">
+                                                        <img src="assets/img/left-double-arrow.svg" alt=""/>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <Tabs>
+                                            <TabList>
+                                                <Tab onClick={()=>props.subPageReDirectAction("general")} >General</Tab>
+                                                <Tab onClick={()=>props.subPageReDirectAction("sku")}>SKU Lists</Tab>
+                                            </TabList>
+
+                                        </Tabs>
+                                    </div>
+                            </div>
+                    </div>
+                }
+
+            {pageToOpen === "general" && <GeneralSettings />}
+            {pageToOpen === "sku" && <SkuList/> }
         </div>
+       
         )
     }
 

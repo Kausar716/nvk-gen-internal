@@ -52,6 +52,7 @@ import {
 */
 
 export const createProductAction = (product,tags) => dispatch => {
+    debugger;
     let errorArray=[];
     if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
     if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
@@ -175,7 +176,8 @@ export const duplicateProduct = (id) =>dispatch=>{
 export const createSkuAction = (id) => dispatch => {
 
 }
-export const updateSkuAction = (id,product_id, data, actionType="edit") => dispatch => {
+export const updateSkuAction = (id, data, actionType="edit") =>async dispatch => {
+   // debugger;
     let error = []
     //debugger;
     console.log("DATADATA", data);
@@ -186,7 +188,8 @@ export const updateSkuAction = (id,product_id, data, actionType="edit") => dispa
     if(data.sku_item_name==null ||data.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete data["id"]
-        axios.post(`/api/update-sku/${product_id}`,data,config).then(res=>{ 
+     
+        axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
             dispatch(showSpecifiedSkuAction(id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
@@ -219,11 +222,8 @@ export const updateSkuAction = (id,product_id, data, actionType="edit") => dispa
 
     }
 
-    
-   
-
 }
-export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
+export const updateSkuActionClear = (id,data,actionType="add") => async dispatch=>{
     delete data["id"]
     let error  = []
     if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
@@ -268,13 +268,13 @@ export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
     }
 
 }
-export const deleteSkuAction = (id) => dispatch => {
-    axios.post(` /api/delete-sku/${id}?type=product`,null,config).then(res=>{ 
+export const deleteSkuAction = (product_id) => dispatch => {
+    axios.post(` /api/delete-sku/${product_id}?type=product`,null,config).then(res=>{ 
         })
 
 
 }
-export const getAllSkuAction = (id) => dispatch => {
+export const getAllSkuAction = (product_id) => dispatch => {
     axios.get("/api/skus/products",config).then(res=>{ 
         console.log(res.data)
         dispatch({
@@ -285,8 +285,8 @@ export const getAllSkuAction = (id) => dispatch => {
         })
 
 }
-export const showSpecifiedSkuAction = (id) => dispatch => {
-    axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
+export const showSpecifiedSkuAction = (product_id) => dispatch => {
+    axios.get(`/api/sku/${product_id}?type=product`,config).then(res=>{ 
         console.log(res.data)
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,

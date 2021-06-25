@@ -68,6 +68,7 @@ const onSubmit = (values) =>{
 }
 
 const SkuList=(props)=> {
+
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation} = props.productData
     const [value, onChange] = useState(new Date());
     const [pageSize, setPageSize] =useState(15)
@@ -75,6 +76,8 @@ const SkuList=(props)=> {
     const [open,setOpen] = useState(false)
     const {subCategoryData} = props.categoryData
 
+
+    console.log("skuDataByIdskuDataById",skuData)
     useEffect(()=>{
         props.getAllSkuAction()
     },[])
@@ -122,6 +125,8 @@ const SkuList=(props)=> {
    
    }
 
+
+
    // validation input  data
 
       
@@ -138,6 +143,7 @@ const SkuList=(props)=> {
     let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
     console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
 
+    console.log("skuDataById123", skuDataById)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
@@ -230,7 +236,15 @@ const SkuList=(props)=> {
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
                                             <button type="button" class="btn btn-primary btn-lg"
-                                             disabled={needAction===true?false:true} onClick={()=>props.updateSkuAction(skuDataById.product_id,skuDataById,skuValidation)} >Add SKU &amp; Clear</button>
+                                             disabled={needAction===true?false:true} 
+                                             onClick={()=>{ 
+                                                //  const data={}
+                                                //  data.name="abcd";
+                                                //  data.description=10;
+                                             props.updateSkuAction(skuDataById.product_id, skuDataById,skuValidation);}} 
+                                             >Add SKU &amp; Clear</button>
+
+
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3"
                                             disabled={needAction===true?false:true} onClick={()=>props.updateSkuActionClear(skuDataById.product_id,skuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
@@ -267,7 +281,6 @@ const SkuList=(props)=> {
                     <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={skuPageNumber+1}/>
                     </div>
                     </div>
-
 
                             <div className="form-group row mt-3">
                             <div className="col-md-12">
@@ -309,14 +322,14 @@ const SkuList=(props)=> {
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedProduct(sku.product_id,"edit","sku")}/>
                                                    
                                                 </span>
-                                                <span>
+                                                {/* <span>
                                                     <a href="javascript:;">
                                                         <img src="assets/img/duplicate.svg" alt=""  onClick={()=>confirmDelete(sku.product_id)}/>
                                                     </a>
-                                                </span>
+                                                </span> */}
                                                 <span>
                                                     <a href="javascript:;">
-                                                        <img src="assets/img/delete.svg" alt=""/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.product_id)}/>
                                                     </a>
                                                 </span>
                                             </td>
