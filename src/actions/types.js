@@ -181,6 +181,13 @@ export const SHOW_USER = "SHOW_USER"
 export const UPDATE_USER = "UPDATE_USER"
 export const DELETE_USER = "DELETE_USER"
 
+// User Access
+export const GET_ROLES_LIST = "GET_ROLES_LIST"
+export const SHOW_ROLE = "SHOW_ROLE"
+export const UPDATE_ROLE = "UPDATE_ROLE"
+export const DELETE_ROLE = "DELETE_ROLE"
+export const ADD_ROLE  = "ADD_ROLE"
+
 export const qs = require('qs');
 export const axios = require('axios');
 export const AUTH_TOKEN = "1|Hk0h42DEoy9H0qPIMDdRzsh9JwrQjDbsHYX79Pf4"
