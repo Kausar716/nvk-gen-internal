@@ -25,7 +25,10 @@ import {
     subPageReDirectAction,
 
     //category Filter
-    handleCategory
+    handleCategory,
+
+    serachProduct
+
 
 } from "../../actions/productAction";
 import {
@@ -48,6 +51,7 @@ const  ProductManagement = (props) =>{
     const [subCategory,setsubCategory] = useState(0)
     const [disable,setDisable] = useState(false)
     const [id,setId] = useState(0)
+    const [categoryId,setCategoryId] = useState(0)
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
@@ -82,12 +86,12 @@ const  ProductManagement = (props) =>{
         }
 
 
-        // const searchBasedOnCategory = (e) =>{
+        const searchBasedOnCategory = (e) =>{
           
-        //     props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
-        //     setCategoryId(e.target.value)
+            props.serachProduct({category: e.target.value})
+            setCategoryId(e.target.value)
            
-        // }
+        }
 
 
         const handleFilter  = ()=>{
@@ -97,7 +101,7 @@ const  ProductManagement = (props) =>{
         }
         const resetFilter = () =>{
             setCategory("All")
-            setsubCategory("0")
+            setCategoryId("0")
             props.getAllProductAction()
 
         }
@@ -185,14 +189,18 @@ const  ProductManagement = (props) =>{
                             <div className="form-group row">
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
-                              
-                                <select className="form-control"  id="category" onChange={handleCategoryData} onClick={handleCategoryData}>
+
+                                <select className="form-control"  id="category"
+                               // onChange={searchBasedOnCategory}
+                               onChange={handleCategoryData}
+                                 >
                                     <option value="All" selected={category==="All"?"selected":""}>All</option>
                                     {categoryData.map(categoryData=>{
-                                        return(<option value={categoryData.id} key={categoryData.id}
-                                             selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
+                                        return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
                                     })
                                     }
+        
+                
                                 </select>
                                 </div>
 
@@ -317,6 +325,8 @@ getAllSubCategoriesAction,
 getAllManufactureAction,
 
 //filter catgeory
-handleCategory
+handleCategory,
+
+serachProduct
 }
 )(ProductManagement)

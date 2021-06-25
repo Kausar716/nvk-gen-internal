@@ -264,6 +264,7 @@ export default function(state = initialSatate, action){
 
             //search plant 
             case HANDLE_SEARCH_INPUT:
+                debugger;
                 var optionVal = -1;
                 var categoryVal = "";
                 if(action.payload.option ==="active"){

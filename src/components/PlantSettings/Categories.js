@@ -1,23 +1,72 @@
-import React, {useState} from 'react' ;
-//import { Field, reduxForm } from 'redux-form';
 
-function Categories() {
-    // const [name,setName] = useState("")
-    const [selectedItem,setSelectedItem] = useState("")
+import React, { Component } from 'react'
+import './style.css';
 
-    // const handleName = (e) => {
-    //     setName(e.target.value)
-    // }
-
-    // const handleAddManufacturer = (e) => {
-    //     e.preventDefault()
-    //     console.log(name)
-    // }
-    const handleitemSelect= (e)=> {
-        setSelectedItem(e.target.id)
+export default class Categories extends Component {
+    state ={
+        tasks:[
+            {name:"Christmas tree", category:"inactive", bgcolor:"#cfcbcbf7"},
+            {name:"Areac Palm", category:"inactive", bgcolor:"#cfcbcbf7"},
+            {name:"Peace lily", category:"active", bgcolor:"#cfcbcbf7"},
+        ]
     }
-    return (
-        <div>
+
+
+        onDragOver = (ev)=>{
+            ev.preventDefault();
+        }
+
+        onDragStart=(ev, id)=>{
+            console.log("dragstart:", id);
+            ev.dataTransfer.setData("id",id)
+        }
+
+
+
+
+
+        onDrop=(ev,cat)=>{
+            let id= ev.dataTransfer.getData("id");
+            let tasks = this.state.tasks.filter((task)=>{
+                if(task.name===id){
+                    task.category = cat;
+                }
+                return task;
+            });
+
+            this.setState({
+                ...this.state,
+                tasks
+            })
+
+        }
+
+
+        onDelete =(eve)=>{
+            console.log("eveDELETE",eve )
+
+        }
+
+
+
+
+render() {
+    var tasks={
+        inactive:[],
+        active:[],
+    }
+
+    this.state.tasks.forEach((t)=>{
+            tasks[t.category].push(
+                <div key={t.name} onDragStart={(e)=>this.onDragStart(e, t.name)} onDelete={(e)=>this.onDelete(e, t.name)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
+                        {t.name}
+                </div>
+            )
+    });
+    
+        return (
+           
+                   <div>
                <div className="bg-white">
                             <h4 className="p-15 mb-0">Categories</h4>
                             <hr className="m-0"/>
@@ -43,54 +92,19 @@ function Categories() {
                                             <div class="card-header">
                                                 Inactive
                                             </div>
-                                            <div class="card-body cardBg">
+
+
+                                            <div class="card-body cardBg"
+                                            onDragOver={(e)=>this.onDragOver(e)}
+                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                                <ul class="list-unstyled">
-                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
-                                                        <a href="/" class="" id="Christmas Trees">
-                                                            <span>Christmas Trees</span>
-                                                        </a>
-                                                   </li>
-                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
-                                                        <a href="/" id="Wheathers"  class="">
-                                                            <span id="Wheathers">Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="/" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="/" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
+                                                   <li  id="Christmas Trees" name="Christmas Trees"  >
+                                                   {tasks.inactive}
                                                    </li>
                                                </ul>
+                                               
+
+
                                             </div>
                                         </div>
                                     </div>
@@ -98,21 +112,16 @@ function Categories() {
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                                 <a href="javascript;">
-                                                    {/* <i className="fas fa-angle-double-right"></i> */}
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
-                                                    {/* <i className="fas fa-arrows-alt"></i> */}
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
-                                            <div>
-                                                <a href="javascript;" className="icDelete">
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDelete={(e)=>this.onDelete(e)}>
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -121,39 +130,14 @@ function Categories() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg">
+                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    <li class="active">
-                                                        <a href="javascript;" class="">
-                                                            <span>Broadleaf Evergrens</span>
-                                                        </a>
+                                                    {tasks.active}
                                                    </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Bulbs</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Evergreens</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Frems</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Fruits</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Grasses</span>
-                                                        </a>
-                                                   </li>
+                                                   
                                                </ul>
+                                                 {/* {tasks.active} */}
                                             </div>
                                         </div>
                                     </div>
@@ -161,7 +145,9 @@ function Categories() {
                             </div>
                         </div>
         </div>
-    )
+       
+        )
+    }
 }
 
-export default Categories
+     

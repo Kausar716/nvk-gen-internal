@@ -35,7 +35,8 @@ import {
     FILTER_CATEGORY_DATA,
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
-    FILTER_GET_SLECTED_CATEGORY_SUB_DATA
+    FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
+    HANDLE_SEARCH_PINPUT
 
 
 } from '../actions/types';
@@ -47,6 +48,7 @@ let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+
 
 
 const initialSatate = {
+   
     productData         :   [],
     skuData             :   [],
     productDataById     :   {
@@ -320,6 +322,37 @@ export default function(state = initialSatate, action){
                 status:action.status,
                 message:action.message
             }
+
+
+            case HANDLE_SEARCH_PINPUT:
+                debugger;
+                var optionVal = -1;
+                var categoryVal = "";
+                // if(action.payload.option ==="active"){
+                //     optionVal = 0;
+                // }
+                // if(action.payload.option ==="archive"){
+                //     optionVal = 1;
+                // }
+                categoryVal = action.payload.category;
+                if(action.payload.category.trim() ==="" && optionVal === -1 && categoryVal === "0"){
+                    return{
+                        ...state,
+                        productData:state.backupData
+                    }
+                }else{
+                    return{
+                        ...state,
+                        productData:state.backupData.filter(
+                            filterData=>(filterData.name===action.payload.category.trim() || action.payload.category.trim()==="") &&
+                            (filterData.category_id === Number(categoryVal) || categoryVal === "0")
+                            )
+                    }
+
+                }
+
+
+
         default:
             return state
      

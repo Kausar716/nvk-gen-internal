@@ -1,4 +1,4 @@
-import React, {useState} from 'react' ;
+import React, {Component} from 'react' ;
 import { Field, reduxForm } from 'redux-form';
 import {  Row} from 'reactstrap';
 
@@ -27,14 +27,37 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
   </div>
 )
 
-const  Caliper=()=> {
-    const [selectedItem,setSelectedItem] = useState("")
 
 
-    const handleitemSelect= (e)=> {
-        setSelectedItem(e.target.id)
-    }
-    return (
+
+
+
+export default class Caliper extends Component {
+        state ={
+            tasks:[
+                {name:"Christmas tree", category:"inactive", bgcolor:"yellow"},
+                {name:"Areac Palm", category:"inactive", bgcolor:"pink"},
+                {name:"Peace lily", category:"active", bgcolor:"skyblue"},
+            ]
+        }
+
+
+    render() {
+        var tasks={
+            Inactive:[],
+            active:[],
+        }
+
+        this.state.tasks.forEach((t)=>{
+            
+                tasks[t.category].push(
+                    <div key={t.name} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
+                            {t.name}
+                    </div>
+                )
+        });
+    return ( 
+       
         <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0"> Caliper</h4>
@@ -56,25 +79,15 @@ const  Caliper=()=> {
                                         <div className="col-md-4">
                                             <p>Imperial<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <Field
-                                                        name="Imperial"
-                                                        component={renderField}
-                                                        type="text"
-                                                        validate={[ required]}
-                                                    />
+                                                <input type="text" className="form-control" placeholder=""/>
+                                             
                                             </div>
                                         </div>
                                         <div className="col-md-4">
                                             <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <Field
-                                                        name="SKUValueCaliper"
-                                                        component={renderField}
-                                                        type="text"
-                                                        validate={[ required ]}
-                                                    />
+                                                <input type="text" className="form-control" placeholder=""/>
+                                             
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 <a href="javascript;" className="d-flex align-items-center">
@@ -92,16 +105,18 @@ const  Caliper=()=> {
                                             </div>
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
-                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
+                                                   <li  id="Christmas Trees" name="Christmas Trees"  >
                                                         <a href="/" class="" id="Christmas Trees">
                                                             <span>Christmas Trees</span>
                                                         </a>
                                                    </li>
-                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
+
+                                                   <li>
                                                         <a href="/" id="Wheathers"  class="">
                                                             <span id="Wheathers">Wheathers</span>
                                                         </a>
                                                    </li>
+
                                                    <li>
                                                         <a href="/" class="">
                                                             <span>Attracts Birds</span>
@@ -141,6 +156,8 @@ const  Caliper=()=> {
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
@@ -210,7 +227,5 @@ const  Caliper=()=> {
         </>
     )
 }
+}
 
-export default reduxForm({
-    form: 'Caliper',
-  })(Caliper);

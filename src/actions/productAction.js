@@ -37,7 +37,8 @@ import {
     //filter category
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
-    FILTER_GET_SLECTED_CATEGORY_SUB_DATA
+    FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
+    HANDLE_SEARCH_PINPUT
 
 } from './types';
 
@@ -415,6 +416,14 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
 
 
 
+export const serachProduct = (data) =>dispatch=>{
+    //console.log(data)
+    dispatch({
+        type:HANDLE_SEARCH_PINPUT,
+        payload:data,
+    })
+
+}
 
 
 
