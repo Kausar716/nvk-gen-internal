@@ -87,7 +87,6 @@ const  ProductManagement = (props) =>{
 
 
         const searchBasedOnCategory = (e) =>{
-          
             props.serachProduct({category: e.target.value})
             setCategoryId(e.target.value)
            
