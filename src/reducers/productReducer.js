@@ -1,5 +1,6 @@
 // import {v4 as uuidv4} from 'uuid';
 
+import actions from 'redux-form/lib/actions';
 import {    
     //PRODUCT ACTION
 
@@ -89,7 +90,7 @@ const initialSatate = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
-
+ console.log("actions", action)
    
     switch(action.type){
         // page action
@@ -306,9 +307,10 @@ export default function(state = initialSatate, action){
             }
 
         case FILTER_GET_SLECTED_CATEGORY_DATA:
+            // JSON.stringify(product.category_id )===action.categoryId
             return{
                 ...state,
-                productData:state.backupData.filter(product=>product.category_id ===action.categoryId)
+                productData:state.backupData.filter(product=>JSON.stringify(product.category_id )===action.categoryId)
             }
         case FILTER_GET_SLECTED_CATEGORY_SUB_DATA:
             console.log("cat sub cat")

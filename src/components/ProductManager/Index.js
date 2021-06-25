@@ -67,12 +67,15 @@ const  ProductManagement = (props) =>{
 
         const handleCategoryData =(e)=>{
             console.log(e.target.id)
-
+            console.log("0", e.target.value)
             if(e.target.id ==="category"){
+                // props.handleCategory(e.target.value,"0")
                 if(e.target.value==="All"){
+                    props.handleCategory("All","0")
                     setDisable(true)
                     
                 }else{
+                    props.handleCategory(e.target.value,"0")
                     setDisable(false)
                 }
                 setCategory(e.target.value)
@@ -80,6 +83,7 @@ const  ProductManagement = (props) =>{
                 
             }
             else if(e.target.id ==="subcategory"){
+                props.handleCategory(category,e.target.value)
                 setsubCategory(e.target.value)
 
             }
@@ -94,7 +98,8 @@ const  ProductManagement = (props) =>{
 
 
         const handleFilter  = ()=>{
-            console.log(category,subCategory)
+            alert("ABCD")
+            console.log("ABCD",category,subCategory)
             props.handleCategory(category,subCategory) 
 
         }
@@ -147,6 +152,7 @@ const  ProductManagement = (props) =>{
        
         const {pageToOpen,actionType,productDataById} = props.productData
         const {categoryData,subCategoryData} = props.categoryData
+        console.log("subCategoryData.id" ,subCategoryData)
     return (
         <div>
             <ModalData/>
@@ -189,10 +195,20 @@ const  ProductManagement = (props) =>{
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
 
-                                <select className="form-control"  id="category"
+                                {/* <select className="form-control"  id="category"
                                // onChange={searchBasedOnCategory}
                                onChange={handleCategoryData}
                                  >
+                                    <option value="All" selected={category==="All"?"selected":""}>All</option>
+                                    {categoryData.map(categoryData=>{
+                                        return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
+                                    })
+                                    }
+        
+                
+                                </select> */}
+
+                                <select className="form-control"  id="category" onChange={handleCategoryData} onclick={handleCategoryData}  >
                                     <option value="All" selected={category==="All"?"selected":""}>All</option>
                                     {categoryData.map(categoryData=>{
                                         return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
@@ -207,7 +223,7 @@ const  ProductManagement = (props) =>{
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Sub Category</label>
 
-                                <select className="form-control"  disabled={disable?true:false}
+                                {/* <select className="form-control"  disabled={disable?true:false}
                                  id="subcategory" onChange={handleCategoryData}  >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {subCategoryData.map(subCategoryData=>{
@@ -215,11 +231,20 @@ const  ProductManagement = (props) =>{
                                     })
                                     }
                                         
+                                </select> */}
+                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleCategoryData}  onClick={handleCategoryData}>
+                                <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
+                                    {subCategoryData.map(subCategoryData=>{
+                                        return(<option selected={subCategory===subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
+                                    })
+                                    }
+                                        
                                 </select>
+
                                 </div>
                                 <div className="col-md-2 col-lg-2">
-                                    <a href="javascript:;" onClick={resetFilter} className="d-block topSpace">Reset</a>
-                                    <a href="javascript:;" onClick={handleFilter} className="d-block topSpace">Search</a>
+                                    <h4 onClick={resetFilter} style={{color:"#348fe2", cursor:"pointer"}} className="d-block topSpace">Reset</h4>
+                                    {/* <a href="javascript:;" onClick={handleFilter} className="d-block topSpace">Search</a> */}
                                 </div>
                             </div>
                              <hr/>
