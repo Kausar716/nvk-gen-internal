@@ -42,6 +42,9 @@ export class CreateUserProfile extends Component {
             cancel:false
         }
     }
+    componentDidMount(){
+        this.props.getRolesList()   
+    }
 
     handleInput = (e) => {
         console.log(e.target.value)
@@ -163,7 +166,9 @@ export class CreateUserProfile extends Component {
     }
     render() {
 
-     
+     console.log(this.props.roles)
+     let roles=[]
+     if(this.props.roles)roles = this.props.roles
     return (
         <>
          <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
@@ -247,9 +252,11 @@ export class CreateUserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
-                                                        <option  >Select Position</option>
-                                                        <option >Option 1</option>
-                                                        <option >Option 2</option>
+                                                    <option>Select</option>
+                                                        {roles?roles.map(userObj=>{
+                                                            console.log(userObj)
+                                                            return  <option value={userObj.id}>{userObj.name}</option>
+                                                        }):null}                                                        
                                                     </select>
                                                     {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
 
@@ -348,9 +355,10 @@ export class CreateUserProfile extends Component {
 const mapStateToProps = (state)=> (
     // console.log(state)
     {
-        users:state.userReduser.users
+        users:state.userReduser.users,
+        roles:state.userAccessReduser.roles.payload
 }
 
 )
 
-export default connect(mapStateToProps,{getRolesList,getUsersList,showUser,updateUser,addUser})(CreateUserProfile)
+export default connect(mapStateToProps,{getRolesList,addUser})(CreateUserProfile)

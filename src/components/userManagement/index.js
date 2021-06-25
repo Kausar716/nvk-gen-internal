@@ -9,6 +9,7 @@ import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
+import {getRolesList} from "../../actions/userAccessAction";
 
 export class UserManagement extends Component {  
 constructor(){
@@ -70,6 +71,7 @@ handleCancle = () => {
 }
 componentDidMount(){
     this.props.getUsersList()
+    this.props.getRolesList()
 }
  hanleCheckBox = (e) => {
 if( e.target.value === "off"){
@@ -85,23 +87,32 @@ else {
         let {displayUpdateProfile,displayCreate} = this.state
            
         let userProfiles = []  
-        console.log(this.props.users)
+        let roleList = []
+        console.log(this.props)
+        console.log(this.props.users.active)
+        // console.log([...this.props.users.active,...this.props.users.inactive])
+        if(this.props.users.active){
         if(this.props.users && (this.state.displatDeletedRecord === "off")){
-            //  userProfiles =  [...this.props.users.active,...this.props.users.inactive]
-            //  console.log(userProfiles)
-            // // this.setState({userProfiles})
+             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+           
+            // userProfiles = this.props.users.active.concat(this.props.users.inactive)
         }  
         if(this.props.users && (this.state.displatDeletedRecord === "on")){
-            // userProfiles =  [...this.props.users.active,...this.props.users.inactive]
-            // let userWithDeletedRecords = userProfiles.filter(user=>{
-            //     return (user.deleted_at!== null)
-            //     console.log(user.deleted_at)
+            userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+            let userWithDeletedRecords = userProfiles.filter(user=>{
+                return (user.deleted_at!== null)
+            
                
-            // })
-            // userProfiles = userWithDeletedRecords
+            })
+            userProfiles = userWithDeletedRecords
             console.log(userProfiles)
-           // this.setState({userProfiles})
+     
        } 
+    }
+    if(this.props.roles){
+        console.log(this.props.roles.payload)
+        roleList = this.props.roles.payload
+    }
 
         
     return (
@@ -138,9 +149,10 @@ else {
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option>Select</option>
-                                            {/* {userProfiles.length>0?userProfiles.map(userObj=>{
+                                            {userProfiles[0]?userProfiles.map(userObj=>{
+                                                console.log(userObj)
                                                 return  <option value={userObj.id}>{userObj.name}</option>
-                                            }):null} */}
+                                            }):null}
                                             </select>
                                         </div>
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0">  
@@ -156,7 +168,7 @@ else {
                                             </a>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} />:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList} />:null}
                                     {displayCreate?<CreateUserProfile cancle={this.handleCancle}/>:null}
                                 </div>
                             </div>
@@ -179,9 +191,12 @@ else {
 const mapStateToProps = (state)=> (
     // console.log(state)
     {
-    users:state.userReduser.users.payload
+    
+    users:state.userReduser.users.type==="GET_USERS_LIST"? state.userReduser.users.payload :[],
+    roles:state.userAccessReduser.roles
+
 }
 
 )
 
-export default connect(mapStateToProps,{getUsersList})(UserManagement)
+export default connect(mapStateToProps,{getUsersList,getRolesList})(UserManagement)
