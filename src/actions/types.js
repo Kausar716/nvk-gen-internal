@@ -196,6 +196,13 @@ export const UPDATE_ORGANIZATION = "UPDATE_ORGANIZATION"
 export const DELETE_ORGANIZATION = "DELETE_ORGANIZATION"
 export const HANDLE_ORGANIZATION_INPUT_DATA = "HANDLE_ORGANIZATION_INPUT_DATA"
 
+//customer settings
+export const GET_CUSTOMER_LIST = "GET_CUSTOMER_LIST"
+export const ADD_CUSTOMER = "ADD_CUSTOMER"
+export const SHOW_CUSTOER = "SHOW_CUSTOER"
+export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER"
+export const DELETE_CUSTOMER = "DELETE_CUSTOMER"
+
 export const qs = require('qs');
 export const axios = require('axios');
 export const AUTH_TOKEN = "1|Hk0h42DEoy9H0qPIMDdRzsh9JwrQjDbsHYX79Pf4"

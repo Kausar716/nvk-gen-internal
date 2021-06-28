@@ -1,26 +1,54 @@
 import React from 'react'
 import AddCustomer from './EditCustomer'
+import {getAllCustomer} from "../../actions/customerSettingAction";
+import {connect} from "react-redux";
 
-
-export class OrganizationSettings extends React.Component {  
+export class CustomerSettings extends React.Component {  
     constructor(){
         super()
         this.state={
-            addCustomerToggle:false
+            addCustomerToggle:false,
+            customerListStatus:"All"
         }
+    }
+    componentDidMount(){
+        this.props.getAllCustomer()
     }
 
     handleAddCustomerClick = () => {
         this.setState({addCustomerToggle:!this.state.addCustomerToggle})
     }
+    handleRadioClick = (e)=> {
+        this.setState({customerListStatus:e.target.name})
+    }    
     render(){
+        let customerData = [] 
+        let tempArray = []
+        if(this.props.customerData) tempArray = this.props.customerData
+        console.log(this.props.customerData)
+        if(this.state.customerListStatus === "All" && this.props.customerData){
+            tempArray = [...this.props.customerData.active ,...this.props.customerData.inactive]
+            customerData = tempArray
+        
+        }
+        if(this.state.customerListStatus === "active" && this.props.customerData){
+            tempArray = [...this.props.customerData.active ]
+            customerData = tempArray
+        
+        }
+        if(this.state.customerListStatus === "inactive" && this.props.customerData){
+            tempArray = [...this.props.customerData.inactive ]
+            customerData = tempArray
+        
+        }
+        console.log(customerData)
     return (
         <>
         {! this.state.addCustomerToggle? <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - 324</small></div>
+                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData.active.length}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
@@ -52,15 +80,15 @@ export class OrganizationSettings extends React.Component {
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/>
+                                        <input class="form-check-input" type="radio" name="active" id="activePlants" value="" checked={this.state.customerListStatus === "active"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="activePlants">Active Only  </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/>
+                                        <input class="form-check-input" type="radio" name="inactive" id="archivedPlants" value="" checked={this.state.customerListStatus === "inactive"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="archivedPlants">Inactive Only</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/>
+                                        <input class="form-check-input" type="radio" name="all" id="allPlants" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="allPlants">All</label>
                                     </div>
                                 </div>
@@ -115,74 +143,25 @@ export class OrganizationSettings extends React.Component {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>Active</td>
-                                                <td>0023555</td>
-                                                <td>John Smith landscaping</td>
-                                                <td>LANDRICH</td>
-                                                <td>202-555-0191</td>
-                                                <td>John Smith</td>
-                                                <td>158.25</td>
-                                                <td>85.00</td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-danger">Inactive</td>
-                                                <td>0023478</td>
-                                                <td>Windham Gardens</td>
-                                                <td>LANDRICH</td>
-                                                <td>202-555-0191</td>
-                                                <td>Brendan Weirs</td>
-                                                <td>158.25</td>
-                                                <td>125.02</td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>Active</td>
-                                                <td>0023555</td>
-                                                <td>John Smith landscaping</td>
-                                                <td>LANDRICH</td>
-                                                <td>202-555-0191</td>
-                                                <td>John Smith</td>
-                                                <td>158.25</td>
-                                                <td>85.00</td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td class="text-danger">Inactive</td>
-                                                <td>0023478</td>
-                                                <td>Windham Gardens</td>
-                                                <td>LANDRICH</td>
-                                                <td>202-555-0191</td>
-                                                <td>Brendan Weirs</td>
-                                                <td>158.25</td>
-                                                <td>125.02</td>
-                                                <td class="text-center">
-                                                    <span>
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/edit.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
+                                        {customerData.map(customerData=>{
+                                            return <tr>
+                                                        <td>{customerData.status === 1?"Active":"Inactive" }</td>
+                                                        <td>{customerData.id}</td>
+                                                        <td>{customerData.name}</td>
+                                                        <td>{JSON.parse(customerData.type).join()}</td>
+                                                        <td>{customerData.telephone}</td>
+                                                        <td>{customerData.contact_id}</td>
+                                                        <td>{customerData.last_order}</td>
+                                                        <td>{customerData.outstanding}</td>
+                                                        <td class="text-center">
+                                                        <span>
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/edit.svg" alt=""/>
+                                                            </a>
+                                                        </span>
+                                                        </td>
+                                                   </tr>
+                                        })}                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -198,5 +177,13 @@ export class OrganizationSettings extends React.Component {
 }
 
 }
+const mapStateToProps = (state)=> (
+    // console.log(state.customerReducer.payload)
+    {
+        customerData:state.customerReducer.payload
+    }
 
-export default OrganizationSettings
+)
+
+export default connect(mapStateToProps,{getAllCustomer})(CustomerSettings)
+

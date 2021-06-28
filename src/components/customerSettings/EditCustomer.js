@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 
-export default function AddPlant() {
+export default function AddCustomer() {
     const [value, onChange] = useState(new Date());
     return (
         <div>
