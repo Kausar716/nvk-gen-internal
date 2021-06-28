@@ -188,6 +188,14 @@ export const UPDATE_ROLE = "UPDATE_ROLE"
 export const DELETE_ROLE = "DELETE_ROLE"
 export const ADD_ROLE  = "ADD_ROLE"
 
+//organization setting
+export const GET_ORGANIZATION_LIST ="GET_ORGANIZATION_LIST"
+export const ADD_ORGANIZATION = "ADD_ORGANIZATION" 
+export const SHOW_ORGANIZATION = "SHOW_ORGANIZATION" 
+export const UPDATE_ORGANIZATION = "UPDATE_ORGANIZATION"
+export const DELETE_ORGANIZATION = "DELETE_ORGANIZATION"
+export const HANDLE_ORGANIZATION_INPUT_DATA = "HANDLE_ORGANIZATION_INPUT_DATA"
+
 export const qs = require('qs');
 export const axios = require('axios');
 export const AUTH_TOKEN = "1|Hk0h42DEoy9H0qPIMDdRzsh9JwrQjDbsHYX79Pf4"
