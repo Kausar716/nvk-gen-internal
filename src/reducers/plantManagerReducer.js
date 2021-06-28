@@ -282,9 +282,9 @@ export default function(state = initialSatate, action){
                     return{
                         ...state,
                         plantData:state.backupData.filter(
-                            filterData=>(filterData.genus===action.payload.plant.trim() || action.payload.plant.trim()==="") &&
+                            filterData=>(filterData.genus.indexOf(action.payload.plant.trim().toLowerCase()) > -1 || action.payload.plant==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&
-                            (filterData.category_id === Number(categoryVal) || categoryVal === "0")
+                            (filterData.category_id === Number(categoryVal) || Number(categoryVal) === 0)
                             )
                     }
 

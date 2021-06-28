@@ -4,8 +4,7 @@ import React ,{useState,useEffect} from "react";
 import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
-
-
+import {checkLogin} from "../actions/authAction";
 
 
 const Left = (props)=>{
@@ -16,6 +15,7 @@ const Left = (props)=>{
    props.getMenuItems()
   },[])
   
+  console.log("karthike", props)
 //  const handleMainSelection= (id) => {
 //     console.log(id)
 //    console.log(selectedSubBar)
@@ -56,16 +56,23 @@ const handleMainSelection= (id) => {
   // setSelectedSubBar(id)
   props.updateMenuItems(updateObject)
  }
- console.log(props)
+
+ const handleSideMenuEnter=() => {
+  props.authKey.bdyClass=" page-sidebar-fixed page-header-fixed";
+ }
+ const handleSideMenuLeave=() => {
+  props.authKey.bdyClass=" page-sidebar-fixed page-header-fixed page-sidebar-minified";
+ }
+
  let reduxObject = props.updateObject
  let selectedMainBar=reduxObject.mainMenu
  let initialSelect = reduxObject.initialSelect
  let selectedSubBar = reduxObject.submenu
- console.log(reduxObject.mainMenu)
+
 
   return (
     <div>
-      <div id="sidebar" class="sidebar">
+      <div id="sidebar" class="sidebar" onMouseEnter={()=>{handleSideMenuEnter()}} onMouseLeave={()=>{handleSideMenuLeave()}}>
         <div data-scrollbar="true" data-height="100%">
           <ul class="nav">
             <li>
@@ -79,12 +86,12 @@ const handleMainSelection= (id) => {
                 <span>Dashboard</span>
               </Link>
             </li>
-            <li class={selectedMainBar === "orderList"?"has-sub active":"has-sub "} onClick={()=>{handleMainSelection("orderList")}}>             
-            <a href="javascript:void(0)">
+            <li class={selectedMainBar === "orderList"?"has-sub active":"has-sub "} >             
+              <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/customer-quotes.svg" alt=""/>
                 <span>Customer Quotes &amp; Orders</span>
-                </a>  
+              </Link>  
                 <ul class="sub-menu">
                 <li class= {(selectedSubBar === "orderList1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
@@ -112,7 +119,7 @@ const handleMainSelection= (id) => {
                   handleSubSelection("orderList8")}}><Link to="/comingsoon">New Quote</Link></li>
               </ul>          
             </li>
-            <li class={selectedMainBar === "purchaseOrder"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("purchaseOrder")}}>
+            <li class={selectedMainBar === "purchaseOrder"?"has-sub active":"has-sub"} >
               <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/purchase-orders.svg" alt=""/>
@@ -127,14 +134,12 @@ const handleMainSelection= (id) => {
                   handleSubSelection("purchaseOrder2")}}><Link to="/comingsoon">New P.O</Link></li>
               </ul>  
             </li>
-            <li  
-            class={(selectedMainBar === "inventory")?"has-sub active":"has-sub "} onClick={()=>{handleMainSelection("inventory")}} 
-            >
-              <a href="javascript:void(0)">
+            <li class={(selectedMainBar === "inventory")?"has-sub active":"has-sub "} >
+              <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/inventory.svg" alt=""/>
                 <span>Inventory</span> 
-              </a>
+              </Link>
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "inventory1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
@@ -163,7 +168,6 @@ const handleMainSelection= (id) => {
               </ul>
             </li>
             <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>
-            {/* activeClassName="active" */}
             <Link to="/comingsoon">
                 <img src="assets/img/customermanagement.svg" alt=""/>
                 <span>Customer Management</span>
@@ -175,7 +179,7 @@ const handleMainSelection= (id) => {
                 <span>Supplier Management</span>
               </Link>
             </li>
-            <li class={selectedMainBar === "ToolsAndSettings"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("ToolsAndSettings")}}>
+            <li class={selectedMainBar === "ToolsAndSettings"?"has-sub active":"has-sub"}>
               <Link to="/organizationSettings">
               <b class="caret"></b>
                 <img src="assets/img/settings.svg" alt=""/>
@@ -185,7 +189,7 @@ const handleMainSelection= (id) => {
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{e.stopPropagation()
                   handleSubSelection("AdminSetting1")}}><Link to="/organizationSettings">Organization</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/customerlisting">Customer Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/comingsoon">Customer Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/comingsoon">Supplier Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting5")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting5")}}><Link to="/comingsoon">Tags & Labels</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting6")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting6")}}><Link to="/comingsoon">Image Management</Link></li>
@@ -204,7 +208,7 @@ const handleMainSelection= (id) => {
                 <span>Staff Directory</span>
               </Link>
             </li>
-            <li class={selectedMainBar === "MessageCenter"?"has-sub active":"has-sub"} onClick={()=>{handleMainSelection("MessageCenter")}}>
+            <li class={selectedMainBar === "MessageCenter"?"has-sub active":"has-sub"}>
               <Link to="/comingsoon">
               <b class="caret"></b>
                 <img src="assets/img/message-center.svg" alt=""/>
@@ -234,8 +238,9 @@ const mapStateToProps = (state)=> (
   // console.log(state)
 
   {
+    authKey:state.authKey,
   updateObject : state.sideMenu
 }
 )
 
-export default connect(mapStateToProps,{getMenuItems,updateMenuItems})(Left)
+export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin})(Left)
