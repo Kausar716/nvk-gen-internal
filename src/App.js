@@ -28,6 +28,7 @@ import AddPlant from './components/PlantManager/AddPlant'
 import AddProduct from "./components/ProductManager/AddProduct";
 import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'
 import StaffDirectory from './components/StaffDirectory'
+import CustomerLists from './components/customerSettings/CustomerLists'
 
 export const history = createBrowserHistory({forceRefresh: true})
 
@@ -94,6 +95,12 @@ function App(props) {
                   <Nav />
                   <Left />
                     <UserManagement/>
+                  </Route>
+
+                  <Route path="/customerlisting">
+                  <Nav />
+                  <Left />
+                    <CustomerLists/>
                   </Route>
 
                   

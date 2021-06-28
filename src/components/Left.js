@@ -7,6 +7,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
 
 
 
+
 const Left = (props)=>{
   // const [selectedMainBar,setSelectedMainBar] = useState("Dashboard")
   // const [selectedSubBar , setSelectedSubBar] = useState("")
@@ -184,7 +185,7 @@ const handleMainSelection= (id) => {
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{e.stopPropagation()
                   handleSubSelection("AdminSetting1")}}><Link to="/organizationSettings">Organization</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
-                <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/comingsoon">Customer Settings</Link></li>
+                <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/customerlisting">Customer Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/comingsoon">Supplier Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting5")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting5")}}><Link to="/comingsoon">Tags & Labels</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting6")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting6")}}><Link to="/comingsoon">Image Management</Link></li>

@@ -18,6 +18,7 @@ import dlistOfNumberReducer from './listOfNumbers';
 import sideReducer from './sideMenuItemReducer'
 import userReduser from './userReduser'
 import userAccessReduser from './userAccessReduser'
+import organizationReduser from './organizationSettingReducer'
 
 
 export default combineReducers({
@@ -34,7 +35,8 @@ export default combineReducers({
     dlistOfNumber:dlistOfNumberReducer,
     sideMenu:sideReducer,
     userReduser:userReduser,
-    userAccessReduser:userAccessReduser
+    userAccessReduser:userAccessReduser,
+    organizationReduser:organizationReduser
 
     
 })

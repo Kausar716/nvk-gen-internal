@@ -166,7 +166,7 @@ export class UserProfile extends Component {
                 if(this.props.selectedUser.last_name !== userStateObject.lastName)userObject['last_name'] = userStateObject.lastName
                 if(this.props.selectedUser.email !== userStateObject.email)userObject['email'] = userStateObject.email
                 if(this.props.selectedUser.phone !== userStateObject.phone)userObject['phone'] = userStateObject.phone
-                if(this.props.selectedUser.position !== userStateObject.position)userObject['position'] = userStateObject.position
+                if(this.props.selectedUser.position !== userStateObject.position)userObject['role'] = userStateObject.position
 
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
@@ -189,7 +189,7 @@ export class UserProfile extends Component {
     render() {
         let roles=[]
         if(this.props.roles)roles = this.props.roles
-        console.log(this.props.roles)
+        console.log(this.props.selectedUser)
    
      
     return (
@@ -273,7 +273,7 @@ export class UserProfile extends Component {
                                             <div class="row form-group">
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger">*</span></label>
-                                                    <select class="form-control" name="position"  onChange={this.handleInput}  >
+                                                    <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}  >
                                                     {roles?roles.map(userObj=>{
                                                             console.log(userObj)
                                                             return  <option value={userObj.id}>{userObj.name}</option>
