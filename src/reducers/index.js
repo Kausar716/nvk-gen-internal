@@ -19,6 +19,7 @@ import sideReducer from './sideMenuItemReducer'
 import userReduser from './userReduser'
 import userAccessReduser from './userAccessReduser'
 import organizationReduser from './organizationSettingReducer'
+import customerReducer from './customerReduser'
 
 
 export default combineReducers({
@@ -36,7 +37,8 @@ export default combineReducers({
     sideMenu:sideReducer,
     userReduser:userReduser,
     userAccessReduser:userAccessReduser,
-    organizationReduser:organizationReduser
+    organizationReduser:organizationReduser,
+    customerReducer:customerReducer
 
     
 })

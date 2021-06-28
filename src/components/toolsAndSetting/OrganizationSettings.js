@@ -52,7 +52,6 @@ export class OrganizationSettings extends React.Component {
         }
         if(name=== "logo"){
             console.log(e.target.value)
-            const logoImage = e.target.files[0]
           
             this.setState({logoImage: URL.createObjectURL(e.target.files[0])})
         }
@@ -69,8 +68,6 @@ export class OrganizationSettings extends React.Component {
         let nameReg = /^[a-zA-Z]+$/
         let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
-        console.log(emailReg.test(organizationData.sending_email_address))
-        console.log(organizationData.sending_email_address)
         if(!phoneReg.test(organizationData.phone)){
             errorObj.phoneError=1
             errorCount++
@@ -143,6 +140,7 @@ export class OrganizationSettings extends React.Component {
         else{
             organizationDataById = this.props.organizationData
         }
+        let logourl = "https://zvky.flamingotech.ml"
 
         
     return (
@@ -173,7 +171,9 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-4 col-lg-3">
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3">
-                                            <img src={this.state.logoImage} style={{width:"100px",height:"100px"}} />
+                                            {/* <img src={this.state.logoImage.length>0?this.state.logoImage : `${logourl}+${organizationDataById.logo}`} style={{width:"100px",height:"100px"}} /> */}
+                                            <img src={this.state.logoImage.length>0?this.state.logoImage : `${logourl}+${organizationDataById.logo}`} style={{width:"100px",height:"100px"}} />
+
                                         </div>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
