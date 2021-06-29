@@ -1,61 +1,10 @@
 import React, {Component} from 'react' ;
-import { Field, reduxForm } from 'redux-form';
-import {  Row} from 'reactstrap';
-
-
-
-const required = value => value ? undefined : 'Required'
-//const maxLength = max => value =>
-  //value && value.length > max ? `Must be ${max} characters or less` : undefined
-//const maxLength15 = maxLength(15)
-//const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
-//const minValue = min => value =>
-  //value && value < min ? `Must be at least ${min}` : undefined
-//const minValue2 = minValue(2)
-
-
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  <div>
-    {/* <label>{label}</label> */}
-    <div>
-      <input {...input}  className="form-control" placeholder={label}  type={type}/>
-      <Row>
-      {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
-      </Row>
-      
-    </div>
-  </div>
-)
-
-
-
-
-
 
 export default class Caliper extends Component {
-        state ={
-            tasks:[
-                {name:"Christmas tree", category:"inactive", bgcolor:"yellow"},
-                {name:"Areac Palm", category:"inactive", bgcolor:"pink"},
-                {name:"Peace lily", category:"active", bgcolor:"skyblue"},
-            ]
-        }
-
+     
 
     render() {
-        var tasks={
-            Inactive:[],
-            active:[],
-        }
 
-        this.state.tasks.forEach((t)=>{
-            
-                tasks[t.category].push(
-                    <div key={t.name} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
-                            {t.name}
-                    </div>
-                )
-        });
     return ( 
        
         <>

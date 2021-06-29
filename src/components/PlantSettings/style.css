@@ -41,3 +41,9 @@
   width: 10em;
   border: 1px solid green; */
 }
+
+.testingBorder {
+  border: 1px solid red;
+  width: 30em;
+  height: 7em;
+}

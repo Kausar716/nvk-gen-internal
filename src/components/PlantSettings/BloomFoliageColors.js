@@ -4,7 +4,6 @@ import * as MdIcons from "react-icons/md";
 //import { Field, reduxForm } from 'redux-form';
 //import {  Row} from 'reactstrap';
 
-
 // fake data generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -73,7 +72,11 @@ class BloomFoliageColors extends Component  {
     state = {
         items: getItems(3),
         selected: getItems(1, 3),
-        event: ""
+        delete:[],
+        event: "",
+        itemSelectedList:'',
+        isselectCheckbox:false,
+        checkedItems: new Map(),  
     };
 
      /**
@@ -83,7 +86,8 @@ class BloomFoliageColors extends Component  {
      */
       id2List = {
         droppable: 'items',
-        droppable2: 'selected'
+        droppable2: 'selected',
+        droppable3: 'delete'
     };
 
     getList = id => this.state[this.id2List[id]];
@@ -93,8 +97,29 @@ class BloomFoliageColors extends Component  {
 
         // dropped outside the list
         if (!destination) {
+            console.log("not droped in droppable");
             return;
-        }
+          }
+          if (
+            destination.index === source.index &&
+            destination.droppableId === source.draggableId
+          ) {
+            console.log("droped in same place");
+            return;
+          }
+
+        //   const itemCopy = { ...state[source.droppableId].items[source.index] };
+        //   setstate((prev) => {
+        //     prev = { ...prev };
+        //     prev[source.droppableId].items.splice(source.index, 1);
+        //     prev[destination.droppableId].items.splice(
+        //       destination.index,
+        //       0,
+        //       itemCopy
+        //     );
+        //     return prev;
+        //   });
+      
 
         if (source.droppableId === destination.droppableId) {
             const items = reorder(
@@ -109,6 +134,10 @@ class BloomFoliageColors extends Component  {
                 state = { selected: items };
             }
 
+            if (source.droppableId === 'droppable3') {
+                state = { delete: items };
+            }
+
             this.setState(state);
         } else {
             const result = move(
@@ -120,7 +149,8 @@ class BloomFoliageColors extends Component  {
 
             this.setState({
                 items: result.droppable,
-                selected: result.droppable2
+                selected: result.droppable2,
+                delete:result.droppable3,
             });
         }
     };
@@ -154,7 +184,7 @@ class BloomFoliageColors extends Component  {
 
 
       deleteIndex = index => {
-        console.log(index);
+        console.log("index deleting",index);
         let items = this.state.items;
         items.splice(index, 1);
         this.setState({
@@ -162,7 +192,20 @@ class BloomFoliageColors extends Component  {
         });
       };
 
+      onItemSelect = (index) => {
+          console.log("abcd", index)
+          
+        
+      };
 
+
+      handleChange(event) {  
+        var isChecked = event.target.checked;  
+        var item1 = event.target.value;  
+           
+        this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item1, isChecked) }));  
+  }  
+  
 
     render() {
     return (
@@ -215,9 +258,8 @@ class BloomFoliageColors extends Component  {
                                                                         draggableId={item.id}
                                                                         index={index}>
                                                                         {(provided, snapshot) => (
-                                                                            
-                                                                        
                                                                                 <div 
+                                                                                // onClick={this.onItemSelect}
                                                                                 ref={provided.innerRef}
                                                                                 {...provided.draggableProps}
                                                                                 {...provided.dragHandleProps}
@@ -225,10 +267,9 @@ class BloomFoliageColors extends Component  {
                                                                                     snapshot.isDragging,
                                                                                     provided.draggableProps.style
                                                                                 )}>
-                                                                            {item.content}<span style={{float:"right",fontSize:20}}><MdIcons.MdDelete  onClick={this.deleteIndex.bind(this, index)} /></span>
+                                                                            {/* <input type="checkbox" id={index} value={item.id} onChange={this.handleChange} /> */}
+                                                                            <p onClick={this.onItemSelect(index)} key={item.id} >{item.content}<span style={{float:"right",fontSize:20}}><MdIcons.MdDelete  onClick={this.deleteIndex.bind(this, index)} /></span></p>
                                                                             </div>
-                                                                        
-                                                                        
                                                                             
                                                                         )}
                                                                     </Draggable>
@@ -258,13 +299,22 @@ class BloomFoliageColors extends Component  {
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
-                                            {/* <div>
+                                            <div>
                            
                                                     <div>
-                                                        <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                        <Droppable droppableId="delete">
+                                                        {(provided, snapshot) => (
+                                                            <div  ref={provided.innerRef} className="testingBorder">
+                                                                <div>
+                                                              
+                                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                                </div>
+                                                            </div>
+                                                            )}
+                                                        </Droppable>
                                                     </div>
                                             
-                                            </div> */}
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col">
@@ -292,7 +342,8 @@ class BloomFoliageColors extends Component  {
                                                                         style={getItemStyle(
                                                                             snapshot.isDragging,
                                                                             provided.draggableProps.style
-                                                                        )}>
+                                                                        )}
+                                                                        >
                                                                     {item.content}<span style={{float:"right",fontSize:20}}></span>
                                                                     </div>
                                                                 )}
@@ -313,6 +364,8 @@ class BloomFoliageColors extends Component  {
                             </div>
                             {/* </DragDropContext> */}
                         </div>
+
+
         </>
     )
 }
