@@ -1,6 +1,6 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BloomFoliageColors from './BloomFoliageColors';
@@ -20,6 +20,11 @@ import Zones from './Zones';
 
  const  PlantSettings=()=>{  
     
+    const [plantAttribute, setPlantAttribute]=useState({
+        name:"",
+        isComplete:false,
+
+    })
     return (
         <div>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">

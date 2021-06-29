@@ -313,10 +313,14 @@ export default function(state = initialSatate, action){
                 productData:state.backupData.filter(product=>JSON.stringify(product.category_id )===action.categoryId)
             }
         case FILTER_GET_SLECTED_CATEGORY_SUB_DATA:
+            //debugger;
+            console.log("action123456", action)
             console.log("cat sub cat")
+         
             return{
                 ...state,
-                productData:state.productData.filter(product=>(product.category_id===action.categoryId&&product.subcategory_id ==  action.subCategoryId))
+                //productData:state.productData.filter(product=>(JSON.stringify(product.category_id)===action.categoryId && JSON.stringify(product.subcategory_id) ===  action.subCategoryId))
+                productData:state.productData.filter(product=>( JSON.stringify(product.subcategory_id) ===  action.subCategoryId))
             }
         case ERROR_HANDLE:
             return{

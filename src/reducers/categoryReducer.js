@@ -38,6 +38,8 @@ export default function(state = initialSatate, action){
 
            //sub category data
         case GET_ALL_PRODUCT_SUB_CATEGORIES_ACTION:
+            //debugger;
+            console.log("categore123456",action )
             return{
                 ...state,
                 subCategoryData:[...action.payload.data.active,...action.payload.data.inactive]

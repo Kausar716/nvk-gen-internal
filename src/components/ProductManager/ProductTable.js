@@ -106,8 +106,10 @@ const ProductTable  = (props) => {
     const pagesVisited = pageNumber*pageSize;
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
-    const {categoryData} = props.categoryData
-    console.log("productDataproductData", props.productData)
+    const {categoryData,subCategoryData} = props.categoryData
+    //const {categoryData} = props.categoryData
+    console.log("subCategoryData", subCategoryData)
+    console.log("categoryDataDATA", categoryData)
 
      
     return (
@@ -153,6 +155,7 @@ const ProductTable  = (props) => {
 
                                                 <th className="text-nowrap">Location</th>
                                                 <th className="text-nowrap">Category</th>
+                                                <th className="text-nowrap">Sub Category</th>
                                                 <th className="text-nowrap text-center">On Website</th>
                                                 <th className="text-nowrap text-center">Actions</th>
                                             </tr>
@@ -160,7 +163,7 @@ const ProductTable  = (props) => {
                                         <tbody>
 
                                         {displayProductList.map(product=>{
-                                           // console.log("Product data", product)
+                                           console.log("Product data", product)
                                             //console.log("cacategoryData",categoryData)
                                             //console.log("categoryDatacategoryDataLENGTH", categoryData.length)
                                             let id2 ="onwebsite1"
@@ -187,6 +190,8 @@ const ProductTable  = (props) => {
                                                     {categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:"":""}
                                                     {/* {abcd[0].name} */}
                                                     </td>
+
+                                                <td> {subCategoryData.length>0?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]["name"]:"":""}</td> 
                                                 <td  className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" className="custom-control-input" id={id2.concat(product.product_id)}/>

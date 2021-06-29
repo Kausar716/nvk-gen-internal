@@ -382,7 +382,7 @@ export const modalAction =() =>dispatch=>{
 
 //handle category Filter action
 export const handleCategory = (category,subCategory) =>dispatch=>{
-    console.log("Afor",category,subCategory)
+    console.log("AforAA",category,subCategory)
     if(category ==="All"){
          console.log("only all", category)
         dispatch({

@@ -55,6 +55,7 @@ const  ProductManagement = (props) =>{
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
+    const [filterSubCategory, setFilterSubCategory]= useState([])
 
     //const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
@@ -66,8 +67,11 @@ const  ProductManagement = (props) =>{
         },[])
 
         const handleCategoryData =(e)=>{
+            let temSub =[];
+
             console.log(e.target.id)
-            console.log("0", e.target.value)
+            console.log("asca0", e.target.value)
+            //console.log("propsSubCategory", props.categoryData.subCategoryData)
             if(e.target.id ==="category"){
                 // props.handleCategory(e.target.value,"0")
                 if(e.target.value==="All"){
@@ -75,15 +79,26 @@ const  ProductManagement = (props) =>{
                     setDisable(true)
                     
                 }else{
+
+                    console.log("abcdfrf", e.target.value)
                     props.handleCategory(e.target.value,"0")
                     setDisable(false)
                 }
+
+                temSub = props.categoryData.subCategoryData.filter(cat=>JSON.stringify(cat.category_id)===e.target.value)
+                console.log("temSub", temSub)
+               
+                //?subCategoryData.filter(sub=>sub.id===product.subcategory_id)
                 setCategory(e.target.value)
+                setFilterSubCategory(temSub)
 
                 
             }
+
             else if(e.target.id ==="subcategory"){
-                props.handleCategory(category,e.target.value)
+                alert("ancd")
+                console.log("filterSubCategory", filterSubCategory)
+                props.handleCategory(filterSubCategory,e.target.value)
                 setsubCategory(e.target.value)
 
             }
@@ -106,7 +121,9 @@ const  ProductManagement = (props) =>{
         const resetFilter = () =>{
             setCategory("All")
             setCategoryId("0")
+            setsubCategory("0")
             props.getAllProductAction()
+           // props.handleCategory(category,subCategory) 
 
         }
 
@@ -152,7 +169,7 @@ const  ProductManagement = (props) =>{
        
         const {pageToOpen,actionType,productDataById} = props.productData
         const {categoryData,subCategoryData} = props.categoryData
-        console.log("subCategoryData.id" ,subCategoryData)
+        console.log("subCategoprops.productData" ,props.productData)
     return (
         <div>
             <ModalData/>
@@ -208,7 +225,7 @@ const  ProductManagement = (props) =>{
                 
                                 </select> */}
 
-                                <select className="form-control"  id="category" onChange={handleCategoryData} onclick={handleCategoryData}  >
+                                <select className="form-control"  id="category" onChange={handleCategoryData}   >
                                     <option value="All" selected={category==="All"?"selected":""}>All</option>
                                     {categoryData.map(categoryData=>{
                                         return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
@@ -232,9 +249,9 @@ const  ProductManagement = (props) =>{
                                     }
                                         
                                 </select> */}
-                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleCategoryData}  onClick={handleCategoryData}>
+                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleCategoryData}  >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
-                                    {subCategoryData.map(subCategoryData=>{
+                                    {filterSubCategory.map(subCategoryData=>{
                                         return(<option selected={subCategory===subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
                                     })
                                     }
