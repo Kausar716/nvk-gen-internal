@@ -168,7 +168,7 @@ const handleMainSelection= (id) => {
               </ul>
             </li>
             <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>
-            <Link to="/comingsoon">
+            <Link to="/customerlisting">
                 <img src="assets/img/customermanagement.svg" alt=""/>
                 <span>Customer Management</span>
               </Link>

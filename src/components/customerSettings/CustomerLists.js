@@ -48,7 +48,7 @@ export class CustomerSettings extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData.active.length}</small></div>
+                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData? this.props.customerData.active.length:0}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
@@ -88,7 +88,7 @@ export class CustomerSettings extends React.Component {
                                         <label class="form-check-label" for="archivedPlants">Inactive Only</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="all" id="allPlants" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
+                                        <input class="form-check-input" type="radio" name="All" id="allPlants" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="allPlants">All</label>
                                     </div>
                                 </div>

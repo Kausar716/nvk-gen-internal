@@ -28,7 +28,6 @@ export class OrganizationSettings extends React.Component {
             secondartBody:false,
             },
             errorCount:0,
-            logoImage:""
         }
     }
     handleInput = (e) => {
@@ -50,11 +49,6 @@ export class OrganizationSettings extends React.Component {
                 errorCount--
             }           
         }
-        if(name=== "logo"){
-            console.log(e.target.value)
-          
-            this.setState({logoImage: URL.createObjectURL(e.target.files[0])})
-        }
         console.log(hadModified[name],name)
         // if(hadModified[name]  === name){
             hadModified[name] = true
@@ -68,6 +62,8 @@ export class OrganizationSettings extends React.Component {
         let nameReg = /^[a-zA-Z]+$/
         let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
+        console.log(emailReg.test(organizationData.sending_email_address))
+        console.log(organizationData.sending_email_address)
         if(!phoneReg.test(organizationData.phone)){
             errorObj.phoneError=1
             errorCount++
@@ -140,7 +136,6 @@ export class OrganizationSettings extends React.Component {
         else{
             organizationDataById = this.props.organizationData
         }
-        let logourl = "https://zvky.flamingotech.ml"
 
         
     return (
@@ -156,7 +151,6 @@ export class OrganizationSettings extends React.Component {
                         <div class="row mb-3 mb-md-0">
                             <div class="col-md-6 col-lg-6">
                                 <h2 class="p-15 mb-0">Document Details</h2>
-                                {/* <img src={organizationDataById.logo !== undefined?window.URL.createObjectURL(organizationDataById.logo):""} style={{with:"200px",height:"200px"}} alt="" /> */}
                             </div>
                         </div>
                         <div class="ContentSection p-15">
@@ -171,15 +165,13 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-4 col-lg-3">
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3">
-                                            {/* <img src={this.state.logoImage.length>0?this.state.logoImage : `${logourl}+${organizationDataById.logo}`} style={{width:"100px",height:"100px"}} /> */}
-                                            <img src={this.state.logoImage.length>0?this.state.logoImage : `${logourl}+${organizationDataById.logo}`} style={{width:"100px",height:"100px"}} />
-
+                                            <img src="assets/img/nvk-circle-logo.png" />
                                         </div>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
                                                 <span class="f-s-20">Upload</span>
-                                                <input type="file" name="logo" onChange={this.handleInput}/>
                                             </span>
+                                            <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
                                         <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
                                             <span class="d-flex align-items-center justify-content-around">
