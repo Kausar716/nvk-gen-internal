@@ -1,6 +1,6 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BloomFoliageColors from './BloomFoliageColors';
@@ -14,24 +14,22 @@ import Packaging from './Packaging';
 import VolumeTiers from './VolumeTiers';
 import Zones from './Zones';
 
-export class PlantSettings extends Component {  
-    render() {
+
+
+
+
+ const  PlantSettings=()=>{  
+    
+    const [plantAttribute, setPlantAttribute]=useState({
+        name:"",
+        isComplete:false,
+
+    })
     return (
         <div>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
             <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>		<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Settings</h1></div> 
-			
-				{/* <div className="">
-					<a href="javascript:;">
-						<img src="assets/img/add.svg" alt=""/>
-					</a>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/preview.svg" alt=""/>
-					</a>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/print.svg" alt=""/>
-					</a>
-				</div> */}
+		
 			</div>
             <div className="px-md-3 mt-3">
                 <Tabs>
@@ -90,6 +88,6 @@ export class PlantSettings extends Component {
             </div>
         </div>
     )
-}}
+}
 
 export default PlantSettings

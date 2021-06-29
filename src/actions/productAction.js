@@ -37,7 +37,8 @@ import {
     //filter category
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
-    FILTER_GET_SLECTED_CATEGORY_SUB_DATA
+    FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
+    HANDLE_SEARCH_PINPUT
 
 } from './types';
 
@@ -381,9 +382,9 @@ export const modalAction =() =>dispatch=>{
 
 //handle category Filter action
 export const handleCategory = (category,subCategory) =>dispatch=>{
-    console.log(category,subCategory)
+    console.log("AforAA",category,subCategory)
     if(category ==="All"){
-        // console.log("only all")
+         console.log("only all", category)
         dispatch({
             type:FILTER_GET_ALL_CATEGORY_DATA,
             categoryId:category,
@@ -391,7 +392,7 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
         })
 
     }else if(category!=="All" && subCategory ==="0"){
-        console.log("all")
+        console.log("acategoryllsubCategory", category, subCategory)
         dispatch({
             type:FILTER_GET_SLECTED_CATEGORY_DATA,
             categoryId:category,
@@ -415,6 +416,14 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
 
 
 
+export const serachProduct = (data) =>dispatch=>{
+    //console.log(data)
+    dispatch({
+        type:HANDLE_SEARCH_PINPUT,
+        payload:data,
+    })
+
+}
 
 
 

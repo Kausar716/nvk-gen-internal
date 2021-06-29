@@ -1,47 +1,24 @@
 import React, {useState} from 'react' ;
-import { Field, reduxForm } from 'redux-form';
-import {  Row} from 'reactstrap';
 
 
-
-// const required = value => value ? undefined : 'Required'
-// const maxLength = max => value =>
-//   value && value.length > max ? `Must be ${max} characters or less` : undefined
-// const maxLength15 = maxLength(15)
-const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
-// const minValue = min => value =>
-//   value && value < min ? `Must be at least ${min}` : undefined
-// const minValue2 = minValue(2)
-
-
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  <div>
-    {/* <label>{label}</label> */}
-    <div>
-      <input {...input}  className="form-control" placeholder={label}  type={type}/>
-      <Row>
-      {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
-      </Row>
-      
-    </div>
-  </div>
-)
 
 const  VolumeTiers=()=> {
-   // const [name,setName] = useState("")
-    const [selectedItem,setSelectedItem] = useState("")
 
-    // const handleName = (e) => {
-    //     setName(e.target.value)
-    // }
+    const [plantVolumeTiers, setPlantVolumeTiers]=useState({
+        volumeTierName:"",
+        isComplete:false,
 
-    // const handleAddManufacturer = (e) => {
-    //     e.preventDefault()
-    //     console.log(name)
-    // }
-    const handleitemSelect= (e)=> {
-        setSelectedItem(e.target.id)
+    })
+
+    const handleSubmit = e =>{
+        e.preventDefault()
+        console.log(plantVolumeTiers)
+        setPlantVolumeTiers({
+            volumeTierName:"",
+            isComplete:false,
+        })
     }
+
     return (
         <>
             <div className="bg-white">
@@ -53,16 +30,12 @@ const  VolumeTiers=()=> {
                                         <p>Volume Tier</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <Field
-                                            name="VolumeTier"
-                                            component={renderField}
-                                            type="text"
-                                            validate={[ number]}
-                                            
-                                        />
+                                                <input type="text" className="form-control" 
+                                                placeholder="" value={plantVolumeTiers.volumeTierName}
+                                                onChange={(e)=>setPlantVolumeTiers({...plantVolumeTiers, volumeTierName:e.target.value, date: new Date()})}/>
+                                              
                                             </div>
-                                            <div className="col-md-6 col-lg-3">
+                                            <div className="col-md-6 col-lg-3" onClick={handleSubmit}>
                                                 <a href="javascript;" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Volume Tier
                                                 </a>
@@ -78,12 +51,12 @@ const  VolumeTiers=()=> {
                                             </div>
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
-                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
+                                                   <li  id="Christmas Trees" name="Christmas Trees" >
                                                         <a href="/" class="" id="Christmas Trees">
                                                             <span>Christmas Trees</span>
                                                         </a>
                                                    </li>
-                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
+                                                   <li  id="Wheathers">
                                                         <a href="/" id="Wheathers"  class="">
                                                             <span id="Wheathers">Wheathers</span>
                                                         </a>
@@ -197,6 +170,4 @@ const  VolumeTiers=()=> {
     )
 }
 
-export default reduxForm({
-    form: 'VolumeTiers',
-  })(VolumeTiers);
+export default VolumeTiers

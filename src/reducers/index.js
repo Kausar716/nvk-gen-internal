@@ -20,6 +20,7 @@ import userReduser from './userReduser'
 import userAccessReduser from './userAccessReduser'
 import organizationReduser from './organizationSettingReducer'
 import customerReducer from './customerReduser'
+import plantSettingAttributeReducer from './plantSettingAttributeReducer';
 
 
 export default combineReducers({
@@ -38,7 +39,7 @@ export default combineReducers({
     userReduser:userReduser,
     userAccessReduser:userAccessReduser,
     organizationReduser:organizationReduser,
-    customerReducer:customerReducer
-
+    customerReducer:customerReducer,
+    plantSettingAttribute: plantSettingAttributeReducer
     
 })

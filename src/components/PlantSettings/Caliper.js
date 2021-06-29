@@ -1,40 +1,12 @@
-import React, {useState} from 'react' ;
-import { Field, reduxForm } from 'redux-form';
-import {  Row} from 'reactstrap';
+import React, {Component} from 'react' ;
 
+export default class Caliper extends Component {
+     
 
+    render() {
 
-const required = value => value ? undefined : 'Required'
-//const maxLength = max => value =>
-  //value && value.length > max ? `Must be ${max} characters or less` : undefined
-//const maxLength15 = maxLength(15)
-//const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
-//const minValue = min => value =>
-  //value && value < min ? `Must be at least ${min}` : undefined
-//const minValue2 = minValue(2)
-
-
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  <div>
-    {/* <label>{label}</label> */}
-    <div>
-      <input {...input}  className="form-control" placeholder={label}  type={type}/>
-      <Row>
-      {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
-      </Row>
-      
-    </div>
-  </div>
-)
-
-const  Caliper=()=> {
-    const [selectedItem,setSelectedItem] = useState("")
-
-
-    const handleitemSelect= (e)=> {
-        setSelectedItem(e.target.id)
-    }
-    return (
+    return ( 
+       
         <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0"> Caliper</h4>
@@ -56,25 +28,15 @@ const  Caliper=()=> {
                                         <div className="col-md-4">
                                             <p>Imperial<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <Field
-                                                        name="Imperial"
-                                                        component={renderField}
-                                                        type="text"
-                                                        validate={[ required]}
-                                                    />
+                                                <input type="text" className="form-control" placeholder=""/>
+                                             
                                             </div>
                                         </div>
                                         <div className="col-md-4">
                                             <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <Field
-                                                        name="SKUValueCaliper"
-                                                        component={renderField}
-                                                        type="text"
-                                                        validate={[ required ]}
-                                                    />
+                                                <input type="text" className="form-control" placeholder=""/>
+                                             
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 <a href="javascript;" className="d-flex align-items-center">
@@ -92,16 +54,18 @@ const  Caliper=()=> {
                                             </div>
                                             <div class="card-body cardBg">
                                                <ul class="list-unstyled">
-                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
+                                                   <li  id="Christmas Trees" name="Christmas Trees"  >
                                                         <a href="/" class="" id="Christmas Trees">
                                                             <span>Christmas Trees</span>
                                                         </a>
                                                    </li>
-                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
+
+                                                   <li>
                                                         <a href="/" id="Wheathers"  class="">
                                                             <span id="Wheathers">Wheathers</span>
                                                         </a>
                                                    </li>
+
                                                    <li>
                                                         <a href="/" class="">
                                                             <span>Attracts Birds</span>
@@ -141,6 +105,8 @@ const  Caliper=()=> {
                                             </div>
                                         </div>
                                     </div>
+
+
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
@@ -210,7 +176,5 @@ const  Caliper=()=> {
         </>
     )
 }
+}
 
-export default reduxForm({
-    form: 'Caliper',
-  })(Caliper);
