@@ -88,7 +88,7 @@ export class CustomerSettings extends React.Component {
                                         <label class="form-check-label" for="archivedPlants">Inactive Only</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="all" id="allPlants" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
+                                        <input class="form-check-input" type="radio" name="All" id="allPlants" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="allPlants">All</label>
                                     </div>
                                 </div>
