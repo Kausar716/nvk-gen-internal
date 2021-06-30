@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser} from "../../actions/userAction";
+import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
 export class UserProfile extends Component {  
@@ -27,6 +28,13 @@ export class UserProfile extends Component {
                 emailError:0,    
                 positionError:0            
             },
+            isUpdated:{
+                firstName:false,
+                lastName:false,
+                phone:false,
+                email:false,
+                position:false
+            },
             errorCount:0,
             display:false,
             deleteProfile:false,
@@ -40,11 +48,13 @@ export class UserProfile extends Component {
             setSuccessPop:false,
             message:"",
             open:false,
-            cancel:false
+            cancel:false,
         }
     }
     componentDidMount(){
            let selectedUser = this.props.selectedUser
+ 
+          
            this.setState({
                firstName:selectedUser.name,
                lastName:selectedUser.last_name,
@@ -60,6 +70,8 @@ export class UserProfile extends Component {
     handleInput = (e) => {
         const {target:{name,value}} =e
         let {errorObj,errorCount} = this.state
+        console.log(name)
+        console.log(value)
         this.setState({[name]:value})
         if(name === "firstName" ){
             if(errorObj.firstNameError>0){
@@ -148,20 +160,15 @@ export class UserProfile extends Component {
                 console.log(this.state)
                 let userStateObject = this.state
                 let userObject={}
-                
-    
-                userObject['name'] = userStateObject.firstName
-                userObject['id'] = userStateObject.id
+                userObject.id= this.props.selectedUser.id
+                console.log(this.props.selectedUser)
+                if(this.props.selectedUser.name !== userStateObject.firstName)userObject['name'] = userStateObject.firstName
+                if(this.props.selectedUser.last_name !== userStateObject.lastName)userObject['last_name'] = userStateObject.lastName
+                if(this.props.selectedUser.email !== userStateObject.email)userObject['email'] = userStateObject.email
+                if(this.props.selectedUser.phone !== userStateObject.phone)userObject['phone'] = userStateObject.phone
+                if(this.props.selectedUser.position !== userStateObject.position)userObject['role'] = userStateObject.position
 
-                // userObject['last_name'] = userStateObject.lastName
-                // userObject['role'] = userStateObject.position
-                // userObject['email'] = userStateObject.email
-                // userObject['phone'] = userStateObject.phone
-                // userObject['password']
-                // userObject['status'] = 
-    
-                console.log("success")
-                console.log(userObject)
+               console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
                   
@@ -172,7 +179,7 @@ export class UserProfile extends Component {
                 
 
                 })
-                console.log(res)
+                // console.log(res)
             }
          }
       
@@ -180,7 +187,9 @@ export class UserProfile extends Component {
  
      }
     render() {
-      
+        let roles=[]
+        if(this.props.roles)roles = this.props.roles
+        console.log(this.props.selectedUser)
    
      
     return (
@@ -264,10 +273,11 @@ export class UserProfile extends Component {
                                             <div class="row form-group">
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger">*</span></label>
-                                                    <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position} >
-                                                        <option name="position" >Select Position</option>
-                                                        <option name="position"  >Option 1</option>
-                                                        <option name="position" >Option 2</option>
+                                                    <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}  >
+                                                    {roles?roles.map(userObj=>{
+                                                            console.log(userObj)
+                                                            return  <option value={userObj.id}>{userObj.name}</option>
+                                                        }):null}   
                                                     </select>
                                                     {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
                                                 </div>
@@ -362,11 +372,12 @@ export class UserProfile extends Component {
 
 
 const mapStateToProps = (state)=> (
-    // console.log(state.users.payload)
+    // console.log(state.userAccessReduser)
     {
-    users:state.userReduser.users
+    users:state.userReduser.users,
+    // roles:state.userAccessReduser
 }
 
 )
 
-export default connect(mapStateToProps,{getUsersList,showUser,updateUser})(UserProfile)
+export default connect(mapStateToProps,{updateUser,getRolesList})(UserProfile)

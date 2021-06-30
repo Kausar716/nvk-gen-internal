@@ -30,6 +30,8 @@ import OrganizationSettings from './components/toolsAndSetting/OrganizationSetti
 import StaffDirectory from './components/StaffDirectory'
 import CustomerSettings from "./components/CustomerSettings/CustomerSettingsIndex";
 import SupplierSettingIndex from "./components/SupplierSettings/SupplierSettingIndex";
+import CustomerLists from './components/CustomerSettings/CustomerLists.js'
+import InventoryLists from "./components/inventoryManagement/InventoryLists";
 
 export const history = createBrowserHistory({forceRefresh: true})
 
@@ -62,9 +64,7 @@ function App(props) {
 
     
     {/* {authKey.loggedIn ? <> */}
-      <div id="page-container" className=" page-sidebar-fixed page-header-fixed">
-       
-
+      <div id="page-container" className={props.authKey.bdyClass}>
 
           <div id="content" className="content">
 
@@ -96,6 +96,12 @@ function App(props) {
                   <Nav />
                   <Left />
                     <UserManagement/>
+                  </Route>
+
+                  <Route path="/customerlisting">
+                  <Nav />
+                  <Left />
+                    <CustomerLists/>
                   </Route>
 
                   
@@ -150,6 +156,11 @@ function App(props) {
               <Nav />
               <Left />
               <OrganizationSettings />
+              </Route>
+              <Route  path="/inventoryLists" >
+              <Nav />
+              <Left />
+              <InventoryLists />
               </Route>
 
                   <Route path="/comingsoon">

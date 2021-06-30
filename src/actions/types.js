@@ -183,6 +183,28 @@ export const SHOW_USER = "SHOW_USER"
 export const UPDATE_USER = "UPDATE_USER"
 export const DELETE_USER = "DELETE_USER"
 
+// User Access
+export const GET_ROLES_LIST = "GET_ROLES_LIST"
+export const SHOW_ROLE = "SHOW_ROLE"
+export const UPDATE_ROLE = "UPDATE_ROLE"
+export const DELETE_ROLE = "DELETE_ROLE"
+export const ADD_ROLE  = "ADD_ROLE"
+
+//organization setting
+export const GET_ORGANIZATION_LIST ="GET_ORGANIZATION_LIST"
+export const ADD_ORGANIZATION = "ADD_ORGANIZATION" 
+export const SHOW_ORGANIZATION = "SHOW_ORGANIZATION" 
+export const UPDATE_ORGANIZATION = "UPDATE_ORGANIZATION"
+export const DELETE_ORGANIZATION = "DELETE_ORGANIZATION"
+export const HANDLE_ORGANIZATION_INPUT_DATA = "HANDLE_ORGANIZATION_INPUT_DATA"
+
+//customer settings
+export const GET_CUSTOMER_LIST = "GET_CUSTOMER_LIST"
+export const ADD_CUSTOMER = "ADD_CUSTOMER"
+export const SHOW_CUSTOER = "SHOW_CUSTOER"
+export const UPDATE_CUSTOMER = "UPDATE_CUSTOMER"
+export const DELETE_CUSTOMER = "DELETE_CUSTOMER"
+
 export const qs = require('qs');
 export const axios = require('axios');
 export const AUTH_TOKEN = "1|Hk0h42DEoy9H0qPIMDdRzsh9JwrQjDbsHYX79Pf4"

@@ -1,5 +1,5 @@
 
-import React,  { Component,useEffect,useState } from 'react';
+import React,  { Component,useEffect,useState,Link } from 'react';
 import {connect} from "react-redux";
 
 import {
@@ -100,10 +100,9 @@ import {
 
      }
      const submitAction = (e) =>{
-         console.log(plantDataById.genus)
-         console.log(errorObj);
+         
          let validate = handleValidation()  
-         if(validate)
+        //  if(validate)
         if(submitCount === 0){
            if(needAction){
                if(actionType ==="add")
@@ -335,7 +334,11 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
+                                        <a href='/plantManager'>
                                         <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
+                                        </a>
+                                         
+                                        
                                         <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add Plant":"Update Plant"}</button>
                                     </div>
                                 </div>

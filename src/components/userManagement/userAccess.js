@@ -1,8 +1,14 @@
 import React from 'react'
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import {  Tabs,  TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
 
-export  default class UserAccess extends React.Component{
+import {getRolesList,showRole,addRoler,updateRole,deleteRole} from "../../actions/userAccessAction";
+import {getUsersList} from "../../actions/userAction";
+
+
+
+ class UserAccess extends React.Component{
     constructor(props){
         super(props)
         this.state={    
@@ -78,6 +84,11 @@ export  default class UserAccess extends React.Component{
         const {target:{name,checked}} =e
         this.setState({[name]:checked})
 
+    }
+
+    componentDidMount(){
+        this.props.getRolesList()
+        // this.props.getUsersList()
     }
     handleSelect= (e) => {
         let checkBoxGroup = e.target.id
@@ -193,10 +204,16 @@ export  default class UserAccess extends React.Component{
         }
         this.setState({deleteRole,deleteRoleToggle:false})
     } 
+    handleRoleSelect = (e) => {
+        
+    }
 
 
 
     render(){
+        let userProfiles = []  
+        console.log(this.props.roles)
+        userProfiles =  [...this.props.users.active,...this.props.users.inactive]
     return (
         <>
         {/* <div clas="userManagementSection"> */}
@@ -299,18 +316,28 @@ export  default class UserAccess extends React.Component{
                                                     <div>
                                                         <h5>Select User Profile</h5>
                                                         <select class="form-control">
-                                                            <option>Select</option>
-                                                            <option>Option 1</option>
-                                                            <option>Option 2</option>
+                                                        <option>Select</option>
+                                                        {userProfiles.length>0?userProfiles.map(userObj=>{
+                                                            return  <option value={userObj.id}>{userObj.name}</option>
+                                                        }):null}
                                                         </select>
                                                     </div>
                                                     <div class="mt-2">
                                                         <h5>Load Existing Role</h5>
-                                                        <select class="form-control">
+                                                        {/* <select class="form-control">
                                                             <option>User</option>
                                                             <option>Option 1</option>
                                                             <option>Option 2</option>
-                                                        </select>
+                                                        </select> */}
+                                                        <select class="form-control"  onChange={this.handleRoleSelect}>
+                                                        <option value="0" selected>None</option>
+                                                        {this.props.roles.map(role=>{
+                                                                    return(
+                                                                        <option value={role.id}>{role.name} </option>
+                                                                    )
+                                                                })                                       
+                                                        }
+                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4 mt-2 mt-md-0">
@@ -531,3 +558,13 @@ export  default class UserAccess extends React.Component{
 
 
 }
+const mapStateToProps = (state)=> (
+    console.log(state)
+//     {
+//     roles:state.userAccessReduser.roles.payload,
+//     users:state.userReduser.users.payload
+// }
+
+)
+
+export default connect(mapStateToProps,{getRolesList,showRole,addRoler,updateRole,deleteRole,getUsersList})(UserAccess)

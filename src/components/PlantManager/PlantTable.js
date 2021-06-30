@@ -12,7 +12,9 @@ import {
      getAllPlantAction,
      getSpecifiedPlantAction,
      duplicatePlant,
-     setPlantPageNumber
+     setPlantPageNumber,
+     plantPageReDirectAction,
+    plantSubPageReDirectAction
 
 
     
@@ -213,5 +215,6 @@ export default connect(mapStateToProps,{  //plant actions
      duplicatePlant,
      setPlantPageNumber,
      dPageNumberList,
-    
+     plantPageReDirectAction,
+     plantSubPageReDirectAction
     })(PlantTable)

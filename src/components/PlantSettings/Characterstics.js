@@ -75,7 +75,7 @@ function Characterstics() {
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
-                                            <div>
+                                            <div id="delete">
                                                 <a href="javascript;" className="icDelete">
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                                     {/* <i className="fas fa-trash"></i> */}

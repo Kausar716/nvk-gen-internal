@@ -20,6 +20,11 @@ export default function Nav() {
             <img src="assets/img/notifications.svg" alt=""/>
           </a>
         </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle f-s-14">
+            <img src="assets/img/mail.svg" alt="" /> 
+          </a>
+        </li>
         <li class="dropdown navbar-user align-items-center">
           <a href="#" class="dropdown-toggle">
             <img src="assets/img/profile-img.svg" alt="" /> 
