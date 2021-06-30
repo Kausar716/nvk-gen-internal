@@ -2,6 +2,7 @@
 import React,  { useEffect,useState } from 'react';
 import {connect} from "react-redux";
 import { Link, useHistory } from "react-router-dom";
+import './style.css'
 import {
     //product actions
     createProductAction ,
@@ -132,12 +133,19 @@ console.log("TAGDATA", tagsData)
                                     <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                         <label>Common Name(s)</label>
                                         {/* <input type="text" class="form-control" placeholder=""/> */}
+                                        {/* <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
+                                            {tagsData.map(tagData=>{
+                                            return (<a className="subtag">{tagData}</a>)
+                                            }) }
+
+                                        </div> */}
+
                                         <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
                                             {tagsData.map(tagData=>{
                                             return (<a className="subtag">{tagData}</a>)
                                             }) }
 
-                    </div>
+                                        </div>
                                     </div>
                           
                                 </div>

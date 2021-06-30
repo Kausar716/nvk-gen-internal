@@ -4,6 +4,7 @@ import * as MdIcons from "react-icons/md";
 //import { Field, reduxForm } from 'redux-form';
 //import {  Row} from 'reactstrap';
 
+
 // fake data generator
 const getItems = (count, offset = 0) =>
     Array.from({ length: count }, (v, k) => k).map(k => ({
@@ -24,7 +25,7 @@ const reorder = (list, startIndex, endIndex) => {
 /**
  * Moves an item from one list to another list.
  */
- const move = (source, destination, droppableSource, droppableDestination) => {
+ const move = (source, destination, droppableSource, droppableDestination, droppableDestination2) => {
     const sourceClone = Array.from(source);
     const destClone = Array.from(destination);
     const [removed] = sourceClone.splice(droppableSource.index, 1);
@@ -34,8 +35,10 @@ const reorder = (list, startIndex, endIndex) => {
     const result = {};
     result[droppableSource.droppableId] = sourceClone;
     result[droppableDestination.droppableId] = destClone;
-
+    //result[droppableDestination2.droppableId] = destClone;
+    console.log("result", result)
     return result;
+    
 };
 
 const grid = 8;
@@ -70,8 +73,10 @@ const getListStyle = isDraggingOver => ({
 class BloomFoliageColors extends Component  {
    
     state = {
-        items: getItems(3),
-        selected: getItems(1, 3),
+        items: [{content:"Fern",id:"01"}, {content:"Areca Palm",id:"02"},{content:"Peacelilly",id:"03"}],
+        // items: getItems(3),
+        //selected: getItems(1, 3),
+        selected:[{content:"Draceena",id:"04"}, {content:"Spider Plant",id:"05"}],
         delete:[],
         event: "",
         itemSelectedList:'',
@@ -364,6 +369,8 @@ class BloomFoliageColors extends Component  {
                             </div>
                             {/* </DragDropContext> */}
                         </div>
+
+
 
 
         </>

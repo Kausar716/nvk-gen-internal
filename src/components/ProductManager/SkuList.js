@@ -164,15 +164,14 @@ const SkuList=(props)=> {
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-3">
+                                    <div class="col-md-6 col-lg-4">
                                             <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                             id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} />
                                         </div>
-                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                           
-                                        </div>
-                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                        {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                        </div> */}
+                                        <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                             <label>Sub-Category <span class="text-danger">*</span></label>
                                             <select class="form-control"  id="subcategory" onChange={handleInput}>
                                             <option value="0">None</option>
@@ -185,7 +184,7 @@ const SkuList=(props)=> {
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                        <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
                                             <select class="form-control">
                                                 <option>Select</option>
@@ -251,7 +250,7 @@ const SkuList=(props)=> {
                                     </div>
                                 </form>
                             </div>
-                            <div className="row_1">
+                            <div className="row_1" style={{marginTop:"1em"}}>
                             <div>
                             <label className="greenText">{"Showing " + (skuPageNumber>0 ? (pageSize*((skuPageNumber)))+1 : ((skuPageNumber)+1))+  "  to  " +  (skuPageNumber>0 ? (((pageSize*((skuPageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((skuPageNumber)))+pageSize)) : ((((skuPageNumber)+1)*pageSize)>totalLength?totalLength:(((skuPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label>
                             </div>
