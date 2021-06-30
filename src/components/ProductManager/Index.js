@@ -260,15 +260,12 @@ const  ProductManagement = (props) =>{
 
                                 </div>
                                 <div className="col-md-2 col-lg-2">
-                                    <h4 onClick={resetFilter} style={{color:"#348fe2", cursor:"pointer"}} className="d-block topSpace">Reset</h4>
+                                    <p onClick={resetFilter} className="d-block  resetlink">Reset</p>
                                     {/* <a href="javascript:;" onClick={handleFilter} className="d-block topSpace">Search</a> */}
                                 </div>
                             </div>
                              <hr/>
                                     <ProductTable />
-                            
-
-
                             </div>
                         </div>
                     </div>

@@ -53,7 +53,7 @@ import {
 */
 
 export const createProductAction = (product,tags) => dispatch => {
-    debugger;
+    //debugger;
     let errorArray=[];
     if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
     if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
