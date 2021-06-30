@@ -3,8 +3,8 @@ import {  Tabs,  TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 
-import {getRolesList,showRole,addRoler,updateRole,deleteRole} from "../../actions/userAccessAction";
-import {getUsersList} from "../../actions/userAction";
+import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserAccessInputAction} from "../../actions/userAccessAction";
+import {getUsersList,showUser} from "../../actions/userAction";
 
 
 
@@ -55,7 +55,8 @@ import {getUsersList} from "../../actions/userAction";
     masterInventoryView:false,
     masterInventoryModify:false,
     taskQueueView:false,
-    taskQueueModify:false
+    taskQueueModify:false,
+    selectedUser:{}
         }
     }
         
@@ -80,14 +81,16 @@ import {getUsersList} from "../../actions/userAction";
     // supplierSetting:false,       
     handleCheckBox = (e) => {
         console.log(e.target)
-
-        const {target:{name,checked}} =e
-        this.setState({[name]:checked})
+        const {target:{name,checked,id}} =e
+        // this.setState({[name]:checked})
+        console.log(name.id)
+        this.props.handleUserAccessInputAction(name,id)
 
     }
 
     componentDidMount(){
         this.props.getRolesList()
+        this.props.getPermissionList()
         // this.props.getUsersList()
     }
     handleSelect= (e) => {
@@ -207,12 +210,42 @@ import {getUsersList} from "../../actions/userAction";
     handleRoleSelect = (e) => {
         
     }
+   
 
+    handleUserSelect = (e) =>{
+        console.log(e.target.value)
+        let selectedId = e.target.value
+        let userProfiles  =  [...this.props.users.active,...this.props.users.inactive]
+        console.log(userProfiles)
+        let result = this.props.showUser(selectedId)
+        console.log(result)
+  
+        // this.setState({selectedUser:selectedUser[0]})
+
+    }
 
 
     render(){
         let userProfiles = []  
-        console.log(this.props.roles)
+        let selectedUser = this.props.user.data
+        let exestingRoles = []
+        let exestingPermission = []
+        let currentPermissionNames= this.props.temp.currentPermissionNames
+        console.log(this.props.permissionList)
+        let userData = {}
+        if(this.props.user)
+        {
+            console.log(this.props.user)
+            if(this.props.user.user){
+            userData=this.props.user.user.data
+            exestingRoles = this.props.user.user.data.roles
+            console.log(userData)
+            }
+        }
+        if(this.props.permissionList){
+            exestingPermission = this.props.permissionList.payload
+        }
+        console.log(currentPermissionNames)
         userProfiles =  [...this.props.users.active,...this.props.users.inactive]
     return (
         <>
@@ -315,7 +348,7 @@ import {getUsersList} from "../../actions/userAction";
                                                 <div class="col-md-8">
                                                     <div>
                                                         <h5>Select User Profile</h5>
-                                                        <select class="form-control">
+                                                        <select class="form-control" name="userList" onChange={this.handleUserSelect}>
                                                         <option>Select</option>
                                                         {userProfiles.length>0?userProfiles.map(userObj=>{
                                                             return  <option value={userObj.id}>{userObj.name}</option>
@@ -331,11 +364,11 @@ import {getUsersList} from "../../actions/userAction";
                                                         </select> */}
                                                         <select class="form-control"  onChange={this.handleRoleSelect}>
                                                         <option value="0" selected>None</option>
-                                                        {this.props.roles.map(role=>{
+                                                        {exestingRoles?exestingRoles.map(role=>{
                                                                     return(
                                                                         <option value={role.id}>{role.name} </option>
                                                                     )
-                                                                })                                       
+                                                                }):""                                       
                                                         }
                                         </select>
                                                     </div>
@@ -356,7 +389,7 @@ import {getUsersList} from "../../actions/userAction";
                             <div class="row">
                                 <div class="col-md-12 d-flex justify-content-md-end">
                                     <div class="custom-control custom-checkbox" >
-                                        <input type="checkbox" class="custom-control-input" id="PermissionAll" chec onChange={this.handleSelect} name="selectAll"/>
+                                        <input type="checkbox" class="custom-control-input" id="PermissionAll"  onChange={this.handleSelect} name="selectAll"/>
                                         <label class="custom-control-label pl-2" for="PermissionOnAll"> Turn All Permissions On</label>
                                     </div>
                                     <div class="custom-control custom-checkbox ml-2">
@@ -371,68 +404,68 @@ import {getUsersList} from "../../actions/userAction";
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-4">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input"  id="supervisorRole" name="supervisorRole" value={this.state.supervisorRole} checked={this.state.supervisorRole} onChange={this.handleCheckBox}/>
-                                                <label class="custom-control-label pl-2" for="supervisorRole">Supervisor Role</label>
+                                                <input type="checkbox" class="custom-control-input"  id="supervisorRole_quotes" name="Supervisor Role"  checked={currentPermissionNames.includes("Supervisor Role")} onChange={this.handleCheckBox}/>
+                                                <label class="custom-control-label pl-2" for="supervisorRole_quotes">Supervisor Role</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" value={this.state.quotes} checked={this.state.quotes} onChange={this.handleCheckBox} id="quotes"/>
-                                                <label class="custom-control-label pl-2" for="quotes">Quote</label>
+                                                <input type="checkbox" class="custom-control-input" value={this.state.quotes} name="Quote" checked={currentPermissionNames.includes("Quote")} onChange={this.handleCheckBox} id="quotes_quotes"/>
+                                                <label class="custom-control-label pl-2" for="quotes_quotes">Quote</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="openOrder" value={this.state.openOrder} checked={this.state.openOrder} onChange={this.handleCheckBox} id="openOrder"/>
-                                                <label class="custom-control-label pl-2" for="openOrder">Open Orders</label>
+                                                <input type="checkbox" class="custom-control-input" name="Open Orders" value={this.state.openOrder} checked={currentPermissionNames.includes("Open Orders")} onChange={this.handleCheckBox} id="openOrder_quotes"/>
+                                                <label class="custom-control-label pl-2" for="openOrder_quotes">Open Orders</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="actionDeleteOrder" value={this.state.actionDeleteOrder} checked={this.state.actionDeleteOrder} onChange={this.handleCheckBox} id="actionDeleteOrder"/>
+                                                <input type="checkbox" class="custom-control-input" name="Action Delete Order" value={this.state.actionDeleteOrder} checked={currentPermissionNames.includes("Action Delete Order")} onChange={this.handleCheckBox} id="actionDeleteOrder_quotes"/>
                                                 <label class="custom-control-label pl-2" for="actionDeleteOrder">Action Delete Order</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="actionCreateQuotes" checked={this.state.actionCreateQuotes} onChange={this.handleCheckBox} id="actionCreateQuotes"/>
-                                                <label class="custom-control-label pl-2" for="actionCreateQuotes">Action Create Quotes</label>
+                                                <input type="checkbox" class="custom-control-input" name="Action Create Quotes" checked={currentPermissionNames.includes("Action Create Quotes")} onChange={this.handleCheckBox} id="actionCreateQuotes_quotes"/>
+                                                <label class="custom-control-label pl-2" for="actionCreateQuotes_quotes">Action Create Quotes</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-4">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input"  name="closedAndCancledOrder" checked={this.state.closedAndCancledOrder} onChange={this.handleCheckBox} id="closedAndCancledOrder"/>
-                                                <label class="custom-control-label pl-2" for="closedAndCancledOrder"> Closed &amp; Cancelled Orders</label>
+                                                <input type="checkbox" class="custom-control-input"  name="Closed & Cancelled Orders" checked={currentPermissionNames.includes("Closed & Cancelled Orders")} onChange={this.handleCheckBox} id="closedAndCancledOrder_quotes"/>
+                                                <label class="custom-control-label pl-2" for="closedAndCancledOrder_quotes"> Closed &amp; Cancelled Orders</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="pickingOrder" checked={this.state.pickingOrder} onChange={this.handleCheckBox} id="pickingOrder"/>
-                                                <label class="custom-control-label pl-2" for="pickingOrder">Picking Order</label>
+                                                <input type="checkbox" class="custom-control-input" name="Picking Order" checked={currentPermissionNames.includes("Picking Order")} onChange={this.handleCheckBox} id="pickingOrder_quotes"/>
+                                                <label class="custom-control-label pl-2" for="pickingOrder_quotes">Picking Order</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="readyOrder" checked={this.state.readyOrder} onChange={this.handleCheckBox} id="readyOrder"/>
-                                                <label class="custom-control-label pl-2" for="readyOrder"> Ready Order</label>
+                                                <input type="checkbox" class="custom-control-input" name="Ready Order" checked={currentPermissionNames.includes("Ready Order")}  onChange={this.handleCheckBox} id="readyOrder_quotes"/>
+                                                <label class="custom-control-label pl-2" for="readyOrder_quotes"> Ready Order</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="actionReturnToOrder" checked={this.state.actionReturnToOrder} onChange={this.handleCheckBox} id="actionReturnToOrder"/>
-                                                <label class="custom-control-label pl-2" for="actionReturnToOrder"> Action Return to Order</label>
+                                                <input type="checkbox" class="custom-control-input" name="Action Return to Order" checked={currentPermissionNames.includes("Action Return to Order")} onChange={this.handleCheckBox} id="actionReturnToOrder_quotes"/>
+                                                <label class="custom-control-label pl-2" for="actionReturnToOrder_quotes"> Action Return to Order</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="reservations" checked={this.state.reservations} onChange={this.handleCheckBox} id="reservations"/>
-                                                <label class="custom-control-label pl-2" for="reservations">Reservations</label>
+                                                <input type="checkbox" class="custom-control-input" name="Reservations" checked={currentPermissionNames.includes("Reservations")} onChange={this.handleCheckBox} id="reservations_quotes"/>
+                                                <label class="custom-control-label pl-2" for="reservations_quotes">Reservations</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-4">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="shippedInvoicesAdjustment" checked={this.state.shippedInvoicesAdjustment} onChange={this.handleCheckBox} id="shippedInvoicesAdjustment"/>
-                                                <label class="custom-control-label pl-2" for="shippedInvoicesAdjustment">  Shipped Invoices Adjustment</label>
+                                                <input type="checkbox" class="custom-control-input" name="Shipped Invoices Adjustment" checked={currentPermissionNames.includes("Shipped Invoices Adjustment")} onChange={this.handleCheckBox} id="shippedInvoicesAdjustment_quotes"/>
+                                                <label class="custom-control-label pl-2" for="shippedInvoicesAdjustment_quotes">  Shipped Invoices Adjustment</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="receiveInvoice" checked={this.state.receiveInvoice} onChange={this.handleCheckBox} id="receiveInvoice"/>
-                                                <label class="custom-control-label pl-2" for="receiveInvoice"> Receive Invoices</label>
+                                                <input type="checkbox" class="custom-control-input" name="Receive Invoices" checked={currentPermissionNames.includes("Receive Invoices")} onChange={this.handleCheckBox} id="receiveInvoice_quotes"/>
+                                                <label class="custom-control-label pl-2" for="receiveInvoice_quotes"> Receive Invoices</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="quickPicks" checked={this.state.quickPicks} onChange={this.handleCheckBox} id="quickPicks"/>
-                                                <label class="custom-control-label pl-2" for="quickPicks">  Quick Picks</label>
+                                                <input type="checkbox" class="custom-control-input" name="Quick Picks" checked={currentPermissionNames.includes("Quick Picks")} onChange={this.handleCheckBox} id="quickPicks_quotes"/>
+                                                <label class="custom-control-label pl-2" for="quickPicks_quotes">  Quick Picks</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="actionOveride" checked={this.state.actionOveride} onChange={this.handleCheckBox} id="actionOveride"/>
-                                                <label class="custom-control-label pl-2" for="actionOveride">  Action Override</label>
+                                                <input type="checkbox" class="custom-control-input" name="Action Override" checked={currentPermissionNames.includes("Action Override")} onChange={this.handleCheckBox} id="actionOveride_quotes"/>
+                                                <label class="custom-control-label pl-2" for="actionOveride_quotes">  Action Override</label>
                                             </div>
                                             <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="digAndPlantRequest1" checked={this.state.digAndPlantRequest1} onChange={this.handleCheckBox} id="digAndPlantRequest1"/>
-                                                <label class="custom-control-label pl-2" for="digAndPlantRequest1"> Dig And Plant Request</label>
+                                                <input type="checkbox" class="custom-control-input" name="Dig And Plant Request" checked={currentPermissionNames.includes("Dig And Plant Request")} onChange={this.handleCheckBox} id="digAndPlantRequest_quotes"/>
+                                                <label class="custom-control-label pl-2" for="digAndPlantRequest_quotes"> Dig And Plant Request</label>
                                             </div>
                                         </div>
                                     </div>
@@ -457,65 +490,69 @@ import {getUsersList} from "../../actions/userAction";
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-4">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="ToolsAndsettings" checked={this.state.ToolsAndsettings } onChange={this.handleCheckBox} id="ToolsAndsettings"/>
-                                                <label class="custom-control-label pl-2" for="ToolsAndsettings">Tools &amp; Settings </label>
+                                                <input type="checkbox" class="custom-control-input" name="Tools & Settings" checked={currentPermissionNames.includes("Tools & Settings") } onChange={this.handleCheckBox} id="toolsAndSettings"/>
+                                                <label class="custom-control-label pl-2" for="toolsAndSettings">Tools &amp; Settings </label>
                                             </div>
                                             <div class="pl-4">
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="TagsAndLabels"checked={this.state.TagsAndLabels } onChange={this.handleCheckBox} id="TagsAndLabels"/>
+                                                    <input type="checkbox" class="custom-control-input" name="Tags And Labels"checked={currentPermissionNames.includes("Tags And Labels") } onChange={this.handleCheckBox} id="TagsAndLabels_tools"/>
                                                     <label class="custom-control-label pl-2" for="TagsAndLabels">Tags And Labels</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="organizationSettings"checked={this.state.organizationSettings } onChange={this.handleCheckBox} id="organizationSettings"/>
-                                                    <label class="custom-control-label pl-2" for="organizationSettings">Organization Setting</label>
+                                                    <input type="checkbox" class="custom-control-input" name="Organization Setting"checked={currentPermissionNames.includes("Organization Setting") } onChange={this.handleCheckBox} id="organizationSettings_tools"/>
+                                                    <label class="custom-control-label pl-2" for="organizationSettings_tools">Organization Setting</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="mapLocator"checked={this.state.mapLocator } onChange={this.handleCheckBox} id="mapLocator"/>
-                                                    <label class="custom-control-label pl-2" for="mapLocator">Map Locator</label>
+                                                    <input type="checkbox" class="custom-control-input" name="Map Locator"checked={currentPermissionNames.includes("Map Locator") } onChange={this.handleCheckBox} id="mapLocator_tools"/>
+                                                    <label class="custom-control-label pl-2" for="mapLocator_tools">Map Locator</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="maplocatorEditMaps"checked={this.state.maplocatorEditMaps } onChange={this.handleCheckBox} id="maplocatorEditMaps"/>
-                                                    <label class="custom-control-label pl-2" for="maplocatorEditMaps">Map Locator (Edit map)</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4 col-lg-4">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="customerManagement"checked={this.state.customerManagement } onChange={this.handleCheckBox} id="customerManagement"/>
-                                                <label class="custom-control-label pl-2" for="customerManagement">  Customer Management</label>
-                                            </div>
-                                            <div class="pl-4">
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="customerListAddEditForCustomer"checked={this.state.customerListAddEditForCustomer } onChange={this.handleCheckBox} id="customerListAddEditForCustomer"/>
-                                                    <label class="custom-control-label pl-2" for="customerListAddEditForCustomer">Customer List (Add/Edit)</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="customerListViewPrintForCustomer"checked={this.state.customerListViewPrintForCustomer } onChange={this.handleCheckBox} id="customerListViewPrintForCustomer"/>
-                                                    <label class="custom-control-label pl-2" for="customerListViewPrintForCustomer">Customer List (View/Print)</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input"  name="customerSettings"checked={this.state.customerSettings } onChange={this.handleCheckBox} id="customerSettings"/>
-                                                    <label class="custom-control-label pl-2" for="customerSettings"> Setting</label>
+                                                    <input type="checkbox" class="custom-control-input" name="Map Locator (Edit map)"checked={currentPermissionNames.includes("Map Locator (Edit map)") } onChange={this.handleCheckBox} id="maplocatorEditMaps_tools"/>
+                                                    <label class="custom-control-label pl-2" for="maplocatorEditMaps_tools">Map Locator (Edit map)</label>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-4">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" name="userManagement"checked={this.state.userManagement } onChange={this.handleCheckBox} id="userManagement"/>
-                                                <label class="custom-control-label pl-2" for="userManagement">   User Management</label>
+                                                <input type="checkbox" class="custom-control-input" name="Customer Management"checked={currentPermissionNames.includes("Customer Management") } onChange={this.handleCheckBox} id="customerManagement_customer"/>
+                                                <label class="custom-control-label pl-2" for="customerManagement_customer">  Customer Management</label>
                                             </div>
                                             <div class="pl-4">
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="customerListAddEditForUser"checked={this.state.customerListAddEditForUser } onChange={this.handleCheckBox} id="customerListAddEditForUser"/>
-                                                    <label class="custom-control-label pl-2" for="customerListAddEditForUser">Customer List (Add/Edit)</label>
+                                                    <input type="checkbox" class="custom-control-input" name="Customer List (Add/Edit)"checked={currentPermissionNames.includes("customerListAddEditForCustomer") } onChange={this.handleCheckBox} id="customerListAddEditForCustomer_customer"/>
+                                                    <label class="custom-control-label pl-2" for="customerListAddEditForCustomer_customer">Customer List (Add/Edit)</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="customerListViewPrintForUser"checked={this.state.customerListViewPrintForUser } onChange={this.handleCheckBox} id="customerListViewPrintForUser"/>
-                                                    <label class="custom-control-label pl-2" for="customerListViewPrintForUser">Customer List (View/Print)</label>
+                                                    <input type="checkbox" class="custom-control-input" name="Customer List (View/Print)"checked={currentPermissionNames.includes("Customer List (View/Print)") } onChange={this.handleCheckBox} id="customerListViewPrintForCustomer_customer"/>
+                                                    <label class="custom-control-label pl-2" for="customerListViewPrintForCustomer_customer">Customer List (View/Print)</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" name="userSetting"checked={this.state.userSetting } onChange={this.handleCheckBox} id="userSetting"/>
-                                                    <label class="custom-control-label pl-2" for="userSetting">  Setting  </label>
+                                                    <input type="checkbox" class="custom-control-input"  name="Settings"checked={currentPermissionNames.includes("Settings") } onChange={this.handleCheckBox} id="customerSettings_customer"/>
+                                                    <label class="custom-control-label pl-2" for="customerSettings_customer"> Setting</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" name="User Management"checked={currentPermissionNames.includes("User Management") } onChange={this.handleCheckBox} id="userManagement_user"/>
+                                                <label class="custom-control-label pl-2" for="userManagement_user">   User Management</label>
+                                            </div>
+                                            <div class="pl-4">
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" name="User Profile"checked={currentPermissionNames.includes("User Profile") } onChange={this.handleCheckBox} id="customerListAddEditForUser_user"/>
+                                                    <label class="custom-control-label pl-2" for="customerListAddEditForUser_user">User Profile</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" name="User Access"checked={currentPermissionNames.includes("User Access(this screen") } onChange={this.handleCheckBox} id="customerListViewPrintForUser_user"/>
+                                                    <label class="custom-control-label pl-2" for="customerListViewPrintForUser_user">User Access(this screen)</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" name="Staff Directory"checked={currentPermissionNames.includes("Staff Directory") } onChange={this.handleCheckBox} id="StaffDirectory_user"/>
+                                                    <label class="custom-control-label pl-2" for="StaffDirectory_user">Staff Directory</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" name="Settings user" checked={currentPermissionNames.includes("Settings") } onChange={this.handleCheckBox} id="userSetting"/>
+                                                    <label class="custom-control-label pl-2" for="userSetting_user">  Settings  </label>
                                                 </div>
                                             </div>
                                         </div>
@@ -559,12 +596,19 @@ import {getUsersList} from "../../actions/userAction";
 
 }
 const mapStateToProps = (state)=> (
-    console.log(state)
-//     {
-//     roles:state.userAccessReduser.roles.payload,
-//     users:state.userReduser.users.payload
-// }
+    // console.log(state)
+    {
+    roles:state.userAccessReduser.roles.payload,
+    users:state.userReduser.users.payload,
+    user:state.userReduser,
+    permissionList:state.userAccessReduser.permissionList,
+    temp:state.userAccessReduser
+    // permissionList:state.permissionList
+}
 
 )
 
-export default connect(mapStateToProps,{getRolesList,showRole,addRoler,updateRole,deleteRole,getUsersList})(UserAccess)
+export default connect(mapStateToProps,{getRolesList,showRole,showUser,addRoler,updateRole
+    ,deleteRole,getUsersList
+    ,getPermissionList
+,handleUserAccessInputAction})(UserAccess)

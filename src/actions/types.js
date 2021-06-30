@@ -180,6 +180,8 @@ export const ADD_USER = "ADD_USER"
 export const SHOW_USER = "SHOW_USER"
 export const UPDATE_USER = "UPDATE_USER"
 export const DELETE_USER = "DELETE_USER"
+export const UPLOAD_USER_IMAGE = "UPLOAD_USER_IMAGE"
+export const REMOVE_USER_IMAGE = "REMOVE_USER_IMAGE"
 
 // User Access
 export const GET_ROLES_LIST = "GET_ROLES_LIST"
@@ -187,6 +189,8 @@ export const SHOW_ROLE = "SHOW_ROLE"
 export const UPDATE_ROLE = "UPDATE_ROLE"
 export const DELETE_ROLE = "DELETE_ROLE"
 export const ADD_ROLE  = "ADD_ROLE"
+export const HANDLE_USER_ACCESS_INPUT_DATA = "HANDLE_USER_ACCESS_INPUT_DATA"
+export const GET_PERMISSION_LIST = "GET_PERMISSION_LIST"
 
 //organization setting
 export const GET_ORGANIZATION_LIST ="GET_ORGANIZATION_LIST"

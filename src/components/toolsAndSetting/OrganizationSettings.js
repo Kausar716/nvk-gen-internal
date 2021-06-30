@@ -28,9 +28,15 @@ export class OrganizationSettings extends React.Component {
             secondartBody:false,
             },
             errorCount:0,
+            logo:""
         }
     }
+    handlImageUpload = (e)=>{
+        this.setState({logo:e.target.file[0]})
+    }
+
     handleInput = (e) => {
+      
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state        
         // this.setState({[name]:value})     
@@ -122,20 +128,23 @@ export class OrganizationSettings extends React.Component {
      componentDidMount(){
          let id = "2"
        this.props.showorganization(id)
-        //  console.log(this.props.organizationData)
      }
     render(){
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
+        let url="https://zvky.flamingotech.ml/"
         let organizationDataById 
         if(this.props.organizationData.organizationData){
              organizationDataById = this.props.organizationData.organizationData
             console.log(organizationDataById)
+            url="https://zvky.flamingotech.ml/"+organizationDataById.logo
         }
         else{
             organizationDataById = this.props.organizationData
+            url="https://zvky.flamingotech.ml/"+organizationDataById.logo
         }
+        console.log(url)
 
         
     return (
@@ -165,11 +174,14 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-4 col-lg-3">
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3">
-                                            <img src="assets/img/nvk-circle-logo.png" />
+                                            {/* <img src="assets/img/nvk-circle-logo.png" /> */}
+                                            <img src={url} style={{height:"100px",width:"100px"}}/>
+                                            
                                         </div>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
-                                                <span class="f-s-20">Upload</span>
+                                            <input  type="file"  id="imageid" name="logo"  onChange={this.handleInput} style={{zIndex:1,opacity:0}}  />
+                                                <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>

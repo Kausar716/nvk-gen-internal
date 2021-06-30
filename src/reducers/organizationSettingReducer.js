@@ -15,7 +15,8 @@ const initialSatate = {
     secondaryTitle:"",
     mainBody:"",
     secondartBody:"",
-    id:"2"
+    id:"2",
+    logo:""
 }
 }
  const organizationReduser = (state = initialSatate, action)=> {

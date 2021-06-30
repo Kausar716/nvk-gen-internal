@@ -36,6 +36,7 @@ import {
    }
 
    export const updateorganization = (organizationData) => dispatch => {
+       console.log(organizationData)
 
     return axios.post(`/api/update-organization/${organizationData.id}`,organizationData,config).then(res=>{     
         dispatch({
