@@ -29,6 +29,7 @@ import AddProduct from "./components/ProductManager/AddProduct";
 import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'
 import StaffDirectory from './components/StaffDirectory'
 import CustomerLists from './components/customerSettings/CustomerLists'
+import InventoryLists from "./components/inventoryManagement/InventoryLists";
 
 export const history = createBrowserHistory({forceRefresh: true})
 
@@ -141,6 +142,11 @@ function App(props) {
               <Nav />
               <Left />
               <OrganizationSettings />
+              </Route>
+              <Route  path="/inventoryLists" >
+              <Nav />
+              <Left />
+              <InventoryLists />
               </Route>
 
                   <Route path="/comingsoon">

@@ -101,6 +101,7 @@ export const createPlantAction = (plantData,tags) => dispatch => {
         plantData["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/add-plant`,plantData,config).then(res=>{
             errorArray.push("Producted Added successfully")
+            console.log("karthi",res.data.data);
             dispatch(getAllPlantAction())
             dispatch(showSpecifiedPlantSkuAction(res.data.data.sku_code))
          
