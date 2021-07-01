@@ -6,7 +6,9 @@ import {
     DELETE_ROLE,
     ADD_ROLE ,
     GET_PERMISSION_LIST,
-    HANDLE_USER_ACCESS_INPUT_DATA
+    HANDLE_USER_ACCESS_INPUT_DATA,
+    SHOW_SELECTED_USER,
+    UPDATE_USER_PERMISSION
    } from '../actions/types';
 
 const initialSatate = {
@@ -19,7 +21,8 @@ const initialSatate = {
     quotes:[],
     tools:[],
     customer:[],
-    user:[]
+    user:[],
+    selectedUser:{}
 }
  const userAccessReduser = (state = initialSatate, action)=> {
      console.log(action)
@@ -49,13 +52,41 @@ const initialSatate = {
             }
         }
         case GET_PERMISSION_LIST:{
-            console.log(action)
-          
+            console.log(action)          
             return{
                 ...state,
                 permissionList:action,
                 permissionListBackup:action.payload  
                
+            }
+        }
+        case SHOW_SELECTED_USER:{
+            console.log(action)
+            let selectedPermissionId = []
+            let selectedPermissionName = []
+            action.selectedUser.data.permissions.map(permission=>{
+                selectedPermissionId.push(permission.id)
+                selectedPermissionName.push(permission.name)
+            })
+            return{
+                ...state,
+                selectedUser:action,
+              
+                currentPermission:selectedPermissionId,
+                currentPermissionNames:selectedPermissionName
+            }
+        }
+        case UPDATE_USER_PERMISSION:{
+            console.log(action)
+            // let selectedPermissionId = []
+            // let selectedPermissionName = []
+            // action.selectedUser.data.permissions.map(permission=>{
+            //     selectedPermissionId.push(permission.id)
+            //     selectedPermissionName.push(permission.name)
+            // })
+            return{
+                ...state,
+                selectedUser:action 
             }
         }
         case HANDLE_USER_ACCESS_INPUT_DATA:{

@@ -7,7 +7,9 @@ import {
     DELETE_ROLE,
     ADD_ROLE,
     HANDLE_USER_ACCESS_INPUT_DATA,
-    GET_PERMISSION_LIST 
+    GET_PERMISSION_LIST,
+    SHOW_SELECTED_USER,
+    UPDATE_USER_PERMISSION 
    } from './types';
    
 //    export const getUsersList = (dispatch) => {
@@ -111,4 +113,23 @@ import {
              permissionID:id,
              checked:checked
          })
+        }
+        export const handleUserSelect = (id) =>dispatch=>{
+            axios.get(`/api/show-user/${id}`,config).then(res=>{     
+                dispatch({
+                        type:SHOW_SELECTED_USER,
+                        selectedUser:res.data    
+                    })
+                })
+        }
+        export const handleUserUpdateUserPermission = (id,currentPermission) =>dispatch=>{
+            let updateObject = {}
+            updateObject.user_id=id
+            updateObject.permissions_ids = currentPermission
+            axios.post(`/api/add-user-permission`,updateObject,config).then(res=>{     
+                dispatch({
+                        type:UPDATE_USER_PERMISSION,
+                        selectedUser:res.data    
+                    })
+                })
         }
