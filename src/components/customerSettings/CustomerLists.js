@@ -1,6 +1,8 @@
 import React from 'react'
 import AddCustomer from './EditCustomer'
 import {getAllCustomer} from "../../actions/customerSettingAction";
+// import {getAllCustomer} from "../../actions/customerSettingAction";
+
 import {connect} from "react-redux";
 
 export class CustomerSettings extends React.Component {  
