@@ -8,7 +8,9 @@ export class CustomerSettings extends React.Component {
         super()
         this.state={
             addCustomerToggle:false,
-            customerListStatus:"All"
+            customerListStatus:"active",
+            editCustmerToggle:false,
+            customerObject:{}
         }
     }
     componentDidMount(){
@@ -21,6 +23,9 @@ export class CustomerSettings extends React.Component {
     handleRadioClick = (e)=> {
         this.setState({customerListStatus:e.target.name})
     }    
+    handleEdit = (customerObject) => {
+        this.setState({editCustomerToggle:!this.state.editCustomerToggle,customerObject})   
+    }
     render(){
         let customerData = [] 
         let tempArray = []
@@ -44,7 +49,7 @@ export class CustomerSettings extends React.Component {
         console.log(customerData)
     return (
         <>
-        {! this.state.addCustomerToggle? <div>
+        {! this.state.addCustomerToggle && !this.state.editCustomerToggle  ? <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
@@ -154,7 +159,7 @@ export class CustomerSettings extends React.Component {
                                                         <td>{customerData.last_order}</td>
                                                         <td>{customerData.outstanding}</td>
                                                         <td class="text-center">
-                                                        <span>
+                                                        <span onClick={()=>{this.handleEdit(customerData)}}>
                                                             <a href="javascript:;">
                                                                 <img src="assets/img/edit.svg" alt=""/>
                                                             </a>
@@ -171,7 +176,7 @@ export class CustomerSettings extends React.Component {
 				</div>
 			</div>
         </div>
-         :<AddCustomer/>}
+         : <AddCustomer toggle ={this.state.addCustomerToggle?"add":"edit"} customerData={this.state.addCustomerToggle?{}:this.state.customerObject}/>}
         </>
     )
 }

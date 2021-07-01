@@ -1,5 +1,5 @@
 import React from 'react'
-import {showorganization,updateorganization,handleOrganizationSettingsInputAction} from "../../actions/organizationSettingAction";
+import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
 
 
@@ -28,9 +28,24 @@ export class OrganizationSettings extends React.Component {
             secondartBody:false,
             },
             errorCount:0,
+            logo:"",
+            imageUploaded:false
         }
     }
+    handlImageUpload = (e)=>{
+        // this.setState({logo:e.target.files[0]})
+        console.log(e.target.files[0])
+        let imageData = e.target.files[0]
+        let id="2"
+        let data =  this.props.uploadImage(imageData,id)
+        data.then(res=>{
+            console.log(res)
+            console.log(this.props.organizationData.organizationData.payload.logo)
+        })
+    }
+
     handleInput = (e) => {
+      
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state        
         // this.setState({[name]:value})     
@@ -105,11 +120,13 @@ export class OrganizationSettings extends React.Component {
              if(this.state.hadModified.secondartBody === true){
                 updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
              }
+             if(this.state.imageUploaded)
+             updateObject.log=this.props.organizationData.organizationData.logo
                 console.log(updateObject)
              
             let res=  this.props.updateorganization(updateObject)
             res.then(r=>{
-                alert(JSON.stringify(r))
+                console.log(JSON.stringify(r))
             }).catch(c=>{
                 alert(JSON.stringify(c))
             })
@@ -119,23 +136,47 @@ export class OrganizationSettings extends React.Component {
 
 
      }
+     handleRemoveImage = (e) =>{
+        // this.setState({logo:""})
+        let id="2"
+        let data = this.props.removeImage(id)
+        data.then(res=>{
+            console.log(res)
+            this.props.showorganization(id)
+        })
+     }
      componentDidMount(){
          let id = "2"
        this.props.showorganization(id)
-        //  console.log(this.props.organizationData)
      }
     render(){
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
+        let url="https://zvky.flamingotech.ml/"
         let organizationDataById 
         if(this.props.organizationData.organizationData){
              organizationDataById = this.props.organizationData.organizationData
             console.log(organizationDataById)
+            if(this.props.organizationData.organizationData.payload){
+                url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
+            }
+            else{
+                url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+            }
         }
         else{
             organizationDataById = this.props.organizationData
+            if(this.state.imageUploaded){
+                url = URL.createObjectURL(organizationDataById.logo)
+                console.log(url)
+            }
+            else{
+                url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+            }
+            
         }
+        console.log(url)
 
         
     return (
@@ -165,16 +206,19 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-4 col-lg-3">
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3">
-                                            <img src="assets/img/nvk-circle-logo.png" />
+                                            {/* <img src="assets/img/nvk-circle-logo.png" /> */}
+                                            <img src={url} style={{height:"100px",width:"100px"}}/>
+                                            
                                         </div>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
-                                                <span class="f-s-20">Upload</span>
+                                            <input  type="file"  id="imageid" name="logo"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
+                                                <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
                                         <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
-                                            <span class="d-flex align-items-center justify-content-around">
+                                            <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
                                             <img src="assets/img/bin-ic-red.svg" alt=""/>
@@ -250,4 +294,6 @@ export class OrganizationSettings extends React.Component {
     
     )
     
-    export default connect(mapStateToProps,{showorganization,updateorganization,handleOrganizationSettingsInputAction})(OrganizationSettings)
+    export default connect(mapStateToProps,{showorganization,updateorganization,removeImage
+        ,handleOrganizationSettingsInputAction,
+        uploadImage})(OrganizationSettings)
