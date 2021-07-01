@@ -500,7 +500,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Action Override"  && premission.group_name === "quotesAndOrders").map(filteredPermission => (
                                             <div class="custom-control custom-checkbox mt-2">
                                             <input type="checkbox" class="custom-control-input" name="Action Override" checked={currentPermissionNames.includes("Action Override")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
-                                            <label class="custom-control-label pl-2" for="actionOveride_quotes">  Action Override</label>
+                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>  Action Override</label>
                                         </div>
                                        )):null}
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Dig And Plant Request"  && premission.group_name === "quotesAndOrders").map(filteredPermission => (
@@ -533,7 +533,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                         <div class="col-md-4 col-lg-4">
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Tools & Settings"  && premission.group_name === "toolsAndSettings").map(filteredPermission => (
                                              <div class="custom-control custom-checkbox">
-                                             <input type="checkbox" class="custom-control-input" name="toolsAndSettings" checked={currentPermissionNames.includes("Tools & Settings") } onChange={this.handleCheckBox} id="toolsAndSettings"/>
+                                             <input type="checkbox" class="custom-control-input" name="toolsAndSettings" checked={currentPermissionNames.includes("Tools & Settings") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                              <label class="custom-control-label pl-2" for={filteredPermission.id}>Tools &amp; Settings </label>
                                          </div>
                                        )):null} 
@@ -542,7 +542,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                             <div class="pl-4">
                                             {exestingPermission?exestingPermission.filter(premission => premission.name==="Tags And Labels"  && premission.group_name === "toolsAndSettings").map(filteredPermission => (
                                            <div class="custom-control custom-checkbox mt-2">
-                                           <input type="checkbox" class="custom-control-input" name="Tags And Labels" checked={currentPermissionNames.includes("Tags And Labels") } onChange={this.handleCheckBox} id="TagsAndLabels_tools"/>
+                                           <input type="checkbox" class="custom-control-input" name="Tags And Labels" checked={currentPermissionNames.includes("Tags And Labels") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Tags And Labels</label>
                                        </div>
                                        )):null} 
@@ -569,7 +569,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                         <div class="col-md-4 col-lg-4">
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Customer Management"  && premission.group_name === "customerManagement").map(filteredPermission => (
                                          <div class="custom-control custom-checkbox">
-                                         <input type="checkbox" class="custom-control-input" name="Customer Management"checked={currentPermissionNames.includes("Customer Management") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                         <input type="checkbox" class="custom-control-input" name="customerManagement"checked={currentPermissionNames.includes("Customer Management") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                          <label class="custom-control-label pl-2" for={filteredPermission.id}>  Customer Management</label>
                                      </div>
                                        )):null}
@@ -613,7 +613,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>User Profile</label>
                                       </div>
                                         )):null}
-                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="User Profile"  && premission.group_name === "userManagement").map(filteredPermission => (
+                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="User Access(this screen)"  && premission.group_name === "userManagement").map(filteredPermission => (
                                           <div class="custom-control custom-checkbox mt-2">
                                           <input type="checkbox" class="custom-control-input" name="User Access(this screen)" checked={currentPermissionNames.includes("User Access(this screen)") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>User Access(this screen)</label>
@@ -621,7 +621,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                         )):null}
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Staff Directory"  && premission.group_name === "userManagement").map(filteredPermission => (
                                          <div class="custom-control custom-checkbox mt-2">
-                                         <input type="checkbox" class="custom-control-input" name="Staff Directory"checked={currentPermissionNames.includes("Staff Directory") } onChange={this.handleCheckBox} id="StaffDirectory_user"/>
+                                         <input type="checkbox" class="custom-control-input" name="Staff Directory"checked={currentPermissionNames.includes("Staff Directory") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                          <label class="custom-control-label pl-2" for={filteredPermission.id}>Staff Directory</label>
                                      </div>
                                         )):null}

@@ -123,6 +123,7 @@ import {
                 })
         }
         export const handleUserUpdateUserPermission = (id,currentPermission) =>dispatch=>{
+            console.log(currentPermission)
             let updateObject = {}
             updateObject.user_id=id
             updateObject.permissions_ids = currentPermission
