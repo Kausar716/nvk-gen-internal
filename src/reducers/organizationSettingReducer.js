@@ -4,7 +4,9 @@ import {
     SHOW_ORGANIZATION, 
     UPDATE_ORGANIZATION,
     DELETE_ORGANIZATION, 
-    HANDLE_ORGANIZATION_INPUT_DATA
+    HANDLE_ORGANIZATION_INPUT_DATA,
+    UPLOAD_ORGANIZATION_IMAGE,
+    REMOVE_USER_IMAGE
    } from '../actions/types';
 
 const initialSatate = {
@@ -15,7 +17,8 @@ const initialSatate = {
     secondaryTitle:"",
     mainBody:"",
     secondartBody:"",
-    id:"2"
+    id:"2",
+    logo:""
 }
 }
  const organizationReduser = (state = initialSatate, action)=> {
@@ -49,6 +52,18 @@ const initialSatate = {
         case DELETE_ORGANIZATION:{
             return{
                 ...state
+            }
+        }
+        case UPLOAD_ORGANIZATION_IMAGE:{
+            return{
+                ...state,
+                organizationData:action
+            }
+        }
+        case REMOVE_USER_IMAGE:{
+            return{
+                ...state,
+                removedData:action
             }
         }
         case HANDLE_ORGANIZATION_INPUT_DATA:{
