@@ -28,11 +28,16 @@ export class OrganizationSettings extends React.Component {
             secondartBody:false,
             },
             errorCount:0,
-            logo:""
+            logo:"",
+            imageUploaded:false
         }
     }
     handlImageUpload = (e)=>{
-        this.setState({logo:e.target.file[0]})
+        // this.setState({logo:e.target.files[0]})
+        console.log(e.target.files[0])
+
+        this.props.handleOrganizationSettingsInputAction("logo",e.target.files[0]) 
+        this.setState({imageUploaded:true})
     }
 
     handleInput = (e) => {
@@ -111,11 +116,13 @@ export class OrganizationSettings extends React.Component {
              if(this.state.hadModified.secondartBody === true){
                 updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
              }
+             if(this.state.imageUploaded)
+             updateObject.log=this.props.organizationData.organizationData.logo
                 console.log(updateObject)
              
             let res=  this.props.updateorganization(updateObject)
             res.then(r=>{
-                alert(JSON.stringify(r))
+                console.log(JSON.stringify(r))
             }).catch(c=>{
                 alert(JSON.stringify(c))
             })
@@ -138,11 +145,25 @@ export class OrganizationSettings extends React.Component {
         if(this.props.organizationData.organizationData){
              organizationDataById = this.props.organizationData.organizationData
             console.log(organizationDataById)
-            url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+            if(this.state.imageUploaded){
+                url = URL.createObjectURL(organizationDataById.logo)
+                console.log(url)
+            }
+            else{
+                url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+            }
+            
         }
         else{
             organizationDataById = this.props.organizationData
-            url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+            if(this.state.imageUploaded){
+                url = URL.createObjectURL(organizationDataById.logo)
+                console.log(url)
+            }
+            else{
+                url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+            }
+            
         }
         console.log(url)
 
@@ -180,7 +201,7 @@ export class OrganizationSettings extends React.Component {
                                         </div>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
-                                            <input  type="file"  id="imageid" name="logo"  onChange={this.handleInput} style={{zIndex:1,opacity:0}}  />
+                                            <input  type="file"  id="imageid" name="logo"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
                                                 <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
