@@ -1,5 +1,5 @@
 import React from 'react'
-import {showorganization,updateorganization,handleOrganizationSettingsInputAction} from "../../actions/organizationSettingAction";
+import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
 
 
@@ -35,9 +35,13 @@ export class OrganizationSettings extends React.Component {
     handlImageUpload = (e)=>{
         // this.setState({logo:e.target.files[0]})
         console.log(e.target.files[0])
-
-        this.props.handleOrganizationSettingsInputAction("logo",e.target.files[0]) 
-        this.setState({imageUploaded:true})
+        let imageData = e.target.files[0]
+        let id="2"
+        let data =  this.props.uploadImage(imageData,id)
+        data.then(res=>{
+            console.log(res)
+            console.log(this.props.organizationData.organizationData.payload.logo)
+        })
     }
 
     handleInput = (e) => {
@@ -132,6 +136,15 @@ export class OrganizationSettings extends React.Component {
 
 
      }
+     handleRemoveImage = (e) =>{
+        // this.setState({logo:""})
+        let id="2"
+        let data = this.props.removeImage(id)
+        data.then(res=>{
+            console.log(res)
+            this.props.showorganization(id)
+        })
+     }
      componentDidMount(){
          let id = "2"
        this.props.showorganization(id)
@@ -145,14 +158,12 @@ export class OrganizationSettings extends React.Component {
         if(this.props.organizationData.organizationData){
              organizationDataById = this.props.organizationData.organizationData
             console.log(organizationDataById)
-            if(this.state.imageUploaded){
-                url = URL.createObjectURL(organizationDataById.logo)
-                console.log(url)
+            if(this.props.organizationData.organizationData.payload){
+                url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
             }
             else{
                 url="https://zvky.flamingotech.ml/"+organizationDataById.logo
             }
-            
         }
         else{
             organizationDataById = this.props.organizationData
@@ -207,7 +218,7 @@ export class OrganizationSettings extends React.Component {
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
                                         <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
-                                            <span class="d-flex align-items-center justify-content-around">
+                                            <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
                                             <img src="assets/img/bin-ic-red.svg" alt=""/>
@@ -283,4 +294,6 @@ export class OrganizationSettings extends React.Component {
     
     )
     
-    export default connect(mapStateToProps,{showorganization,updateorganization,handleOrganizationSettingsInputAction})(OrganizationSettings)
+    export default connect(mapStateToProps,{showorganization,updateorganization,removeImage
+        ,handleOrganizationSettingsInputAction,
+        uploadImage})(OrganizationSettings)

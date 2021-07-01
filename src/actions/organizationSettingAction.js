@@ -6,7 +6,9 @@ import {
     SHOW_ORGANIZATION, 
     UPDATE_ORGANIZATION,
     DELETE_ORGANIZATION,
-    HANDLE_ORGANIZATION_INPUT_DATA 
+    HANDLE_ORGANIZATION_INPUT_DATA,
+    UPLOAD_ORGANIZATION_IMAGE,
+    REMOVE_ORGANIZATION_IMAGE 
    } from './types';
    
 //    export const getUsersList = (dispatch) => {
@@ -87,4 +89,44 @@ import {
     })
    
 
+}
+export const uploadImage = (imageFile,organizationId) => dispatch => {
+    console.log(imageFile)
+    console.log(organizationId)
+ //    let imageObject = {}
+ //    imageObject.user_id = userId
+ //    imageObject.avatar = imageFile
+    const imageObject = new FormData()
+    imageObject.append("organization_id", organizationId);
+    imageObject.append("logo", imageFile);
+    
+    
+    console.log(imageObject)
+return axios.post("/api/upload-logo-organization",imageObject,config).then(res=>{
+    console.log(res)   
+     dispatch({
+             type:UPLOAD_ORGANIZATION_IMAGE,
+             payload:res.data.data
+ 
+         })
+     }).catch(err=>{
+         console.log(err)
+     })
+}
+export const removeImage = (organizationId) => dispatch => {
+    console.log(organizationId)
+   
+    let organizationObj={}
+    organizationObj.organization_id = organizationId
+    return axios.post("/api/remove-logo-organization",organizationObj,config).then(res=>{ 
+ 
+     
+     dispatch({
+             type:REMOVE_ORGANIZATION_IMAGE,
+             payload:res.data.data
+ 
+         })
+     }).catch(err=>{
+         console.log(err)
+     })
 }
