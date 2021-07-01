@@ -28,6 +28,8 @@ import AddPlant from './components/PlantManager/AddPlant'
 import AddProduct from "./components/ProductManager/AddProduct";
 import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'
 import StaffDirectory from './components/StaffDirectory'
+import CustomerSettings from './components/customerSettings/CustomerSettingsIndex'
+import SupplierSettingIndex from "./components/SupplierSettings/SupplierSettingIndex";
 import CustomerLists from './components/customerSettings/CustomerLists'
 import InventoryLists from "./components/inventoryManagement/InventoryLists";
 
@@ -63,8 +65,6 @@ function App(props) {
     
     {/* {authKey.loggedIn ? <> */}
       <div id="page-container" className={props.authKey.bdyClass}>
-       
-
 
           <div id="content" className="content">
 
@@ -116,6 +116,20 @@ function App(props) {
                   <Nav />
                   <Left />
                     <UserSettings/>
+                  </Route>
+
+
+                  <Route path="/customerSettings">
+                  <Nav />
+                  <Left />
+                    <CustomerSettings/>
+                  </Route>
+
+
+                  <Route path="/supplierSettings">
+                  <Nav />
+                  <Left />
+                    <SupplierSettingIndex/>
                   </Route>
 
               <Route path="/addPlant">
