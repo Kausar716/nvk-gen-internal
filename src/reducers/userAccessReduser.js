@@ -115,8 +115,7 @@ const initialSatate = {
 
                 
             } 
-            else
-            if(action.permissionName === "toolsAndSettings"){
+            else if(action.permissionName === "toolsAndSettings"){
                 let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="toolsAndSettings")
                 console.log(quotesArray)
                 quotesArray.map(premission=>{
@@ -136,8 +135,8 @@ const initialSatate = {
 
                 
             } 
-            else
-            if(action.permissionName === "customerManagement"){
+            else if(action.permissionName === "customerManagement"){
+                console.log(action)                
                 let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="customerManagement")
                 console.log(quotesArray)
                 quotesArray.map(premission=>{
@@ -152,6 +151,7 @@ const initialSatate = {
                     currentPermissionNames.push(premission.name)
                 }
                 })
+                
                 console.log(currentPermissionNames)
                 console.log(permissionArray)
 

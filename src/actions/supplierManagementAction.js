@@ -1,7 +1,8 @@
 import { keys } from '@material-ui/core/styles/createBreakpoints';
 import { formValues } from 'redux-form';
 
-import smAddress from '../components/apis/smAddress'
+// import smAddress from '../components/apis/smAddress'
+
 
 // import {contactsSuppliers} from '../components/SupplierManagement/Supplier_Contacts/data';
 import {
@@ -144,9 +145,9 @@ export const getAllSupplierAction = () => dispatch => {
 
         })
 
-        .catch(error =>{
-            const errorMsg = error.message
-        })
+        // .catch(error =>{
+        //     const errorMsg = error.message
+        // })
     })
 }
 
@@ -341,9 +342,9 @@ export const createSupplierContactInfo =(contact)=>{
             };
 
 
-            return(dispatch)=>{
-                dispatch(editSupplierContactInfo(data))
-            }
+            // return(dispatch)=>{
+            //     dispatch(editSupplierContactInfo(data))
+            // }
 
         }
 
@@ -400,51 +401,51 @@ export const createSupplierContactInfo =(contact)=>{
 
 //EDIT
 
-export const editSupplierContactInfoError =(data)=>{
-    return{
-        type:EDIT_SUPPLIER_CONTACT_ERROR,
-        payload:data
-    }
+// export const editSupplierContactInfoError =(data)=>{
+//     return{
+//         type:EDIT_SUPPLIER_CONTACT_ERROR,
+//         payload:data
+//     }
 
-}
+// }
 
-export const editSupplierContactInfoSuccess =(data)=>{
-    return{
-        type:EDIT_SUPPLIER_CONTACT_SUCCESS,
-        payload:data,
-    }
-}
-
-
-export const  editSupplierContactInfo =(data)=>{
-
-    console.log("editSupplierContactInfo", data)
-    const id=data.id;
+// export const editSupplierContactInfoSuccess =(data)=>{
+//     return{
+//         type:EDIT_SUPPLIER_CONTACT_SUCCESS,
+//         payload:data,
+//     }
+// }
 
 
-    return(dispatch)=>{
-        return axios.post(`api/update-supplier-contact/${id}`,data, config)
+// export const  editSupplierContactInfo =(data)=>{
+
+//     console.log("editSupplierContactInfo", data)
+//     const id=data.id;
+
+
+//     return(dispatch)=>{
+//         return axios.post(`api/update-supplier-contact/${id}`,data, config)
                    
-            .then(()=>{
-                    return axios.get(`api/supplier-contact/${id}`,data, config)
-                        .then(response=>{
-                           dispatch(editSupplierContactInfo(response.data.data));
-                        }).catch(error=>{
-                            const errorPayload ={};
-                            errorPayload['statusText'] =error.response.statusText;
-                            errorPayload['status'] =error.response.status;
-                            dispatch(editSupplierContactInfoError(errorPayload));
-                        })
-            }).catch((error)=>{
+//             .then(()=>{
+//                     return axios.get(`api/supplier-contact/${id}`,data, config)
+//                         .then(response=>{
+//                            dispatch(editSupplierContactInfo(response.data.data));
+//                         }).catch(error=>{
+//                             const errorPayload ={};
+//                             errorPayload['statusText'] =error.response.statusText;
+//                             errorPayload['status'] =error.response.status;
+//                             dispatch(editSupplierContactInfoError(errorPayload));
+//                         })
+//             }).catch((error)=>{
 
                 // const errorPayload ={};
                 // errorPayload['statusText'] =error.response.statusText;
                 // errorPayload['status'] =error.response.status;
                 // dispatch(editSupplierContactInfoError(errorPayload));
 
-            })
-    }
-}
+//             })
+//     }
+// }
 
 
 //DELETE
@@ -458,60 +459,60 @@ export const  editSupplierContactInfo =(data)=>{
 //ADDRESS SUPPLIER STARTS FROM HERE
 
 
-export const createAddress =formValues => async (dispatch) =>{
-    const data={
-        supplier_id:1,
-        contact_name:'Bangalore',
-        shipping_address:'Bangalore',
-        billing_address:'bangalore',
-        status:1,
-    };
-    const FinalValue = {...data, ...formValues}
-        const response = await smAddress.post('/api/add-supplier-address', FinalValue, config);
-console.log("CETEADDRESS",response )
-        dispatch({type:CREATE_SUPPLIER_ADDRESS, payload:response.data.data});  
+// export const createAddress =formValues => async (dispatch) =>{
+//     const data={
+//         supplier_id:1,
+//         contact_name:'Bangalore',
+//         shipping_address:'Bangalore',
+//         billing_address:'bangalore',
+//         status:1,
+//     };
+//     const FinalValue = {...data, ...formValues}
+//         const response = await smAddress.post('/api/add-supplier-address', FinalValue, config);
+// console.log("CETEADDRESS",response )
+//         dispatch({type:CREATE_SUPPLIER_ADDRESS, payload:response.data.data});  
     
-};
-export const getAddress =() =>async dispatch=>{
-    const response = await smAddress.get('/api/supplier-addresses', config);
-    // debugger;
-        console.log("responeforGETALL", response)
-    dispatch({type:GET_ALL_SUPPLIER_ADDRESS, payload:response.data.data.active}); 
-};
+// };
+// export const getAddress =() =>async dispatch=>{
+//     const response = await smAddress.get('/api/supplier-addresses', config);
+//     // debugger;
+//         console.log("responeforGETALL", response)
+//     dispatch({type:GET_ALL_SUPPLIER_ADDRESS, payload:response.data.data.active}); 
+// };
 
 
-export const getSpecifiedAddress=(id)=> async dispatch =>{
-    const response = await smAddress.get(`/api/supplier-address/${id}`, config);
-    dispatch({type:GET_SPECIFIED_SUPPLIER_ADDRESS, payload:response.data.data});
-};
+// export const getSpecifiedAddress=(id)=> async dispatch =>{
+//     const response = await smAddress.get(`/api/supplier-address/${id}`, config);
+//     dispatch({type:GET_SPECIFIED_SUPPLIER_ADDRESS, payload:response.data.data});
+// };
 
-export const updateAddress=(id, formValues)=>async dispatch=>{
-    const data={
-        supplier_id:1,
-        contact_name:'Bangalore',
-        shipping_address:'Bangalore',
-        billing_address:'bangalore',
-        status:1,
-    };
-    const FinalValue = {...data, ...formValues}
-    const response = await smAddress.put(`/api/update-supplier-address/${id}`,FinalValue , config);
-    dispatch({type:UPDATE_SUPPLIER_ADDRESS, payload:response.data.data});
-};
-
-
-
-export const deleteAddress=(id)=>async dispatch=>{
-    await smAddress.delete(`/api/delete-supplier-address/${id}`);
-    dispatch({type:DELETE_SUPPLIER_ADDRESS,payload:id});
-};
+// export const updateAddress=(id, formValues)=>async dispatch=>{
+//     const data={
+//         supplier_id:1,
+//         contact_name:'Bangalore',
+//         shipping_address:'Bangalore',
+//         billing_address:'bangalore',
+//         status:1,
+//     };
+//     const FinalValue = {...data, ...formValues}
+//     const response = await smAddress.put(`/api/update-supplier-address/${id}`,FinalValue , config);
+//     dispatch({type:UPDATE_SUPPLIER_ADDRESS, payload:response.data.data});
+// };
 
 
 
-export const onClickValueID =(id)=>{
+// export const deleteAddress=(id)=>async dispatch=>{
+//     await smAddress.delete(`/api/delete-supplier-address/${id}`);
+//     dispatch({type:DELETE_SUPPLIER_ADDRESS,payload:id});
+// };
 
 
 
-}
+// export const onClickValueID =(id)=>{
+
+
+
+// }
 
 
 
