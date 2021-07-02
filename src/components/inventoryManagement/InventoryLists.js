@@ -127,10 +127,11 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                     </div>
                                     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                         <label>Supplier</label>
-                                        <select class="form-control">
-                                            <option>All</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
+                                        <select class="form-control" onChange={this.handleCategoryChange}>
+                                        <option>All</option>
+                                        {supplierList.map(category=>{
+                                        return  <option value={category.id}>{category.supplier_name}</option>
+                                        })}
                                         </select>
                                     </div>
                                 </div>
