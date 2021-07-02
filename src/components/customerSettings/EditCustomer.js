@@ -15,9 +15,13 @@ export default function AddCustomer(props) {
     const [notes,setNotes] = useState("")
     const [ alternativeId,setAlternativeId] =  useState("")
     const [customer_id,setCustomer_id] = useState("")
-    const [errorObj,setErrorObject] = useState({customer_name:0,fax:0})
+    const [errorObj,setErrorObject] = useState({customer_name:0,fax:0,taxExemptNumber:0})
     const [errorCount, setErrorCount] = useState(0)
-    const [taxExemptNumber,setTaxExemptNumber] = useState(0)
+    const [taxExemptNumber,setTaxExemptNumber] = useState("")
+    const [taxExemp,setTaxExemp] = useState(false)
+    const [dispatchType,setDispatchType] = useState(false)
+    const [poRequired,setPoRequired] = useState(false)
+    const [reStock,setReStock] = useState(false)
     console.log()
     useEffect (()=>{
         console.log(props.toggle)
@@ -53,6 +57,10 @@ export default function AddCustomer(props) {
             errorObjforValidation.customer_name=1
            errorCountForValidation++
         }
+        // if(taxExemptNumber.length===0 && taxExemp){
+        //     errorObj.taxExemptNumber=1
+        //     errorCountForValidation++
+        // }
       
         if(fax.length !== 8){
           
@@ -66,6 +74,7 @@ export default function AddCustomer(props) {
 
     const handleInput= (e)=>{
         let errorCountForValidation = errorCount
+        console.log(e.target.name,e.target.value)
         if(e.target.name === "customer_name"){
             setCustomer_name(e.target.value)
             if(errorObj.customer_name>0){
@@ -80,14 +89,31 @@ export default function AddCustomer(props) {
             setPrimaryContact(e.target.value)
         }
         if(e.target.name === "fax"){
+           
             setFax(e.target.value)
             if(errorObj.fax>0){
                 errorObj.fax=0
                 errorCountForValidation--
             }       
         }
-        if(e.target.name = "taxExemptNumber"){
+        if(e.target.name === "taxExemptNo" || e.target.name === "taxExemptYes"  ){
+            setTaxExemp(!taxExemp)
+        }
+        if(e.target.name === "dispatchTypeDelivery" || e.target.name === "dispatchTypePickup"  ){
+            setDispatchType(!dispatchType)
+        }
+        if(e.target.name === "poRequiredNo" || e.target.name === "poRequiredYes"){
+            setPoRequired(!poRequired)
+        }
+        if(e.target.name === "restockNo" || e.target.name === "restockYes"){
+            setPoRequired(!reStock)
+        }
+        if(e.target.name === "taxExemptNumber"){
             setTaxExemptNumber(e.target.value)
+            if(errorObj.taxExemptNumber>0){
+                errorObj.taxExemptNumber=0
+                errorCountForValidation--
+            }  
         }
         if(e.target.name === "website_url"){
             setWebsiteUrl(e.target.value)
@@ -107,7 +133,12 @@ export default function AddCustomer(props) {
          if(count === 0){
          }
     }
+    const handleTabClick=()=>{
+        alert("in")
+    }
+    
 console.log(errorObj)
+  
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -254,7 +285,7 @@ console.log(errorObj)
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>
                                         <input type="number" class="form-control" name="fax" value={fax} onChange={handleInput} />
-                                        {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Enter Number</span>:""}
+                                        {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -282,7 +313,7 @@ console.log(errorObj)
                             </form>
                         </div>
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel >
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
                             <form>
                                 <h2>Order Settings</h2>
@@ -292,11 +323,11 @@ console.log(errorObj)
                                         <label>Dispatch Type</label>
                                         <div class="d-flex">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="dispatchTypeDelivery" name="dispatchTypeDelivery" class="custom-control-input" />
+                                                <input type="radio" id="dispatchTypeDelivery" name="dispatchTypeDelivery" class="custom-control-input" checked = {!dispatchType?true:false} onClick={handleInput}/>
                                                 <label class="custom-control-label" for="dispatchTypeDelivery">Delivery</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
-                                                <input type="radio" id="dispatchTypePickup" name="dispatchTypePickup" class="custom-control-input" />
+                                                <input type="radio" id="dispatchTypePickup" name="dispatchTypePickup" class="custom-control-input"checked = {dispatchType?true:false} onClick={handleInput} />
                                                 <label class="custom-control-label" for="dispatchTypePickup">Pickup</label>
                                             </div>
                                         </div>
@@ -307,12 +338,13 @@ console.log(errorObj)
                                         <label>Tax Exempt</label>
                                         <div class="d-flex">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="taxExemptNo" name="taxExemptNo" class="custom-control-input" />
-                                                <label class="custom-control-label" for="taxExemptNo1">No</label>
+                                                <input type="radio" id="taxExemptNo" name="taxExemptNo" checked = {!taxExemp?true:false} class="custom-control-input" onClick={handleInput} />
+                                               
+                                                <label class="custom-control-label" for="taxExemptNo">No</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
-                                                <input type="radio" id="poRequiredYes" name="poRequiredYes" class="custom-control-input" />
-                                                <label class="custom-control-label" for="poRequiredYes">Yes</label>
+                                                <input type="radio" id="taxExemptYes" name="taxExemptYes" checked = {taxExemp?true:false} onClick={handleInput} class="custom-control-input" />
+                                                <label class="custom-control-label" for="taxExemptYes">Yes</label>
                                             </div>
                                         </div>
                                     </div>
@@ -320,7 +352,9 @@ console.log(errorObj)
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="text" class="form-control" name={taxExemptNumber} value={taxExemptNumber} onChange={handleInput} />
+                                                <input type="number" class="form-control" name={"taxExemptNumber"} value={taxExemptNumber} onChange={handleInput} />
+                                                {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
+
                                             </div>
                                         </div>
                                     </div>
@@ -330,12 +364,12 @@ console.log(errorObj)
                                         <label>P.O. Required</label>
                                         <div class="d-flex">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="poRequiredNo" name="poRequiredNo" class="custom-control-input" />
-                                                <label class="custom-control-label" for="poRequiredNo1">No</label>
+                                                <input type="radio" id="poRequiredNo" name="poRequiredNo" class="custom-control-input" checked = {!poRequired?true:false} onClick={handleInput} />
+                                                <label class="custom-control-label" for="poRequiredNo">No</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
-                                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
-                                                <label class="custom-control-label" for="customRadio1">Yes</label>
+                                                <input type="radio" id="poRequiredYes" name="poRequiredYes" class="custom-control-input" checked = {poRequired?true:false} onClick={handleInput} />
+                                                <label class="custom-control-label" for="poRequiredYes">Yes</label>
                                             </div>
                                         </div>
                                     </div>
