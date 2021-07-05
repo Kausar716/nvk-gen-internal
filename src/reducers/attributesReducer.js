@@ -5,7 +5,9 @@ import {
     HANDLE_DRAG_ATTRIBUTE_CATEGORY,
     HANDLE_DELETE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION,
-    HANDLE_ADD_ZONE_ATTRIBUTE
+    HANDLE_ADD_ZONE_ATTRIBUTE,
+    HANDLE_POSITION_INPUT_ACTION,
+    HANDLE_ADD_POSITION_ATTRIBUTE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
@@ -54,6 +56,15 @@ switch(action.type){
             subAttributeName:{...state.subAttributeName,[action.name]:action.value}
         }
     case HANDLE_ADD_ZONE_ATTRIBUTE:
+        return{
+            ...state
+        }
+    case HANDLE_POSITION_INPUT_ACTION:
+        return{
+            ...state,
+            subAttributeName:{...state.subAttributeName,[action.name]:action.value}
+        }
+    case HANDLE_ADD_POSITION_ATTRIBUTE:
         return{
             ...state
         }
