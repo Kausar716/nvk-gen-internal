@@ -3,7 +3,11 @@ import {
 
     GET_ALL_ATTRIBUtTES,
     CREATE_ALL_ATTRIBUTES,
-
+    GET_ALL_SUB_ATTRIBUtTES,
+    HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+    HANDLE_DELETE_ATTRIBUTE,
+    HANDLE_ZONE_INPUT_ACTION,
+    HANDLE_ADD_ZONE_ATTRIBUTE,
     // axios config
     config,
     axios
@@ -31,6 +35,62 @@ export const createSubAttributeAction = (name,status) => dispatch => {
         })
     })
 }
+export const getAllSubAttribute = (id) => dispatch => {
+    axios.get(`/api/show-attribute/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_ALL_SUB_ATTRIBUtTES,
+            payload:res.data
+        })
+    })
+}
+export const handleAttributeDragDrop = (data) =>dispatch=>{
+    console.log(data)
+    let attributeObject={}
+    if(data.status === 1){
+        attributeObject.status=0
+    }
+    else {
+        attributeObject.status=1
+    }
+    return axios.post(`/api/update-subattribute/${data.id}`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+            payload:res.data
+        })
+    })
+}
+export const handleAttributeDelete = (id) =>dispatch=>{
+    console.log(id)
+    let attributeObject={}
 
+    return axios.post(`/api/delete-subattribute/${id}`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DELETE_ATTRIBUTE,
+            payload:res.data
+        })
+    })
+}
+export const handleZoneInputAction = (name,value) =>dispatch=>{
+    console.log(name)
+ dispatch({
+     type:HANDLE_ZONE_INPUT_ACTION,
+     name:name,
+     value:value    
+ })
+}
 
-
+export const handleAddZone = (data) =>dispatch=>{
+    console.log(data)
+    let attributeObject={}
+  
+    return axios.post(`/api/add-subattribute`,data,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_ADD_ZONE_ATTRIBUTE,
+            payload:res.data
+        })
+    })
+}

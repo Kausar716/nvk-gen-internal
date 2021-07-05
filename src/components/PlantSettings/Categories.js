@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
-import './style.css';
+// import './style.css';
 import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 
     class Categories extends Component {
@@ -123,7 +123,7 @@ render() {
                                                 <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a  className="d-flex align-items-center">
+                                                <a href="#" className="d-flex align-items-center" >
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                                 </a>
                                             </div>
@@ -141,19 +141,13 @@ render() {
                                             <div class="card-body cardBg"
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                               <ul class="list-unstyled">
-                                                   <li  id="Christmas Trees" name="Christmas Trees"  >
-                                                    {tasks.inactive.map(t=>{
-                                                        console.log(t.name)
-                                                    return <div key={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
-                                                               {t.name}
-                                                    </div>
+                                            <ul class="list-unstyled">
+                                                   {tasks.inactive.map(t=>{
+                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                <span id="Wheathers">{t.name}</span>
+                                                            </li>
                                                     })}
-                                                  
-
-                                                   {/* {tasks.inactive} */}
-                                                   </li>
-                                               </ul>
+                                            </ul>
                                                
 
 
@@ -184,17 +178,12 @@ render() {
                                             </div>
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
-                                                   <li class="active">
                                                    {tasks.active.map(t=>{
-                                                        console.log(t.name)
-                                                    return <div key={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
-                                                               {t.name}
-                                                    </div>
+                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                <span id="Wheathers">{t.name}</span>
+                                                            </li>
                                                     })}
-                                                   </li>
-                                                   
-                                               </ul>
-                                                 {/* {tasks.active} */}
+                                            </ul>
                                             </div>
                                         </div>
                                     </div>

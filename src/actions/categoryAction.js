@@ -71,8 +71,7 @@ export const handleCategoryInputAction = (name) =>dispatch=>{
     console.log(name)
  dispatch({
      type:HANDLE_CATEGORY_INPUT_DATA,
-     name:name
-    
+     name:name    
  })
 }
 export const handleAddCategory = (data) =>dispatch=>{
@@ -112,11 +111,10 @@ export const handleDragDrop = (data) =>dispatch=>{
 }
 export const handleCategoryDelete = (id) =>dispatch=>{
     let deleteId = parseInt(id)
-    console.log(`/api/plant-delete-category/${deleteId}`)
-    console.log(typeof(deleteId))
+    let plantCategoryObject={}
 
  
-    return axios.post(`/api/plant-delete-category/${deleteId}`,config).then(res=>{ 
+    return axios.post(`/api/plant-delete-category/${deleteId}`,plantCategoryObject,config).then(res=>{ 
         console.log(res)
     dispatch({
             type:HANDLE_CATEGORY_DELETE,
