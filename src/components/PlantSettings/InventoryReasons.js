@@ -19,7 +19,7 @@ function InventoryReasons() {
         setSelectedItem(e.target.id)
     }
     return (
-        <>
+        // <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0">Inventory Reasons</h4>
                             <hr className="m-0"/>
@@ -162,7 +162,7 @@ function InventoryReasons() {
                                 </div>
                             </div>
                         </div>
-        </>
+     
     )
 }
 

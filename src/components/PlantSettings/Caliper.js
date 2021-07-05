@@ -173,7 +173,7 @@ export default class Caliper extends Component {
                                 </div>
                             </div>
                         </div>
-        </>
+                        </>
     )
 }
 }

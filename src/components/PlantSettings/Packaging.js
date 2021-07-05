@@ -42,7 +42,7 @@ const  Packaging=()=> {
         setSelectedItem(e.target.id)
     }
     return (
-        <>
+        // <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0"> Packaging</h4>
                             <hr className="m-0"/>
@@ -201,7 +201,7 @@ const  Packaging=()=> {
                                 </div>
                             </div>
                         </div>
-        </>
+       
     )
 }
 
