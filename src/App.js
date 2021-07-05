@@ -28,9 +28,9 @@ import AddPlant from './components/PlantManager/AddPlant'
 import AddProduct from "./components/ProductManager/AddProduct";
 import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'
 import StaffDirectory from './components/StaffDirectory'
-import CustomerSettings from './components/customerSettings/CustomerSettingsIndex'
+import CustomerSettings from './components/CustomerSettings/CustomerSettingsIndex';
 import SupplierSettingIndex from "./components/SupplierSettings/SupplierSettingIndex";
-import CustomerLists from './components/customerSettings/CustomerLists'
+import CustomerLists from './components/CustomerSettings/CustomerLists'
 import InventoryLists from "./components/inventoryManagement/InventoryLists";
 
 export const history = createBrowserHistory({forceRefresh: true})

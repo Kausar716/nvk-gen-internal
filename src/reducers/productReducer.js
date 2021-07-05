@@ -93,7 +93,7 @@ const initialSatate = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
- console.log("actions", action)
+ //console.log("actions", action)
    
     switch(action.type){
         // page action
@@ -171,7 +171,8 @@ export default function(state = initialSatate, action){
                 backupData:action.payload.data,
             }
         case GET_SPECIFIED_PRODUCT_ACTION:
-            console.log(action.payload.data)
+           // debugger;
+            //console.log("GET_SPECIFIED_PRODUCT_ACTION",action.payload.data)
             return{
                 ...state,
                 productDataById:action.payload.data,
@@ -282,10 +283,13 @@ export default function(state = initialSatate, action){
     case GET_SPECIFIED_SKU_ACTION:
         //debugger
         return{
-            ...state,
-           // productDataById:action.payload.data,
-            skuDataById:action.payload.data,
-            actionType:action.actionType
+            
+           ...state,
+            skuDataById:action.payload,
+            // productDataById:action.payload.data,
+            //     tagsData:JSON.parse(action.payload.data.common_name),
+                needAction:false,
+                actionType:action.actionType
         }
 
             

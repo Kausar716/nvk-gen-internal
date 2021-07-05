@@ -70,9 +70,10 @@ const onSubmit = (values) =>{
 
 const SkuList=(props)=> {
 
-    const {skuData,skuPageNumber,skuDataById,needAction,skuValidation, productData} = props.productData
+    const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType} = props.productData
 
     console.log("productDataFINE", productData)
+    const [submitCount, setSubmitCount] = useState(0)
     const [value, onChange] = useState(new Date());
     const [pageSize, setPageSize] =useState(15)
     const [id,setId] = useState(0)
@@ -92,7 +93,25 @@ const SkuList=(props)=> {
     let finalPrID = product_id_List.reverse()[0]
     console.log("product_id_List", finalPrID)
    
+
+
+    const submitAction = (e) =>{
+        e.preventDefault();
     
+       
+         if(submitCount === 0){
+            if(needAction){
+                if(actionType ==="add")
+                props.createSkuAction( finalPrID,skuDataById,skuValidation)
+   
+                if(actionType ==="edit")
+                alert("abcd")
+                props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
+                setSubmitCount(1)
+            }
+        }
+          
+     }
 
     const paginationChange =(event, page)=>{
         props.setSkuPageNumber(page-1)
@@ -120,8 +139,8 @@ const SkuList=(props)=> {
         
     }
     const confirm = ()=>{
-       props.deleteProductAction(id)
-       //props.deleteSkuAction(id)
+       //props.deleteProductAction(id)
+       props.deleteSkuAction(id)
        setOpen(false)
        setId(0)
    }
@@ -129,12 +148,12 @@ const SkuList=(props)=> {
        setOpen(true)
        setId(id)
    }
-   const getSpecifiedProduct = (sku,data,value) =>{
+   const getSpecifiedProduct = (id,data,value) =>{
      //debugger
       window.scrollTo(100, -100)
      
-      props.getSpecifiedProductAction(id,"edit","sku")
-      //props.showSpecifiedSkuAction(id,data,"edit","sku")
+      //props.getSpecifiedProductAction(id,"edit","sku")
+      props.showSpecifiedSkuAction(id,"edit","sku")
    
    }
 
@@ -157,7 +176,7 @@ const SkuList=(props)=> {
     let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
     console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
 
-    console.log("skuDataById123", skuDataById)
+    console.log("productDataByIdskuDataById", productDataById, skuDataById)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
@@ -248,17 +267,17 @@ const SkuList=(props)=> {
                             
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg"
-                                             disabled={needAction===true?false:true} 
-                                             onClick={()=>{ 
-                                                //  const data={}
-                                                //  data.name="abcd";
-                                                //  data.description=10;
-                                             //props.updateSkuAction(skuDataById.product_id, skuDataById,skuValidation);
-                                             
-                                             props.createSkuAction( finalPrID,skuDataById,skuValidation);
-                                             }} 
-                                             >Add SKU &amp; Clear</button>
+                                            <button 
+                                            // type="button" class="btn btn-primary btn-lg"
+                                            className={needAction===true?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
+                                            disabled={submitCount===0?needAction===true?false:true:true} 
+                                            onClick={submitAction}
+                                             //disabled={needAction===true?false:true} 
+                                             //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
+                                            
+                                             > {actionType==="add"?"Add SKU":"Update SKU"}
+                                                 {/* Add SKU &amp; Clear */}
+                                                 </button>
 
 
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3"
@@ -335,17 +354,17 @@ const SkuList=(props)=> {
                                             <td class="text-center">
                                                 <span>
                                                    
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedProduct(sku)}/>
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedProduct(sku.id, "edit","sku")}/>
                                                    
                                                 </span>
                                                 {/* <span>
                                                     <a href="javascript:;">
                                                         <img src="assets/img/duplicate.svg" alt=""  onClick={()=>confirmDelete(sku.product_id)}/>
-                                                    </a>
+                                                    </a>onClick={()=>confirmAction(product.product_id,"delete")}
                                                 </span> */}
                                                 <span>
                                                     <a href="javascript:;">
-                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.id)}/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.id,"delete")}/>
                                                     </a>
                                                 </span>
                                             </td>

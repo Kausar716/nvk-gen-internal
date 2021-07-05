@@ -62,11 +62,13 @@ export const createProductAction = (product,tags) => dispatch => {
         product["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/create-product`,product
         , config).then(res=>{
-            debugger;
+           // debugger;
             errorArray.push("Producted Added successfully")
             dispatch(getAllProductAction())
-            dispatch(showSpecifiedSkuAction(res.data.data.product))
-            //console.log("res12345",res.data.data.product)
+            //dispatch(showSpecifiedSkuAction(res.data.data.product))
+            console.log("res12345",res.data.data.product)
+            //dispatch(createSkuAction(res.data.data.product.product_id,product,"add"))
+           // disppath(updateProductAction(product,res.data.data.product.product_id,tag))
             dispatch({
                 type:ERROR_HANDLE,
                 message:errorArray,
@@ -77,8 +79,10 @@ export const createProductAction = (product,tags) => dispatch => {
             dispatch({
                 type:CREATE_PRODUCT_ACTION
             })
-    
+
+            //dispatch(getSpecifiedProductAction(res.data.data.product.product_id,"edit","general"))
         })
+
         .catch(error=>{
             errorArray.push("Please select mandate fileds")
             dispatch({
@@ -149,9 +153,10 @@ export const getAllProductAction = () => dispatch => {
 
 export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
     axios.get(`/api/product/${id}`,config).then(res=>{ 
-        debugger;
-        console.log(res.data)
-        dispatch(showSpecifiedSkuAction(id))
+
+        //debugger;
+        console.log("abcd",res.data)
+        //dispatch(showSpecifiedSkuAction(id))
         dispatch(pageReDirectAction(pageToOpen,actionType))
         dispatch({
                 type:GET_SPECIFIED_PRODUCT_ACTION,
@@ -211,12 +216,10 @@ export const duplicateProduct = (id) =>dispatch=>{
 
 
 
-export const createSkuAction = (id, data, actionType="edit") =>async dispatch => {
+export const createSkuAction = (id, data, actionType="add") =>async dispatch => {
     const data1={
                 type:"product",
                 supplier_id:1,
-                // sku_item_name:"MJ"
-        
             };
             const FinalData = {...data1, id, ...data}
     
@@ -234,15 +237,19 @@ export const createSkuAction = (id, data, actionType="edit") =>async dispatch =>
         delete data["id"]
      
         axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
-            // dispatch(getAllProductAction())
-            dispatch(showSpecifiedSkuAction(id))
-            // dispatch(getSpecifiedProductAction(id,"edit","sku"))
+            debugger;
+            console.log("createSKU", res)
+            //dispatch(getAllProductAction())
+                            // dispatch(showSpecifiedSkuAction(id))
+            //dispatch(getSpecifiedProductAction(id,"edit","sku"))
             // dispatch(pageReDirectAction("sku",actionType))
+            dispatch(updateSkuAction())
             dispatch(getAllSkuAction(id))
+
             dispatch({
                 type:CREATE_SKU_ACTION
             })
-            error.push("SKU updated successfully")
+            error.push("SKU Created successfully")
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
@@ -275,50 +282,66 @@ export const createSkuAction = (id, data, actionType="edit") =>async dispatch =>
 export const updateSkuAction = (id, data, actionType="edit") =>async dispatch => {
     //debugger;
     let error = []
-    //debugger;
+    const data1={
+        type:"product",
+        supplier_id:1,
+    };
+    const FinalData = {...data1, id, ...data}
     console.log("DATADATA", data);
-    if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
-    if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
-    if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
-    if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
-    if(data.sku_item_name==null ||data.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
-    if(error.length===0){
-        delete data["id"]
+  
      
-        axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
+        axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{ 
+           // debugger;
             // dispatch(getAllProductAction())
-            dispatch(showSpecifiedSkuAction(id))
+           // dispatch(showSpecifiedSkuAction(id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
             // dispatch(pageReDirectAction("sku",actionType))
             dispatch(getAllSkuAction(id))
+            error.push("Product Updated successfully")
             dispatch({
                 type:UPDATE_SKU_ACTION
             })
-            error.push("SKU updated successfully")
+           
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
                 status:true
             })
-            }).catch(error1=>{
-                error.push("Please add Product first")
-                dispatch({
-                    type:ERROR_HANDLE,
-                    message:error,
-                    status:true
-                })
-    
             })
-    }else{
-        dispatch({
-            type:ERROR_HANDLE,
-            message:error,
-            status:true
-        })
+            // .catch(error1=>{
+            //     error.push("Please add Product first")
+            //     dispatch({
+            //         type:ERROR_HANDLE,
+            //         message:error,
+            //         status:true
+            //     })
+    
+            // })
 
-    }
 
 }
+
+// export const updateProductAction = (data,id,tag) => dispatch => {
+//     data["common_name"] = tag
+//     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
+//         dispatch(getAllProductAction())
+//         let error = []
+//         error.push("Product Updated successfully")
+//         dispatch({
+//             type:UPDATE_PRODUCT_ACTION
+//         })
+//         dispatch({
+//             type:ERROR_HANDLE,
+//             message:error,
+//             status:true
+//         })
+//     })
+
+// }
+
+
+
+
 export const updateSkuActionClear = (id,data,actionType="add") => async dispatch=>{
    // debugger
     delete data["id"]
@@ -388,14 +411,17 @@ export const getAllSkuAction = (id) => dispatch => {
 
 
 export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch => {
-    // debugger
-    axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
+    // debugger/api/skus/products/HG102
+
+     axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
+        //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
+
         //debugger;
-        console.log(res.data)
+        console.log("showSpecifiedSkuAction",res.data.data[0])
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
-                payload:res.data,
-                actionType:actionType
+                payload:res.data.data[0]
+                //actionType:actionType
     
             })
         })
@@ -404,8 +430,10 @@ export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch =
 
 // export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
 //     axios.get(`/api/product/${id}`,config).then(res=>{ 
-//         console.log(res.data)
-//         dispatch(showSpecifiedSkuAction(id))
+
+//         //debugger;
+//         console.log("abcd",res.data)
+//         //dispatch(showSpecifiedSkuAction(id))
 //         dispatch(pageReDirectAction(pageToOpen,actionType))
 //         dispatch({
 //                 type:GET_SPECIFIED_PRODUCT_ACTION,
