@@ -3,6 +3,8 @@ import {
     ADD_USER,   
     SHOW_USER, 
     UPDATE_USER,
+    UPLOAD_USER_IMAGE,
+    REMOVE_USER_IMAGE,
     DELETE_USER 
    } from '../actions/types';
 
@@ -23,7 +25,7 @@ const initialSatate = {
             
             return{
                 ...state,
-                user:state.users.filter(user=>user.id === action.payload)
+                user:action.payload
             }
         case UPDATE_USER:{
             return {
@@ -35,6 +37,18 @@ const initialSatate = {
             return{
                 ...state,
                 users:action              
+            }
+        }
+        case UPLOAD_USER_IMAGE:{
+            return{
+                ...state,
+                user:action
+            }
+        }
+        case REMOVE_USER_IMAGE:{
+            return{
+                ...state,
+                removedData:action
             }
         }
 

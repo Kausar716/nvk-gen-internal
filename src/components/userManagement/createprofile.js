@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getUsersList,showUser,updateUser,addUser} from "../../actions/userAction";
+import {getUsersList,showUser,updateUser,addUser,uploadImage} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -39,7 +39,8 @@ export class CreateUserProfile extends Component {
             clickedCreate:false,
             message:"",
             open:false,
-            cancel:false
+            cancel:false,
+            logo:""
         }
     }
     componentDidMount(){
@@ -83,8 +84,14 @@ export class CreateUserProfile extends Component {
         }
         this.setState({errorObj,errorCount})
     }
-    handleUpdate = () => {
-        
+    handlImageUpload = (e) => {
+        console.log(e)
+        console.log(e.target.files[0])
+        let imageData = e.target.files[0]
+        // this.props.uploadImage(imageData)
+        // this.setState({log:e.target.files[0]})
+        this.setState({logo: URL.createObjectURL(e.target.files[0])})
+
     }
     validate = () =>{
         let {errorObj,errorCount}=this.state
@@ -214,15 +221,20 @@ export class CreateUserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-4 py-4">
                                                 <div class="profImg">
-                                                    <img src="assets/img/profile-img.png" />
+                                                    <img src={this.state.logo.length>0?this.state.logo:""} alt="" />
                                                 </div>
                                                 <p>Image should print quality PNF or JPG</p>
-                                                <a href="#" class="btn btn-primary btn-block btnGroup">
+                                                <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
-                                                        <span class="f-s-20">Upload</span>
+                                                    <input  type="file"  id="imageid"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
+                                                    <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
+                                                        
                                                     </span>
+                                                  
                                                     <img src="assets/img/upload-ic-white.svg" alt="" />
                                                 </a>
+                                               
+
                                                 {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
                                                     <span class="d-flex align-items-center justify-content-around">
                                                         <span class="f-s-20 text-danger">Remove</span>
@@ -276,10 +288,10 @@ export class CreateUserProfile extends Component {
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
-                                                    <label>Location Assigned</label>
-                                                    <div class="locAssignBox">
-                                                        <ul class="list-unstyled">
-                                                            <li>
+                                                    {/* <label>Location Assigned</label> */}
+                                                    {/* <div class="locAssignBox">
+                                                        <ul class="list-unstyled"> */}
+                                                            {/* <li>
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" id="customCheck1"/>
                                                                     <label class="custom-control-label pl-2" for="customCheck1">Farm A <span>1105 HWY5, Dundas, CN</span></label>
@@ -308,14 +320,14 @@ export class CreateUserProfile extends Component {
                                                                     <input type="checkbox" class="custom-control-input" id="customCheck5"/>
                                                                     <label class="custom-control-label pl-2" for="customCheck5">Farm E <span>1105 HWY5, Dundas, CN</span></label>
                                                                 </div> 
-                                                            </li>
-                                                        </ul>
-                                                    </div>
+                                                            </li> */}
+                                                        {/* </ul>
+                                                    </div> */}
                                                     <div class="mt-3">
-                                                        <div class="custom-control custom-checkbox">
+                                                        {/* <div class="custom-control custom-checkbox">
                                                             <input type="checkbox" class="custom-control-input" id="customCheck6"/>
                                                             <label class="custom-control-label pl-2" for="customCheck6">User has access to all locations </label>
-                                                        </div> 
+                                                        </div>  */}
                                                     </div>
                                                 </div>
                                             </div>
@@ -361,4 +373,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getRolesList,addUser})(CreateUserProfile)
+export default connect(mapStateToProps,{getRolesList,addUser,uploadImage})(CreateUserProfile)

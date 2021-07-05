@@ -29470,7 +29470,7 @@ a:hover { text-decoration: none;}
     background: rgba(255, 255, 255, .5) !important
 }
 
-.float-sub-menu-container {
+/* .float-sub-menu-container {
     position: fixed;
     width: 220px;
     margin: 0;
@@ -29597,7 +29597,7 @@ a:hover { text-decoration: none;}
 .float-sub-menu-container .foat-sub-menu-arrow:after,
 .float-sub-menu-container .foat-sub-menu-arrow:before {
     display: none
-}
+} */
 
 .boxed-layout {
     height: 100%;
@@ -53507,6 +53507,42 @@ ul.sub-menu {
 .sidebar .nav>li:hover .sub-menu {
     display: block;
 }
+
+
+.invtDashPlantTbl th {
+    line-height: 20px;
+    vertical-align: middle !important;
+}
+.invtDashPlantTbl {
+    font-s
+}
+.invtDashPlantTbl td:not(:first-child) {
+    text-align: center;
+}
+.prevYear {
+    background-color: #FFC581 !important;
+    border: none !important;
+    color: #000 !important;
+    text-align: center;
+    width: 60px;
+} 
+.currentYear {
+    background-color: #FFA834 !important;
+    border: none !important;
+    color: #000 !important;
+    text-align: center;
+    width: 60px;
+} 
+.nextYear {
+    background-color: #FFC957 !important;
+    border: none !important;
+    color: #000 !important;
+    text-align: center;
+    width: 60px;
+} 
+
+
+
 
 @media (max-width:560px) {
     .contactCard { margin-bottom: 20px; }

@@ -76,11 +76,11 @@ const handleMainSelection= (id) => {
       <div id="sidebar" class="sidebar" onMouseEnter={()=>{handleSideMenuEnter()}} onMouseLeave={()=>{handleSideMenuLeave()}}>
         <div data-scrollbar="true" data-height="100%">
           <ul class="nav">
-            <li>
+            {/* <li>
               <a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify">
                 <i class="fa fa-angle-double-left"></i>
               </a>
-            </li>
+            </li> */}
             <li class={selectedMainBar === "Dashboard"?"active":""} onClick={()=>{handleMainSelection("Dashboard")}} >
               <Link to="/Dashboard">
                 <img src="assets/img/dashboard.svg" alt=""/>

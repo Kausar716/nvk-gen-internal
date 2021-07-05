@@ -5,7 +5,9 @@ import {
     axios,
     SHOW_USER, 
     UPDATE_USER,
-    DELETE_USER 
+    UPLOAD_USER_IMAGE,
+    REMOVE_USER_IMAGE
+    // DELETE_USER 
    } from './types';
    
 //    export const getUsersList = (dispatch) => {
@@ -69,3 +71,41 @@ import {
          
    }
    
+   export const uploadImage = (imageFile,userId) => dispatch => {
+       console.log(imageFile)
+    //    let imageObject = {}
+    //    imageObject.user_id = userId
+    //    imageObject.avatar = imageFile
+       const imageObject = new FormData()
+       imageObject.append("user_id", userId);
+       imageObject.append("avatar", imageFile);
+       
+       
+       console.log(imageObject)
+   return axios.post("/api/upload-image",imageObject,config).then(res=>{ 
+        dispatch({
+                type:UPLOAD_USER_IMAGE,
+                payload:res.data.data
+    
+            })
+        }).catch(err=>{
+            console.log(err)
+        })
+}
+export const removeImage = (userId) => dispatch => {
+    console.log(userId)
+   
+    let userObj={}
+    userObj.user_id = userId
+    return axios.post("/api/remove-image",userObj,config).then(res=>{ 
+ 
+     
+     dispatch({
+             type:REMOVE_USER_IMAGE,
+             payload:res.data.data
+ 
+         })
+     }).catch(err=>{
+         console.log(err)
+     })
+}

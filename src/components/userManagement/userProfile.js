@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getUsersList,showUser,updateUser} from "../../actions/userAction";
+import {getUsersList,showUser,updateUser,uploadImage,removeImage} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -49,12 +49,12 @@ export class UserProfile extends Component {
             message:"",
             open:false,
             cancel:false,
+            logo:""
         }
     }
     componentDidMount(){
-           let selectedUser = this.props.selectedUser
- 
-          
+           let selectedUser = this.props.selectedUser 
+          console.log(selectedUser)
            this.setState({
                firstName:selectedUser.name,
                lastName:selectedUser.last_name,
@@ -62,7 +62,8 @@ export class UserProfile extends Component {
                email:selectedUser.email,
                position:selectedUser.position,
                status:selectedUser.status,
-               id:selectedUser.id
+               id:selectedUser.id,
+               logo:selectedUser.avatar?selectedUser.avatar:""
             })
 
     }
@@ -186,6 +187,59 @@ export class UserProfile extends Component {
  
  
      }
+     handlImageUpload = (e) => {
+        console.log(e)
+        console.log(e.target.files[0])
+        let imageData = e.target.files[0]
+       
+     
+       let data =  this.props.uploadImage(imageData,JSON.stringify(this.props.selectedUser.id))
+       data.then(res=>{
+           console.log(res)
+           console.log(res)
+           console.log(this.props)
+           let updatedData = this.props.data.user.payload
+           this.setState({
+            firstName:updatedData.name,
+            lastName:updatedData.last_name,
+            phone:updatedData.phone,
+            email:updatedData.email,
+            position:updatedData.position,
+            status:updatedData.status,
+            id:updatedData.id,
+            logo:updatedData.avatar?updatedData.avatar:""
+         })
+       })
+
+
+
+
+
+        // this.setState({log:e.target.files[0]})
+        this.setState({logo: URL.createObjectURL(e.target.files[0])})
+
+    }
+    handleRemoveImage = (e) =>{
+        // this.setState({logo:""})
+        let data = this.props.removeImage(this.props.selectedUser.id)
+        console.log(data)
+        data.then(res=>{
+            console.log(res)
+            console.log(this.props)
+            let updatedData = this.props.data.removedData.payload
+            this.setState({
+             firstName:updatedData.name,
+             lastName:updatedData.last_name,
+             phone:updatedData.phone,
+             email:updatedData.email,
+             position:updatedData.position,
+             status:updatedData.status,
+             id:updatedData.id,
+             logo:updatedData.avatar?updatedData.avatar:""
+          })
+        })
+        
+    }
     render() {
         let roles=[]
         if(this.props.roles)roles = this.props.roles
@@ -236,17 +290,18 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-4 py-4">
                                                 <div class="profImg">
-                                                    <img src="assets/img/profile-img.png" />
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" />
                                                 </div>
                                                 <p>Image should print quality PNF or JPG</p>
-                                                <a href="#" class="btn btn-primary btn-block btnGroup">
+                                                <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
-                                                        <span class="f-s-20">Upload</span>
+                                                    <input  type="file"  id="imageid"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
+                                                        <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg" alt=""/>
                                                 </a>
                                                 <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
-                                                    <span class="d-flex align-items-center justify-content-around">
+                                                    <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
                                                         <span class="f-s-20 text-danger">Remove</span>
                                                     </span>
                                                     <img src="assets/img/bin-ic-red.svg" alt=""/>
@@ -375,9 +430,10 @@ const mapStateToProps = (state)=> (
     // console.log(state.userAccessReduser)
     {
     users:state.userReduser.users,
+    data:state.userReduser
     // roles:state.userAccessReduser
 }
 
 )
 
-export default connect(mapStateToProps,{updateUser,getRolesList})(UserProfile)
+export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,uploadImage})(UserProfile)

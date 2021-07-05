@@ -5,7 +5,11 @@ import {
     axios,
     UPDATE_ROLE,
     DELETE_ROLE,
-    ADD_ROLE 
+    ADD_ROLE,
+    HANDLE_USER_ACCESS_INPUT_DATA,
+    GET_PERMISSION_LIST,
+    SHOW_SELECTED_USER,
+    UPDATE_USER_PERMISSION 
    } from './types';
    
 //    export const getUsersList = (dispatch) => {
@@ -86,3 +90,47 @@ import {
      
     }
    
+    export const getPermissionList = () => dispatch => {
+        console.log()
+        return axios.get(`/api/permission-list`,config).then(res=>{  
+         console.log(res)  
+       
+         dispatch({
+                 type:GET_PERMISSION_LIST,
+                 payload:res.data.data    
+             })
+         })
+         .catch(message=>{
+             console.log(message)
+         })         
+        }
+
+        export const handleUserAccessInputAction = (name, id,checked) =>dispatch=>{
+            console.log(name,id)
+         dispatch({
+             type:HANDLE_USER_ACCESS_INPUT_DATA,
+             permissionName:name,
+             permissionID:id,
+             checked:checked
+         })
+        }
+        export const handleUserSelect = (id) =>dispatch=>{
+            axios.get(`/api/show-user/${id}`,config).then(res=>{     
+                dispatch({
+                        type:SHOW_SELECTED_USER,
+                        selectedUser:res.data    
+                    })
+                })
+        }
+        export const handleUserUpdateUserPermission = (id,currentPermission) =>dispatch=>{
+            console.log(currentPermission)
+            let updateObject = {}
+            updateObject.user_id=id
+            updateObject.permissions_ids = currentPermission
+            axios.post(`/api/add-user-permission`,updateObject,config).then(res=>{     
+                dispatch({
+                        type:UPDATE_USER_PERMISSION,
+                        selectedUser:res.data    
+                    })
+                })
+        }
