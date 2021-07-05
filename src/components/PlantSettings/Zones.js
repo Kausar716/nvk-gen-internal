@@ -104,7 +104,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                 <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                  <a href="#" class="">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -141,7 +143,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                 <a href="#" class="">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                </a>
                                                             </li>
                                                     })}
                                             </ul>
