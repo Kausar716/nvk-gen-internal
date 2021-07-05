@@ -33,6 +33,7 @@ getAllSkuAction ,
 showSpecifiedSkuAction ,
 setSkuPageNumber,
 
+
 //input handle
 handleSkuInputAction
     
@@ -69,7 +70,9 @@ const onSubmit = (values) =>{
 
 const SkuList=(props)=> {
 
-    const {skuData,skuPageNumber,skuDataById,needAction,skuValidation} = props.productData
+    const {skuData,skuPageNumber,skuDataById,needAction,skuValidation, productData} = props.productData
+
+    console.log("productDataFINE", productData)
     const [value, onChange] = useState(new Date());
     const [pageSize, setPageSize] =useState(15)
     const [id,setId] = useState(0)
@@ -80,7 +83,14 @@ const SkuList=(props)=> {
     console.log("skuDataByIdskuDataById",skuData)
     useEffect(()=>{
         props.getAllSkuAction()
+        //props.createSkuAction()
     },[])
+
+
+    //Finiding last ID in product list
+    const product_id_List = productData.map(prId=>prId.product_id)
+    let finalPrID = product_id_List.reverse()[0]
+    console.log("product_id_List", finalPrID)
    
     
 
@@ -111,6 +121,7 @@ const SkuList=(props)=> {
     }
     const confirm = ()=>{
        props.deleteProductAction(id)
+       //props.deleteSkuAction(id)
        setOpen(false)
        setId(0)
    }
@@ -118,10 +129,12 @@ const SkuList=(props)=> {
        setOpen(true)
        setId(id)
    }
-   const getSpecifiedProduct = (id,data,value) =>{
-     
+   const getSpecifiedProduct = (sku,data,value) =>{
+     //debugger
       window.scrollTo(100, -100)
+     
       props.getSpecifiedProductAction(id,"edit","sku")
+      //props.showSpecifiedSkuAction(id,data,"edit","sku")
    
    }
 
@@ -131,7 +144,8 @@ const SkuList=(props)=> {
 
       
 //    window.addEventListener('scroll', this.listenToScroll)
-   console.log(props.productData)
+   //console.log("123",props.productData)
+
     const skuPerPAge = pageSize;
     const totalLength = skuData.length;
     const pagesVisited = skuPageNumber*pageSize;
@@ -240,7 +254,10 @@ const SkuList=(props)=> {
                                                 //  const data={}
                                                 //  data.name="abcd";
                                                 //  data.description=10;
-                                             props.updateSkuAction(skuDataById.product_id, skuDataById,skuValidation);}} 
+                                             //props.updateSkuAction(skuDataById.product_id, skuDataById,skuValidation);
+                                             
+                                             props.createSkuAction( finalPrID,skuDataById,skuValidation);
+                                             }} 
                                              >Add SKU &amp; Clear</button>
 
 
@@ -318,7 +335,7 @@ const SkuList=(props)=> {
                                             <td class="text-center">
                                                 <span>
                                                    
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedProduct(sku.product_id,"edit","sku")}/>
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedProduct(sku)}/>
                                                    
                                                 </span>
                                                 {/* <span>
@@ -328,7 +345,7 @@ const SkuList=(props)=> {
                                                 </span> */}
                                                 <span>
                                                     <a href="javascript:;">
-                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.product_id)}/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.id)}/>
                                                     </a>
                                                 </span>
                                             </td>

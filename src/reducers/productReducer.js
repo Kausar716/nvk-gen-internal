@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import {v4 as uuidv4} from 'uuid';
 
 import actions from 'redux-form/lib/actions';
@@ -72,6 +73,8 @@ const initialSatate = {
         discontinued:0,
         archived:0,
         status:1,
+        supplier_id:1,
+        //id:null
 
 
     },
@@ -118,7 +121,9 @@ export default function(state = initialSatate, action){
                     subcategory:0,
                     discontinued:0,
                     status:1,
-                    archived:0
+                    supplier_id:1,
+                    archived:0,
+                    //id:null
             
             
                 },
@@ -206,7 +211,9 @@ export default function(state = initialSatate, action){
                     subcategory:null,
                     discontinued:0,
                     status:1,
-                    archived:0
+                    archived:0,
+                    supplier_id:1,
+                    //id:null
             
             
                 },
@@ -228,6 +235,17 @@ export default function(state = initialSatate, action){
             needAction:false
             
         }
+
+
+    case CREATE_SKU_ACTION:
+        return{
+            //const skuData = state.
+            ...state, 
+            needAction:false
+            // skuData:[...action.payload.data]
+        };
+
+
     case UPDATE_SKU_ACTION_CLEAR:
         return{
             ...state,
@@ -250,18 +268,24 @@ export default function(state = initialSatate, action){
                 subcategory:null,
                 discontinued:0,
                 status:1,
-                archived:0
+                archived:0,
+                supplier_id:1,
+                //id:null
         
         
             },
+            // eslint-disable-next-line no-dupe-keys
             actionType:"add",
             needAction:false,
             tagsData:[]
         }
     case GET_SPECIFIED_SKU_ACTION:
+        //debugger
         return{
             ...state,
-            skuDataById:{...action.payload.data}
+           // productDataById:action.payload.data,
+            skuDataById:action.payload.data,
+            actionType:action.actionType
         }
 
             
@@ -331,7 +355,7 @@ export default function(state = initialSatate, action){
 
 
             case HANDLE_SEARCH_PINPUT:
-                debugger;
+                //debugger;
                 var optionVal = -1;
                 var categoryVal = "";
                 // if(action.payload.option ==="active"){

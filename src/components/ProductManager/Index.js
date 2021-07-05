@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react' ;
 import {connect} from "react-redux";
-import { Link } from "react-router-dom";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+//import { Link } from "react-router-dom";
+import { Tab, Tabs, TabList } from 'react-tabs';
 //import {getAllImageAssets} from "../Utility/Utility";
 // import '../ProductManagement/index.css'
  import GeneralSettings from './GeneralSettings'
@@ -105,19 +106,19 @@ const  ProductManagement = (props) =>{
         }
 
 
-        const searchBasedOnCategory = (e) =>{
-            props.serachProduct({category: e.target.value})
-            setCategoryId(e.target.value)
+        // const searchBasedOnCategory = (e) =>{
+        //     props.serachProduct({category: e.target.value})
+        //     setCategoryId(e.target.value)
            
-        }
+        // }
 
 
-        const handleFilter  = ()=>{
-            alert("ABCD")
-            console.log("ABCD",category,subCategory)
-            props.handleCategory(category,subCategory) 
+        // const handleFilter  = ()=>{
+        //     alert("ABCD")
+        //     console.log("ABCD",category,subCategory)
+        //     props.handleCategory(category,subCategory) 
 
-        }
+        // }
         const resetFilter = () =>{
             setCategory("All")
             setCategoryId("0")
@@ -167,6 +168,7 @@ const  ProductManagement = (props) =>{
            setId(id)
        }
        
+        // eslint-disable-next-line no-unused-vars
         const {pageToOpen,actionType,productDataById} = props.productData
         const {categoryData,subCategoryData} = props.categoryData
         console.log("subCategoprops.productData" ,props.productData)

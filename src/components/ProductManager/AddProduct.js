@@ -1,12 +1,14 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import DatePicker from 'react-date-picker';
+//import DatePicker from 'react-date-picker';
 import SkuList from './SkuList';
 import GeneralSettings from './GeneralSettings';
 
 function AddProduct() {
-    const [value, onChange] = useState(new Date());
+    //const [value, onChange] = useState(new Date());
     return (
         <div>
             <div> 
