@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Collapse,  Row, Col, Label} from 'reactstrap';
 
 import '../style.css';
-import * as BiIcons from "react-icons/bs";
+// import * as BiIcons from "react-icons/bs";
 
 const onSubmit = (values) =>{
     console.log(values);
@@ -46,13 +46,13 @@ const EmailSetting = props => {
         <div onClick={toggle}  className="SubHeader">
         <Label className="subFont">Email Settings</Label>
         <span className="updownSymbolContainer"> 
-        {isOpen ? <BiIcons.BsCaretDownFill className="updownSymbol" /> : <BiIcons.BsCaretRightFill className="updownSymbol" /> } 
+        {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
           
           </div>
         <Collapse isOpen={isOpen}>
            
-                <div className="docDetails">
+                <div className="docDetails" style={{marginTop:"-12px"}}>
                 <p className="sub_menu_nameD"> Quote Reminders</p>
                   {/* <Label className="secondHeader">
                   Quote Reemainders
@@ -128,13 +128,18 @@ const EmailSetting = props => {
                             </Col>
                             </Row>
                     </Col>
-                    </Row>
-
-
+                    <Col sm="6">
+                    </Col>
+                    <Col>
+                    
                     <div align="right" className="action_area_left">
                               <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
                               <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
                         </div> 
+                    </Col>
+                    </Row>
+
+
         </Collapse>
       
    

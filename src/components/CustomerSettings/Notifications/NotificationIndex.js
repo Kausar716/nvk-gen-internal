@@ -4,7 +4,7 @@ import { Collapse, Label} from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 //import validators from './validators'
-import * as BiIcons from "react-icons/bs";
+// import * as BiIcons from "react-icons/bs";
 import * as FaIcon from 'react-icons/fi';
 //import input from './input'
 
@@ -69,14 +69,14 @@ const Notification = (props) => {
       <div color="primary" onClick={toggle} className="SubHeader">
       
       <Label className="subFont">Notifications</Label>
-      <span className="updownSymbolContainer"> 
-      {isOpen ? <BiIcons.BsCaretDownFill className="updownSymbol" /> : <BiIcons.BsCaretRightFill className="updownSymbol" /> } 
+      <span className="updownSymbolContainer"  style={{paddingTop:4}}> 
+      {isOpen ?   <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
         
         </div>
       <Collapse isOpen={isOpen}>
   
-         <div className="docDetails">
+         <div className="docDetails" style={{marginTop:"-12px"}}>
          <p className="sub_menu_nameD"> Customer Notifications</p>
                   {/* <Label className="secondHeader">
                   Customer Notification
@@ -112,16 +112,17 @@ const Notification = (props) => {
                       <div className="notification_label"></div>
 
                     </div>
+                    <div align="right" className="action_area_left">
+                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
+                        <button className="button_style_Tools_Setting_Save"   style={{marginRight:"-9.1rem"}} onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                  </div> 
 
                         
                          
 
 
             </div> 
-                  <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                        <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
-                  </div> 
+               
 
 
        
