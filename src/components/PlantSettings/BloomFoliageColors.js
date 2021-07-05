@@ -214,7 +214,7 @@ class BloomFoliageColors extends Component  {
 
     render() {
     return (
-        <div>
+        <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0">Bloom &amp; Foliage Colors</h4>
                             <hr className="m-0"/>
@@ -373,7 +373,7 @@ class BloomFoliageColors extends Component  {
 
 
 
-        </div>
+        </>
     )
 }
 }

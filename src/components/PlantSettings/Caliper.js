@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react' ;
 
 export default class Caliper extends Component {
      
@@ -7,7 +7,7 @@ export default class Caliper extends Component {
 
     return ( 
        
-        <React.Fragment>
+        <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0"> Caliper</h4>
                             <hr className="m-0"/>
@@ -173,7 +173,7 @@ export default class Caliper extends Component {
                                 </div>
                             </div>
                         </div>
-                        </React.Fragment>
+                        </>
     )
 }
 }

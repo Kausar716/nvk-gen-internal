@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <svg id="Drag_Drag_to_place" data-name="Drag Drag to place" xmlns="http://www.w3.org/2000/svg" width="76" height="73" viewBox="0 0 76 73">
   <g id="move" transform="translate(15)">
     <g id="Group_76" data-name="Group 76">
@@ -6,3 +7,13 @@
   </g>
   <text id="Drag_to_Sort" data-name="Drag to Sort" transform="translate(38 69)" fill="#4e4e4e" font-size="14" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="-37.919" y="0">Drag to Sort</tspan></text>
 </svg>
+=======
+<svg id="Drag_Drag_to_place" data-name="Drag Drag to place" xmlns="http://www.w3.org/2000/svg" width="76" height="73" viewBox="0 0 76 73">
+  <g id="move" transform="translate(15)">
+    <g id="Group_76" data-name="Group 76">
+      <path id="Path_64" data-name="Path 64" d="M45.112,21.806l-7.442-7a1.313,1.313,0,0,0-2.213.956v3.064H26.7V10.068h3.064a1.313,1.313,0,0,0,.956-2.213l-7-7.442a1.313,1.313,0,0,0-1.913,0l-7,7.442a1.313,1.313,0,0,0,.956,2.213h3.064v8.755H10.068V15.759A1.313,1.313,0,0,0,7.855,14.8l-7.442,7a1.313,1.313,0,0,0,0,1.913l7.442,7a1.313,1.313,0,0,0,2.213-.956V26.7h8.755v8.755H15.759A1.313,1.313,0,0,0,14.8,37.67l7,7.442a1.313,1.313,0,0,0,1.913,0l7-7.442a1.313,1.313,0,0,0-.956-2.213H26.7V26.7h8.755v3.064a1.313,1.313,0,0,0,2.213.956l7.442-7a1.313,1.313,0,0,0,0-1.913Z" fill="#b4b4b4"/>
+    </g>
+  </g>
+  <text id="Drag_to_Sort" data-name="Drag to Sort" transform="translate(38 69)" fill="#4e4e4e" font-size="14" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="-37.919" y="0">Drag to Sort</tspan></text>
+</svg>
+>>>>>>> 6a868d99e4bc60033d5f2c4d18d895716a70fffd
