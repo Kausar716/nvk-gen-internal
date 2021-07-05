@@ -1,6 +1,6 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from 'react'
+import React, {useState} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import BloomFoliageColors from './BloomFoliageColors';
@@ -14,37 +14,36 @@ import Packaging from './Packaging';
 import VolumeTiers from './VolumeTiers';
 import Zones from './Zones';
 
-export class PlantSettings extends Component {  
-    render() {
+
+
+
+
+ const  PlantSettings=()=>{  
+    
+    const [plantAttribute, setPlantAttribute]=useState({
+        name:"",
+        isComplete:false,
+
+    })
     return (
         <div>
             <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
-				<h1 className="page-header mb-0">Plant Settings</h1>
-				<div className="">
-					<a href="javascript:;">
-						<img src="assets/img/add.svg" alt=""/>
-					</a>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/preview.svg" alt=""/>
-					</a>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/print.svg" alt=""/>
-					</a>
-				</div>
+            <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>		<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Settings</h1></div> 
+		
 			</div>
             <div className="px-md-3 mt-3">
                 <Tabs>
                     <TabList>
-                        <Tab>Categories</Tab>
-                        <Tab>Bloom &amp; Foliage Colors</Tab>
-                        <Tab>Zones</Tab>
-                        <Tab>Characteristics</Tab>
-                        <Tab>Volume Tiers</Tab>
-                        <Tab>Inventory Reasons</Tab>
-                        <Tab>Form</Tab>
-                        <Tab>Caliper</Tab>
-                        <Tab>Height</Tab>
-                        <Tab>Packaging</Tab>
+                        <Tab style={{bottom:"0px"}}>Categories</Tab>
+                        <Tab style={{bottom:"0px"}}>Bloom &amp; Foliage Colors</Tab>
+                        <Tab style={{bottom:"0px"}}>Zones</Tab>
+                        <Tab style={{bottom:"0px"}}>Characteristics</Tab>
+                        <Tab style={{bottom:"0px"}}>Volume Tiers</Tab>
+                        <Tab style={{bottom:"0px"}}>Inventory Reasons</Tab>
+                        <Tab style={{bottom:"0px"}}>Form</Tab>
+                        <Tab style={{bottom:"0px"}}>Caliper</Tab>
+                        <Tab style={{bottom:"0px"}}>Height</Tab>
+                        <Tab style={{bottom:"0px"}}>Packaging</Tab>
                     </TabList>
                     <TabPanel>
                         <Categories/>
@@ -89,6 +88,6 @@ export class PlantSettings extends Component {
             </div>
         </div>
     )
-}}
+}
 
 export default PlantSettings

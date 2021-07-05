@@ -23,7 +23,7 @@ const initialSatate = {
     plantCategoryData:[]
 }
 
-
+// eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
     console.log(action)
    
@@ -38,6 +38,8 @@ export default function(state = initialSatate, action){
 
            //sub category data
         case GET_ALL_PRODUCT_SUB_CATEGORIES_ACTION:
+            //debugger;
+            console.log("categore123456",action )
             return{
                 ...state,
                 subCategoryData:[...action.payload.data.active,...action.payload.data.inactive]
@@ -45,6 +47,7 @@ export default function(state = initialSatate, action){
 
         // manufacture data
         case GET_ALL_MANUFACTURE_ACTON:
+           
             return{
                 ...state,
                 manufactureData:[...action.payload.data.active,...action.payload.data.inactive]

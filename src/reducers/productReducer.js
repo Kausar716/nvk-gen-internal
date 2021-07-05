@@ -1,5 +1,6 @@
 // import {v4 as uuidv4} from 'uuid';
 
+import actions from 'redux-form/lib/actions';
 import {    
     //PRODUCT ACTION
 
@@ -11,9 +12,9 @@ import {
 
     // SKU ACTION
 
-    //CREATE_SKU_ACTION,
+    CREATE_SKU_ACTION,
     UPDATE_SKU_ACTION,
-    //DELETE_SKU_ACTION,
+    DELETE_SKU_ACTION,
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
@@ -27,7 +28,7 @@ import {
     
     // INPUT HANDLE
     HANDLE_INPUT_DATA,
-    //HANDLE_TAG_INPUT_DATA,
+    HANDLE_TAG_INPUT_DATA,
     HANDLE_SKU_INPUT_DATA,
     ERROR_HANDLE,
 
@@ -35,7 +36,8 @@ import {
     FILTER_CATEGORY_DATA,
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
-    FILTER_GET_SLECTED_CATEGORY_SUB_DATA
+    FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
+    HANDLE_SEARCH_PINPUT
 
 
 } from '../actions/types';
@@ -47,6 +49,7 @@ let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+
 
 
 const initialSatate = {
+   
     productData         :   [],
     skuData             :   [],
     productDataById     :   {
@@ -56,7 +59,8 @@ const initialSatate = {
         manufacturer_id:null,
         archived:0,
         internal_notes:"",
-        discontinued:0
+        discontinued:0,
+        status:1
     },
     skuDataById         :   {
         each_cost:0,
@@ -66,8 +70,8 @@ const initialSatate = {
         sku_item_name:"",
         subcategory:null,
         discontinued:0,
+        archived:0,
         status:1,
-        archived:0
 
 
     },
@@ -84,10 +88,9 @@ const initialSatate = {
 
 }
 
-
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
-
+ console.log("actions", action)
    
     switch(action.type){
         // page action
@@ -103,7 +106,8 @@ export default function(state = initialSatate, action){
                     manufacturer_id:null,
                     archived:0,
                     internal_notes:"",
-                    discontinued:0
+                    discontinued:0,
+                    status:1,
                 },
                 skuDataById         :   {
                     each_cost:0,
@@ -211,6 +215,7 @@ export default function(state = initialSatate, action){
             }
     //sku action
     case GET_ALL_SKU_ACTION:
+       
         return{
             ...state,
             skuData:[...action.payload.data]
@@ -249,7 +254,6 @@ export default function(state = initialSatate, action){
         
         
             },
-            // eslint-disable-next-line no-dupe-keys
             actionType:"add",
             needAction:false,
             tagsData:[]
@@ -303,15 +307,20 @@ export default function(state = initialSatate, action){
             }
 
         case FILTER_GET_SLECTED_CATEGORY_DATA:
+            // JSON.stringify(product.category_id )===action.categoryId
             return{
                 ...state,
-                productData:state.backupData.filter(product=>product.category_id ===action.categoryId)
+                productData:state.backupData.filter(product=>JSON.stringify(product.category_id )===action.categoryId)
             }
         case FILTER_GET_SLECTED_CATEGORY_SUB_DATA:
+            //debugger;
+            console.log("action123456", action)
             console.log("cat sub cat")
+         
             return{
                 ...state,
-                productData:state.productData.filter(product=>(product.category_id===action.categoryId&&product.subcategory_id ===  action.subCategoryId))
+                //productData:state.productData.filter(product=>(JSON.stringify(product.category_id)===action.categoryId && JSON.stringify(product.subcategory_id) ===  action.subCategoryId))
+                productData:state.productData.filter(product=>( JSON.stringify(product.subcategory_id) ===  action.subCategoryId))
             }
         case ERROR_HANDLE:
             return{
@@ -319,6 +328,37 @@ export default function(state = initialSatate, action){
                 status:action.status,
                 message:action.message
             }
+
+
+            case HANDLE_SEARCH_PINPUT:
+                debugger;
+                var optionVal = -1;
+                var categoryVal = "";
+                // if(action.payload.option ==="active"){
+                //     optionVal = 0;
+                // }
+                // if(action.payload.option ==="archive"){
+                //     optionVal = 1;
+                // }
+                categoryVal = action.payload.category;
+                if(action.payload.category.trim() ==="" && optionVal === -1 && categoryVal === "0"){
+                    return{
+                        ...state,
+                        productData:state.backupData
+                    }
+                }else{
+                    return{
+                        ...state,
+                        productData:state.backupData.filter(
+                            filterData=>(filterData.name===action.payload.category.trim() || action.payload.category.trim()==="") &&
+                            (filterData.category_id === Number(categoryVal) || categoryVal === "0")
+                            )
+                    }
+
+                }
+
+
+
         default:
             return state
      

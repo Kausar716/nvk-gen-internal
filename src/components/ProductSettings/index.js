@@ -11,8 +11,8 @@ export class ProductSettings extends Component {
     return (
         <div>
             <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0">Product Settings</h1>
-				<div class="">
+				<h1 class="page-header mb-0"> <img src="assets/img/product-green.svg" alt=""/> Product Settings</h1>
+				{/* <div class="">
 					<a href="javascript:;">
 						<img src="assets/img/add.svg" alt=""/>
 					</a>
@@ -22,13 +22,13 @@ export class ProductSettings extends Component {
 					<a href="javascript:;" class="ml-2">
 						<img src="assets/img/print.svg" alt=""/>
 					</a>
-				</div>
+				</div> */}
 			</div>
             <div class="px-md-3 mt-3">
                 <Tabs>
                     <TabList>
-                        <Tab>Categories</Tab>
-                        <Tab>Manufacturer</Tab>                        
+                        <Tab style={{bottom:"0px"}}>Categories</Tab>
+                        <Tab style={{bottom:"0px"}}>Manufacturer</Tab>                        
                     </TabList>
                   
                     <TabPanel>

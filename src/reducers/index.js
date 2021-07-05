@@ -15,7 +15,13 @@ import  attributesReducer from './attributesReducer'
 import contactsSuppliers from './supplierContactReducer';
 import AddressManagementReducerSM from './contactManagementReducerSM';
 import dlistOfNumberReducer from './listOfNumbers';
-
+import sideReducer from './sideMenuItemReducer'
+import userReduser from './userReduser'
+import userAccessReduser from './userAccessReduser'
+import organizationReduser from './organizationSettingReducer'
+import customerReducer from './customerReduser'
+import plantSettingAttributeReducer from './plantSettingAttributeReducer';
+import inventoryManagementReducer from './inventorymanagementReducer'
 
 
 export default combineReducers({
@@ -30,5 +36,12 @@ export default combineReducers({
     addressSM: AddressManagementReducerSM,
     attributeData:attributesReducer,
     dlistOfNumber:dlistOfNumberReducer,
+    sideMenu:sideReducer,
+    userReduser:userReduser,
+    userAccessReduser:userAccessReduser,
+    organizationReduser:organizationReduser,
+    customerReducer:customerReducer,
+    plantSettingAttribute: plantSettingAttributeReducer,
+    inventoryManagementReducer:inventoryManagementReducer
     
 })

@@ -37,7 +37,8 @@ import {
     //filter category
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
-    FILTER_GET_SLECTED_CATEGORY_SUB_DATA
+    FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
+    HANDLE_SEARCH_PINPUT
 
 } from './types';
 
@@ -52,6 +53,7 @@ import {
 */
 
 export const createProductAction = (product,tags) => dispatch => {
+    //debugger;
     let errorArray=[];
     if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
     if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
@@ -175,15 +177,19 @@ export const duplicateProduct = (id) =>dispatch=>{
 export const createSkuAction = (id) => dispatch => {
 
 }
-export const updateSkuAction = (id, data, actionType="edit") => dispatch => {
+export const updateSkuAction = (id, data, actionType="edit") =>async dispatch => {
+   // debugger;
     let error = []
+    //debugger;
+    console.log("DATADATA", data);
     if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
     if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
     if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
     if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
-    if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
+    if(data.sku_item_name==null ||data.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete data["id"]
+     
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
             dispatch(showSpecifiedSkuAction(id))
@@ -217,11 +223,8 @@ export const updateSkuAction = (id, data, actionType="edit") => dispatch => {
 
     }
 
-    
-   
-
 }
-export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
+export const updateSkuActionClear = (id,data,actionType="add") => async dispatch=>{
     delete data["id"]
     let error  = []
     if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
@@ -266,14 +269,15 @@ export const updateSkuActionClear = (id,data,actionType="add") =>dispatch=>{
     }
 
 }
-export const deleteSkuAction = (id) => dispatch => {
-    axios.post(` /api/delete-sku/${id}?type=product`,null,config).then(res=>{ 
+export const deleteSkuAction = (product_id) => dispatch => {
+    axios.post(` /api/delete-sku/${product_id}?type=product`,null,config).then(res=>{ 
         })
 
 
 }
-export const getAllSkuAction = (id) => dispatch => {
+export const getAllSkuAction = (product_id) => dispatch => {
     axios.get("/api/skus/products",config).then(res=>{ 
+        console.log(res.data)
         dispatch({
                 type:GET_ALL_SKU_ACTION,
                 payload:res.data
@@ -282,8 +286,8 @@ export const getAllSkuAction = (id) => dispatch => {
         })
 
 }
-export const showSpecifiedSkuAction = (id) => dispatch => {
-    axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
+export const showSpecifiedSkuAction = (product_id) => dispatch => {
+    axios.get(`/api/sku/${product_id}?type=product`,config).then(res=>{ 
         console.log(res.data)
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
@@ -378,9 +382,9 @@ export const modalAction =() =>dispatch=>{
 
 //handle category Filter action
 export const handleCategory = (category,subCategory) =>dispatch=>{
-    console.log(category,subCategory)
+    console.log("AforAA",category,subCategory)
     if(category ==="All"){
-        // console.log("only all")
+         console.log("only all", category)
         dispatch({
             type:FILTER_GET_ALL_CATEGORY_DATA,
             categoryId:category,
@@ -388,7 +392,7 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
         })
 
     }else if(category!=="All" && subCategory ==="0"){
-        console.log("all")
+        console.log("acategoryllsubCategory", category, subCategory)
         dispatch({
             type:FILTER_GET_SLECTED_CATEGORY_DATA,
             categoryId:category,
@@ -412,6 +416,14 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
 
 
 
+export const serachProduct = (data) =>dispatch=>{
+    //console.log(data)
+    dispatch({
+        type:HANDLE_SEARCH_PINPUT,
+        payload:data,
+    })
+
+}
 
 
 

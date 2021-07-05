@@ -1,66 +1,60 @@
-// import {GET_USERS,GET_USER} from '../actions/types';
-// const initialSatate = {
-//     users:[
-//         {
-//             id:1,
-//             firstName:"kausar",
-//             lastName:"a",
-//             position:"roal",
-//             phone:"2323232323",
-//             emailId:"kausarbanu716@gmail.com",
-//             addressTitle:"title of add",
-//             address:"12 ferdsj askdfm"
+import {
+    GET_USERS_LIST,
+    ADD_USER,   
+    SHOW_USER, 
+    UPDATE_USER,
+    UPLOAD_USER_IMAGE,
+    REMOVE_USER_IMAGE,
+    DELETE_USER 
+   } from '../actions/types';
 
-//         },
-//         {
-//             id:2,
-//             firstName:"asd first name",
-//             lastName:"a",
-//             position:"roal",
-//             phone:"2323232323",
-//             emailId:"sdvfd716@gmail.com",
-//             addressTitle:"title of add",
-//             address:"12 ferdsj askdfm"
-//         }
-      
-//     ],
-//     loading:false
-// }
-// export default function(state = initialSatate, action){
+const initialSatate = {
+    users:[]
+}
+ const userReduser = (state = initialSatate, action)=> {
+     console.log(action)
     
-//     switch(action.type){
+    switch(action.type){
         
-//         case GET_USERS:
-//             return{
-//                 ...state
-              
-//             }
-//             case GET_USER:
-                
-//                 return{
-//                     ...state,
-//                    user:state.users.filter(user=>user.id== action.payload)
-//                 }
-//             // case DELETE_ITEM:
-//             //     return{
-//             //         ...state,
-//             //         items:state.items.filter(item=>item.id != action.payload)
+        case GET_USERS_LIST:
+            return{
+                ...state,
+                users:action              
+            }
+        case SHOW_USER:
+            
+            return{
+                ...state,
+                user:action.payload
+            }
+        case UPDATE_USER:{
+            return {
+                ...state,
+                users:action 
+            }
+        }
+        case ADD_USER:{
+            return{
+                ...state,
+                users:action              
+            }
+        }
+        case UPLOAD_USER_IMAGE:{
+            return{
+                ...state,
+                user:action
+            }
+        }
+        case REMOVE_USER_IMAGE:{
+            return{
+                ...state,
+                removedData:action
+            }
+        }
 
-//             //     }
-//             //     case ADD_ITEM:
-//             //     return{
-//             //         ...state,
-//             //         items:[action.payload, ...state.items]
+            default:
+                return state
+    }
 
-//             //     }
-//             //     case ITEMS_LOADING:
-//             //         return{
-//             //             ...state,
-//             //             loading:true
-    
-//             //         }
-//             default:
-//                 return state
-//     }
-
-// }
+}
+export default userReduser

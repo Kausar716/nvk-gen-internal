@@ -17,11 +17,22 @@ import ProductSettings from './components/ProductSettings/index'
 import {createBrowserHistory} from 'history';
 import {checkLogin} from "./actions/authAction";
 import SignIn from './components/SignIn/SignInPage'
-
+import UserManagement from './components/userManagement/index'
 //import Sidebar from "./components/Sidebar";
-import CommingSoon from './components/commingSoon'
+import ComingSoon from './components/commingSoon'
 import PlantSettings from './components/PlantSettings/PlantSettings';
 import ForgotPassword from "./components/SignIn/ForgotPassword";
+import RegisterNewUser from "./components/SignIn/RegisterNewUser";
+import UserSettings from "./components/UserSettings/UserSettings";
+import AddPlant from './components/PlantManager/AddPlant'
+import AddProduct from "./components/ProductManager/AddProduct";
+import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'
+import StaffDirectory from './components/StaffDirectory'
+import CustomerSettings from './components/CustomerSettings/CustomerSettingsIndex'
+import SupplierSettingIndex from "./components/SupplierSettings/SupplierSettingIndex";
+import CustomerLists from './components/CustomerSettings/CustomerLists'
+import InventoryLists from "./components/inventoryManagement/InventoryLists";
+
 export const history = createBrowserHistory({forceRefresh: true})
 
 
@@ -44,11 +55,16 @@ function App(props) {
     <Route exact path="/forgot" >
                     <ForgotPassword />
     </Route>
-            
-    {/* {authKey.loggedIn ? <> */}
-      <div id="page-container" className="fade page-sidebar-fixed page-header-fixed">
-       
 
+    <Route exact path="/registerNewUser" >
+                    <RegisterNewUser />
+    </Route>
+
+            
+
+    
+    {/* {authKey.loggedIn ? <> */}
+      <div id="page-container" className={props.authKey.bdyClass}>
 
           <div id="content" className="content">
 
@@ -76,6 +92,17 @@ function App(props) {
                   <Left />
                     <ProductSettings/>
                   </Route>
+                  <Route path="/usermanagement">
+                  <Nav />
+                  <Left />
+                    <UserManagement/>
+                  </Route>
+
+                  <Route path="/customerlisting">
+                  <Nav />
+                  <Left />
+                    <CustomerLists/>
+                  </Route>
 
                   
                   <Route path="/productManager">
@@ -84,10 +111,62 @@ function App(props) {
                     <ProductManager/>
                   </Route>
 
-                  <Route path="/commingsoon">
+
+                  <Route path="/userSetting">
                   <Nav />
                   <Left />
-                <CommingSoon/>
+                    <UserSettings/>
+                  </Route>
+
+
+                  <Route path="/customerSettings">
+                  <Nav />
+                  <Left />
+                    <CustomerSettings/>
+                  </Route>
+
+
+                  <Route path="/supplierSettings">
+                  <Nav />
+                  <Left />
+                    <SupplierSettingIndex/>
+                  </Route>
+
+              <Route path="/addPlant">
+              <Nav />
+                  <Left />
+                <AddPlant/>
+              </Route>
+
+
+              <Route path="/addProduct">
+              <Nav />
+                  <Left />
+                <AddProduct/>
+              </Route>
+
+
+              <Route path="/staffDirectory">
+              <Nav />
+                <Left />
+                <StaffDirectory/>
+              </Route>
+
+              <Route  path="/organizationSettings" >
+              <Nav />
+              <Left />
+              <OrganizationSettings />
+              </Route>
+              <Route  path="/inventoryLists" >
+              <Nav />
+              <Left />
+              <InventoryLists />
+              </Route>
+
+                  <Route path="/comingsoon">
+                  <Nav />
+                  <Left />
+                <ComingSoon/>
               </Route>
 
                 </Switch>

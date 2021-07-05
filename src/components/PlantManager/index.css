@@ -54,3 +54,13 @@
 .row_1 div option {
   text-align: left;
 }
+
+.page-header_PlantManager {
+  font-size: 24px;
+  margin: 0.6em;
+  /* margin: 0 0 15px; */
+  padding: 0;
+  border: none;
+  line-height: 32px;
+  font-weight: 500;
+}

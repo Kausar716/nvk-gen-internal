@@ -8,7 +8,8 @@ const initialSatate = {
         password:"zvky123",
         loading:false,
         loggedIn:false,
-        error:false
+        error:false,
+        bdyClass: " page-sidebar-fixed page-header-fixed page-sidebar-minified"
     
 }
 

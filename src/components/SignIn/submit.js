@@ -3,19 +3,20 @@ import { SubmissionError } from 'redux-form'
 const sleep = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 function submit(values) {
-  return sleep(1000).then(() => {
+  return sleep(500).then(() => {
     // simulate server latency
-    if (!['richard@nvknurseries.com', 'paul@nvknurseries.com', '1@nvknurseries.com'].includes(values.username)) {
+    if (!['john@nvk.com','richard@nvknurseries.com',  'nvk@nvk.com','paul', 'george', 'ringo'].includes(values.email)) {
       throw new SubmissionError({
-        username: 'User does not exist',
-        _error: 'Login failed!'
+        email: 'User does not exist',
+        _error: 'Login failed!!'
       })
     } else if (values.password !== '12345') {
       throw new SubmissionError({
         password: 'Wrong password',
         _error: 'Login failed!'
       })
-    } else {
+    } 
+    else {
       window.alert(`You submitted:\n\n${JSON.stringify(values, null, 2)}`)
     }
   })
