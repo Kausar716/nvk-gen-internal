@@ -1,15 +1,17 @@
 
 import React, { Component } from 'react'
+import {connect} from "react-redux";
 import './style.css';
+import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 
-export default class Categories extends Component {
-    state ={
-        tasks:[
-            {name:"Christmas tree", category:"inactive", bgcolor:"#cfcbcbf7"},
-            {name:"Areac Palm", category:"inactive", bgcolor:"#cfcbcbf7"},
-            {name:"Peace lily", category:"active", bgcolor:"#cfcbcbf7"},
-        ]
-    }
+    class Categories extends Component {
+    // state ={
+    //     tasks:[
+    //         {name:"Christmas tree", category:"inactive", bgcolor:"#cfcbcbf7"},
+    //         {name:"Areac Palm", category:"inactive", bgcolor:"#cfcbcbf7"},
+    //         {name:"Peace lily", category:"active", bgcolor:"#cfcbcbf7",id:"2"},
+    //     ]
+    // }
 
 
         onDragOver = (ev)=>{
@@ -20,31 +22,58 @@ export default class Categories extends Component {
             console.log("dragstart:", id);
             ev.dataTransfer.setData("id",id)
         }
+        componentDidMount(){
+            this.props.getAllPlantCategories()
 
+        }
 
 
 
 
         onDrop=(ev,cat)=>{
             let id= ev.dataTransfer.getData("id");
-            let tasks = this.state.tasks.filter((task)=>{
-                if(task.name===id){
-                    task.category = cat;
-                }
-                return task;
-            });
+            console.log(id)
+           
+            let tasks = this.props.plantCategoryList.filter((task)=>{
+                
+                   return JSON.stringify(task.id) === id;
+                
 
-            this.setState({
-                ...this.state,
-                tasks
-            })
+            });
+            console.log(tasks)
+           let result= this.props.handleDragDrop(tasks[0])
+           result.then(res=>{
+            this.props.getAllPlantCategories()
+           })
+
+            // this.setState({
+            //     ...this.state,
+            //     tasks
+            // })
 
         }
 
 
-        onDelete =(eve)=>{
-            console.log("eveDELETE",eve )
+        onDelete =(ev)=>{
+            let id= ev.dataTransfer.getData("id");
+            console.log(id)
+           let result= this.props.handleCategoryDelete(id)
+           result.then(res=>{
+            this.props.getAllPlantCategories()
+           })
 
+
+        }
+        handleCategoryInputAction = (e)=>{
+            this.props.handleCategoryInputAction(e.target.value)
+        }
+        handleAddCategory = (e)=>{
+            if(this.props.name){
+            let result = this.props.handleAddCategory(this.props.name)
+            result.then(res=>{
+                this.props.getAllPlantCategories()
+            })
+        }
         }
 
 
@@ -55,14 +84,29 @@ render() {
         inactive:[],
         active:[],
     }
+    if(this.props.plantCategoryList){
+        // tasks=this.props.plantCategoryList
+         this.props.plantCategoryList.forEach((t)=>{
+             console.log(t)
+            if(t.status === "1"){
+                tasks.active.push(t)
+            }
+            else if(t.status=== "0"){
+                tasks.inactive.push(t)
+            }
+         })
+    }
+    console.log(this.props.temp)
+    // this.props.plantCategoryList.forEach((t)=>{
+    //         tasks[t.category].push(
+    //             <div key={t.name} onDragStart={(e)=>this.onDragStart(e, t.name)} onDelete={(e)=>this.onDelete(e, t.name)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
+    //                     {t.name}
+    //             </div>
+    //         )
+    // });
 
-    this.state.tasks.forEach((t)=>{
-            tasks[t.category].push(
-                <div key={t.name} onDragStart={(e)=>this.onDragStart(e, t.name)} onDelete={(e)=>this.onDelete(e, t.name)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
-                        {t.name}
-                </div>
-            )
-    });
+
+  
     
         return (
            
@@ -76,10 +120,10 @@ render() {
                                         <p>Category Name</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control"   placeholder=""/>
+                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="" onChange={this.handleCategoryInputAction}/>
                                             </div>
-                                            <div className="col-md-6 col-lg-3">
-                                                <a href="javascript;" className="d-flex align-items-center">
+                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                                <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                                 </a>
                                             </div>
@@ -99,7 +143,15 @@ render() {
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                                <ul class="list-unstyled">
                                                    <li  id="Christmas Trees" name="Christmas Trees"  >
-                                                   {tasks.inactive}
+                                                    {tasks.inactive.map(t=>{
+                                                        console.log(t.name)
+                                                    return <div key={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
+                                                               {t.name}
+                                                    </div>
+                                                    })}
+                                                  
+
+                                                   {/* {tasks.inactive} */}
                                                    </li>
                                                </ul>
                                                
@@ -120,7 +172,7 @@ render() {
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
-                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDelete={(e)=>this.onDelete(e)}>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                             </div>
                                         </div>
@@ -133,7 +185,12 @@ render() {
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    <li class="active">
-                                                    {tasks.active}
+                                                   {tasks.active.map(t=>{
+                                                        console.log(t.name)
+                                                    return <div key={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
+                                                               {t.name}
+                                                    </div>
+                                                    })}
                                                    </li>
                                                    
                                                </ul>
@@ -150,4 +207,20 @@ render() {
     }
 }
 
-     
+     const mapStateToProps = (state)=> (
+        // console.log(state)
+         {
+        
+    plantCategoryList:state.categoryData.plantCategoryData,
+    temp:state,
+    name:state.categoryData.name
+    }
+    )
+    export default connect(mapStateToProps,{
+        getAllPlantCategories,
+        handleCategoryInputAction,
+        handleAddCategory,
+        handleDragDrop,
+        handleCategoryDelete        
+    })(Categories)
+

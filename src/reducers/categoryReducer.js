@@ -7,7 +7,10 @@ import {
 
     //manufacture action
     GET_ALL_MANUFACTURE_ACTON,
-
+    HANDLE_CATEGORY_INPUT_DATA,
+    HANDLE_ADD_PLANT_CATEGORY,
+    HANDLE_DRAG_PLANT_CATEGORY,
+    HANDLE_CATEGORY_DELETE,
 
 
     // GET_ALL_PLANT_CATEGORIES
@@ -20,7 +23,10 @@ const initialSatate = {
     categoryData:[],
     subCategoryData:[],
     manufactureData:[],
-    plantCategoryData:[]
+    plantCategoryData:[],
+    name:"",
+    status:""  
+    
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -47,7 +53,7 @@ export default function(state = initialSatate, action){
 
         // manufacture data
         case GET_ALL_MANUFACTURE_ACTON:
-           
+         
             return{
                 ...state,
                 manufactureData:[...action.payload.data.active,...action.payload.data.inactive]
@@ -58,8 +64,28 @@ export default function(state = initialSatate, action){
         case GET_ALL_PLANT_CATEGORIES:
             return{
                 ...state,
-                plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive]
+                plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive],
+                name:""
 
+            }
+        case HANDLE_CATEGORY_INPUT_DATA:
+            return{
+                ...state,
+                name:action.name,
+                             
+            }
+        case HANDLE_ADD_PLANT_CATEGORY:
+            return{
+                ...state
+            }
+
+        case HANDLE_DRAG_PLANT_CATEGORY:
+            return{
+                ...state
+            }
+        case HANDLE_CATEGORY_DELETE:
+            return{
+                ...state
             }
     }
  
