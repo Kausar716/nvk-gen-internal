@@ -3,11 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Collapse ,Row,  Label} from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
-<<<<<<< HEAD
 // import * as BiIcons from "react-icons/bs";
-=======
-import * as BiIcons from "react-icons/bs";
->>>>>>> 6a868d99e4bc60033d5f2c4d18d895716a70fffd
 
 
 const required = value => value ? undefined : 'Required'
@@ -65,20 +61,12 @@ const InrestRates = (props) => {
       <div color="primary" onClick={toggle}  className="SubHeader">
       <Label className="subFont">Interest Rates</Label> 
       <span className="updownSymbolContainer"> 
-<<<<<<< HEAD
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
-=======
-      {isOpen ? <BiIcons.BsCaretDownFill className="updownSymbol" /> : <BiIcons.BsCaretRightFill className="updownSymbol" /> } 
->>>>>>> 6a868d99e4bc60033d5f2c4d18d895716a70fffd
         </span>
         </div>
       <Collapse isOpen={isOpen}>
        
-<<<<<<< HEAD
           <div className="docDetails" style={{marginTop:"-12px"}}>
-=======
-          <div className="docDetails">
->>>>>>> 6a868d99e4bc60033d5f2c4d18d895716a70fffd
                    <p className="sub_menu_nameD"> CUSTOMER Orders and Invoices</p>
           </div>
 
@@ -146,25 +134,15 @@ const InrestRates = (props) => {
                                         />
                       </div>
             </div>
-<<<<<<< HEAD
             
             <div align="right" className="action_area_left"  >
                               <button className="button_style_Tools_Setting_Cancel"    disabled={pristine || submitting} onClick={reset} >Cancel</button>
                               <button className="button_style_Tools_Setting_Save"    style={{marginRight:"-9.5rem"}} onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
                   </div> 
-=======
->>>>>>> 6a868d99e4bc60033d5f2c4d18d895716a70fffd
 
                 </div>
 
 
-<<<<<<< HEAD
-=======
-                  <div align="right" className="action_area_left">
-                              <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
-                  </div> 
->>>>>>> 6a868d99e4bc60033d5f2c4d18d895716a70fffd
                     
       </Collapse>
 
