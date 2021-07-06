@@ -29,7 +29,9 @@ const initialSatate = {
         heightImperial:"",
         heightSku:"",
         packagingName:"",
-        packagingSku:""
+        packagingSku:"",
+        characterSectionName:"",
+        characterFeatureName:""
 
 
 
@@ -48,10 +50,10 @@ switch(action.type){
             allAttributes:[...action.payload.data.active,...action.payload.data.inactive]
         }
     case GET_ALL_SUB_ATTRIBUtTES:{
-        console.log(action.payload.data.attribute.subattributes)
+        console.log(action.payload.data[0].subattributes)
         return{
              ...state,
-            subAttribute:action.payload.data.attribute.subattributes
+            subAttribute:action.payload.data[0].subattributes
        }
     }
     case HANDLE_DRAG_ATTRIBUTE_CATEGORY:

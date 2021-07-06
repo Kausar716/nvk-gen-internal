@@ -69,7 +69,6 @@ import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handle
         }
         handleAddCategory = (e)=>{
             if(this.props.name){
-                alert("in")
             let result = this.props.handleAddCategory(this.props.name)
             result.then(res=>{
                 this.props.getAllPlantCategories()
