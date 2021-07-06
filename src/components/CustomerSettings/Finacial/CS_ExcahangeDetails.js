@@ -53,13 +53,13 @@ const CS_ExcahangeDetails = (props) => {
       <div color="primary" onClick={toggle}  className="SubHeader">
       <Label className="subFont">Customer and Supplier Exchange Details</Label>
         <span className="updownSymbolContainer"> 
-          {isOpen ? <BiIcons.BsCaretDownFill className="updownSymbol" /> : <BiIcons.BsCaretRightFill className="updownSymbol" /> } 
+        {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
         </div>
       <Collapse isOpen={isOpen}>
        
           
-          <div className="docDetails">
+          <div className="docDetails" style={{marginTop:"-12px"}}>
                   {/* <Label className="secondHeader">
                   Customer Exchange Details
                   </Label> */}
@@ -123,7 +123,7 @@ const CS_ExcahangeDetails = (props) => {
           </Row>
 
   
-          <div className="docDetails">
+          <div className="docDetails" style={{marginTop:"-16px"}}>
           <p className="sub_menu_nameD">  Supplier Exchange Details</p>
                   {/* <Label className="secondHeader">
                   Suppliear Exchange Details
@@ -173,17 +173,22 @@ const CS_ExcahangeDetails = (props) => {
                             </Col>
                         </Row>
               </Col>
+              <Col xs="12">
+              
+          <div align="right" className="action_area_left">
+                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
+                        <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                  </div>
+                  </Col> 
 
           </Row>
+          
+          
           
           </div>
    
 
 
-          <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                        <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
-                  </div> 
           
 
       </Collapse>

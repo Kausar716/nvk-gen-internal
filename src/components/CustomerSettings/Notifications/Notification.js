@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Collapse} from 'reactstrap';
-import * as BiIcons from "react-icons/bs";
+import { Collapse,Label } from 'reactstrap';
+// import * as BiIcons from "react-icons/bs";
 import * as FaIcon from 'react-icons/fi';
 import './style.css';
 
@@ -55,13 +55,13 @@ const Notification = (props) => {
       
       <Label className="subFont">Notifications</Label>
       <span className="updownSymbolContainer"> 
-      {isOpen ? <BiIcons.BsCaretDownFill className="updownSymbol" /> : <BiIcons.BsCaretRightFill className="updownSymbol" /> } 
+      {isOpen ?  <img src="assets/img/arrow-icon.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
         
         </div>
       <Collapse isOpen={isOpen}>
   
-         <div className="docDetails">
+         <div className="docDetails" style={{marginTop:"-12px"}}>
          <p className="sub_menu_nameD"> Customer Notifications</p>
                   {/* <Label className="secondHeader">
                   Customer Notification
@@ -79,7 +79,7 @@ const Notification = (props) => {
                                             component={renderField2}
                                             type="text"
                                             label="2"
-                                            validate={[ required, number, minValue2]}
+                                            validate={[ required, number]}
                                         />
                       </div>
 
@@ -90,7 +90,7 @@ const Notification = (props) => {
                                             component={renderField}
                                             type="text"
                                             label="2"
-                                            validate={[ required, number, minValue2]}
+                                            validate={[ required, number]}
                                         />
                       </div>
 

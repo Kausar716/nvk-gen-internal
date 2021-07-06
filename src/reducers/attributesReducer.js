@@ -1,44 +1,39 @@
 // import {v4 as v4} from 'uuid';
 import {
-    //Plant ACTION
-    // CREATE_PLANT_ACTION,
-    // UPDATE_PLANT_ACTION,
-    // DELETE_PLANT_ACTION,
-    // GET_ALL_PLANT_ACTION,
-    // GET_SPECIFIED_PLANT_ACTION,
-    // DUPLICTE_PLANT,
-
-    // // Plant SKU ACTION
-    // CREATE_PLANT_SKU_ACTION,
-    // UPDATE_PLANT_SKU_ACTION,
-    // DELETE_PLANT_SKU_ACTION,
-    // GET_ALL_PLANT_SKU_ACTION,
-    // GET__PLANT_SPECIFIED_SKU_ACTION,
-
-    // //Plant page redirects action
-
-    // PAGE_PLANT_REDIRECT_ACTION,
-    // SUB_PLANT_PAGE_REDIRECT_ACTION,
-
-    // // Plant INPUT HANDLE
-    // HANDLE_PLANT_INPUT_DATA,
-    // HANDLE_PLANT_TAG_INPUT_DATA,
-    // HANDLE_PLANT_SKU_INPUT_DATA,
-
-    // // pagination
-    // SET_PLANT_PAGE_NUMBER,
-
-
-    // //ERROR_HANDLE
-    // ERROR_HANDLE,
-
-    GET_ALL_ATTRIBUtTES
+    GET_ALL_ATTRIBUtTES,
+    GET_ALL_SUB_ATTRIBUtTES,
+    HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+    HANDLE_DELETE_ATTRIBUTE,
+    HANDLE_ZONE_INPUT_ACTION,
+    HANDLE_ADD_ZONE_ATTRIBUTE,
+    HANDLE_POSITION_INPUT_ACTION,
+    HANDLE_ADD_POSITION_ATTRIBUTE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
 
 const initialSatate = {
-    allAttributes:{}
+    allAttributes:{},
+    subAttribute:[],
+    subAttributeName:{
+        zone:"",
+        bloomColor:"",
+        volume:"",
+        reason:"",
+        formName:"",
+        formSku:"",
+        caliperName:"",
+        caliperImperial:"",
+        caliperSku:"",
+        heightName:"",
+        heightImperial:"",
+        heightSku:"",
+        packagingName:"",
+        packagingSku:""
+
+
+
+    }
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -52,7 +47,41 @@ switch(action.type){
             ...state,
             allAttributes:[...action.payload.data.active,...action.payload.data.inactive]
         }
-        default:
+    case GET_ALL_SUB_ATTRIBUtTES:{
+        console.log(action.payload.data.attribute.subattributes)
+        return{
+             ...state,
+            subAttribute:action.payload.data.attribute.subattributes
+       }
+    }
+    case HANDLE_DRAG_ATTRIBUTE_CATEGORY:
+        return{
+            ...state
+        
+    }
+    case HANDLE_DELETE_ATTRIBUTE:
+        return{
+            ...state
+        }
+    case HANDLE_ZONE_INPUT_ACTION:
+        return{
+            ...state,
+            subAttributeName:{...state.subAttributeName,[action.name]:action.value}
+        }
+    case HANDLE_ADD_ZONE_ATTRIBUTE:
+        return{
+            ...state
+        }
+    case HANDLE_POSITION_INPUT_ACTION:
+        return{
+            ...state,
+            subAttributeName:{...state.subAttributeName,[action.name]:action.value}
+        }
+    case HANDLE_ADD_POSITION_ATTRIBUTE:
+        return{
+            ...state
+        }
+     default:
             return state
 }
 

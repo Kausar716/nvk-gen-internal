@@ -1,137 +1,128 @@
-import React, {useState} from 'react' ;
-import { Field, reduxForm } from 'redux-form';
-import { Row} from 'reactstrap';
 
+import React, { Component } from 'react'
+import {connect} from "react-redux";
+// import './style.css';
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
-const required = value => value ? undefined : 'Required'
-// const maxLength = max => value =>
-//   value && value.length > max ? `Must be ${max} characters or less` : undefined
-// const maxLength15 = maxLength(15)
-// const number = value => value && isNaN(Number(value)) ? 'Must be a number' : undefined
-// const minValue = min => value =>
-//   value && value < min ? `Must be at least ${min}` : undefined
-// const minValue2 = minValue(2)
-
-
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  <div>
-    {/* <label>{label}</label> */}
-    <div>
-      <input {...input}  className="form-control" placeholder={label}  type={type}/>
-      <Row>
-      {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
-      </Row>
-      
-    </div>
-  </div>
-)
-
-const  Packaging=()=> {
-    //const [name,setName] = useState("")
-    const [selectedItem,setSelectedItem] = useState("")
-
-    // const handleName = (e) => {
-    //     setName(e.target.value)
-    // }
-
-    // const handleAddManufacturer = (e) => {
-    //     e.preventDefault()
-    //     console.log(name)
-    // }
-    const handleitemSelect= (e)=> {
-        setSelectedItem(e.target.id)
-    }
+    class Packaging extends Component {
+        bloomColor
+         onDragOver = (ev)=>{
+            ev.preventDefault();
+        }
+        onDragStart=(ev, id)=>{
+            console.log("dragstart:", id);
+            ev.dataTransfer.setData("id",id)
+        }
+        componentDidMount(){
+            this.props.getAllSubAttribute(4)
+        }
+        onDrop=(ev,cat)=>{
+            let id= ev.dataTransfer.getData("id");
+            let tasks = this.props.zoneCategoryList.filter((task)=>{                
+                   return JSON.stringify(task.id) === id;
+            });
+            console.log(tasks)
+            let result= this.props.handleAttributeDragDrop(tasks[0])
+            result.then(res=>{
+            this.props.getAllSubAttribute(4)
+           })
+        }
+        onDelete =(ev)=>{
+           let id= ev.dataTransfer.getData("id");
+           console.log(id)
+           let result= this.props.handleAttributeDelete(id)
+           result.then(res=>{
+            this.props.getAllSubAttribute(4)
+           })
+        }
+        handleZoneInputAction = (e)=>{
+            this.props.handleZoneInputAction(e.target.name,e.target.value)
+        }
+        handleAddCategory = (e)=>{       
+            let zoneObj={}
+            zoneObj.attribute_id=4
+            zoneObj.value = this.props.packagingName           
+            zoneObj["childrens"] =[
+                {'children_name':'SKU value',
+                'children_value':this.props.packagingSku
+            }
+            ]
+            zoneObj.status=1
+            console.log(zoneObj)
+            let result = this.props.handleAddZone(zoneObj)
+            result.then(res=>{
+                this.props.getAllSubAttribute(4)
+            })
+        
+        }
+        render() {
+        console.log(this.props.temp)
+        var tasks={
+            inactive:[],
+            active:[],
+        }
+        if(this.props.zoneCategoryList){
+            this.props.zoneCategoryList.forEach((t)=>{
+                console.log(t)
+                if(t.status === 1){
+                    tasks.active.push(t)
+                }
+                else if(t.status=== 0){
+                    tasks.inactive.push(t)
+                }
+            })
+        }
+        
     return (
         <>
             <div className="bg-white">
                             <h4 className="p-15 mb-0"> Packaging</h4>
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
-                                <div className="row">
-                                        <div className="col-md-6">
-                                            <p>Packaging Name</p>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder=""/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
-                                            </div>
+                            <div className="row">
+                                    <div className="col-md-6">
+                                        <p>Packaging Name</p>
+                                        <div>
+                                            <input type="text" className="form-control" name="packagingName" value={this.props.packagingName}   placeholder="" onChange={this.handleZoneInputAction}/>
                                         </div>
-                                        <div className="col-md-6">
-                                            <p>SKU Value<span style={{color:"red"}}>*</span></p>
-                                            <div>
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <Field
-                                                        name="SKU Value in Packanging"
-                                                        component={renderField}
-                                                        type="text"
-                                                        validate={[ required]}
-                                                    />
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Packaging
-                                                </a>
-                                            </div>
+                                        <div className="d-flex justify-content-md-end mt-2">
+                                            {/* <a href="javascript;" className="d-flex align-items-center">
+                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
+                                            </a> */}
                                         </div>
                                     </div>
-                          
-                                    <div class="row mt-5 mb-4">
+                                    <div className="col-md-6">
+                                        <p>SKU Value<span style={{color:"red"}}>*</span></p>
+                                        <div>
+
+                                            <input type="text" className="form-control" placeholder="" name="packagingSku" value={this.props.packagingSku}    onChange={this.handleZoneInputAction}/>
+                                        </div>
+                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
+                                            <a href="#" className="d-flex align-items-center">
+                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Packaging
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-5 mb-4">
                                     <div class="col">
                                         <div class="card zoneCard">
                                             <div class="card-header">
                                                 Inactive
                                             </div>
-                                            <div class="card-body cardBg">
-                                               <ul class="list-unstyled">
-                                                   <li class={selectedItem === "Christmas Trees"?"active":""} id="Christmas Trees" name="Christmas Trees" onClick={handleitemSelect} >
-                                                        <a href="/" class="" id="Christmas Trees">
-                                                            <span>Christmas Trees</span>
-                                                        </a>
-                                                   </li>
-                                                   <li class={selectedItem === "Wheathers"?"active":""} id="Wheathers" onClick={handleitemSelect} >
-                                                        <a href="/" id="Wheathers"  class="">
-                                                            <span id="Wheathers">Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="/" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="/" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Wheathers</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Attracts Birds</span>
-                                                        </a>
-                                                   </li>
-                                               </ul>
+                                            <div class="card-body cardBg"
+                                            onDragOver={(e)=>this.onDragOver(e)}
+                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
+                                                <ul class="list-unstyled">
+                                                   {tasks.inactive.map(t=>{
+                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                 <a href="#" class="">
+                                                                <span id="Wheathers">{t.value}</span>
+                                                                </a>
+                                                            </li>
+                                                    })}
+                                            </ul>
+
                                             </div>
                                         </div>
                                     </div>
@@ -149,11 +140,8 @@ const  Packaging=()=> {
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
-                                            <div>
-                                                <a href="javascript;" className="icDelete">
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -162,39 +150,16 @@ const  Packaging=()=> {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg">
+                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
-                                                   <li class="active">
-                                                        <a href="javascript;" class="">
-                                                            <span>Broadleaf Evergrens</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Bulbs</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Evergreens</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Frems</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Fruits</span>
-                                                        </a>
-                                                   </li>
-                                                   <li>
-                                                        <a href="javascript;" class="">
-                                                            <span>Grasses</span>
-                                                        </a>
-                                                   </li>
-                                               </ul>
+                                                   {tasks.active.map(t=>{
+                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                 <a href="#" class="">
+                                                                <span id="Wheathers">{t.value}</span>
+                                                                </a>
+                                                            </li>
+                                                    })}
+                                            </ul>
                                             </div>
                                         </div>
                                     </div>
@@ -204,7 +169,23 @@ const  Packaging=()=> {
         </>
     )
 }
+}
 
-export default reduxForm({
-    form: 'Packaging',
-  })(Packaging);
+const mapStateToProps = (state)=> (
+    // console.log(state)
+     {
+    
+zoneCategoryList:state.attributeData.subAttribute,
+temp:state,
+// name:state.categoryData.name 
+packagingName:state.attributeData.subAttributeName.packagingName,
+packagingSku:state.attributeData.subAttributeName.packagingSku
+}
+)
+export default connect(mapStateToProps,{
+    getAllSubAttribute,
+    handleAttributeDragDrop,
+    handleAttributeDelete,
+    handleZoneInputAction,
+    handleAddZone      
+})(Packaging)

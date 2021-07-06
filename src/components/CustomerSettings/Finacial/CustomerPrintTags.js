@@ -3,7 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Collapse,   Row, Col, Label} from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
-import * as BiIcons from "react-icons/bs";
+// import * as BiIcons from "react-icons/bs";
 
 const onSubmit = (values) =>{
   console.log(values);
@@ -45,13 +45,13 @@ const CustomerPrintRates = (props) => {
       <div color="primary" onClick={toggle}  className="SubHeader">
       <Label className="subFont">Customer Print Rates</Label>
       <span className="updownSymbolContainer"> 
-      {isOpen ? <BiIcons.BsCaretDownFill className="updownSymbol" /> : <BiIcons.BsCaretRightFill className="updownSymbol" /> } 
+      {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
         
         </div>
       <Collapse isOpen={isOpen}>
         
-                <div className="docDetails">
+                <div className="docDetails" style={{marginTop:"-12px"}}>
                 <p className="sub_menu_nameD"> Print Tag & Label Pricing</p>
                     {/* <Label className="secondHeader">
                     Print Tag & Label Pricing
@@ -146,6 +146,13 @@ const CustomerPrintRates = (props) => {
                             </Col>
                         </Row>
               </Col>
+              <Col xs="12">
+              <div align="right" className="action_area_left">
+                              <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
+                              <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                        </div> 
+            
+              </Col>
 
 
 
@@ -173,11 +180,7 @@ const CustomerPrintRates = (props) => {
 
 
 
-                        <div align="right" className="action_area_left">
-                              <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
-                        </div> 
-            
+                     
 
 
             </div>

@@ -12,7 +12,10 @@ import {
 
     ///GET_ALL_PLANT_CATEGORIES
     GET_ALL_PLANT_CATEGORIES,
-
+    HANDLE_CATEGORY_INPUT_DATA,
+    HANDLE_ADD_PLANT_CATEGORY,
+    HANDLE_DRAG_PLANT_CATEGORY,
+    HANDLE_CATEGORY_DELETE,
 
     // axios config
     config,
@@ -63,4 +66,60 @@ export const getAllPlantCategories = ()=> dispatch =>{
         })
     })
 
+}
+export const handleCategoryInputAction = (name) =>dispatch=>{
+    console.log(name)
+ dispatch({
+     type:HANDLE_CATEGORY_INPUT_DATA,
+     name:name    
+ })
+}
+export const handleAddCategory = (data) =>dispatch=>{
+    console.log(data)
+    let plantCategoryObject={}
+    plantCategoryObject.name=data
+    plantCategoryObject.status="1"
+    // console.log(name)plant-add-category
+    return axios.post("/api/plant-add-category",plantCategoryObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_ADD_PLANT_CATEGORY,
+            payload:res.data
+
+        })
+    })
+}
+export const handleDragDrop = (data) =>dispatch=>{
+    console.log(data)
+    let plantCategoryObject={}
+    // plantCategoryObject.name=data
+  
+    if(data.status === "1"){
+        plantCategoryObject.status="0"
+    }
+    else {
+        plantCategoryObject.status="1"
+    }
+    return axios.post(`/api/plant-update-category/${data.id}`,plantCategoryObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DRAG_PLANT_CATEGORY,
+            payload:res.data
+
+        })
+    })
+}
+export const handleCategoryDelete = (id) =>dispatch=>{
+    let deleteId = parseInt(id)
+    let plantCategoryObject={}
+
+ 
+    return axios.post(`/api/plant-delete-category/${deleteId}`,plantCategoryObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CATEGORY_DELETE,
+            payload:res.data
+
+        })
+    })
 }

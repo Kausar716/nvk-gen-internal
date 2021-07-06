@@ -1,222 +1,80 @@
-import React, { Component } from 'react';
-import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import * as MdIcons from "react-icons/md";
-//import { Field, reduxForm } from 'redux-form';
-//import {  Row} from 'reactstrap';
 
+import React, { Component } from 'react'
+import {connect} from "react-redux";
+// import './style.css';
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
-// fake data generator
-const getItems = (count, offset = 0) =>
-    Array.from({ length: count }, (v, k) => k).map(k => ({
-        id: `Areca Palms-${k + offset}`,
-        content: `Areca Palms`
-    }));
-
-// a little function to help us with reordering the result
-const reorder = (list, startIndex, endIndex) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-
-    return result;
-};
-
-
-/**
- * Moves an item from one list to another list.
- */
- const move = (source, destination, droppableSource, droppableDestination, droppableDestination2) => {
-    const sourceClone = Array.from(source);
-    const destClone = Array.from(destination);
-    const [removed] = sourceClone.splice(droppableSource.index, 1);
-
-    destClone.splice(droppableDestination.index, 0, removed);
-
-    const result = {};
-    result[droppableSource.droppableId] = sourceClone;
-    result[droppableDestination.droppableId] = destClone;
-    //result[droppableDestination2.droppableId] = destClone;
-    console.log("result", result)
-    return result;
-    
-};
-
-const grid = 8;
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-    // some basic styles to make the items look a bit nicer
-    userSelect: 'none',
-    padding: grid * 2,
-    margin: `0 0 ${grid}px 0`,
-    height:40,
-    padding:7,
-    color:"#ffffff",
-    // border:"3px dotted red",
-
-    // change background colour if dragging
-    background: isDragging ? '#b4b4b4' : '#5287f5',
-
-    // styles we need to apply on draggables
-    ...draggableStyle
-});
-
-const getListStyle = isDraggingOver => ({
-    background: isDraggingOver ? 'lightblue' : 'lightgrey',
-    padding: grid,
-    width: 250
-});
-
-
-
-
-
-class BloomFoliageColors extends Component  {
-   
-    state = {
-        items: [{content:"Fern",id:"01"}, {content:"Areca Palm",id:"02"},{content:"Peacelilly",id:"03"}],
-        // items: getItems(3),
-        //selected: getItems(1, 3),
-        selected:[{content:"Draceena",id:"04"}, {content:"Spider Plant",id:"05"}],
-        delete:[],
-        event: "",
-        itemSelectedList:'',
-        isselectCheckbox:false,
-        checkedItems: new Map(),  
-    };
-
-     /**
-     * A semi-generic way to handle multiple lists. Matches
-     * the IDs of the droppable container to the names of the
-     * source arrays stored in the state.
-     */
-      id2List = {
-        droppable: 'items',
-        droppable2: 'selected',
-        droppable3: 'delete'
-    };
-
-    getList = id => this.state[this.id2List[id]];
-
-    onDragEnd = result => {
-        const { source, destination } = result;
-
-        // dropped outside the list
-        if (!destination) {
-            console.log("not droped in droppable");
-            return;
-          }
-          if (
-            destination.index === source.index &&
-            destination.droppableId === source.draggableId
-          ) {
-            console.log("droped in same place");
-            return;
-          }
-
-        //   const itemCopy = { ...state[source.droppableId].items[source.index] };
-        //   setstate((prev) => {
-        //     prev = { ...prev };
-        //     prev[source.droppableId].items.splice(source.index, 1);
-        //     prev[destination.droppableId].items.splice(
-        //       destination.index,
-        //       0,
-        //       itemCopy
-        //     );
-        //     return prev;
-        //   });
-      
-
-        if (source.droppableId === destination.droppableId) {
-            const items = reorder(
-                this.getList(source.droppableId),
-                source.index,
-                destination.index
-            );
-
-            let state = { items };
-
-            if (source.droppableId === 'droppable2') {
-                state = { selected: items };
-            }
-
-            if (source.droppableId === 'droppable3') {
-                state = { delete: items };
-            }
-
-            this.setState(state);
-        } else {
-            const result = move(
-                this.getList(source.droppableId),
-                this.getList(destination.droppableId),
-                source,
-                destination
-            );
-
-            this.setState({
-                items: result.droppable,
-                selected: result.droppable2,
-                delete:result.droppable3,
+    class BloomFoliageColors extends Component {
+        bloomColor
+         onDragOver = (ev)=>{
+            ev.preventDefault();
+        }
+        onDragStart=(ev, id)=>{
+            console.log("dragstart:", id);
+            ev.dataTransfer.setData("id",id)
+        }
+        componentDidMount(){
+            this.props.getAllSubAttribute(14)
+        }
+        onDrop=(ev,cat)=>{
+            let id= ev.dataTransfer.getData("id");
+            let tasks = this.props.zoneCategoryList.filter((task)=>{                
+                   return JSON.stringify(task.id) === id;
             });
+            console.log(tasks)
+            let result= this.props.handleAttributeDragDrop(tasks[0])
+            result.then(res=>{
+            this.props.getAllSubAttribute(14)
+           })
         }
-    };
-
-
-    change = v => {
-        v.preventDefault();
-        this.setState({
-          event: v.target.value
-        });
-      };
-
-
-      handleKeyPress = (k,event) => {
-        
-        if (k.charCode === 13 && this.state.event.trim() !== "") {
-          let items = this.state.items;
-          // TODO: use real id of the event here instead of length
-          const id = items.length;
-          items.push({
-            id: `event-${id}`,
-            content: this.state.event
-          });
-          this.setState({
-            event: ""
-          });
+        onDelete =(ev)=>{
+           let id= ev.dataTransfer.getData("id");
+           console.log(id)
+           let result= this.props.handleAttributeDelete(id)
+           result.then(res=>{
+            this.props.getAllSubAttribute(14)
+           })
+        }
+        handleZoneInputAction = (e)=>{
+            this.props.handleZoneInputAction(e.target.name,e.target.value)
+        }
+        handleAddCategory = (e)=>{
+       
+            let zoneObj={}
+            zoneObj.attribute_id=14
+            zoneObj.value = this.props.bloomColor
+            zoneObj.status=1
+            console.log(zoneObj)
+            if(this.props.bloomColor){
+            let result = this.props.handleAddZone(zoneObj)
+            result.then(res=>{
+                this.props.getAllSubAttribute(14)
+            })
         }
         
-      };
-
-
-
-      deleteIndex = index => {
-        console.log("index deleting",index);
-        let items = this.state.items;
-        items.splice(index, 1);
-        this.setState({
-          items
-        });
-      };
-
-      onItemSelect = (index) => {
-          console.log("abcd", index)
-          
-        
-      };
-
-
-      handleChange(event) {  
-        var isChecked = event.target.checked;  
-        var item1 = event.target.value;  
+        }
+        render() {
+        console.log(this.props.temp)
+        var tasks={
+            inactive:[],
+            active:[],
+        }
+        if(this.props.zoneCategoryList){
+            this.props.zoneCategoryList.forEach((t)=>{
+                console.log(t)
+                if(t.status === 1){
+                    tasks.active.push(t)
+                }
+                else if(t.status=== 0){
+                    tasks.inactive.push(t)
+                }
+            })
+        }
+        return (
            
-        this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item1, isChecked) }));  
-  }  
-  
-
-    render() {
-    return (
-        <>
-            <div className="bg-white">
-                            <h4 className="p-15 mb-0">Bloom &amp; Foliage Colors</h4>
+               <div>
+               <div className="bg-white">
+                            <h4 className="p-15 mb-0">Bloom & Foilage Colors</h4>
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
                                 <div className="row">
@@ -224,14 +82,9 @@ class BloomFoliageColors extends Component  {
                                         <p>Color Name</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                {/* <input type="text" className="form-control" placeholder=""/> */}
-                                                <input className="form-control"
-                                                        value={this.state.event}
-                                                        onChange={this.change.bind(this)}
-                                                        onKeyPress={this.handleKeyPress.bind(this)}
-                                                        />
+                                                <input type="text" className="form-control" name="bloomColor" value={this.props.bloomColor}   placeholder="" onChange={this.handleZoneInputAction}/>
                                             </div>
-                                            <div className="col-md-6 col-lg-3"  >
+                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Color
                                                 </a>
@@ -239,53 +92,29 @@ class BloomFoliageColors extends Component  {
                                         </div>
                                     </div>
                                 </div>
-                                <DragDropContext onDragEnd={this.onDragEnd}>
                                 <div class="row mt-5 mb-4">
                                     <div class="col">
                                         <div class="card zoneCard">
                                             <div class="card-header">
                                                 Inactive
                                             </div>
-                                            <div class="card-body cardBg">
-                                            
-                                                <Droppable droppableId="droppable">
-                                                    {(provided, snapshot) => (
-                                                        <div className="sub_drop_box2">
-                                                            <div className="inactive_drop"
-                                                            
-                                                                ref={provided.innerRef}
-                                                                >
-                                                                    {/* <p style={{color:"#357ebd"}}>Inactive</p> */}
-                                                                {this.state.items.map((item, index) => (
-                                                                    <Draggable
-                                                                        style={{background:"red", backgroundColor:"red"}}
-                                                                        key={item.id}
-                                                                        draggableId={item.id}
-                                                                        index={index}>
-                                                                        {(provided, snapshot) => (
-                                                                                <div 
-                                                                                // onClick={this.onItemSelect}
-                                                                                ref={provided.innerRef}
-                                                                                {...provided.draggableProps}
-                                                                                {...provided.dragHandleProps}
-                                                                                style={getItemStyle(
-                                                                                    snapshot.isDragging,
-                                                                                    provided.draggableProps.style
-                                                                                )}>
-                                                                            {/* <input type="checkbox" id={index} value={item.id} onChange={this.handleChange} /> */}
-                                                                            <p onClick={this.onItemSelect(index)} key={item.id} >{item.content}<span style={{float:"right",fontSize:20}}><MdIcons.MdDelete  onClick={this.deleteIndex.bind(this, index)} /></span></p>
-                                                                            </div>
-                                                                            
-                                                                        )}
-                                                                    </Draggable>
-                                                                ))}
-                                                                {provided.placeholder}
-                                                            </div>
 
-                                                        </div>
-                                    
-                                                    )}
-                                                </Droppable>
+
+                                            <div class="card-body cardBg"
+                                            onDragOver={(e)=>this.onDragOver(e)}
+                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
+                                                <ul class="list-unstyled">
+                                                   {tasks.inactive.map(t=>{
+                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                             <a href="#" class="">
+                                                                <span id="Wheathers">{t.value}</span>
+                                                                </a>
+                                                            </li>
+                                                    })}
+                                            </ul>
+                                             
+                                               
+
 
                                             </div>
                                         </div>
@@ -304,21 +133,8 @@ class BloomFoliageColors extends Component  {
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
-                                            <div>
-                           
-                                                    <div>
-                                                        <Droppable droppableId="delete">
-                                                        {(provided, snapshot) => (
-                                                            <div  ref={provided.innerRef} className="testingBorder">
-                                                                <div>
-                                                              
-                                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                                </div>
-                                                            </div>
-                                                            )}
-                                                        </Droppable>
-                                                    </div>
-                                            
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                             </div>
                                         </div>
                                     </div>
@@ -327,55 +143,43 @@ class BloomFoliageColors extends Component  {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg">
-                                            <Droppable droppableId="droppable2">
-                                                {(provided, snapshot) => (
-                                                    <div  className="sub_drop_box4">
-                                                        <div className="inactive_drop"
-                                                        ref={provided.innerRef}
-                                                    > 
-                                                        {this.state.selected.map((item, index) => (
-                                                            <Draggable
-                                                                key={item.id}
-                                                                draggableId={item.id}
-                                                                index={index}>
-                                                                {(provided, snapshot) => (
-                                                                    <div 
-                                                                        ref={provided.innerRef}
-                                                                        {...provided.draggableProps}
-                                                                        {...provided.dragHandleProps}
-                                                                        style={getItemStyle(
-                                                                            snapshot.isDragging,
-                                                                            provided.draggableProps.style
-                                                                        )}
-                                                                        >
-                                                                    {item.content}<span style={{float:"right",fontSize:20}}></span>
-                                                                    </div>
-                                                                )}
-                                                            </Draggable>
-                                                        ))}
-                                                        {provided.placeholder}
-                                                    </div>
-
-                                                    </div>
-                                            
-                                                )}
-                                            </Droppable>
+                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
+                                            <ul class="list-unstyled">
+                                                   {tasks.active.map(t=>{
+                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                 <a href="#" class="">
+                                                                <span id="Wheathers">{t.value}</span>
+                                                                </a>
+                                                            </li>
+                                                    })}
+                                            </ul>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                </DragDropContext>
                             </div>
-                            {/* </DragDropContext> */}
                         </div>
+        </div>
+       
+        )
+    }
+}
 
-
-
-
-        </>
+     const mapStateToProps = (state)=> (
+        // console.log(state)
+         {
+        
+   zoneCategoryList:state.attributeData.subAttribute,
+    temp:state,
+    // name:state.categoryData.name
+    bloomColor:state.attributeData.subAttributeName.bloomColor
+    }
     )
-}
-}
+    export default connect(mapStateToProps,{
+        getAllSubAttribute,
+        handleAttributeDragDrop,
+        handleAttributeDelete,
+        handleZoneInputAction,
+        handleAddZone      
+    })(BloomFoliageColors)
 
-export default BloomFoliageColors
