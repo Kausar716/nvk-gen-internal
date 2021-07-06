@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
-    class Categories extends Component {
+    class Zones extends Component {
      
          onDragOver = (ev)=>{
             ev.preventDefault();
@@ -45,10 +45,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             zoneObj.value = this.props.zoneName
             zoneObj.status=1
             console.log(zoneObj)
+            if(this.props.zoneName){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(10)
             })
+        }
         
         }
         render() {
@@ -177,5 +179,5 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
         handleAttributeDelete,
         handleZoneInputAction,
         handleAddZone      
-    })(Categories)
+    })(Zones)
 

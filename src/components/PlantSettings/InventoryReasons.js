@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
-    class Categories extends Component {
+    class InventoryReasons extends Component {
          onDragOver = (ev)=>{
             ev.preventDefault();
         }
@@ -44,10 +44,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             zoneObj.value = this.props.reason
             zoneObj.status=1
             console.log(zoneObj)
+            if(this.props.reason){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(13)
             })
+        }
         
         }
         render() {
@@ -103,7 +105,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                 <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                <a href="#" class="">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -140,7 +144,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                <a href="#" class="">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -172,5 +178,5 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
         handleAttributeDelete,
         handleZoneInputAction,
         handleAddZone      
-    })(Categories)
+    })(InventoryReasons)
 
