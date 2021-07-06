@@ -54,10 +54,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
        
             let zoneObj={}
             zoneObj.attribute_id=1
-            zoneObj.value = this.props.formName           
+            zoneObj.value = this.props.characterSectionName           
             zoneObj["childrens"] =[
                 {'children_name':'SKU value',
-                'children_value':this.props.formSku
+                'children_value':this.props.characterSectionName
             }
             ]
             zoneObj.status=1
@@ -132,13 +132,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <div className="card-header">
                                                 Inactive
                                             </div>
-                                            
-                      
                                             <div className="card-body cardBg"y
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
-                                                   {tasks.active.map(t=>{
+                                                   {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a href="#" className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
@@ -180,7 +178,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
-                                                   {tasks.inactive.map(t=>{
+                                                   {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a href="#" className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
@@ -207,8 +205,7 @@ const mapStateToProps = (state)=> (
 zoneCategoryList:state.attributeData.subAttribute,
 temp:state,
 // name:state.categoryData.name 
-formName:state.attributeData.subAttributeName.formName,
-formSku:state.attributeData.subAttributeName.formSku
+characterSectionName:state.attributeData.subAttributeName.characterSectionName
 }
 )
 export default connect(mapStateToProps,{
