@@ -339,8 +339,14 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
                                         </tr>
                                     </thead>
                                     <tbody>
-                                    {displaySkuList.map(sku=>{
+
+                                    {displaySkuList.map((sku)=>{
+                                            
+                                            if(sku.product_id===product_idFromGeneral){
+
+                                            
                         return(
+
                                         <tr key={sku.id}>
                                             <td>{sku.archived===0?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
@@ -377,7 +383,9 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
                                     
                                     
                         )
+                                            }
                     })}
+                
                                     </tbody>
                                 </table>
                             </div>

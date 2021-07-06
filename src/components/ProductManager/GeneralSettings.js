@@ -33,6 +33,10 @@ const GeneralSettings=(props)=> {
     let history = useHistory();
     const [count, setCount] = useState(0)
     const [submitCount, setSubmitCount] = useState(0)
+
+    const [currentTagText, setCurrentTagText] = useState("");
+    const [tags, setTags] = useState(["Areca"]);
+ 
     const {productData,productDataById,tagsData,actionType,needAction} = props.productData
     const {categoryData,manufactureData} = props.categoryData
     const [toggleForTagInput,setToggle] = useState(true)
@@ -47,6 +51,31 @@ const GeneralSettings=(props)=> {
         else props.handleInputAction(e.target.id,e.target.value)
 
     }
+
+    useEffect(()=>{
+       
+    },[])
+
+
+
+
+    const handleTag = (e) => {
+        setCurrentTagText(e.target.value);
+        if (e.keyCode === 13 && currentTagText) {
+          setTags((prevTags) => [...prevTags, currentTagText]);
+          setCurrentTagText("");
+        } else if (e.keyCode === 32 && currentTagText) {
+          setTags((prevTags) => [...prevTags, currentTagText]);
+          setCurrentTagText("");
+        }
+      };
+      
+      const removeTag = (index) => {
+        const newTagArray = tags;
+        newTagArray.splice(index, 1);
+        setTags([...newTagArray]);
+      };
+    
     
     const childAdd = (e) =>{
         let commonArray = tagsData
@@ -65,27 +94,30 @@ const GeneralSettings=(props)=> {
             setToggle(true)
         }
        
-
-      
      }
+
+
      const submitAction = (e) =>{
         e.preventDefault();
        // e.target.reset();
        //debugger;
 console.log("TAGDATA", tagsData)
+
+        let localTagData = tagsData;
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add")
-                props.createProductAction(productDataById,tagsData)
+                props.createProductAction(productDataById,localTagData)
    
                 if(actionType ==="edit")
-                props.updateProductAction(productDataById,productDataById.product_id,tagsData)
+                props.updateProductAction(productDataById,productDataById.product_id,localTagData)
                 setSubmitCount(1)
             }
         }
           
      }
      const addTag = (e) =>{
+         //alert("acadcda")
          if(e.target.id==="tags" && toggleForTagInput){
              var inputTag = document.createElement('input');
              inputTag.id = count
@@ -142,13 +174,44 @@ console.log("TAGDATA", tagsData)
 
                                         </div> */}
 
-                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
+                                        {/* <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
+                                        border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
                                             {tagsData.map(tagData=>{
                                             return (<a className="subtag">{tagData}</a>)
                                             }) }
+                                        </div> */}
 
-                                        </div>
-                                        {/* <input class="form-control" type="text" value="html,input,tag" data-role="tagsinput"></input> */}
+                                            <div className="masterStackDiv"  >
+                                                        <div
+                                                            className="stackTags"
+                                                            style={{ display: tags.length > 0 ? "flex":"none"}} 
+                                                        >
+                                                            {tags.map((tag, index) => {
+                                                            return (
+                                                                <div className="stackTag" key={index}>
+                                                                <button
+                                                                    onClick={() => removeTag(index)}
+                                                                    className="tagCloseBtn"
+                                                                >
+                                                                    x
+                                                                </button>
+                                                                {tag}
+                                                                </div>
+                                                            );
+                                                            })}
+                                                        </div>
+                                                        <div className="stackInput" >
+                                                           
+                                                            <input
+                                                            
+                                                            class="form-control"
+                                                            type="text"
+                                                            onKeyDown={handleTag}
+                                                            onChange={handleTag}
+                                                            value={currentTagText}
+                                                            />
+                                                        </div>
+                                            </div>
                                     </div>
                           
                                 </div>
