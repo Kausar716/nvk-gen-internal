@@ -305,7 +305,9 @@ const  ProductManagement = (props) =>{
                                                 <div class="col-md-6 d-flex justify-content-md-end">
                                                 <span onClick={()=>props.pageReDirectAction("product","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
-                                                    <i class='bx bx-arrow-back' ></i><label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label></span>
+                                                    <i class='bx bx-arrow-back' ></i>
+                                                    {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
+                                                    </span>
                                                     <a href="" class="mx-2">
                                                         <img src="assets/img/copy-ic.svg" alt=""/>
                                                     </a>

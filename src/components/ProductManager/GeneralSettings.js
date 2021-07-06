@@ -35,7 +35,7 @@ const GeneralSettings=(props)=> {
     const [submitCount, setSubmitCount] = useState(0)
 
     const [currentTagText, setCurrentTagText] = useState("");
-    const [tags, setTags] = useState(["Areca"]);
+    const [tags, setTags] = useState(["Areca", "Fern"]);
  
     const {productData,productDataById,tagsData,actionType,needAction} = props.productData
     const {categoryData,manufactureData} = props.categoryData
@@ -60,22 +60,33 @@ const GeneralSettings=(props)=> {
 
 
     const handleTag = (e) => {
+       
         setCurrentTagText(e.target.value);
         if (e.keyCode === 13 && currentTagText) {
-          setTags((prevTags) => [...prevTags, currentTagText]);
+          setTags((prevTags) => [...prevTags, currentTagText,]);
+          //setTags(()=>[...tagsData])
           setCurrentTagText("");
         } else if (e.keyCode === 32 && currentTagText) {
           setTags((prevTags) => [...prevTags, currentTagText]);
+         // setTags(()=>[...tagsData])
           setCurrentTagText("");
         }
+
+       
+
       };
       
       const removeTag = (index) => {
-        const newTagArray = tags;
+        const newTagArray = tagsData;
         newTagArray.splice(index, 1);
         setTags([...newTagArray]);
       };
     
+      const removeTag1 = (index) => {
+        const newTagArray = tagsData;
+        newTagArray.splice(index, 1);
+        setCount([...newTagArray]);
+      };
     
     const childAdd = (e) =>{
         let commonArray = tagsData
@@ -102,7 +113,7 @@ const GeneralSettings=(props)=> {
        // e.target.reset();
        //debugger;
 console.log("TAGDATA", tagsData)
-
+        //tagsData = [...tags,...tagsData]
         let localTagData = tagsData;
          if(submitCount === 0){
             if(needAction){
@@ -135,7 +146,7 @@ console.log("TAGDATA", tagsData)
 
 }
 
-   
+//tagsData = [...tags, ...tagsData]
     return (
         <div>
             <div class="bg-white px-3 py-3 mt-3">
@@ -174,19 +185,30 @@ console.log("TAGDATA", tagsData)
 
                                         </div> */}
 
-                                        {/* <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
+                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
                                         border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
-                                            {tagsData.map(tagData=>{
-                                            return (<a className="subtag">{tagData}</a>)
+                                            {tagsData.map((tagData, index)=>{
+                                            return (<a className="subtag" key={index}>
+                                                <button
+                                                                    onClick={() => removeTag1(index)}
+                                                                    className="tagCloseBtn"
+                                                                >
+                                                                    x
+                                                                </button>{tagData}</a>)
                                             }) }
-                                        </div> */}
+                                        </div>
 
-                                            <div className="masterStackDiv"  >
+                                            {/* <div className="masterStackDiv"  >
                                                         <div
                                                             className="stackTags"
                                                             style={{ display: tags.length > 0 ? "flex":"none"}} 
                                                         >
-                                                            {tags.map((tag, index) => {
+
+                                                            {
+                                                            
+                                                          // tags=[...tags, ...tagsData];
+
+                                                           tags.map((tag, index) => {
                                                             return (
                                                                 <div className="stackTag" key={index}>
                                                                 <button
@@ -211,7 +233,7 @@ console.log("TAGDATA", tagsData)
                                                             value={currentTagText}
                                                             />
                                                         </div>
-                                            </div>
+                                            </div> */}
                                     </div>
                           
                                 </div>
