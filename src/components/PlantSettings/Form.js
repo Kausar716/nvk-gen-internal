@@ -5,7 +5,16 @@ import {connect} from "react-redux";
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
     class Form extends Component {
-        bloomColor
+            constructor(props){
+                super()
+                    this.state={
+                        errorObj:{
+                            formName:0,
+                            formSku:0
+                        }
+                    }
+                
+            }
          onDragOver = (ev)=>{
             ev.preventDefault();
         }
@@ -36,6 +45,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
            })
         }
         handleZoneInputAction = (e)=>{
+            let errorObj=this.state.errorObj
+            if(e.target.name === "formSku"){
+            errorObj.formSku=0
+            this.setState({errorObj})}
             this.props.handleZoneInputAction(e.target.name,e.target.value)
         }
         handleAddCategory = (e)=>{
@@ -50,13 +63,22 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             ]
             zoneObj.status=1
             console.log(zoneObj)
-            if(this.props.formName){
+            if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(1)
             })
+        }        
         }
-        
+        validate = ()=>{
+            let errorObj = this.state.errorObj
+            if(this.props.formSku.length === 0){
+                errorObj.formSku=1
+                this.setState({errorObj})
+                return false
+            }
+            return true
+            
         }
         render() {
         console.log(this.props.temp)
@@ -87,6 +109,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <p>Form Name</p>
                                         <div>
                                             <input type="text" className="form-control" name="formName" value={this.props.formName}   placeholder="" onChange={this.handleZoneInputAction}/>
+                                            
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2">
                                             {/* <a href="javascript;" className="d-flex align-items-center">
@@ -97,8 +120,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-6">
                                         <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                         <div>
-
                                             <input type="text" className="form-control" placeholder="" name="formSku" value={this.props.formSku}    onChange={this.handleZoneInputAction}/>
+                                            {this.state.errorObj.formSku!==0?<span style={{fontSize:"small",color:"red"}}>Enter SKU Value</span>:""}
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
                                             <a href="#" className="d-flex align-items-center">
