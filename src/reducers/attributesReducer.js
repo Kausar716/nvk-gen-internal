@@ -19,7 +19,20 @@ const initialSatate = {
         zone:"",
         bloomColor:"",
         volume:"",
-        reason:""
+        reason:"",
+        formName:"",
+        formSku:"",
+        caliperName:"",
+        caliperImperial:"",
+        caliperSku:"",
+        heightName:"",
+        heightImperial:"",
+        heightSku:"",
+        packagingName:"",
+        packagingSku:""
+
+
+
     }
 }
 

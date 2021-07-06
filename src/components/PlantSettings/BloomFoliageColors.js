@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
-    class Categories extends Component {
+    class BloomFoliageColors extends Component {
         bloomColor
          onDragOver = (ev)=>{
             ev.preventDefault();
@@ -45,10 +45,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             zoneObj.value = this.props.bloomColor
             zoneObj.status=1
             console.log(zoneObj)
+            if(this.props.bloomColor){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(14)
             })
+        }
         
         }
         render() {
@@ -104,7 +106,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                 <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                             <a href="#" class="">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -119,11 +123,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                                 <a href="javascript;">
+                                                    {/* <i className="fas fa-angle-double-right"></i> */}
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
+                                                    {/* <i className="fas fa-arrows-alt"></i> */}
                                                     <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
@@ -141,7 +147,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                 <a href="#" class="">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -173,5 +181,5 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
         handleAttributeDelete,
         handleZoneInputAction,
         handleAddZone      
-    })(Categories)
+    })(BloomFoliageColors)
 
