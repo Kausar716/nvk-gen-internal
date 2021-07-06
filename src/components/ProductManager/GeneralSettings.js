@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 
 import React,  { useEffect,useState } from 'react';
 import {connect} from "react-redux";
@@ -10,6 +11,7 @@ import {
     deleteProductAction ,
     getAllProductAction,
     getSpecifiedProductAction,
+    getAllSpecifiedSkuProductList,
 
     //page Redirects action
     pageReDirectAction,
@@ -31,6 +33,10 @@ const GeneralSettings=(props)=> {
     let history = useHistory();
     const [count, setCount] = useState(0)
     const [submitCount, setSubmitCount] = useState(0)
+
+    const [currentTagText, setCurrentTagText] = useState("");
+    const [tags, setTags] = useState(["Areca", "Fern"]);
+ 
     const {productData,productDataById,tagsData,actionType,needAction} = props.productData
     const {categoryData,manufactureData} = props.categoryData
     const [toggleForTagInput,setToggle] = useState(true)
@@ -45,6 +51,42 @@ const GeneralSettings=(props)=> {
         else props.handleInputAction(e.target.id,e.target.value)
 
     }
+
+    useEffect(()=>{
+       
+    },[])
+
+
+
+
+    const handleTag = (e) => {
+       
+        setCurrentTagText(e.target.value);
+        if (e.keyCode === 13 && currentTagText) {
+          setTags((prevTags) => [...prevTags, currentTagText,]);
+          //setTags(()=>[...tagsData])
+          setCurrentTagText("");
+        } else if (e.keyCode === 32 && currentTagText) {
+          setTags((prevTags) => [...prevTags, currentTagText]);
+         // setTags(()=>[...tagsData])
+          setCurrentTagText("");
+        }
+
+       
+
+      };
+      
+      const removeTag = (index) => {
+        const newTagArray = tagsData;
+        newTagArray.splice(index, 1);
+        setTags([...newTagArray]);
+      };
+    
+      const removeTag1 = (index) => {
+        const newTagArray = tagsData;
+        newTagArray.splice(index, 1);
+        setCount([...newTagArray]);
+      };
     
     const childAdd = (e) =>{
         let commonArray = tagsData
@@ -63,27 +105,30 @@ const GeneralSettings=(props)=> {
             setToggle(true)
         }
        
-
-      
      }
+
+
      const submitAction = (e) =>{
         e.preventDefault();
        // e.target.reset();
        //debugger;
 console.log("TAGDATA", tagsData)
+        //tagsData = [...tags,...tagsData]
+        let localTagData = tagsData;
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add")
-                props.createProductAction(productDataById,tagsData)
+                props.createProductAction(productDataById,localTagData)
    
                 if(actionType ==="edit")
-                props.updateProductAction(productDataById,productDataById.product_id,tagsData)
+                props.updateProductAction(productDataById,productDataById.product_id,localTagData)
                 setSubmitCount(1)
             }
         }
           
      }
      const addTag = (e) =>{
+         //alert("acadcda")
          if(e.target.id==="tags" && toggleForTagInput){
              var inputTag = document.createElement('input');
              inputTag.id = count
@@ -101,7 +146,7 @@ console.log("TAGDATA", tagsData)
 
 }
 
-   
+//tagsData = [...tags, ...tagsData]
     return (
         <div>
             <div class="bg-white px-3 py-3 mt-3">
@@ -111,14 +156,17 @@ console.log("TAGDATA", tagsData)
                                 
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued} checked={productDataById.discontinued===0?false:true} />
+                                                <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued}
+                                                //  checked={productDataById.discontinued===0?false:true}
+                                                  />
                                                 <label for="discontinued"></label>
                                             </div>
                                             Discountiued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived} checked={productDataById.archived===0?false:true}/>
+                                                <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived}
+                                                 checked={productDataById.archived===0?false:true}/>
                                                 <label for="archived"></label>
                                             </div>
                                             Archive
@@ -140,12 +188,50 @@ console.log("TAGDATA", tagsData)
 
                                         </div> */}
 
-                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
-                                            {tagsData.map(tagData=>{
-                                            return (<a className="subtag">{tagData}</a>)
+                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
+                                        border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
+                                            {tagsData.map((tagData, index)=>{
+                                            return (<a className="subtag" key={index}>
+                                                <button
+                                                                    onClick={() => removeTag1(index)}
+                                                                    className="tagCloseBtn"
+                                                                >
+                                                                    x
+                                                                </button>{tagData}</a>)
                                             }) }
-
                                         </div>
+
+                                            {/* <div className="masterStackDiv"  >
+                                                        <div
+                                                            className="stackTags"
+                                                            style={{ display: tags.length > 0 ? "flex":"none"}} 
+                                                        >
+                                                            {   
+                                                          // tags=[...tags, ...tagsData];
+                                                           tags.map((tag, index) => {
+                                                            return (
+                                                                <div className="stackTag" key={index}>
+                                                                <button
+                                                                    onClick={() => removeTag(index)}
+                                                                    className="tagCloseBtn"
+                                                                >
+                                                                    x
+                                                                </button>
+                                                                {tag}
+                                                                </div>
+                                                            );
+                                                            })}
+                                                        </div>
+                                                        <div className="stackInput" >
+                                                            <input
+                                                            class="form-control"
+                                                            type="text"
+                                                            onKeyDown={handleTag}
+                                                            onChange={handleTag}
+                                                            value={currentTagText}
+                                                            />
+                                                        </div>
+                                            </div> */}
                                     </div>
                           
                                 </div>
@@ -170,7 +256,6 @@ console.log("TAGDATA", tagsData)
                                             {manufactureData.map(manufacture=>{
                                                 return(<option value={manufacture.id} selected={manufacture.id===productDataById.manufacturer_id?"selected":""}>{manufacture.name}</option>)
                                             })
-
                                             }
                                         </select>
                                     </div>
@@ -217,6 +302,7 @@ export default connect(mapStateToProps ,{
     deleteProductAction ,
     getAllProductAction,
     getSpecifiedProductAction,
+    getAllSpecifiedSkuProductList,
 
     //page Redirects action
     pageReDirectAction,
