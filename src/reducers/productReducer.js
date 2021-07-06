@@ -10,6 +10,7 @@ import {
     DELETE_PRODUCT_ACTION,
     GET_ALL_PRODUCT_ACTION,
     GET_SPECIFIED_PRODUCT_ACTION,
+    GET_SKU_SPECIFIED_PRODUCT,
 
     // SKU ACTION
 
@@ -53,6 +54,8 @@ const initialSatate = {
    
     productData         :   [],
     skuData             :   [],
+    poduct_idStoring:'',
+   
     productDataById     :   {
         name:"",
         category_id:null,
@@ -74,7 +77,7 @@ const initialSatate = {
         archived:0,
         status:1,
         supplier_id:1,
-        //id:null
+       
 
 
     },
@@ -87,7 +90,9 @@ const initialSatate = {
     pageNumber          :   0,
     tagsData            :   [],
     needAction          :   false,
-    backupData          :[]
+    backupData          :[],
+    ae_product_id:"",
+    productDataBySKUlist:[],
 
 }
 
@@ -160,7 +165,9 @@ export default function(state = initialSatate, action){
         case SUB_PAGE_REDIRECT_ACTION:
             return{
                  ...state,
+                 
                 pageToOpen:action.page,
+                productID:action.productID
             }
 
         //product action
@@ -170,6 +177,15 @@ export default function(state = initialSatate, action){
                 productData:action.payload.data,
                 backupData:action.payload.data,
             }
+
+        case GET_SKU_SPECIFIED_PRODUCT:
+           return {
+                ...state,
+                productDataBySKUlist:action.payload.data,
+                backupData:action.payload.data,
+
+            }
+            
         case GET_SPECIFIED_PRODUCT_ACTION:
            // debugger;
             //console.log("GET_SPECIFIED_PRODUCT_ACTION",action.payload.data)
@@ -183,7 +199,9 @@ export default function(state = initialSatate, action){
         case CREATE_PRODUCT_ACTION:
             return{
                 ...state,
-                needAction:false
+                needAction:false,
+                ae_product_id:action.ae_product_id
+
             }
         case UPDATE_PRODUCT_ACTION:
             return{
@@ -215,12 +233,40 @@ export default function(state = initialSatate, action){
                     archived:0,
                     supplier_id:1,
                     //id:null
-            
-            
                 },
                 needAction:false,
                 tagsData:[]
             }
+
+            case DELETE_SKU_ACTION:
+                return{
+                    ...state,
+                    actionType:"add",
+                    productDataById     :   {
+                        name:"",
+                        category_id:null,
+                        subcategory_id:null,
+                        manufacturer_id:null,
+                        archived:0,
+                        internal_notes:"",
+                        discontinued:0
+                    },
+                    skuDataById         :   {
+                        each_cost:null,
+                        each_price:null,
+                        sale_price:null,
+                        sale_expiry_date:null,
+                        sku_item_name:null,
+                        subcategory:null,
+                        discontinued:0,
+                        status:1,
+                        archived:0,
+                        supplier_id:1,
+                        //id:null
+                    },
+                    needAction:false,
+                    tagsData:[]
+                }
     //sku action
     case GET_ALL_SKU_ACTION:
        

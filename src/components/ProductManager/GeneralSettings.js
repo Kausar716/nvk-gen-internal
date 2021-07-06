@@ -11,6 +11,7 @@ import {
     deleteProductAction ,
     getAllProductAction,
     getSpecifiedProductAction,
+    getAllSpecifiedSkuProductList,
 
     //page Redirects action
     pageReDirectAction,
@@ -141,12 +142,13 @@ console.log("TAGDATA", tagsData)
 
                                         </div> */}
 
-                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
+                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
                                             {tagsData.map(tagData=>{
                                             return (<a className="subtag">{tagData}</a>)
                                             }) }
 
                                         </div>
+                                        {/* <input class="form-control" type="text" value="html,input,tag" data-role="tagsinput"></input> */}
                                     </div>
                           
                                 </div>
@@ -218,6 +220,7 @@ export default connect(mapStateToProps ,{
     deleteProductAction ,
     getAllProductAction,
     getSpecifiedProductAction,
+    getAllSpecifiedSkuProductList,
 
     //page Redirects action
     pageReDirectAction,

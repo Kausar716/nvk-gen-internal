@@ -22,6 +22,7 @@ import {
     //product actions
     deleteProductAction ,
     getSpecifiedProductAction,
+    getAllSpecifiedSkuProductList,
 
 } from "../../actions/productAction";
 import {
@@ -69,22 +70,22 @@ const onSubmit = (values) =>{
 }
 
 const SkuList=(props)=> {
-
-    const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType} = props.productData
-
-    console.log("productDataFINE", productData)
+   
     const [submitCount, setSubmitCount] = useState(0)
     const [value, onChange] = useState(new Date());
     const [pageSize, setPageSize] =useState(15)
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
-    const {subCategoryData} = props.categoryData
-
-
-    console.log("skuDataByIdskuDataById",skuData)
+   
+   
+    const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
+    const {subCategoryData} = props.categoryData;
+    console.log("productDataFINE", props.productData)
+    //console.log("productDataBySKUlist", productDataBySKUlist)
+    //console.log("skuDataByIdskuDataById",skuData)
     useEffect(()=>{
         props.getAllSkuAction()
-        //props.createSkuAction()
+        props.getAllSpecifiedSkuProductList(product_idFromGeneral)
     },[])
 
 
@@ -97,16 +98,18 @@ const SkuList=(props)=> {
 
     const submitAction = (e) =>{
         e.preventDefault();
-    
+   
        
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add")
-                props.createSkuAction( finalPrID,skuDataById,skuValidation)
+                props.createSkuAction(product_idFromGeneral,skuDataById)
+                //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
                 if(actionType ==="edit")
                 alert("abcd")
-                props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
+                props.updateSkuAction(skuDataById.id,skuDataById)
+                // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 setSubmitCount(1)
             }
         }
@@ -118,6 +121,7 @@ const SkuList=(props)=> {
     }
     const handleInput =(e)=>{
         console.log(e.target.id,e.target.value)
+        setSubmitCount(0)
         if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)
@@ -157,11 +161,12 @@ const SkuList=(props)=> {
    
    }
 
+console.log("temp",props.temp.productData.ae_product_id)
 
-
+const product_idFromGeneral =props.temp.productData.ae_product_id
    // validation input  data
 
-      
+   console.log("actionType12345",actionType)
 //    window.addEventListener('scroll', this.listenToScroll)
    //console.log("123",props.productData)
 
@@ -281,7 +286,7 @@ const SkuList=(props)=> {
 
 
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3"
-                                            disabled={needAction===true?false:true} onClick={()=>props.updateSkuActionClear(skuDataById.product_id,skuDataById)}>Add SKU &amp; Retain</button>
+                                            disabled={needAction===true?false:true} onClick={()=>props.updateSkuActionClear(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
                                 </form>
@@ -364,7 +369,7 @@ const SkuList=(props)=> {
                                                 </span> */}
                                                 <span>
                                                     <a href="javascript:;">
-                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.id,"delete")}/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>confirmDelete(sku.id,"delete","sku")}/>
                                                     </a>
                                                 </span>
                                             </td>
@@ -385,6 +390,7 @@ const SkuList=(props)=> {
 
 const mapStateToProps = (state)=> ({
     productData:state.productData,
+    temp:state,
     categoryData:state.categoryData
 })
 function validate(values) {
@@ -420,6 +426,7 @@ export default reduxForm({
     // product actions
     deleteProductAction ,
     getSpecifiedProductAction,
+    getAllSpecifiedSkuProductList,
 
     //handle sku input
     handleSkuInputAction
