@@ -161,7 +161,7 @@ export const getAllProductAction = () => dispatch => {
 export const getAllSpecifiedSkuProductList =(id)=>dispatch=>{
    // debugger;
     axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
-    debugger;
+    //debugger;
         console.log("getAllSpecifiedSkuProductList",res.data)
         dispatch({
                 type:GET_SKU_SPECIFIED_PRODUCT,

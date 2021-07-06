@@ -156,14 +156,17 @@ console.log("TAGDATA", tagsData)
                                 
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued} checked={productDataById.discontinued===0?false:true} />
+                                                <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued}
+                                                //  checked={productDataById.discontinued===0?false:true}
+                                                  />
                                                 <label for="discontinued"></label>
                                             </div>
                                             Discountiued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived} checked={productDataById.archived===0?false:true}/>
+                                                <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived}
+                                                 checked={productDataById.archived===0?false:true}/>
                                                 <label for="archived"></label>
                                             </div>
                                             Archive
@@ -203,11 +206,8 @@ console.log("TAGDATA", tagsData)
                                                             className="stackTags"
                                                             style={{ display: tags.length > 0 ? "flex":"none"}} 
                                                         >
-
-                                                            {
-                                                            
+                                                            {   
                                                           // tags=[...tags, ...tagsData];
-
                                                            tags.map((tag, index) => {
                                                             return (
                                                                 <div className="stackTag" key={index}>
@@ -223,9 +223,7 @@ console.log("TAGDATA", tagsData)
                                                             })}
                                                         </div>
                                                         <div className="stackInput" >
-                                                           
                                                             <input
-                                                            
                                                             class="form-control"
                                                             type="text"
                                                             onKeyDown={handleTag}
@@ -258,7 +256,6 @@ console.log("TAGDATA", tagsData)
                                             {manufactureData.map(manufacture=>{
                                                 return(<option value={manufacture.id} selected={manufacture.id===productDataById.manufacturer_id?"selected":""}>{manufacture.name}</option>)
                                             })
-
                                             }
                                         </select>
                                     </div>
