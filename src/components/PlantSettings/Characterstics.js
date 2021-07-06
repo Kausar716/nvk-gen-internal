@@ -134,21 +134,18 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             </div>
                                             
                       
-                                            <div class="card-body cardBg"
+                                            <div className="card-body cardBg"y
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a href="#" class="">
-                                                                <span id="Wheathers">{t.id}</span>
+                                                                 <a href="#" className="d-flex justify-content-between align-items-center">
+                                                                <span id="Wheathers">{t.value}</span>
                                                                 </a>
                                                             </li>                                                            
                                                     })}
                                             </ul>
-                                               
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -185,15 +182,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a href="#" class="">
-                                                                <span id="Wheathers">{t.id}</span>
+                                                                 <a href="#" className="d-flex justify-content-between align-items-center">
+                                                                <span id="Wheathers">{t.value}</span>
                                                                 </a>
                                                             </li>                                                            
                                                     })}
                                             </ul>
-                                               
-
-
                                             </div>
                                         </div>
                                     </div>
