@@ -201,8 +201,8 @@ const ProductTable  = (props) => {
                                                 <td className="text-center">
 
                                                     <span>
-                                                       
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>{props.getSpecifiedProductAction(product.product_id); handleEdit(product);}}/>
+                                                                                                                                                        {/* Add here for path handleEdit(product); */}
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>{props.getSpecifiedProductAction(product.product_id); }}/>
                                                        
                                                     </span>
                                                     <span>

@@ -251,8 +251,12 @@ import {getUsersList,showUser} from "../../actions/userAction";
         if(this.props.permissionList){
             exestingPermission = this.props.permissionList.payload
         }
-        console.log(currentPermissionNames)
-        userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+        console.log(this.props.user.data)
+        if(this.props.user.data !== undefined){
+            userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+
+        }
+       
     return (
         <>
         {/* <div clas="userManagementSection"> */}

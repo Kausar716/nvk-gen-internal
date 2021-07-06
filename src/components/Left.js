@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React ,{useState,useEffect} from "react";
@@ -134,8 +135,8 @@ const handleMainSelection= (id) => {
                   handleSubSelection("purchaseOrder2")}}><Link to="/comingsoon">New P.O</Link></li>
               </ul>  
             </li>
-            <li class={(selectedMainBar === "inventory")?"has-sub active":"has-sub "} >
-              <Link to="/comingsoon">
+            <li class={(selectedMainBar === "inventory")?"active":""} onClick={()=>{handleMainSelection("inventory")}}>
+              <Link to="/inventoryLists">
               <b class="caret"></b>
                 <img src="assets/img/inventory.svg" alt=""/>
                 <span>Inventory</span> 

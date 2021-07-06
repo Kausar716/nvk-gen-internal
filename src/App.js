@@ -32,7 +32,7 @@ import CustomerSettings from './components/CustomerSettings/CustomerSettingsInde
 import SupplierSettingIndex from "./components/SupplierSettings/SupplierSettingIndex";
 import CustomerLists from './components/CustomerSettings/CustomerLists'
 import InventoryLists from "./components/inventoryManagement/InventoryLists";
-import SupplierManagemnet from "./components/SupplierManagemnet";
+//import SupplierManagemnet from "./components/SupplierManagemnet";
 
 export const history = createBrowserHistory({forceRefresh: true})
 
@@ -132,11 +132,11 @@ function App(props) {
                   <Left />
                     <SupplierSettingIndex/>
                   </Route>
-                  <Route path="/supplierManagemnet">
+                  {/* <Route path="/supplierManagemnet">
                   <Nav />
                   <Left />
                     <SupplierManagemnet/>
-                  </Route>
+                  </Route> */}
 
               <Route path="/addPlant">
               <Nav />

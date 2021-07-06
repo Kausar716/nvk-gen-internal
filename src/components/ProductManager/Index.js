@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react' ;
 import {connect} from "react-redux";
-import { Link } from "react-router-dom";
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+//import { Link } from "react-router-dom";
+import { Tab, Tabs, TabList } from 'react-tabs';
 //import {getAllImageAssets} from "../Utility/Utility";
 // import '../ProductManagement/index.css'
  import GeneralSettings from './GeneralSettings'
@@ -19,6 +20,7 @@ import {
     getAllProductAction,
     getSpecifiedProductAction,
     duplicateProduct,
+    getAllSpecifiedSkuProductList,
 
     //page Redirects action
     pageReDirectAction,
@@ -36,7 +38,8 @@ import {
     getAllSubCategoriesAction,
 
     //manufacture actions
-    getAllManufactureAction
+    getAllManufactureAction,
+    
 
 } from '../../actions/categoryAction'
 //import './index.css'
@@ -56,13 +59,14 @@ const  ProductManagement = (props) =>{
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
     const [filterSubCategory, setFilterSubCategory]= useState([])
-
+    const product_idFromGeneral =props.temp.productData.ae_product_id
     //const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
             props.getAllProductAction()
             props.getAllCategoriesAction()
             props.getAllSubCategoriesAction()
             props.getAllManufactureAction()
+            //props.getAllSpecifiedSkuProductList()
 
         },[])
 
@@ -105,19 +109,19 @@ const  ProductManagement = (props) =>{
         }
 
 
-        const searchBasedOnCategory = (e) =>{
-            props.serachProduct({category: e.target.value})
-            setCategoryId(e.target.value)
+        // const searchBasedOnCategory = (e) =>{
+        //     props.serachProduct({category: e.target.value})
+        //     setCategoryId(e.target.value)
            
-        }
+        // }
 
 
-        const handleFilter  = ()=>{
-            alert("ABCD")
-            console.log("ABCD",category,subCategory)
-            props.handleCategory(category,subCategory) 
+        // const handleFilter  = ()=>{
+        //     alert("ABCD")
+        //     console.log("ABCD",category,subCategory)
+        //     props.handleCategory(category,subCategory) 
 
-        }
+        // }
         const resetFilter = () =>{
             setCategory("All")
             setCategoryId("0")
@@ -167,7 +171,8 @@ const  ProductManagement = (props) =>{
            setId(id)
        }
        
-        const {pageToOpen,actionType,productDataById} = props.productData
+        // eslint-disable-next-line no-unused-vars
+        const {pageToOpen,actionType,productDataById, skuDataById} = props.productData
         const {categoryData,subCategoryData} = props.categoryData
         console.log("subCategoprops.productData" ,props.productData)
     return (
@@ -294,13 +299,15 @@ const  ProductManagement = (props) =>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Product ID</h2>
+                                                    <h2>Product ID {product_idFromGeneral}</h2>
                                                 </div>
                                                 
                                                 <div class="col-md-6 d-flex justify-content-md-end">
                                                 <span onClick={()=>props.pageReDirectAction("product","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
-                                                    <i class='bx bx-arrow-back' ></i><label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label></span>
+                                                    <i class='bx bx-arrow-back' ></i>
+                                                    {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
+                                                    </span>
                                                     <a href="" class="mx-2">
                                                         <img src="assets/img/copy-ic.svg" alt=""/>
                                                     </a>
@@ -336,7 +343,8 @@ const  ProductManagement = (props) =>{
 
 const mapStateToProps = (state)=> ({
     productData : state.productData,
-    categoryData: state.categoryData
+    categoryData: state.categoryData,
+    temp:state,
 })
 
 export default connect(mapStateToProps,
@@ -364,6 +372,8 @@ getAllManufactureAction,
 
 //filter catgeory
 handleCategory,
+
+getAllSpecifiedSkuProductList,
 
 serachProduct
 }

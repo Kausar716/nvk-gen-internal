@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // import {v4 as uuidv4} from 'uuid';
 
 import actions from 'redux-form/lib/actions';
@@ -9,6 +10,7 @@ import {
     DELETE_PRODUCT_ACTION,
     GET_ALL_PRODUCT_ACTION,
     GET_SPECIFIED_PRODUCT_ACTION,
+    GET_SKU_SPECIFIED_PRODUCT,
 
     // SKU ACTION
 
@@ -52,6 +54,8 @@ const initialSatate = {
    
     productData         :   [],
     skuData             :   [],
+    poduct_idStoring:'',
+   
     productDataById     :   {
         name:"",
         category_id:null,
@@ -72,6 +76,8 @@ const initialSatate = {
         discontinued:0,
         archived:0,
         status:1,
+        supplier_id:1,
+       
 
 
     },
@@ -84,13 +90,15 @@ const initialSatate = {
     pageNumber          :   0,
     tagsData            :   [],
     needAction          :   false,
-    backupData          :[]
+    backupData          :[],
+    ae_product_id:"",
+    productDataBySKUlist:[],
 
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
- console.log("actions", action)
+ //console.log("actions", action)
    
     switch(action.type){
         // page action
@@ -118,7 +126,9 @@ export default function(state = initialSatate, action){
                     subcategory:0,
                     discontinued:0,
                     status:1,
-                    archived:0
+                    supplier_id:1,
+                    archived:0,
+                    //id:null
             
             
                 },
@@ -155,7 +165,9 @@ export default function(state = initialSatate, action){
         case SUB_PAGE_REDIRECT_ACTION:
             return{
                  ...state,
+                 
                 pageToOpen:action.page,
+                productID:action.productID
             }
 
         //product action
@@ -165,8 +177,18 @@ export default function(state = initialSatate, action){
                 productData:action.payload.data,
                 backupData:action.payload.data,
             }
+
+        case GET_SKU_SPECIFIED_PRODUCT:
+           return {
+                ...state,
+                productDataBySKUlist:action.payload.data,
+                backupData:action.payload.data,
+
+            }
+            
         case GET_SPECIFIED_PRODUCT_ACTION:
-            console.log(action.payload.data)
+           // debugger;
+            //console.log("GET_SPECIFIED_PRODUCT_ACTION",action.payload.data)
             return{
                 ...state,
                 productDataById:action.payload.data,
@@ -177,7 +199,9 @@ export default function(state = initialSatate, action){
         case CREATE_PRODUCT_ACTION:
             return{
                 ...state,
-                needAction:false
+                needAction:false,
+                ae_product_id:action.ae_product_id
+
             }
         case UPDATE_PRODUCT_ACTION:
             return{
@@ -206,13 +230,43 @@ export default function(state = initialSatate, action){
                     subcategory:null,
                     discontinued:0,
                     status:1,
-                    archived:0
-            
-            
+                    archived:0,
+                    supplier_id:1,
+                    //id:null
                 },
                 needAction:false,
                 tagsData:[]
             }
+
+            case DELETE_SKU_ACTION:
+                return{
+                    ...state,
+                    actionType:"add",
+                    productDataById     :   {
+                        name:"",
+                        category_id:null,
+                        subcategory_id:null,
+                        manufacturer_id:null,
+                        archived:0,
+                        internal_notes:"",
+                        discontinued:0
+                    },
+                    skuDataById         :   {
+                        each_cost:null,
+                        each_price:null,
+                        sale_price:null,
+                        sale_expiry_date:null,
+                        sku_item_name:null,
+                        subcategory:null,
+                        discontinued:0,
+                        status:1,
+                        archived:0,
+                        supplier_id:1,
+                        //id:null
+                    },
+                    needAction:false,
+                    tagsData:[]
+                }
     //sku action
     case GET_ALL_SKU_ACTION:
        
@@ -228,6 +282,17 @@ export default function(state = initialSatate, action){
             needAction:false
             
         }
+
+
+    case CREATE_SKU_ACTION:
+        return{
+            //const skuData = state.
+            ...state, 
+            needAction:false
+            // skuData:[...action.payload.data]
+        };
+
+
     case UPDATE_SKU_ACTION_CLEAR:
         return{
             ...state,
@@ -250,18 +315,27 @@ export default function(state = initialSatate, action){
                 subcategory:null,
                 discontinued:0,
                 status:1,
-                archived:0
+                archived:0,
+                supplier_id:1,
+                //id:null
         
         
             },
+            // eslint-disable-next-line no-dupe-keys
             actionType:"add",
             needAction:false,
             tagsData:[]
         }
     case GET_SPECIFIED_SKU_ACTION:
+        //debugger
         return{
-            ...state,
-            skuDataById:{...action.payload.data}
+            
+           ...state,
+            skuDataById:action.payload,
+            // productDataById:action.payload.data,
+            //     tagsData:JSON.parse(action.payload.data.common_name),
+                needAction:false,
+                actionType:action.actionType
         }
 
             
@@ -331,7 +405,7 @@ export default function(state = initialSatate, action){
 
 
             case HANDLE_SEARCH_PINPUT:
-                debugger;
+                //debugger;
                 var optionVal = -1;
                 var categoryVal = "";
                 // if(action.payload.option ==="active"){
