@@ -240,15 +240,22 @@ export class UserProfile extends Component {
         })
         
     }
+    cancel = ()=>{
+        this.setState({open:false})
+    }
+    confirm = ()=>{
+        this.setState({open:false})
+    }
     render() {
         let roles=[]
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser)
+    
    
      
     return (
         <>
-         <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
+         <ActionModal cancel={this.cancel} confirm={this.confirm} open={this.state.open} message={this.state.message}/>
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">

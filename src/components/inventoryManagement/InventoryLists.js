@@ -74,7 +74,7 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
             <div class="px-md-3 mt-3">
                 <Tabs>
                     <TabList>
-                        <Tab>Dashboard</Tab>
+                        <Tab>Master Inventory</Tab>
                         <Tab>Plants</Tab>
                         <Tab>Task List <span class="badge badge-pill badge-success">25</span></Tab>
                         <Tab>Task Queue</Tab>
