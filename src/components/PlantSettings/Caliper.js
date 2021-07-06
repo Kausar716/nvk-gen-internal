@@ -5,7 +5,17 @@ import {connect} from "react-redux";
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
     class Caliper extends Component {
-        bloomColor
+        constructor(props){
+            super()
+                this.state={
+                    errorObj:{
+                        caliperName:0,
+                        caliperSku:0,
+                        caliperImperial:0
+                    }
+                }
+            
+        }
          onDragOver = (ev)=>{
             ev.preventDefault();
         }

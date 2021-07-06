@@ -9,7 +9,6 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                 super()
                     this.state={
                         errorObj:{
-                            formName:0,
                             formSku:0
                         }
                     }
