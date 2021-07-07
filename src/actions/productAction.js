@@ -228,10 +228,10 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
     //debugger;
     //console.log("DATADATA", data);
     console.log("DATADATA", FinalData);
-    if(skuData.each_cost===0||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
-    if(skuData.each_price ===0||skuData.each_price ===""||skuData.each_price==null) error.push(" Add Each Price")
-    if(skuData.sale_price ===0||skuData.sale_price === ""||skuData.sale_price==null) error.push("Add Sale Price") 
-    if(skuData.subcategory ===0||skuData.subcategory == null||skuData.subcategory==null) error.push("Select Sub Category")
+    if(skuData.each_cost===""||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
+    if(skuData.each_price ===""||skuData.each_price ===""||skuData.each_price==null) error.push(" Add Each Price")
+    if(skuData.sale_price ===""||skuData.sale_price === ""||skuData.sale_price==null) error.push("Add Sale Price") 
+    if(skuData.subcategory ===""||skuData.subcategory == null||skuData.subcategory==null) error.push("Select Sub Category")
     if(skuData.sku_item_name==null ||skuData.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete skuData["id"]

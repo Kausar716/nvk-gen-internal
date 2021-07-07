@@ -213,7 +213,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
                                                 <div class="switcher ml-2">
-                                                    <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} checked={skuDataById.archived===0?false:true}/>
+                                                    <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} 
+                                                    // checked={skuDataById.archived===0?false:true}
+                                                    />
                                                     <label for="archived"></label>
                                                 </div>
                                             </div>
@@ -252,24 +254,35 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" value="$1.25"
-                                             id="each_cost" onChange={handleInput} value={skuDataById.each_cost} min="0" />
+                                            <input type="text" class="form-control text-right" placeholder="0" 
+                                            // value="$1.25"
+                                             id="each_cost" onChange={handleInput} 
+                                             value={skuDataById.each_cost} 
+                                            min="0"
+                                              />
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" value="$1.25"
-                                            id="each_price"  onChange={handleInput} value={skuDataById.each_price} min="0"/>
+                                            <input type="text" class="form-control text-right" placeholder="0" 
+                                            // value="$1.25"
+                                            id="each_price"  onChange={handleInput} 
+                                            value={skuDataById.each_price} 
+                                            min="0"/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" value="$1.25"
-                                             id="sale_price" onChange={handleInput} value={skuDataById.sale_price} min="0"/>
+                                            <input type="text" class="form-control text-right" placeholder="0" 
+                                            //  value="$1.25"
+                                             id="sale_price" onChange={handleInput}
+                                              value={skuDataById.sale_price}
+                                               min="0"/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>
+                                                    <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} 
+                                                    value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>
                                                     {/* <div>
                                                         <DatePicker onChange={handleChange1} value={value} 
                                                         min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} 
@@ -279,7 +292,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                         Active
                                                         <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2"
-                                                            onChange={handleInput} value={skuDataById.status} checked={skuDataById.status===0?false:true} />
+                                                            onChange={handleInput} value={skuDataById.status}
+                                                            //  checked={skuDataById.status===0?false:true}
+                                                              />
                                                             <label for="switcher_checkbox_date"></label>
                                                         </div>
                                                     </div>

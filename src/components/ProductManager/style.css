@@ -77,3 +77,29 @@
   background-color: white;
   cursor: pointer;
 } */
+
+/* new CSS* for tabs */
+.product_add_navigation {
+  margin-left: 4px;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.product_add_navigation span {
+  border: 1px solid #5287f5;
+  padding: 14px;
+  /* padding: 10px; */
+  /* background-color: #5287f5; */
+}
+
+.selected_link {
+  cursor: pointer;
+  color: white;
+  background-color: #5287f5;
+}
+
+.normal_link {
+  cursor: pointer;
+  background: white;
+  background-color: white;
+}
