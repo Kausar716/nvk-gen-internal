@@ -17,6 +17,7 @@ export class OrganizationSettings extends React.Component {
             errorObj:{               
                 sendingEmailError:0,
                 phoneError:0,
+                firstNameError:0
             },
             hadModified:{
             name:false,
@@ -64,6 +65,13 @@ export class OrganizationSettings extends React.Component {
                 errorCount--
             }           
         }
+        else if(name === "name" ){
+            hadModified.name=true
+            if(errorObj.firstNameError>0){
+                errorObj.firstNameError=0
+                errorCount--
+            }           
+        }
         console.log(hadModified[name],name)
         // if(hadModified[name]  === name){
             hadModified[name] = true
@@ -96,6 +104,8 @@ export class OrganizationSettings extends React.Component {
     }
     handleSubmit = (e) => {
         let count= this.validate()
+        console.log(count)
+        console.log(this.state.errorObj)
          if(count === 0){
              console.log(this.state)
              console.log("success")
@@ -126,6 +136,8 @@ export class OrganizationSettings extends React.Component {
              
             let res=  this.props.updateorganization(updateObject)
             res.then(r=>{
+                let id = "2"
+                this.props.showorganization(id)
                 console.log(JSON.stringify(r))
             }).catch(c=>{
                 alert(JSON.stringify(c))
@@ -230,6 +242,7 @@ export class OrganizationSettings extends React.Component {
                                         <div class="col-md-12">
                                             <label>Name</label>
                                             <input type="text" placeholder="Name" class="form-control" name="name" value={organizationDataById.name} onChange={this.handleInput}  />
+                                            {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Numbers are not allowed</span>:""}
                                         </div>
                                     </div>
                                     <div class="row form-group">
