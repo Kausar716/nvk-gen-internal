@@ -120,14 +120,15 @@ const ProductTable  = (props) => {
     const productPerPage = pageSize;
     const totalLength = productData.length
     const pagesVisited = pageNumber*pageSize;
-    // const reverseData = productData.reverse();
+
+    //const reverseData = productData.reverse();
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
     const {categoryData,subCategoryData} = props.categoryData
     //const {categoryData} = props.categoryData
     console.log("subCategoryData", subCategoryData)
     console.log("categoryDataDATA", categoryData)
-
+        console.log("displayProductList", displayProductList)
      
     return (
         <>
@@ -180,7 +181,7 @@ const ProductTable  = (props) => {
                                         <tbody>
 
                                         {
-                                        displayProductList.reverse().map(product=>{
+                                        displayProductList.map(product=>{
 
                                             // skuData.map(sku=>{
 

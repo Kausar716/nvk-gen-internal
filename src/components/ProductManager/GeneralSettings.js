@@ -110,7 +110,7 @@ const GeneralSettings=(props)=> {
         e.preventDefault();
        // e.target.reset();
        //debugger;
-console.log("TAGDATA", tagsData)
+        console.log("TAGDATA", tagsData)
         //tagsData = [...tags,...tagsData]
         let localTagData = tagsData;
          if(submitCount === 0){

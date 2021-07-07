@@ -109,7 +109,7 @@ const SkuList=(props)=> {
                 if(actionType ==="edit")
                 //debugger;
                
-                props.updateSkuAction( skuDataById.id,skuDataById)
+                props.updateSkuAction(skuDataById.id,skuDataById)
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 //setSubmitCount(1)
             }

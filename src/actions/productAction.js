@@ -135,8 +135,8 @@ export const deleteProductAction = (id) => dispatch => {
     let error = []
     axios.post(`/api/delete-product/${id}?type=product`,null,config).then(res=>{ 
         dispatch(getAllProductAction())
-        dispatch(getAllSkuAction())
-        // dispatch(deleteSkuAction(id))
+        //dispatch(getAllSkuAction())
+         dispatch(getAllSpecifiedSkuProductList(id))
         dispatch({
             type:DELETE_PRODUCT_ACTION
         })
@@ -245,8 +245,9 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
             // dispatch(pageReDirectAction("sku",actionType))
             //dispatch(showSpecifiedSkuAction())
 
-            dispatch(updateSkuAction(res.data.data.id, skuData))
+            //dispatch(updateSkuAction(res.data.data.id, skuData))
             dispatch(getAllSkuAction(res.data.data.id))
+            dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
             dispatch(showSpecifiedSkuAction(res.data.data.id, "edit","sku"))
             dispatch({
                 type:CREATE_SKU_ACTION
@@ -293,7 +294,8 @@ export const updateSkuAction = (id, data) =>async dispatch => {
 
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{ 
             //debugger;
-            dispatch(getAllSkuAction(res.data.data.id))
+            dispatch(getAllSkuAction(id))
+            dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
             
             dispatch({
                 type:UPDATE_SKU_ACTION
@@ -326,12 +328,14 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
         };
         const FinalData = {...data1, id, ...data}
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{
-            dispatch(getAllSkuAction(res.data.data.id))
+           
            // error.push("Product Updated Successfully")
         dispatch({
             type:UPDATE_SKU_ACTION_CLEAR
         })
         error.push("Product updated successfully and cleared Data")
+        dispatch(getAllSkuAction(id))
+        dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
         dispatch({
             type:ERROR_HANDLE,
             message:error,
@@ -366,6 +370,7 @@ export const deleteSkuAction = (id) => dispatch => {
     axios.post(`/api/delete-sku/${id}?type=product`,null,config).then(res=>{ 
         dispatch(getAllProductAction())
         dispatch(getAllSkuAction())
+        dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
         dispatch({
             type:DELETE_SKU_ACTION
         })
