@@ -39,7 +39,8 @@ const initialSatate = {
         case ADD_USER:{
             return{
                 ...state,
-                users:action              
+                user:action,
+                users:state.userBackup,
             }
         }
         case UPLOAD_USER_IMAGE:{

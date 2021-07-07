@@ -49,7 +49,8 @@ export class UserProfile extends Component {
             message:"",
             open:false,
             cancel:false,
-            logo:""
+            logo:"",
+            deleted_at:null
         }
     }
     componentDidMount(){
@@ -63,7 +64,8 @@ export class UserProfile extends Component {
                position:selectedUser.position,
                status:selectedUser.status,
                id:selectedUser.id,
-               logo:selectedUser.avatar?selectedUser.avatar:""
+               logo:selectedUser.avatar?selectedUser.avatar:"",
+               deleted_at:selectedUser.deleted_at
             })
 
     }
@@ -191,8 +193,6 @@ export class UserProfile extends Component {
         console.log(e)
         console.log(e.target.files[0])
         let imageData = e.target.files[0]
-       
-     
        let data =  this.props.uploadImage(imageData,JSON.stringify(this.props.selectedUser.id))
        data.then(res=>{
            console.log(res)
@@ -207,14 +207,10 @@ export class UserProfile extends Component {
             position:updatedData.position,
             status:updatedData.status,
             id:updatedData.id,
-            logo:updatedData.avatar?updatedData.avatar:""
+            logo:updatedData.avatar?updatedData.avatar:"",
+            deleted_at:updatedData.deleted_at
          })
        })
-
-
-
-
-
         // this.setState({log:e.target.files[0]})
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
@@ -235,21 +231,66 @@ export class UserProfile extends Component {
              position:updatedData.position,
              status:updatedData.status,
              id:updatedData.id,
-             logo:updatedData.avatar?updatedData.avatar:""
+             logo:updatedData.avatar?updatedData.avatar:"",
+             deleted_at:updatedData.deleted_at
           })
         })
         
     }
     handleDelete =()=> {
        let id = this.props.selectedUser.id
-        // let deleted = this.props.deleteUser(id)
-        var person = this.confirm("are you sure you want to delete?");
-        alert(person)
-        // deleted.then(res=>{
-        //     console.log(res)
-        // })
-        
-
+      
+        var person = window.confirm("are you sure you want to delete?");
+        if(person){
+              let deleted = this.props.deleteUser(id)
+              deleted.then(res=>{
+                console.log(res)
+               
+                let updatedData = this.props.data.removedData.payload
+                this.setState({
+                 firstName:updatedData.name,
+                 lastName:updatedData.last_name,
+                 phone:updatedData.phone,
+                 email:updatedData.email,
+                 position:updatedData.position,
+                 status:updatedData.status,
+                 id:updatedData.id,
+                 logo:updatedData.avatar?updatedData.avatar:"",
+                 deleted_at:updatedData.deleted_at
+                 
+              })
+              alert("deleted")
+            })
+        }
+    }
+    handleRestore =()=>{
+        let userStateObject = this.state
+        let userObject={}
+        userObject.id= this.props.selectedUser.id
+        userObject.deleted_at=null
+      
+        var person = window.confirm("are you sure you want to Restore?");
+        if(person){
+              let deleted = this.props.deleteUser(userStateObject.id)
+              deleted.then(res=>{
+                console.log(res)
+               
+                let updatedData = this.props.data.removedData.payload
+                this.setState({
+                 firstName:updatedData.name,
+                 lastName:updatedData.last_name,
+                 phone:updatedData.phone,
+                 email:updatedData.email,
+                 position:updatedData.position,
+                 status:updatedData.status,
+                 id:updatedData.id,
+                 logo:updatedData.avatar?updatedData.avatar:"",
+                 deleted_at:updatedData.deleted_at
+                 
+              })
+              alert("deleted")
+            })
+        }
     }
     cancel = ()=>{
         this.setState({open:false})
@@ -261,7 +302,7 @@ export class UserProfile extends Component {
         let roles=[]
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
-    
+    console.log(this.state.position)
    
      
     return (
@@ -417,11 +458,11 @@ export class UserProfile extends Component {
                                 {/* </div> */}
                             </div>
                             <div class="row mt-3">
-                                {this.props.selectedUser.deleted_at!== null?
+                                {this.state.deleted_at!== null?
                                 <div class="col-md-4 col-lg-4 d-flex align-items-center">
                                     Restore User
                                     <div class="switcher ml-2 pr-md-3">
-                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.props.handleRestore}/>
+                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.handleRestore}/>
                                         <label for="switcher_checkbox_2"></label>
                                     </div>
                                 </div>:

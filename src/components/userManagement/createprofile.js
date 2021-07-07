@@ -40,7 +40,8 @@ export class CreateUserProfile extends Component {
             message:"",
             open:false,
             cancel:false,
-            logo:""
+            logo:"",
+            createdUser:{}
         }
     }
     componentDidMount(){
@@ -143,14 +144,13 @@ export class CreateUserProfile extends Component {
         if(count === 0){
             console.log(this.state)
             let userStateObject = this.state
-            let userObject={}
-            
-
+            let userObject={}  
             userObject['name'] = userStateObject.firstName
             userObject['last_name'] = userStateObject.lastName
             userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
             userObject['phone'] = userStateObject.phone
+            userObject['role'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 
 
@@ -160,16 +160,23 @@ export class CreateUserProfile extends Component {
             res.then(result=>{
                 console.log(result)
                   
-                console.log(this.props.users)
-                if(this.props.users.payload.status === "Success"){
-                    this.setState({open:true,message:this.props.users.payload.message})
+                console.log(this.props)
+                if(this.props.user.payload.status === "Success"){
+                    this.setState({createdUser:this.props.user.payload.data.user})
+                    this.setState({open:true,message:this.props.user.payload.message})
                 }
             })
             console.log(res)
         }
-       
-
-
+    }
+    handleConfirm=()=>{
+        this.setState({open:false})
+        let userStateObject = this.state.createdUser
+        console.log()
+        this.props.handleCreateUpdateFlow(userStateObject)
+    }
+    handleCancel=()=>{
+        this.setState({open:false})
     }
     render() {
 
@@ -178,7 +185,7 @@ export class CreateUserProfile extends Component {
      if(this.props.roles)roles = this.props.roles
     return (
         <>
-         <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
+         <ActionModal cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
 
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
@@ -368,7 +375,8 @@ const mapStateToProps = (state)=> (
     // console.log(state)
     {
         users:state.userReduser.users,
-        roles:state.userAccessReduser.roles.payload
+        roles:state.userAccessReduser.roles.payload,
+        user:state.userReduser.user
 }
 
 )
