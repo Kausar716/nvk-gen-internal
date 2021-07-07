@@ -188,7 +188,7 @@ const handleMainSelection= (id) => {
               </Link>
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "AdminSetting1" || initialSelect)?"active":""} onClick={(e)=>{e.stopPropagation()
-                  handleSubSelection("AdminSetting1")}}><Link to="/organizationSettings">Organization</Link></li>
+                  handleSubSelection("AdminSetting1")}}><Link to="/organizationSettings">Organization Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting2")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting2")}}><Link to="/userSetting">User Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting3")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting3")}}><Link to="/customerSettings">Customer Settings</Link></li>
                 <li class= {(selectedSubBar === "AdminSetting4")?"active":""} onClick={(e)=>{e.stopPropagation();handleSubSelection("AdminSetting4")}}><Link to="/supplierSettings">Supplier Settings</Link></li>
