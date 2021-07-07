@@ -218,9 +218,9 @@ export class CreateUserProfile extends Component {
                                         </div>
                                     </div> */}
                                     <div class="row mt-3">
-                                        <div class="col-md-4 col-lg-3">
-                                            <div class="bg-grey-transparent-2 text-center px-4 py-4">
-                                                <div class="profImg">
+                                        {/* <div class="col-md-4 col-lg-3"> */}
+                                            {/* <div class="bg-grey-transparent-2 text-center px-4 py-4"> */}
+                                                {/* <div class="profImg">
                                                     <img src={this.state.logo.length>0?this.state.logo:""} alt="" />
                                                 </div>
                                                 <p>Image should print quality PNF or JPG</p>
@@ -233,7 +233,7 @@ export class CreateUserProfile extends Component {
                                                   
                                                     <img src="assets/img/upload-ic-white.svg" alt="" />
                                                 </a>
-                                               
+                                                */}
 
                                                 {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
                                                     <span class="d-flex align-items-center justify-content-around">
@@ -245,8 +245,8 @@ export class CreateUserProfile extends Component {
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
                                                 </div> */}
-                                            </div>
-                                        </div>
+                                            {/* </div> */}
+                                        {/* </div> */}
                                         <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                             <div class="row form-group">
                                                 <div class="col-md-6">
