@@ -242,8 +242,8 @@ export class UserProfile extends Component {
     }
     handleDelete =()=> {
        let id = this.props.selectedUser.id
-        let deleted = this.props.deleteUser(id)
-        var person = prompt("are you sure you want to delete?");
+        // let deleted = this.props.deleteUser(id)
+        var person = this.confirm("are you sure you want to delete?");
         alert(person)
         // deleted.then(res=>{
         //     console.log(res)
@@ -260,7 +260,7 @@ export class UserProfile extends Component {
     render() {
         let roles=[]
         if(this.props.roles)roles = this.props.roles
-        console.log(this.props.selectedUser)
+        console.log(this.props.selectedUser.deleted_at !== null)
     
    
      
