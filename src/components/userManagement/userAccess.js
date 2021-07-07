@@ -57,7 +57,8 @@ import {getUsersList,showUser} from "../../actions/userAction";
     masterInventoryModify:false,
     taskQueueView:false,
     taskQueueModify:false,
-    selectedUser:{}
+    selectedUser:{},
+    displayPermission:false
         }
     }
         
@@ -84,7 +85,6 @@ import {getUsersList,showUser} from "../../actions/userAction";
         console.log(e.target)
         const {target:{name,checked,id}} =e
         // this.setState({[name]:checked})
-        console.log(name.id)
         this.props.handleUserAccessInputAction(name,id,checked)
 
     }
@@ -161,7 +161,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
             taskQueueModify: name === "selectAll"?true:false,
             })
         }
-         if(checkBoxGroup === "additionalPermissionAll"|| checkBoxGroup === "additionalPermissionNone" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
+         if(checkBoxGroup === "additionalPermissionYes"|| checkBoxGroup === "additionalPermissionNO" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
             this.setState({
                ToolsAndsettings: name === "selectAll"?true:false,
                TagsAndLabels: name === "selectAll"?true:false,
@@ -232,7 +232,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
         this.props.handleUserSelect(selectedId)
   
-        this.setState({selectedUser:e.target.value})
+        this.setState({selectedUser:e.target.value,displayPermission:true})
 
     }
 
@@ -243,15 +243,15 @@ import {getUsersList,showUser} from "../../actions/userAction";
         let exestingRoles = []
         let exestingPermission = []
         let currentPermissionNames= this.props.temp.currentPermissionNames
-        console.log(this.props.temp)
+        console.log(this.props.temp.selectedUser.data)
         let userData = {}
-        if(this.props.user)
+        if(this.props.users)
         {
-            console.log(this.props.user)
-            if(this.props.user.user){
-            userData=this.props.user.user.data
-            if(this.props.user.user.data.roles)
-            exestingRoles = this.props.user.user.data.roles
+            console.log(this.props.users)
+            if(this.props.users.user){
+            userData=this.props.users.user.data
+            if(this.props.users.user.data.roles)
+            exestingRoles = this.props.users.user.data.roles
             console.log(userData)
             }
         }
@@ -264,7 +264,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
 
         }
-       
+       console.log(this.props.selectedUser?this.props.selectedUser:"")
     return (
         <>
         {/* <div clas="userManagementSection"> */}
@@ -348,18 +348,18 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                 <div class="ContentSection p-15">
                                     <div class="row">
                                         <div class="col-md-6 col-lg-5">
-                                            <div class="bg-grey-transparent-2 px-3 py-3">
-                                                <div class="row align-items-center">
+                                        {this.state.displayPermission? <div class="bg-grey-transparent-2 px-3 py-3">
+                                              <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
                                                         <img src="assets/img/profile-img.png" class="img-fluid" />
                                                     </div>
                                                     <div class="col-md-9 col-lg-9">
-                                                        <p class="mb-0">Olivia</p>
-                                                        <div>Olivia231@gmail.com</div>
+                                                        <p class="mb-0">{this.props.selectedUser?this.props.selectedUser.selectedUser.data.name:""}</p>
+                                                        <div>{this.props.selectedUser?this.props.selectedUser.selectedUser.data.email:""}</div>
                                                         <a href="#" class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg" /></a>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            </div>:null}
                                         </div>
                                         <div class="col-md-6 col-lg-5 mt-3 mt-md-0">
                                             <div class="row align-items-end">
@@ -403,7 +403,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-4">
+                       {this.state.displayPermission? <><div class="mt-4">
                             <div class="row">
                                 <div class="col-md-12 d-flex justify-content-md-end">
                                     <div class="custom-control custom-checkbox" >
@@ -526,11 +526,11 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                     <div class="row mt-4">
                                         <div class="col-md-12 d-flex justify-content-md-end">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="quotesAll" onClick={this.handleCheckBox} name="quotesAll"/>
+                                                <input type="checkbox" class="custom-control-input" id="quotesAll" checked={currentPermissionNames.includes("quotesAll") } onClick={this.handleCheckBox} name="quotesAll"/>
                                                 <label class="custom-control-label pl-2" for="quotesAll"> Select All</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-2">
-                                                <input type="checkbox" class="custom-control-input" id="quotesNone" onClick={this.handleCheckBox} name="quotesNone" />
+                                                <input type="checkbox" class="custom-control-input" id="quotesNone" checked={currentPermissionNames.includes("quotesNone") } onClick={this.handleCheckBox} name="quotesNone" />
                                                 <label class="custom-control-label pl-2" for="quotesNone"> Select None</label>
                                             </div>
                                         </div>
@@ -621,7 +621,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                             <div class="pl-4">
                                             {exestingPermission?exestingPermission.filter(premission => premission.name==="User Profile"  && premission.group_name === "userManagement").map(filteredPermission => (
                                           <div class="custom-control custom-checkbox mt-2">
-                                          <input type="checkbox" class="custom-control-input" name="User Profile"checked={currentPermissionNames.includes("User Profile") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                          <input type="checkbox" class="custom-control-input" name="User Profile" checked={currentPermissionNames.includes("User Profile") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>User Profile</label>
                                       </div>
                                         )):null}
@@ -653,18 +653,19 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                     <div class="row mt-4">
                                         <div class="col-md-12 d-flex justify-content-md-end">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="additionalPermissionAll" onChange={this.handleCheckBox} name="additionalPermissionAll"/>
-                                                <label class="custom-control-label pl-2" for="additionalPermissionAll" > Select All</label>
+                                                <input type="checkbox" class="custom-control-input" id="additionalPermissionYes" checked={currentPermissionNames.includes("additionalPermissionYes") } onChange={this.handleCheckBox} name="additionalPermissionYes"/>
+                                                <label class="custom-control-label pl-2" for="additionalPermissionYes" > Select All</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-2">
-                                                <input type="checkbox" class="custom-control-input" id="additionalPermissionNone"  onChange={this.handleCheckBox} name="additionalPermissionNone"/>
-                                                <label class="custom-control-label pl-2" for="additionalPermissionNone" name=""> Select None</label>
+                                                <input type="checkbox" class="custom-control-input" id="additionalPermissionNo"  checked={currentPermissionNames.includes("additionalPermissionNO") }  onChange={this.handleCheckBox} name="additionalPermissionNo"/>
+                                                <label class="custom-control-label pl-2" for="additionalPermissionNo" name=""> Select None</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                      
                         <div class="row mt-3">
                             <div class="col-md-12">
                                 <a href="#">Update Current Role</a>
@@ -677,6 +678,8 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                 <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>update</button>
                             </div>
                         </div>
+                        </> :null}
+                        
                     </div>
                     </TabPanel>
                 </Tabs>
@@ -695,7 +698,8 @@ const mapStateToProps = (state)=> (
     users:state.userReduser.users.payload,
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,
-    temp:state.userAccessReduser
+    temp:state.userAccessReduser,
+    selectedUser:state.userAccessReduser.selectedUser
     // permissionList:state.permissionList
 }
 

@@ -375,7 +375,7 @@ const mapStateToProps = (state)=> (
     // console.log(state)
     {
         users:state.userReduser.users,
-        roles:state.userAccessReduser.roles.payload,
+        roles:state.userAccessReduser.roles,
         user:state.userReduser.user
 }
 

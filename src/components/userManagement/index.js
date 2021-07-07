@@ -164,7 +164,6 @@ handleCreateUpdateFlow = (obj)=>{
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option>Select</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                console.log(userObj)
                                                 return  <option value={userObj.id}>{userObj.name}</option>
                                             }):null}
                                             </select>
