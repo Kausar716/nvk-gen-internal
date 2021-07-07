@@ -1,3 +1,5 @@
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
@@ -21,11 +23,24 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             let tasks = this.props.zoneCategoryList.filter((task)=>{                
                    return JSON.stringify(task.id) === id;
             });
-            console.log(tasks)
-            let result= this.props.handleAttributeDragDrop(tasks[0])
-            result.then(res=>{
-            this.props.getAllSubAttribute(14)
-           })
+        //     console.log(tasks)
+        //     let result= this.props.handleAttributeDragDrop(tasks[0])
+        //     result.then(res=>{
+        //     this.props.getAllSubAttribute(14)
+        //    })
+            let doProcess = false;
+            if (cat === 'active' && tasks[0].status === 0) {
+                doProcess = true;
+            }
+            if (cat === 'inactive' && tasks[0].status === 1) {
+                doProcess = true;
+            }
+            if (doProcess === true) {
+                let result= this.props.handleAttributeDragDrop(tasks[0])
+                result.then(res=>{
+                    this.props.getAllSubAttribute(14)
+                })   
+            }
         }
         onDelete =(ev)=>{
            let id= ev.dataTransfer.getData("id");
@@ -54,7 +69,6 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
         
         }
         render() {
-        console.log(this.props.temp)
         var tasks={
             inactive:[],
             active:[],
@@ -85,7 +99,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                 <input type="text" className="form-control" name="bloomColor" value={this.props.bloomColor}   placeholder="" onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a  className="d-flex align-items-center">
+                                                <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Color
                                                 </a>
                                             </div>
@@ -94,7 +108,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                 </div>
                                 <div class="row mt-5 mb-4">
                                     <div class="col">
-                                        <div class="card zoneCard">
+                                        <div class="card midCard">
                                             <div class="card-header">
                                                 Inactive
                                             </div>
@@ -106,7 +120,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                 <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                             <a href="#" class="">
+                                                             <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 </a>
                                                             </li>
@@ -122,16 +136,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-angle-double-right"></i> */}
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-arrows-alt"></i> */}
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
@@ -139,7 +147,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card zoneCard">
+                                        <div class="card midCard">
                                             <div class="card-header">
                                                 Active
                                             </div>
@@ -147,7 +155,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a href="#" class="">
+                                                                 <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 </a>
                                                             </li>

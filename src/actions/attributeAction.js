@@ -10,6 +10,7 @@ import {
     HANDLE_ADD_ZONE_ATTRIBUTE,
     HANDLE_POSITION_INPUT_ACTION,
     HANDLE_ADD_POSITION_ATTRIBUTE,
+    HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     // axios config
     config,
     axios
@@ -85,14 +86,10 @@ export const handleZoneInputAction = (name,value) =>dispatch=>{
 }
 
 export const handleAddZone = (data) =>dispatch=>{
-    console.log(data)
-    let attributeObject={}
-  
     return axios.post(`/api/add-subattribute`,data,config).then(res=>{ 
         console.log(res)
     dispatch({
-            type:HANDLE_ADD_ZONE_ATTRIBUTE,
-            payload:res.data
+            type:HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE
         })
     })
 }
@@ -106,9 +103,6 @@ export const handlePositionInputAction = (name,value) =>dispatch=>{
 }
 
 export const handleAddPosition = (data) =>dispatch=>{
-    console.log(data)
-    let attributeObject={}
-  
     return axios.post(`/api/add-subattribute`,data,config).then(res=>{ 
         console.log(res)
     dispatch({

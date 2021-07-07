@@ -7,7 +7,8 @@ import {
     HANDLE_ZONE_INPUT_ACTION,
     HANDLE_ADD_ZONE_ATTRIBUTE,
     HANDLE_POSITION_INPUT_ACTION,
-    HANDLE_ADD_POSITION_ATTRIBUTE
+    HANDLE_ADD_POSITION_ATTRIBUTE,
+    HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
@@ -32,9 +33,6 @@ const initialSatate = {
         packagingSku:"",
         characterSectionName:"",
         characterFeatureName:""
-
-
-
     }
 }
 
@@ -82,6 +80,28 @@ switch(action.type){
     case HANDLE_ADD_POSITION_ATTRIBUTE:
         return{
             ...state
+        }
+    case HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE:
+        return{
+            ...state,
+            subAttributeName:{
+                zone:"",
+                bloomColor:"",
+                volume:"",
+                reason:"",
+                formName:"",
+                formSku:"",
+                caliperName:"",
+                caliperImperial:"",
+                caliperSku:"",
+                heightName:"",
+                heightImperial:"",
+                heightSku:"",
+                packagingName:"",
+                packagingSku:"",
+                characterSectionName:"",
+                characterFeatureName:""
+            }
         }
      default:
             return state
