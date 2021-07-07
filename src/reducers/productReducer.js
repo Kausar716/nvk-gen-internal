@@ -172,6 +172,8 @@ export default function(state = initialSatate, action){
 
         //product action
         case GET_ALL_PRODUCT_ACTION:
+//debugger;
+console.log("actions", action.payload.data)
             return{
                  ...state,
                 productData:action.payload.data,
@@ -179,10 +181,11 @@ export default function(state = initialSatate, action){
             }
 
         case GET_SKU_SPECIFIED_PRODUCT:
+            //debugger;
            return {
                 ...state,
                 productDataBySKUlist:action.payload.data,
-                backupData:action.payload.data,
+                //backupData:action.payload.data,
 
             }
             

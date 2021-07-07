@@ -4,16 +4,16 @@
 
 import React,  {  useEffect,useState } from 'react' ;
 import {connect} from "react-redux";
-import { Link } from "react-router-dom";
+import { Tab, Tabs, TabList } from 'react-tabs';
 //import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table, Row,Col} from 'reactstrap'
 //import {getAllImageAssets} from "../Utility/Utility";
 //import '../ProductManagement/index.css'
 
 import PlantTable from './PlantTable'
-//import GeneralSettings from './GeneralSettings'
+import GeneralSettings from './GeneralSettings'
 
 import ActionModal from '../Modal/ActionModal';
-//import SkuList from './SkuList'
+import SkuList from './SkuList'
 import ModalData from '../Modal'
 import {
     //plant actions
@@ -38,9 +38,9 @@ import {
 }from "../../actions/categoryAction";
 
 
-const  PlantManager=(props)=> {
+const  PlantManger=(props)=> {
 
-    //const [disable,setDisable] = useState(false)
+    const [disable,setDisable] = useState(false)
     const [id,setId] = useState(0)
     const [selectedRadio,setRadio] =useState("all")
     const [open,setOpen] = useState(false)
@@ -49,22 +49,23 @@ const  PlantManager=(props)=> {
     const [categoryId,setCategoryId] = useState(0)
     const [inputValue, setInputValue] = useState("");
     const [errorObj,setErrorObj] = useState({ genusError:0,lastNameError:0,phoneError:0,emailError:0,positionError:0})
-// const productFormAction = ()=>{
-//         this.props.getProductPage("general")
-//         this.setState({plantPageToOpen:"general"})
+const productFormAction = ()=>{
+        this.props.getProductPage("general")
+        this.setState({plantPageToOpen:"general"})
         
-//     }
-//     const pageRenderAction = (pageType) =>{
-//         props.getProductPage(pageType)
-//     }
+    }
+    const pageRenderAction = (pageType) =>{
+        props.getProductPage(pageType)
+    }
     useEffect(()=>{
         props.getAllPlantAction()
         props.getAllPlantCategories()
     },[])
-    // const addPlant =()=>{
-    //     console.log("working")
-    //     props.createPlantAction()
-    // }
+    
+    const addPlant =()=>{
+        console.log("working")
+        props.createPlantAction()
+    }
     const cancel = ()=>{
         setOpen(false)
         setId(0)
@@ -85,19 +86,19 @@ const  PlantManager=(props)=> {
         setType("")
         setMessage("")
     }
-    // const confirmAction = (id,type)=>{
-    //     if(type=="delete"){
-    //         setType(type)
-    //         setMessage("Are you sure you want to delete this plant and its related SKUs?")
+    const confirmAction = (id,type)=>{
+        if(type=="delete"){
+            setType(type)
+            setMessage("Are you sure you want to delete this plant and its related SKUs?")
 
-    //     }else{
-    //         setType(type)
-    //         setMessage("Are you sure you want to duplicate this plant and all its related SKU and plant information?")
+        }else{
+            setType(type)
+            setMessage("Are you sure you want to duplicate this plant and all its related SKU and plant information?")
 
-    //     }
-    //     setOpen(true)
-    //     setId(id)
-    // } selectedRadio
+        }
+        setOpen(true)
+        setId(id)
+    }
         const getValue = (e)=>{
             console.log(e.target.value)
             props.serachPlant({plant: e.target.value, option: selectedRadio, category: categoryId})
@@ -133,127 +134,166 @@ const  PlantManager=(props)=> {
     
 
 
-    const {plantData} = props.plantData
+    const {plantPageToOpen,plantData,actionType,plantDataById} = props.plantData
     const {plantCategoryData} =  props.categoryData
     console.log(plantData)
-
 
     return (
         <div>
             <ModalData/>
              
              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
-            <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
-           <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>	<h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Manager</h1></div> 
-				{/* <div className="">
-
-					<Link to="/addPlant">
-                    <img src="assets/img/add.svg" alt=""/>
-                    </Link>
-						
-				
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/preview.svg" alt=""/>
-					</a>
-					<a href="javascript:;" className="ml-2">
-						<img src="assets/img/print.svg" alt=""/>
-					</a>
-				</div> */}
-                	<div class="topbarCtrls mt-3 mt-md-0">
-                    {/* <a href="#" class="btn active"> */}
-                        <Link to="/addPlant" class="btn active">
-                        <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/plant-ic-btn.svg" alt=""/>
-                            <span class="ml-2"><b>Add Plant</b></span>
-                        </span>
-                        </Link>
-                    {/* </a> */}
-                    <a href="#" class="btn ml-2">
-                        <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/search-ic-btn.svg" alt=""/>
-                            <span class="ml-2"><b>Preview</b></span>
-                        </span>
-                    </a>
-                    <a href="#" class="btn ml-2 mt-3 mt-md-0">
-                        <span class="d-flex align-items-center text-left">
-                            <img src="assets/img/print-ic-btn.svg" alt=""/>
-                            <span class="ml-2"><b>Print</b></span>
-                        </span>
-                    </a>
-				</div>
+             {plantPageToOpen==="all" &&
+             <div>
+                    <div className="contentHeader bg-white d-flex justify-content-between align-items-center">
+                        <div className="row"><img src="assets/img/PlantManagerIcon.svg" alt=""/>	
+                            <h1 className="page-header mb-0" style={{margin:"0.6em"}}>Plant Manager</h1>
+                        </div> 
+                
+                            <div class="topbarCtrls mt-3 mt-md-0">
+                            <a href="#" class="btn active">
+                              
+                                <span class="d-flex align-items-center text-left"  onClick={()=>props.plantPageReDirectAction("general","add")}>
+                                    <img src="assets/img/plant-ic-btn.svg" alt=""/>
+                                    <span class="ml-2"><b>Add Plant</b></span>
+                                </span>
+                             
+                            </a>
+                            <a href="#" class="btn ml-2">
+                                <span class="d-flex align-items-center text-left">
+                                    <img src="assets/img/search-ic-btn.svg" alt=""/>
+                                    <span class="ml-2"><b>Preview</b></span>
+                                </span>
+                            </a>
+                            <a href="#" class="btn ml-2 mt-3 mt-md-0">
+                                <span class="d-flex align-items-center text-left">
+                                    <img src="assets/img/print-ic-btn.svg" alt=""/>
+                                    <span class="ml-2"><b>Print</b></span>
+                                </span>
+                            </a>
+                        </div>
 
 
-			</div>
-			<div className="contentWrapper">
-				<div className="row">
-					<div className="col-xl-12 col-md-12">
-						<div className="bg-white p-15">
-                            <div className="form-group row">
-                                <div className="col-md-5 col-lg-5">
-                                    <label for="plantSearch">Plant Search</label>
-                                    <div className="searchInput">
-                                        <button type="submit" className="btn btn-search">
-                                            <img src="assets/img/search.svg" alt=""/>
-                                        </button>
-                                        {/* <input type="text" className="form-control" placeholder="Search"/> */}
-                                        <input className="form-control" 
-                                                type="text" 
-                                                autocomplete={"off"}
-                                                placeholder="Search" 
-                                                value={inputValue}
-                                                onChange={getValue} id="search"/>
+                    </div>
+                    <div className="contentWrapper">
+                        <div className="row">
+                            <div className="col-xl-12 col-md-12">
+                                <div className="bg-white p-15">
+                                    <div className="form-group row">
+                                        <div className="col-md-5 col-lg-5">
+                                            <label for="plantSearch">Plant Search</label>
+                                            <div className="searchInput">
+                                                <button type="submit" className="btn btn-search">
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                                {/* <input type="text" className="form-control" placeholder="Search"/> */}
+                                                <input className="form-control" 
+                                                        type="text" 
+                                                        autocomplete={"off"}
+                                                        placeholder="Search" 
+                                                        value={inputValue}
+                                                        onChange={getValue} id="search"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
+                                            <label for="Category">Category</label>
+                                            {/* <select className="form-control">
+                                                <option>None</option>
+                                            </select> */}
+
+                                            <select className="form-control"  id="sub_category" onChange={searchBasedOnCategory}>
+                                                <option value={0}>None</option>
+                                            {plantCategoryData.map(plantCategory=>{
+                                                return(
+                                                    <option value={plantCategory.id}  selected={Number(categoryId) ===plantCategory.id?"selected":""} >{plantCategory.name} </option>
+                                                )
+                                            })
+                                                
+                                            }
+                                            </select>
+
+
+                                        </div>
+                                        <div className="col-md-2 col-lg-2">
+                                            <a href="javascript:;" onClick={resetData} className="d-block topSpace" style={{marginTop:"2.5em"}}>Reset</a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
-                                    <label for="Category">Category</label>
-                                    {/* <select className="form-control">
-                                        <option>None</option>
-                                    </select> */}
-
-                                    <select className="form-control"  id="sub_category" onChange={searchBasedOnCategory}>
-                                        <option value={0}>None</option>
-                                    {plantCategoryData.map(plantCategory=>{
-                                        return(
-                                            <option value={plantCategory.id}  selected={Number(categoryId) ===plantCategory.id?"selected":""} >{plantCategory.name} </option>
-                                        )
-                                    })
-                                        
-                                    }
-                                    </select>
-
-
-                                </div>
-                                <div className="col-md-2 col-lg-2">
-                                    <a href="javascript:;" onClick={resetData} className="d-block topSpace">Reset</a>
-                                </div>
-                            </div>
-                            <div className="form-group row">
-                                <div className="col-md-12">
-                                    <div className="form-check form-check-inline">
-                                    <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
-                                        {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
-                                        <label className="form-check-label" for="activePlants">Active</label>
+                                    <div className="form-group row">
+                                        <div className="col-md-12">
+                                            <div className="form-check form-check-inline">
+                                            <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
+                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
+                                                <label className="form-check-label" for="activePlants">Active</label>
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
+                                                <label className="form-check-label" for="archivedPlants">Archived</label>
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                            <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
+                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
+                                                <label className="form-check-label" for="allPlants"> &nbsp;All</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div className="form-check form-check-inline">
-                                    <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
-                                        {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
-                                        <label className="form-check-label" for="archivedPlants">Archived</label>
-                                    </div>
-                                    <div className="form-check form-check-inline">
-                                    <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
-                                        {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
-                                        <label className="form-check-label" for="allPlants"> &nbsp;All</label>
-                                    </div>
+                                    <hr/>
+                                    <PlantTable/>
                                 </div>
                             </div>
-                            <hr/>
-                            
-                            <PlantTable/>
+                        </div>
+                    </div>
+            </div>}
 
-						</div>
-					</div>
-				</div>
-			</div>
+
+            {(plantPageToOpen === "general" || plantPageToOpen === "sku") &&
+                  
+
+
+                            <div> 
+                                <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
+                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add Plant</h1>
+                        
+                                </div>
+                                    <div class="px-md-3 mt-3">
+                                        <div class="px-3 py-3 mb-3 bg-white">
+                                            <div class="row align-items-center">
+                                                <div class="col-md-6">
+                                                    <h2>Plant ID </h2>
+                                                </div>
+                                                
+                                                <div class="col-md-6 d-flex justify-content-md-end">
+                                                <span onClick={()=>props.plantPageReDirectAction("all","add")} 
+                                                style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
+                                                    <i class='bx bx-arrow-back' ></i>
+                                                    {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
+                                                    </span>
+                                                    <a href="" class="mx-2">
+                                                        <img src="assets/img/copy-ic.svg" alt=""/>
+                                                    </a>
+                                                    <a href="" class="mx-2">
+                                                        <img src="assets/img/trash-ic.svg" alt=""/>
+                                                    </a>
+                                                    <a href="" class="mx-2">
+                                                        <img src="assets/img/left-double-arrow.svg" alt=""/>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <Tabs>
+                                            <TabList>
+                                                <Tab onClick={()=>props.plantSubPageReDirectAction("general")}>General</Tab>
+                                                <Tab onClick={()=>props.plantSubPageReDirectAction("sku")}>SKU Lists</Tab>
+                                            </TabList>
+                                        </Tabs>
+                                    </div>
+                            </div>
+                   
+                }
+
+                    { plantPageToOpen==="general"&&<GeneralSettings/>}
+                    { plantPageToOpen==="sku"&&<SkuList/>}
+
         </div>
     )
 }
@@ -281,4 +321,5 @@ export default connect(mapStateToProps,{
          radioSearch,
             serachPlant,
             searchCategoryApplyAction
-})(PlantManager)
+})(PlantManger)
+
