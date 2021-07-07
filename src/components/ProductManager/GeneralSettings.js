@@ -165,7 +165,8 @@ const GeneralSettings=(props)=> {
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived}
-                                                 checked={productDataById.archived===0?false:true}/>
+                                                //  checked={productDataById.archived===0?false:true}
+                                                 />
                                                 <label for="archived"></label>
                                             </div>
                                             Archive
@@ -194,10 +195,10 @@ const GeneralSettings=(props)=> {
                                                 <button
                                                                     onClick={() => removeTag1(index)}
                                                                     className="tagCloseBtn"
-                                                                    style={{paddingTop:"1px"}}
+                                                                    style={{paddingTop:"0px"}}
                                                                 >
                                                                     
-                                                               {tagData}  &nbsp;&nbsp;&nbsp;x </button></a>)
+                                                              <p>{tagData}  &nbsp;&nbsp;&nbsp;x </p> </button></a>)
                                             }) }
                                         </div>
 

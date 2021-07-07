@@ -9,6 +9,7 @@ import { Tab, Tabs, TabList } from 'react-tabs';
 import ProductTable from './ProductTable'
 import ActionModal from '../Modal/ActionModal'
 
+import './style.css';
 import {
     //product actions
     createProductAction ,
@@ -44,6 +45,7 @@ import ModalData from '../Modal'
 
 
 const  ProductManagement = (props) =>{
+    const [tabIndex, setTabIndex]=useState(0)
     const [category,setCategory] = useState("All")
     const [subCategory,setsubCategory] = useState(0)
     const [disable,setDisable] = useState(false)
@@ -268,13 +270,27 @@ const  ProductManagement = (props) =>{
                                                 </div>
                                             </div>
                                         </div>
-                                        <Tabs>
-                                            <TabList>
-                                                <Tab onClick={()=>props.subPageReDirectAction("general")} >General</Tab>
-                                                <Tab onClick={()=>props.subPageReDirectAction("sku")}>SKU Lists</Tab>
+
+                                        {/* className={pageToOpen === "general" ? "selected_link" : "normal_link" }
+                                        className={pageToOpen === "sku" ? "selected_link" : "normal_link" } 
+                                        selectedIndex={this.props.tabIndex} onSelect={tabIndex => this.setState({ tabIndex })}
+                                         const [tabIndex, setTabIndex]=useState(0)
+                                        */}
+                                        {/* <Tabs  >
+                                            <TabList >
+                                                <Tab onSelect={pageToOpen === "general"} onClick={()=>props.subPageReDirectAction("general")} >General</Tab>
+                                                <Tab onSelect={pageToOpen === "sku"} onClick={()=>props.subPageReDirectAction("sku")}>SKU Lists</Tab>
                                             </TabList>
 
-                                        </Tabs>
+                                        </Tabs> */}
+
+                                                <div style={{clear:"both"}}></div>
+
+                                                <div className="product_add_navigation">
+                                                    <span  style={{ marginRight: "25px"}} id="general" className={pageToOpen === "general" ? "selected_link" : "normal_link" } onClick={()=>props.subPageReDirectAction("general")}>General</span>
+                                                    <span  style={{ marginLeft: "-25px"}} id="skuList" className={pageToOpen === "sku" ? "selected_link" : "normal_link" } onClick={()=>props.subPageReDirectAction("sku")}>SKU Lists</span>
+                                                    
+                                                </div>
                                     </div>
                             </div>
                     </div>
