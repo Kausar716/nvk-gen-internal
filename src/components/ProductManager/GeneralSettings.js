@@ -195,10 +195,10 @@ const GeneralSettings=(props)=> {
                                                 <button
                                                                     onClick={() => removeTag1(index)}
                                                                     className="tagCloseBtn"
-                                                                    style={{paddingTop:"1px"}}
+                                                                    style={{paddingTop:"0px"}}
                                                                 >
                                                                     
-                                                               {tagData}  &nbsp;&nbsp;&nbsp;x </button></a>)
+                                                              <p>{tagData}  &nbsp;&nbsp;&nbsp;x </p> </button></a>)
                                             }) }
                                         </div>
 
