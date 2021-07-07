@@ -64,10 +64,10 @@ export const createProductAction = (product,tags) => dispatch => {
         axios.post(`/api/create-product`,product
         , config).then(res=>{
           // debugger;
-            errorArray.push("Producted Added successfully")
+            errorArray.push("Product Added successfully")
             dispatch(getAllProductAction())
             //dispatch(createSkuAction(res.data.data.product.product_id,product,"add"))
-           dispatch(getAllSpecifiedSkuProductList(res.data.data.product.product_id))
+           //dispatch(getAllSpecifiedSkuProductList(res.data.data.product.product_id))
             console.log("res12345",res.data.data.product.product_id)
         
         //disppath(updateProductAction(product,res.data.data.product.product_id,))
@@ -77,7 +77,7 @@ export const createProductAction = (product,tags) => dispatch => {
                 status:true
             },
             dispatch(subPageReDirectAction("sku")))
-           
+            dispatch(getAllSpecifiedSkuProductList(res.data.data.product.product_id))
             dispatch({
                 type:CREATE_PRODUCT_ACTION,
                 ae_product_id:res.data.data.product.product_id
@@ -111,7 +111,7 @@ export const updateProductAction = (data,id,tag) => dispatch => {
     //debugger;
     data["common_name"] = tag
     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
-      
+      //debugger;
         dispatch(getAllProductAction())
         //dispatch(createSkuAction(res.data.data.product.product_id,data,"add"))
         let error = []
@@ -123,7 +123,10 @@ export const updateProductAction = (data,id,tag) => dispatch => {
             type:ERROR_HANDLE,
             message:error,
             status:true
-        })
+        },
+        dispatch(getAllSpecifiedSkuProductList(id)),
+        dispatch(subPageReDirectAction("sku"))
+        )
     })
 
 }
@@ -159,7 +162,7 @@ export const getAllProductAction = () => dispatch => {
 
 
 export const getAllSpecifiedSkuProductList =(id)=>dispatch=>{
-   // debugger;
+  // debugger;
     axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
     //debugger;
         console.log("getAllSpecifiedSkuProductList",res.data)
@@ -187,7 +190,9 @@ export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="gene
                 payload:res.data,
                 actionType:actionType
     
-            })
+            },
+            dispatch(getAllSpecifiedSkuProductList(id)),
+            )
         })
    
 }
@@ -239,9 +244,10 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
             //dispatch(getSpecifiedProductAction(id,"edit","sku"))
             // dispatch(pageReDirectAction("sku",actionType))
             //dispatch(showSpecifiedSkuAction())
-            //dispatch(updateSkuAction(res.data.data.id, skuData))
-            dispatch(getAllSkuAction(res.data.data.id))
 
+            dispatch(updateSkuAction(res.data.data.id, skuData))
+            dispatch(getAllSkuAction(res.data.data.id))
+            dispatch(showSpecifiedSkuAction(res.data.data.id, "edit","sku"))
             dispatch({
                 type:CREATE_SKU_ACTION
             })
@@ -276,7 +282,7 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
 
 
 export const updateSkuAction = (id, data) =>async dispatch => {
-  
+ // debugger;
     let error = []
     const data1={
         type:"product",
@@ -286,13 +292,13 @@ export const updateSkuAction = (id, data) =>async dispatch => {
     console.log("DATADATA", data);
 
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{ 
-            
+            //debugger;
             dispatch(getAllSkuAction(res.data.data.id))
-            error.push("Product Updated Successfully")
+            
             dispatch({
                 type:UPDATE_SKU_ACTION
             })
-           
+            error.push("Product Updated Successfully")
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
@@ -375,6 +381,7 @@ export const deleteSkuAction = (id) => dispatch => {
 }
 export const getAllSkuAction = (id) => dispatch => {
     axios.get("/api/skus/products",config).then(res=>{ 
+       // debugger;
         console.log(res.data)
         dispatch({
                 type:GET_ALL_SKU_ACTION,

@@ -59,28 +59,26 @@ const GeneralSettings=(props)=> {
 
 
 
-    const handleTag = (e) => {
+    // const handleTag = (e) => {
        
-        setCurrentTagText(e.target.value);
-        if (e.keyCode === 13 && currentTagText) {
-          setTags((prevTags) => [...prevTags, currentTagText,]);
-          //setTags(()=>[...tagsData])
-          setCurrentTagText("");
-        } else if (e.keyCode === 32 && currentTagText) {
-          setTags((prevTags) => [...prevTags, currentTagText]);
-         // setTags(()=>[...tagsData])
-          setCurrentTagText("");
-        }
+    //     setCurrentTagText(e.target.value);
+    //     if (e.keyCode === 13 && currentTagText) {
+    //       setTags((prevTags) => [...prevTags, currentTagText,]);
+    //       //setTags(()=>[...tagsData])
+    //       setCurrentTagText("");
+    //     } else if (e.keyCode === 32 && currentTagText) {
+    //       setTags((prevTags) => [...prevTags, currentTagText]);
+    //      // setTags(()=>[...tagsData])
+    //       setCurrentTagText("");
+    //     }
 
-       
-
-      };
+    //   };
       
-      const removeTag = (index) => {
-        const newTagArray = tagsData;
-        newTagArray.splice(index, 1);
-        setTags([...newTagArray]);
-      };
+    //   const removeTag = (index) => {
+    //     const newTagArray = tagsData;
+    //     newTagArray.splice(index, 1);
+    //     setTags([...newTagArray]);
+    //   };
     
       const removeTag1 = (index) => {
         const newTagArray = tagsData;
@@ -122,7 +120,8 @@ console.log("TAGDATA", tagsData)
    
                 if(actionType ==="edit")
                 props.updateProductAction(productDataById,productDataById.product_id,localTagData)
-                setSubmitCount(1)
+                //setSubmitCount(1)
+
             }
         }
           
@@ -141,15 +140,15 @@ console.log("TAGDATA", tagsData)
      }
 
 
-     const goToParentPage=()=>{
-        history.push("/productManager")
+//      const goToParentPage=()=>{
+//         history.push("/productManager")
 
-}
+// }
 
 //tagsData = [...tags, ...tagsData]
     return (
         <div>
-            <div class="bg-white px-3 py-3 mt-3">
+            <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"1em",paddingRight:"1em"}}>
                             <form>
                                 <div class="row">
                                     <div class="col-md-12 d-md-flex flex-wrap align-items-center">
@@ -195,9 +194,10 @@ console.log("TAGDATA", tagsData)
                                                 <button
                                                                     onClick={() => removeTag1(index)}
                                                                     className="tagCloseBtn"
+                                                                    style={{paddingTop:"1px"}}
                                                                 >
-                                                                    x
-                                                                </button>{tagData}</a>)
+                                                                    
+                                                               {tagData}  &nbsp;&nbsp;&nbsp;x </button></a>)
                                             }) }
                                         </div>
 

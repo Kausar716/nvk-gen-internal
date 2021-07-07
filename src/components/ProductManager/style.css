@@ -1,10 +1,21 @@
 .subtag {
-  border: 1px solid #999999;
+  /* border: 1px solid #999999;
   padding-left: 1em;
   padding-right: 1em;
-  /* padding: 3px; */
   color: white;
   margin-left: 14px;
+  width: 100px;
+  background-color: #999999;
+  border-radius: 4px; */
+  border: 1px solid #999999;
+  /* padding-left: 0em;
+  padding-right: 1em; */
+  /* padding: 3px; */
+  color: white;
+  margin-left: 10px;
+  padding-top: 2px;
+  padding-bottom: 0px;
+  /* margin-top: 10px; */
   width: 100px;
   background-color: #999999;
   border-radius: 4px;
@@ -62,7 +73,7 @@
   background-color: transparent;
   border-radius: 5px;
 }
-.tagCloseBtn:hover {
+/* .tagCloseBtn:hover {
   background-color: white;
   cursor: pointer;
-}
+} */

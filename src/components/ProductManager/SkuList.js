@@ -80,12 +80,12 @@ const SkuList=(props)=> {
    
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
     const {subCategoryData} = props.categoryData;
-    console.log("productDataFINE", props.productData)
-    //console.log("productDataBySKUlist", productDataBySKUlist)
+    //console.log("productDataFINE", props.productData)
+    console.log("productDataBySKUlist", productDataBySKUlist)
     //console.log("skuDataByIdskuDataById",skuData)
     useEffect(()=>{
         props.getAllSkuAction()
-        props.getAllSpecifiedSkuProductList(product_idFromGeneral)
+        props.getAllSpecifiedSkuProductList()
     },[])
 
 
@@ -107,10 +107,11 @@ const SkuList=(props)=> {
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
                 if(actionType ==="edit")
-                alert("abcd")
-                props.updateSkuAction(skuDataById.id,skuDataById)
+                //debugger;
+               
+                props.updateSkuAction( skuDataById.id,skuDataById)
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
-                setSubmitCount(1)
+                //setSubmitCount(1)
             }
         }
           
@@ -152,9 +153,12 @@ const SkuList=(props)=> {
        setOpen(true)
        setId(id)
    }
-   const getSpecifiedProduct = (id,data,value) =>{
+   const getSpecifiedProduct = async(id,data,value) =>{
      //debugger
-      window.scrollTo(100, -100)
+
+     window.scrollTo(100, -100)
+    
+     
      
       //props.getSpecifiedProductAction(id,"edit","sku")
       props.showSpecifiedSkuAction(id,"edit","sku")
@@ -165,14 +169,26 @@ console.log("temp",props.temp.productData.ae_product_id)
 
 const product_idFromGeneral =props.temp.productData.ae_product_id
    // validation input  data
-
+console.log("product_idFromGeneral", product_idFromGeneral)
+console.log("PRODUCT.ID", productDataById.product_id)
    console.log("actionType12345",actionType)
 //    window.addEventListener('scroll', this.listenToScroll)
    //console.log("123",props.productData)
 
+
+   
+
+
+
+
     const skuPerPAge = pageSize;
     const totalLength = skuData.length;
     const pagesVisited = skuPageNumber*pageSize;
+
+    const displaySkuList2 = productDataBySKUlist.slice(pagesVisited, pagesVisited+skuPerPAge)
+    const totalLength2 = productDataBySKUlist.length;
+    const pageCount2 = Math.ceil(productDataBySKUlist.length/skuPerPAge)
+
     const displaySkuList = skuData.slice(pagesVisited,pagesVisited+skuPerPAge)
     const pageCount = Math.ceil(skuData.length/skuPerPAge)
     let minMonth = new Date().getMonth()
@@ -181,11 +197,13 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
     let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
     console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
 
+    const productIDList = productData.map(pro=>pro.product_id)
+    console.log("productIDList", displaySkuList2)
     console.log("productDataByIdskuDataById", productDataById, skuDataById)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
-                            <div class="bg-white px-3 py-3 mt-3">
+                            <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"0.5em",paddingRight:"1em"}}>
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -291,9 +309,16 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
                                     </div>
                                 </form>
                             </div>
-                            <div className="row_1" style={{marginTop:"1em"}}>
+                            <div className="row_1" style={{marginTop:"1em", marginLeft:"1em"}}>
                             <div>
-                            <label className="greenText">{"Showing " + (skuPageNumber>0 ? (pageSize*((skuPageNumber)))+1 : ((skuPageNumber)+1))+  "  to  " +  (skuPageNumber>0 ? (((pageSize*((skuPageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((skuPageNumber)))+pageSize)) : ((((skuPageNumber)+1)*pageSize)>totalLength?totalLength:(((skuPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label>
+                            {/* <label className="greenText">
+                                {"Showing " + (skuPageNumber>0 ? (pageSize*((skuPageNumber)))+1 : ((skuPageNumber)+1))+  "  to  " +  (skuPageNumber>0 ? 
+                                (((pageSize*((skuPageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((skuPageNumber)))+pageSize)) : 
+                                ((((skuPageNumber)+1)*pageSize)>totalLength?totalLength:(((skuPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label> */}
+
+                            <label className="greenText">{"Showing " + (skuPageNumber>0 ? (pageSize*((skuPageNumber)))+1 : ((skuPageNumber)+1))+  "  to  " + 
+                             (skuPageNumber>0 ? (((pageSize*((skuPageNumber)))+pageSize)>totalLength2 ? totalLength2 : ((pageSize*((skuPageNumber)))+pageSize)) :
+                              ((((skuPageNumber)+1)*pageSize)>totalLength2?totalLength2:(((skuPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength2 }</label>
                             </div>
 
 
@@ -318,11 +343,11 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
 
 
                     <div className="skuPagination">
-                    <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={skuPageNumber+1}/>
+                    <TablePagination pageChange={paginationChange} pageCount={pageCount2} pageNumber={skuPageNumber+1}/>
                     </div>
                     </div>
 
-                            <div className="form-group row mt-3">
+                            <div className="form-group row mt-3" style={{marginLeft:"0.42em", marginRight:"0.5em"}}>
                             <div className="col-md-12">
                                 <table id="plantDetails" class="table table-striped w-100 ">
                                     <thead>
@@ -340,9 +365,20 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
                                     </thead>
                                     <tbody>
 
-                                    {displaySkuList.map((sku)=>{
-                                            
-                                            if(sku.product_id===product_idFromGeneral){
+                                    {displaySkuList2.map((sku)=>{
+
+                                            // {let abc= productIDList.filter(pID =>pID.includes(sku.product_id).map(filterIDs=>
+                                            //     <li>{filterIDs}</li>
+                                            //     ))}
+                                                
+                                           // product_idFromGeneral   
+                                           //productDataById.product_id
+                                           //console.log(sku.product_id);
+                                           // console.log("AB12345", sku.product_id, product_idFromGeneral, productDataById.product_id)
+                                            //  if(sku.product_id=== (product_idFromGeneral ? product_idFromGeneral  : productDataById.product_id)){
+
+
+
 
                                             
                         return(
@@ -383,7 +419,7 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
                                     
                                     
                         )
-                                            }
+                        // }
                     })}
                 
                                     </tbody>

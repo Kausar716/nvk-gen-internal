@@ -3,10 +3,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useEffect, useState } from 'react' ;
 import {connect} from "react-redux";
-//import { Link } from "react-router-dom";
 import { Tab, Tabs, TabList } from 'react-tabs';
-//import {getAllImageAssets} from "../Utility/Utility";
-// import '../ProductManagement/index.css'
  import GeneralSettings from './GeneralSettings'
  import SkuList from './SkuList'
 import ProductTable from './ProductTable'
@@ -42,11 +39,8 @@ import {
     
 
 } from '../../actions/categoryAction'
-//import './index.css'
-//import * as BsIcons from "react-icons/bs";
-//import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 import ModalData from '../Modal'
-//const IconAssets =  getAllImageAssets();
 
 
 const  ProductManagement = (props) =>{
@@ -108,20 +102,6 @@ const  ProductManagement = (props) =>{
             }
         }
 
-
-        // const searchBasedOnCategory = (e) =>{
-        //     props.serachProduct({category: e.target.value})
-        //     setCategoryId(e.target.value)
-           
-        // }
-
-
-        // const handleFilter  = ()=>{
-        //     alert("ABCD")
-        //     console.log("ABCD",category,subCategory)
-        //     props.handleCategory(category,subCategory) 
-
-        // }
         const resetFilter = () =>{
             setCategory("All")
             setCategoryId("0")
@@ -131,11 +111,6 @@ const  ProductManagement = (props) =>{
 
         }
 
-   
-   
-        // const paginationChange =(event, page)=>{
-        //     props.setPageNumber(page-1)
-        // }
         const cancel = ()=>{
            setOpen(false)
            setId(0)
@@ -217,19 +192,6 @@ const  ProductManagement = (props) =>{
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
 
-                                {/* <select className="form-control"  id="category"
-                               // onChange={searchBasedOnCategory}
-                               onChange={handleCategoryData}
-                                 >
-                                    <option value="All" selected={category==="All"?"selected":""}>All</option>
-                                    {categoryData.map(categoryData=>{
-                                        return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
-                                    })
-                                    }
-        
-                
-                                </select> */}
-
                                 <select className="form-control"  id="category" onChange={handleCategoryData}   >
                                     <option value="All" selected={category==="All"?"selected":""}>All</option>
                                     {categoryData.map(categoryData=>{
@@ -245,15 +207,6 @@ const  ProductManagement = (props) =>{
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Sub Category</label>
 
-                                {/* <select className="form-control"  disabled={disable?true:false}
-                                 id="subcategory" onChange={handleCategoryData}  >
-                                <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
-                                    {subCategoryData.map(subCategoryData=>{
-                                        return(<option selected={subCategory===subCategoryData.id?"selected":""} value={subCategoryData.id} key={subCategoryData.id}>{subCategoryData.name}</option>)
-                                    })
-                                    }
-                                        
-                                </select> */}
                                  <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleCategoryData}  >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {filterSubCategory.map(subCategoryData=>{
@@ -276,19 +229,11 @@ const  ProductManagement = (props) =>{
                     </div>
                 </div> 
                 </div>}
+
+
             {(pageToOpen === "general" || pageToOpen === "sku") &&
                     <div className={`show_add_product, add_product_page`}>
 
-                        {/* <p className="headerbar1">Add Product</p>
-
-                        <div className="action_buttons_area2">
-                            <span style={{textDecoration:"none",cursor:"pointer"}} className="left_float" ><p className="textNumberBold" style={{marginLeft:"1em"}}>PRODUCT  ID: <span className="textNumberBold2">{productDataById.product_id} </span> </p> </span>
-                            <span  className="right_float icons_small"  style={{display:actionType==="add"?"none":"block",cursor:"pointer"}} onClick={()=>confirmAction(productDataById.product_id,"delete")}><i class='bx bxs-trash-alt'></i> <label className="deleteIcon">Delete</label></span>
-                            <span  className="right_float icons_small" style={{display:actionType==="add"?"none":"block",cursor:"pointer"}} onClick={()=>confirmAction(productDataById.product_id,"duplicate")}><i class='bx bx-copy' ></i><label className="trashIcon" style={{marginLeft:"-59px"}}>Duplicate</label></span>
-                            <span onClick={()=>props.pageReDirectAction("product","add")} style={{textDecoration:"none",cursor:"pointer"}}  className="right_float"><i class='bx bx-arrow-back' ></i><label className="trashIcon" style={{marginLeft:"-49px"}}>Back</label></span>
-                        </div>
-
-                        <div style={{clear:"both"}}></div> */}
 
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -299,7 +244,10 @@ const  ProductManagement = (props) =>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Product ID {product_idFromGeneral}</h2>
+                                                    <h2>Product ID &nbsp;&nbsp;
+                                                        {/* //{product_idFromGeneral||productDataById.product_id} */}
+                                                        {props.temp.productData.ae_product_id ==="" ? productDataById.product_id: product_idFromGeneral}
+                                                        </h2>
                                                 </div>
                                                 
                                                 <div class="col-md-6 d-flex justify-content-md-end">

@@ -70,38 +70,35 @@ import {
  
         }else{
          commonArray[commonArray.length] =e.target.value
-         var elem = document.getElementById(count);
+         elem = document.getElementById(count);
          elem.parentNode.removeChild(elem);
          setCount(count+1)
             setToggle(true)
         }
      }
-     const handleValidation =()=>{
-         let returnValue=true
-         let errorcount =errorCount
-         let errorobj =errorObj
-       if(plantDataById.genus.length === 0){
-        returnValue= false
-        errorobj.genus=1
-        errorcount++
-       }
-       if(plantDataById.species.length === 0){
-        returnValue= false
-        errorobj.species=1
-        errorcount++
-       }
-    //    if(plantDataById.categoryData.length === 0){
+    //  const handleValidation =()=>{
+    //      let returnValue=true
+    //      let errorcount =errorCount
+    //      let errorobj =errorObj
+    //    if(plantDataById.genus.length === 0){
     //     returnValue= false
-    //     errorobj.categoryData=1
+    //     errorobj.genus=1
     //     errorcount++
     //    }
-       setErrorObj(errorobj)
-       setErrorCount(errorcount)
+    //    if(plantDataById.species.length === 0){
+    //     returnValue= false
+    //     errorobj.species=1
+    //     errorcount++
+    //    }
+    //    setErrorObj(errorobj)
+    //    setErrorCount(errorcount)
 
-     }
+    //  }
+
+
      const submitAction = (e) =>{
          
-         let validate = handleValidation()  
+         //let validate = handleValidation()  
         //  if(validate)
         if(submitCount === 0){
            if(needAction){
@@ -140,34 +137,34 @@ import {
 
     return (
         <div>
-            <div class="bg-white px-3 py-3 mt-3">
+            <div class="bg-white px-3 py-3 mt-3" >
                             <form>
                                 <div class="row">
                                     <div class="col-md-12 d-md-flex flex-wrap align-items-center">
-                                        <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                        {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued==0?false:true}/>
+                                                <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
                                                 <label for="switcher_checkbox_2"></label>
                                             </div>
                                             Website
-                                        </div>
+                                        </div> */}
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued==0?false:true}/>
+                                                <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
                                                 <label for="switcher_checkbox_2"></label>
                                             </div>
                                             In Production
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox"id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued==0?false:true}/>
+                                                <input type="checkbox"id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
                                                 <label for="switcher_checkbox_2"></label>
                                             </div>
                                             Discountiued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="archived"  onChange={handleInput} value={plantDataById.archived} checked={plantDataById.archived==0?false:true}/>
+                                                <input type="checkbox" id="archived"  onChange={handleInput} value={plantDataById.archived} checked={plantDataById.archived===0?false:true}/>
                                                 <label for="switcher_checkbox_2"></label>
                                             </div>
                                             Archive
@@ -375,7 +372,6 @@ export default connect(mapStateToProps,{
 
 
 })(GeneralSettings)
-
 
 
 

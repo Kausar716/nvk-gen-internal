@@ -57,10 +57,10 @@ const ProductTable  = (props) => {
 
         }else{
             props.duplicateProduct(id)
-            history.push({
-                pathname:`/addProduct/${id}`,
+            // history.push({
+            //     pathname:`/addProduct/${id}`,
     
-            })
+            // })
         }
   
        setOpen(false)
@@ -82,13 +82,29 @@ const ProductTable  = (props) => {
        setId(id)
    }
 
+   const getSpecifiedProduct =(id,data,value) =>{
+   // debugger
+     window.scrollTo(100, -100)
+        props.showSpecifiedSkuAction(id,"edit","sku")
+  
+  }
 
-   const handleEdit=(product)=>{
-        history.push({
-            pathname:`/addProduct/${product.product_id}`,
-
-        })
+  const getSpecifiedProduct1 =async(id) =>{
+    // debugger
+      window.scrollTo(100, -100)
+      props.showSpecifiedSkuAction(id,"edit","sku")
+    //   setTimeout(()=>{
+    //     props.showSpecifiedSkuAction(id,"edit","sku")
+    //   }, 10000)
+        
+   
    }
+//    const handleEdit=(product)=>{
+//         history.push({
+//             pathname:`/addProduct/${product.product_id}`,
+
+//         })
+//    }
 
 //    const handleDuplicate=(product)=>{
 //     history.push({
@@ -99,11 +115,12 @@ const ProductTable  = (props) => {
 
 //    }
    
-   const {productData,pageNumber,productDataById} = props.productData
+   const {productData,pageNumber,productDataById,skuData} = props.productData
   // const {productData,pageNumber} = props.productData
     const productPerPage = pageSize;
     const totalLength = productData.length
     const pagesVisited = pageNumber*pageSize;
+    // const reverseData = productData.reverse();
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
     const {categoryData,subCategoryData} = props.categoryData
@@ -162,7 +179,12 @@ const ProductTable  = (props) => {
                                         </thead>
                                         <tbody>
 
-                                        {displayProductList.map(product=>{
+                                        {
+                                        displayProductList.reverse().map(product=>{
+
+                                            // skuData.map(sku=>{
+
+                                          
                                            console.log("Product data", product)
                                             //console.log("cacategoryData",categoryData)
                                             //console.log("categoryDatacategoryDataLENGTH", categoryData.length)
@@ -202,7 +224,11 @@ const ProductTable  = (props) => {
 
                                                     <span>
                                                                                                                                                         {/* Add here for path handleEdit(product); */}
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>{props.getSpecifiedProductAction(product.product_id); }}/>
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>{ props.getSpecifiedProductAction(product.product_id);
+                                                                                                                       // getSpecifiedProduct1(product.product_id);
+                                                                                                                    //getSpecifiedProduct(skuData.map(sku=>sku.id), "edit","sku")
+                                                                                                                   // props.getAllSpecifiedSkuProductList(product.product_id);
+                                                                                                                     }}/>
                                                        
                                                     </span>
                                                     <span>
@@ -219,7 +245,9 @@ const ProductTable  = (props) => {
                                             </tr>
                                        
                                             )
-                                        })}
+                                       
+                                    })
+                                    }
                                             
                                         </tbody>
                                     </table>
