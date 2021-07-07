@@ -35,7 +35,7 @@ import {
 
    export const addUser = (userData) => dispatch => {
        console.log(userData)
-       userData.role="1"
+    //    userData.role="1"
        userData.password="pass"
        userData.status="1"
        return axios.post(`/api/add-user`,userData,config).then(res=>{  

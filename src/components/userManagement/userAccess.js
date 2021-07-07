@@ -219,6 +219,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
     handleUserSelect = (e) =>{
         console.log(e.target.value)
         let selectedId = e.target.value
+        console.log(this.props.users)
         let userProfiles  =  [...this.props.users.active,...this.props.users.inactive]
         console.log(userProfiles)
         // let result = this.props.showUser(selectedId)
@@ -244,6 +245,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
             console.log(this.props.user)
             if(this.props.user.user){
             userData=this.props.user.user.data
+            if(this.props.user.user.data.roles)
             exestingRoles = this.props.user.user.data.roles
             console.log(userData)
             }

@@ -67,6 +67,8 @@ handleSubmit = ()=> {
 
 }
 handleCancle = () => {
+    this.props.getUsersList()
+    this.props.getRolesList()
     this.setState({displayUpdateProfile:false,displayCreate:false})
 }
 componentDidMount(){
@@ -81,6 +83,12 @@ else {
     this.setState({displatDeletedRecord:"off"})
 }
 }
+handleCreateUpdateFlow = (obj)=>{
+    console.log(obj)
+    this.setState({selectedUser:obj,displayUpdateProfile:true,displayCreate:false})
+    // displayUpdateProfile,
+    // selectedProfile:
+}
 
     
     render() {
@@ -94,6 +102,12 @@ else {
         if(this.props.users.active || this.props.users.inactive){ 
         if(this.props.users && (this.state.displatDeletedRecord === "off")){
              userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+             let userWithOutDeletedRecords = userProfiles.filter(user=>{
+                return (user.deleted_at=== null)
+            
+               
+            })
+            userProfiles = userWithOutDeletedRecords
            
             // userProfiles = this.props.users.active.concat(this.props.users.inactive)
         }  
@@ -168,8 +182,8 @@ else {
                                             </a>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList} />:null}
-                                    {displayCreate?<CreateUserProfile cancle={this.handleCancle}/>:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  />:null}
+                                    {displayCreate?<CreateUserProfile cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>
                         </div>

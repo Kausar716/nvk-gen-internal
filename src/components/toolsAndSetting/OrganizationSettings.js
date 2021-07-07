@@ -210,7 +210,7 @@ export class OrganizationSettings extends React.Component {
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
-                                        <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of loading, etc.</p>
+                                        <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of lading, etc.</p>
                                     </div>
                                 </div>
                             </div>
