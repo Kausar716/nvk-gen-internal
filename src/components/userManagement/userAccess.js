@@ -90,9 +90,10 @@ import {getUsersList,showUser} from "../../actions/userAction";
     }
 
     componentDidMount(){
+        this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
-        // this.props.getUsersList()
+       
     }
     handleSelect= (e) => {
         let checkBoxGroup = e.target.id
@@ -183,8 +184,12 @@ import {getUsersList,showUser} from "../../actions/userAction";
         // let createRoleToggle = ! this.state.createRoleToggle
         // this.setState({createRoleToggle})
         console.log(this.props.temp.currentPermission)
-        if(this.state.selectedUser)
-        this.props.handleUserUpdateUserPermission(this.state.selectedUser,this.props.temp.currentPermission)
+        if(this.state.selectedUser){
+        let result=this.props.handleUserUpdateUserPermission(this.state.selectedUser,this.props.temp.currentPermission)
+        result.then(res=>{
+            alert("updated")
+        })
+        }
     }
     handlecreateRoleModalResult = (e) => {
         console.log(e.target.id)
@@ -253,8 +258,9 @@ import {getUsersList,showUser} from "../../actions/userAction";
         if(this.props.permissionList){
             exestingPermission = this.props.permissionList.payload
         }
-        console.log(this.props.user.data)
-        if(this.props.user.data !== undefined){
+        console.log(this.props.users)
+        if(this.props.users !== undefined){
+            console.log(this.props.user)
             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
 
         }
@@ -685,7 +691,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
 const mapStateToProps = (state)=> (
     // console.log(state)
     {
-    roles:state.userAccessReduser.roles.payload,
+    roles:state.userAccessReduser.roles,
     users:state.userReduser.users.payload,
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,

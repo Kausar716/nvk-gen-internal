@@ -31,7 +31,7 @@ const initialSatate = {
         case GET_ROLES_LIST:
             return{
                 ...state,
-                roles:action              
+                roles:action.payload              
             }
         case SHOW_ROLE:
             

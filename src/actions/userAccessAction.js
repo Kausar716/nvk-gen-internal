@@ -127,7 +127,7 @@ import {
             let updateObject = {}
             updateObject.user_id=id
             updateObject.permissions_ids = currentPermission
-            axios.post(`/api/add-user-permission`,updateObject,config).then(res=>{     
+            return axios.post(`/api/add-user-permission`,updateObject,config).then(res=>{     
                 dispatch({
                         type:UPDATE_USER_PERMISSION,
                         selectedUser:res.data    

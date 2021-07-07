@@ -300,9 +300,10 @@ export class UserProfile extends Component {
     }
     render() {
         let roles=[]
+        console.log(this.props.roles)
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
-    console.log(this.state.position)
+        console.log(this.state.position)
    
      
     return (
@@ -499,8 +500,8 @@ const mapStateToProps = (state)=> (
     // console.log(state.userAccessReduser)
     {
     users:state.userReduser.users,
-    data:state.userReduser
-    // roles:state.userAccessReduser
+    data:state.userReduser,
+    roles:state.userAccessReduser.roles
 }
 
 )
