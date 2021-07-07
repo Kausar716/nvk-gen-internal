@@ -69,7 +69,6 @@ import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handle
         }
         handleAddCategory = (e)=>{
             if(this.props.name){
-                alert("in")
             let result = this.props.handleAddCategory(this.props.name)
             result.then(res=>{
                 this.props.getAllPlantCategories()
@@ -184,8 +183,8 @@ render() {
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a href="#" class="">
-                                                                <span id="Wheathers">{t.name}</span>
-                                                                </a>
+                                                                      <span id="Wheathers">{t.name}</span>
+                                                                      </a>
                                                             </li>
                                                     })}
                                             </ul>
