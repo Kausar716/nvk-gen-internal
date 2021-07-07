@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getUsersList,showUser,updateUser,uploadImage,removeImage} from "../../actions/userAction";
+import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -240,6 +240,17 @@ export class UserProfile extends Component {
         })
         
     }
+    handleDelete =()=> {
+       let id = this.props.selectedUser.id
+        let deleted = this.props.deleteUser(id)
+        var person = prompt("are you sure you want to delete?");
+        alert(person)
+        // deleted.then(res=>{
+        //     console.log(res)
+        // })
+        
+
+    }
     cancel = ()=>{
         this.setState({open:false})
     }
@@ -406,13 +417,23 @@ export class UserProfile extends Component {
                                 {/* </div> */}
                             </div>
                             <div class="row mt-3">
+                                {this.props.selectedUser.deleted_at!== null?
                                 <div class="col-md-4 col-lg-4 d-flex align-items-center">
                                     Restore User
                                     <div class="switcher ml-2 pr-md-3">
-                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2"/>
+                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.props.handleRestore}/>
                                         <label for="switcher_checkbox_2"></label>
                                     </div>
+                                </div>:
+                                <div class="col-md-4 col-lg-4 d-flex align-items-center">
+                                    Delete User
+                                <div class="switcher ml-2 pr-md-3" onClick={this.handleDelete}>
+                                    {/* <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.props.handleRestore}/> */}
+                                    <img src="assets/img/bin-ic-red.svg" alt=""/>
+                                    {/* <label for="switcher_checkbox_2"></label> */}
                                 </div>
+                            </div>
+                                }
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
                                     <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Update</button>
@@ -443,4 +464,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,uploadImage})(UserProfile)
+export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,uploadImage,deleteUser})(UserProfile)

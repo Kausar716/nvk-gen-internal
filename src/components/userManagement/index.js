@@ -91,7 +91,7 @@ else {
         console.log(this.props)
         console.log(this.props.users.active)
         // console.log([...this.props.users.active,...this.props.users.inactive])
-        if(this.props.users.active){
+        if(this.props.users.active || this.props.users.inactive){ 
         if(this.props.users && (this.state.displatDeletedRecord === "off")){
              userProfiles =  [...this.props.users.active,...this.props.users.inactive]
            
@@ -113,7 +113,7 @@ else {
         console.log(this.props.roles.payload)
         roleList = this.props.roles.payload
     }
-
+    console.log(this.props.temp.userReduser)
         
     return (
         <div clas="userManagementSection">
@@ -193,7 +193,8 @@ const mapStateToProps = (state)=> (
     {
     
     users:state.userReduser.users.type==="GET_USERS_LIST"? state.userReduser.users.payload :[],
-    roles:state.userAccessReduser.roles
+    roles:state.userAccessReduser.roles,
+    temp:state
 
 }
 
