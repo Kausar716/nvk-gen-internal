@@ -67,14 +67,14 @@ const initialSatate = {
         status:1
     },
     skuDataById         :   {
-        each_cost:0,
-        each_price:0,
-        sale_price:0,
+        each_cost:null,
+        each_price:null,
+        sale_price:null,
         sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
         sku_item_name:"",
         subcategory:null,
-        discontinued:0,
-        archived:0,
+        discontinued:null,
+        archived:null,
         status:1,
         supplier_id:1,
        
@@ -118,9 +118,9 @@ export default function(state = initialSatate, action){
                     status:1,
                 },
                 skuDataById         :   {
-                    each_cost:0,
-                    each_price:0,
-                    sale_price:0,
+                    each_cost:null,
+                    each_price:null,
+                    sale_price:null,
                     sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                     sku_item_name:"",
                     subcategory:0,

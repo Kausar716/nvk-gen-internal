@@ -33,6 +33,7 @@ deleteSkuAction ,
 getAllSkuAction ,
 showSpecifiedSkuAction ,
 setSkuPageNumber,
+pageReDirectAction,
 
 
 //input handle
@@ -104,6 +105,7 @@ const SkuList=(props)=> {
             if(needAction){
                 if(actionType ==="add")
                 props.createSkuAction(product_idFromGeneral,skuDataById)
+                   props.pageReDirectAction("product","add")
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
                 if(actionType ==="edit")
@@ -257,7 +259,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <input type="text" class="form-control text-right" placeholder="0" 
                                             // value="$1.25"
                                              id="each_cost" onChange={handleInput} 
-                                             value={skuDataById.each_cost} 
+                                              value={skuDataById.each_cost} 
                                             min="0"
                                               />
                                         </div>
@@ -266,7 +268,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <input type="text" class="form-control text-right" placeholder="0" 
                                             // value="$1.25"
                                             id="each_price"  onChange={handleInput} 
-                                            value={skuDataById.each_price} 
+                                             value={skuDataById.each_price} 
                                             min="0"/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
@@ -488,7 +490,9 @@ export default reduxForm({
     getAllSpecifiedSkuProductList,
 
     //handle sku input
-    handleSkuInputAction
+    handleSkuInputAction,
+    pageReDirectAction,
+
 
 })(SkuList));
 
