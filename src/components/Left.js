@@ -129,10 +129,10 @@ const handleMainSelection= (id) => {
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "purchaseOrder1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("purchaseOrder1")}}><Link to="/comingsoon">P.O.List</Link></li>
+                  handleSubSelection("purchaseOrder1")}}><Link to="/PurchaseOrderList">P.O.List</Link></li>
                 <li class= {(selectedSubBar === "purchaseOrder2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("purchaseOrder2")}}><Link to="/comingsoon">New P.O</Link></li>
+                  handleSubSelection("purchaseOrder2")}}><Link to="/PurchaseOrder">New P.O</Link></li>
               </ul>  
             </li>
             <li class={(selectedMainBar === "inventory")?"active":""} onClick={()=>{handleMainSelection("inventory")}}>
