@@ -6,8 +6,8 @@ import {
     SHOW_USER, 
     UPDATE_USER,
     UPLOAD_USER_IMAGE,
-    REMOVE_USER_IMAGE
-    // DELETE_USER 
+    REMOVE_USER_IMAGE,
+    DELETE_USER 
    } from './types';
    
 //    export const getUsersList = (dispatch) => {
@@ -35,7 +35,7 @@ import {
 
    export const addUser = (userData) => dispatch => {
        console.log(userData)
-       userData.role="1"
+    //    userData.role="1"
        userData.password="pass"
        userData.status="1"
        return axios.post(`/api/add-user`,userData,config).then(res=>{  
@@ -102,6 +102,22 @@ export const removeImage = (userId) => dispatch => {
      
      dispatch({
              type:REMOVE_USER_IMAGE,
+             payload:res.data.data
+ 
+         })
+     }).catch(err=>{
+         console.log(err)
+     })
+}
+export const deleteUser = (userId) => dispatch => {
+    console.log(userId)
+   
+    let userObj={}
+    userObj.user_id = userId
+    return axios.post(`/api/delete-user/${userId}`,userObj,config).then(res=>{  
+     
+     dispatch({
+             type:DELETE_USER,
              payload:res.data.data
  
          })

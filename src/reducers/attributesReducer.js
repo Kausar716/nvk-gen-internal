@@ -7,7 +7,8 @@ import {
     HANDLE_ZONE_INPUT_ACTION,
     HANDLE_ADD_ZONE_ATTRIBUTE,
     HANDLE_POSITION_INPUT_ACTION,
-    HANDLE_ADD_POSITION_ATTRIBUTE
+    HANDLE_ADD_POSITION_ATTRIBUTE,
+    HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
@@ -29,10 +30,9 @@ const initialSatate = {
         heightImperial:"",
         heightSku:"",
         packagingName:"",
-        packagingSku:""
-
-
-
+        packagingSku:"",
+        characterSectionName:"",
+        characterFeatureName:""
     }
 }
 
@@ -48,10 +48,10 @@ switch(action.type){
             allAttributes:[...action.payload.data.active,...action.payload.data.inactive]
         }
     case GET_ALL_SUB_ATTRIBUtTES:{
-        console.log(action.payload.data.attribute.subattributes)
+        console.log(action.payload.data[0].subattributes)
         return{
              ...state,
-            subAttribute:action.payload.data.attribute.subattributes
+            subAttribute:action.payload.data[0].subattributes
        }
     }
     case HANDLE_DRAG_ATTRIBUTE_CATEGORY:
@@ -80,6 +80,28 @@ switch(action.type){
     case HANDLE_ADD_POSITION_ATTRIBUTE:
         return{
             ...state
+        }
+    case HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE:
+        return{
+            ...state,
+            subAttributeName:{
+                zone:"",
+                bloomColor:"",
+                volume:"",
+                reason:"",
+                formName:"",
+                formSku:"",
+                caliperName:"",
+                caliperImperial:"",
+                caliperSku:"",
+                heightName:"",
+                heightImperial:"",
+                heightSku:"",
+                packagingName:"",
+                packagingSku:"",
+                characterSectionName:"",
+                characterFeatureName:""
+            }
         }
      default:
             return state

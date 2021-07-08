@@ -40,7 +40,8 @@ export class CreateUserProfile extends Component {
             message:"",
             open:false,
             cancel:false,
-            logo:""
+            logo:"",
+            createdUser:{}
         }
     }
     componentDidMount(){
@@ -143,14 +144,13 @@ export class CreateUserProfile extends Component {
         if(count === 0){
             console.log(this.state)
             let userStateObject = this.state
-            let userObject={}
-            
-
+            let userObject={}  
             userObject['name'] = userStateObject.firstName
             userObject['last_name'] = userStateObject.lastName
             userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
             userObject['phone'] = userStateObject.phone
+            userObject['role'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 
 
@@ -160,16 +160,23 @@ export class CreateUserProfile extends Component {
             res.then(result=>{
                 console.log(result)
                   
-                console.log(this.props.users)
-                if(this.props.users.payload.status === "Success"){
-                    this.setState({open:true,message:this.props.users.payload.message})
+                console.log(this.props)
+                if(this.props.user.payload.status === "Success"){
+                    this.setState({createdUser:this.props.user.payload.data.user})
+                    this.setState({open:true,message:this.props.user.payload.message})
                 }
             })
             console.log(res)
         }
-       
-
-
+    }
+    handleConfirm=()=>{
+        this.setState({open:false})
+        let userStateObject = this.state.createdUser
+        console.log()
+        this.props.handleCreateUpdateFlow(userStateObject)
+    }
+    handleCancel=()=>{
+        this.setState({open:false})
     }
     render() {
 
@@ -178,7 +185,7 @@ export class CreateUserProfile extends Component {
      if(this.props.roles)roles = this.props.roles
     return (
         <>
-         <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
+         <ActionModal cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
 
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
@@ -218,9 +225,9 @@ export class CreateUserProfile extends Component {
                                         </div>
                                     </div> */}
                                     <div class="row mt-3">
-                                        <div class="col-md-4 col-lg-3">
-                                            <div class="bg-grey-transparent-2 text-center px-4 py-4">
-                                                <div class="profImg">
+                                        {/* <div class="col-md-4 col-lg-3"> */}
+                                            {/* <div class="bg-grey-transparent-2 text-center px-4 py-4"> */}
+                                                {/* <div class="profImg">
                                                     <img src={this.state.logo.length>0?this.state.logo:""} alt="" />
                                                 </div>
                                                 <p>Image should print quality PNF or JPG</p>
@@ -233,7 +240,7 @@ export class CreateUserProfile extends Component {
                                                   
                                                     <img src="assets/img/upload-ic-white.svg" alt="" />
                                                 </a>
-                                               
+                                                */}
 
                                                 {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
                                                     <span class="d-flex align-items-center justify-content-around">
@@ -245,8 +252,8 @@ export class CreateUserProfile extends Component {
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
                                                 </div> */}
-                                            </div>
-                                        </div>
+                                            {/* </div> */}
+                                        {/* </div> */}
                                         <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                             <div class="row form-group">
                                                 <div class="col-md-6">
@@ -368,7 +375,8 @@ const mapStateToProps = (state)=> (
     // console.log(state)
     {
         users:state.userReduser.users,
-        roles:state.userAccessReduser.roles.payload
+        roles:state.userAccessReduser.roles,
+        user:state.userReduser.user
 }
 
 )

@@ -9,7 +9,8 @@ import {
    } from '../actions/types';
 
 const initialSatate = {
-    users:[]
+    users:[],
+    userBackup:[]
 }
  const userReduser = (state = initialSatate, action)=> {
      console.log(action)
@@ -19,7 +20,8 @@ const initialSatate = {
         case GET_USERS_LIST:
             return{
                 ...state,
-                users:action              
+                users:action,
+                userBackup:action              
             }
         case SHOW_USER:
             
@@ -30,13 +32,15 @@ const initialSatate = {
         case UPDATE_USER:{
             return {
                 ...state,
-                users:action 
+                users:state.userBackup,
+                userupdated:action 
             }
         }
         case ADD_USER:{
             return{
                 ...state,
-                users:action              
+                user:action,
+                users:state.userBackup,
             }
         }
         case UPLOAD_USER_IMAGE:{
@@ -46,6 +50,12 @@ const initialSatate = {
             }
         }
         case REMOVE_USER_IMAGE:{
+            return{
+                ...state,
+                removedData:action
+            }
+        }
+        case DELETE_USER:{
             return{
                 ...state,
                 removedData:action

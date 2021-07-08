@@ -140,7 +140,7 @@ export class SupplierManagemnet extends React.Component {
                                             <tr>
                                                 <th class="text-nowrap">Status</th>
                                                 <th class="text-nowrap">ID</th>
-                                                <th class="text-nowrap">supplier Name</th>
+                                                <th class="text-nowrap">Supplier Name</th>
                                                 <th class="text-nowrap">Type</th>
                                                 <th class="text-nowrap">Telephone</th>
                                                 <th class="text-nowrap">Contact</th>

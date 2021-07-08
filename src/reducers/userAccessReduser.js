@@ -31,7 +31,7 @@ const initialSatate = {
         case GET_ROLES_LIST:
             return{
                 ...state,
-                roles:action              
+                roles:action.payload              
             }
         case SHOW_ROLE:
             
@@ -96,6 +96,7 @@ const initialSatate = {
             console.log(state.permissionListBackup)
             // console.log(action.permissionName === "quotesAll" && action.cheked)
             if(action.permissionName === "quotesAll"){
+               
                 let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
                 console.log(quotesArray)
                 quotesArray.map(premission=>{
@@ -112,6 +113,15 @@ const initialSatate = {
                 })
                 console.log(currentPermissionNames)
                 console.log(permissionArray)
+                let quotesIndex = currentPermissionNames.indexOf("quotesNone")
+                console.log(quotesIndex)
+                if(quotesIndex>=0){
+                currentPermissionNames.splice(quotesIndex,1)
+                
+                }
+                else if(quotesIndex === -1){
+                    currentPermissionNames.push(action.permissionName)
+                }
 
                 
             } 
@@ -179,7 +189,14 @@ const initialSatate = {
                 
             }
             else 
-            if(action.permissionName === "additionalPermissionAll"){
+            if(action.permissionName === "additionalPermissionYes"){
+                let quotesIndex = currentPermissionNames.indexOf("additionalPermissionNo")
+                if(quotesIndex>=0){
+                    currentPermissionNames.splice(quotesIndex,1)                
+                }
+                else if(quotesIndex === -1){
+                    currentPermissionNames.push(action.permissionName)
+                }
                 let quotesArray = state.permissionListBackup.filter(permission=>
                     ((permission.group_name==="userManagement") || (permission.group_name==="customerManagement")||(permission.group_name==="toolsAndSettings")))
                 console.log(quotesArray)
@@ -202,7 +219,14 @@ const initialSatate = {
                 
             }
             else 
-            if(action.permissionName === "additionalPermissionNone"){
+            if(action.permissionName === "additionalPermissionNo"){
+                let quotesIndex = currentPermissionNames.indexOf("additionalPermissionYes")
+                if(quotesIndex>=0){
+                    currentPermissionNames.splice(quotesIndex,1)                
+                }
+                else if(quotesIndex === -1){
+                    currentPermissionNames.push(action.permissionName)
+                }
                 let quotesArray = state.permissionListBackup.filter(permission=>
                     ((permission.group_name==="userManagement") || (permission.group_name==="customerManagement")||(permission.group_name==="toolsAndSettings")))
                 console.log(quotesArray)
@@ -225,6 +249,9 @@ const initialSatate = {
             }
            
             else if(action.permissionName === "quotesNone" ){
+                let quotesIndex = currentPermissionNames.indexOf("quotesAll")
+                currentPermissionNames.splice(quotesIndex,1)
+                currentPermissionNames.push(action.permissionName)
                 let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
                 console.log(quotesArray)
                 quotesArray.map(premission=>{

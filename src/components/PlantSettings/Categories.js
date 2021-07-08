@@ -1,3 +1,5 @@
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
@@ -40,11 +42,24 @@ import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handle
                 
 
             });
-            console.log(tasks)
-           let result= this.props.handleDragDrop(tasks[0])
-           result.then(res=>{
-            this.props.getAllPlantCategories()
-           })
+            // console.log(tasks)
+        //    let result= this.props.handleDragDrop(tasks[0])
+        //    result.then(res=>{
+        //     this.props.getAllPlantCategories()
+        //    })
+           let doProcess = false;
+            if (cat === 'active' && tasks[0].status === "0") {
+                doProcess = true;
+            }
+            if (cat === 'inactive' && tasks[0].status === "1") {
+                doProcess = true;
+            }
+            if (doProcess === true) {
+                let result= this.props.handleDragDrop(tasks[0])
+                result.then(res=>{
+                    this.props.getAllPlantCategories()
+                })   
+            }
 
             // this.setState({
             //     ...this.state,
@@ -69,7 +84,6 @@ import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handle
         }
         handleAddCategory = (e)=>{
             if(this.props.name){
-                alert("in")
             let result = this.props.handleAddCategory(this.props.name)
             result.then(res=>{
                 this.props.getAllPlantCategories()
@@ -124,7 +138,7 @@ render() {
                                                 <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="#" className="d-flex align-items-center" >
+                                                <a href="javascript:" className="d-flex align-items-center" >
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                                 </a>
                                             </div>
@@ -133,7 +147,7 @@ render() {
                                 </div>
                                 <div class="row mt-5 mb-4">
                                     <div class="col">
-                                        <div class="card zoneCard">
+                                        <div class="card midCard">
                                             <div class="card-header">
                                                 Inactive
                                             </div>
@@ -145,7 +159,7 @@ render() {
                                             <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a href="#" class="">
+                                                                 <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.name}</span>
                                                                 </a>
                                                             </li>
@@ -160,14 +174,10 @@ render() {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
@@ -175,7 +185,7 @@ render() {
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card zoneCard">
+                                        <div class="card midCard">
                                             <div class="card-header">
                                                 Active
                                             </div>
@@ -183,9 +193,9 @@ render() {
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a href="#" class="">
-                                                                <span id="Wheathers">{t.name}</span>
-                                                                </a>
+                                                                 <a className="d-flex justify-content-between align-items-center">
+                                                                      <span id="Wheathers">{t.name}</span>
+                                                                 </a>
                                                             </li>
                                                     })}
                                             </ul>

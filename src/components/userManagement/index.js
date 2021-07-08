@@ -67,6 +67,8 @@ handleSubmit = ()=> {
 
 }
 handleCancle = () => {
+    this.props.getUsersList()
+    this.props.getRolesList()
     this.setState({displayUpdateProfile:false,displayCreate:false})
 }
 componentDidMount(){
@@ -81,6 +83,12 @@ else {
     this.setState({displatDeletedRecord:"off"})
 }
 }
+handleCreateUpdateFlow = (obj)=>{
+    console.log(obj)
+    this.setState({selectedUser:obj,displayUpdateProfile:true,displayCreate:false})
+    // displayUpdateProfile,
+    // selectedProfile:
+}
 
     
     render() {
@@ -91,9 +99,15 @@ else {
         console.log(this.props)
         console.log(this.props.users.active)
         // console.log([...this.props.users.active,...this.props.users.inactive])
-        if(this.props.users.active){
+        if(this.props.users.active || this.props.users.inactive){ 
         if(this.props.users && (this.state.displatDeletedRecord === "off")){
              userProfiles =  [...this.props.users.active,...this.props.users.inactive]
+             let userWithOutDeletedRecords = userProfiles.filter(user=>{
+                return (user.deleted_at=== null)
+            
+               
+            })
+            userProfiles = userWithOutDeletedRecords
            
             // userProfiles = this.props.users.active.concat(this.props.users.inactive)
         }  
@@ -113,7 +127,7 @@ else {
         console.log(this.props.roles.payload)
         roleList = this.props.roles.payload
     }
-
+    console.log(this.props.temp.userReduser)
         
     return (
         <div clas="userManagementSection">
@@ -150,7 +164,6 @@ else {
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option>Select</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                console.log(userObj)
                                                 return  <option value={userObj.id}>{userObj.name}</option>
                                             }):null}
                                             </select>
@@ -168,8 +181,8 @@ else {
                                             </a>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList} />:null}
-                                    {displayCreate?<CreateUserProfile cancle={this.handleCancle}/>:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  />:null}
+                                    {displayCreate?<CreateUserProfile cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>
                         </div>
@@ -193,7 +206,8 @@ const mapStateToProps = (state)=> (
     {
     
     users:state.userReduser.users.type==="GET_USERS_LIST"? state.userReduser.users.payload :[],
-    roles:state.userAccessReduser.roles
+    roles:state.userAccessReduser.roles,
+    temp:state
 
 }
 

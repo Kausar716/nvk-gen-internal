@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getUsersList,showUser,updateUser,uploadImage,removeImage} from "../../actions/userAction";
+import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -49,7 +49,8 @@ export class UserProfile extends Component {
             message:"",
             open:false,
             cancel:false,
-            logo:""
+            logo:"",
+            deleted_at:null
         }
     }
     componentDidMount(){
@@ -63,7 +64,8 @@ export class UserProfile extends Component {
                position:selectedUser.position,
                status:selectedUser.status,
                id:selectedUser.id,
-               logo:selectedUser.avatar?selectedUser.avatar:""
+               logo:selectedUser.avatar?selectedUser.avatar:"",
+               deleted_at:selectedUser.deleted_at
             })
 
     }
@@ -172,7 +174,8 @@ export class UserProfile extends Component {
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
-                  
+                  alert("updated")
+                  this.props.cancle() 
                     console.log(this.props.users)
                     if(this.props.users.payload.status === "Success"){
                         this.setState({open:true,message:this.props.users.payload.message})
@@ -191,11 +194,8 @@ export class UserProfile extends Component {
         console.log(e)
         console.log(e.target.files[0])
         let imageData = e.target.files[0]
-       
-     
        let data =  this.props.uploadImage(imageData,JSON.stringify(this.props.selectedUser.id))
        data.then(res=>{
-           console.log(res)
            console.log(res)
            console.log(this.props)
            let updatedData = this.props.data.user.payload
@@ -207,14 +207,12 @@ export class UserProfile extends Component {
             position:updatedData.position,
             status:updatedData.status,
             id:updatedData.id,
-            logo:updatedData.avatar?updatedData.avatar:""
+            logo:updatedData.avatar?updatedData.avatar:"",
+            deleted_at:updatedData.deleted_at
+            
          })
+        
        })
-
-
-
-
-
         // this.setState({log:e.target.files[0]})
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
@@ -235,20 +233,84 @@ export class UserProfile extends Component {
              position:updatedData.position,
              status:updatedData.status,
              id:updatedData.id,
-             logo:updatedData.avatar?updatedData.avatar:""
+             logo:updatedData.avatar?updatedData.avatar:"",
+             deleted_at:updatedData.deleted_at
           })
         })
         
     }
+    handleDelete =()=> {
+       let id = this.props.selectedUser.id
+      
+        var person = window.confirm("are you sure you want to delete?");
+        if(person){
+              let deleted = this.props.deleteUser(id)
+              deleted.then(res=>{
+                console.log(res)
+               
+                let updatedData = this.props.data.removedData.payload
+                this.setState({
+                 firstName:updatedData.name,
+                 lastName:updatedData.last_name,
+                 phone:updatedData.phone,
+                 email:updatedData.email,
+                 position:updatedData.position,
+                 status:updatedData.status,
+                 id:updatedData.id,
+                 logo:updatedData.avatar?updatedData.avatar:"",
+                 deleted_at:updatedData.deleted_at
+                 
+              })
+              alert("deleted")
+            })
+        }
+    }
+    handleRestore =()=>{
+        let userStateObject = this.state
+        let userObject={}
+        userObject.id= this.props.selectedUser.id
+        userObject.deleted_at=null
+      
+        var person = window.confirm("are you sure you want to Restore?");
+        if(person){
+              let deleted = this.props.deleteUser(userStateObject.id)
+              deleted.then(res=>{
+                console.log(res)
+               
+                let updatedData = this.props.data.removedData.payload
+                this.setState({
+                 firstName:updatedData.name,
+                 lastName:updatedData.last_name,
+                 phone:updatedData.phone,
+                 email:updatedData.email,
+                 position:updatedData.position,
+                 status:updatedData.status,
+                 id:updatedData.id,
+                 logo:updatedData.avatar?updatedData.avatar:"",
+                 deleted_at:updatedData.deleted_at
+                 
+              })
+              alert("deleted")
+            })
+        }
+    }
+    cancel = ()=>{
+        this.setState({open:false})
+    }
+    confirm = ()=>{
+        this.setState({open:false})
+    }
     render() {
         let roles=[]
+        console.log(this.props.roles)
         if(this.props.roles)roles = this.props.roles
-        console.log(this.props.selectedUser)
+        console.log(this.props.selectedUser.deleted_at !== null)
+        console.log(this.state.position)
    
      
     return (
         <>
-         <ActionModal cancel={this.state.cancel} confirm={this.state.confirm} open={this.state.open} message={this.state.message}/>
+         <ActionModal cancel={this.cancel} confirm={this.confirm} open={this.state.open} message={this.state.message}/>
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">
@@ -399,13 +461,23 @@ export class UserProfile extends Component {
                                 {/* </div> */}
                             </div>
                             <div class="row mt-3">
+                                {this.state.deleted_at!== null?
                                 <div class="col-md-4 col-lg-4 d-flex align-items-center">
                                     Restore User
                                     <div class="switcher ml-2 pr-md-3">
-                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2"/>
+                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.handleRestore}/>
                                         <label for="switcher_checkbox_2"></label>
                                     </div>
+                                </div>:
+                                <div class="col-md-4 col-lg-4 d-flex align-items-center">
+                                    Delete User
+                                <div class="switcher ml-2 pr-md-3" onClick={this.handleDelete}>
+                                    {/* <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.props.handleRestore}/> */}
+                                    <img src="assets/img/bin-ic-red.svg" alt=""/>
+                                    {/* <label for="switcher_checkbox_2"></label> */}
                                 </div>
+                            </div>
+                                }
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
                                     <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Update</button>
@@ -430,10 +502,10 @@ const mapStateToProps = (state)=> (
     // console.log(state.userAccessReduser)
     {
     users:state.userReduser.users,
-    data:state.userReduser
-    // roles:state.userAccessReduser
+    data:state.userReduser,
+    roles:state.userAccessReduser.roles
 }
 
 )
 
-export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,uploadImage})(UserProfile)
+export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,uploadImage,deleteUser})(UserProfile)

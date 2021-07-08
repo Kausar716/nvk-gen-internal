@@ -1,3 +1,5 @@
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
@@ -21,11 +23,19 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
             let tasks = this.props.positionCategoryList.filter((task)=>{                
                    return JSON.stringify(task.id) === id;
             });
-            console.log(tasks)
-            let result= this.props.handleAttributeDragDrop(tasks[0])
-            result.then(res=>{
-            this.props.getAllSubAttribute(16)
-           })
+            let doProcess = false;
+            if (cat === 'active' && tasks[0].status === 0) {
+                doProcess = true;
+            }
+            if (cat === 'inactive' && tasks[0].status === 1) {
+                doProcess = true;
+            }
+            if (doProcess === true) {
+                let result= this.props.handleAttributeDragDrop(tasks[0])
+                result.then(res=>{
+                    this.props.getAllSubAttribute(16)
+                })   
+            }
         }
         onDelete =(ev)=>{
            let id= ev.dataTransfer.getData("id");
@@ -83,7 +93,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                                 <input type="text" className="form-control" name="position" value={this.props.name}   placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="#" className="d-flex align-items-center">
+                                                <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
                                                 </a>
                                             </div>
@@ -92,7 +102,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                 </div>
                                 <div class="row mt-5 mb-4">
                                     <div class="col">
-                                        <div class="card zoneCard">
+                                        <div class="card midCard">
                                             <div class="card-header">
                                                 Inactive
                                             </div>
@@ -104,7 +114,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                                 <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                  <a href="#" class="">
+                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 </a>
                                                             </li>
@@ -120,14 +130,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
@@ -135,7 +141,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card zoneCard">
+                                        <div class="card midCard">
                                             <div class="card-header">
                                                 Active
                                             </div>
@@ -143,7 +149,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a href="#" class="">
+                                                                 <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 </a>
                                                             </li>
