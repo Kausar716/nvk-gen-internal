@@ -174,7 +174,8 @@ export class UserProfile extends Component {
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
-                  
+                  alert("updated")
+                  this.props.cancle() 
                     console.log(this.props.users)
                     if(this.props.users.payload.status === "Success"){
                         this.setState({open:true,message:this.props.users.payload.message})
@@ -196,7 +197,6 @@ export class UserProfile extends Component {
        let data =  this.props.uploadImage(imageData,JSON.stringify(this.props.selectedUser.id))
        data.then(res=>{
            console.log(res)
-           console.log(res)
            console.log(this.props)
            let updatedData = this.props.data.user.payload
            this.setState({
@@ -209,7 +209,9 @@ export class UserProfile extends Component {
             id:updatedData.id,
             logo:updatedData.avatar?updatedData.avatar:"",
             deleted_at:updatedData.deleted_at
+            
          })
+        
        })
         // this.setState({log:e.target.files[0]})
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
@@ -300,9 +302,10 @@ export class UserProfile extends Component {
     }
     render() {
         let roles=[]
+        console.log(this.props.roles)
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
-    console.log(this.state.position)
+        console.log(this.state.position)
    
      
     return (
@@ -499,8 +502,8 @@ const mapStateToProps = (state)=> (
     // console.log(state.userAccessReduser)
     {
     users:state.userReduser.users,
-    data:state.userReduser
-    // roles:state.userAccessReduser
+    data:state.userReduser,
+    roles:state.userAccessReduser.roles
 }
 
 )
