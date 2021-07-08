@@ -120,6 +120,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
 
         }
+        console.log(this.props.reduxSelectedUser)
        
     return (
         <>
@@ -209,11 +210,12 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                     <div class="col-md-3 col-lg-3">
                                                         <img src="assets/img/profile-img.png" class="img-fluid" />
                                                     </div>
+                                                    {this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
-                                                        <p class="mb-0">Olivia</p>
-                                                        <div>Olivia231@gmail.com</div>
+                                                        <p class="mb-0">{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.name:"":""}</p>
+                                                        <div>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.email:"":""}</div>
                                                         <a href="#" class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg" /></a>
-                                                    </div>
+                                                    </div>:null}
                                                 </div>
                                             </div>
                                         </div>
@@ -554,7 +556,7 @@ const mapStateToProps = (state)=> (
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,
     temp:state.userAccessReduser,
-    // reduxSelectedUser:state.userAccessReduser.selectedUser
+    reduxSelectedUser:state.userAccessReduser.selectedUser
     // permissionList:state.permissionList
 }
 

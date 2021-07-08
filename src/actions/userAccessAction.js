@@ -110,7 +110,7 @@ import {
          dispatch({
              type:HANDLE_USER_ACCESS_INPUT_DATA,
              permissionName:name,
-             permissionID:id,
+             permissionID:id, 
              checked:checked
          })
         }
