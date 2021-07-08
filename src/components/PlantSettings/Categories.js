@@ -135,7 +135,7 @@ render() {
                                         <p>Category Name</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center" >

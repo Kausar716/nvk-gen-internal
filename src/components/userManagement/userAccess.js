@@ -13,78 +13,17 @@ import {getUsersList,showUser} from "../../actions/userAction";
     constructor(props){
         super(props)
         this.state={    
-    quotes:false,
-    openOrder:false,
-    actionDeleteOrder:false,
-    actionCreateQuotes:false,
-    closedAndCancledOrder:false,
-    pickingOrder:false,
-    readyOrder:false,
-    actionReturnToOrder:false,
-    reservations:false,
-    shippedInvoicesAdjustment:false,
-    receiveInvoice:false,
-    quickPicks:false,
-    actionOveride:false,
-    digAndPlantRequest1:false,
-    ToolsAndsettings:false,
-    TagsAndLabels:false,
-    organizationSettings:false,
-    mapLocator:false,
-    maplocatorEditMaps:false,
-    customerManagement:false,
-    customerListAddEditForCustomer:false,
-    customerListViewPrintForCustomer:false,
-    customerSettings:false,
-    userManagement:false,
-    customerListAddEditForUser:false,
-    customerListViewPrintForUser:false,
-    userSetting:false,
-    supervisorRolePurchase:false,
-    createAndModifyDraftPurchase:false,
-    createModifyDeleteOpenOrder:false,
-    receiveAndCheckinOpenOrder:false,
-    viewClosedCancelledOrder:false,
-    actionClosedOpenOrder:false,
-    supervisorRole:false,
-    PlantManager:false,
-    addEdit:false,
-    printPlant:false,
-    inventoryManagement:false,
-    dashboardView:false,
-    dashboardModify:false,
-    masterInventoryView:false,
-    masterInventoryModify:false,
-    taskQueueView:false,
-    taskQueueModify:false,
-    selectedUser:{},
-    displayPermission:false
+            displayselectedUSer:false,
+    selectedUser:{}
         }
     }
         
-
-    // userProfile:false,
-    // userAccess:false,
-    // staffDirectory:false,
-    
-    // inventoryManagement:false,
-    // plantSetting:false,
-    // productSetting:false,
-    // locationSetting:false, 
-    // role:"" ,
-    // createRoleToggle:false,
-    // createRole:false,
-    // selectedRole:"sales",
-    // deleteRoleToggle:false,
-    // deleteRole:false  
-      // supplierManagement:false,
-    // supplierListAddEdit:false,
-    // supplierListView:false,
-    // supplierSetting:false,       
+     
     handleCheckBox = (e) => {
         console.log(e.target)
         const {target:{name,checked,id}} =e
         // this.setState({[name]:checked})
+        console.log(name.id)
         this.props.handleUserAccessInputAction(name,id,checked)
 
     }
@@ -95,91 +34,8 @@ import {getUsersList,showUser} from "../../actions/userAction";
         this.props.getPermissionList()
        
     }
-    handleSelect= (e) => {
-        let checkBoxGroup = e.target.id
-        let name = e.target.name
-        console.log(e.target.checked)
-
-        console.log(checkBoxGroup)
-        console.log(name)
-        
-        
-
-
-        if(checkBoxGroup === "QuotesPermissionAll" ||checkBoxGroup === "QuotesPermissionNone" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){            
-            this.setState({
-                supervisorRole: checkBoxGroup.includes("All")?e.target.checked:false,
-                quotes:checkBoxGroup.includes("All")?e.target.checked:false,
-                openOrder:checkBoxGroup.includes("All")?e.target.checked:false,
-                actionDeleteOrder:checkBoxGroup.includes("All")?e.target.checked:false,
-                actionCreateQuotes:checkBoxGroup.includes("All")?e.target.checked:false,
-                closedAndCancledOrder:checkBoxGroup.includes("All")?e.target.checked:false,
-                pickingOrder:checkBoxGroup.includes("All")?e.target.checked:false,
-                readyOrder:checkBoxGroup.includes("All")?e.target.checked:false,
-                actionReturnToOrder:checkBoxGroup.includes("All")?e.target.checked:false,
-                reservations:checkBoxGroup.includes("All")?e.target.checked:false,
-                shippedInvoicesAdjustment:checkBoxGroup.includes("All")?e.target.checked:false,
-                receiveInvoice:checkBoxGroup.includes("All")?e.target.checked:false,
-                quickPicks:checkBoxGroup.includes("All")?e.target.checked:false,
-                actionOveride:checkBoxGroup.includes("All")?e.target.checked:false,
-                digAndPlantRequest1:checkBoxGroup.includes("All")?e.target.checked:false,
-            })
-
-        }
-        //  if(checkBoxGroup==="additionalPermission"|| checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
-        //     this.setState({
-        //     supervisorRolePurchase: name === "selectAll"?true:false,
-        //     createAndModifyDraftPurchase: name === "selectAll"?true:false,
-        //     createModifyDeleteOpenOrder: name === "selectAll"?true:false,
-        //     receiveAndCheckinOpenOrder: name === "selectAll"?true:false,
-        //     viewClosedCancelledOrder: name === "selectAll"?true:false,
-        //     actionClosedOpenOrder: name === "selectAll"?true:false,
-        //     })
-        // }
-        // if(checkBoxGroup==="purchaseOrderPermission"|| checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
-        //     this.setState({
-        //     supervisorRolePurchase: name === "selectAll"?true:false,
-        //     createAndModifyDraftPurchase: name === "selectAll"?true:false,
-        //     createModifyDeleteOpenOrder: name === "selectAll"?true:false,
-        //     receiveAndCheckinOpenOrder: name === "selectAll"?true:false,
-        //     viewClosedCancelledOrder: name === "selectAll"?true:false,
-        //     actionClosedOpenOrder: name === "selectAll"?true:false,
-        //     })
-        // }
-         if(checkBoxGroup === "inventoryManagementPermission" || checkBoxGroup==="allPermissionOff"|| checkBoxGroup==="PermissionOnAll"){
-            this.setState({
-            supervisorRole: name === "selectAll"?true:false,
-            PlantManager: name === "selectAll"?true:false,
-            addEdit: name === "selectAll"?true:false,
-            printPlant: name === "selectAll"?true:false,
-            inventoryManagement: name === "selectAll"?true:false,
-            dashboardView: name === "selectAll"?true:false,
-            dashboardModify: name === "selectAll"?true:false,
-            masterInventoryView: name === "selectAll"?true:false,
-            masterInventoryModify: name === "selectAll"?true:false,
-            taskQueueView: name === "selectAll"?true:false,
-            taskQueueModify: name === "selectAll"?true:false,
-            })
-        }
-         if(checkBoxGroup === "additionalPermissionYes"|| checkBoxGroup === "additionalPermissionNO" || checkBoxGroup==="allPermissionOff" || checkBoxGroup==="PermissionOnAll"){
-            this.setState({
-               ToolsAndsettings: name === "selectAll"?true:false,
-               TagsAndLabels: name === "selectAll"?true:false,
-               organizationSettings: name === "selectAll"?true:false,
-               mapLocator: name === "selectAll"?true:false,
-               maplocatorEditMaps: name === "selectAll"?true:false,
-               customerManagement: name === "selectAll"?true:false,
-               customerListAddEditForCustomer: name === "selectAll"?true:false,
-               customerListViewPrintForCustomer: name === "selectAll"?true:false,
-               customerSettings: name === "selectAll"?true:false,
-               userManagement: name === "selectAll"?true:false,
-               userSetting: name === "selectAll"?true:false,   
-               customerListAddEditForUser: name === "selectAll"?true:false, 
-               customerListViewPrintForUser: name === "selectAll"?true:false,          
-            })
-        }
-
-    }
+   
+    
     handleUpdate = (e) => {
         // let createRoleToggle = ! this.state.createRoleToggle
         // this.setState({createRoleToggle})
@@ -232,7 +88,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
         this.props.handleUserSelect(selectedId)
   
-        this.setState({selectedUser:e.target.value,displayPermission:true})
+        this.setState({selectedUser:e.target.value,displayselectedUSer:true})
 
     }
 
@@ -243,15 +99,15 @@ import {getUsersList,showUser} from "../../actions/userAction";
         let exestingRoles = []
         let exestingPermission = []
         let currentPermissionNames= this.props.temp.currentPermissionNames
-        console.log(this.props.temp.selectedUser.data)
+        console.log(this.props.temp)
         let userData = {}
-        if(this.props.users)
+        if(this.props.user)
         {
-            console.log(this.props.users)
-            if(this.props.users.user){
-            userData=this.props.users.user.data
-            if(this.props.users.user.data.roles)
-            exestingRoles = this.props.users.user.data.roles
+            console.log(this.props.user)
+            if(this.props.user.user){
+            userData=this.props.user.user.data
+            if(this.props.user.user.data.roles)
+            exestingRoles = this.props.user.user.data.roles
             console.log(userData)
             }
         }
@@ -264,7 +120,8 @@ import {getUsersList,showUser} from "../../actions/userAction";
             userProfiles =  [...this.props.users.active,...this.props.users.inactive]
 
         }
-       console.log(this.props.selectedUser?this.props.selectedUser:"")
+        console.log(this.props.reduxSelectedUser)
+       
     return (
         <>
         {/* <div clas="userManagementSection"> */}
@@ -348,18 +205,19 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                 <div class="ContentSection p-15">
                                     <div class="row">
                                         <div class="col-md-6 col-lg-5">
-                                        {this.state.displayPermission? <div class="bg-grey-transparent-2 px-3 py-3">
-                                              <div class="row align-items-center">
+                                            <div class="bg-grey-transparent-2 px-3 py-3">
+                                                <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
                                                         <img src="assets/img/profile-img.png" class="img-fluid" />
                                                     </div>
+                                                    {this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
-                                                        <p class="mb-0">{this.props.selectedUser?this.props.selectedUser.selectedUser.data.name:""}</p>
-                                                        <div>{this.props.selectedUser?this.props.selectedUser.selectedUser.data.email:""}</div>
+                                                        <p class="mb-0">{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.name:"":""}</p>
+                                                        <div>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.email:"":""}</div>
                                                         <a href="#" class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg" /></a>
-                                                    </div>
+                                                    </div>:null}
                                                 </div>
-                                            </div>:null}
+                                            </div>
                                         </div>
                                         <div class="col-md-6 col-lg-5 mt-3 mt-md-0">
                                             <div class="row align-items-end">
@@ -403,7 +261,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                 </div>
                             </div>
                         </div>
-                       {this.state.displayPermission? <><div class="mt-4">
+                     {this.state.displayselectedUSer?   <div class="mt-4">
                             <div class="row">
                                 <div class="col-md-12 d-flex justify-content-md-end">
                                     <div class="custom-control custom-checkbox" >
@@ -664,22 +522,21 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                      
+                        </div> :null}
                         <div class="row mt-3">
+                        {this.state.displayselectedUSer? 
                             <div class="col-md-12">
                                 <a href="#">Update Current Role</a>
                                 <a href="#" class="ml-4">Create Role From Current Values</a>
-                            </div>
+                            </div>:null}
                         </div>
                         <div class="row mt-2">
+                        {this.state.displayselectedUSer? 
                             <div class="col-md-12 text-md-right">
                                 <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
                                 <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>update</button>
-                            </div>
+                            </div>:null}
                         </div>
-                        </> :null}
-                        
                     </div>
                     </TabPanel>
                 </Tabs>
@@ -699,7 +556,7 @@ const mapStateToProps = (state)=> (
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,
     temp:state.userAccessReduser,
-    selectedUser:state.userAccessReduser.selectedUser
+    reduxSelectedUser:state.userAccessReduser.selectedUser
     // permissionList:state.permissionList
 }
 

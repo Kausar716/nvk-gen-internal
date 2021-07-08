@@ -124,7 +124,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-6">
                                         <p>Packaging Name</p>
                                         <div>
-                                            <input type="text" className="form-control" name="packagingName" value={this.props.packagingName}   placeholder="" onChange={this.handleZoneInputAction}/>
+                                            <input type="text" className="form-control" name="packagingName" value={this.props.packagingName}   placeholder="Name" onChange={this.handleZoneInputAction}/>
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2">
                                             {/* <a href="javascript;" className="d-flex align-items-center">
@@ -136,7 +136,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                         <div>
 
-                                            <input type="text" className="form-control" placeholder="" name="packagingSku" value={this.props.packagingSku}    onChange={this.handleZoneInputAction}/>
+                                            <input type="text" className="form-control" placeholder="Value" name="packagingSku" value={this.props.packagingSku}    onChange={this.handleZoneInputAction}/>
                                             {this.state.errorObj.packagingSku!==0?<span style={{fontSize:"small",color:"red"}}>Enter SKU Value</span>:""}
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>

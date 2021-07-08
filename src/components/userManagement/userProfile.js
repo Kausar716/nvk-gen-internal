@@ -354,7 +354,7 @@ export class UserProfile extends Component {
                                                 <div class="profImg">
                                                     <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" />
                                                 </div>
-                                                <p>Image should print quality PNF or JPG</p>
+                                                <p><small>Image should print quality PNF or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id="imageid"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />

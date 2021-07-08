@@ -133,9 +133,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                             <div className="ContentSection p-15">
                                 <div className="row">
                                         <div className="col-md-4">
-                                            <p>Height Name</p>
+                                            <p>Height</p>
                                             <div>
-                                                <input type="text" className="form-control"  placeholder=""  name="heightName" value={this.props.heightName}    onChange={this.handleZoneInputAction}/>
+                                                <input type="text" className="form-control"  placeholder="Height"  name="heightName" value={this.props.heightName}    onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 {/* <a href="javascript;" className="d-flex align-items-center">
@@ -154,7 +154,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <div className="col-md-4">
                                             <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                <input type="text" className="form-control" placeholder=""  name="heightSku" value={this.props.heightSku}    onChange={this.handleZoneInputAction}/>
+                                                <input type="text" className="form-control" placeholder="Value"  name="heightSku" value={this.props.heightSku}    onChange={this.handleZoneInputAction}/>
                                                 {this.state.errorObj.heightSku!==0?<span style={{fontSize:"small",color:"red"}}>Enter SKU Value</span>:""}
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>

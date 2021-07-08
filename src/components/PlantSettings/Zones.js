@@ -97,7 +97,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <p>Hardiness Zone</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="zone" value={this.props.zone}   placeholder="" onChange={this.handleZoneInputAction}/>
+                                                <input type="text" className="form-control" name="zone" value={this.props.zone}   placeholder="Zone" onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">

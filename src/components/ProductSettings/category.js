@@ -43,7 +43,7 @@ const Category=(props)=> {
                                     <div class="col-md-6">
                                         <p>Main Category Name</p>
                                         <div>
-                                            <input type="text" class="form-control" placeholder=""  onChange={handleCategory}/>
+                                            <input type="text" class="form-control" placeholder="Name"  onChange={handleCategory}/>
                                         </div>
                                         <div class="d-flex justify-content-md-end mt-2" onClick={handleAddCategory}>
                                             <a href="javascript;" class="d-flex align-items-center">
@@ -54,7 +54,7 @@ const Category=(props)=> {
                                     <div class="col-md-6">
                                         <p>Sub-category Name</p>
                                         <div>
-                                            <input type="text" class="form-control" placeholder="" onChange={handleSubCategory}/>
+                                            <input type="text" class="form-control" placeholder="Name" onChange={handleSubCategory}/>
                                         </div>
                                         <div class="d-flex justify-content-md-end mt-2" onClick={handleAddSubCategory} >
                                             <a href="javascript;" class="d-flex align-items-center">
