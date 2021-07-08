@@ -65,7 +65,6 @@ const initialSatate = {
             let selectedPermissionName = []
             console.log(action)
             console.log(action.selectedUser.data.permissions )
-            debugger;
             action.selectedUser.data.permissions.map(permission=>{
                 selectedPermissionId.push(permission.id)
                 selectedPermissionName.push(permission.name)
