@@ -144,7 +144,7 @@ handleCreateUpdateFlow = (obj)=>{
                     </TabList>
                     <TabPanel>
                     <div class="bg-white">
-                         <div class="f-s-24 px-3 py-3 f-w-500">User Profile - <span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span></div>
+                         <div class="f-s-24 px-3 py-3 f-w-500">User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span></div>
                         <hr class="m-0"/>
                         <div class="ContentSection p-15">
                             <div class="row">

@@ -34,7 +34,6 @@ const initialSatate = {
                 roles:action.payload              
             }
         case SHOW_ROLE:
-            
             return{
                 ...state,
                 role:state.roles.filter(user=>user.id === action.payload)
@@ -61,17 +60,21 @@ const initialSatate = {
             }
         }
         case SHOW_SELECTED_USER:{
-            console.log(action)
+            let selectedUser= action
             let selectedPermissionId = []
             let selectedPermissionName = []
+            console.log(action)
+            console.log(action.selectedUser.data.permissions )
+            debugger;
             action.selectedUser.data.permissions.map(permission=>{
                 selectedPermissionId.push(permission.id)
                 selectedPermissionName.push(permission.name)
             })
+            console.log(selectedPermissionId)
+            console.log(selectedPermissionName)
             return{
                 ...state,
-                selectedUser:action,
-              
+                selectedUser:action,              
                 currentPermission:selectedPermissionId,
                 currentPermissionNames:selectedPermissionName
             }

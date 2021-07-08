@@ -96,7 +96,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <p>Reason Value</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="reason" value={this.props.reason}   placeholder="" onChange={this.handleZoneInputAction}/>
+                                                <input type="text" className="form-control" name="reason" value={this.props.reason}   placeholder="Value" onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">

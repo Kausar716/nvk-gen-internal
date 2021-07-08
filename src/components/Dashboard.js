@@ -119,7 +119,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                            <span>Human Resources</span>
                            contact@nvknurseries.com
                        </p>
-                       <p class="mt-2">Staff Directory <a href="javascript:;">Click here</a></p>
+                       <p class="mt-2">Staff Directory <a href="#"> Click here</a></p>
                        <span class="editIcon"><a href=""><img src="./assets/img/edit-ic.svg" /></a></span>
                     </div>
                 </div>

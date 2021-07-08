@@ -230,11 +230,12 @@ console.log(errorObj)
                                     <a href="" class="text-danger f-s-18 f-w-600">Delete Customer</a>
                                 </div>}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                        Archive
                                     <div class="switcher ml-2 pr-2">
                                         <input type="checkbox" name="customerStatus" id="customerStatus" value="2"/>
                                         <label for="customerStatus"></label>
                                     </div>
-                                    Active
+                                   
                                 </div>
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <span class="mr-2 f-s-18"><strong>Level</strong></span>

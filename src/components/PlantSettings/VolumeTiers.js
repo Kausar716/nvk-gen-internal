@@ -97,7 +97,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <p>Volume Tier</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="volume" value={this.props.volume}   placeholder="" onChange={this.handleZoneInputAction}/>
+                                                <input type="text" className="form-control" name="volume" value={this.props.volume}   placeholder="Tier" onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">

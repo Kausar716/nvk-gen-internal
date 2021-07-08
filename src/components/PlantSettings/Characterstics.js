@@ -121,7 +121,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-6">
                                         <p>Section Name</p>
                                         <div>
-                                            <input type="text" className="form-control" placeholder="" name="characterSectionName" value={this.props.characterSectionName}  onChange={this.handleZoneInputAction}/>
+                                            <input type="text" className="form-control" placeholder="Section" name="characterSectionName" value={this.props.characterSectionName}  onChange={this.handleZoneInputAction}/>
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
                                             <a href="javascript:" className="d-flex align-items-center">
@@ -132,7 +132,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-6">
                                         <p>Feature Name</p>
                                         <div>
-                                            <input type="text" className="form-control" placeholder=""/>
+                                            <input type="text" className="form-control" placeholder="Feature"/>
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2">
                                             <a href="#" className="d-flex align-items-center">

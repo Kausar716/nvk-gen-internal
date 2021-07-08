@@ -86,7 +86,7 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                 <Tabs class="my-4">
                                     <TabList>
                                         <Tab>Plants Inventory</Tab>
-                                        <Tab>Produts Inventory</Tab>
+                                        <Tab>Products Inventory</Tab>
                                     </TabList>
                                     <TabPanel>
                                         <PlantInventory/>

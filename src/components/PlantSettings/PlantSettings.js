@@ -36,7 +36,7 @@ import Zones from './Zones';
                     <TabList>
                         <Tab style={{bottom:"0px"}}>Categories</Tab>
                         <Tab style={{bottom:"0px"}}>Bloom &amp; Foliage Colors</Tab>
-                        <Tab style={{bottom:"0px"}}>Zones</Tab>
+                        {/* <Tab style={{bottom:"0px"}}>Zones</Tab> */}
                         <Tab style={{bottom:"0px"}}>Characteristics</Tab>
                         <Tab style={{bottom:"0px"}}>Volume Tiers</Tab>
                         <Tab style={{bottom:"0px"}}>Inventory Reasons</Tab>
@@ -52,10 +52,10 @@ import Zones from './Zones';
                     <TabPanel>
                         <BloomFoliageColors/>
                     </TabPanel>
-
-                    <TabPanel>
-                        <Zones/>
-                    </TabPanel>
+                    {/* commented for future use */}
+                    {/* <TabPanel>
+                        <Zones/>        
+                    </TabPanel> */}
 
                     <TabPanel>
                         <Characterstics/>

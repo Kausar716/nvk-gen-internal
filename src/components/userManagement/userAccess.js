@@ -239,11 +239,11 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
     render(){
         let userProfiles = []  
-        let selectedUser = this.props.user.data
+        let selectedUser = this.props.users.data
         let exestingRoles = []
         let exestingPermission = []
         let currentPermissionNames= this.props.temp.currentPermissionNames
-        console.log(this.props.temp.selectedUser.data)
+        console.log(this.props.temp)
         let userData = {}
         if(this.props.users)
         {
@@ -265,6 +265,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
         }
        console.log(this.props.selectedUser?this.props.selectedUser:"")
+       console.log(this.props.selectedUser)
     return (
         <>
         {/* <div clas="userManagementSection"> */}
@@ -354,8 +355,8 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                         <img src="assets/img/profile-img.png" class="img-fluid" />
                                                     </div>
                                                     <div class="col-md-9 col-lg-9">
-                                                        <p class="mb-0">{this.props.selectedUser?this.props.selectedUser.selectedUser.data.name:""}</p>
-                                                        <div>{this.props.selectedUser?this.props.selectedUser.selectedUser.data.email:""}</div>
+                                                        <p class="mb-0">{this.props.selectedUser?this.props.selectedUser.selectedUser:""}</p>
+                                                        <div>{this.props.selectedUser?this.props.selectedUser.selectedUser:""}</div>
                                                         <a href="#" class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg" /></a>
                                                     </div>
                                                 </div>
@@ -698,7 +699,7 @@ const mapStateToProps = (state)=> (
     users:state.userReduser.users.payload,
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,
-    temp:state.userAccessReduser,
+    temp:state,
     selectedUser:state.userAccessReduser.selectedUser
     // permissionList:state.permissionList
 }
