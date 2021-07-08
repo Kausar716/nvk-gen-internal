@@ -228,10 +228,10 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
     //debugger;
     //console.log("DATADATA", data);
     console.log("DATADATA", FinalData);
-    if(skuData.each_cost===""||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
-    if(skuData.each_price ===""||skuData.each_price ===""||skuData.each_price==null) error.push(" Add Each Price")
-    if(skuData.sale_price ===""||skuData.sale_price === ""||skuData.sale_price==null) error.push("Add Sale Price") 
-    if(skuData.subcategory ===""||skuData.subcategory == null||skuData.subcategory==null) error.push("Select Sub Category")
+    if(skuData.each_cost===0||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
+    if(skuData.each_price ===0||skuData.each_price ===""||skuData.each_price==null) error.push(" Add Each Price")
+    if(skuData.sale_price ===0||skuData.sale_price === ""||skuData.sale_price==null) error.push("Add Sale Price") 
+    if(skuData.subcategory ===0||skuData.subcategory == null||skuData.subcategory==null) error.push("Select Sub Category")
     if(skuData.sku_item_name==null ||skuData.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete skuData["id"]
@@ -284,7 +284,16 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
 
 export const updateSkuAction = (id, data) =>async dispatch => {
  // debugger;
-    let error = []
+
+ let error  = []
+ if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
+ if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
+ if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
+ if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+ if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
+   
+
+ if(error.length===0){
     const data1={
         type:"product",
         supplier_id:1,
@@ -306,7 +315,24 @@ export const updateSkuAction = (id, data) =>async dispatch => {
                 message:error,
                 status:true
             })
+
+            }).catch(error1=>{
+                error.push("Please add Product first")
+                dispatch({
+                    type:ERROR_HANDLE,
+                    message:error,
+                    status:true
+                })
+    
             })
+
+        }else{
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+        }
 }
 
 
@@ -315,13 +341,14 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
    // debugger
     // delete data["id"]
     // 
-    // if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
-    // if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
-    // if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
-    // if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
-    // if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
-    //if(error.length===0){
-        let error  = []
+    let error  = []
+    if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
+    if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
+    if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+    if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
+    if(error.length===0){
+       
         const data1={
             type:"product",
             supplier_id:1,
@@ -342,25 +369,26 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
             status:true
         })
         })
+
        
-        // .catch(error1=>{
-        //     error.push("Please add Product first")
-        //     dispatch({
-        //         type:ERROR_HANDLE,
-        //         message:error,
-        //         status:true
-        //     })
+        .catch(error1=>{
+            error.push("Please add Product first")
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
 
-        // })
-    // }
-    // else{
-    //     dispatch({
-    //         type:ERROR_HANDLE,
-    //         message:error,
-    //         status:true
-    //     })
+        })
+    }
+    else{
+        dispatch({
+            type:ERROR_HANDLE,
+            message:error,
+            status:true
+        })
 
-    // }
+    }
 
 }
 

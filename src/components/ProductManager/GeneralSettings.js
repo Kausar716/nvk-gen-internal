@@ -132,7 +132,7 @@ const GeneralSettings=(props)=> {
              var inputTag = document.createElement('input');
              inputTag.id = count
              inputTag.className= "input_tag_edit"
-             inputTag.placeholder = "add tag"
+             inputTag.placeholder = "Add tag"
              inputTag.onchange = childAdd
              document.getElementById("tags").appendChild(inputTag);  
              setToggle(false)       
@@ -316,3 +316,5 @@ export default connect(mapStateToProps ,{
     handleTagAction
 
 })(GeneralSettings)
+
+
