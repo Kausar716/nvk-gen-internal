@@ -101,7 +101,7 @@ class SignIn extends Component{
                     <p className="logincontactInfo" style={{color:"gray"}}>Contact <span  style={{color:"#4f91f7"}}>webmaster@nvknurseries.com</span></p>
                 </div>
             </Form>
-            <p>version:0.0.0.1</p>
+            <p>version:0.0.0.2</p>
             </div>
                 </div>
                 <footer>

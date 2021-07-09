@@ -81,6 +81,7 @@ const SkuList=(props)=> {
    
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
     const {subCategoryData} = props.categoryData;
+    console.log(props.categoryData)
     //console.log("productDataFINE", props.productData)
     console.log("productDataBySKUlist", productDataBySKUlist)
     //console.log("skuDataByIdskuDataById",skuData)
@@ -93,6 +94,8 @@ const SkuList=(props)=> {
     //Finiding last ID in product list
     const product_id_List = productData.map(prId=>prId.product_id)
     let finalPrID = product_id_List.reverse()[0]
+    let supCategoryIdForFilter = productDataById.category_id
+    console.log(supCategoryIdForFilter)
     console.log("product_id_List", finalPrID)
    
 
@@ -103,15 +106,14 @@ const SkuList=(props)=> {
        
          if(submitCount === 0){
             if(needAction){
-                if(actionType ==="add")
+                if(actionType ==="add"){
                 props.createSkuAction(product_idFromGeneral,skuDataById)
                    props.pageReDirectAction("product","add")
+                }
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
-                if(actionType ==="edit")
-                //debugger;
-               
-                props.updateSkuAction(skuDataById.id,skuDataById)
+                if(actionType ==="edit")              
+                props.updateSkuActionClear(skuDataById.id,skuDataById)
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 //setSubmitCount(1)
             }
@@ -235,8 +237,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <label>Sub-Category <span class="text-danger">*</span></label>
                                             <select class="form-control"  id="subcategory" onChange={handleInput}>
                                             <option value="0">None</option>
-                                            <option value="0">None</option>
                             {subCategoryData.map(subcategory=>{
+                                if(parseInt(supCategoryIdForFilter) === subcategory.category_id)
                                 return (<option value={subcategory.id} selected={subcategory.id===skuDataById.subcategory?"selected":""}>{subcategory.name}</option>)
 
                             })}
@@ -320,8 +322,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                  </button>
 
 
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"
-                                            disabled={needAction===true?false:true} onClick={()=>props.updateSkuActionClear(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
+                                            disabled={needAction===true?false:true} onClick={()=>props.updateSkuAction(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
                                 </form>

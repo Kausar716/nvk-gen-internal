@@ -96,8 +96,7 @@ const  ProductManagement = (props) =>{
             }
 
             else if(e.target.id ==="subcategory"){
-                alert("ancd")
-                console.log("filterSubCategory", filterSubCategory)
+                console.log("filterSubCategory", e.target.value)
                 props.handleCategory(filterSubCategory,e.target.value)
                 setsubCategory(e.target.value)
 
