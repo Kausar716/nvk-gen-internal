@@ -139,7 +139,6 @@ const GeneralSettings=(props)=> {
          }
      }
 
-
 //      const goToParentPage=()=>{
 //         history.push("/productManager")
 
@@ -151,8 +150,7 @@ const GeneralSettings=(props)=> {
             <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"1em",paddingRight:"1em"}}>
                             <form>
                                 <div class="row">
-                                    <div class="col-md-12 d-md-flex flex-wrap align-items-center">
-                                
+                                     {actionType !== "add" ?<div class="col-md-12 d-md-flex flex-wrap align-items-center">
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued}
@@ -171,7 +169,7 @@ const GeneralSettings=(props)=> {
                                             </div>
                                             Archive
                                         </div>
-                                    </div>
+                                    </div>:null}
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">

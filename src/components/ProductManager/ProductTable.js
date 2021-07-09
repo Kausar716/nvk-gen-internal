@@ -198,7 +198,7 @@ const ProductTable  = (props) => {
                                             // var abcd =categoryData.filter(cat=>cat.id===product.category_id)
                                             // console.log("abcd,", abcd);
 
-
+                                                console.log(product)
 
                                              return(
                                             <tr  key={product.product_id}>
@@ -214,7 +214,8 @@ const ProductTable  = (props) => {
                                                     {/* {abcd[0].name} */}
                                                     </td>
 
-                                                <td> {subCategoryData.length>0?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]["name"]:"":""}</td> 
+                                                {/* <td> {subCategoryData.length>0?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]["name"]:"":""}</td>  */}
+                                                <td>{product.subcategory_id}</td>
                                                 <td  className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" className="custom-control-input" id={id2.concat(product.product_id)}/>

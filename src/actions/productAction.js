@@ -235,9 +235,11 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
     if(skuData.sku_item_name==null ||skuData.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete skuData["id"]
-     
+     console.log(FinalData)
+        FinalData.subcategory_id =FinalData.subcategory
+        delete FinalData.subcategory
         axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
-            //debugger;
+           
             console.log("createSKU", res)
             //dispatch(getAllProductAction())
                             // dispatch(showSpecifiedSkuAction(id))
@@ -338,6 +340,7 @@ export const updateSkuAction = (id, data) =>async dispatch => {
 
 
 export const updateSkuActionClear = (id,data) => async dispatch=>{
+    console.log(data)
    // debugger
     // delete data["id"]
     // 
@@ -355,7 +358,7 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
         };
         const FinalData = {...data1, id, ...data}
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{
-           
+           console.log(res)
            // error.push("Product Updated Successfully")
         dispatch({
             type:UPDATE_SKU_ACTION_CLEAR
@@ -429,12 +432,12 @@ export const getAllSkuAction = (id) => dispatch => {
 
 
 export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch => {
-    // debugger/api/skus/products/HG102
+  
 
      axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
 
-        //debugger;
+      
         console.log("showSpecifiedSkuAction",res.data.data[0])
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
