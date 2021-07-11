@@ -247,9 +247,6 @@ const productFormAction = ()=>{
 
 
             {(plantPageToOpen === "general" || plantPageToOpen === "sku") &&
-                  
-
-
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                                     <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add Plant</h1>
@@ -280,14 +277,20 @@ const productFormAction = ()=>{
                                                 </div>
                                             </div>
                                         </div>
-                                        <Tabs>
+                                        {/* <Tabs>
                                             <TabList>
                                                 <Tab onClick={()=>props.plantSubPageReDirectAction("general")}>General</Tab>
                                                 <Tab onClick={()=>props.plantSubPageReDirectAction("sku")}>SKU Lists</Tab>
                                             </TabList>
-                                        </Tabs>
+                                        </Tabs> */}
+
+
+                                    <div className="product_add_navigation">
+                                        <span style={{ marginRight: "25px"}} id="general" className={plantPageToOpen === "general" ? "selected_link" : "normal_link" }  onClick={()=>props.plantSubPageReDirectAction("general")}>General</span>
+                                        <span  style={{ marginLeft: "-25px"}} id="sku"  className={plantPageToOpen === "sku" ? "selected_link" : "normal_link" }  onClick={()=>props.plantSubPageReDirectAction("sku")}>SKU Lists</span>
                                     </div>
-                            </div>
+                                </div>
+                        </div>
                    
                 }
 

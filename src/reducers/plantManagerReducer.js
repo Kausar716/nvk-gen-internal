@@ -2,8 +2,8 @@
 // import {v4 as v4} from 'uuid';
 import {
         //Plant ACTION
-        // CREATE_PLANT_ACTION,
-        // UPDATE_PLANT_ACTION,
+        CREATE_PLANT_ACTION,
+        UPDATE_PLANT_ACTION,
         DELETE_PLANT_ACTION,
         GET_ALL_PLANT_ACTION,
         GET_SPECIFIED_PLANT_ACTION,
@@ -89,11 +89,13 @@ const initialSatate = {
     discontinued: 0,
     location: null,
     status: 1,
-    attributes_subattributes:[]
+    attributes_subattributes:[],
+
 
   },
   tagsData: [],
-  status:false
+  status:false,
+  ae_plant_id:"",
 
 }
 
@@ -169,6 +171,15 @@ export default function(state = initialSatate, action){
                 backupData:action.payload
 
             }
+
+
+            case CREATE_PLANT_ACTION:
+                return{
+                    ...state,
+                    needAction:false,
+                    ae_plant_id:action.ae_plant_id
+    
+                }
 
 
             //pagination action 
