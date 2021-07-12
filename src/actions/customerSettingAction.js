@@ -4,16 +4,21 @@
  SHOW_CUSTOER, 
  UPDATE_CUSTOMER,
  DELETE_CUSTOMER,
+ SET_PAGE_NUMBER,
+ FILTER_DATA_BY_RADIO,
+ FILTER_DATA_BY_SEARCH,
+ FILTER_DATA_BY_ALPHA,
  axios,
  config
  } from './types'
 
- export const getAllCustomer = () => dispatch => {
+ export const getAllCustomer = (dataType) => dispatch => {
     axios.get("/api/customers-list",config).then(res=>{ 
         console.log(res.data)
     dispatch({
             type:GET_CUSTOMER_LIST,
-            payload:res.data
+            payload:res.data,
+            dataType:dataType
 
         })
     })
@@ -68,3 +73,35 @@ export const deleteCustomer= (customerData) => dispatch => {
      })
      
 }
+export const setPageNumber = (pageNumber) => {
+    return{
+          type:SET_PAGE_NUMBER,
+          pageNumber:pageNumber,
+      }
+  
+  }
+  export const handleRadioFilter = (data)=>{
+    //   if()
+      return{
+          type: FILTER_DATA_BY_RADIO,
+          actionType:data
+      }
+  }
+  export const handleSearchFilter = (data)=>{
+    //   if()
+      return{
+          type:FILTER_DATA_BY_SEARCH,
+          searchData:data
+      }
+  }
+  export const handleAplhabetFilter = (data)=>{
+    //   if()
+      return{
+          type:FILTER_DATA_BY_ALPHA,
+          alphaData:data
+      }
+  }
+
+
+
+/// cutomer
