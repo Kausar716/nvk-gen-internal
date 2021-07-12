@@ -94,7 +94,8 @@ import {
 // "attributes[2][id]":3,
 // "attributes[2][subattributes][2][id]":4,
 export const createPlantAction = (plantData,tags) => dispatch => {
-   // debugger;
+    console.log(plantData)
+   debugger;
     let errorArray=[];
     if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
@@ -116,7 +117,8 @@ export const createPlantAction = (plantData,tags) => dispatch => {
            
             dispatch({
                 type:CREATE_PLANT_ACTION,
-                ae_plant_id:res.data.data.plant.plant_id
+                ae_plant_id:res.data.data.plant.plant_id,
+                createdPlantData:res.data.data.plant
 
             })
     
@@ -234,6 +236,9 @@ export const createPlantSkuAction = (id) => dispatch => {
 
 }
 export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch => {
+    console.log(data)
+    console.log(id)
+    debugger;
     let error = []
     // if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
     // if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
