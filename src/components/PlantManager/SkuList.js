@@ -288,8 +288,8 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>props.updatePlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)} >Add SKU &amp; Clear</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>{alert("in");props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)}} >Add SKU &amp; Clear</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.createPlantSkuAction(plantSkuDataById.ae_plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
                                 </form>

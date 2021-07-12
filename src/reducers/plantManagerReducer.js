@@ -10,8 +10,8 @@ import {
         // DUPLICTE_PLANT,
     
         // Plant SKU ACTION
-        // CREATE_PLANT_SKU_ACTION,
-        // UPDATE_PLANT_SKU_ACTION,
+        CREATE_PLANT_SKU_ACTION,
+        UPDATE_PLANT_SKU_ACTION,
         // DELETE_PLANT_SKU_ACTION,
         GET_ALL_PLANT_SKU_ACTION,
         GET_PLANT_SPECIFIED_SKU_ACTION,
@@ -335,7 +335,21 @@ export default function(state = initialSatate, action){
             //         plantData:state.backupData.filter(filterData=>filterData.category_id === Number(action.payload))
             //     }
                 
-           
+           case UPDATE_PLANT_SKU_ACTION :
+               return{
+                   ...state,
+                   action:action
+               }
+            
+            case CREATE_PLANT_SKU_ACTION :
+                debugger;
+                return{
+                    //const skuData = state.
+                    ...state, 
+                    needAction:false
+                    // skuData:[...action.payload.data]
+                };
+        
   
             default:
                 return state

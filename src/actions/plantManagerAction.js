@@ -9,7 +9,7 @@ import {
     //DUPLICTE_PLANT,
 
     // Plant SKU ACTION
-    //CREATE_PLANT_SKU_ACTION,
+    CREATE_PLANT_SKU_ACTION,
     UPDATE_PLANT_SKU_ACTION,
     //DELETE_PLANT_SKU_ACTION,
     GET_ALL_PLANT_SKU_ACTION,
@@ -232,10 +232,56 @@ export const getSpecifiedPlantAction = (id, actionType="edit",pageToOpen="genera
     4. update sku API
     5. delete SKU API
 */
-export const createPlantSkuAction = (id) => dispatch => {
+export const createPlantSkuAction = (id, data, actionType="add") => dispatch => {
+   debugger;
+    let error = []
+    // if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
+    // if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
+    // if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+    // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
+    debugger;
+    if(error.length===0){
+        delete data["id"]
+        debugger;
+        axios.post(`/api/add-sku/${id}`,data,config).then(res=>{ 
+            console.log(res)
+            // dispatch(getAllProductAction())
+            dispatch(showSpecifiedPlantSkuAction(id))
+            // dispatch(getSpecifiedProductAction(id,"edit","sku"))
+            // dispatch(pageReDirectAction("sku",actionType))
+            dispatch(getAllPlantSkuAction(id))
+            dispatch({
+                type:CREATE_PLANT_SKU_ACTION
+            })
+            error.push("SKU updated successfully")
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+            }).catch(error1=>{
+                console.log(error1)
+                error.push("Please add Plant firsteksdjfnvdz")
+                dispatch({
+                    type:ERROR_HANDLE,
+                    message:error,
+                    status:true
+                })
+    
+            })
+    }else{
+        dispatch({
+            type:ERROR_HANDLE,
+            message:error,
+            status:true
+        })
+
+    }
 
 }
 export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch => {
+    debugger;
     console.log(data)
     console.log(id)
     debugger;
@@ -248,6 +294,7 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     if(error.length===0){
         delete data["id"]
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
+            console.log(res)
             // dispatch(getAllProductAction())
             dispatch(showSpecifiedPlantSkuAction(id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
@@ -263,7 +310,8 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
                 status:true
             })
             }).catch(error1=>{
-                error.push("Please add Plant first")
+                console.log(error1)
+                error.push("Please add Plant firstttttttttt")
                 dispatch({
                     type:ERROR_HANDLE,
                     message:error,
