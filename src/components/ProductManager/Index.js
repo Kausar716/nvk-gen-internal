@@ -248,7 +248,7 @@ const  ProductManagement = (props) =>{
                                                     <h2>Product ID &nbsp;&nbsp;
                                                         {/* //{product_idFromGeneral||productDataById.product_id} */}
                                                         {props.temp.productData.ae_product_id ==="" ? productDataById.product_id: product_idFromGeneral}
-                                                        </h2>
+                                                    </h2>
                                                 </div>
                                                 
                                                 <div class="col-md-6 d-flex justify-content-md-end">

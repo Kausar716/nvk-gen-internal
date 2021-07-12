@@ -366,6 +366,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                     </div>
                     </div>
 
+
                             <div className="form-group row mt-3" style={{marginLeft:"0.42em", marginRight:"0.5em"}}>
                             <div className="col-md-12">
                                 <table id="plantDetails" class="table table-striped w-100 ">

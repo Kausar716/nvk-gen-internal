@@ -163,9 +163,9 @@ const PlantTable=(props)=> {
 
 
                                                 <td className="text-center">
-                                                <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
-                                                        <label className="custom-control-label" for={id3.concat(plant_id)}></label>
+                                                    <div className="custom-control custom-checkbox mb-1">
+                                                            <input type="checkbox" className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
+                                                            <label className="custom-control-label" for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 

@@ -2,7 +2,7 @@
 import {
     //Plant ACTION
     CREATE_PLANT_ACTION,
-    //UPDATE_PLANT_ACTION,
+    UPDATE_PLANT_ACTION,
     DELETE_PLANT_ACTION,
     GET_ALL_PLANT_ACTION,
     GET_SPECIFIED_PLANT_ACTION,
@@ -94,12 +94,14 @@ import {
 // "attributes[2][id]":3,
 // "attributes[2][subattributes][2][id]":4,
 export const createPlantAction = (plantData,tags) => dispatch => {
+   // debugger;
     let errorArray=[];
     if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
     if(errorArray.length===0){
         plantData["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/add-plant`,plantData,config).then(res=>{
+           // debugger;
             errorArray.push("Plant Added successfully")
             console.log("karthi",res.data.data);
             dispatch(getAllPlantAction())
@@ -113,7 +115,9 @@ export const createPlantAction = (plantData,tags) => dispatch => {
             dispatch(plantSubPageReDirectAction("sku")))
            
             dispatch({
-                type:CREATE_PLANT_ACTION
+                type:CREATE_PLANT_ACTION,
+                ae_plant_id:res.data.data.plant.plant_id
+
             })
     
         })
@@ -140,13 +144,35 @@ export const createPlantAction = (plantData,tags) => dispatch => {
 
 
 export const updatePlantAction = (data,id,tag) => dispatch => {
+    data["common_name"] = tag
+        axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
+            dispatch(getAllPlantAction())
+            let error = []
+            error.push("Plant Updated successfully")
+            dispatch({
+                            type:UPDATE_PLANT_ACTION
+                    
+                        })
+                        dispatch({
+                                        type:ERROR_HANDLE,
+                                        message:error,
+                                        status:true
+                                    }
+                                    // dispatch(getAllSpecifiedSkuProductList(id)),
+                                    // dispatch(subPageReDirectAction("sku"))
+                                    )
 
+        })
 }
+
+
+
+
 export const deletePlantAction = (id) => dispatch => {
     let error = []
     axios.post(`/api/delete-plant/${id}`,null,config).then(res=>{ 
         dispatch(getAllPlantAction())
-        dispatch(getAllPlantSkuAction())
+        //dispatch(getAllPlantSkuAction())
         // dispatch(deleteSkuAction(id))
         dispatch({
             type:DELETE_PLANT_ACTION
@@ -175,6 +201,8 @@ export const getAllPlantAction = () => dispatch => {
         })
 
 }
+
+
 
 export const getSpecifiedPlantAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
     axios.get(`/api/plant/${id}`,config).then(res=>{ 

@@ -14,13 +14,8 @@ import {
     plantPageReDirectAction,
     plantSubPageReDirectAction,
 
-
     //input handle
     handlePlantInputAction
-
-
-
-    
 
 }from "../../actions/plantManagerAction";
 import {
@@ -101,6 +96,7 @@ import {
          //let validate = handleValidation()  
         //  if(validate)
         if(submitCount === 0){
+            debugger;
            if(needAction){
                if(actionType ==="add")
                props.createPlantAction(plantDataById,tagsData)
@@ -112,6 +108,13 @@ import {
        }
          
     }
+
+
+    const removeTag1 = (index) => {
+        const newTagArray = tagsData;
+        newTagArray.splice(index, 1);
+        setCount([...newTagArray]);
+      };
 
     const addTag = (e) =>{
         if(e.target.id==="tags" && toggleForTagInput){
@@ -137,17 +140,11 @@ import {
 
     return (
         <div>
-            <div class="bg-white px-3 py-3 mt-3" >
+            <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"0.5em",paddingRight:"1em"}}>
                             <form>
                                 <div class="row">
                                     <div class="col-md-12 d-md-flex flex-wrap align-items-center">
-                                        {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
-                                            <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
-                                                <label for="switcher_checkbox_2"></label>
-                                            </div>
-                                            Website
-                                        </div> */}
+                                  
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
@@ -201,16 +198,31 @@ import {
                                         <label>Series</label>
                                         <input type="text" class="form-control" placeholder=""  id="series" value={plantDataById.series} onChange={handleInput}/>
                                     </div>
+
+
+
                                     <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                         <label>Common Name(s)</label>
-                                        {/* <input type="text" class="form-control" placeholder=""/> */}
-                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",border:"2px solid #cccccc",borderRadius:"5px"}} onClickCapture={addTag}>
-                                            {tagsData.map(tagData=>{
-                                            return (<a className="subtag">{tagData}</a>)
+                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
+                                        border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
+                                            {tagsData.map((tagData, index)=>{
+                                            return (<a className="subtag" key={index}>
+                                                <button
+                                                                    onClick={() => removeTag1(index)}
+                                                                    className="tagCloseBtn"
+                                                                    style={{paddingTop:"0px"}}
+                                                                >
+                                                                    
+                                                              <p>{tagData}  &nbsp;&nbsp;&nbsp;x </p> </button></a>)
                                             }) }
-
                                         </div>
                                     </div>
+
+                                    
+
+
+
+
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
@@ -225,73 +237,9 @@ import {
                                         </select>
 
                                     </div>
-                                    {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Bloom Color:</label>
-                                        <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Follage Color:</label>
-                                        <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select>
-                                    </div> */}
+                 
                                 </div>
-                                <div class="row mt-3">
-                                    {/* <div class="col-md-6 col-lg-3">
-                                        <label>Height:</label>
-                                        <div class="d-flex">
-                                            <input type="text" class="form-control" placeholder="MIN"/>
-                                            <span class="midDash">-</span>
-                                            <input type="text" class="form-control" placeholder="MAX"/>
-                                            <span class="midDash">-</span>
-                                            <select class="form-control">
-                                                <option>CM</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Spread:</label>
-                                        <div class="d-flex">
-                                            <input type="text" class="form-control" placeholder="MIN"/>
-                                            <span class="midDash">-</span>
-                                            <input type="text" class="form-control" placeholder="MAX"/>
-                                            <span class="midDash">-</span>
-                                            <select class="form-control">
-                                                <option>CM</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Spacing:</label>
-                                        <div class="d-flex">
-                                            <input type="text" class="form-control" placeholder="MIN"/>
-                                            <span class="midDash">-</span>
-                                            <input type="text" class="form-control" placeholder="MAX"/>
-                                            <span class="midDash">-</span>
-                                            <select class="form-control">
-                                                <option>CM</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Temperature:</label>
-                                        <div class="d-flex">
-                                            <input type="text" class="form-control" placeholder="MIN"/>
-                                            <span class="midDash">-</span>
-                                            <input type="text" class="form-control" placeholder="MAX"/>
-                                            <span class="midDash">-</span>
-                                            <select class="form-control">
-                                                <option>&#8457;</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
-                                            </select>
-                                        </div>
-                                    </div> */}
-                                </div>
+                               
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
                                         <label>Patent</label>
@@ -303,11 +251,6 @@ import {
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Hardiness</label>
-                                        {/* <select class="form-control">
-                                            <option>Select</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                        </select> */}
                                         <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/>
                                         
                                     </div>
@@ -318,8 +261,7 @@ import {
                                         indents.map(year=>{
                                             return(<option value={year} selected={plantDataById.introduction_year===year?"selected":""}>{year}</option>)
                                         })
-
-                                    }
+                                        }
                                         </select>
                                     </div>
                                 </div>
@@ -332,10 +274,10 @@ import {
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
                                         <a href='/plantManager'>
-                                        <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
+                                        <button type="button" class="btn btn-outline-secondary btn-lg"
+                                         onClick={()=>props.plantPageReDirectAction("plant","add")}
+                                        >Cancel</button>
                                         </a>
-                                         
-                                        
                                         <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add Plant":"Update Plant"}</button>
                                     </div>
                                 </div>
