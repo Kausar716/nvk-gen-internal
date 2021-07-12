@@ -49,8 +49,15 @@ export class CustomerSettings extends React.Component {
     }
     handleSearch = (e)=>{
         // alert(e.target.value)
-        this.setState({searchValue:e.target.value})
-        this.props.handleSearchFilter(e.target.value)
+        if(e.target.value === undefined){
+            this.setState({searchValue:""})
+            this.props.handleSearchFilter("")
+
+        }else{
+            this.setState({searchValue:e.target.value})
+            this.props.handleSearchFilter(e.target.value)
+        }
+        
         // alert(e.target.value)
 
     }
@@ -129,7 +136,7 @@ export class CustomerSettings extends React.Component {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 mt-2 mt-md-0 pb-2">
-                                    <a >Reset</a>
+                                    <a onClick={this.handleSearch}>Reset</a>
                                 </div>
                             </div>
                             <div class="form-group row">
