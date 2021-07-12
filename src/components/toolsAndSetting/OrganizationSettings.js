@@ -2,6 +2,8 @@ import React from 'react'
 import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
 
+//import noImageI from '../../../public/images/noImage.png';
+
 
 export class OrganizationSettings extends React.Component {  
     constructor(){
@@ -30,7 +32,9 @@ export class OrganizationSettings extends React.Component {
             },
             errorCount:0,
             logo:"",
-            imageUploaded:false
+            imageUploaded:false,
+            initilaImages :false,
+            imagePreviewURL:"assets/img/noImage.png"
         }
     }
     handlImageUpload = (e)=>{
@@ -165,16 +169,23 @@ export class OrganizationSettings extends React.Component {
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        let url="https://zvky.flamingotech.ml/"
+        let url= "https://zvky.flamingotech.ml/";
+        var iImage="assets/img/noImage.png";
+        
         let organizationDataById 
         if(this.props.organizationData.organizationData){
              organizationDataById = this.props.organizationData.organizationData
             console.log(organizationDataById)
             if(this.props.organizationData.organizationData.payload){
+              // debugger
                 url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
+               
             }
             else{
-                url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+              // debugger
+               url="assets/img/noImage.png";
+               // url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+               
             }
         }
         else{
@@ -184,7 +195,9 @@ export class OrganizationSettings extends React.Component {
                 console.log(url)
             }
             else{
+                debugger
                 url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+                
             }
             
         }
@@ -219,7 +232,11 @@ export class OrganizationSettings extends React.Component {
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3">
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
-                                            <img src={url} style={{height:"100px",width:"100px"}}/>
+                                            <img 
+                                              src={url}
+                                           // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
+                                           // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
+                                            style={{height:"100px",width:"100px"}}/>
                                             
                                         </div>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
@@ -242,7 +259,7 @@ export class OrganizationSettings extends React.Component {
                                         <div class="col-md-12">
                                             <label>Name</label>
                                             <input type="text" placeholder="Name" class="form-control" name="name" value={organizationDataById.name} onChange={this.handleInput}  />
-                                            {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Numbers are not allowed</span>:""}
+                                            {/* {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Numbers are not allowed</span>:""} */}
                                         </div>
                                     </div>
                                     <div class="row form-group">

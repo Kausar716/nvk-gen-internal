@@ -64,3 +64,11 @@
   line-height: 32px;
   font-weight: 500;
 }
+
+.dateDesign {
+  height: 2.5em;
+  padding-right: 17px;
+  padding-left: 0.5em;
+  width: 11em;
+  margin-right: 0em;
+}

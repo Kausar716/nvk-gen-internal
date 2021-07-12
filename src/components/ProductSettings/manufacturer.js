@@ -83,7 +83,7 @@ render()
                             <div className="col-md-12 col-lg-12">
                                 <p>Manufacturer Name</p>
                                 <div className="row d-flex align-items-center">
-                                    <div className="col-md-6 col-lg-9">  
+                                    <div className="col-md-6 col-lg-6">  
                                         <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Name" onChange={this.handleProductManufacturerInputAction}/>
                                     </div>
                                     <div className="col-md-6 col-lg-3" onClick={this.handleAddProductManufacturer}>

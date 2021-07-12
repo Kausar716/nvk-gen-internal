@@ -142,7 +142,7 @@ const PlantTable=(props)=> {
                                              return(     
                                             <tr>
                                                 <td style={{color:status==="1" ? "black" :"red"}}>{status === "1" ?"Active":"Inactive"}</td>
-                                                <td>{plant_id}</td>
+                                                <td className="text-nowrap text-center">{plant_id}</td>
                                                 <td>{genus}</td>
                                                 <td>
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
