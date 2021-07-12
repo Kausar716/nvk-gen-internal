@@ -95,7 +95,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-12 col-lg-12">
                                         <p>Color Name</p>
                                         <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-9">  
+                                            <div className="col-md-6 col-lg-6">  
                                                 <input type="text" className="form-control" name="bloomColor" value={this.props.bloomColor}   placeholder="Colour" onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>

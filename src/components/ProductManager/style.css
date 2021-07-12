@@ -97,4 +97,23 @@
 .input_tag_edit {
   margin-top: -3px;
   margin-left: 6px;
+  border: 0px;
+  outline: none;
+  /* overflow: hidden; */
+  /* //width: 100%; */
+}
+input_tag_edit:hover {
+  border: 0px;
+  visibility: hidden;
+  overflow: hidden;
+  outline: none;
+}
+input_tag_edit::selection {
+  overflow: hidden;
+  outline: none;
+}
+
+input_tag_edit:focus {
+  border: none;
+  outline: none;
 }

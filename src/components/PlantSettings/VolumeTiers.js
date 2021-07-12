@@ -96,7 +96,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-12 col-lg-12">
                                         <p>Volume Tier</p>
                                         <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-9">  
+                                            <div className="col-md-6 col-lg-6">  
                                                 <input type="text" className="form-control" name="volume" value={this.props.volume}   placeholder="Tier" onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>

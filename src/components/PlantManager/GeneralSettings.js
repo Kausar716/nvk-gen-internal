@@ -249,7 +249,7 @@ import {
                                         <input type="text" class="form-control" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Hardiness</label>
+                                        <label>Hardiness Zone</label>
                                         <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/>
                                         
                                     </div>
@@ -277,7 +277,7 @@ import {
                                          onClick={()=>props.plantPageReDirectAction("plant","add")}
                                         >Cancel</button>
                                         </a>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add Plant":"Update Plant"}</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>
                                 </div>
                             </form>
