@@ -214,7 +214,7 @@ const SignInPage = (props) => {
                     <div class="row">
                         <div class="col-md-12 text-center">
                             <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label>
-                            <small><p>Version Number: 0.0.2.0</p> </small>
+                            <small><p>Version Number: 0.0.2.1</p> </small>
                         </div>
                     </div>
                 </div>
