@@ -162,7 +162,7 @@ const SkuList = (props)=>{
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
                 <div>
-                            <div class="bg-white px-3 py-3 mt-3">
+                            <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"0.5em",paddingRight:"1em"}}>
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -294,7 +294,7 @@ const SkuList = (props)=>{
                                     </div>
                                 </form>
                             </div>
-                               <div className="row_1">
+                               <div className="row_1" style={{marginTop:"1em", marginLeft:"1em"}}>
                             <div>
                             <label className="greenText">{"Showing " + (plantSkuPageNumber>0 ? (pageSize*((plantSkuPageNumber)))+1 : ((plantSkuPageNumber)+1))+  "  to  " +  (plantSkuPageNumber>0 ? (((pageSize*((plantSkuPageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((plantSkuPageNumber)))+pageSize)) : ((((plantSkuPageNumber)+1)*pageSize)>totalLength?totalLength:(((plantSkuPageNumber)+1)*pageSize)))   + "  of   "  +   totalLength }</label>
                             </div>
@@ -324,7 +324,7 @@ const SkuList = (props)=>{
                     <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={plantSkuPageNumber+1}/>
                     </div>
                     </div>
-                            <div className="form-group row mt-3">
+                            <div className="form-group row mt-3" style={{marginLeft:"0.42em", marginRight:"0.5em"}}>
                                 <div className="col-md-12">
                                     <table id="plantDetails" class="table table-striped w-100">
                                         <thead>

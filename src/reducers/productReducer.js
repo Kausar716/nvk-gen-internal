@@ -330,7 +330,6 @@ console.log("actions", action.payload.data)
             tagsData:[]
         }
     case GET_SPECIFIED_SKU_ACTION:
-        //debugger
         return{
             
            ...state,
@@ -338,7 +337,7 @@ console.log("actions", action.payload.data)
             // productDataById:action.payload.data,
             //     tagsData:JSON.parse(action.payload.data.common_name),
                 needAction:false,
-                actionType:action.actionType
+                actionType:"edit"
         }
 
             
@@ -392,7 +391,7 @@ console.log("actions", action.payload.data)
         case FILTER_GET_SLECTED_CATEGORY_SUB_DATA:
             //debugger;
             console.log("action123456", action)
-            console.log("cat sub cat")
+            console.log("cat sub cat",state.productData)
          
             return{
                 ...state,
