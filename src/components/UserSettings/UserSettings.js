@@ -89,12 +89,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                     <div className="col-md-12 col-lg-12">
                                         <p>Position</p>
                                         <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-9">  
+                                            <div className="col-md-6 col-lg-6">  
                                                 <input type="text" className="form-control" name="position" value={this.props.name}   placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Position
                                                 </a>
                                             </div>
                                         </div>
