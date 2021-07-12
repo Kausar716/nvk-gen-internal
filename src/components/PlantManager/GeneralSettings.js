@@ -98,6 +98,8 @@ import {
         if(submitCount === 0){
            if(needAction){
                if(actionType ==="add")
+               console.log(plantDataById)
+               console.log(tagsData)
                props.createPlantAction(plantDataById,tagsData)
   
                if(actionType ==="edit")

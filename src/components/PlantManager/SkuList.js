@@ -157,7 +157,7 @@ const SkuList = (props)=>{
         let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
         let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
         console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
-        console.log(plantSkuDataById)
+        console.log(props.plantData)
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -289,7 +289,7 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)} >Add SKU &amp; Clear</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>props.updatePlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)} >Add SKU &amp; Clear</button>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
