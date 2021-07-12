@@ -81,7 +81,7 @@ const SkuList=(props)=> {
    
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
     const {subCategoryData} = props.categoryData;
-    console.log(props.categoryData)
+    console.log(props.productData)
     //console.log("productDataFINE", props.productData)
     console.log("productDataBySKUlist", productDataBySKUlist)
     //console.log("skuDataByIdskuDataById",skuData)
@@ -112,8 +112,20 @@ const SkuList=(props)=> {
                 }
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
-                if(actionType ==="edit")              
-                props.updateSkuActionClear(skuDataById.id,skuDataById)
+                if(actionType ==="edit")  
+                console.log(skuDataById.id)
+                let skuid = skuDataById.id
+                if(skuDataById.id === undefined){
+                     skuid= props.productData.productDataById.product_id
+                     props.createSkuAction(skuid,skuDataById)
+                }
+                else{
+                    props.updateSkuActionClear(skuid,skuDataById)
+                }
+                console.log(skuDataById) 
+                console.log(props.productData)  
+                console.log(skuid)       
+               
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 //setSubmitCount(1)
             }

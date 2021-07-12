@@ -392,11 +392,13 @@ console.log("actions", action.payload.data)
             //debugger;
             console.log("action123456", action)
             console.log("cat sub cat",state.productData)
-         
+            console.log(action.subCategoryId)
+            let selectedSubCategory = action.categoryId.filter(data=>JSON.stringify(data.id) === action.subCategoryId )[0]
+            console.log(selectedSubCategory)
             return{
                 ...state,
                 //productData:state.productData.filter(product=>(JSON.stringify(product.category_id)===action.categoryId && JSON.stringify(product.subcategory_id) ===  action.subCategoryId))
-                productData:state.productData.filter(product=>( JSON.stringify(product.subcategory_id) ===  action.subCategoryId))
+                productData:state.backupData.filter(product=>( JSON.stringify(product.subcategory_id).includes(selectedSubCategory.name)))
             }
         case ERROR_HANDLE:
             return{

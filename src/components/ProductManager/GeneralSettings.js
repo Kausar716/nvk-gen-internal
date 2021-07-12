@@ -143,7 +143,7 @@ const GeneralSettings=(props)=> {
 //         history.push("/productManager")
 
 // }
-
+console.log(actionType)
 //tagsData = [...tags, ...tagsData]
     return (
         <div>

@@ -96,7 +96,6 @@ import {
          //let validate = handleValidation()  
         //  if(validate)
         if(submitCount === 0){
-            debugger;
            if(needAction){
                if(actionType ==="add")
                props.createPlantAction(plantDataById,tagsData)
