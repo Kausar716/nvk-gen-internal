@@ -21,7 +21,7 @@ const initialSatate = {
    inactiveData:[],
    radioFilter:"active",
    searchFilter:"",
-   alphabetSearch:"",
+   alphabetSearch:"All",
    
 //    filterData:[]
   }
@@ -60,16 +60,15 @@ const initialSatate = {
                     searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchData.toLowerCase()))
 
                 }
-                if(state.alphabetSearch !=="All" && action.searchData ===""){
-                    searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
-
-                }
              
                 else if(action.searchData !=="" && state.alphabetSearch !=="All")
                 // alert("hhh")
                 searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchData.toLowerCase().charAt(0)))
-                else if(action.searchData ==="" && state.alphabetSearch ==="All"){
-                    searchedData =datatoShow
+                else if(action.searchData ==="" && state.alphabetSearch !=="All"){
+                    searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
+
+                }else if(action.searchData ==="" && state.alphabetSearch ==="All"){
+                    searchedData = datatoShow
 
                 }
 
