@@ -20,7 +20,8 @@ showSpecifiedPlantSkuAction ,
 setPlantSkuPageNumber,
 handlePlantSkuInputAction,
 deletePlantAction,
-getSpecifiedPlantAction
+getSpecifiedPlantAction,
+showSinglePlantSkuAction
    
 } from "../../actions/plantManagerAction";
 import {
@@ -75,6 +76,8 @@ const SkuList = (props)=>{
         }
         setErrorObj(errorobj)
        setErrorCount(errorcount)
+       console.log(e.target.id)
+       console.log(e.target.value)
         if(e.target.id =="archived") props.handlePlantSkuInputAction(e.target.id,e.target.value ==1?0:1)
         else if(e.target.id =="status") props.handlePlantSkuInputAction(e.target.id,e.target.value ==1?0:1)
         else props.handlePlantSkuInputAction(e.target.id,e.target.value)
@@ -136,19 +139,19 @@ const SkuList = (props)=>{
     setId(id)
 }
    const getSpecifiedplant = (id,data,value) =>{
-     
+     console.log(id)
       window.scrollTo(100, -100)
-      props.getSpecifiedPlantAction(id,"edit","sku")
+      props.showSinglePlantSkuAction(id,"edit","sku")
    
    }
 
 
    console.log(props.plantData);
-      const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById} = props.plantData
+      const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList} = props.plantData
       const plantPerPage = pageSize;
       const totalLength = plantSkuData.length;
       const pagesVisited = plantSkuPageNumber*pageSize;
-      const displayPlantSkuList = plantSkuData.slice(pagesVisited,pagesVisited+plantPerPage)
+      const displayPlantSkuList = plantSkuDataList.slice(pagesVisited,pagesVisited+plantPerPage)
       const pageCount = Math.ceil(plantSkuData.length/plantPerPage)
         const {allAttributes} = props.attributeData
         console.log(displayPlantSkuList)
@@ -158,6 +161,7 @@ const SkuList = (props)=>{
         let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
         console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
         console.log(props.plantData)
+        console.log(props.plantData.plantSkuDataList)
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -182,7 +186,7 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Form</label>
-                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Form")[0]["id"]:"form"} onChange={handleInput}>
+                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.id ==1)[0]["id"]:"form"} onChange={handleInput}>
                                                  <option>None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -218,12 +222,12 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Packaging <span class="text-danger">*</span></label>
-                                            <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Packaging")[0]["id"]:"packaging"} onChange={handleInput}>
+                                            <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
                                                     
-                                                        return(<option value={subData.id} selected={plantSkuDataById.attributes_subattributes.filter(filter=>filter.subattribute_id == subData.id).length==0?"selected":""}>{subData.value}</option>)
+                                                        return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
                                                 :""}
@@ -289,7 +293,7 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>{alert("in");props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)}} >Add SKU &amp; Clear</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>{props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)}} >Add SKU &amp; Clear</button>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.createPlantSkuAction(plantSkuDataById.ae_plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
@@ -404,5 +408,6 @@ export default connect(mapStateToProps,{
     setPlantSkuPageNumber,
     handlePlantSkuInputAction,
     deletePlantAction,
-    getSpecifiedPlantAction
+    getSpecifiedPlantAction,
+    showSinglePlantSkuAction
 })(SkuList)
