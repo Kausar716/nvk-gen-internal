@@ -3,6 +3,7 @@ import React,  { useState , useEffect} from 'react' ;
 import {connect} from "react-redux";
 // import ReactPaginate from 'react-paginate'
 import ActionModal from '../Modal/ActionModal'
+import Loader from '../ProductManager/Loader'
 //import { useTable, usePagination } from 'react-table'
 import {
     //plant actions
@@ -193,7 +194,7 @@ const PlantTable=(props)=> {
 
                                         </tbody>
                                     </table>
-                                    <p style={{textAlign:"center",color:"red"}}>{plantData.length===0?"No Plant Found ":""}</p>
+                                    <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>{plantData.length===0?"Plant Found loading ":""} <Loader /></p>
 
                                 </div>
                             </div>
