@@ -125,7 +125,7 @@ const PlantTable=(props)=> {
                                         <thead>
                                             <tr>
                                                 <th className="text-nowrap">Status</th>
-                                                <th className="text-nowrap">Plant ID</th>
+                                                <th className="text-nowrap text-center">Plant ID</th>
                                                 <th className="text-nowrap">Plant Name</th>
                                                 <th className="text-nowrap">Category</th>
                                                 <th className="text-nowrap text-center">In Production</th>
