@@ -59,27 +59,29 @@ const GeneralSettings=(props)=> {
 
 
 
-    // const handleTag = (e) => {
+    const handleTag = (e) => {
        
-    //     setCurrentTagText(e.target.value);
-    //     if (e.keyCode === 13 && currentTagText) {
-    //       setTags((prevTags) => [...prevTags, currentTagText,]);
-    //       //setTags(()=>[...tagsData])
-    //       setCurrentTagText("");
-    //     } else if (e.keyCode === 32 && currentTagText) {
-    //       setTags((prevTags) => [...prevTags, currentTagText]);
-    //      // setTags(()=>[...tagsData])
-    //       setCurrentTagText("");
-    //     }
+        setCurrentTagText(e.target.value);
+        if (e.keyCode === 13 && currentTagText) {
+          setTags((prevTags) => [...prevTags, currentTagText,]);
+          //setTags(()=>[...tagsData])
+          setCurrentTagText("");
+        } else if (e.keyCode === 32 && currentTagText) {
+          setTags((prevTags) => [...prevTags, currentTagText]);
+         // setTags(()=>[...tagsData])
+          setCurrentTagText("");
+        }
 
-    //   };
+      };
       
-    //   const removeTag = (index) => {
-    //     const newTagArray = tagsData;
-    //     newTagArray.splice(index, 1);
-    //     setTags([...newTagArray]);
-    //   };
+      const removeTag = (index) => {
+        const newTagArray = tagsData;
+        newTagArray.splice(index, 1);
+        setTags([...newTagArray]);
+      };
     
+
+
       const removeTag1 = (index) => {
         const newTagArray = tagsData;
         newTagArray.splice(index, 1);
@@ -143,7 +145,7 @@ const GeneralSettings=(props)=> {
 //         history.push("/productManager")
 
 // }
-
+console.log(actionType)
 //tagsData = [...tags, ...tagsData]
     return (
         <div>
@@ -200,37 +202,38 @@ const GeneralSettings=(props)=> {
                                             }) }
                                         </div>
 
-                                            {/* <div className="masterStackDiv"  >
-                                                        <div
-                                                            className="stackTags"
-                                                            style={{ display: tags.length > 0 ? "flex":"none"}} 
-                                                        >
-                                                            {   
-                                                          // tags=[...tags, ...tagsData];
-                                                           tags.map((tag, index) => {
-                                                            return (
-                                                                <div className="stackTag" key={index}>
-                                                                <button
-                                                                    onClick={() => removeTag(index)}
-                                                                    className="tagCloseBtn"
-                                                                >
-                                                                    x
-                                                                </button>
-                                                                {tag}
-                                                                </div>
-                                                            );
-                                                            })}
-                                                        </div>
-                                                        <div className="stackInput" >
-                                                            <input
-                                                            class="form-control"
-                                                            type="text"
-                                                            onKeyDown={handleTag}
-                                                            onChange={handleTag}
-                                                            value={currentTagText}
-                                                            />
-                                                        </div>
+                                {/* <div className="masterStackDiv">
+                                            <div
+                                                className="stackTags"
+                                                style={{ display: tags.length > 0 ? "flex":"none"}} 
+                                            >
+                                                {tags.map((tag, index) => {
+                                                return (
+                                                    <div className="stackTag" key={index}>
+                                                    <button
+                                                        onClick={() => removeTag(index)}
+                                                        className="tagCloseBtn"
+                                                    >
+                                                        x
+                                                    </button>
+                                                    #{tag}
+                                                    </div>
+                                                );
+                                                })}
+                                            </div>
+                                            <div className="stackInput">
+                                                <input
+                                                type="text"
+                                                onKeyDown={handleTag}
+                                                onChange={handleTag}
+                                                value={currentTagText}
+                                                />
+                                            </div>
                                             </div> */}
+
+
+
+
                                     </div>
                           
                                 </div>

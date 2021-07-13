@@ -23,7 +23,7 @@ import ComingSoon from './components/commingSoon'
 import PlantSettings from './components/PlantSettings/PlantSettings';
 import ForgotPassword from "./components/SignIn/ForgotPassword";
 import RegisterNewUser from "./components/SignIn/RegisterNewUser";
-import UserSettings from "./components/UserSettings/UserSettings";
+import UserSettings from "./components/UserSettings/UserSettingsIndex";
 import AddPlant from './components/PlantManager/AddPlant'
 import AddProduct from "./components/ProductManager/AddProduct";
 import OrganizationSettings from './components/toolsAndSetting/OrganizationSettings'

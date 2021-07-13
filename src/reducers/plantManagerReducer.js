@@ -174,10 +174,13 @@ export default function(state = initialSatate, action){
 
 
             case CREATE_PLANT_ACTION:
+                console.log(action)
+                console.log(state)
                 return{
                     ...state,
                     needAction:false,
-                    ae_plant_id:action.ae_plant_id
+                    ae_plant_id:action.ae_plant_id,
+                    createdPlantData:action.createdPlantData
     
                 }
 

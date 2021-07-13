@@ -157,7 +157,7 @@ const SkuList = (props)=>{
         let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
         let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
         console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
-        console.log(plantSkuDataById)
+        console.log(props.plantData)
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -250,7 +250,8 @@ const SkuList = (props)=>{
                                                     <div>
                                                         {/* <DatePicker value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate}
                                                          onChange={handleChange1}/> */}
-                                                    <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} />
+                                                    <input type="date" onChange={handleChange1} className="dateDesign" 
+                                                     value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} />
 
                                                     </div>
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
@@ -288,7 +289,7 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)} >Add SKU &amp; Clear</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>props.updatePlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)} >Add SKU &amp; Clear</button>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.updatePlantSkuAction(plantSkuDataById.plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
@@ -331,11 +332,11 @@ const SkuList = (props)=>{
                                             <tr>
                                                 <th class="text-nowrap">Status</th>
                                                 <th class="text-nowrap">SKU</th>
-                                                <th class="text-nowrap">Each Cost</th>
-                                                <th class="text-nowrap">Each Price</th>
-                                                <th class="text-nowrap">Sale Price</th>
-                                                <th class="text-nowrap">Sale Active</th>
-                                                <th class="text-nowrap">Volume Per Unit</th>
+                                                <th class="text-nowrap text-center">Each Cost</th>
+                                                <th class="text-nowrap text-center">Each Price</th>
+                                                <th class="text-nowrap text-center">Sale Price</th>
+                                                <th class="text-center">Sale Active</th>
+                                                <th class="text-nowrap">Volume Price Per Unit</th>
                                                 <th class="text-nowrap">Volume QTY</th>
                                                 <th class="text-nowrap text-center">Actions</th>
                                             </tr>
@@ -348,11 +349,11 @@ const SkuList = (props)=>{
                                             <tr>
                                                 <td>{skuData.archived ===0?"Active":"Inactive"}</td>
                                                 <td>{skuData.sku_code}</td>
-                                                <td>{skuData.each_cost}</td>
-                                                <td>{skuData.each_price}</td>
-                                                <td>{skuData.sale_price}</td>
+                                                <td class="text-center">{skuData.each_cost}</td>
+                                                <td class="text-center">{skuData.each_price}</td>
+                                                <td class="text-center">{skuData.sale_price}</td>
                                                 <td class="text-center">
-                                                    <div class="custom-control custom-checkbox mb-1">
+                                                    <div class="custom-control custom-checkbox mb-1 text-center">
                                                         <input type="checkbox" class="custom-control-input"checked={skuData.status==0?false:true}/>
                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                     </div>
