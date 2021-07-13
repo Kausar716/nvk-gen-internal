@@ -23,6 +23,7 @@ import customerReducer from './customerReduser'
 import plantSettingAttributeReducer from './plantSettingAttributeReducer';
 import inventoryManagementReducer from './inventorymanagementReducer';
 import productManufacturerReducer from './productManufacturerReducer'
+// import supplierManagementReducer from './supplierManagementReducer';
 
 
 export default combineReducers({

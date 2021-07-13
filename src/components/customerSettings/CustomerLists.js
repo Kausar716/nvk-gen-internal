@@ -23,7 +23,7 @@ export class CustomerSettings extends React.Component {
         }
     }
     componentDidMount(){
-        // alert("hi")
+        // alert("hif")
         this.props.getAllCustomer(this.state.radioFilter)
     }
 
@@ -110,7 +110,7 @@ export class CustomerSettings extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData.customerList.active? 100:0}</small></div>
+                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData.activeData.length}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
