@@ -546,28 +546,6 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <div class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                     <h4>Purchase &amp; Order Permissions</h4>
@@ -644,30 +622,6 @@ import {getUsersList,showUser} from "../../actions/userAction";
                             </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                             <div class="bg-white mt-3">
                                 <div class="ContentSection p-15">
                                     <h4>Inventory Management Permissions</h4>
@@ -682,7 +636,6 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                             )):null} 
                                             
 
-                                            
                                                 {exestingPermission?exestingPermission.filter(premission => premission.name==="Plant Manager"  && premission.group_name === "Plant Manager").map(filteredPermission => (
                                                     <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" name="Plant Manager" checked={currentPermissionNames.includes("Plant Manager") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
@@ -740,10 +693,6 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                             </div>
                                                         )):null} 
                                                     </div>
-
-
-
-
 
 
                                         </div>

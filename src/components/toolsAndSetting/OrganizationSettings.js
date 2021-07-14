@@ -37,15 +37,17 @@ export class OrganizationSettings extends React.Component {
             imagePreviewURL:"assets/img/noImage.png"
         }
     }
-    handlImageUpload = (e)=>{
+    handlImageUpload = (e1)=>{
+        alert(1)
+        debugger;
         // this.setState({logo:e.target.files[0]})
-        console.log(e.target.files[0])
-        let imageData = e.target.files[0]
+        console.log(e1.target.files[0])
+        let imageData = e1.target.files[0]
         let id="2"
         let data =  this.props.uploadImage(imageData,id)
         data.then(res=>{
             console.log(res)
-            console.log(this.props.organizationData.organizationData.payload.logo)
+           // console.log(this.props.organizationData.organizationData.payload.logo)
         })
     }
 
@@ -184,7 +186,7 @@ export class OrganizationSettings extends React.Component {
             else{
               // debugger
                url="assets/img/noImage.png";
-               // url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+                //url="https://zvky.flamingotech.ml/"+organizationDataById.logo
                
             }
         }
@@ -195,7 +197,7 @@ export class OrganizationSettings extends React.Component {
                 console.log(url)
             }
             else{
-                debugger
+                //debugger
                 url="https://zvky.flamingotech.ml/"+organizationDataById.logo
                 
             }
