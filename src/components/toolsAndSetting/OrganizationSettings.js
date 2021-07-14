@@ -222,6 +222,7 @@ export class OrganizationSettings extends React.Component {
                         <div class="ContentSection p-15">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
+                               
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of lading, etc.</p>
                                     </div>
@@ -229,6 +230,7 @@ export class OrganizationSettings extends React.Component {
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 col-lg-3">
+                                <label>Logo</label>
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3">
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
@@ -236,9 +238,10 @@ export class OrganizationSettings extends React.Component {
                                               src={url}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"100px",width:"100px"}}/>
+                                            style={{height:"160px",width:"160px"}}/>
                                             
                                         </div>
+                                        <p><small>Image should print quality PNG or JPG</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
@@ -246,7 +249,7 @@ export class OrganizationSettings extends React.Component {
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
-                                        <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
+                                        <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                             <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
