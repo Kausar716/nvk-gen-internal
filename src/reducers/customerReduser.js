@@ -5,7 +5,8 @@ import {
     HANDLE_ALL_FILTER,
     FILTER_DATA_BY_RADIO,
     FILTER_DATA_BY_SEARCH,
-    FILTER_DATA_BY_ALPHA
+    FILTER_DATA_BY_ALPHA,
+    HANDLE_INPUT
     // ADD_CUSTOMER, 
     // SHOW_CUSTOER, 
     // UPDATE_CUSTOMER,
@@ -22,6 +23,8 @@ const initialSatate = {
    radioFilter:"active",
    searchFilter:"",
    alphabetSearch:"All",
+   ready_to_late_notice:"",
+   reserve_expiry_notice:""
    
 //    filterData:[]
   }
@@ -35,6 +38,13 @@ const initialSatate = {
       
 
         // plant page redirects
+        case HANDLE_INPUT:
+            return{
+                ...state,
+                [action.id]:action.data
+
+            }
+     
 
         case GET_CUSTOMER_LIST :
             return{
@@ -56,21 +66,12 @@ const initialSatate = {
                 else if(state.radioFilter === "inactive") datatoShow = state.inactiveData
                 else datatoShow = state.duplicateData
 
-                if(state.alphabetSearch ==="All" && action.searchData !==""){
-                    searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchData.toLowerCase()))
+                if(state.alphabetSearch ==="All" && action.searchData !=="")searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchData.toLowerCase()))
+                else if(action.searchData !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchData.toLowerCase().charAt(0)))
+                else if(action.searchData  ==="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
+                else if(action.searchData  ==="" && state.alphabetSearch  ==="All") searchedData = datatoShow
 
-                }
-             
-                else if(action.searchData !=="" && state.alphabetSearch !=="All")
-                // alert("hhh")
-                searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchData.toLowerCase().charAt(0)))
-                else if(action.searchData ==="" && state.alphabetSearch !=="All"){
-                    searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
-
-                }else if(action.searchData ==="" && state.alphabetSearch ==="All"){
-                    searchedData = datatoShow
-
-                }
+                
 
                 return{
                     ...state,
@@ -79,9 +80,25 @@ const initialSatate = {
                 }
             case FILTER_DATA_BY_RADIO:
                 let radioData = []
-                if(action.actionType === "active") radioData = state.activeData
-                if(action.actionType === "inactive") radioData = state.inactiveData
-                if(action.actionType === "all") radioData = state.duplicateData
+                // alert(action.actionType)
+                if(action.actionType === "active" && state.searchFilter ==="" && state.alphabetSearch ==="All")radioData = state.activeData
+                else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.activeData.filter(data=>data.name.toLowerCase().includes(state.searchFilter.toLowerCase()))
+                else if(action.actionType === "active" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.activeData.filter(filterData=>(filterData.name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
+
+                else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.activeData.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                    ////////////////////////////////
+                    if(action.actionType === "inactive" && state.searchFilter ==="" && state.alphabetSearch ==="All") radioData = state.inactiveData
+                    else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.inactiveData.filter(data=>data.name.toLowerCase().includes(state.searchFilter.toLowerCase()))
+    
+                    else if(action.actionType === "inactive" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.inactiveData.filter(filterData=>(filterData.name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
+    
+                    else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.inactiveData.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+
+                    ////////////////////////////////
+                    if(action.actionType === "all" && state.searchFilter ==="" && state.alphabetSearch ==="All") radioData = state.duplicateData
+                    else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.duplicateData.filter(data=>data.name.toLowerCase().includes(state.searchFilter.toLowerCase()))
+                    else if(action.actionType === "all" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.duplicateData.filter(filterData=>(filterData.name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
+                    else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.duplicateData.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
             return{
                 ...state,
                 customerList:radioData,
@@ -96,10 +113,11 @@ const initialSatate = {
                 else datatoShow1 = state.duplicateData
 
                 if(state.searchFilter ==="" && action.alphaData !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0))
-                else if(action.alphaData ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                else if(state.searchFilter !=="" && action.alphaData ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                // else if(action.alphaData ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
                 else if(state.searchFilter !=="" && action.alphaData !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
                 else if(state.searchFilter ==="" && action.alphaData ==="All")searchedData1 = datatoShow1
-                else if(state.searchFilter !=="" && action.alphaData ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+               
 
                 return{
                     ...state,

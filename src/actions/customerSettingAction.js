@@ -8,10 +8,15 @@
  FILTER_DATA_BY_RADIO,
  FILTER_DATA_BY_SEARCH,
  FILTER_DATA_BY_ALPHA,
+ HANLE_DATA_CHANGE,
+ HANDLE_INPUT,
  axios,
  config
  } from './types'
 
+ export const saveNoticationData = ()=>dispatch=>{
+
+ }
  export const getAllCustomer = (dataType) => dispatch => {
     axios.get("/api/customers-list",config).then(res=>{ 
         console.log(res.data)
@@ -21,6 +26,14 @@
             dataType:dataType
 
         })
+    })
+}
+export const handleChangeFilter = (data,id) =>dispatch =>{
+    dispatch({
+        type:HANDLE_INPUT,
+        data:data,
+        id:id
+
     })
 }
 
@@ -101,6 +114,12 @@ export const setPageNumber = (pageNumber) => {
           alphaData:data
       }
   }
+//   export const dataChange = ()=>{
+//       return {
+//           type:"@@redux-form/BLUR",
+
+//       }
+//   }
 
 
 

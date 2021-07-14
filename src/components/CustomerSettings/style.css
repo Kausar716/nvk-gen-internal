@@ -709,6 +709,16 @@
   background-color: #357ebd;
   color: white;
 }
+.button_style_Tools_Setting_Save1 {
+  padding: 6px;
+  border: 2px solid lightgray;
+  margin: 1em;
+  width: 80px;
+  border-radius: 4px;
+  margin-right: -10em;
+  background-color: lightgray;
+  color: white;
+}
 
 .button_style_Tools_Setting_Cancel {
   width: 80px;
