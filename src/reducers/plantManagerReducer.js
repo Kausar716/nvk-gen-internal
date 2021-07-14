@@ -10,11 +10,12 @@ import {
         // DUPLICTE_PLANT,
     
         // Plant SKU ACTION
-        // CREATE_PLANT_SKU_ACTION,
-        // UPDATE_PLANT_SKU_ACTION,
+        CREATE_PLANT_SKU_ACTION,
+        UPDATE_PLANT_SKU_ACTION,
         // DELETE_PLANT_SKU_ACTION,
         GET_ALL_PLANT_SKU_ACTION,
         GET_PLANT_SPECIFIED_SKU_ACTION,
+        GET_SINGLE_PLANT_SKU,
     
         //Plant page redirects action
     
@@ -96,6 +97,7 @@ const initialSatate = {
   tagsData: [],
   status:false,
   ae_plant_id:"",
+  plantSkuDataList:[]
 
 }
 
@@ -129,7 +131,6 @@ export default function(state = initialSatate, action){
                 },
                 plantSkuDataById         :   {
                     sku_code: "",
-    product_id: null,
     plant_id: "",
     each_cost: null,
     each_price: null,
@@ -183,6 +184,13 @@ export default function(state = initialSatate, action){
                     createdPlantData:action.createdPlantData
     
                 }
+             case UPDATE_PLANT_ACTION:
+                 return{
+                    ...state,
+                    needAction:false,
+                    ae_plant_id:action.ae_plant_id,
+                    createdPlantData:action.createdPlantData
+                 }
 
 
             //pagination action 
@@ -192,13 +200,15 @@ export default function(state = initialSatate, action){
                     plantPageNumber:action.pageNumber
                 }
             case GET_SPECIFIED_PLANT_ACTION:{
+                console.log(action)
                 return{
                     ...state,
                     ...state,
                     plantDataById:action.payload.data,
                     tagsData:JSON.parse(action.payload.data.common_name),
                     needAction:false,
-                    actionType:action.actionType
+                    actionType:action.actionType,
+                    ae_plant_id:action.payload.data.plant_id
 
                 }
             }
@@ -265,7 +275,7 @@ export default function(state = initialSatate, action){
         case GET_PLANT_SPECIFIED_SKU_ACTION:
             return{
                 ...state,
-                plantSkuDataById:{...action.payload.data.sku,attributes_subattributes:action.payload.data.attributes}
+                plantSkuDataList:action.payload.data
             }
         case DELETE_PLANT_ACTION:
             return{
@@ -335,7 +345,25 @@ export default function(state = initialSatate, action){
             //         plantData:state.backupData.filter(filterData=>filterData.category_id === Number(action.payload))
             //     }
                 
-           
+           case UPDATE_PLANT_SKU_ACTION :
+               return{
+                   ...state,
+                   action:action
+               }
+            
+            case CREATE_PLANT_SKU_ACTION :
+                return{
+                    //const skuData = state.
+                    ...state, 
+                    needAction:false
+                    // skuData:[...action.payload.data]
+                };
+            case GET_SINGLE_PLANT_SKU:
+                return{
+                    ...state,
+                    action:action
+                }
+        
   
             default:
                 return state
