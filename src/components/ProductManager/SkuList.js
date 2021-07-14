@@ -97,6 +97,7 @@ const SkuList=(props)=> {
     let supCategoryIdForFilter = productDataById.category_id
     console.log(supCategoryIdForFilter)
     console.log("product_id_List", finalPrID)
+    console.log(skuDataById)
    
 
 
@@ -107,12 +108,14 @@ const SkuList=(props)=> {
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add"){
+                    console.log(product_idFromGeneral)
+                    console.log(skuDataById)
                 props.createSkuAction(product_idFromGeneral,skuDataById)
                    props.pageReDirectAction("product","add")
                 }
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
-                if(actionType ==="edit")  
+                if(actionType ==="edit"){  
                 console.log(skuDataById.id)
                 let skuid = skuDataById.id
                 if(skuDataById.id === undefined){
@@ -120,11 +123,17 @@ const SkuList=(props)=> {
                      props.createSkuAction(skuid,skuDataById)
                 }
                 else{
+                   
+                    skuDataById.subcategory = skuDataById.sub_category_id
+                    console.log(skuDataById)
+                   
                     props.updateSkuActionClear(skuid,skuDataById)
                 }
                 console.log(skuDataById) 
                 console.log(props.productData)  
-                console.log(skuid)       
+                console.log(skuid) 
+            }
+                    
                
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 //setSubmitCount(1)
@@ -138,6 +147,7 @@ const SkuList=(props)=> {
     }
     const handleInput =(e)=>{
         console.log(e.target.id,e.target.value)
+  
         setSubmitCount(0)
         if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
@@ -170,7 +180,6 @@ const SkuList=(props)=> {
        setId(id)
    }
    const getSpecifiedProduct = async(id,data,value) =>{
-     //debugger
 
      window.scrollTo(100, -100)
     
@@ -216,6 +225,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
     const productIDList = productData.map(pro=>pro.product_id)
     console.log("productIDList", displaySkuList2)
     console.log("productDataByIdskuDataById", productDataById, skuDataById)
+    let selectedSubCategoryId = skuDataById.sub_category_id
+    console.log(skuDataById.sub_category_id)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
@@ -247,14 +258,14 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div> */}
                                         <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                             <label>Sub-Category <span class="text-danger">*</span></label>
-                                            <select class="form-control"  id="subcategory" onChange={handleInput}>
+                                            <select class="form-control"  id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
                                             <option value="0">None</option>
                             {subCategoryData.map(subcategory=>{
                                 if(parseInt(supCategoryIdForFilter) === subcategory.category_id)
                                 return (<option value={subcategory.id} selected={subcategory.id===skuDataById.subcategory?"selected":""}>{subcategory.name}</option>)
 
                             })}
-                          
+                          {/* subcategory_id */}
                                             </select>
                                         </div>
 

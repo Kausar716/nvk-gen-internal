@@ -6,7 +6,7 @@ import {
     DELETE_PRODUCT_ACTION,
     GET_ALL_PRODUCT_ACTION,
     GET_SPECIFIED_PRODUCT_ACTION,
-    //DUPLICTE_PRODUCT,
+    DUPLICTE_PRODUCT,
     GET_SKU_SPECIFIED_PRODUCT,
 
 
@@ -54,7 +54,6 @@ import {
 */
 
 export const createProductAction = (product,tags) => dispatch => {
-    //debugger;
     let errorArray=[];
     if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
     if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
@@ -63,7 +62,6 @@ export const createProductAction = (product,tags) => dispatch => {
         product["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/create-product`,product
         , config).then(res=>{
-          // debugger;
             errorArray.push("Product Added successfully")
             dispatch(getAllProductAction())
             //dispatch(createSkuAction(res.data.data.product.product_id,product,"add"))
@@ -198,7 +196,25 @@ export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="gene
 }
 
 export const duplicateProduct = (id) =>dispatch=>{
-    dispatch(getSpecifiedProductAction(id, "add"))
+    // dispatch(getSpecifiedProductAction(id, "add"))
+    let error = []
+    console.log(id)
+    let filteredID = id.match(/\d+/g).map(Number);
+    axios.get(`/api/duplicate-product/${filteredID[0]}`,config).then(res=>{ 
+        console.log(res)
+        dispatch(getAllProductAction())
+        dispatch(getAllSkuAction())
+        // dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
+        dispatch({
+            type:DUPLICTE_PRODUCT
+        })
+        error.push("Product duplicated successfully",)
+        dispatch({
+                        type:ERROR_HANDLE,
+                        message:error,
+                        status:true
+                    })
+        })
     
 
 }
@@ -216,7 +232,6 @@ export const duplicateProduct = (id) =>dispatch=>{
 
 
 export const createSkuAction = (id, skuData, actionType="add") =>async dispatch => {
-   //debugger;
     const data1={
                 type:"product",
                 supplier_id:1,
@@ -231,12 +246,12 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
     if(skuData.each_cost===0||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
     if(skuData.each_price ===0||skuData.each_price ===""||skuData.each_price==null) error.push(" Add Each Price")
     if(skuData.sale_price ===0||skuData.sale_price === ""||skuData.sale_price==null) error.push("Add Sale Price") 
-    if(skuData.subcategory ===0||skuData.subcategory == null||skuData.subcategory==null) error.push("Select Sub Category")
+    if(skuData.sub_category_id ===0||skuData.sub_category_id == null||skuData.sub_category_id==null) error.push("Select Sub Category")
     if(skuData.sku_item_name==null ||skuData.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete skuData["id"]
      console.log(FinalData)
-        FinalData.subcategory_id =FinalData.subcategory
+        // FinalData.subcategory_id =FinalData.subcategory
         delete FinalData.subcategory
         axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
            
@@ -286,6 +301,7 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
 
 export const updateSkuAction = (id, data) =>async dispatch => {
  // debugger;
+console.log(data)
 
  let error  = []
  if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
@@ -433,11 +449,11 @@ export const getAllSkuAction = (id) => dispatch => {
 
 export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch => {
   
-
+console.log(id)
      axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
-
-      
+        console.log(res)
+    
         console.log("showSpecifiedSkuAction",res.data.data[0])
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
@@ -523,6 +539,8 @@ export const handleInputAction = (id, value) =>dispatch=>{
 
 }
 export const handleSkuInputAction =(id,value) =>dispatch=>{
+    console.log(id)
+    console.log(value)
     dispatch({
         type:HANDLE_SKU_INPUT_DATA,
         itemId:id,

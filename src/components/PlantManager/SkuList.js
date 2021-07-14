@@ -20,8 +20,10 @@ showSpecifiedPlantSkuAction ,
 setPlantSkuPageNumber,
 handlePlantSkuInputAction,
 deletePlantAction,
+deleteSkuAction,
 getSpecifiedPlantAction,
-showSinglePlantSkuAction
+showSinglePlantSkuAction,
+plantPageReDirectAction
    
 } from "../../actions/plantManagerAction";
 import {
@@ -120,7 +122,8 @@ const SkuList = (props)=>{
         
     }
     const confirm = ()=>{
-       props.deletePlantAction(id)
+       console.log(id)
+       props.deleteSkuAction(id)
        setOpen(false)
        setId(0)
    }
@@ -128,7 +131,7 @@ const SkuList = (props)=>{
    const confirmAction = (id,type)=>{
     if(type=="delete"){
         setType(type)
-        setMessage("Are you sure you want to delete this product and its related SKUs?")
+        setMessage("Are you sure you want to delete this SKU?")
 
     }else{
         setType(type)
@@ -138,16 +141,27 @@ const SkuList = (props)=>{
     setOpen(true)
     setId(id)
 }
-   const getSpecifiedplant = (id,data,value) =>{
+   const getSpecifiedplant = (skudata,data,value) =>{
      console.log(id)
       window.scrollTo(100, -100)
-      props.showSinglePlantSkuAction(id,"edit","sku")
+      props.showSinglePlantSkuAction(skudata.id,"edit","sku")
    
+   }
+   const submitAction = () => {
+       alert(actionType)
+    if(actionType ==="add" || actionType === "edit"){
+    props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
+    props.plantPageReDirectAction("all","plant")
+    }
+    else if(actionType ==="sku"){ 
+        props.updatePlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
+
+    }
    }
 
 
    console.log(props.plantData);
-      const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList} = props.plantData
+      const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList,actionType} = props.plantData
       const plantPerPage = pageSize;
       const totalLength = plantSkuData.length;
       const pagesVisited = plantSkuPageNumber*pageSize;
@@ -162,6 +176,7 @@ const SkuList = (props)=>{
         console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
         console.log(props.plantData)
         console.log(props.plantData.plantSkuDataList)
+
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -285,7 +300,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            <input type="text" class="form-control text-right" placeholder="" id="volume_price_per_unit" onChange={handleInput}/>
+                                            <input type="text" class="form-control text-right" placeholder="" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
 
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
@@ -293,8 +308,9 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={()=>{props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)}} >Add SKU &amp; Clear</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>props.createPlantSkuAction(plantSkuDataById.ae_plant_id,plantSkuDataById)}>Add SKU &amp; Retain</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={submitAction}
+                                                 >{actionType==="sku"?"Add SKU":"Update SKU"}</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>{props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)}}>Add SKU &amp; Retain</button>
                                         </div>
                                     </div>
                                 </form>
@@ -370,14 +386,15 @@ const SkuList = (props)=>{
                                                             <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedplant(skuData,"edit","sku")}/>
                                                         {/* </a> */}
                                                     </span>
-                                                    <span>
-                                                        {/* <a href="javascript:;"> */}
-                                                            <img src="assets/img/duplicate.svg" alt=""/>
+                                                    {/* duplicate doesnt exeist for sku */}
+                                                    {/* <span>
+                                                        {/* <a href="javascript:;"> 
+                                                            {/* <img src="assets/img/duplicate.svg" alt=""/> */}
                                                         {/* </a> */}
-                                                    </span>
+                                                    {/* </span>  */}
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
-                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(skuData.plant_id)}/>
+                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(skuData.id,"delete")}/>
                                                         {/* </a> */}
                                                     </span>
                                                 </td>
@@ -393,7 +410,7 @@ const SkuList = (props)=>{
         </div>
      )
     }
-
+    // )=>props.plantPageReDirectAction("plant","add")
 const mapStateToProps = (state)=> ({
     plantData:state.plantData,
     attributeData:state.attributeData
@@ -408,6 +425,8 @@ export default connect(mapStateToProps,{
     setPlantSkuPageNumber,
     handlePlantSkuInputAction,
     deletePlantAction,
+    deleteSkuAction,
     getSpecifiedPlantAction,
-    showSinglePlantSkuAction
+    showSinglePlantSkuAction,
+    plantPageReDirectAction
 })(SkuList)
