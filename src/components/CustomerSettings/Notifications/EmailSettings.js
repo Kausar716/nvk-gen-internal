@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse,  Row, Col, Label} from 'reactstrap';
+import {connect} from "react-redux";
+import InfoModal from "../../Modal/InfoModal"
+import {handleChangeFilter,saveNoticationData,getNotificationData,saveEmailData,getEmailData} from "../../../actions/customerSettingAction";
 
 import '../style.css';
 // import * as BiIcons from "react-icons/bs";
@@ -38,11 +41,51 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
 const EmailSetting = props => {
 
     const [isOpen, setIsOpen] = useState(false);
+	const [isOpen1, setIsOpen1] = useState(false);
+	const [message,setMessage] = useState([]);
     const toggle = () => setIsOpen(!isOpen);
+	const toggle1 = () => setIsOpen1(!isOpen1);
 
-  const { handleSubmit, pristine, reset, submitting } = props;
+
+	const handleDataChange = (e)=>{
+		props.handleChangeFilter(e.target.value,e.target.id)
+
+	}
+	const handleSaveData = (e)=>{
+		if(parseInt(first_notice)==0 && parseInt(second_notice) ==0 && parseInt(quote_set_to_inactive==0)){
+
+			setMessage(["Values can't be zero"])
+			setIsOpen1(true)
+		}else if(parseInt(second_notice)<parseInt(first_notice)){
+
+			setMessage(["Second Notice should be greater than first Notice"])
+			setIsOpen1(true)
+
+		}else if(parseInt(second_notice)>parseInt(quote_set_to_inactive)){
+			alert()
+
+			setMessage(["Quote set to inactive should be greater than second Notice"])
+			setIsOpen1(true)
+		}else{
+			let obj = {}
+			obj.first_notice = first_notice
+			obj.second_notice = second_notice
+			obj.quote_set_to_inactive = quote_set_to_inactive
+			obj.status =1
+			props.saveEmailData(obj)
+
+		}
+
+	}
+	useEffect(()=>{
+		props.getEmailData()
+
+	},[isOpen])
+
+  const { handleSubmit, pristine, reset, submitting,first_notice,second_notice,quote_set_to_inactive } = props.customerData;
   return (
     <div>
+		<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
         <div onClick={toggle}  className="SubHeader">
         <Label className="subFont">Email Settings</Label>
         <span className="updownSymbolContainer"> 
@@ -58,21 +101,18 @@ const EmailSetting = props => {
                   Quote Reemainders
                   </Label> */}
                 </div>
-                
                     <Row className="containerBox">
                         <Col sm="2">
                             <Label className="subHeadingLabels">First Notice</Label>
                         <Row className="spacebelow">
                             <Col>
-                            
-                            <Field
-                                            name="FirstNotice"
-                                            component={renderField}
-                                            type="text"
-                                            label="30"
-                                            validate={[ required, number, minValue2 ]}
-                                            
-                                        />
+                              	<div>
+        							<input type="number" placeholder={""}   className="textRightESetting" id="first_notice" value={first_notice} onChange={handleDataChange}/>
+        							<Row>
+        								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
+        							</Row>
+        
+      							</div>
                             </Col>
                            
                             <Col> <Label  className="moveLeftESetting">days
@@ -85,19 +125,15 @@ const EmailSetting = props => {
                         <Col sm="2">
                             <Label className="subHeadingLabels">Second Notice</Label>
                             <Row>
-                              <Col>
-                              
-                              <Field
-                                            name="SecondNotice"
-                                            component={renderField}
-                                            type="text"
-                                            label="45"
-                                            validate={[ required, number, minValue2 ]}
-                                            
-                                        />
-                     
-                              
-                              </Col>
+							<Col>
+                              	<div>
+        							<input type="number" placeholder={""}   className="textRightESetting" id="second_notice" value={second_notice} onChange={handleDataChange}/>
+        							<Row>
+        								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
+        							</Row>
+        
+      							</div>
+                            </Col>
 
                               <Col>
                             <Label  className="moveLeftESetting">days
@@ -110,17 +146,15 @@ const EmailSetting = props => {
                     <Col sm="2">
                             <Label className="subHeadingLabels">Quote Set to Inactive</Label>
                             <Row>
-                              <Col>
-                             
-                              <Field
-                                            name="QuoteSetToInactive"
-                                            component={renderField}
-                                            type="text"
-                                            label="60"
-                                            validate={[ required, number, minValue2 ]}
-                                          
-                                        />
-                              </Col>
+							<Col>
+                              	<div>
+        							<input type="number" placeholder={""}   className="textRightESetting" id="quote_set_to_inactive" value={quote_set_to_inactive} onChange={handleDataChange}/>
+        							<Row>
+        								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
+        							</Row>
+        
+      							</div>
+                            </Col>
 
                               <Col>
                             <Label  className="moveLeftESetting">days
@@ -133,8 +167,8 @@ const EmailSetting = props => {
                     <Col>
                     
                     <div align="right" className="action_area_left">
-                              <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                              <button className="button_style_Tools_Setting_Cancel">Cancel</button>
+                              <button className="button_style_Tools_Setting_Save" onClick={handleSaveData}>Save</button>
                         </div> 
                     </Col>
                     </Row>
@@ -146,7 +180,12 @@ const EmailSetting = props => {
     </div>
   );
 };
+const mapStateToProps = (state)=>(
+	{
+	  customerData:state.customerReducer
+	}
+  
+  )
 
-export default reduxForm({
-  form: 'EmailSetting', // a unique identifier for this form
-})(EmailSetting);
+const form = reduxForm({ form: 'Notification' });
+export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData,getNotificationData,saveEmailData,getEmailData})(form(EmailSetting));

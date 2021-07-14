@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse,   Row, Col, Label} from 'reactstrap';
+import {connect} from "react-redux";
+import {handleChangeFilter,saveNoticationData,savecustomPrintData,handleExchangeData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 // import * as BiIcons from "react-icons/bs";
@@ -38,8 +40,22 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
 const CustomerPrintRates = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const handleInputData =(e)=>{
+    props.handleExchangeData(e.target.value,e.target.id,"customerTag")
+
+  }
+
+  const saveExchangeData = ()=>{
+    let obj={}
+    obj.base_price = customerTag.base_price
+    obj.custom_logo = customerTag.custom_logo
+    obj.custom_pricing = customerTag.custom_pricing
+    obj.custom_application = customerTag.custom_application
+    obj.status = 1
+    props.savecustomPrintData(obj)
+  }
   
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit, pristine, reset, submitting,customerTag } = props.customerData;
   return (
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
@@ -66,14 +82,7 @@ const CustomerPrintRates = (props) => {
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <Field
-                                            name="BasePrice"
-                                            component={renderField}
-                                            type="text"
-                                            label="0.05"
-                                            
-                                            validate={[ required, number,]}
-                                        />
+                            <input type="number" className="textRight" style={{width:"115%"}} id="base_price" value={customerTag.base_price}  onChange={handleInputData}/>
                               </Col>
                             
 
@@ -88,13 +97,7 @@ const CustomerPrintRates = (props) => {
                         <Row>
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <Field
-                                            name="CustomLogo"
-                                            component={renderField}
-                                            type="text"
-                                            label="0.00"
-                                            validate={[ required, number,]}
-                                        />
+                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_logo" value={customerTag.custom_logo}  onChange={handleInputData}/>
                             </Col>
                            
                             <Col sm="0">
@@ -110,14 +113,7 @@ const CustomerPrintRates = (props) => {
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
 
-                         
-                            <Field
-                                            name="CustomPricing"
-                                            component={renderField}
-                                            type="text"
-                                            label="0.10"
-                                            validate={[ required, number,]}
-                                        />
+                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_pricing" value={customerTag.custom_pricing}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -133,13 +129,7 @@ const CustomerPrintRates = (props) => {
                             <Col sm="4">
 
                            
-                            <Field
-                                            name="CustomApplication"
-                                            component={renderField}
-                                            type="text"
-                                            label="0.20"
-                                            validate={[ required, number,]}
-                                        />
+                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_application" value={customerTag.custom_application}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -148,8 +138,8 @@ const CustomerPrintRates = (props) => {
               </Col>
               <Col xs="12">
               <div align="right" className="action_area_left">
-                              <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                              <button className="button_style_Tools_Setting_Cancel"   >Cancel</button>
+                              <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}>Save</button>
                         </div> 
             
               </Col>
@@ -193,8 +183,13 @@ const CustomerPrintRates = (props) => {
     </>
   );
 }
+const mapStateToProps = (state)=>(
+  {
+    customerData:state.customerReducer
+  }
+
+)
 
 
-export default reduxForm({
-  form: 'CustomerPrintRates', // a unique identifier for this form
-})(CustomerPrintRates);
+const form = reduxForm({ form: 'Notification' });
+export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData,savecustomPrintData,handleExchangeData})(form(CustomerPrintRates));

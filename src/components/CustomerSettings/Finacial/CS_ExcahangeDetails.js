@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse, Row, Col, Label} from 'reactstrap';
-
+import {connect} from "react-redux";
+import {handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
+import {saveSupplierData,handleSupplierExchnageData} from "../../../actions/supplierManagementAction";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -35,6 +37,7 @@ import * as BiIcons from "react-icons/bs";
   const onSubmit = (values) =>{
     console.log(values);
   }
+ 
   
   
     
@@ -44,8 +47,47 @@ import * as BiIcons from "react-icons/bs";
 const CS_ExcahangeDetails = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+  // const [customerExchange,setCustomerExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
+  // const [supplierExchange,setSupplierExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
 
-  const { handleSubmit, pristine, reset, submitting } = props;
+  const { handleSubmit, pristine, reset, submitting,customerExchange } = props.customerData;
+  const {supplierExchange} = props.supplierData
+
+
+  const handleInputData =(e)=>{
+    props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+
+  }
+  const handleInputData1 =(e)=>{
+    props.handleSupplierExchnageData(e.target.value,e.target.id)
+
+  }
+  const datePickerData =(data)=>{
+    props.handleExchangeData(data,"exchange_date","customerExchange")
+}
+const datePickerData1 =(data)=>{
+  props.handleSupplierExchnageData(data,"exchange_date")
+
+}
+const saveExchangeData = ()=>{
+  let obj={}
+  obj.from_currency = customerExchange.from_currency
+  obj.to_currency = customerExchange.to_currency
+  obj.exchange_rate = customerExchange.exchange_rate
+  let date = new Date(customerExchange.exchange_date)
+  let dateInformate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
+  obj.exchange_date =dateInformate
+  props.saveFinanceExchangeData(obj)
+let obj1 ={};
+obj1.from_currency = supplierExchange.from_currency
+obj1.to_currency = supplierExchange.to_currency
+obj1.exchange_rate = supplierExchange.exchange_rate
+let date1 = new Date(supplierExchange.exchange_date)
+let dateInformate1 = date1.getFullYear() + '-' + (date1.getMonth()+1) + '-' + date1.getDate()
+  obj1.exchange_date =dateInformate1
+props.saveSupplierData(obj1)
+
+}
 
   const [startDate, setStartDate] = useState(new Date());
   return (
@@ -77,7 +119,7 @@ const CS_ExcahangeDetails = (props) => {
               <Col>
                     <Label className="subHeadingLabels">From Currency</Label>
                         <Row>
-                            <Col><Label className="topSpace">CAD</Label>
+                            <Col><Label className="topSpace">{customerExchange.from_currency}</Label>
                             </Col>
                         </Row>
               </Col>
@@ -86,7 +128,7 @@ const CS_ExcahangeDetails = (props) => {
               <Col>
                   <Label className="subHeadingLabels">To Currency</Label>
                         <Row>
-                            <Col><Label className="topSpace">US</Label>
+                            <Col><Label className="topSpace">{customerExchange.to_currency}</Label>
                             </Col>
                         </Row>
               </Col>
@@ -96,15 +138,9 @@ const CS_ExcahangeDetails = (props) => {
                         <Row>
                             <Col> 
                           
-                            <Field
-                                            name="UsersCExchangeRates"
-                                            component={renderField}
-                                            type="text"
-                                           
-                                            //validate={formValidators.ReadyToLateNotice}
-                                            validate={[ required, number, minValue2]}
-                                            label="0.72"
-                                        />
+                            <div>
+                                <input type="number" className="inputBoxDesign2" placeholder={""} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate"/> 
+                            </div>
                            
                             
                             </Col>
@@ -115,7 +151,7 @@ const CS_ExcahangeDetails = (props) => {
                   <Label className="subHeadingLabels">Exchange Date</Label>
                         <Row>
                             <Col>
-                            <DatePicker  className="inputBoxDesign2" selected={startDate} onChange={date => setStartDate(date)} />
+                            <DatePicker  className="inputBoxDesign2" selected={customerExchange.exchange_date} onChange={datePickerData} id="exchange_date_customer"/>
                             </Col>
                         </Row>
               </Col>
@@ -151,16 +187,13 @@ const CS_ExcahangeDetails = (props) => {
                   <Label className="subHeadingLabels">Exchange Rates</Label>
                         <Row>
                             <Col> 
+                                
+                            <div>
+                                <input type="number" className="inputBoxDesign2" placeholder={""} value={supplierExchange.exchange_rate} onChange={handleInputData1} id="exchange_rate"/> 
+                            </div>
                            
-                            <Field
-                                            name="UsersSExchangeRates"
-                                            component={renderField}
-                                            type="text"
-                                            
-                                            //validate={formValidators.ReadyToLateNotice}
-                                            validate={[ required, number, minValue2]}
-                                            label="0.72"
-                                        />
+                           
+                          
                             </Col>
                         </Row>
               </Col>
@@ -169,15 +202,15 @@ const CS_ExcahangeDetails = (props) => {
                   <Label className="subHeadingLabels">Exchange Date</Label>
                         <Row>
                             <Col>
-                            <DatePicker className="inputBoxDesign2" selected={startDate} onChange={date => setStartDate(date)} />
+                            <DatePicker className="inputBoxDesign2" selected={supplierExchange.exchange_date} onChange={datePickerData1} />
                             </Col>
                         </Row>
               </Col>
               <Col xs="12">
               
           <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                        <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                        <button className="button_style_Tools_Setting_Cancel" >Cancel</button>
+                        <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}>Save</button>
                   </div>
                   </Col> 
 
@@ -197,7 +230,15 @@ const CS_ExcahangeDetails = (props) => {
     </>
   );
 }
+const mapStateToProps = (state)=>(
+  {
+    customerData:state.customerReducer,
+    supplierData:state.supplierData
+  }
 
-export default reduxForm({
-  form: 'CS_ExcahangeDetails',
-})(CS_ExcahangeDetails);
+)
+// export default reduxForm({
+//   form: 'CS_ExcahangeDetails',
+// })(CS_ExcahangeDetails);
+const form = reduxForm({ form: 'Notification' });
+export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData,handleSupplierExchnageData,saveSupplierData})(form(CS_ExcahangeDetails));

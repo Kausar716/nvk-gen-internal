@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse, Label} from 'reactstrap';
 import {connect} from "react-redux";
-import {handleChangeFilter,saveNoticationData} from "../../../actions/customerSettingAction";
+import {handleChangeFilter,saveNoticationData,getNotificationData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 //import validators from './validators'
@@ -33,14 +33,15 @@ const Notification = (props) => {
     const [isOpen, setIsOpen] = useState(true);
     const toggle = () => setIsOpen(!isOpen);
     const [notificationError,setNotificationError] = useState(["",""])
+    const [checkedData,setCheckedData] = useState(false)
   
     useEffect(() => {
-    // Update the document title using the browser API
-    document.title = `You clicked times`;
-    },[]);
+      props.getNotificationData()
+    },[isOpen]);
 
   
  const handleDataChange = (e)=>{
+  //  alert("hi")
   const some_array = [...notificationError]
 
    if(e.target.id ==="ready_to_late_notice"){
@@ -52,6 +53,27 @@ const Notification = (props) => {
     if(isNaN(e.target.value))some_array[1] = 'Must be a number'
     else some_array[1] = ""
    }
+  //  alert(reserve_expiry_notice)
+  //  if(ready_to_late_notice !=="" && reserve_expiry_notice !==""){
+  //    console.log(isNaN(parseInt(ready_to_late_notice))==true ,isNaN(parseInt(reserve_expiry_notice))==true)
+  //   if(isNaN(parseInt(ready_to_late_notice))==true &&  isNaN(parseInt(reserve_expiry_notice))==true){
+    if(ready_to_late_notice >0 && reserve_expiry_notice>0)
+      setCheckedData(true)
+    else setCheckedData(false)
+    
+
+  //   }else{
+  //     setCheckedData(false)
+
+  //   }
+  //  }else{
+  //   setCheckedData(false)
+
+   
+  
+    // 
+    // else  
+
    setNotificationError(some_array)
 
    props.handleChangeFilter(e.target.value,e.target.id)
@@ -62,7 +84,12 @@ const Notification = (props) => {
 
  }
  const saveNotfication = ()=>{
-   props.saveNoticationData()
+   let obj = {}
+   obj.ready_to_late_notice = ready_to_late_notice
+   obj.reserve_expiry_notice = reserve_expiry_notice
+   obj.status =1
+  //  alert("f")
+   props.saveNoticationData(obj)
  }
 
 
@@ -94,7 +121,7 @@ const Notification = (props) => {
 
                       <div className="notification_label">
                             <label>READY to LATE Notice<span> <FaIcon.FiAlertCircle className="alertIcon" /></span></label>
-                            <input placeholder={"data"}  type="text" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
+                            <input placeholder={""}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
                                 </div> 
@@ -110,7 +137,7 @@ const Notification = (props) => {
 
                       <div className="notification_label">
                             <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" /></span></label>
-                            <input placeholder={"data"}  type="text" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                            <input placeholder={""}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[1]}</span>}
                                 </div> 
@@ -119,13 +146,10 @@ const Notification = (props) => {
                       <div className="notification_label"></div>
 
                     </div>
-                    <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel"   >Cancel</button>
-                        <button className={(isNaN(ready_to_late_notice) ===false && isNaN(reserve_expiry_notice) ===false)?"button_style_Tools_Setting_Save":"button_style_Tools_Setting_Save1"}   disabled={(isNaN(ready_to_late_notice) ===false && isNaN(reserve_expiry_notice) ===false)?false:true}
-                        onClick={saveNotfication}
-                        
-                        
-                        >Save</button>
+                    <div align="right" className="action_area_left" style={{marginRight:180}}>
+                        <button className="button_style_Tools_Setting_Cancel">Cancel</button>
+                        <button className={"button_style_Tools_Setting_Save"}
+                        onClick={saveNotfication}>Save</button>
                   </div> 
 
                         
@@ -153,6 +177,6 @@ const mapStateToProps = (state)=>(
 )
 
 const form = reduxForm({ form: 'Notification' });
-export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData})(form(Notification));
+export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData,getNotificationData})(form(Notification));
 
 
