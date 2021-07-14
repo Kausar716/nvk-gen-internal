@@ -406,6 +406,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
                             </div>
                             {/* <label class="text-muted mt-2">Note: Actions required related main order status access to function</label> */}
+                           
                             <div class="bg-white mt-3">
                                 <div class="ContentSection p-15">
                                     <h4>Additional Permissions</h4>
@@ -540,20 +541,332 @@ import {getUsersList,showUser} from "../../actions/userAction";
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="bg-white mt-2">
+                                <div class="ContentSection p-15">
+                                    <h4>Purchase &amp; Order Permissions</h4>
+                                    <div class="row mt-3">
+                                     
+                                        <div class="col-md-4 col-lg-4">
+                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="Supervisor Roles"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                           
+                                           <div class="custom-control custom-checkbox">
+                                           <input type="checkbox" class="custom-control-input"  id={filteredPermission.id} name="Supervisor Roles"  checked={currentPermissionNames.includes("Supervisor Roles")} onChange={this.handleCheckBox}/>
+                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>Supervisor Role (all access)</label>
+                                           </div>
+                                       )):null}
+                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Create and Modify Drafts"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                           
+                                           <div class="custom-control custom-checkbox mt-2">
+                                           <input type="checkbox" class="custom-control-input" value={this.state.quotes} name="Create and Modify Drafts" checked={currentPermissionNames.includes("Create and Modify Drafts")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>Create & Modify Drafts</label>
+                                       </div>
+                                       )):null}
+                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Create Modify and Delete Open Orders"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                           
+                                           <div class="custom-control custom-checkbox mt-2">
+                                                <input type="checkbox" class="custom-control-input" name="Create Modify and Delete Open Orders" value={this.state.actionDeleteOrder} checked={currentPermissionNames.includes("Create Modify and Delete Open Orders")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>Create, Modify &amp; Delete Open Orders</label>
+                                            </div>
+                                       )):null}
+                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="Recive and Check in Open Orders"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                           
+                                           <div class="custom-control custom-checkbox mt-2">
+                                           <input type="checkbox" class="custom-control-input" name="Recive and Check in Open Orders" checked={currentPermissionNames.includes("Recive and Check in Open Orders")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>Receive &amp; Check-In Open Orders</label>
+                                       </div>
+                                       )):null}                                       
+                                           
+                                        </div>
+
+                                        <div class="col-md-4 col-lg-4">
+                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="View Closed and Cancelled Orders"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                           
+                                            <div class="custom-control custom-checkbox mt-2">
+
+                                                <input type="checkbox" class="custom-control-input"  name="View Closed and Cancelled Orders" checked={currentPermissionNames.includes("View Closed and Cancelled Orders")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                <label class="custom-control-label pl-2" for={filteredPermission.id}> View Closed &amp; Cancelled Orders</label>
+                                            </div>
+                                       )):null}  
+
+                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="Actions: Close Open Orders"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                           
+                                           <div class="custom-control custom-checkbox mt-2">
+                                                <input type="checkbox" class="custom-control-input" name="Actions: Close Open Orders" checked={currentPermissionNames.includes("Actions: Close Open Orders")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>Actions: Close Open Orders</label>
+                                            </div>
+                                       )):null} 
+                                            
+                                        </div>
+
+
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-md-12 d-flex justify-content-md-end">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="quotesAll" checked={currentPermissionNames.includes("quotesAll") } onClick={this.handleCheckBox} name="quotesAll"/>
+                                                <label class="custom-control-label pl-2" for="quotesAll"> Select All</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-2">
+                                                <input type="checkbox" class="custom-control-input" id="quotesNone" checked={currentPermissionNames.includes("quotesNone") } onClick={this.handleCheckBox} name="quotesNone" />
+                                                <label class="custom-control-label pl-2" for="quotesNone"> Select None</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                            <div class="bg-white mt-3">
+                                <div class="ContentSection p-15">
+                                    <h4>Inventory Management Permissions</h4>
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-4 col-lg-4">
+                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="Supervisor Role in Inventory"  && premission.group_name === "Inventory Managaement Supervisor").map(filteredPermission => (
+                                                    <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="Supervisor Role in Inventory" checked={currentPermissionNames.includes("Supervisor Role in Inventory") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                    <label class="custom-control-label pl-2" for={filteredPermission.id}>Supervisor Role (all access)</label>
+                                                </div>
+                                            )):null} 
+                                            
+
+                                            
+                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="Plant Manager"  && premission.group_name === "Plant Manager").map(filteredPermission => (
+                                                    <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="Plant Manager" checked={currentPermissionNames.includes("Plant Manager") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                    <label class="custom-control-label pl-2" for={filteredPermission.id}>Plant Manager</label>
+                                                </div>
+                                            )):null} 
+                                            
+                                                
+                                                    <div class="pl-4">
+                                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="Add or Edit"  && premission.group_name === "Plant Manager").map(filteredPermission => (
+                                                            <div class="custom-control custom-checkbox mt-2">
+                                                            <input type="checkbox" class="custom-control-input" name="Add or Edit" checked={currentPermissionNames.includes("Add or Edit") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Add / Edit</label>
+                                                        </div>
+                                                        )):null} 
+
+                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Print"  && premission.group_name === "Plant Manager").map(filteredPermission => (
+                                                                <div class="custom-control custom-checkbox mt-2">
+                                                                <input type="checkbox" class="custom-control-input" name="Print"checked={currentPermissionNames.includes("Print") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>Print</label>
+                                                            </div>
+                                                        )):null} 
+                                                    </div>
+
+
+
+
+
+
+
+
+
+
+
+                                                    {exestingPermission?exestingPermission.filter(premission => premission.name==="Product Manager"  && premission.group_name === "Product Manager").map(filteredPermission => (
+                                                    <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" class="custom-control-input" name="Product Manager" checked={currentPermissionNames.includes("Product Manager") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                    <label class="custom-control-label pl-2" for={filteredPermission.id}>Product Manager</label>
+                                                </div>
+                                            )):null} 
+                                            
+                                                
+                                                    <div class="pl-4">
+                                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="AddorEdit"  && premission.group_name === "Product Manager").map(filteredPermission => (
+                                                            <div class="custom-control custom-checkbox mt-2">
+                                                            <input type="checkbox" class="custom-control-input" name="AddorEdit" checked={currentPermissionNames.includes("AddorEdit") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Add / Edit</label>
+                                                        </div>
+                                                        )):null} 
+
+                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Print in Product"  && premission.group_name === "Product Manager").map(filteredPermission => (
+                                                                <div class="custom-control custom-checkbox mt-2">
+                                                                <input type="checkbox" class="custom-control-input" name="Print in Product"checked={currentPermissionNames.includes("Print in Product") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>Print</label>
+                                                            </div>
+                                                        )):null} 
+                                                    </div>
+
+
+
+
+
+
+                                        </div>
+
+
+                                        <div class="col-md-4 col-lg-4">
+                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="Inventory Managaement"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                         <div class="custom-control custom-checkbox">
+                                         <input type="checkbox" class="custom-control-input" name="Inventory Managaement"checked={currentPermissionNames.includes("Inventory Managaement") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                         <label class="custom-control-label pl-2" for={filteredPermission.id}> Inventory Management</label>
+                                     </div>
+                                       )):null}
+                                            
+                                            <div class="pl-4">
+                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Dashboard View"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                            <div class="custom-control custom-checkbox mt-2">
+                                            <input type="checkbox" class="custom-control-input" name="Dashboard View"checked={currentPermissionNames.includes("Dashboard View") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Dashboard (View)</label>
+                                        </div>
+                                        )):null}
+
+
+                                                 <div class="pl-3">
+                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Dashboard Modify"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                                            <div class="custom-control custom-checkbox mt-2">
+                                                            <input type="checkbox" class="custom-control-input" name="Dashboard Modify"checked={currentPermissionNames.includes("Dashboard Modify") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Dashboard (Modify)</label>
+                                                        </div>
+                                                        )):null}
+                                                </div>
+                                                
+                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="Master Inventory View"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                            <div class="custom-control custom-checkbox mt-2">
+                                            <input type="checkbox" class="custom-control-input"  name="Master Inventory View" checked={currentPermissionNames.includes("Master Inventory View") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                            <label class="custom-control-label pl-2" for={filteredPermission.id}> Master Inventory (View)</label>
+                                        </div>
+                                        )):null}
+
+
+
+                                                <div class="pl-3">
+                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Master Inventory Modify"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                                            <div class="custom-control custom-checkbox mt-2">
+                                                            <input type="checkbox" class="custom-control-input" name="Master Inventory Modify"checked={currentPermissionNames.includes("Master Inventory Modify") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Master Inventory (Modify)</label>
+                                                        </div>
+                                                        )):null}
+                                                </div>
+
+
+                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="Task Queue View"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                            <div class="custom-control custom-checkbox mt-2">
+                                            <input type="checkbox" class="custom-control-input"  name="Task Queue View" checked={currentPermissionNames.includes("Task Queue View") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                            <label class="custom-control-label pl-2" for={filteredPermission.id}> Task Queue (View)</label>
+
+
+
+                                            <div class="pl-3">
+                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Task Queue Modify"  && premission.group_name === "Inventory Managaement").map(filteredPermission => (
+                                                            <div class="custom-control custom-checkbox mt-2">
+                                                            <input type="checkbox" class="custom-control-input" name="Task Queue Modify" checked={currentPermissionNames.includes("Task Queue Modify") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Task Queue (Modify)</label>
+                                                        </div>
+                                                        )):null}
+                                            </div>
+
+
+
+                                        </div>
+                                        )):null}
+
+
+                                                
+                                            </div>
+                                        </div>
+                                        
+
+
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col-md-12 d-flex justify-content-md-end">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="additionalPermissionInventory" checked={currentPermissionNames.includes("additionalPermissionInventory") } onChange={this.handleCheckBox} name="additionalPermissionYes"/>
+                                                <label class="custom-control-label pl-2" for="additionalPermissionInventory" > Select All</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-2">
+                                                <input type="checkbox" class="custom-control-input" id="additionalPermissionNo"  checked={currentPermissionNames.includes("additionalPermissionNO") }  onChange={this.handleCheckBox} name="additionalPermissionNo"/>
+                                                <label class="custom-control-label pl-2" for="additionalPermissionNo" name=""> Select None</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
                         </div> :null}
+
+
+
+
                         <div class="row mt-3">
-                        {this.state.displayselectedUSer? 
-                            <div class="col-md-12">
-                                <a href="#">Update Current Role</a>
-                                <a href="#" class="ml-4">Create Role From Current Values</a>
-                            </div>:null}
+                            {this.state.displayselectedUSer? 
+                                <div class="col-md-12">
+                                    <a href="#">Update Current Role</a>
+                                    <a href="#" class="ml-4">Create Role From Current Values</a>
+                                </div>:null}
                         </div>
                         <div class="row mt-2">
-                        {this.state.displayselectedUSer? 
-                            <div class="col-md-12 text-md-right">
-                                <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
-                                <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>Update</button>
-                            </div>:null}
+                            {this.state.displayselectedUSer? 
+                                <div class="col-md-12 text-md-right">
+                                    <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
+                                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>Update</button>
+                                </div>:null}
                         </div>
                     </div>
                     </TabPanel>
