@@ -41,12 +41,30 @@ export class CreateUserProfile extends Component {
             open:false,
             cancel:false,
             logo:"",
-            createdUser:{}
+            createdUser:{},
+            selected: null,
+            hasError: false
         }
     }
+
+
+
     componentDidMount(){
         this.props.getRolesList()   
     }
+
+    handleChange2(value) {
+        this.setState({ selected: value });
+      }
+
+
+
+      handleClick2() {
+        this.setState({ hasError: false });
+        if (!this.state.selected) {
+          this.setState({ hasError: true });
+        }
+      }
 
     handleInput = (e) => {
         console.log(e.target.value)
@@ -78,6 +96,7 @@ export class CreateUserProfile extends Component {
             }            
         }
         else if(name === "postiton"){
+            debugger;
             if(errorObj.positionError>0){
                 errorObj.positionError=0
                 errorCount--
@@ -85,6 +104,11 @@ export class CreateUserProfile extends Component {
         }
         this.setState({errorObj,errorCount})
     }
+
+
+
+
+
     handlImageUpload = (e) => {
         console.log(e)
         console.log(e.target.files[0])
@@ -95,6 +119,7 @@ export class CreateUserProfile extends Component {
 
     }
     validate = () =>{
+        //debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z]+$/
@@ -112,13 +137,18 @@ export class CreateUserProfile extends Component {
         else{
             errorObj.firstNameError=0
         }
+
+
          if(this.state.lastName.length === 0){
+             //debugger;
             errorObj.lastNameError=1
             errorCount++
         }
         else{
             errorObj.lastNameError=0
         }
+
+
          if(!phoneReg.test(this.state.phone)){
             errorObj.phoneError=1
             errorCount++
@@ -128,9 +158,15 @@ export class CreateUserProfile extends Component {
         //     errorCount++
         // }
         if(this.state.position.length === 0){
+            //debugger;
             errorObj.positionError=1
             errorCount++
         }
+        else{
+            errorObj.lastNameError=0
+        }
+
+
          if(! emailReg.test(this.state.email)){
             errorObj.emailError=1
             errorCount++
@@ -140,17 +176,23 @@ export class CreateUserProfile extends Component {
     }
     handleSubmit = (e) => {
        let count= this.validate()
+
+       this.setState({ hasError: false });
+       if (!this.state.selected) {
+         this.setState({ hasError: true });
+       }
+
        console.log(count)
         if(count === 0){
             console.log(this.state)
             let userStateObject = this.state
             let userObject={}  
-            userObject['name'] = userStateObject.firstName
+           // userObject['name'] = userStateObject.firstName
             userObject['last_name'] = userStateObject.lastName
-            userObject['role'] = userStateObject.position
+           // userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
             userObject['phone'] = userStateObject.phone
-            userObject['role'] = userStateObject.position
+           // userObject['position'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 
 
@@ -179,7 +221,10 @@ export class CreateUserProfile extends Component {
         this.setState({open:false})
     }
     render() {
+        // const { classes } = this.props;
+        const { selected, hasError } = this.state;
 
+        console.log("this.state.errorObj.positionError",this.state.errorObj.positionError, this.state.errorObj.lastNameError)
      console.log(this.props.roles)
      let roles=[]
      if(this.props.roles)roles = this.props.roles
@@ -187,73 +232,14 @@ export class CreateUserProfile extends Component {
         <>
          <ActionModal cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
 
-        {/* <div clas="userManagementSection"> */}
-               {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
-                    <h1 class="page-header mb-0 d-flex align-items-center">
-                        <img src="assets/img/settings-primary.svg" class="mr-2"/>User Management
-                    </h1>
-                </div> */}
-                {/* <div class="px-md-3 mt-3"> */}
                     <Tabs>
-                        {/* <TabList class="d-inline-block bg-white pl-0">
-                            <Tab>User Profile</Tab>
-                            <Tab>User Access</Tab>
-                        </TabList> */}
+                      
                         <TabPanel>
                         <div class="pb-4">
                             <div class="bg-white">
-                                {/* <div class="row mb-3 mb-md-0">
-                                    <div class="col-md-6 col-lg-6">
-                                        <h4 class="p-15 mb-0">Add, Edit or Remove User</h4>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 pl-4 pl-md-0 d-flex align-items-center justify-content-md-end">
-                                        Active
-                                        <div class="switcher ml-2 pr-md-3 ml-3">
-                                            <input type="checkbox" name="switcher_checkbox_1" id="switcher_checkbox_1" value="1"/>
-                                            <label for="switcher_checkbox_1"></label>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                {/* <hr class="m-0"/> */}
-                                {/* <div class="ContentSection p-15"> */}
-                                    {/* <div class="row">
-                                        <div class="col-md-12 col-lg-12">
-                                            <div class="bg-grey-transparent-2 text-center px-2 py-2">
-                                                <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                                <p class="m-0">Inactive users will not have access to this system. User permissions can be sent via <a href="">User Access</a>.</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
+                      
                                     <div class="row mt-3">
-                                        {/* <div class="col-md-4 col-lg-3"> */}
-                                            {/* <div class="bg-grey-transparent-2 text-center px-4 py-4"> */}
-                                                {/* <div class="profImg">
-                                                    <img src={this.state.logo.length>0?this.state.logo:""} alt="" />
-                                                </div>
-                                                <p>Image should print quality PNF or JPG</p>
-                                                <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
-                                                    <span class="d-flex align-items-center justify-content-around">
-                                                    <input  type="file"  id="imageid"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
-                                                    <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
-                                                        
-                                                    </span>
-                                                  
-                                                    <img src="assets/img/upload-ic-white.svg" alt="" />
-                                                </a>
-                                                */}
-
-                                                {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
-                                                    <span class="d-flex align-items-center justify-content-around">
-                                                        <span class="f-s-20 text-danger">Remove</span>
-                                                    </span>
-                                                    <img src="assets/img/bin-ic-red.svg" alt=""/>
-                                                </a> */}
-                                                {/* <div class="text-left mt-2">
-                                                    <span><small>Last signed in 23/05/2021</small></span>
-                                                    <span class="ml-2"><a href="#">History</a></span>
-                                                </div> */}
-                                            {/* </div> */}
-                                        {/* </div> */}
+                                  
                                         <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                             <div class="row form-group">
                                                 <div class="col-md-6">
@@ -268,7 +254,7 @@ export class CreateUserProfile extends Component {
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                <div class="col-md-6">
+                                                {/* <div class="col-md-6">
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
                                                     <option>Select</option>
@@ -278,8 +264,23 @@ export class CreateUserProfile extends Component {
                                                         }):null}                                                        
                                                     </select>
                                                     {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
+                                                </div> */}
 
+
+                                                
+                                                <div class="col-md-6" error={hasError}>
+                                                    <label>Position<span class="text-danger" >*</span></label>
+                                                    <select class="form-control" name="position"   onChange={event => this.handleChange2(event.target.value)} value={selected}>
+                                                    <option> </option>
+                                                        {roles?roles.map(userObj=>{
+                                                            console.log(userObj)
+                                                            return  <option value={userObj.id}>{userObj.name}</option>
+                                                        }):null}                                                        
+                                                    </select>
+                                                    {hasError && <p style={{fontSize:"small",color:"red"}}>Select Position</p>}
+                                                   
                                                 </div>
+
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"  value={this.state.phone} onChange={this.handleInput} name="phone"/>

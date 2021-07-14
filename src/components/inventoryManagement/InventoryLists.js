@@ -279,8 +279,9 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <th class="salesBg f-s-10">Ready</th>
                                                         <th class="salesBg f-s-10">Not Ready</th>
                                                         <th class="productionBg f-s-10">Ready</th>
-                                                        <th class="productionBg f-s-10">Not Ready</th>
+                                                        <th class="productionBg f-s-10 text-center">Not Ready</th>
                                                     </tr>
+                                                    {/* className="text-nowrap text-center" */}
                                                 </thead>
                                                 <tbody>
                                                     <tr class="tblLinks">
@@ -310,10 +311,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}> 50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -340,10 +341,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -370,10 +371,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -400,10 +401,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -430,10 +431,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -460,10 +461,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -490,10 +491,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td ><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -721,10 +722,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -751,10 +752,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -781,10 +782,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -811,10 +812,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -841,10 +842,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -871,10 +872,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -901,10 +902,10 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">

@@ -36507,7 +36507,8 @@ hr {
 }
 
 .media.media-sm .media-object {
-    width: 64px
+    /* width: 64px */
+    width: 90px;
 }
 
 .media.media-xs .media-object {
@@ -53310,11 +53311,16 @@ ul.list-unstyled.searchAlpha li a:hover {
     margin-left: 4px;
 }
 .staffCard .media-left {
+    /* width: 80px;
+    height: 80px;
+    display: inline-block;
+    padding: 0;
+    margin-right: 10px; */
     width: 80px;
     height: 80px;
     display: inline-block;
     padding: 0;
-    margin-right: 10px;
+    margin-right: 32px;
 }
 .staffCard .media-left img {
     width: 100%;

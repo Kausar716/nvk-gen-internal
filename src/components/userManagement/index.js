@@ -144,14 +144,26 @@ handleCreateUpdateFlow = (obj)=>{
                     </TabList>
                     <TabPanel>
                     <div class="bg-white">
-                         <div class="f-s-24 px-3 py-3 f-w-500">User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span></div>
+                         <div class="f-s-24 px-3 py-3 f-w-500" >User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
+                         
+                                                    {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
+                                                        <span style={{float:"right", marginRight:"3em", marginLeft:"-5em"}}>Active</span>
+                                                        <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"8px"}}>
+                                                            <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2"
+                                                              />
+                                                            <label for="switcher_checkbox_date"></label>
+                                                        </div>
+                                                    {/* </div> */}
+                         
+                         
+                         </div>
                         <hr class="m-0"/>
                         <div class="ContentSection p-15">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be sent via <a href="">User Access</a>.</p>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <a href="">User Access</a>.</p>
                                     </div>
                                 </div>
                             </div>

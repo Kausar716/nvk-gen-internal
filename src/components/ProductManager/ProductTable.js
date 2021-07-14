@@ -4,6 +4,7 @@ import React,  {useState } from 'react' ;
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal'
 import {useHistory} from "react-router-dom"
+import Loader from './Loader'
 import {
     //product actions
     createProductAction ,
@@ -253,7 +254,9 @@ const ProductTable  = (props) => {
                                             
                                         </tbody>
                                     </table>
-                                    <p style={{textAlign:"center",color:"red"}}>{productData.length===0?"No Product Found ":""}</p>
+                                    <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>
+                                   
+                                        {productData.length===0?"Product data loading ... " :""}  <Loader /></p>
                                 </div>
                             </div>
         </>
