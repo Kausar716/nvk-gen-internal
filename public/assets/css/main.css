@@ -53572,10 +53572,15 @@ ul.sub-menu {
 
 @media (min-width:1200px) {
     .profImg {
-        height: 160px;
+        height: 200px;
+        width: 200px;
+        border-radius: 100px;
+        overflow: hidden;
+        margin: 0 auto;
+        /* height: 160px;
         width: 160px;
         border-radius: 80px;
         overflow: hidden;
-        margin: 0 auto;
+        margin: 0 auto; */
     }
 }
