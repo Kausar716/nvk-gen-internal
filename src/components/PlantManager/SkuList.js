@@ -367,7 +367,7 @@ const SkuList = (props)=>{
                                                 <td class="text-center">
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedplant(skuData.plant_id,"edit","sku")}/>
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedplant(skuData,"edit","sku")}/>
                                                         {/* </a> */}
                                                     </span>
                                                     <span>
