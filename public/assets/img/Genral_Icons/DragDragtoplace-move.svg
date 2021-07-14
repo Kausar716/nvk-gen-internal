@@ -1,14 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="76" height="76" viewBox="0 0 76 76">
-  <g id="Drag_Drag_to_place" data-name="Drag Drag to place" transform="translate(0 1)">
-    <g id="Group_77" data-name="Group 77" transform="translate(-741.593 -645.982)">
-      <g id="arrow-down-sign-to-navigate" transform="translate(778.851 678.642) rotate(-90)">
-        <path id="Path_21" data-name="Path 21" d="M16.33,18.617a2.28,2.28,0,0,1-1.617-.67L.67,3.9A2.287,2.287,0,0,1,3.9.67L16.33,13.1,28.755.67A2.287,2.287,0,1,1,31.989,3.9L17.946,17.948A2.28,2.28,0,0,1,16.33,18.617Z" transform="translate(0 0)" fill="#b4b4b4" stroke="#b4b4b4" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="104" height="103.951" viewBox="0 0 104 103.951">
+  <g id="DragDragtoplace-move" transform="translate(1 1)">
+    <g id="Group_77" data-name="Group 77" transform="translate(27.918)">
+      <g id="arrow-down-sign-to-navigate" transform="translate(24.048 45.509) rotate(-90)">
+        <path id="Path_21" data-name="Path 21" d="M22.754,25.942a3.178,3.178,0,0,1-2.253-.933L.934,5.44A3.187,3.187,0,0,1,5.44.933L22.754,18.248,40.068.934a3.187,3.187,0,0,1,4.507,4.507L25.007,25.009A3.178,3.178,0,0,1,22.754,25.942Z" transform="translate(0 0)" fill="#b4b4b4" stroke="#b4b4b4" stroke-width="2"/>
       </g>
-      <g id="arrow-down-sign-to-navigate-2" data-name="arrow-down-sign-to-navigate" transform="translate(763.024 678.642) rotate(-90)">
-        <path id="Path_21-2" data-name="Path 21" d="M13.577,15.479a1.9,1.9,0,0,1-1.344-.557L.557,3.246A1.9,1.9,0,0,1,3.246.557L13.577,10.889,23.908.557A1.9,1.9,0,0,1,26.6,3.247L14.922,14.923A1.9,1.9,0,0,1,13.577,15.479Z" transform="translate(2.752 -1.431)" fill="#b4b4b4" stroke="#b4b4b4" stroke-width="2"/>
+      <g id="arrow-down-sign-to-navigate-2" data-name="arrow-down-sign-to-navigate" transform="translate(0 41.674) rotate(-90)">
+        <path id="Path_21-2" data-name="Path 21" d="M18.919,21.569a2.642,2.642,0,0,1-1.873-.776L.776,4.524A2.65,2.65,0,0,1,4.524.776l14.4,14.4,14.4-14.4a2.65,2.65,0,0,1,3.747,3.748l-16.27,16.27A2.642,2.642,0,0,1,18.919,21.569Z" transform="translate(0 0)" fill="#b4b4b4" stroke="#b4b4b4" stroke-width="2"/>
       </g>
     </g>
     <text id="Drag_Drop_to_Place" data-name="Drag &amp; Drop
-to Place" transform="translate(38 54)" fill="#4e4e4e" font-size="14" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="-37.823" y="0">Drag &amp; Drop</tspan><tspan x="-25.491" y="17">to Place</tspan></text>
+to Place" transform="translate(51 74.951)" font-size="19" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="-51.332" y="0">Drag &amp; Drop</tspan><tspan x="-34.595" y="23">to Place</tspan></text>
   </g>
 </svg>

@@ -238,8 +238,7 @@ export class OrganizationSettings extends React.Component {
                                               src={url}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"160px",width:"160px"}}/>
-                                            
+                                            style={{height:"200px",width:"200px"}}/>
                                         </div>
                                         <p><small>Image should print quality PNG or JPG</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
