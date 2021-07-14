@@ -114,7 +114,7 @@ const ForgotPassword = (props) => {
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">
-                                            <p className="infostyle" style={{marginTop:25}}><span style={{color:"#FF8C00"}}>Click here to </span> <span className="infostyle" style={{color:"#4f91f7"}}>Go Back</span></p>
+                                            <p className="infostyle" style={{marginTop:25}}> <span className="infostyle" style={{color:"#4f91f7"}}>Return to Sign In</span></p>
                                         </Link>
                                     </div>
                                 </div>
