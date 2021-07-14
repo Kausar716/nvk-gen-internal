@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse, Label} from 'reactstrap';
+import {connect} from "react-redux";
+import {handleChangeFilter,saveNoticationData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 //import validators from './validators'
@@ -26,43 +28,46 @@ const minValue = min => value =>
 const minValue2 = minValue(2)
 
 
-const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
-  
-    <div>
-      <input {...input} placeholder={label}  type={type} className="textRight_OrderSettings"/><span className="smallFont">days remaining</span>
-      <div className="row_1">
-      {touched && ((error && <span style={{color:"red"}}>{error}</span>) || (warning && <span>{warning}</span>))}
-        </div> 
-     
-    </div>
-  
-)
-
-const renderField2 = ({ input, label, type, meta: { touched, error, warning } }) => (
-  
-  <div>
-    <input {...input} placeholder={label}  type={type} className="textRight_OrderSettings"/><span className="smallFont">days (Setting not used if set to 0)</span>
-    <div className="row_1">
-    {touched && ((error && <span style={{color:"red"}}>{error}</span>) || (warning && <span>{warning}</span>))}
-      </div> 
-   
-  </div>
-
-)
-
-
-
-const onSubmit = (values) =>{
-  console.log(values);
-}
-
 
 const Notification = (props) => {
-  const [isOpen, setIsOpen] = useState(true);
-  const toggle = () => setIsOpen(!isOpen);
+    const [isOpen, setIsOpen] = useState(true);
+    const toggle = () => setIsOpen(!isOpen);
+    const [notificationError,setNotificationError] = useState(["",""])
+  
+    useEffect(() => {
+    // Update the document title using the browser API
+    document.title = `You clicked times`;
+    },[]);
+
+  
+ const handleDataChange = (e)=>{
+  const some_array = [...notificationError]
+
+   if(e.target.id ==="ready_to_late_notice"){
+     if(isNaN(e.target.value))some_array[0] = 'Must be a number'
+      else some_array[0] = "" 
+  }
+
+   if(e.target.id ==="reserve_expiry_notice"){
+    if(isNaN(e.target.value))some_array[1] = 'Must be a number'
+    else some_array[1] = ""
+   }
+   setNotificationError(some_array)
+
+   props.handleChangeFilter(e.target.value,e.target.id)
+   
+  //  if(e.target.id ==="")
+  //  setNotificationError(some_array)
 
 
-  const { handleSubmit, pristine, reset, submitting } = props;
+ }
+ const saveNotfication = ()=>{
+   props.saveNoticationData()
+ }
+
+
+
+  const {ready_to_late_notice,reserve_expiry_notice} = props.customerData;
   return (
     <>
 
@@ -89,32 +94,38 @@ const Notification = (props) => {
 
                       <div className="notification_label">
                             <label>READY to LATE Notice<span> <FaIcon.FiAlertCircle className="alertIcon" /></span></label>
-                            <Field
+                            <input placeholder={"data"}  type="text" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
+                              <div className="row_1">
+                              { <span style={{color:"red"}}>{notificationError[0]}</span>}
+                                </div> 
+                            {/* <Field
                                             name="ReserveExpiryNotice1"
                                             component={renderField2}
                                             type="text"
                                             label="2"
                                             validate={[ required, number, minValue2]}
-                                        />
+                                            value={props.customerData.customerNotification[0]}
+                                        /> */}
                       </div>
 
                       <div className="notification_label">
                             <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" /></span></label>
-                            <Field
-                                            name="ReserveExpiryNotice2"
-                                            component={renderField}
-                                            type="text"
-                                            label="2"
-                                            validate={[ required, number, minValue2]}
-                                        />
+                            <input placeholder={"data"}  type="text" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                              <div className="row_1">
+                              { <span style={{color:"red"}}>{notificationError[1]}</span>}
+                                </div> 
                       </div>
 
                       <div className="notification_label"></div>
 
                     </div>
                     <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                        <button className="button_style_Tools_Setting_Save"   style={{marginRight:"-9.1rem"}} onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                        <button className="button_style_Tools_Setting_Cancel"   >Cancel</button>
+                        <button className={(isNaN(ready_to_late_notice) ===false && isNaN(reserve_expiry_notice) ===false)?"button_style_Tools_Setting_Save":"button_style_Tools_Setting_Save1"}   disabled={(isNaN(ready_to_late_notice) ===false && isNaN(reserve_expiry_notice) ===false)?false:true}
+                        onClick={saveNotfication}
+                        
+                        
+                        >Save</button>
                   </div> 
 
                         
@@ -131,9 +142,17 @@ const Notification = (props) => {
   );
 }
 
-export default reduxForm({
-  form: 'notification',
-})(Notification);
+// export default reduxForm({
+//   form: 'notification',
+// })(Notification);
+const mapStateToProps = (state)=>(
+  {
+    customerData:state.customerReducer
+  }
 
+)
+
+const form = reduxForm({ form: 'Notification' });
+export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData})(form(Notification));
 
 

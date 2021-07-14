@@ -27,7 +27,7 @@ class UserSettingsIndex extends Component {
                 <div class="px-md-3 mt-3">
                     <Tabs>
                         <TabList>
-                            <Tab style={{bottom:"0px"}}>User Settings</Tab>
+                            <Tab style={{bottom:"0px"}}>Positions</Tab>
                         </TabList>
                       
                         <TabPanel>

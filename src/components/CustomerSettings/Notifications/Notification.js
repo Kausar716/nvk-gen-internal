@@ -16,7 +16,7 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
     <div>
       <input {...input} placeholder={label}  type={type} className="textRight_OrderSettings"/><span className="smallFont">days remaining</span>
       <div className="row_1">
-      {touched && ((error && <span style={{color:"red"}}>{error}</span>) || (warning && <span>{warning}</span>))}
+      {touched && ((error && <span style={{color:"red"}} id="field">{error}</span>) || (warning && <span>{warning}</span>))}
         </div> 
      
     </div>
@@ -28,7 +28,7 @@ const renderField2 = ({ input, label, type, meta: { touched, error, warning } })
   <div>
     <input {...input} placeholder={label}  type={type} className="textRight_OrderSettings"/><span className="smallFont">days (Setting not used if set to 0)</span>
     <div className="row_1">
-    {touched && ((error && <span style={{color:"red"}}>{error}</span>) || (warning && <span>{warning}</span>))}
+    {touched && ((error && <span style={{color:"red"}} id="field1">{error}</span>) || (warning && <span>{warning}</span>))}
       </div> 
    
   </div>
@@ -45,6 +45,12 @@ const onSubmit = (values) =>{
 const Notification = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+  console.log(number,required)
+  const [val,setVal] = useState(3)
+
+  const handleDataChange = (e)=>{
+    alert(e.target.value)
+  }
 
 
   const { handleSubmit, pristine, reset, submitting } = props;
@@ -78,8 +84,12 @@ const Notification = (props) => {
                                             name="ReserveExpiryNotice1"
                                             component={renderField2}
                                             type="text"
-                                            label="2"
+                                           
                                             validate={[ required, number]}
+                                            onChange={handleDataChange}
+                                           
+                                            value={val}
+                                          
                                         />
                       </div>
 
@@ -89,8 +99,11 @@ const Notification = (props) => {
                                             name="ReserveExpiryNotice2"
                                             component={renderField}
                                             type="text"
-                                            label="2"
+                                       
                                             validate={[ required, number]}
+                                            onChange={handleDataChange}
+                                            value={val}
+                                        
                                         />
                       </div>
 
@@ -116,7 +129,10 @@ const Notification = (props) => {
 }
 
 export default reduxForm({
-  form: 'Notification',
+  form: 'Notification1',
+
+  // error:errors.
+  enableReinitialize: true,
 })(Notification);
 
 
