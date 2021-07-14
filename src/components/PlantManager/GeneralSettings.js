@@ -95,14 +95,19 @@ import {
          
          //let validate = handleValidation()  
         //  if(validate)
+        console.log(actionType)
         if(submitCount === 0){
-            debugger;
            if(needAction){
-               if(actionType ==="add")
-               props.createPlantAction(plantDataById,tagsData)
+               if(actionType ==="add"){
+                props.createPlantAction(plantDataById,tagsData)
+               }
+              
   
-               if(actionType ==="edit")
-               props.updatePlantAction(plantDataById,plantDataById.plant_id,tagsData)
+               if(actionType ==="edit"){
+                   console.log(plantDataById)
+                   console.log(plantDataById.plant_id)
+               props.updatePlantAction(plantDataById,plantDataById.plant_id,tagsData)}
+
                setSubmitCount(1)
            }
        }
@@ -136,7 +141,7 @@ import {
     }
     const {plantData,plantDataById,tagsData,actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData
-        console.log(plantDataById)
+        console.log(props.plantData)
 
     return (
         <div>
@@ -230,7 +235,7 @@ import {
                                         <select class="form-control"  onChange={handleInput}>
                                         {plantCategoryData.map(plantCategory=>{
                                                     return(
-                                                        <option value={plantCategory.id}>{plantCategory.name} </option>
+                                                        <option value={plantDataById.id}>{plantCategory.name} </option>
                                                     )
                                                 })                                       
                                         }

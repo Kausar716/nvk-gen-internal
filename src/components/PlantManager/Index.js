@@ -134,7 +134,7 @@ const productFormAction = ()=>{
     
 
 
-    const {plantPageToOpen,plantData,actionType,plantDataById} = props.plantData
+    const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id} = props.plantData
     const {plantCategoryData} =  props.categoryData
     console.log(plantData)
 
@@ -256,7 +256,7 @@ const productFormAction = ()=>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Plant ID </h2>
+                                                    <h2>Plant ID {ae_plant_id} </h2>
                                                 </div>
                                                 
                                                 <div class="col-md-6 d-flex justify-content-md-end">

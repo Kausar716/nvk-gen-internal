@@ -9,12 +9,13 @@ import {
     //DUPLICTE_PLANT,
 
     // Plant SKU ACTION
-    //CREATE_PLANT_SKU_ACTION,
+    CREATE_PLANT_SKU_ACTION,
     UPDATE_PLANT_SKU_ACTION,
     //DELETE_PLANT_SKU_ACTION,
     GET_ALL_PLANT_SKU_ACTION,
 
     GET_PLANT_SPECIFIED_SKU_ACTION,
+    GET_SINGLE_PLANT_SKU,
 
     //Plant page redirects action
 
@@ -94,18 +95,17 @@ import {
 // "attributes[2][id]":3,
 // "attributes[2][subattributes][2][id]":4,
 export const createPlantAction = (plantData,tags) => dispatch => {
-   // debugger;
+    console.log(plantData)
     let errorArray=[];
     if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
     if(errorArray.length===0){
         plantData["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/add-plant`,plantData,config).then(res=>{
-           // debugger;
-            errorArray.push("Plant Added successfully")
-            console.log("karthi",res.data.data);
+          
+            errorArray.push("Plant Added successfully")            
             dispatch(getAllPlantAction())
-            dispatch(showSpecifiedPlantSkuAction(res.data.data.sku_code))
+            dispatch(showSpecifiedPlantSkuAction(res.data.data.plant.plant_id))
          
             dispatch({
                 type:ERROR_HANDLE,
@@ -116,7 +116,8 @@ export const createPlantAction = (plantData,tags) => dispatch => {
            
             dispatch({
                 type:CREATE_PLANT_ACTION,
-                ae_plant_id:res.data.data.plant.plant_id
+                ae_plant_id:res.data.data.plant.plant_id,
+                createdPlantData:res.data.data.plant
 
             })
     
@@ -144,23 +145,30 @@ export const createPlantAction = (plantData,tags) => dispatch => {
 
 
 export const updatePlantAction = (data,id,tag) => dispatch => {
+   
     data["common_name"] = tag
         axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
+            console.log(res.data.data.plant_id)
             dispatch(getAllPlantAction())
             let error = []
             error.push("Plant Updated successfully")
+            
+            dispatch(getAllPlantAction())
+            dispatch(showSpecifiedPlantSkuAction(res.data.data.plant_id))
+         
             dispatch({
-                            type:UPDATE_PLANT_ACTION
-                    
-                        })
-                        dispatch({
-                                        type:ERROR_HANDLE,
-                                        message:error,
-                                        status:true
-                                    }
-                                    // dispatch(getAllSpecifiedSkuProductList(id)),
-                                    // dispatch(subPageReDirectAction("sku"))
-                                    )
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            },
+            dispatch(plantSubPageReDirectAction("sku")))
+           
+            dispatch({
+                type:UPDATE_PLANT_ACTION,
+                ae_plant_id:res.data.data.plant_id,
+                createdPlantData:res.data.data.plant
+
+            })
 
         })
 }
@@ -230,7 +238,89 @@ export const getSpecifiedPlantAction = (id, actionType="edit",pageToOpen="genera
     4. update sku API
     5. delete SKU API
 */
-export const createPlantSkuAction = (id) => dispatch => {
+export const createPlantSkuAction = (id, data, actionType="add") => dispatch => {
+    let error = []
+    // if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
+    // if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
+    // if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+    // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
+    let copyData = data
+    copyData.subcategory_id = data.subcategory
+    copyData.each_cost= data.each_cost
+    copyData.each_price= data.each_price
+    delete copyData.subCategory
+    copyData.supplier_id = "1"
+    copyData.sale_expiry_date = "2021-07-09"
+    delete copyData.product_id
+    delete copyData.plant_id
+   
+    delete copyData.discontinued
+    delete copyData.sku_code
+    delete copyData.subcategory
+    delete copyData.subcategory_id
+    delete copyData.volume_price_per_unit
+    delete copyData.volume_quantity
+    delete copyData.archived
+    delete copyData.sale_expiry_date
+    // copyData.attributes_subattributes=[
+    //     {
+    //         "attribute_id":1,
+    //         "subattribute_id":1
+    //     },
+    //     {
+    //          "attribute_id":3,
+    //         "subattribute_id":4
+    //     },
+    //     {
+    //          "attribute_id":4,
+    //         "subattribute_id":6
+    //     }
+    // ]
+    copyData.id=id
+    copyData.type = "plant"
+   
+        
+    console.log(copyData,"plantcheck")
+    console.log(id)
+
+
+    if(error.length===0){
+      console.log(copyData)
+        axios.post(`/api/add-sku`,copyData,config).then(res=>{ 
+            console.log(res)
+            // dispatch(getAllProductAction())
+            dispatch(showSpecifiedPlantSkuAction(id))
+            // dispatch(getSpecifiedProductAction(id,"edit","sku"))
+            // dispatch(pageReDirectAction("sku",actionType))
+            dispatch(getAllPlantSkuAction(id))
+            dispatch({
+                type:CREATE_PLANT_SKU_ACTION
+            })
+            error.push("SKU updated successfully")
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+            }).catch(error1=>{
+                console.log(error1)
+                error.push("Please add Plant firsteksdjfnvdz")
+                dispatch({
+                    type:ERROR_HANDLE,
+                    message:error,
+                    status:true
+                })
+    
+            })
+    }else{
+        dispatch({
+            type:ERROR_HANDLE,
+            message:error,
+            status:true
+        })
+
+    }
 
 }
 export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch => {
@@ -243,6 +333,7 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     if(error.length===0){
         delete data["id"]
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
+            console.log(res)
             // dispatch(getAllProductAction())
             dispatch(showSpecifiedPlantSkuAction(id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
@@ -258,6 +349,7 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
                 status:true
             })
             }).catch(error1=>{
+                console.log(error1)
                 error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,
@@ -294,7 +386,7 @@ export const getAllPlantSkuAction = (id) => dispatch => {
 
 }
 export const showSpecifiedPlantSkuAction = (id) => dispatch => {
-    axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{ 
+    axios.get(`/api/skus/plants/${id}`,config).then(res=>{ 
         console.log(res.data)
         dispatch({
                 type:GET_PLANT_SPECIFIED_SKU_ACTION,
@@ -302,9 +394,25 @@ export const showSpecifiedPlantSkuAction = (id) => dispatch => {
     
             })
         })
+}
 
+export const showSinglePlantSkuAction = (id,data, actionType="edit") => dispatch => {
+  
 
+     axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{ 
+        //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
 
+      
+        console.log("showSpecifiedSkuAction",res.data.data[0])
+        debugger;
+        dispatch({
+                type:GET_SINGLE_PLANT_SKU,
+                payload:res.data.data[0],
+                plantSkuDataById:res.data.data[0]
+                //actionType:actionType
+    
+            })
+        })
 
 }
 

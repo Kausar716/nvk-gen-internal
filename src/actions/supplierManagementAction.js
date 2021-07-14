@@ -7,6 +7,22 @@ import { formValues } from 'redux-form';
 // import {contactsSuppliers} from '../components/SupplierManagement/Supplier_Contacts/data';
 import {
 
+
+    GET_SUPPLIER_LIST, 
+    SET_SUPPLIER_PAGE_NUMBER,
+    FILTER_SUPPLIER_DATA_BY_RADIO,
+    FILTER_SUPPLIER_BY_SEARCH,
+    FILTER_SUPPLIER_BY_ALPHA, 
+    GET_CUSTOMER_LIST, 
+    ADD_CUSTOMER, 
+    SHOW_CUSTOER, 
+    UPDATE_CUSTOMER,
+    DELETE_CUSTOMER,
+    SET_PAGE_NUMBER,
+    FILTER_DATA_BY_RADIO,
+    FILTER_DATA_BY_SEARCH,
+    FILTER_DATA_BY_ALPHA,
+
     ADD_SUPPLIER_CONTACT_ERROR ,
     ADD_SUPPLIER_CONTACT_LOADING,
     ADD_SUPPLIER_CONTACT_SUCCESS ,
@@ -82,6 +98,59 @@ import {
 
 
 //CREATE
+
+
+
+
+
+
+export const getAllSuppliers = () => dispatch => {
+    axios.get("/api/suppliers",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_LIST,
+            payload:res.data,
+            dataType:"dataType"
+
+        })
+    })
+}
+export const setPageNumber = (pageNumber) => {
+    return{
+          type:SET_SUPPLIER_PAGE_NUMBER,
+          pageNumber:pageNumber,
+      }
+  
+  }
+  export const handleRadioFilter = (data)=>{
+    //   if()
+      return{
+          type: FILTER_SUPPLIER_DATA_BY_RADIO,
+          actionType:data
+      }
+  }
+  export const handleSearchFilter = (data)=>{
+    //   if()
+      return{
+          type:FILTER_SUPPLIER_BY_SEARCH,
+          searchData:data
+      }
+  }
+  export const handleAplhabetFilter = (data)=>{
+    //   if()
+      return{
+          type:FILTER_SUPPLIER_BY_ALPHA,
+          alphaData:data
+      }
+  }
+
+//   export const getAllSupplierAction = ()=>{
+//     return{
+//         type:FILTER_SUPPLIER_BY_ALPHA,
+//         alphaData:"data"
+//     }
+
+//   }
 
 export const createSupplierInfo =(supplierInfo)=>{
     const data ={
