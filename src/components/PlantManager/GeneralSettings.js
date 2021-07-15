@@ -33,6 +33,9 @@ import {
     const [errorCount,setErrorCount] = useState(0)
  
     const handleInput =(e)=>{
+        console.log(e.target.value)
+        console.log(e.target.id)
+ 
         setSubmitCount(0)
         let errorcount =errorCount
         let errorobj =errorObj
@@ -142,6 +145,7 @@ import {
     const {plantData,plantDataById,tagsData,actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData
         console.log(props.plantData)
+        console.log(plantDataById)
 
     return (
         <div>
@@ -232,10 +236,11 @@ import {
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
                                         <label>Category <span class="text-danger">*</span></label>
-                                        <select class="form-control"  onChange={handleInput}>
+                                        <select class="form-control"  onChange={handleInput} id="category_id" value={plantDataById.category_id} >
+                                        <option>None</option>
                                         {plantCategoryData.map(plantCategory=>{
                                                     return(
-                                                        <option value={plantDataById.id}>{plantCategory.name} </option>
+                                                        <option value={plantCategory.id}>{plantCategory.name} </option>
                                                     )
                                                 })                                       
                                         }
@@ -269,7 +274,7 @@ import {
                                     {/* </div> */}
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Introduction Year</label>
-                                        <select class="form-control" id="introduction_year" onChange={handleInput}>
+                                        <select class="form-control" id="introduction_year" onChange={handleInput} value={plantDataById.introduction_year}>
                                         {
                                         indents.map(year=>{
                                             return(<option value={year} selected={plantDataById.introduction_year===year?"selected":""}>{year}</option>)
@@ -327,6 +332,5 @@ export default connect(mapStateToProps,{
 
 
 })(GeneralSettings)
-
 
 
