@@ -12848,8 +12848,7 @@ th {
 
 label {
     display: inline-block;
-    margin-bottom: .5rem;
-    font-weight: bold;
+    margin-bottom: .5rem
 }
 
 button {
@@ -36507,8 +36506,7 @@ hr {
 }
 
 .media.media-sm .media-object {
-    /* width: 64px */
-    width: 90px;
+    width: 64px
 }
 
 .media.media-xs .media-object {
@@ -53089,6 +53087,7 @@ span.editIcon {
 .card-header {
     background-color: #629C44;
     color: #fff;
+    font-size: 22px;
 }
 .cardBg {
     background-color: #F0F0F0;
@@ -53311,16 +53310,11 @@ ul.list-unstyled.searchAlpha li a:hover {
     margin-left: 4px;
 }
 .staffCard .media-left {
-    /* width: 80px;
-    height: 80px;
-    display: inline-block;
-    padding: 0;
-    margin-right: 10px; */
     width: 80px;
     height: 80px;
     display: inline-block;
     padding: 0;
-    margin-right: 32px;
+    margin-right: 10px;
 }
 .staffCard .media-left img {
     width: 100%;
@@ -53345,7 +53339,7 @@ ul.list-unstyled.searchAlpha li a:hover {
     color: grey;
 }
 .btnSignIn {
-    background-color: #348fe2;
+    background-color: #7EBB03;
     color: #fff;
     font-size:24px;
     font-weight: 400;
@@ -53451,7 +53445,7 @@ ul.list-unstyled.searchAlpha li a:hover {
     background-color: #fff;
 }
 .invtTbl tbody tr:nth-of-type(even) td {
-    background-color: #F7F7F7 !important;
+    background-color: #F7F7F7;
 }
 .invtTbl tbody tr:nth-of-type(odd) td {
     background-color: #fff !important;
@@ -53459,70 +53453,14 @@ ul.list-unstyled.searchAlpha li a:hover {
 .topbarCtrls a {
     display: inline-block;
 }
-#sidebar {
-    width: 60px;
-    overflow:hidden;
-    box-shadow: 2px 0px 8px rgb(0 0 0 / 5%);
-    -webkit-box-shadow: 2px 0px 8px rgb(0 0 0 / 5%);
-}
-#sidebar:hover {
-    width: 280px;
-    transition: all ease 0.5s;
-}
-#sidebar .nav li a span {
-    display: none;
-    width: 0;
-    line-height: 18px;
-}
-#sidebar .nav {
-    width: 280px;
-}
-#sidebar:hover .nav li a span {
-    display: none;
-    width: 100%;
-    
-}
 
-
-.content {
-    margin-left: 60px;
-}
-#sidebar:hover .nav li a span {
-    opacity: 1;
-    display: block;
-}
-
-#sidebar li>a .caret {
-    left: 32px;
-    position: absolute;
-}
-#sidebar:hover li>a .caret {
-    left: unset;
-    position: unset;
-}
-
-ul.sub-menu {
-    display: none ;
-}
-#sidebar:hover li.has-sub.expand .sub-menu {
-   display: block !important;
-}
-
-.sidebar .nav>li:hover .sub-menu {
-    display: block;
-}
-.sidebar .nav>li:hover .sub-menu {
-    display: block;
-}
 
 
 .invtDashPlantTbl th {
     line-height: 20px;
     vertical-align: middle !important;
 }
-.invtDashPlantTbl {
-    font-s
-}
+
 .invtDashPlantTbl td:not(:first-child) {
     text-align: center;
 }
@@ -53547,6 +53485,208 @@ ul.sub-menu {
     text-align: center;
     width: 60px;
 } 
+.stsBadge {
+    padding: 4px 8px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    font-size: 13px;
+    font-weight: 600;
+}
+.stsClosed {
+    background-color: #C4E9C4;
+    color: #069D06;
+}
+.stsDraft {
+    background-color: #D4D4D4;
+    color: #000000;
+}
+.stsOpen {
+    background-color: #B2D4FF;
+    color: #2D71FF;
+}
+.editPurchaseHead h2 {
+    background-color: #D4D4D4;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 22px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+.editPurchaseHead .bdrLeft {
+    border-left: 1px solid #E2E2E2;
+    padding-left: 20px;
+}
+.editPurchaseHead div {
+    font-size: 18px;
+}
+.btnLarge {
+    font-size: 22px;
+    padding: 12px 40px;
+}
+.textQtySm {
+    width: 60px;
+    text-align: right;
+}
+.btnGrey {
+    background-color: rgba(203,203,203, 0.3);
+    border: 1px solid rgba(82,135,245, 0.3);
+    color: #5287F5;
+    font-size: 14px;
+    height: 42px;
+    line-height: 28px;
+}
+.movePanel {
+    background-color: #D9D9D9 !important;
+}
+.w-60 { width:60px;}
+.w-80 { width:80px;}
+.table-no-border td {
+    border: none !important;
+}
+.table .form-control {
+    height: 32px;
+    padding: 2px 10px 2px 2px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.table {
+    font-size: 14px;
+    font-weight: 600;
+}
+.trBgWhite {
+    background-color: #fff !important;
+}
+.controlLabel {
+    line-height: 32px;
+}
+.descLbl {
+    margin-top: -28px;
+    position: absolute;
+    left: 30px;
+}
+.tblBgWhite, .tblBgWhite td {
+    background-color: #fff !important;
+}
+.tblBgGrey, .tblBgGrey td {
+    background-color: #F0F0F0 !important;
+}
+.topTitleRow td {
+    padding: 4px 8px;
+}
+.greyBox {
+    background-color: #FAFAFA;
+    border: 1px solid #DFDFDF;
+    border-radius: 8px;
+} 
+.totalSec label, .totalSec span {
+    font-size: 18px;
+}
+.totalSec .form-control {
+    font-size: 16px;
+}
+.subTotLbl label, .subTotLbl span  {
+    font-size: 22px;
+}
+.text-green {
+    color: #7EBB03 !important;
+}
+.plantNameSel {
+    min-width: 180px;
+}
+.actionTd {
+    min-width: 80px;
+}
+.formAddressList li {
+    padding: 15px;
+}
+.formAddressList li:hover {
+    color: #000;
+    background: #fff !important;
+}
+.formAddressList li {
+    padding-left: 40px;
+    position: relative;
+}
+.formAddressList li label,
+.formAddressList li h5 {
+    margin-bottom: 4px;
+}
+.formAddressList li img.arrowIc {
+    position: absolute;
+    left: 15px;
+    top: 22px;
+}
+.formAddressList li img.mapMarkerIc {
+    position: absolute;
+    right: 15px;
+    top: 22px;
+}
+.formAddressList {
+    min-height: 340px;
+}
+.formAddressList li.selected, .formAddressList li.selected:hover {
+   background-color: #F5F6FA;
+}
+.subChild > img {
+    float: left;
+}
+.subChild.grandChild {
+    padding-left: 20px;
+    margin: 4px 0;
+}
+.subChild {
+    margin: 4px 0;
+}
+.overdueBg td {
+    background-color: rgba(236, 201, 201, 0.5) !important;
+}
+.taskListTbl select.form-control {
+    max-width: 140px;
+}
+.taskListTbl .form-control {
+    max-width: 60px;
+}
+.tooltipSec {
+    position: relative;
+}
+.currentLocation {
+    padding: 2px 4px;
+    border-radius: 2px;
+}
+.currentLocation:hover {
+    background-color: #E8E8E8;
+}
+.customTooltip {
+    position: absolute;
+    top: -40px;
+    background-color: #707070;
+    color: #fff;
+    min-width: 160px;
+    padding: 4px 8px;
+    left: 0;
+    font-size: 16px;
+    border-radius: 4px;
+    opacity: 0;
+    visibility: hidden;
+}
+.currentLocation:hover .customTooltip {
+    opacity: 1;
+    visibility: visible;
+}
+.prodHighlight {
+    border: 2px solid #5287F5;
+    padding: 20px 10px;
+    border-radius: 8px;
+}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -53556,9 +53696,26 @@ ul.sub-menu {
     .page-header {
         font-size: 20px;
     }
+    .react-tabs__tab {
+        font-size: 14px;
+    }
+    .midControls > div a {
+        padding: 15px 15px;
+        display: block;
+    }
+    .midControls > div a:after {
+        display: none;
+    }
 }
 @media (min-width:561px) {
    
+}
+@media (max-width:991px) {
+    .descLbl {
+        margin-top: 0;
+        position: relative;
+        left: 0;
+    }
 }
 @media (min-width:990px) {
     .btn.btn-lg {
@@ -53566,21 +53723,67 @@ ul.sub-menu {
         min-width: 120px;
         padding: 4px 12px;
     }
-
+    #sidebar {
+        width: 60px;
+        overflow:hidden;
+        box-shadow: 2px 0px 8px rgb(0 0 0 / 5%);
+        -webkit-box-shadow: 2px 0px 8px rgb(0 0 0 / 5%);
+    }
+    #sidebar:hover {
+        width: 280px;
+        transition: all ease 0.5s;
+    }
+    #sidebar .nav li a span {
+        display: none;
+        width: 0;
+        line-height: 18px;
+    }
+    #sidebar .nav {
+        width: 280px;
+    }
+    #sidebar:hover .nav li a span {
+        display: none;
+        width: 100%;   
+    }
+    .content {
+        margin-left: 60px;
+    }
+    #sidebar:hover .nav li a span {
+        opacity: 1;
+        display: block;
+    }
+    
+    #sidebar li>a .caret {
+        left: 32px;
+        position: absolute;
+    }
+    #sidebar:hover li>a .caret {
+        left: unset;
+        position: unset;
+    }
+    
+    ul.sub-menu {
+        display: none ;
+    }
+    #sidebar:hover li.has-sub.expand .sub-menu {
+       display: block !important;
+    }
+    
+    .sidebar .nav>li:hover .sub-menu {
+        display: block;
+    }
+    .sidebar .nav>li:hover .sub-menu {
+        display: block;
+    }
    
 }
 
 @media (min-width:1200px) {
     .profImg {
-        height: 200px;
-        width: 200px;
-        border-radius: 100px;
-        overflow: hidden;
-        margin: 0 auto;
-        /* height: 160px;
+        height: 160px;
         width: 160px;
         border-radius: 80px;
         overflow: hidden;
-        margin: 0 auto; */
+        margin: 0 auto;
     }
 }

@@ -172,7 +172,7 @@ const handleMainSelection= (id) => {
                   handleSubSelection("inventory7")}}><Link to="/productsettings">Product Settings</Link></li>
                 <li class= {(selectedSubBar === "inventory8")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory8")}}><Link to="/comingsoon">Inventory Settings</Link></li>
+                  handleSubSelection("inventory8")}}><Link to="/InventorySettings">Inventory Settings</Link></li>
               </ul>
             </li>
             <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>

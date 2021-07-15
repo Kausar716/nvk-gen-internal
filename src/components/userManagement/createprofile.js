@@ -96,7 +96,7 @@ export class CreateUserProfile extends Component {
             }            
         }
         else if(name === "postiton"){
-            debugger;
+  
             if(errorObj.positionError>0){
                 errorObj.positionError=0
                 errorCount--
