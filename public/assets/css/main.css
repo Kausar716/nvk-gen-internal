@@ -53345,7 +53345,7 @@ ul.list-unstyled.searchAlpha li a:hover {
     color: grey;
 }
 .btnSignIn {
-    background-color: #7EBB03;
+    background-color: #348fe2;
     color: #fff;
     font-size:24px;
     font-weight: 400;
@@ -53572,10 +53572,15 @@ ul.sub-menu {
 
 @media (min-width:1200px) {
     .profImg {
-        height: 160px;
+        height: 200px;
+        width: 200px;
+        border-radius: 100px;
+        overflow: hidden;
+        margin: 0 auto;
+        /* height: 160px;
         width: 160px;
         border-radius: 80px;
         overflow: hidden;
-        margin: 0 auto;
+        margin: 0 auto; */
     }
 }

@@ -1,8 +1,10 @@
-<svg id="Drag_Drag_to_place" data-name="Drag Drag to place" xmlns="http://www.w3.org/2000/svg" width="76" height="73" viewBox="0 0 76 73">
-  <g id="move" transform="translate(15)">
-    <g id="Group_76" data-name="Group 76">
-      <path id="Path_64" data-name="Path 64" d="M45.112,21.806l-7.442-7a1.313,1.313,0,0,0-2.213.956v3.064H26.7V10.068h3.064a1.313,1.313,0,0,0,.956-2.213l-7-7.442a1.313,1.313,0,0,0-1.913,0l-7,7.442a1.313,1.313,0,0,0,.956,2.213h3.064v8.755H10.068V15.759A1.313,1.313,0,0,0,7.855,14.8l-7.442,7a1.313,1.313,0,0,0,0,1.913l7.442,7a1.313,1.313,0,0,0,2.213-.956V26.7h8.755v8.755H15.759A1.313,1.313,0,0,0,14.8,37.67l7,7.442a1.313,1.313,0,0,0,1.913,0l7-7.442a1.313,1.313,0,0,0-.956-2.213H26.7V26.7h8.755v3.064a1.313,1.313,0,0,0,2.213.956l7.442-7a1.313,1.313,0,0,0,0-1.913Z" fill="#b4b4b4"/>
+<svg xmlns="http://www.w3.org/2000/svg" width="104" height="100.558" viewBox="0 0 104 100.558">
+  <g id="DragDragto_place" transform="translate(1)">
+    <g id="move" transform="translate(20.951)">
+      <g id="Group_76" data-name="Group 76">
+        <path id="Path_64" data-name="Path 64" d="M62.861,30.386l-10.369-9.76a1.83,1.83,0,0,0-3.084,1.333v4.27h-12.2v-12.2h4.27a1.83,1.83,0,0,0,1.333-3.084L33.051.576a1.83,1.83,0,0,0-2.665,0l-9.76,10.37a1.83,1.83,0,0,0,1.333,3.084h4.27v12.2h-12.2v-4.27a1.83,1.83,0,0,0-3.084-1.333L.576,30.386a1.83,1.83,0,0,0,0,2.665l10.369,9.76a1.83,1.83,0,0,0,3.084-1.333v-4.27h12.2v12.2h-4.27a1.83,1.83,0,0,0-1.333,3.084l9.76,10.369a1.83,1.83,0,0,0,2.665,0l9.76-10.369a1.83,1.83,0,0,0-1.333-3.084h-4.27v-12.2h12.2v4.27a1.83,1.83,0,0,0,3.084,1.333l10.369-9.76a1.83,1.83,0,0,0,0-2.665Z" fill="#b4b4b4"/>
+      </g>
     </g>
+    <text id="Drag_to_Sort" data-name="Drag to Sort" transform="translate(51 95.558)" font-size="19" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="-51.461" y="0">Drag to Sort</tspan></text>
   </g>
-  <text id="Drag_to_Sort" data-name="Drag to Sort" transform="translate(38 69)" fill="#4e4e4e" font-size="14" font-family="Roboto-Bold, Roboto" font-weight="700"><tspan x="-37.919" y="0">Drag to Sort</tspan></text>
 </svg>

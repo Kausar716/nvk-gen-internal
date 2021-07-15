@@ -176,7 +176,8 @@ const SignInPage = (props) => {
                                 </div>
                                 <div class="form-group row mb-0">
                                     <div class="col-md-12 text-center">
-                                    <label class="textGrey">Don't have an account yet?</label> <Link to="/registerNewUser" >Request Now</Link>
+                                    <label class="textGrey">Contact your administrator for account inquiries.</label> 
+                                    {/* <Link to="/registerNewUser" >Request Now</Link> */}
                                     </div>
                                 </div>
                             </form>

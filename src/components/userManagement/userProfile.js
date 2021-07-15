@@ -191,9 +191,15 @@ export class UserProfile extends Component {
  
      }
      handlImageUpload = (e) => {
+         debugger;
         console.log(e)
         console.log(e.target.files[0])
         let imageData = e.target.files[0]
+
+        // if(e.target.files[0] !==e.target.files[0]){
+        //     imageData=e.target.files[0] 
+        // }
+        
        let data =  this.props.uploadImage(imageData,JSON.stringify(this.props.selectedUser.id))
        data.then(res=>{
            console.log(res)
@@ -214,6 +220,9 @@ export class UserProfile extends Component {
         
        })
         // this.setState({log:e.target.files[0]})
+        // if(e.target.files.length !== 0){
+        //     this.setState({logo: URL.createObjectURL(e.target.files[0])})
+        //   }
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
     }
@@ -306,7 +315,7 @@ export class UserProfile extends Component {
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
-   
+        let noImageURL="assets/img/noImage.png";
      
     return (
         <>
@@ -352,17 +361,19 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-4 py-4">
                                                 <div class="profImg">
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" />
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt="" />
+                                                    {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
-                                                <p><small>Image should print quality PNF or JPG</small></p>
+
+                                                <p><small>Image should print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
-                                                    <input  type="file"  id="imageid"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
+                                                    <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg" alt=""/>
                                                 </a>
-                                                <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
+                                                <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                                     <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
                                                         <span class="f-s-20 text-danger">Remove</span>
                                                     </span>
@@ -392,7 +403,7 @@ export class UserProfile extends Component {
                                                     <label>Position<span class="text-danger">*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}  >
                                                     {roles?roles.map(userObj=>{
-                                                            console.log(userObj)
+                                                            //console.log(userObj)
                                                             return  <option value={userObj.id}>{userObj.name}</option>
                                                         }):null}   
                                                     </select>

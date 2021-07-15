@@ -37,15 +37,26 @@ export class OrganizationSettings extends React.Component {
             imagePreviewURL:"assets/img/noImage.png"
         }
     }
-    handlImageUpload = (e)=>{
+    handlImageUpload = (e1)=>{
+        const reader = new FileReader();
+        reader.onload=()=>{
+            if(reader.readyState===2){
+            this.setState({
+                imagePreviewURL:reader.result
+            })
+        }
+        }
+        reader.readAsDataURL(e1.target.files[0])
+        // alert(1)
+        // debugger;
         // this.setState({logo:e.target.files[0]})
-        console.log(e.target.files[0])
-        let imageData = e.target.files[0]
+        console.log(e1.target.files[0])
+        let imageData = e1.target.files[0]
         let id="2"
         let data =  this.props.uploadImage(imageData,id)
         data.then(res=>{
             console.log(res)
-            console.log(this.props.organizationData.organizationData.payload.logo)
+           // console.log(this.props.organizationData.organizationData.payload.logo)
         })
     }
 
@@ -184,7 +195,7 @@ export class OrganizationSettings extends React.Component {
             else{
               // debugger
                url="assets/img/noImage.png";
-               // url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+                //url="https://zvky.flamingotech.ml/"+organizationDataById.logo
                
             }
         }
@@ -195,7 +206,7 @@ export class OrganizationSettings extends React.Component {
                 console.log(url)
             }
             else{
-                debugger
+                //debugger
                 url="https://zvky.flamingotech.ml/"+organizationDataById.logo
                 
             }
@@ -222,6 +233,7 @@ export class OrganizationSettings extends React.Component {
                         <div class="ContentSection p-15">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
+                               
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of lading, etc.</p>
                                     </div>
@@ -229,16 +241,19 @@ export class OrganizationSettings extends React.Component {
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 col-lg-3">
+                                <label>Logo</label>
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
-                                        <div class="logCircle mb-3">
+                                        <div class="logCircle mb-3" key={new Date().getTime()}>
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
                                             <img 
                                               src={url}
+                                              id="imageid"
+                                            //   src={this.state.imagePreviewURL}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"100px",width:"100px"}}/>
-                                            
+                                            style={{height:"200px",width:"200px"}}/>
                                         </div>
+                                        <p><small>Image should print quality PNG or JPG</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
@@ -246,7 +261,7 @@ export class OrganizationSettings extends React.Component {
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
-                                        <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3">
+                                        <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                             <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>

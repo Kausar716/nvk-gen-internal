@@ -92,9 +92,10 @@ const initialSatate = {
             }
         }
         case HANDLE_USER_ACCESS_INPUT_DATA:{
+           // debugger;
             let permissionArray = state.currentPermission
             let currentPermissionNames = state.currentPermissionNames
-            console.log(action.permissionName)
+            console.log("ABCD5",currentPermissionNames)
             console.log(state.permissionListBackup)
             // console.log(action.permissionName === "quotesAll" && action.cheked)
             if(action.permissionName === "quotesAll"){
@@ -190,6 +191,30 @@ const initialSatate = {
 
                 
             }
+            else
+            if(action.permissionName === "purchaseOrders"){
+                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="purchaseOrders")
+                console.log(quotesArray)
+                quotesArray.map(premission=>{
+                    if(permissionArray.length>0){
+                    if(!permissionArray.includes(premission.id)){
+                        permissionArray.push(premission.id)
+                        currentPermissionNames.push(premission.name)
+                    }
+                }
+                else  {
+                    permissionArray.push(premission.id)
+                    currentPermissionNames.push(premission.name)
+                }
+                })
+                console.log(currentPermissionNames)
+                console.log(permissionArray)
+
+                
+            }
+
+
+
             else 
             if(action.permissionName === "additionalPermissionYes"){
                 let quotesIndex = currentPermissionNames.indexOf("additionalPermissionNo")

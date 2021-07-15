@@ -3,7 +3,10 @@
 import React,  { useEffect,useState } from 'react';
 import {connect} from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import './style.css'
+import ReactTagInput from "@pathofdev/react-tag-input";
+
+import "@pathofdev/react-tag-input/build/index.css";
+import './style.css';
 import {
     //product actions
     createProductAction ,
@@ -88,24 +91,24 @@ const GeneralSettings=(props)=> {
         setCount([...newTagArray]);
       };
     
-    const childAdd = (e) =>{
-        let commonArray = tagsData
-        if(commonArray.length === 0){
-         commonArray[count] =e.target.value
-         var elem = document.getElementById(count);
-         elem.parentNode.removeChild(elem);
-         setCount(count+1)
-         setToggle(true)
+    // const childAdd = (e) =>{
+    //     let commonArray = tagsData
+    //     if(commonArray.length === 0){
+    //      commonArray[count] =e.target.value
+    //      var elem = document.getElementById(count);
+    //      elem.parentNode.removeChild(elem);
+    //      setCount(count+1)
+    //      setToggle(true)
  
-        }else{
-         commonArray[commonArray.length] =e.target.value
-         var elem = document.getElementById(count);
-         elem.parentNode.removeChild(elem);
-         setCount(count+1)
-            setToggle(true)
-        }
+    //     }else{
+    //      commonArray[commonArray.length] =e.target.value
+    //      var elem = document.getElementById(count);
+    //      elem.parentNode.removeChild(elem);
+    //      setCount(count+1)
+    //         setToggle(true)
+    //     }
        
-     }
+    //  }
 
 
      const submitAction = (e) =>{
@@ -128,18 +131,18 @@ const GeneralSettings=(props)=> {
         }
           
      }
-     const addTag = (e) =>{
-         //alert("acadcda")
-         if(e.target.id==="tags" && toggleForTagInput){
-             var inputTag = document.createElement('input');
-             inputTag.id = count
-             inputTag.className= "input_tag_edit"
-             inputTag.placeholder = "Add tag"
-             inputTag.onchange = childAdd
-             document.getElementById("tags").appendChild(inputTag);  
-             setToggle(false)       
-         }
-     }
+    //  const addTag = (e) =>{
+    //      //alert("acadcda")
+    //      if(e.target.id==="tags" && toggleForTagInput){
+    //          var inputTag = document.createElement('input');
+    //          inputTag.id = count
+    //          inputTag.className= "input_tag_edit"
+    //          inputTag.placeholder = "Add tag"
+    //          inputTag.onchange = childAdd
+    //          document.getElementById("tags").appendChild(inputTag);  
+    //          setToggle(false)       
+    //      }
+    //  }
 
 //      const goToParentPage=()=>{
 //         history.push("/productManager")
@@ -188,7 +191,7 @@ console.log(actionType)
 
                                         </div> */}
 
-                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
+                                        {/* <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
                                         border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
                                             {tagsData.map((tagData, index)=>{
                                             return (<a className="subtag" key={index}>
@@ -200,7 +203,15 @@ console.log(actionType)
                                                                     
                                                               <p>{tagData}  &nbsp;&nbsp;&nbsp;x </p> </button></a>)
                                             }) }
-                                        </div>
+                                        </div> */}
+
+
+
+
+                                        <ReactTagInput 
+                                                    tags={tags} 
+                                                    onChange={(tagsData) => setTags(tagsData)}
+                                                    />
 
                                 {/* <div className="masterStackDiv">
                                             <div
