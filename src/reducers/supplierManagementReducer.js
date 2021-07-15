@@ -51,7 +51,9 @@ import {
  FILTER_SUPPLIER_BY_SEARCH,
 FILTER_SUPPLIER_BY_ALPHA,
 ADD_FINANCES_SUPPLIER_DATA,
-HANDLE_SUPPLIER_INPUT_EXCHANGE
+HANDLE_SUPPLIER_INPUT_EXCHANGE,
+ADD_SUPPLIER_ACCOUNTS,
+GET_SUPPLIER_ACCOUNTS,
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
 
@@ -93,6 +95,17 @@ const defaultState={
 const supplierManagementReducer =(state=defaultState, action)=>{
     console.log(action.payload)
         switch(action.type){
+
+            case ADD_SUPPLIER_ACCOUNTS:
+                return{
+                    ...state,
+                    
+
+                }
+            case GET_SUPPLIER_ACCOUNTS:
+                return{
+                    ...state
+                }
             // switch(action.type){
       
 

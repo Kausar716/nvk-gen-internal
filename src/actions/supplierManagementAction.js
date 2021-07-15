@@ -90,6 +90,8 @@ import {
 
     DELETE_SUPPLIER_ERROR,
     DELETE_SUPPLIER_SUCCESS,
+    ADD_SUPPLIER_ACCOUNTS,
+    GET_SUPPLIER_ACCOUNTS,
 
 
 
@@ -101,7 +103,28 @@ import {
 
 //CREATE
 
+export const saveReturnReasonMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-customer-reason",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_SUPPLIER_ACCOUNTS,
+                payload:res.data   
+            })
+        })  
 
+}
+ export const getAllReturnReasonMethods = () =>dispatch => {
+    return axios.get("/api/customer-reason-list",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_ACCOUNTS,
+            payload:res.data,
+
+        })
+    })
+
+ }
 
 export const handleSupplierExchnageData =(data,id)=>dispatch=>{
     dispatch({

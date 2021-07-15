@@ -17,7 +17,17 @@ import {
     ADD_PRINT_DATA,
     ADD_CUSTOMER_TYPE,
     GET_ALL_CUSTOMER_TYPES,
-    HANDLE_DRAG_CUSTOMER_CATEGORY
+    HANDLE_DRAG_CUSTOMER_CATEGORY,
+    GET_CUSTOMER_DELIVERY_LIST,
+    ADD_CUSTOMER_DELIVERY,
+    GET_CUSTOMER_STATUS,
+    ADD_CUSTOMER_STATUS,
+    ADD_CUSTOMER_REASON,
+    GET_CUSTOMER_REASON,
+    GET_CUSTOMER_TERMS,
+    ADD_CUSTOMER_TERMS,
+    ADD_CUSTOMER_RETURN_REASON,
+    GET_CUSTOMER_RETURN_REASON,
 
     
     // ADD_CUSTOMER, 
@@ -66,16 +76,93 @@ const initialSatate = {
     customer_type:"",
     short_code:""
    },
-   customerdelivery:{delivery_method:""},
-   customerTypeList:{active:[],inactive:[]}
+
+   customerDelivery:{delivery_method:""},
+   customerDeliveryList:{active:[],inactive:[]},
+   customerTypeList:{active:[],inactive:[]},
+   customerStatus:{status_level:""},
+   customerStatusList:{active:[],inactive:[]},
+   customerReason:{reason:""},
+   customerReasonList:{active:[],inactive:[]},
+   customerTerm : {term:""},
+   customerTermList:{active:[],inactive:[]},
+   customerReturnReason:{reason: "",return_to_inventory: 2},
+   customerReturnReasonList:{active:[],inactive:[]}
+
+
   }
 
  const customerReducer = (state = initialSatate, action)=>{
-    console.log(action)
+    console.log(action.payload)
     console.log(state)
     // alert(action.type)x
     
     switch(action.type){
+        case ADD_CUSTOMER_RETURN_REASON:
+            return{
+                ...state,
+                customerReturnReason:{reason: "",return_to_inventory:"2"}
+                
+            }
+        case GET_CUSTOMER_RETURN_REASON:
+            return{
+                ...state,
+                customerReturnReasonList:action.payload.data
+
+            }
+        case  GET_CUSTOMER_TERMS:
+            return{
+                ...state,
+                customerTermList:action.payload.data
+
+
+            }
+       
+
+        case ADD_CUSTOMER_TERMS:
+            return{
+                ...state,
+                customerTerm : {term:""},
+
+
+            }
+        case GET_CUSTOMER_REASON:
+            return{
+                ...state,
+                customerReasonList:action.payload.data
+
+            }
+        case ADD_CUSTOMER_REASON:
+            return{
+                ...state,
+                customerReason:{reason:""}
+
+            }
+        case ADD_CUSTOMER_STATUS:
+            return{
+                ...state,
+                customerStatus:{status_level:""},
+
+            }
+        case GET_CUSTOMER_STATUS:
+            return{
+                ...state,
+                customerStatusList:action.payload.data
+
+
+            }
+        case ADD_CUSTOMER_DELIVERY:
+            return{
+                ...state,
+                customerDelivery:{delivery_method:""}
+
+            }
+        case GET_CUSTOMER_DELIVERY_LIST:
+        return{
+            ...state,
+            customerDeliveryList:action.payload.data
+
+        }
         case HANDLE_DRAG_CUSTOMER_CATEGORY:
             return{
                 ...state
@@ -132,9 +219,9 @@ const initialSatate = {
             case GET_EMAIL_NOTIFICATION:
             return{
                 ...state,
-                first_notice:action.payload.data.active[0].first_notice,
-                second_notice:action.payload.data.active[0].second_notice,
-                quote_set_to_inactive:action.payload.data.active[0].quote_set_to_inactive
+                first_notice:action.payload.data.first_notice,
+                second_notice:action.payload.data.second_notice,
+                quote_set_to_inactive:action.payload.data.quote_set_to_inactive
                
 
             }
