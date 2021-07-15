@@ -306,15 +306,12 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
+
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <input type="date" onChange={handleChange1} style={{padding:"0px",height:"2.5em"}} 
+                                                    <input type="date" onChange={handleChange1} className="dateDesign"  
                                                     value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>
-                                                    {/* <div>
-                                                        <DatePicker onChange={handleChange1} value={value} 
-                                                        min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} 
-                                                        value={skuDataById.sale_expiry_date}/>
-                                                    </div> */}
+                                                   
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
                                                         Active
                                                         <div class="switcher switcher-sm ml-2 pr-2">

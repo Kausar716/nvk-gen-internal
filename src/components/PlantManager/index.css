@@ -66,9 +66,28 @@
 }
 
 .dateDesign {
-  height: 2.5em;
+  /* height: 2.5em;
   padding-right: 17px;
   padding-left: 0.5em;
   width: 11em;
+  margin-right: 0em; */
+  height: 2.5em;
+  padding-right: 21px;
+  padding-left: 1em;
+  width: 11em;
   margin-right: 0em;
+}
+
+.centerItem {
+  text-align: center;
+
+  /* margin: auto;
+  width: 60%;
+  display: flex;
+  padding: 10px; */
+  /* position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  border: 5px solid #ffff00;
+  padding: 10px; */
 }

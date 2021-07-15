@@ -1,6 +1,8 @@
 
 import React,  { Component,useEffect,useState,Link } from 'react';
 import {connect} from "react-redux";
+import ReactTagInput from "@pathofdev/react-tag-input";
+import "@pathofdev/react-tag-input/build/index.css";
 
 import {
     //plant actions
@@ -28,6 +30,7 @@ import {
  const GeneralSettings = (props) =>{
     const [submitCount, setSubmitCount] = useState(0)
     const [count, setCount] = useState(0)
+    const [tags, setTags] = useState(["Areca", "Fern"]);
     const [toggleForTagInput,setToggle] = useState(true)
     const [errorObj,setErrorObj] = useState({ genus:0,species:0  })
     const [errorCount,setErrorCount] = useState(0)
@@ -208,7 +211,7 @@ import {
 
                                     <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                         <label>Common Name(s)</label>
-                                        <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
+                                        {/* <div id="tags" style={{height:"2.45em",marginLeft:"-3px",marginTop:"0.5px",padding:"6px 0",
                                         border:"2px solid #cccccc",borderRadius:"5px"}} onClick={addTag}>
                                             {tagsData.map((tagData, index)=>{
                                             return (<a className="subtag" key={index}>
@@ -220,7 +223,15 @@ import {
                                                                     
                                                               <p>{tagData}  &nbsp;&nbsp;&nbsp;x </p> </button></a>)
                                             }) }
-                                        </div>
+                                        </div> */}
+
+
+
+
+                                        <ReactTagInput 
+                                                    tags={tags} 
+                                                    onChange={(tagsData) => setTags(tagsData)}
+                                                    />
                                     </div>
 
                                     

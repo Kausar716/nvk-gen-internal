@@ -194,8 +194,10 @@ const PlantTable=(props)=> {
 
                                         </tbody>
                                     </table>
-                                    <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>{plantData.length===0?"Plant Found loading ":""} <Loader /></p>
-
+                                    <div className="centerItem">
+                                    <p >{plantData.length===0?"Plant Data loading ":""} <Loader /></p>
+                                    </div>
+                                   
                                 </div>
                             </div>
         </div>

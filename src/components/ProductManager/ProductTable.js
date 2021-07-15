@@ -254,9 +254,13 @@ const ProductTable  = (props) => {
                                             
                                         </tbody>
                                     </table>
-                                    <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>
-                                   
-                                        {productData.length===0?"Product data loading ... " :""}  <Loader /></p>
+
+                                    <div className="centerItem">
+                                    <p > {productData.length===0?"Product data loading ... " :""}  <Loader /></p>
+                                    </div>
+
+                                    {/* <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>
+                                        {productData.length===0?"Product data loading ... " :""}  <Loader /></p> */}
                                 </div>
                             </div>
         </>
