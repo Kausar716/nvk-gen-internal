@@ -38,8 +38,17 @@ export class OrganizationSettings extends React.Component {
         }
     }
     handlImageUpload = (e1)=>{
-        alert(1)
-        debugger;
+        const reader = new FileReader();
+        reader.onload=()=>{
+            if(reader.readyState===2){
+            this.setState({
+                imagePreviewURL:reader.result
+            })
+        }
+        }
+        reader.readAsDataURL(e1.target.files[0])
+        // alert(1)
+        // debugger;
         // this.setState({logo:e.target.files[0]})
         console.log(e1.target.files[0])
         let imageData = e1.target.files[0]
@@ -234,10 +243,12 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-4 col-lg-3">
                                 <label>Logo</label>
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
-                                        <div class="logCircle mb-3">
+                                        <div class="logCircle mb-3" key={new Date().getTime()}>
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
                                             <img 
                                               src={url}
+                                              id="imageid"
+                                            //   src={this.state.imagePreviewURL}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
                                             style={{height:"200px",width:"200px"}}/>
