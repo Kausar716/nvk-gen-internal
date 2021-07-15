@@ -6,12 +6,12 @@ import {
     DELETE_PLANT_ACTION,
     GET_ALL_PLANT_ACTION,
     GET_SPECIFIED_PLANT_ACTION,
-    //DUPLICTE_PLANT,
+    DUPLICTE_PLANT,
 
     // Plant SKU ACTION
     CREATE_PLANT_SKU_ACTION,
     UPDATE_PLANT_SKU_ACTION,
-    //DELETE_PLANT_SKU_ACTION,
+    DELETE_PLANT_SKU_ACTION,
     GET_ALL_PLANT_SKU_ACTION,
 
     GET_PLANT_SPECIFIED_SKU_ACTION,
@@ -195,8 +195,46 @@ export const deletePlantAction = (id) => dispatch => {
 
 
 }
+export const deleteSkuAction = (id) => dispatch => {
+    let error = []
+    console.log(id)
+    axios.post(`/api/delete-sku/${id}?type=plant`,null,config).then(res=>{ 
+        console.log(res)       
+        dispatch({
+            type:DELETE_PLANT_SKU_ACTION
+        })
+        error.push("Plant SKU deleted successfully",)
+        dispatch({
+                        type:ERROR_HANDLE,
+                        message:error,
+                        status:true
+                    })
+                    dispatch(showSpecifiedPlantSkuAction(JSON.stringify(res.data.data.plant_id)))
+                    // dispatch(getAllPlantAction())
+                    // dispatch(getAllPlantSkuAction())
+        })
+
+
+}
 export const duplicatePlant = (id) =>dispatch=>{
-    dispatch(getSpecifiedPlantAction(id, "add"))
+    let error = []
+    console.log(id)
+    axios.get(`/api/duplicate-plant/${id}`,config).then(res=>{ 
+        console.log(res)
+        dispatch(getAllPlantAction())
+        dispatch(getAllPlantSkuAction())
+        // dispatch(showSinglePlantSkuAction(res.data.data.product_id))
+        dispatch({
+            type:DUPLICTE_PLANT
+        })
+        error.push("Plant duplicated successfully  successfully",)
+        dispatch({
+                        type:ERROR_HANDLE,
+                        message:error,
+                        status:true
+                    })
+        }).catch(err=>{
+        })
 
 }
 export const getAllPlantAction = () => dispatch => {
@@ -255,14 +293,14 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
     delete copyData.product_id
     delete copyData.plant_id
    
-    delete copyData.discontinued
-    delete copyData.sku_code
+    // delete copyData.discontinued
+    // delete copyData.sku_code
     delete copyData.subcategory
     delete copyData.subcategory_id
-    delete copyData.volume_price_per_unit
-    delete copyData.volume_quantity
-    delete copyData.archived
-    delete copyData.sale_expiry_date
+    // delete copyData.volume_price_per_unit
+    // delete copyData.volume_quantity
+    // delete copyData.archived
+    // delete copyData.sale_expiry_date
     // copyData.attributes_subattributes=[
     //     {
     //         "attribute_id":1,
@@ -303,9 +341,10 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
                 message:error,
                 status:true
             })
+            // dispatch(plantPageReDirectAction(actionType = "all"))
             }).catch(error1=>{
                 console.log(error1)
-                error.push("Please add Plant firsteksdjfnvdz")
+                error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,
                     message:error,
@@ -330,8 +369,13 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     // if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
     // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
+    console.log(data)
+    delete data.sub_category_id 
+    delete data.sku_item_name 
+  
     if(error.length===0){
         delete data["id"]
+        data.type = "plant"
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             console.log(res)
             // dispatch(getAllProductAction())
@@ -340,7 +384,8 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
             // dispatch(pageReDirectAction("sku",actionType))
             dispatch(getAllPlantSkuAction(id))
             dispatch({
-                type:UPDATE_PLANT_SKU_ACTION
+                type:UPDATE_PLANT_SKU_ACTION,
+                actionType:actionType
             })
             error.push("SKU updated successfully")
             dispatch({
@@ -386,30 +431,32 @@ export const getAllPlantSkuAction = (id) => dispatch => {
 
 }
 export const showSpecifiedPlantSkuAction = (id) => dispatch => {
+    console.log(id)
     axios.get(`/api/skus/plants/${id}`,config).then(res=>{ 
         console.log(res.data)
         dispatch({
                 type:GET_PLANT_SPECIFIED_SKU_ACTION,
-                payload:res.data
-    
+                payload:res.data    
             })
         })
 }
 
 export const showSinglePlantSkuAction = (id,data, actionType="edit") => dispatch => {
   
+console.log(id)
 
      axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{ 
+         console.log(res)
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
 
       
-        console.log("showSpecifiedSkuAction",res.data.data[0])
-        debugger;
+        console.log("showSpecifiedSkuAction",res.data.data)
+     
         dispatch({
                 type:GET_SINGLE_PLANT_SKU,
-                payload:res.data.data[0],
-                plantSkuDataById:res.data.data[0]
-                //actionType:actionType
+                payload:res.data.data,
+                plantSkuDataById:res.data.data,
+                actionType:actionType
     
             })
         })

@@ -254,7 +254,6 @@ console.log(actionType)
                                         <label>Category <span class="text-danger">*</span></label>
                                         <select class="form-control" id="category_id" onChange={handleInput}>
                                         <option value="0" selected>Select...</option>
-                                            <option>Option 1</option>
                                             {categoryData.map(category=>{
                                                 return (<option value={category.id} selected={category.id===productDataById.category_id?"selected":""}>{category.name}</option>)
 
