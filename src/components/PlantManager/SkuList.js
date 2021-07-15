@@ -156,12 +156,14 @@ const SkuList = (props)=>{
     }
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+        props.plantPageReDirectAction("all","plant")
 
     }
     }
     else if(e.target.id === "retain"){
         if(actionType ==="add" || actionType === "edit"){
             props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
+             
         }
         else if(actionType ==="sku"){ 
             props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
@@ -352,7 +354,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-12 text-md-right">
                                             <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU":"Update SKU"}</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={needAction===true?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU &amp; Retain":"Update SKU &amp; Retain"}</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={needAction===true?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
                                         </div>
                                     </div>
                                 </form>

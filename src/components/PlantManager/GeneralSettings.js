@@ -33,9 +33,6 @@ import {
     const [errorCount,setErrorCount] = useState(0)
  
     const handleInput =(e)=>{
-        console.log(e.target.value)
-        console.log(e.target.id)
- 
         setSubmitCount(0)
         let errorcount =errorCount
         let errorobj =errorObj
@@ -49,8 +46,8 @@ import {
         }
         setErrorObj(errorobj)
        setErrorCount(errorcount)
-        if(e.target.id ==="archived") props.handlePlantInputAction(e.target.id,e.target.value ===1?0:1)
-        else if(e.target.id ==="discontinued") props.handlePlantInputAction(e.target.id,e.target.value ===1?0:1)
+        if(e.target.id ==="archived") props.handlePlantInputAction(e.target.id,parseInt(e.target.value) ===1?0:1)
+        else if(e.target.id ==="discontinued") props.handlePlantInputAction(e.target.id,parseInt(e.target.value) ===1?0:1)
         else props.handlePlantInputAction(e.target.id,e.target.value)
 
     }
@@ -152,30 +149,29 @@ import {
             <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"0.5em",paddingRight:"1em"}}>
                             <form>
                                 <div class="row">
-                                    <div class="col-md-12 d-md-flex flex-wrap align-items-center">
-                                  
+                                {actionType!=="add"?<div class="col-md-12 d-md-flex flex-wrap align-items-center">
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
-                                                <label for="switcher_checkbox_2"></label>
+                                                <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={plantDataById.in_production===0?false:true}/>
+                                                <label for="in_production"></label>
                                             </div>
                                             In Production
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox"id="discontinued" onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
-                                                <label for="switcher_checkbox_2"></label>
+                                                <input type="checkbox" id="discontinued"  onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
+                                                <label for="discontinued"></label>
                                             </div>
                                             Discountiued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="archived"  onChange={handleInput} value={plantDataById.archived} checked={plantDataById.archived===0?false:true}/>
-                                                <label for="switcher_checkbox_2"></label>
+                                                <label for="archived"></label>
                                             </div>
                                             Archive
                                         </div>
-                                    </div>
+                                    </div>:""}
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
@@ -306,7 +302,7 @@ import {
 }
 
 
-const mapStateToProps = (state)=> ({
+const mapStateToProps = (state)=> ({ 
     plantData:state.plantData,
     categoryData: state.categoryData
 
