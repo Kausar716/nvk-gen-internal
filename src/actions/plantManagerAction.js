@@ -335,7 +335,7 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             dispatch({
                 type:CREATE_PLANT_SKU_ACTION
             })
-            error.push("SKU updated successfully")
+            error.push("SKU created successfully")
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
@@ -372,14 +372,14 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     console.log(data)
     delete data.sub_category_id 
     delete data.sku_item_name 
-  
+    
     if(error.length===0){
-        delete data["id"]
+        // delete data["id"]
         data.type = "plant"
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             console.log(res)
             // dispatch(getAllProductAction())
-            dispatch(showSpecifiedPlantSkuAction(id))
+            
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
             // dispatch(pageReDirectAction("sku",actionType))
             dispatch(getAllPlantSkuAction(id))
@@ -388,6 +388,8 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
                 actionType:actionType
             })
             error.push("SKU updated successfully")
+            
+            dispatch(showSpecifiedPlantSkuAction(res.data.data.plant_id))
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
@@ -528,7 +530,7 @@ export const handlePlantInputAction = (id, value) =>dispatch=>{
 }
 export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
 
-    dispatch({
+    dispatch({ 
         type:HANDLE_PLANT_SKU_INPUT_DATA,
         itemId:id,
         itemValue:value

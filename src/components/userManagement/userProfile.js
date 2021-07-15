@@ -191,7 +191,6 @@ export class UserProfile extends Component {
  
      }
      handlImageUpload = (e) => {
-         debugger;
         console.log(e)
         console.log(e.target.files[0])
         let imageData = e.target.files[0]

@@ -147,15 +147,28 @@ const SkuList = (props)=>{
       props.showSinglePlantSkuAction(skudata.id,"edit","sku")
    
    }
-   const submitAction = () => {
-       alert(actionType)
+   const submitAction = (e) => {
+       console.log(props.plantData)
+    if(e.target.id === "dontRetain"){
     if(actionType ==="add" || actionType === "edit"){
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
     props.plantPageReDirectAction("all","plant")
     }
     else if(actionType ==="sku"){ 
-        props.updatePlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
+        props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+        props.plantPageReDirectAction("all","plant")
 
+    }
+    }
+    else if(e.target.id === "retain"){
+        if(actionType ==="add" || actionType === "edit"){
+            props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
+             
+        }
+        else if(actionType ==="sku"){ 
+            props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+        }
+       
     }
    }
 
@@ -176,6 +189,32 @@ const SkuList = (props)=>{
         console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
         console.log(props.plantData)
         console.log(props.plantData.plantSkuDataList)
+        let selectedForm =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
+            if(attributeObj.attribute_id === 1){
+               return attributeObj.subattribute_id
+           }
+       })[0]
+       let selectedCaliper =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
+        if(attributeObj.attribute_id === 5){
+           return attributeObj.subattribute_id
+       }
+       })[0] 
+        let selectedHeight =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
+        if(attributeObj.attribute_id === 4){
+        return attributeObj.subattribute_id
+        }
+        })[0]  
+        let selectedPackaging =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
+            if(attributeObj.attribute_id === 3){
+            return attributeObj.subattribute_id
+        }
+        })[0]
+        let selectedVolumeQuality =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
+        if(attributeObj.attribute_id === 6){
+        return attributeObj.subattribute_id
+        }
+        })[0]
+       console.log(selectedForm)
 
         return(
         <div>
@@ -201,7 +240,8 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Form</label>
-                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.id ==1)[0]["id"]:"form"} onChange={handleInput}>
+                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.id ==1)[0]["id"]:"form"} onChange={handleInput} 
+                                            value={selectedForm?selectedForm.subattribute_id:""}>
                                                  <option>None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -213,7 +253,8 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Caliper</label>
-                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}>
+                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}
+                                            value={selectedCaliper?selectedCaliper.subattribute_id:""}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -225,7 +266,8 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Height</label>
-                                            <select class="form-control" id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}>
+                                            <select class="form-control" id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}
+                                            value={selectedHeight?selectedHeight.subattribute_id:""}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -237,7 +279,8 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Packaging <span class="text-danger">*</span></label>
-                                            <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}>
+                                            <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}
+                                            value={selectedPackaging?selectedPackaging.subattribute_id:""}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -287,7 +330,8 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality <span class="text-danger">*</span></label>
-                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} >
+                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} 
+                                            value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -308,9 +352,9 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true}  onClick={submitAction}
-                                                 >{actionType==="sku"?"Add SKU":"Update SKU"}</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" disabled={needAction===true?false:true} onClick={()=>{props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)}}>Add SKU &amp; Retain</button>
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true} id="dontRetain" onClick={submitAction}
+                                                 >{(actionType ==="add" || actionType === "edit")?"Add SKU":"Update SKU"}</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={needAction===true?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
                                         </div>
                                     </div>
                                 </form>

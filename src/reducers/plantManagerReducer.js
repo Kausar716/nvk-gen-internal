@@ -67,7 +67,7 @@ const initialSatate = {
     hardiness_zone: "",
     royality: "",
     patent: "",
-    category_id: 3,
+    category_id: "",
     in_production: "",
     archived: 0,
     discontinued: 0,
@@ -123,7 +123,7 @@ export default function(state = initialSatate, action){
                     hardiness_zone: "",
                     royality: "",
                     patent: "",
-                    category_id: 3,
+                    category_id: "",
                     in_production: "",
                     archived: 0,
                     discontinued: 0,
@@ -229,14 +229,28 @@ export default function(state = initialSatate, action){
                 }
             }
             if(!isNaN(action.itemId)){
-
                 let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
-                let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
-                filteredAttribute.push(attibuteData)
+                let attributeUpdated = false
+                // let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
+                // filteredAttribute.push(attibuteData)
+                if(attributeValue.length>0){
+                    attributeValue.map(attributeObj=>{
+                        if(attributeObj.attribute_id === parseInt(action.itemId) ){
+                            attributeObj.subattribute_id = parseInt(action.itemValue)
+                            attributeUpdated = true
+                        }
+                    })
+                     if(!attributeUpdated ){
+                        attributeValue.push(attibuteData)
+                    }
+                }
+                else {
+                    attributeValue.push(attibuteData)
+                }                
                 return{
                     ...state,
-                    plantSkuDataById:{...state.plantSkuDataById,attributes_subattributes:filteredAttribute},
+                    plantSkuDataById:{...state.plantSkuDataById,attributes_subattributes:attributeValue},
                     needAction:true
                 }
 
@@ -358,8 +372,8 @@ export default function(state = initialSatate, action){
                 
            case UPDATE_PLANT_SKU_ACTION :
                return{
-                   ...state,
-                   action:action
+                ...state, 
+                needAction:false
                }
             
             case CREATE_PLANT_SKU_ACTION :
