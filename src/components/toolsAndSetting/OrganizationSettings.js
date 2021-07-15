@@ -42,7 +42,7 @@ export class OrganizationSettings extends React.Component {
         }
     }
     handlImageUpload = (e1)=>{
-        alert(123)
+        //alert(123)
         // const reader = new FileReader();
         // reader.onload=()=>{
         //     if(reader.readyState===2){
