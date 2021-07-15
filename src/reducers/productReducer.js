@@ -11,6 +11,7 @@ import {
     GET_ALL_PRODUCT_ACTION,
     GET_SPECIFIED_PRODUCT_ACTION,
     GET_SKU_SPECIFIED_PRODUCT,
+    DUPLICTE_PRODUCT,
 
     // SKU ACTION
 
@@ -20,6 +21,7 @@ import {
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
+    UPDATE_PLANT_SKU_ACTION,
 
     //PAGE REDIRECTS ACTION
 
@@ -240,6 +242,35 @@ console.log("actions", action.payload.data)
                 needAction:false,
                 tagsData:[]
             }
+        case DUPLICTE_PRODUCT:
+            return{
+                ...state,
+                actionType:"add",
+                productDataById     :   {
+                    name:"",
+                    category_id:null,
+                    subcategory_id:null,
+                    manufacturer_id:null,
+                    archived:0,
+                    internal_notes:"",
+                    discontinued:0
+                },
+                skuDataById         :   {
+                    each_cost:null,
+                    each_price:null,
+                    sale_price:null,
+                    sale_expiry_date:null,
+                    sku_item_name:null,
+                    subcategory:null,
+                    discontinued:0,
+                    status:1,
+                    archived:0,
+                    supplier_id:1,
+                    //id:null
+                },
+                needAction:false,
+                tagsData:[]
+            }
 
             case DELETE_SKU_ACTION:
                 return{
@@ -294,6 +325,12 @@ console.log("actions", action.payload.data)
             needAction:false
             // skuData:[...action.payload.data]
         };
+    case UPDATE_PLANT_SKU_ACTION:{
+        return{
+            ...state, 
+            needAction:false
+        }
+    }
 
 
     case UPDATE_SKU_ACTION_CLEAR:
@@ -361,6 +398,7 @@ console.log("actions", action.payload.data)
 
             }
         case HANDLE_SKU_INPUT_DATA:
+            console.log(action)
             return{
                 ...state,
                 skuDataById:{...state.skuDataById,[action.itemId]:action.itemValue},

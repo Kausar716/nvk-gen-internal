@@ -7,12 +7,12 @@ import {
         DELETE_PLANT_ACTION,
         GET_ALL_PLANT_ACTION,
         GET_SPECIFIED_PLANT_ACTION,
-        // DUPLICTE_PLANT,
+        DUPLICTE_PLANT,
     
         // Plant SKU ACTION
         CREATE_PLANT_SKU_ACTION,
         UPDATE_PLANT_SKU_ACTION,
-        // DELETE_PLANT_SKU_ACTION,
+        DELETE_PLANT_SKU_ACTION,
         GET_ALL_PLANT_SKU_ACTION,
         GET_PLANT_SPECIFIED_SKU_ACTION,
         GET_SINGLE_PLANT_SKU,
@@ -144,8 +144,7 @@ export default function(state = initialSatate, action){
     discontinued: 0,
     location: null,
     status: 1,
-    attributes_subattributes:[]
-            
+    attributes_subattributes:[]           
             
                 },
                 message:"",
@@ -284,6 +283,18 @@ export default function(state = initialSatate, action){
                 actionType:"add",
 
             }
+        case DUPLICTE_PLANT:
+            return{
+                ...state,
+                needAction:false,
+                actionType:"add",
+            }
+        case DELETE_PLANT_SKU_ACTION:
+            console.log(action)
+            return{
+                    ...state,
+                    actionType:"add",
+            }
 
 
             //search plant 
@@ -359,9 +370,13 @@ export default function(state = initialSatate, action){
                     // skuData:[...action.payload.data]
                 };
             case GET_SINGLE_PLANT_SKU:
+                console.log(action)
                 return{
                     ...state,
-                    action:action
+                    action:action,
+                    actionType:action.actionType,
+                    plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes}
+
                 }
         
   

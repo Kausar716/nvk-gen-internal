@@ -178,9 +178,9 @@ const PlantTable=(props)=> {
                                                         {/* </a> */}
                                                     </span>
                                                     <span>
-                                                        <a href="javascript;">
-                                                            <img src="assets/img/duplicate.svg" alt="" />
-                                                        </a>
+                                                        {/* <a href="javascript;"> */}
+                                                            <img src="assets/img/duplicate.svg" alt=""  onClick={()=>props.duplicatePlant(plant_id)} />
+                                                        {/* </a> */}
                                                     </span>
                                                     <span>
                                                         {/* <a href="javascript;"> */}

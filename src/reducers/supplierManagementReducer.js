@@ -50,6 +50,8 @@ import {
  FILTER_SUPPLIER_DATA_BY_RADIO ,
  FILTER_SUPPLIER_BY_SEARCH,
 FILTER_SUPPLIER_BY_ALPHA,
+ADD_FINANCES_SUPPLIER_DATA,
+HANDLE_SUPPLIER_INPUT_EXCHANGE
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
 
@@ -79,9 +81,13 @@ const defaultState={
     alphabetSearch:"All",
     inactiveData:[],
     activeData:[],
+    supplierExchange:{
+        from_currency:"CAD",
+        to_currency:"US",
+        exchange_rate:0,
+        exchange_date:new Date()
 
-
-
+    }
 };
 
 const supplierManagementReducer =(state=defaultState, action)=>{
@@ -91,7 +97,19 @@ const supplierManagementReducer =(state=defaultState, action)=>{
       
 
                 // plant page redirects
-        
+                case ADD_FINANCES_SUPPLIER_DATA:
+                    let date = action.payload.data.exchange_date.split("-")
+                    let dateInformate = new Date(date[0],date[1]-1,date[2])
+                    return{
+                        ...state,
+                        supplierExchange:{...action.payload.data,"exchange_date":dateInformate}
+                    }
+                    case HANDLE_SUPPLIER_INPUT_EXCHANGE:
+                        return{
+                            ...state,
+                            supplierExchange:{...state.supplierExchange,[action.id]:action.data}
+                    
+                        }
                 case GET_SUPPLIER_LIST :
                     return{
                         ...state,

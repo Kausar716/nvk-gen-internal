@@ -82,6 +82,8 @@ import {
     FETCH_SUPPLIER_ERROR,
     FETCH_SUPPLIER_LOADING,
     FETCH_SUPPLIER_SUCCESS,
+    ADD_FINANCES_SUPPLIER_DATA,
+    HANDLE_SUPPLIER_INPUT_EXCHANGE,
 
     EDIT_SUPPLIER_ERROR,
     EDIT_SUPPLIER_SUCCESS,
@@ -101,9 +103,28 @@ import {
 
 
 
+export const handleSupplierExchnageData =(data,id)=>dispatch=>{
+    dispatch({
+        type:HANDLE_SUPPLIER_INPUT_EXCHANGE,
+        data:data,
+        id:id
+
+    })
+
+}
 
 
+export const saveSupplierData = (data)=>dispatch =>{
+    console.log(data)
+    axios.post("/api/add-supplierexchangedetail",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_FINANCES_SUPPLIER_DATA,
+                payload:res.data   
+            })
+        })
 
+}
 export const getAllSuppliers = () => dispatch => {
     axios.get("/api/suppliers",config).then(res=>{ 
         console.log(res.data)
