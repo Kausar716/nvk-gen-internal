@@ -258,12 +258,12 @@ import {
                                     {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Hardiness Zone</label> */}
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Hardiness Zone<span class="text-danger">*</span></label>
+                                            {/* <label>Hardiness Zone<span class="text-danger">*</span></label>
                                             <select class="form-control" >
                                             <option>None</option>
                                             <option>Areca</option>
                                             <option>Zone</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                         {/* <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/> */}
                                         

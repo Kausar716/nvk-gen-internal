@@ -38,8 +38,8 @@ import {
 
         //search plant
         HANDLE_SEARCH_INPUT,
-        HANDLE_RADIO_TOGGLE,
-        HANDLE_CATEGORY_SEARCH,
+        // HANDLE_RADIO_TOGGLE,
+        // HANDLE_CATEGORY_SEARCH,
 
         //GET_ALL_ATTRIBUtTES
 
@@ -235,7 +235,7 @@ export default function(state = initialSatate, action){
                 // let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
                 // filteredAttribute.push(attibuteData)
                 if(attributeValue.length>0){
-                    attributeValue.map(attributeObj=>{
+                    attributeValue.map(attributeObj =>{
                         if(attributeObj.attribute_id === parseInt(action.itemId) ){
                             attributeObj.subattribute_id = parseInt(action.itemValue)
                             attributeUpdated = true
