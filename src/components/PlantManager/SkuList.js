@@ -176,10 +176,10 @@ const SkuList = (props)=>{
    console.log(props.plantData);
       const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList,actionType} = props.plantData
       const plantPerPage = pageSize;
-      const totalLength = plantSkuData.length;
+      const totalLength = plantSkuDataList.length;
       const pagesVisited = plantSkuPageNumber*pageSize;
       const displayPlantSkuList = plantSkuDataList.slice(pagesVisited,pagesVisited+plantPerPage)
-      const pageCount = Math.ceil(plantSkuData.length/plantPerPage)
+      const pageCount = Math.ceil(plantSkuDataList.length/plantPerPage)
         const {allAttributes} = props.attributeData
         console.log(displayPlantSkuList)
         let minMonth = new Date().getMonth()
