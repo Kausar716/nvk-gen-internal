@@ -24,6 +24,17 @@
  axios,
  config
  } from './types'
+export const handleCustomerTypeDelete = (id,apiName)=>dispatch => {
+    let plantCategoryObject={}
+    return axios.post(`/api/${apiName}/${id}`,plantCategoryObject,config).then(res=>{ 
+        console.log(res)
+    // dispatch({
+    //         type:HANDLE_DRAG_CUSTOMER_CATEGORY,
+    //         payload:res.data
+
+    //     })
+    })
+}
 
  export const handleDragDropCustomer = (data) =>dispatch=>{
     console.log(data)

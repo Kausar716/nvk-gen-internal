@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
-import {handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,getAllCustomerType,handleDragDropCustomer} from "../../actions/customerSettingAction";
+import {handleCustomerTypeDelete,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,getAllCustomerType,handleDragDropCustomer} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
@@ -94,11 +94,12 @@ import { is } from 'immutable';
 
 
         onDelete =(ev)=>{
+            // alert(ev)
             let id= ev.dataTransfer.getData("id");
             console.log(id)
-           let result= this.props.handleCategoryDelete(id)
+           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
            result.then(res=>{
-            this.props.getAllPlantCategories()
+            this.props.getAllCustomerType()
            })
 
 
@@ -284,7 +285,7 @@ render() {
     }
     )
     export default connect(mapStateToProps,{
-        getAllPlantCategories,
+        handleCustomerTypeDelete,
         handleCategoryInputAction,
         handleAddCategory,
         handleDragDrop,
