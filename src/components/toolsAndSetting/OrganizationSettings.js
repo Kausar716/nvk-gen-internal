@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
@@ -9,6 +11,8 @@ export class OrganizationSettings extends React.Component {
     constructor(){
         super()
         this.state={
+            mobile:"",
+            isError:false,
             name:"",
             sending_email_address:"",
             phone:"",
@@ -38,15 +42,16 @@ export class OrganizationSettings extends React.Component {
         }
     }
     handlImageUpload = (e1)=>{
-        const reader = new FileReader();
-        reader.onload=()=>{
-            if(reader.readyState===2){
-            this.setState({
-                imagePreviewURL:reader.result
-            })
-        }
-        }
-        reader.readAsDataURL(e1.target.files[0])
+        alert(123)
+        // const reader = new FileReader();
+        // reader.onload=()=>{
+        //     if(reader.readyState===2){
+        //     this.setState({
+        //         imagePreviewURL:reader.result
+        //     })
+        // }
+        // }
+       // reader.readAsDataURL(e1.target.files[0])
         // alert(1)
         // debugger;
         // this.setState({logo:e.target.files[0]})
@@ -67,8 +72,9 @@ export class OrganizationSettings extends React.Component {
         // this.setState({[name]:value})     
            // this.setState({[name]:value})     
          if(name === "phone" ){
-            hadModified.name = true
-            if(errorObj.phone>0){
+             //debugger;
+            hadModified.phone = true
+            if(errorObj.phoneError>0){
             errorObj.phoneError=0
             errorCount--
             }
@@ -96,16 +102,30 @@ export class OrganizationSettings extends React.Component {
     }
     validate = () =>{
         let {errorObj,errorCount}=this.state
+        //var phoneNumber = 8660039954;
+        //let phoneReg=/^[0-9\b]+$/;
+       //let phoneReg=/^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/;
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z]+$/
-        let emailReg =/\S+@\S+\.\S+/
+        let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
+       // let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
         console.log(emailReg.test(organizationData.sending_email_address))
         console.log(organizationData.sending_email_address)
-        if(!phoneReg.test(organizationData.phone)){
+
+        if(! phoneReg.test(organizationData.phone)){
+            //debugger;
+            // if(organizationData.phone.length > 10){
             errorObj.phoneError=1
             errorCount++
+            // }
+            // else{
+            //     errorObj.phoneError=0
+            //     errorCount--
+            // }
+
         }   
+
          if(! emailReg.test(organizationData.sending_email_address)){
             errorObj.sendingEmailError=1
             errorCount++
@@ -127,15 +147,22 @@ export class OrganizationSettings extends React.Component {
              let updateObject={}
              updateObject.id=this.props.organizationData.organizationData.id
              console.log(this.state.hadModified.name)
+
              if(this.state.hadModified.name === true){
                 updateObject.name = this.props.organizationData.organizationData.name
              }
+
              if(this.state.hadModified.sending_email_address === true){
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
              }
+
              if(this.state.hadModified.phone === true){
+                // debugger;
+                 console.log("this.state.hadModified.phone",this.state.hadModified.phone)
                 updateObject.phone = this.props.organizationData.organizationData.phone
-             } if(this.state.hadModified.main_title === true){
+             }
+             
+             if(this.state.hadModified.main_title === true){
                 updateObject.main_title = this.props.organizationData.organizationData.main_title
              } if(this.state.hadModified.secondary_title === true){
                 updateObject.secondary_title = this.props.organizationData.organizationData.secondary_title
@@ -165,12 +192,17 @@ export class OrganizationSettings extends React.Component {
      }
      handleRemoveImage = (e) =>{
         // this.setState({logo:""})
+        alert("Image Removed SuccessFully")
         let id="2"
         let data = this.props.removeImage(id)
         data.then(res=>{
             console.log(res)
             this.props.showorganization(id)
         })
+
+        
+        // this.setState({});
+         window.location.reload();
      }
      componentDidMount(){
          let id = "2"
@@ -277,17 +309,36 @@ export class OrganizationSettings extends React.Component {
                                             {/* {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Numbers are not allowed</span>:""} */}
                                         </div>
                                     </div>
+
+
                                     <div class="row form-group">
                                         <div class="col-md-12">
                                             <label>Sending Email Address</label>
+                                            {/* <input refs="email" type="text" size="30" placeholder="Email"  value={organizationDataById.sending_email_address} onChange={this.handleInput}/> */}
+
                                             <input type="text" placeholder="Dispatch Email Address" class="form-control" name="sending_email_address" value={organizationDataById.sending_email_address} onChange={this.handleInput} />
+                                            {/* <div className="text-danger">{this.state.errors.email}</div> */}
                                             {this.state.errorObj.sendingEmailError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Email</span>:""}
                                         </div>
                                     </div>
+
+                                 
+
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label>Phone</label>
-                                            <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control" name="phone" value={organizationDataById.phone} onChange={this.handleInput} />
+                                            <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"  
+                                            //  error={this.state.isError}
+                                            name="phone" value={organizationDataById.phone} 
+                                            onChange={this.handleInput} 
+                                            // onChange={(e) => {
+                                            //     this.setState(organizationDataById.phone);
+                                            //     if (e.target.value.length > 10) {
+                                            //       this.setState({this.state.isError:true});
+                                            //     }
+                                            //   }}
+                                            />
+                                            {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control" name="phone" value={organizationDataById.phone} onChange={this.handleInput} /> */}
                                             {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                         </div>
                                     </div>
@@ -328,6 +379,9 @@ export class OrganizationSettings extends React.Component {
                 </div>
             </div>
         </div>
+
+
+            // <DemoForm/>
     )
     }
     }

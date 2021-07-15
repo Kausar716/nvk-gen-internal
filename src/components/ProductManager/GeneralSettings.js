@@ -207,7 +207,6 @@ console.log(actionType)
 
 
 
-
                                         <ReactTagInput 
                                                     tags={tags} 
                                                     onChange={(tagsData) => setTags(tagsData)}
