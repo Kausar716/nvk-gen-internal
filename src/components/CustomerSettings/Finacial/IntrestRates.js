@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse ,Row,  Label} from 'reactstrap';
+import {connect} from "react-redux";
+import {handleExchangeData,saveNoticationData,getNotificationData,saveIntrestData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 // import * as BiIcons from "react-icons/bs";
@@ -53,8 +55,24 @@ const onSubmit = (values) =>{
 const InrestRates = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const handleChangeData = (e) =>{
+    props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
 
-  const { handleSubmit, pristine, reset, submitting } = props;
+  }
+
+  const saveExchangeData = ()=>{
+    let obj={}
+    obj.monthly = customerIntrest.monthly
+    obj.yearly = customerIntrest.yearly
+    obj.taxrate = customerIntrest.taxrate
+    obj.taxrate_label = customerIntrest.taxrate_label
+    obj.taxrate_number = customerIntrest.taxrate_number
+    obj.status = 1
+    props.saveIntrestData(obj)
+  
+  }
+
+  const { handleSubmit, pristine, reset, submitting,customerIntrest} = props.customerData;
   
   return (
     <>
@@ -77,67 +95,37 @@ const InrestRates = (props) => {
 
                     <div className="intrestRate_label">
                           <label>Monthly</label>
-                          <Field
-                                          name="intrestRate_Monthly"
-                                          component={renderField}
-                                          type="text"
-                                          label="2.5"
-                                          validate={[ required, number, minValue2]}
-                                      />
+                          <input type="number"     className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly} onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label"  style={{marginLeft:"-19em"}}>
                           <label>Yearly</label>
-                          <Field
-                                          name="intrestRate_Yearly"
-                                          component={renderField}
-                                          type="text"
-                                          label="22.0"
-                                          validate={[ required, number, minValue2]}
-                                      />
+                          <input type="number"     className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                           <label>Tax Rate</label>
-                          <Field
-                                          name="intrestRate_Tax_Rate"
-                                          component={renderField}
-                                          type="text"
-                                          label="13"
-                                          validate={[ required, number, minValue2]}
-                                      />
+                          <input type="number"     className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                       <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                             <label>Tax Rate Label</label>
-                            <Field
-                                            name="intrestRate_Tax_Rate_Label"
-                                            component={taxrenderField}
-                                            type="text"
-                                            label="Sales tax (HST)@ 13%"
-                                            validate={[ required, number, minValue2]}
-                                        />
+                            <input type="text"  placeholder={""}    className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label}  onChange={handleChangeData}/>
                       </div>
 
 
                       <div className="intrestRate_label" style={{marginLeft:"-11em"}}>
                             <label>Tax Rate Number</label>
-                            <Field
-                                            name="intrestRate_Tax_Rate_Number"
-                                            component={taxrenderField}
-                                            type="text"
-                                            label="HST: 013455647812 RT0001"
-                                            validate={[ required, number, minValue2]}
-                                        />
+                            <input type="text"  placeholder={""}    className="textRightTax" id="taxrate_number" value={customerIntrest.taxrate_number}  onChange={handleChangeData}/>
                       </div>
             </div>
             
             <div align="right" className="action_area_left"  >
-                              <button className="button_style_Tools_Setting_Cancel"    disabled={pristine || submitting} onClick={reset} >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save"    style={{marginRight:"-9.5rem"}} onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
+                              <button className="button_style_Tools_Setting_Cancel"    >Cancel</button>
+                              <button className="button_style_Tools_Setting_Save"   onClick={saveExchangeData}>Save</button>
                   </div> 
 
                 </div>
@@ -150,7 +138,12 @@ const InrestRates = (props) => {
     </>
   );
 }
+const mapStateToProps = (state)=>(
+  {
+    customerData:state.customerReducer
+  }
 
-export default reduxForm({
-  form: 'notify',
-})(InrestRates);
+)
+
+const form = reduxForm({ form: 'Notification' });
+export default connect(mapStateToProps, {handleExchangeData,saveIntrestData,saveFinanceExchangeData})(form(InrestRates));
