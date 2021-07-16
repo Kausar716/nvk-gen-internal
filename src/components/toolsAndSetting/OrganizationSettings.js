@@ -3,14 +3,29 @@
 import React from 'react'
 import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
+import ActionModal from '../Modal/ActionModal';
+import { Link ,withRouter} from "react-router-dom";
 
+export const Component = withRouter(({ history, location }) =>{
+
+})
 //import noImageI from '../../../public/images/noImage.png';
 
-
+// const [ActionId,setActionId] = useState(0)
+//     const [open,setOpen] = useState(false)
+//     const [message,setMessage] = useState("")
+//     const [type, setType] = useState("")
 export class OrganizationSettings extends React.Component {  
+   
     constructor(){
         super()
         this.state={
+
+            actionId:0,
+            actionOpen:false,
+            actionMessage:"",
+            actionType:"",
+
             mobile:"",
             isError:false,
             name:"",
@@ -41,6 +56,7 @@ export class OrganizationSettings extends React.Component {
             imagePreviewURL:"assets/img/noImage.png"
         }
     }
+  
     handlImageUpload = (e1)=>{
         //alert(123)
         // const reader = new FileReader();
@@ -198,7 +214,7 @@ export class OrganizationSettings extends React.Component {
      }
      handleRemoveImage = (e) =>{
         // this.setState({logo:""})
-        alert("Image Removed SuccessFully")
+        //alert("Image Removed SuccessFully")
         let id="2"
         let data = this.props.removeImage(id)
         data.then(res=>{
@@ -214,7 +230,10 @@ export class OrganizationSettings extends React.Component {
          let id = "2"
        this.props.showorganization(id)
      }
+
+    //  let history = useHistory();
     render(){
+        const { actionType } = this.state;
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
@@ -271,9 +290,114 @@ export class OrganizationSettings extends React.Component {
         }
         console.log(url)
 
+
+        const confirm = ()=>{
+            const { history } = this.props;
+            if(actionType==="goBack"){
+                history.push("/Dashboard")
+
+                // setTimeout(function() {
+                //     history.push("/")
+                //  }, 4000);
+            //    props.deleteProductAction(id)
+    
+            }
+
+            else if(actionType==="save"){
+                this.handleSubmit();
+            }
+
+            else if(actionType==="upload"){
+
+                this.handlImageUpload();
+            }
+            
+
+            else if(actionType==="deleteImage"){
+
+                this.handleRemoveImage();
+            }
+            
+            
+            
+            else{
+                // props.duplicateProduct(id)
+                // history.push({
+                //     pathname:`/addProduct/${id}`,
         
+                // })
+            }
+
+            this.setState({
+                actionOpen:false,
+                actionId:0,
+                actionType:"",
+                actionMessage:""
+            })
+      
+         
+       }
+
+       const confirmAction = (actionType)=>{
+       
+        //let history = useHistory();
+
+        if(actionType==="goBack"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to go back"})
+
+        }
+        else if(actionType==="save"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to save Changes"})
+            
+        }
+
+        else if(actionType==="upload"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to Upload Image"})
+
+        }
+
+        else if(actionType==="deleteImage"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to Delete Image"})
+
+        }
+        
+        
+        
+        else{
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to duplicate this product and all its related SKU and plant information?"})
+       
+        }
+        this.setState({
+            actionOpen:true,
+            // actionId:id
+        })
+
+        // setOpen(true)
+        // setId(id)
+    }
+
+       const cancel = ()=>{
+        this.setState({
+            actionOpen:false,
+            actionId:0,
+            actionType:"",
+            actionMessage:""
+        })
+       
+         
+     }
+        //    actionId:0,
+        //     actionOpen:false,
+        //     actionMessage:"",
+        //     actionType:"",
     return (
         <div clas="userManagementSection">
+             <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">
                         <img src="assets/img/tools-ic-lg.svg" class="mr-2"/>Organization Settings
@@ -308,18 +432,24 @@ export class OrganizationSettings extends React.Component {
                                             //   src={this.state.imagePreviewURL}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"200px",width:"200px"}}/>
+                                            style={{height:"250px",width:"240px"}}/>
                                         </div>
                                         <p><small>Image should print quality PNG or JPG</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
-                                            <input  type="file"  id="imageid" name="logo"  onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
+                                            <input  type="file"  id="imageid" name="logo" 
+                                              onChange={this.handlImageUpload} 
+                                            // onClick={()=>{confirmAction("upload"); }}
+                                             style={{zIndex:1,opacity:0}}  />
                                                 <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
                                         <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
-                                            <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
+                                            <span class="d-flex align-items-center justify-content-around"
+                                            onClick={()=>{confirmAction("deleteImage"); }}
+                                            // onClick={this.handleRemoveImage}
+                                             >
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
                                             <img src="assets/img/bin-ic-red.svg" alt=""/>
@@ -397,8 +527,10 @@ export class OrganizationSettings extends React.Component {
                     </div>
                     <div class="row mt-3">
                         <div class="col-md-12 col-lg-12 text-md-right mt-3 mt-md-0">
-                            <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
-                            <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Save</button>
+                            <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={()=>{confirmAction("goBack"); }}  >Cancel</button>
+                            <button type="button" class="btn btn-primary btn-lg ml-3"  onClick={()=>{confirmAction("save"); }}
+                            // onClick={this.handleSubmit}
+                            >Save</button>
                         </div>
                     </div>
                 </div>
@@ -418,6 +550,6 @@ export class OrganizationSettings extends React.Component {
     
     )
     
-    export default connect(mapStateToProps,{showorganization,updateorganization,removeImage
+    export default withRouter(connect(mapStateToProps,{showorganization,updateorganization,removeImage
         ,handleOrganizationSettingsInputAction,
-        uploadImage})(OrganizationSettings)
+        uploadImage}) (OrganizationSettings));
