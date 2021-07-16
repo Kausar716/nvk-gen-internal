@@ -106,18 +106,18 @@ const  Terms=()=> {
                                             <div>
                                                 <a href="javascript;">
                                                     {/* <i className="fas fa-angle-double-right"></i> */}
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
+                                                    <img style={{width:"4em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;">
                                                     {/* <i className="fas fa-arrows-alt"></i> */}
-                                                    <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
+                                                    <img style={{width:"4em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                                 </a>
                                             </div>
                                             <div>
                                                 <a href="javascript;" className="icDelete">
-                                                <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                <img style={{width:"4em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                                     {/* <i className="fas fa-trash"></i> */}
                                                 </a>
                                             </div>
