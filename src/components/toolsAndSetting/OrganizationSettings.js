@@ -298,7 +298,7 @@ export class OrganizationSettings extends React.Component {
                             </div>
                             <div class="row mt-3">
                                 <div class="col-md-4 col-lg-3">
-                                <label>Logo</label>
+                                <label style={{fontWeight:"bold"}}>Logo</label>
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                         <div class="logCircle mb-3" key={new Date().getTime()}>
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
@@ -329,7 +329,7 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            <label>Name</label>
+                                            <label style={{fontWeight:"bold"}}>Name</label>
                                             <input type="text" placeholder="Name" class="form-control" name="name" value={organizationDataById.name} onChange={this.handleInput}  />
                                             {/* {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Numbers are not allowed</span>:""} */}
                                         </div>
@@ -338,7 +338,7 @@ export class OrganizationSettings extends React.Component {
 
                                     <div class="row form-group">
                                         <div class="col-md-12">
-                                            <label>Sending Email Address</label>
+                                            <label style={{fontWeight:"bold"}}>Sending Email Address</label>
                                             {/* <input refs="email" type="text" size="30" placeholder="Email"  value={organizationDataById.sending_email_address} onChange={this.handleInput}/> */}
 
                                             <input type="text" placeholder="Dispatch Email Address" class="form-control" name="sending_email_address" value={organizationDataById.sending_email_address} onChange={this.handleInput} />
@@ -351,7 +351,7 @@ export class OrganizationSettings extends React.Component {
 
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <label>Phone</label>
+                                            <label style={{fontWeight:"bold"}}>Phone</label>
                                             <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"  
                                             //  error={this.state.isError}
                                             name="phone" value={organizationDataById.phone} 
@@ -373,21 +373,21 @@ export class OrganizationSettings extends React.Component {
                                 <div class="col-md-12 col-lg-12">
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <label>Main Title (Body)</label>
+                                            <label style={{fontWeight:"bold"}}>Main Title (Body)</label>
                                             <input type="text" placeholder="Name" class="form-control" name="main_title" value={organizationDataById.main_title} onChange={this.handleInput}  />
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Secondary Title (Body)</label>
+                                            <label style={{fontWeight:"bold"}}>Secondary Title (Body)</label>
                                             <input type="text" placeholder="Address 01" class="form-control" name="secondary_title" value={organizationDataById.secondary_title} onChange={this.handleInput}  />
                                         </div>
                                     </div>
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <label>Main Body</label>
+                                            <label style={{fontWeight:"bold"}}>Main Body</label>
                                             <textarea class="form-control" rows="5"  name="main_body" value={organizationDataById.main_body} onChange={this.handleInput}>Address 01</textarea>
                                         </div>
                                         <div class="col-md-6">
-                                            <label>Secondary Body</label>
+                                            <label style={{fontWeight:"bold"}}>Secondary Body</label>
                                             <textarea class="form-control" rows="5" name="secondary_body" value={organizationDataById.secondary_body} onChange={this.handleInput}>Address 02</textarea>
                                         </div>
                                     </div>

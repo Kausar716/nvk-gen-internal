@@ -189,7 +189,7 @@ const SignInPage = (props) => {
                         <div class="row">
                             <div class="col-md-12 text-center">
                             <p class="textGrey">Trouble accessing your account or registering?<br/>
-                                Contact <a href="#">webmaster@nvknurseries.com</a> </p>
+                                Contact <a href="#">support@nvkgenesys.com</a> </p>
                             </div>
                         </div>
                     </div>
