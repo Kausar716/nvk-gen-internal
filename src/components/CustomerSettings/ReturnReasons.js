@@ -184,7 +184,8 @@ render() {
                                     
                                 <div className="row">
                                     <div className="col-md-6">
-                                        <p>Reason</p>
+                                        {/* <p>Reason</p> */}
+                                        <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}> Reason</h5>
                                         <div>
                                             <input type="text" className="form-control" placeholder="" id="reason" value={customerData.customerReturnReason.reason}   placeholder="Reason" onChange={this.handleCategoryInputAction}/>
                                         </div>

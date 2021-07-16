@@ -105,7 +105,7 @@ props.saveSupplierData(obj1)
                   {/* <Label className="secondHeader">
                   Customer Exchange Details
                   </Label> */}
-                   <p className="sub_menu_nameD">  Customer Exchange Details</p>
+                   <p className="sub_menu_nameD"> Customer Exchange Rates</p>
           </div>
 
 
@@ -119,7 +119,7 @@ props.saveSupplierData(obj1)
               <Col>
                     <Label className="subHeadingLabels">From Currency</Label>
                         <Row>
-                            <Col><Label className="topSpace">{customerExchange.from_currency}</Label>
+                            <Col><p className="topSpace">{customerExchange.from_currency}</p>
                             </Col>
                         </Row>
               </Col>
@@ -128,13 +128,13 @@ props.saveSupplierData(obj1)
               <Col>
                   <Label className="subHeadingLabels">To Currency</Label>
                         <Row>
-                            <Col><Label className="topSpace">{customerExchange.to_currency}</Label>
+                            <Col><p className="topSpace">{customerExchange.to_currency}</p>
                             </Col>
                         </Row>
               </Col>
 
               <Col className="spacebelow">
-                  <Label className="subHeadingLabels">Exchange Rates</Label>
+                  <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Rate</Label>
                         <Row>
                             <Col> 
                           
@@ -148,7 +148,7 @@ props.saveSupplierData(obj1)
               </Col>
 
               <Col>
-                  <Label className="subHeadingLabels">Exchange Date</Label>
+                  <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
                         <Row>
                             <Col>
                             <DatePicker  className="inputBoxDesign2" selected={customerExchange.exchange_date} onChange={datePickerData} id="exchange_date_customer"/>
@@ -169,7 +169,7 @@ props.saveSupplierData(obj1)
               <Col>
                     <Label className="subHeadingLabels">From Currency</Label>
                         <Row>
-                            <Col><Label className="topSpace">CAD</Label>
+                            <Col><p className="topSpace">CAD</p>
                             </Col>
                         </Row>
               </Col>
@@ -178,13 +178,13 @@ props.saveSupplierData(obj1)
               <Col>
                   <Label className="subHeadingLabels">To Currency</Label>
                         <Row>
-                            <Col><Label className="topSpace">US</Label>
+                            <Col><p className="topSpace">US</p>
                             </Col>
                         </Row>
               </Col>
 
               <Col  className="spacebelow">
-                  <Label className="subHeadingLabels">Exchange Rate</Label>
+                  <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Rate</Label>
                         <Row>
                             <Col> 
                                 
@@ -199,7 +199,7 @@ props.saveSupplierData(obj1)
               </Col>
 
               <Col>
-                  <Label className="subHeadingLabels">Exchange Date</Label>
+                  <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
                         <Row>
                             <Col>
                             <DatePicker className="inputBoxDesign2" selected={supplierExchange.exchange_date} onChange={datePickerData1} />
