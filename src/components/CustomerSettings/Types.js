@@ -77,7 +77,7 @@ import { is } from 'immutable';
             }
             if (doProcess === true) {
                
-                let result= this.props.handleDragDropCustomer(tasks[0])
+                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-type")
                 result.then(res=>{
                     this.props.getAllCustomerType()
                 })   
