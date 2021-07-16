@@ -55,6 +55,8 @@ const  ProductManagement = (props) =>{
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
     const [filterSubCategory, setFilterSubCategory]= useState([])
+    const [inputValue, setInputValue] = useState("");
+    const [selectedRadio,setRadio] =useState("all")
     const product_idFromGeneral =props.temp.productData.ae_product_id
     //const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
@@ -146,7 +148,30 @@ const  ProductManagement = (props) =>{
            setOpen(true)
            setId(id)
        }
-       
+
+
+       const getValue = (e)=>{
+        console.log(e.target.value)
+        console.log(categoryId)
+        props.serachProduct({product: e.target.value, option: selectedRadio, category: JSON.stringify(categoryId)})
+        setInputValue(e.target.value);
+    }
+       const radioSearchAction =(e)=>{
+        console.log(e.target.id)
+        //props.radioSearch(e.target.id)
+        props.serachProduct({product: inputValue, option: e.target.id, category: categoryId})
+        setRadio(e.target.id)
+
+    }
+    const searchBasedOnCategory = (e) =>{
+        //console.log(e.target.value)
+        //props.searchCategoryApplyAction(e.target.value)
+        props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value})
+        setCategoryId(e.target.value)
+        // searchCategoryApply()
+    }
+
+    
         // eslint-disable-next-line no-unused-vars
         const {pageToOpen,actionType,productDataById, skuDataById} = props.productData
         const {categoryData,subCategoryData} = props.categoryData
@@ -189,7 +214,7 @@ const  ProductManagement = (props) =>{
 				<div className="row">
 					<div className="col-xl-12 col-md-12">
 						<div className="bg-white p-15">
-                            <div className="form-group row">
+                            <div className="form-group row">                        
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
 
@@ -203,8 +228,6 @@ const  ProductManagement = (props) =>{
                 
                                 </select>
                                 </div>
-
-
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Sub Category</label>
 
@@ -218,10 +241,44 @@ const  ProductManagement = (props) =>{
                                 </select>
 
                                 </div>
+                                
                                 <div className="col-md-2 col-lg-2">
                                     <p onClick={resetFilter} className="d-block  resetlink">Reset</p>
                                     {/* <a href="javascript:;" onClick={handleFilter} className="d-block topSpace">Search</a> */}
                                 </div>
+                                <div className="col-md-5 col-lg-5">
+                                            <label for="plantSearch">Product Search</label>
+                                            <div className="searchInput">
+                                                <button type="submit" className="btn btn-search">
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                                {/* <input type="text" className="form-control" placeholder="Search"/> */}
+                                                <input className="form-control" 
+                                                        type="text" 
+                                                        autocomplete={"off"}
+                                                        placeholder="Search" 
+                                                        value={inputValue}
+                                                        onChange={getValue} 
+                                                        id="search"/>
+                                            </div>
+                                        </div>
+                                        <div className="col-md-12">
+                                            <div className="form-check form-check-inline">
+                                            <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
+                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
+                                                <label className="form-check-label" for="activePlants">Active</label>
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
+                                                <label className="form-check-label" for="archivedPlants">Archived</label>
+                                            </div>
+                                            <div className="form-check form-check-inline">
+                                            <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
+                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
+                                                <label className="form-check-label" for="allPlants"> &nbsp;All</label>
+                                            </div>
+                                        </div>
                             </div>
                              <hr/>
                                     <ProductTable />
@@ -238,7 +295,7 @@ const  ProductManagement = (props) =>{
 
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add Product</h1>
+                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Product</h1>
                         
                                 </div>
                                     <div class="px-md-3 mt-3">

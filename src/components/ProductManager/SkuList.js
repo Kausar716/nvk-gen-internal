@@ -147,11 +147,21 @@ const SkuList=(props)=> {
     }
     const handleInput =(e)=>{
         console.log(e.target.id,e.target.value)
-  
+        console.log(parseFloat(e.target.id))
+        console.log(!parseFloat(e.target.value) )
+        console.log(e.target.id === "each_cost" && isNaN(parseFloat(e.target.value)))
         setSubmitCount(0)
+        if((e.target.id === "each_cost" ||e.target.id === "each_price"||e.target.id === "sale_price") ){
+          
+            props.handleSkuInputAction(e.target.id,parseFloat(e.target.value))
+        
+        }
+        else if(e.target.id !== "each_cost" && e.target.id !== "each_price"&&e.target.id !== "sale_price"){
+         
         if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)
+        }
 
     }
     const handleChange1 = (e) =>{
@@ -227,6 +237,15 @@ console.log("PRODUCT.ID", productDataById.product_id)
     console.log("productDataByIdskuDataById", productDataById, skuDataById)
     let selectedSubCategoryId = skuDataById.sub_category_id
     console.log(skuDataById.sub_category_id)
+    let flag =0
+    if(skuDataById){       
+        if(!skuDataById.each_cost || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
+            flag=1
+            
+        }
+        
+    }
+    console.log(flag)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
@@ -281,16 +300,16 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="0" 
+                                            <input type="text" class="form-control text-right" placeholder="0.00" 
                                             // value="$1.25"
                                              id="each_cost" onChange={handleInput} 
                                               value={skuDataById.each_cost} 
-                                            min="0"
+                                                // min="0"
                                               />
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="0" 
+                                            <input type="text" class="form-control text-right" placeholder="0.00" 
                                             // value="$1.25"
                                             id="each_price"  onChange={handleInput} 
                                              value={skuDataById.each_price} 
@@ -298,7 +317,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="0" 
+                                            <input type="text" class="form-control text-right" placeholder="0.00" 
                                             //  value="$1.25"
                                              id="sale_price" onChange={handleInput}
                                               value={skuDataById.sale_price}
@@ -326,13 +345,37 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             </div>
                                         </div>
                                     </div>
-                            
+
+                                    <div class="row mt-3">
+                                        <div class="col-md-6 col-lg-3">
+                                            <label>Volume Quality <span class="text-danger">*</span></label>
+                                            <select class="form-control">
+                                              {/* id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput}  */}
+                                             {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
+                                            <option>None</option>
+                                            {/* {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
+                                                    return (filterData.sub_attributes.map(subData=>{
+                                                        return(<option value={subData.id}>{subData.value}</option>)
+                                                    }))
+                                                })                          
+                                                :""} */}
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                            <label>Volume Price per unit</label> 
+                                            {/* <input type="checkbox"  /> */}
+                                            <input type="text" class="form-control text-right" placeholder="" value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+
+                                            
+                                            {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
+                                        </div>
+                                    </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
                                             <button 
                                             // type="button" class="btn btn-primary btn-lg"
-                                            className={needAction===true?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
-                                            disabled={submitCount===0?needAction===true?false:true:true} 
+                                            className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
+                                            disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} 
                                             onClick={submitAction}
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
@@ -343,7 +386,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
 
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
-                                            disabled={needAction===true?false:true} onClick={()=>props.updateSkuAction(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
+                                            disabled={(needAction===true && flag === 0)?false:true} onClick={()=>props.updateSkuAction(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
+                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Cancel</button>
                                         </div>
                                     </div>
                                 </form>
@@ -394,9 +439,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr>
                                             <th class="text-nowrap">Status</th>
                                             <th class="text-nowrap">SKU</th>
-                                            <th class="text-nowrap">Each Cost</th>
-                                            <th class="text-nowrap">Each Price</th>
-                                            <th class="text-nowrap">Sale Price</th>
+                                            <th class="text-nowrap" style={{textAlign:"right"}}>Each Cost</th>
+                                            <th class="text-nowrap" style={{textAlign:"right"}}>Each Price</th>
+                                            <th class="text-nowrap" style={{textAlign:"right"}}>Sale Price</th>
                                             <th class="text-nowrap">Sale Active</th>
                                             <th class="text-nowrap">Volume Per Unit</th>
                                             <th class="text-nowrap">Volume QTY</th>
@@ -426,9 +471,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr key={sku.id}>
                                             <td>{sku.archived===0?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
-                                            <td>{sku.each_cost}</td>
-                                            <td>{sku.each_price}</td>
-                                            <td>{sku.sale_price}</td>
+                                            <td style={{textAlign:"right"}}>{sku.each_cost}</td>
+                                            <td style={{textAlign:"right"}}>{sku.each_price}</td>
+                                            <td style={{textAlign:"right"}}>{sku.sale_price}</td>
                                             <td class="text-center">
                                                 {/* <div class="custom-control custom-checkbox mb-1">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck1"/>

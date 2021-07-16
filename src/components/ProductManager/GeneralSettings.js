@@ -149,6 +149,15 @@ const GeneralSettings=(props)=> {
 
 // }
 console.log(actionType)
+let flag =0
+if(productDataById){       
+    if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id){
+        flag=1
+        
+    }
+    
+}
+
 //tagsData = [...tags, ...tagsData]
     return (
         <div>
@@ -289,8 +298,8 @@ console.log(actionType)
                                         disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} > 
                                         {actionType==="add"?"Add Product":"Update Product"}</button> */}
 
-                                        <button className={needAction===true?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
-                                            disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction}>
+                                        <button className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
+                                            disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} onClick={submitAction}>
                                             {actionType==="add"?"Add Product":"Update Product"}
                                         </button>
                                     </div>

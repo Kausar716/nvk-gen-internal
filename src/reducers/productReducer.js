@@ -41,7 +41,9 @@ import {
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
-    HANDLE_SEARCH_PINPUT
+    HANDLE_PRODUCT_SEARCH_INPUT,
+    HANDLE_PRODUCT_RADIO_TOGGLE
+    
 
 
 } from '../actions/types';
@@ -79,6 +81,8 @@ const initialSatate = {
         archived:null,
         status:1,
         supplier_id:1,
+        volume_price_per_unit:null,
+        volume_quantity:null
        
 
 
@@ -130,6 +134,8 @@ export default function(state = initialSatate, action){
                     status:1,
                     supplier_id:1,
                     archived:0,
+                    volume_price_per_unit:null,
+                    volume_quantity:null
                     //id:null
             
             
@@ -237,6 +243,8 @@ console.log("actions", action.payload.data)
                     status:1,
                     archived:0,
                     supplier_id:1,
+                    volume_price_per_unit:null,
+                    volume_quantity:null
                     //id:null
                 },
                 needAction:false,
@@ -266,6 +274,8 @@ console.log("actions", action.payload.data)
                     status:1,
                     archived:0,
                     supplier_id:1,
+                    volume_price_per_unit:null,
+                    volume_quantity:null
                     //id:null
                 },
                 needAction:false,
@@ -296,6 +306,8 @@ console.log("actions", action.payload.data)
                         status:1,
                         archived:0,
                         supplier_id:1,
+                        volume_price_per_unit:null,
+                        volume_quantity:null
                         //id:null
                     },
                     needAction:false,
@@ -357,6 +369,8 @@ console.log("actions", action.payload.data)
                 status:1,
                 archived:0,
                 supplier_id:1,
+                volume_price_per_unit:null,
+                volume_quantity:null
                 //id:null
         
         
@@ -446,18 +460,19 @@ console.log("actions", action.payload.data)
             }
 
 
-            case HANDLE_SEARCH_PINPUT:
-                //debugger;
+            case HANDLE_PRODUCT_SEARCH_INPUT:
                 var optionVal = -1;
                 var categoryVal = "";
-                // if(action.payload.option ==="active"){
-                //     optionVal = 0;
-                // }
-                // if(action.payload.option ==="archive"){
-                //     optionVal = 1;
-                // }
+                console.log(state.backupData)
+                console.log(action)
+                if(action.payload.option ==="active"){
+                    optionVal = 0;
+                }
+                if(action.payload.option ==="archive"){
+                    optionVal = 1;
+                }
                 categoryVal = action.payload.category;
-                if(action.payload.category.trim() ==="" && optionVal === -1 && categoryVal === "0"){
+                if(action.payload.product.trim() ==="" && optionVal === -1 && categoryVal === "0"){
                     return{
                         ...state,
                         productData:state.backupData
@@ -466,8 +481,9 @@ console.log("actions", action.payload.data)
                     return{
                         ...state,
                         productData:state.backupData.filter(
-                            filterData=>(filterData.name===action.payload.category.trim() || action.payload.category.trim()==="") &&
-                            (filterData.category_id === Number(categoryVal) || categoryVal === "0")
+                            filterData=>(filterData.name.trim().toLowerCase().includes(action.payload.product.trim().toLowerCase()) || action.payload.product==="") &&
+                            (filterData.archived===optionVal || optionVal===-1) &&
+                            (filterData.category_id === parseInt(categoryVal) || parseInt(categoryVal) === 0)
                             )
                     }
 

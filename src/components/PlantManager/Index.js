@@ -107,7 +107,7 @@ const productFormAction = ()=>{
         const radioSearchAction =(e)=>{
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
-            props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
+            props.serachPlant({product: inputValue, option: e.target.id, category: categoryId})
             setRadio(e.target.id)
 
         }
@@ -249,7 +249,7 @@ const productFormAction = ()=>{
             {(plantPageToOpen === "general" || plantPageToOpen === "sku") &&
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add Plant</h1>
+                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Plant</h1>
                         
                                 </div>
                                     <div class="px-md-3 mt-3">

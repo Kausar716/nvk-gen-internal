@@ -171,17 +171,20 @@ const SkuList = (props)=>{
        
     }
    }
+   const handleCancel = ()=>{
+    props.plantPageReDirectAction("all","plant")
+   }
 
 
    console.log(props.plantData);
       const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList,actionType} = props.plantData
       const plantPerPage = pageSize;
-      const totalLength = plantSkuData.length;
+      const totalLength = plantSkuDataList.length;
       const pagesVisited = plantSkuPageNumber*pageSize;
       const displayPlantSkuList = plantSkuDataList.slice(pagesVisited,pagesVisited+plantPerPage)
-      const pageCount = Math.ceil(plantSkuData.length/plantPerPage)
+      const pageCount = Math.ceil(plantSkuDataList.length/plantPerPage)
         const {allAttributes} = props.attributeData
-        console.log(displayPlantSkuList)
+        console.log(allAttributes)
         let minMonth = new Date().getMonth()
         let minDate = new Date().getDate()
         let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
@@ -214,8 +217,30 @@ const SkuList = (props)=>{
         return attributeObj.subattribute_id
         }
         })[0]
-       console.log(selectedForm)
-
+        let flag=0
+        if(plantSkuDataById){       
+            if(!plantSkuDataById.each_cost || !plantSkuDataById.each_price || !plantSkuDataById.sale_price){
+                flag=1
+                
+            }
+            if(plantSkuDataById.attributes_subattributes.length === 0){
+                flag=1
+            }
+            else if(plantSkuDataById.attributes_subattributes.length>0){
+                let checkForData
+                checkForData= plantSkuDataById.attributes_subattributes.filter(attributeData=>{
+                    return(attributeData.attribute_id === 3)
+                })
+                console.log(checkForData)
+                if(checkForData.length === 0){
+                    flag=1
+                }
+            }
+            
+        }
+     
+ 
+      
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -230,9 +255,9 @@ const SkuList = (props)=>{
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
                                                 <div class="switcher ml-2">
-                                                    <input type="checkbox" name="switcher_checkbox_2" 
+                                                    <input type="checkbox" name="archived" 
                                                      id="archived" onChange={handleInput} value={plantSkuDataById.archived} checked={plantSkuDataById.archived===0?false:true}/>
-                                                    <label for="switcher_checkbox_2"></label>
+                                                    <label for="archived"></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -295,7 +320,7 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
+                                            <input type="number" class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
@@ -319,8 +344,8 @@ const SkuList = (props)=>{
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
                                                         Active
                                                         <div class="switcher switcher-sm ml-2 pr-2">
-                                                            <input type="checkbox" id="archived" onChange={handleInput} value={plantSkuDataById.status} checked={plantSkuDataById.status==0?false:true}/>
-                                                            <label for="switcher_checkbox_date"></label>
+                                                            <input type="checkbox" id="status" onChange={handleInput} value={plantSkuDataById.status} checked={plantSkuDataById.status==0?false:true}/>
+                                                            <label for="status"></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -352,9 +377,12 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                            <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true} id="dontRetain" onClick={submitAction}
+                                            
+                                            <button type="button" class="btn btn-primary btn-lg" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU":"Update SKU"}</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={needAction===true?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Cancel</button>
+
                                         </div>
                                     </div>
                                 </form>
