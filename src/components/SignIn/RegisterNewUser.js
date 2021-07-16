@@ -89,8 +89,11 @@ const RegisterNewUser = (props) => {
                 </div>
             </div>
             <div class="container">
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"1em"}}>
+                        <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" />
+                        </div>
                 <div class="row justify-content-center mt-md-8">
-                    <div class="col-md-6">
+                    <div class="col-md-6" style={{marginTop:"2em"}}>
                         <div class="bg-white px-3 py-3 signInContent">
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
@@ -110,11 +113,12 @@ const RegisterNewUser = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                        <button type="submit" className="btn btn-block btnSignIn"  style={{backgroundColor:"#348fe2"}} disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">
-                                            <p className="infostyle" style={{marginTop:25}}><span style={{color:"#FF8C00"}}>Click here to </span> <span className="infostyle" style={{color:"#4f91f7"}}>Go Back</span></p>
+                                        <p className="infostyle" style={{marginTop:25}}> <span className="infostyle" style={{color:"#4f91f7"}}>Return to Sign In</span></p>
+                                            {/* <p className="infostyle" style={{marginTop:25}}><span style={{color:"#FF8C00"}}>Click here to </span> <span className="infostyle" style={{color:"#4f91f7"}}>Go Back</span></p> */}
                                         </Link>
                                     </div>
                                 </div>

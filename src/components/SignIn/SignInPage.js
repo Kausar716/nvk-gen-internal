@@ -121,7 +121,7 @@ const SignInPage = (props) => {
             </div>
             <div class="container" >
             <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"1em"}}>
-                        <img src="./images/logo.png" alt="" class="img-fluid" />
+                        <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" />
                         </div>
                 <div class="row justify-content-center mt-md-8">
                         
@@ -134,6 +134,7 @@ const SignInPage = (props) => {
                                     <div class="col-md-12 text-center">
                                         <div class="">
                                             {/* <img src="./images/logo.png" alt="" class="img-fluid" /> */}
+                                           
                                             <img src="./assets/img/nvk-logo.png" alt="" class="img-fluid" />
                                         </div>
                                         <h1 class="f-w-400 mt-8">Sign in to continue</h1>

@@ -89,8 +89,11 @@ const ForgotPassword = (props) => {
                 </div>
             </div>
             <div class="container">
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"1em"}}>
+                        <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" />
+                        </div>
                 <div class="row justify-content-center mt-md-8">
-                    <div class="col-md-6">
+                    <div class="col-md-6" style={{marginTop:"2em"}}>
                         <div class="bg-white px-3 py-3 signInContent">
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">

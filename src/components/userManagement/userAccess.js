@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import {  Tabs,  TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
@@ -122,6 +123,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
         }
         console.log(this.props.reduxSelectedUser)
        console.log("exestingPermission", exestingPermission)
+       let tempImage = "./images/noPerson.png";
     return (
         <>
         {/* <div clas="userManagementSection"> */}
@@ -208,7 +210,10 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                             <div class="bg-grey-transparent-2 px-3 py-3">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
-                                                        <img src="assets/img/profile-img.png" class="img-fluid" />
+                                                        <img src=
+                                                         {this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar:tempImage:""}
+                                                         class="img-fluid" style={{borderRadius:"3em"}} />
+                                                        {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                     </div>
                                                     {this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
