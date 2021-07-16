@@ -207,14 +207,9 @@ export class OrganizationSettings extends React.Component {
                 alert(JSON.stringify(c))
             })
          }
-         //window.location.reload();
     
-
-
      }
      handleRemoveImage = (e) =>{
-        // this.setState({logo:""})
-        //alert("Image Removed SuccessFully")
         let id="2"
         let data = this.props.removeImage(id)
         data.then(res=>{
@@ -266,13 +261,7 @@ export class OrganizationSettings extends React.Component {
                 else{
                     url="https://zvky.flamingotech.ml/"+organizationDataById.logo
                 }
-                 
-
-              //debugger
-              //iImage="assets/img/noImage.png";
-              
-               
-               
+          
             }
         }
         else{
@@ -321,11 +310,7 @@ export class OrganizationSettings extends React.Component {
             
             
             else{
-                // props.duplicateProduct(id)
-                // history.push({
-                //     pathname:`/addProduct/${id}`,
-        
-                // })
+                //
             }
 
             this.setState({
@@ -486,14 +471,9 @@ export class OrganizationSettings extends React.Component {
                                             //  error={this.state.isError}
                                             name="phone" value={organizationDataById.phone} 
                                             onChange={this.handleInput} 
-                                            // onChange={(e) => {
-                                            //     this.setState(organizationDataById.phone);
-                                            //     if (e.target.value.length > 10) {
-                                            //       this.setState({this.state.isError:true});
-                                            //     }
-                                            //   }}
+  
                                             />
-                                            {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control" name="phone" value={organizationDataById.phone} onChange={this.handleInput} /> */}
+                                           
                                             {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                         </div>
                                     </div>
