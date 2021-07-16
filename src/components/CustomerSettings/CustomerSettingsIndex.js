@@ -36,7 +36,7 @@ class CustomerSettings extends Component {
                 <div class="px-md-3 mt-3">
                     <Tabs>
                         <TabList>
-                            <Tab style={{bottom:"0px"}}>Notification</Tab>
+                            <Tab style={{bottom:"0px"}}>Notifications</Tab>
                             <Tab style={{bottom:"0px"}}>Financial</Tab> 
                             <Tab style={{bottom:"0px"}}>Types</Tab> 
                             <Tab style={{bottom:"0px"}}>Delivery Methods</Tab> 

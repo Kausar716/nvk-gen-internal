@@ -101,7 +101,7 @@ const Notification = (props) => {
 
       <div color="primary" onClick={toggle} className="SubHeader">
       
-      <Label className="subFont">Notifications</Label>
+      <Label className="subFont">Customer Notifications</Label>
       <span className="updownSymbolContainer"  style={{paddingTop:4}}> 
       {isOpen ?   <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -109,12 +109,12 @@ const Notification = (props) => {
         </div>
       <Collapse isOpen={isOpen}>
   
-         <div className="docDetails" style={{marginTop:"-12px"}}>
-         <p className="sub_menu_nameD"> Customer Notifications</p>
+         {/* <div className="docDetails" style={{marginTop:"-12px"}}> */}
+         {/* <p className="sub_menu_nameD"> Customer Notifications</p> */}
                   {/* <Label className="secondHeader">
                   Customer Notification
                   </Label> */}
-          </div>
+          {/* </div> */}
            
           <div className="containerBox">
 

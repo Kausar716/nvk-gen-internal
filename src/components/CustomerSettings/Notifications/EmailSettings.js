@@ -87,7 +87,7 @@ const EmailSetting = props => {
     <div>
 		<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
         <div onClick={toggle}  className="SubHeader">
-        <Label className="subFont">Email Settings</Label>
+        <Label className="subFont">Customer Quote Reminders</Label>
         <span className="updownSymbolContainer"> 
         {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -95,15 +95,15 @@ const EmailSetting = props => {
           </div>
         <Collapse isOpen={isOpen}>
            
-                <div className="docDetails" style={{marginTop:"-12px"}}>
-                <p className="sub_menu_nameD"> Quote Reminders</p>
+                {/* <div className="docDetails" style={{marginTop:"-12px"}}> */}
+                {/* <p className="sub_menu_nameD"> Quote Reminders</p> */}
                   {/* <Label className="secondHeader">
                   Quote Reemainders
                   </Label> */}
-                </div>
+                {/* </div> */}
                     <Row className="containerBox">
                         <Col sm="2">
-                            <Label className="subHeadingLabels">First Notice</Label>
+                            <Label className="subHeadingLabels" style={{marginLeft:6}}>First Notice</Label>
                         <Row className="spacebelow">
                             <Col>
                               	<div>
@@ -115,15 +115,15 @@ const EmailSetting = props => {
       							</div>
                             </Col>
                            
-                            <Col> <Label  className="moveLeftESetting">days
-                              </Label>
+                            <Col> <p  className="moveLeftESetting">days
+                              </p>
                             </Col>
                         </Row>
                         </Col>
 
 
                         <Col sm="2">
-                            <Label className="subHeadingLabels">Second Notice</Label>
+                            <Label className="subHeadingLabels" style={{marginLeft:6}}>Second Notice</Label>
                             <Row>
 							<Col>
                               	<div>
@@ -136,15 +136,15 @@ const EmailSetting = props => {
                             </Col>
 
                               <Col>
-                            <Label  className="moveLeftESetting">days
-                              </Label>
+                            <p  className="moveLeftESetting">days
+                              </p>
                             </Col>
                             </Row>
                         </Col>
 
 
                     <Col sm="2">
-                            <Label className="subHeadingLabels">Quote Set to Inactive</Label>
+                            <Label className="subHeadingLabels" style={{marginLeft:6}}>Quote Set to Inactive</Label>
                             <Row>
 							<Col>
                               	<div>
@@ -157,8 +157,8 @@ const EmailSetting = props => {
                             </Col>
 
                               <Col>
-                            <Label  className="moveLeftESetting">days
-                              </Label>
+                            <p  className="moveLeftESetting">days
+                              </p>
                             </Col>
                             </Row>
                     </Col>
