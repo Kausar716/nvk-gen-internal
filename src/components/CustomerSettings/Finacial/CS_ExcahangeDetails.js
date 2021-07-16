@@ -209,7 +209,7 @@ props.saveSupplierData(obj1)
               <Col xs="12">
               
           <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel" >Cancel</button>
+                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}>Cancel</button>
                         <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}>Save</button>
                   </div>
                   </Col> 

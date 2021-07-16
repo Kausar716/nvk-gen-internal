@@ -219,9 +219,9 @@ const initialSatate = {
             case GET_EMAIL_NOTIFICATION:
             return{
                 ...state,
-                first_notice:action.payload.data.first_notice,
-                second_notice:action.payload.data.second_notice,
-                quote_set_to_inactive:action.payload.data.quote_set_to_inactive
+                first_notice:action.payload.data.active[0].first_notice,
+                second_notice:action.payload.data.active[0].second_notice,
+                quote_set_to_inactive:action.payload.data.active[0].quote_set_to_inactive
                
 
             }

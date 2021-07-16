@@ -208,17 +208,17 @@ console.log(errorObj)
                         <div class="col-md-6">
                             <h2>Customer Details</h2>
                             <div class="d-flex align-items-center">
-                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0" >
                                     <div class="switcher ml-2 pr-2">
-                                        <input type="checkbox" name="switcher_checkbox_alert" id="switcher_checkbox_alert" value="2"/>
-                                        <label for="switcher_checkbox_alert"></label>
+                                        <input style={{cursor:"pointer"}} type="checkbox" name="switcher_checkbox_alert" id="switcher_checkbox_alert" value="2"/>
+                                        <label style={{cursor:"pointer"}} for="switcher_checkbox_alert"></label>
                                     </div>
                                     Alert
                                 </div>
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
-                                        <input type="checkbox" name="switcher_checkbox_Prospect" id="switcher_checkbox_Prospect" value="2"/>
-                                        <label for="switcher_checkbox_Prospect"></label>
+                                        <input style={{cursor:"pointer"}} type="checkbox" name="switcher_checkbox_Prospect" id="switcher_checkbox_Prospect" value="2"/>
+                                        <label style={{cursor:"pointer"}} for="switcher_checkbox_Prospect"></label>
                                     </div>
                                     Prospect
                                 </div>
@@ -233,7 +233,7 @@ console.log(errorObj)
                                         Archive
                                     <div class="switcher ml-2 pr-2">
                                         <input type="checkbox" name="customerStatus" id="customerStatus" value="2"/>
-                                        <label for="customerStatus"></label>
+                                        <label style={{cursor:"pointer"}} for="customerStatus"></label>
                                     </div>
                                    
                                 </div>
