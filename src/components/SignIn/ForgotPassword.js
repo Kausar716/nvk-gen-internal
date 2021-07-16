@@ -125,9 +125,9 @@ const ForgotPassword = (props) => {
                 <div class="row justify-content-center mt-1">
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-12 text-center">
-                            <p class="textGrey">Trouble accessing your account or registering?<br/>
-                                Contact <a href="#">support@nvkgenesys.com</a> </p>
+                            <div class="col-md-12 text-center"  style={{marginBottom:"14em"}}>
+                            {/* <p class="textGrey">Trouble accessing your account or registering?<br/>
+                                Contact <a href="#">support@nvkgenesys.com</a> </p> */}
                             </div>
                         </div>
                     </div>
@@ -142,10 +142,10 @@ const ForgotPassword = (props) => {
                                     NVKGENESYS.COM
                                 </li>
                                 <li class="list-inline-item"> | 
-                                    <a href="">TERMS OF USE</a>
+                                    <a href=""> &nbsp;TERMS OF USE</a>
                                 </li>
                                 <li class="list-inline-item"> | 
-                                    <a href="">PRIVACY</a>
+                                    <a href=""> &nbsp; PRIVACY</a>
                                 </li>
                             </ul>
                         </div>
