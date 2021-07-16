@@ -16,6 +16,7 @@ import InfoModal from "../Modal/InfoModal"
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
+import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData}   from "../../actions/supplierManagementAction"
 
 
     class SupplierAccountReasons extends Component {
@@ -34,7 +35,7 @@ import { is } from 'immutable';
             ev.dataTransfer.setData("id",id)
         }
         componentDidMount(){
-            this.props.getAllReasonMethods()
+            this.props.getAllSupplierReasonMethods()
 
         }
 
@@ -45,7 +46,7 @@ import { is } from 'immutable';
 
         onDrop=(ev,cat)=>{
             let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.customerData.customerReasonList
+            let datatoParse = this.props.supplierData.supplierReasonList
             console.log(cat)
 
             let tasks = []
@@ -85,9 +86,9 @@ import { is } from 'immutable';
             }
             if (doProcess === true) {
                
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-account-reason")
+                let result= this.props.handleDragDropCustomer(tasks[0],"update-supplier-reasons")
                 result.then(res=>{
-                    this.props.getAllReasonMethods()
+                    this.props.getAllSupplierReasonMethods()
                 })   
             }
            }
@@ -104,29 +105,29 @@ import { is } from 'immutable';
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
             console.log(id)
-           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-account-reason")
+           let result= this.props.handleCustomerTypeDelete(id,"delete-supplier-reasons")
            result.then(res=>{
-            this.props.getAllReasonMethods()
+            this.props.getAllSupplierReasonMethods()
            })
 
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerReason")
+            this.props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierReason")
         }
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerReason.reason.trim() ===""){
+            if(this.props.supplierData.supplierReason.reason.trim() ===""){
                 
-                this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+                this.setState({isOpen1:true,message:["please add Reason"]})
 
 
             }else{
                 let obj = {}
-                obj.reason = this.props.customerData.customerReason.reason
+                obj.reason = this.props.supplierData.supplierReason.reason
                 obj.status = 1
-                let result = this.props.saveReasonMethod(obj)
+                let result = this.props.saveSupplierReasonMethod(obj)
                 result.then(data=>{
-                    this.props.getAllReasonMethods()
+                    this.props.getAllSupplierReasonMethods()
                 })
             }
             // this.props.saveCustomerType()
@@ -138,9 +139,9 @@ import { is } from 'immutable';
 
 render() {
  
-    const {customerData} = this.props
+    const {supplierData} = this.props
 
-    console.log(this.props.customerData.customerReasonList)
+    console.log(this.props.supplierData.supplierReasonList)
 
         return (
            
@@ -191,7 +192,7 @@ render() {
                                         <p>Reasons</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="Reason" id="reason" value={customerData.customerReason.reason}   placeholder="Reason" onChange={this.handleCategoryInputAction}/>
+                                            <input type="text" className="form-control" placeholder="Reason" id="reason" value={supplierData.supplierReason.reason}   placeholder="Reason" onChange={this.handleCategoryInputAction}/>
                                               
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
@@ -214,7 +215,7 @@ render() {
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
-                                                   {this.props.customerData.customerReasonList.inactive.map(t=>{
+                                                   {this.props.supplierData.supplierReasonList.inactive.map(t=>{
                                                     return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.reason}</span>
@@ -248,7 +249,7 @@ render() {
                                             </div>
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
-                                                   {this.props.customerData.customerReasonList.active.map(t=>{
+                                                   {this.props.supplierData.supplierReasonList.active.map(t=>{
                                                     return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.reason}</span>
@@ -271,11 +272,9 @@ render() {
      const mapStateToProps = (state)=> (
         // console.log(state)
          {
+            supplierData:state.supplierData
         
-    plantCategoryList:state.categoryData.plantCategoryData,
-    temp:state,
-    name:state.categoryData.name,
-    customerData:state.customerReducer
+   
     }
     )
     export default connect(mapStateToProps,{
@@ -284,7 +283,9 @@ render() {
         getAllDeliveryMethods,
         handleCustomerTypeDelete,
         getAllReasonMethods,
-        saveReasonMethod,
+        getAllSupplierReasonMethods,
+        saveSupplierReasonMethod,
+        handleSupplierExchnageData,
 
         
 handleDragDropCustomer    })((SupplierAccountReasons))

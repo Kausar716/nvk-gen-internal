@@ -45,6 +45,7 @@ import {
     ADD_SUPPLIER_DELIVERY_LOCATION,
     ADD_SUPPLIER_CONTACT ,
     ADD_SUPPLIER_CATEGORY, 
+    GET_SUPPLIER_CATEGORY,
     CREATE_SUPPLIER_ADDRESS,
     ADD_SUPPLIER_REASON, 
    
@@ -92,6 +93,8 @@ import {
     DELETE_SUPPLIER_SUCCESS,
     ADD_SUPPLIER_ACCOUNTS,
     GET_SUPPLIER_ACCOUNTS,
+ ADD_SUPPLIER_LOCATION ,
+GET_SUPPLIER_LOCATION ,
 
 
 
@@ -102,10 +105,31 @@ import {
 
 
 //CREATE
-
-export const saveReturnReasonMethod = (data)=>dispatch=>{
+export const saveSupplierLocationMethod = (data)=>dispatch=>{
  
-    return axios.post("/api/add-customer-reason",data,config).then(res=>{ 
+    return axios.post("/api/add-delivery-supplier",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_SUPPLIER_LOCATION,
+                payload:res.data   
+            })
+        })  
+
+}
+ export const getAllSupplierLocationMethods = () =>dispatch => {
+    return axios.get("/api/delivery-suppliers",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_LOCATION,
+            payload:res.data,
+
+        })
+    })
+
+ }
+export const saveSupplierReasonMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-supplier-reasons",data,config).then(res=>{ 
         console.log(res)
         dispatch({
                 type:ADD_SUPPLIER_ACCOUNTS,
@@ -114,8 +138,8 @@ export const saveReturnReasonMethod = (data)=>dispatch=>{
         })  
 
 }
- export const getAllReturnReasonMethods = () =>dispatch => {
-    return axios.get("/api/customer-reason-list",config).then(res=>{ 
+ export const getAllSupplierReasonMethods = () =>dispatch => {
+    return axios.get("/api/supplier-reasonses",config).then(res=>{ 
         console.log(res.data)
     dispatch({
             type:GET_SUPPLIER_ACCOUNTS,
@@ -125,12 +149,35 @@ export const saveReturnReasonMethod = (data)=>dispatch=>{
     })
 
  }
+ export const saveSupplierCategoryMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-supplier-category",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_SUPPLIER_CATEGORY,
+                payload:res.data   
+            })
+        })  
 
-export const handleSupplierExchnageData =(data,id)=>dispatch=>{
+}
+ export const getAllSupplierCategoryMethods = () =>dispatch => {
+    return axios.get("/api/supplier-categories",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_CATEGORY,
+            payload:res.data,
+
+        })
+    })
+
+ }
+
+export const handleSupplierExchnageData =(data,id,dataType)=>dispatch=>{
     dispatch({
         type:HANDLE_SUPPLIER_INPUT_EXCHANGE,
         data:data,
-        id:id
+        id:id,
+        dataType:dataType
 
     })
 
