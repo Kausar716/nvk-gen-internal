@@ -124,6 +124,12 @@ import {getUsersList,showUser} from "../../actions/userAction";
         console.log(this.props.reduxSelectedUser)
        console.log("exestingPermission", exestingPermission)
        let tempImage = "./images/noPerson.png";
+
+
+
+
+
+       
     return (
         <>
         {/* <div clas="userManagementSection"> */}
@@ -211,7 +217,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
                                                         <img src=
-                                                         {this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar:tempImage:""}
+                                                         {this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null ?tempImage: this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
                                                          class="img-fluid" style={{borderRadius:"3em"}} />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                     </div>
