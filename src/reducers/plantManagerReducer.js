@@ -265,7 +265,7 @@ export default function(state = initialSatate, action){
         }
         case ERROR_HANDLE:
             return{
-                ...state,
+                ...state, 
                 status:action.status,
                 message:action.message
             }

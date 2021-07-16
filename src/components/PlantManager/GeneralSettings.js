@@ -146,6 +146,14 @@ import {
     const {plantCategoryData} =  props.categoryData
         console.log(props.plantData)
         console.log(plantDataById)
+    let flag=0
+    if(plantDataById){       
+        if(!plantDataById.genus || !plantDataById.species || !plantDataById.category_id){
+            flag=1
+            
+        }
+        
+    }
 
     return (
         <div>
@@ -303,7 +311,7 @@ import {
                                          onClick={()=>props.plantPageReDirectAction("all","plant")}
                                         >Cancel</button>
                                         {/* </a> */}
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?(needAction===true && flag ===0)?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>
                                 </div>
                             </form>
