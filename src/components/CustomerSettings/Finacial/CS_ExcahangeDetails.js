@@ -160,7 +160,7 @@ props.saveSupplierData(obj1)
 
   
           <div className="docDetails" style={{marginTop:"-16px"}}>
-          <p className="sub_menu_nameD">  Supplier Exchange Details</p>
+          <p className="sub_menu_nameD">  Supplier Exchange</p>
                   {/* <Label className="secondHeader">
                   Suppliear Exchange Details
                   </Label> */}
@@ -184,7 +184,7 @@ props.saveSupplierData(obj1)
               </Col>
 
               <Col  className="spacebelow">
-                  <Label className="subHeadingLabels">Exchange Rates</Label>
+                  <Label className="subHeadingLabels">Exchange Rate</Label>
                         <Row>
                             <Col> 
                                 

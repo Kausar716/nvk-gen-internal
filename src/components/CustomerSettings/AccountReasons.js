@@ -188,7 +188,7 @@ render() {
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p>Reasons</p>
+                                        <p style={{fontWeight:"bold"}}>Reasons</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text" className="form-control" placeholder="Reason" id="reason" value={customerData.customerReason.reason}   placeholder="Reason" onChange={this.handleCategoryInputAction}/>

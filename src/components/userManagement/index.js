@@ -10,6 +10,7 @@ import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
+import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
 
 export class UserManagement extends Component {  
 constructor(){
@@ -141,6 +142,7 @@ handleCreateUpdateFlow = (obj)=>{
                     <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}>
                         <Tab style={{bottom:"0px"}}>User Profile</Tab>
                         <Tab style={{bottom:"0px"}}>User Access</Tab>
+                        <Tab style={{bottom:"0px"}}>User Positions</Tab>
                     </TabList>
                     <TabPanel>
                     <div class="bg-white">
@@ -204,6 +206,10 @@ handleCreateUpdateFlow = (obj)=>{
 
                     <TabPanel>
                     <UserAccess/>
+                    </TabPanel>
+                    <TabPanel>
+                        <UserSettingsIndex/>
+
                     </TabPanel>
                 </Tabs>
                
