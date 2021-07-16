@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
+import CheckBox from "./Checkbox";
 
 export class UserProfile extends Component {  
     constructor(){
@@ -50,7 +51,13 @@ export class UserProfile extends Component {
             open:false,
             cancel:false,
             logo:"",
-            deleted_at:null
+            deleted_at:null,
+            locations: [
+                { id: 1, value: "Form A",address:"1105 HWY5, Dundas, CN", isChecked: false },
+                { id: 2, value: "Form B", address:"1105 HWY5, Dundas, UN", isChecked: false },
+                { id: 3, value: "Form C", address:"11 HWY5, Dundas, Uk",isChecked: false },
+                { id: 4, value: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
+              ]
         }
     }
     componentDidMount(){
@@ -69,6 +76,24 @@ export class UserProfile extends Component {
             })
 
     }
+
+
+    handleAllChecked = event => {
+        let locations = this.state.locations;
+        locations.forEach(loc => (loc.isChecked = event.target.checked));
+        this.setState({ locations: locations });
+      };
+    
+      handleCheckChieldElement = event => {
+        let locations = this.state.locations;
+        locations.forEach(loc => {
+          if (loc.value === event.target.value)
+            loc.isChecked = event.target.checked;
+        });
+        this.setState({ locations: locations });
+      };
+
+
 
     handleInput = (e) => {
         const {target:{name,value}} =e
@@ -356,6 +381,7 @@ export class UserProfile extends Component {
                                             </div>
                                         </div>
                                     </div> */}
+
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-4 py-4">
@@ -423,9 +449,32 @@ export class UserProfile extends Component {
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
+
+                                                
+
+                                                    
+                                                                 
+                                                                    
                                                     <label>Location Assigned</label>
+
+
+                                                 
+
+
                                                     <div class="locAssignBox">
-                                                        <ul class="list-unstyled">
+
+
+                                                    {this.state.locations.map(loc=>{
+                                                        return(
+                                                            <CheckBox
+                                                                            handleCheckChieldElement={this.handleCheckChieldElement}
+                                                                            {...loc}
+                                                                        />
+                                                        )
+                                                    })}
+
+                                                   
+                                                        {/* <ul class="list-unstyled">
                                                             <li>
                                                                 <div class="custom-control custom-checkbox">
                                                                     <input type="checkbox" class="custom-control-input" id="customCheck1"/>
@@ -456,12 +505,19 @@ export class UserProfile extends Component {
                                                                     <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label>
                                                                 </div> 
                                                             </li>
-                                                        </ul>
+                                                        </ul> */}
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="custom-control custom-checkbox">
-                                                            <input type="checkbox" class="custom-control-input" id="customCheck5"/>
-                                                            <label class="custom-control-label pl-2" for="customCheck5">User has access to all locations </label>
+                                                            {/* <input type="checkbox" class="custom-control-input" id="customCheck5"/>
+                                                            <label class="custom-control-label pl-2" for="customCheck5">User has access to all locations </label> */}
+                                                            <input
+                                                           
+                                                                        type="checkbox"
+                                                                        onClick={this.handleAllChecked}
+                                                                        value="checkedall"
+                                                                        />{" "}
+                                                                        User has access to all locations
                                                         </div> 
                                                     </div>
                                                 </div>

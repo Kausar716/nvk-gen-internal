@@ -45,9 +45,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
             this.props.getAllSubAttribute(16)
            })
         }
+
+        
         handlePositionInputAction = (e)=>{
             this.props.handlePositionInputAction(e.target.name,e.target.value)
         }
+
         handleAddCategory = (e)=>{
        
             let positionObj={}
@@ -61,6 +64,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
             })
         
         }
+
+
         render() {
         console.log(this.props.temp)
         var tasks={
@@ -89,7 +94,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                     <div className="col-md-12 col-lg-12">
                                         <p>Position</p>
                                         <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
+                                        <div className="col-md-6 col-lg-9">  
                                                 <input type="text" className="form-control" name="position" value={this.props.name}   placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
@@ -120,10 +125,6 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                                             </li>
                                                     })}
                                             </ul>
-                                             
-                                               
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -184,4 +185,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
         handlePositionInputAction,
         handleAddPosition      
     })(Categories)
+
+
+
 

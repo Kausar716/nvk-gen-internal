@@ -183,7 +183,7 @@ handleCreateUpdateFlow = (obj)=>{
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0">  
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck1" value={this.state.displatDeletedRecord} checked={(this.state.displatDeletedRecord === "on")? true:false} onChange={this.hanleCheckBox}/>
-                                                <label class="custom-control-label pl-2" for="customCheck1"> Display deleted records</label>
+                                                <label class="custom-control-label pl-2" for="customCheck1"> Display deleted records only</label>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-4 text-center mt-3 mt-md-0" onClick={this.handleCreate}>

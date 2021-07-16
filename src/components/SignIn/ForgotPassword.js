@@ -89,8 +89,11 @@ const ForgotPassword = (props) => {
                 </div>
             </div>
             <div class="container">
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"1em"}}>
+                        <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" />
+                        </div>
                 <div class="row justify-content-center mt-md-8">
-                    <div class="col-md-6">
+                    <div class="col-md-6" style={{marginTop:"2em"}}>
                         <div class="bg-white px-3 py-3 signInContent">
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
@@ -110,7 +113,7 @@ const ForgotPassword = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                        <button type="submit" style={{backgroundColor:"#348fe2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">
@@ -125,34 +128,35 @@ const ForgotPassword = (props) => {
                 <div class="row justify-content-center mt-1">
                     <div class="col-md-6">
                         <div class="row">
-                            <div class="col-md-12 text-center">
-                            <p class="textGrey">Trouble accessing your account or registering?<br/>
-                                Contact <a href="#">webmaster@nvknurseries.com</a> </p>
+                            <div class="col-md-12 text-center"  style={{marginBottom:"14em"}}>
+                            {/* <p class="textGrey">Trouble accessing your account or registering?<br/>
+                                Contact <a href="#">support@nvkgenesys.com</a> </p> */}
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="footerBar py-3 mt-md-8">
+            <div class="footerBar py-3 mt-md-8" style={{position:"fixed", bottom:"0", height:"5em", width:"100%"}}>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <ul class="list-unstyled list-inline mb-0">
+                            {/* <ul class="list-unstyled list-inline mb-0">
                                 <li class="list-inline-item">
                                     NVKGENESYS.COM
                                 </li>
                                 <li class="list-inline-item"> | 
-                                    <a href="">TERMS OF USE</a>
+                                    <a href=""> &nbsp;TERMS OF USE</a>
                                 </li>
                                 <li class="list-inline-item"> | 
-                                    <a href="">PRIVACY</a>
+                                    <a href=""> &nbsp; PRIVACY</a>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label>
+                        <p>Terms of Use | Privacy Policy <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                            {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                         </div>
                     </div>
                 </div>

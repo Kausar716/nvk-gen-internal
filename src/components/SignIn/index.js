@@ -97,15 +97,15 @@ class SignIn extends Component{
                 </div>
                 <hr style={{marginTop:90}}/>
                 <div className="infostyle" style={{textAlign:"center"}}>
-                    <p className="logincontactInfo" style={{color:"gray"}}>Trouble accessing your account or registering ?</p>
-                    <p className="logincontactInfo" style={{color:"gray"}}>Contact <span  style={{color:"#4f91f7"}}>support@nvkgenesys.com</span></p>
+                    {/* <p className="logincontactInfo" style={{color:"gray"}}>Trouble accessing your account or registering ?</p>
+                    <p className="logincontactInfo" style={{color:"gray"}}>Contact <span  style={{color:"#4f91f7"}}>support@nvkgenesys.com</span></p> */}
                 </div>
             </Form>
             <p>version:0.0.0.2</p>
             </div>
                 </div>
                 <footer>
-                    <p>NVKGENESYS.COM | TERMS OF USE | PRIVACY <br></br>&copy; Nurseries. All Rights Reserved</p>
+                    <p>Terms of Use | Privacy Policy <br></br>&copy; © 2021 NVK Holdings Inc. All rights reserved.</p>
                    
                     {/* <p>&copy; Nurseries. All Rights Reserved</p> */}
                    
