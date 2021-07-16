@@ -58,6 +58,7 @@ GET_SUPPLIER_CATEGORY,
 ADD_SUPPLIER_CATEGORY,
 ADD_SUPPLIER_LOCATION,
 GET_SUPPLIER_LOCATION,
+GET_EXCHANGE_SUPPLIER_DATA,
 
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
@@ -92,7 +93,8 @@ const defaultState={
         from_currency:"CAD",
         to_currency:"US",
         exchange_rate:0,
-        exchange_date:new Date()
+        exchange_date:new Date().getFullYear()+"-"+(new Date().getMonth().toString().length===1?"0"+(new Date().getMonth()+1):new Date().getMonth())+"-"
+        +(new Date().getDate().toString().length===1?"0"+(new Date().getDate()):new Date().getDate())
 
     },
     supplierReason:{
@@ -131,6 +133,12 @@ const defaultState={
 const supplierManagementReducer =(state=defaultState, action)=>{
     console.log(action.payload)
         switch(action.type){
+            case GET_EXCHANGE_SUPPLIER_DATA:
+                return{
+                    ...state,
+                    supplierExchange:action.payload.data
+
+                }
 
             case GET_SUPPLIER_LOCATION:
                 return{
@@ -193,11 +201,9 @@ const supplierManagementReducer =(state=defaultState, action)=>{
 
                 // plant page redirects
                 case ADD_FINANCES_SUPPLIER_DATA:
-                    let date = action.payload.data.exchange_date.split("-")
-                    let dateInformate = new Date(date[0],date[1]-1,date[2])
                     return{
                         ...state,
-                        supplierExchange:{...action.payload.data,exchange_date:dateInformate}
+                        supplierExchange:{...action.payload.data}
                     }
                     case HANDLE_SUPPLIER_INPUT_EXCHANGE:
                         return{

@@ -141,47 +141,16 @@ render() {
                        	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
                <div className="bg-white">
  <h4 className="p-15 mb-0">Delivery Methods For Orders</h4>
-                            <h4 className="p-15 mb-0">Categories</h4>
-                            <hr className="m-0"/>
+ <hr className="m-0"/>
+                           
+                          
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                <div className="row">
-                                        {/* <div className="col-md-6">
-                                            <label>Type</label>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerTypes.delivery_method}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
-                                            {/* </div> */}
-                                        {/* </div>  */}
-                                        {/* <div className="col-md-6">
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
-                                                </a>
-                                            </div>
-                                        </div> */}
-                                    </div>
+                           
+                              
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p>Delivery Method</p>
+                                        {/* <p>Delivery Method</p> */}
+                                        <h5 className="p-15 mb-0" style={{marginLeft:"-10px"}}>Delivery Method</h5>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerDelivery.delivery_method}   placeholder="Delivery Method" onChange={this.handleCategoryInputAction}/>
@@ -197,7 +166,7 @@ render() {
                                 </div>
                                 <div class="row mt-5 mb-4">
                                     <div class="col">
-                                        <div class="card midCard">
+                                        <div class="car midCard">
                                             <div class="card-header">
                                                 Inactive
                                             </div>

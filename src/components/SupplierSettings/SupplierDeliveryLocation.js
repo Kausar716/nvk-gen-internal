@@ -183,7 +183,8 @@ render() {
                                 </div> */}
                                 <div className="row">
                                         <div className="col-md-4">
-                                            <p>Location</p>
+                                            {/* <p>Location</p> */}
+                                            <label for="Category">Location</label>
                                             <div>
                                                 <input type="text" className="form-control"  id="location" value={supplierData.supplierLocation.location}   placeholder="location" onChange={this.handleCategoryInputAction}/>
                                             </div>
@@ -191,7 +192,8 @@ render() {
                                             </div>
                                         </div>
                                         <div className="col-md-4">
-                                            <p>Address</p>
+                                            {/* <p>Address</p> */}
+                                            <label for="Category">Address</label>
                                             <div>
                                             <input type="text" className="form-control" placeholder="" id="address" value={supplierData.supplierLocation.address}   placeholder="address" onChange={this.handleCategoryInputAction}/>
                                                 {/* <Field
@@ -204,7 +206,8 @@ render() {
                                         </div>
 
                                         <div className="col-md-4">
-                                            <p>City</p>
+                                            {/* <p>City</p> */}
+                                            <label for="Category">City</label>
                                             <div>
                                                 <input type="text" className="form-control" placeholder="" id="city" value={supplierData.supplierLocation.city}   placeholder="city" onChange={this.handleCategoryInputAction}/>
                                             </div>
@@ -218,7 +221,7 @@ render() {
 
 
                                     <div className="row" style={{marginTop:"0.7em"}}>
-                                            <div className="col-md-6">
+                                            <div className="col-md-3">
                                                         <label for="Category">Prov/State</label>
                                                             <select className="form-control"  id="state"  value={supplierData.supplierLocation.state}  onChange={this.handleCategoryInputAction}>
                                                             <option>Select</option>
@@ -228,7 +231,7 @@ render() {
                                                             </select>
                                             </div>
 
-                                            <div className="col-md-6">
+                                            <div className="col-md-3">
                                                         <label for="Category">Country</label>
                                                             <select className="form-control"  id="country"  value={supplierData.supplierLocation.country}   placeholder="country" onChange={this.handleCategoryInputAction}>
                                                                 <option>Select</option>
@@ -237,11 +240,9 @@ render() {
                                                                 <option value="Africa" selected={supplierData.supplierLocation.country =="Africa"?"selected":""}>Africa</option>
                                                             </select>
                                             </div>
-                                    </div>
-
-                                    <div className="row" style={{marginTop:"1.2em"}}>
-                                        <div className="col-md-6">
-                                            <p>Postal/ZIP</p>
+                                            <div className="col-md-3">
+                                            {/* <p></p> */}
+                                            <label for="Category">Postal/ZIP</label>
                                             <div>
                                                 <input type="text" className="form-control" id="zip" value={supplierData.supplierLocation.zip}   placeholder="zip" onChange={this.handleCategoryInputAction}/>
                                             </div>
@@ -250,8 +251,9 @@ render() {
                                         </div>
                                         
 
-                                        <div className="col-md-6">
-                                            <p>Lat/Long</p>
+                                        <div className="col-md-3">
+                                            {/* <p></p> */}
+                                            <label for="Category">Lat/Long</label>
                                             <div>
                                                 <input type="text" className="form-control" placeholder="" id="lat" value={supplierData.supplierLocation.lat}   placeholder="lat" onChange={this.handleCategoryInputAction}/>
                                             </div>
@@ -262,6 +264,10 @@ render() {
                                                 {/* <a href="javascript;" className="d-flex align-items-center" style={{marginLeft:"1em"}}> Reset</a> */}
                                             </div>
                                         </div>
+                                    </div>
+
+                                    <div className="row" style={{marginTop:"1.2em"}}>
+                                
                                     </div>
                                
                                 <div class="row mt-5 mb-4">

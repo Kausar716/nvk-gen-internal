@@ -140,6 +140,7 @@ render() {
  <h4 className="p-15 mb-0">Customer Terms</h4>
                 
                             <hr className="m-0"/>
+                            
                             <div className="ContentSection p-15">
                                 {/* <div className="row">
                                     <div className="col-md-12 col-lg-12">
@@ -178,7 +179,9 @@ render() {
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p>Term</p>
+                                        {/* <p>Term</p> */}
+                                        {/* <h4 className="p-15 mb-0">Term</h4> */}
+                                        <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}>Term</h5>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text" className="form-control" placeholder="Term" id="term" value={customerData.customerTerm.term}    onChange={this.handleCategoryInputAction}/>

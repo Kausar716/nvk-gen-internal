@@ -95,12 +95,13 @@ const Notification = (props) => {
 
 
   const {ready_to_late_notice,reserve_expiry_notice} = props.customerData;
+  console.log(ready_to_late_notice)
   return (
     <>
 
       <div color="primary" onClick={toggle} className="SubHeader">
       
-      <Label className="subFont">Notifications</Label>
+      <Label className="subFont">Customer Notifications</Label>
       <span className="updownSymbolContainer"  style={{paddingTop:4}}> 
       {isOpen ?   <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -108,12 +109,12 @@ const Notification = (props) => {
         </div>
       <Collapse isOpen={isOpen}>
   
-         <div className="docDetails" style={{marginTop:"-12px"}}>
-         <p className="sub_menu_nameD"> Customer Notifications</p>
+         {/* <div className="docDetails" style={{marginTop:"-12px"}}> */}
+         {/* <p className="sub_menu_nameD"> Customer Notifications</p> */}
                   {/* <Label className="secondHeader">
                   Customer Notification
                   </Label> */}
-          </div>
+          {/* </div> */}
            
           <div className="containerBox">
 
@@ -121,7 +122,7 @@ const Notification = (props) => {
 
                       <div className="notification_label">
                             <label>READY to LATE Notice<span> <FaIcon.FiAlertCircle className="alertIcon" /></span></label>
-                            <input placeholder={""}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
                                 </div> 
@@ -137,7 +138,7 @@ const Notification = (props) => {
 
                       <div className="notification_label">
                             <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" /></span></label>
-                            <input placeholder={""}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[1]}</span>}
                                 </div> 
@@ -147,7 +148,7 @@ const Notification = (props) => {
 
                     </div>
                     <div align="right" className="action_area_left" style={{marginRight:180}}>
-                        <button className="button_style_Tools_Setting_Cancel">Cancel</button>
+                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}>Cancel</button>
                         <button className={"button_style_Tools_Setting_Save"}
                         onClick={saveNotfication}>Save</button>
                   </div> 
