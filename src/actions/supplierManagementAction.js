@@ -95,6 +95,7 @@ import {
     GET_SUPPLIER_ACCOUNTS,
  ADD_SUPPLIER_LOCATION ,
 GET_SUPPLIER_LOCATION ,
+GET_EXCHANGE_SUPPLIER_DATA,
 
 
 
@@ -105,6 +106,17 @@ GET_SUPPLIER_LOCATION ,
 
 
 //CREATE
+export const getAllSupplierExchange = ()=>dispatch=>{
+ 
+    return axios.get("/api/supplierexchangedetail",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_EXCHANGE_SUPPLIER_DATA,
+            payload:res.data,
+
+        })
+    })
+}
 export const saveSupplierLocationMethod = (data)=>dispatch=>{
  
     return axios.post("/api/add-delivery-supplier",data,config).then(res=>{ 

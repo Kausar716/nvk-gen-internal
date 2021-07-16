@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse, Row, Col, Label} from 'reactstrap';
 import {connect} from "react-redux";
-import {handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
-import {saveSupplierData,handleSupplierExchnageData} from "../../../actions/supplierManagementAction";
+import {handleChangeFilter,getAllCustomerExchange,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
+import {saveSupplierData,handleSupplierExchnageData,getAllSupplierExchange} from "../../../actions/supplierManagementAction";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -62,34 +62,69 @@ const CS_ExcahangeDetails = (props) => {
     props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
 
   }
-  const datePickerData =(data)=>{
-    props.handleExchangeData(data,"exchange_date","customerExchange")
+  const datePickerData =(e)=>{
+    props.handleExchangeData(e.target.value,"exchange_date","customerExchange")
 }
-const datePickerData1 =(data)=>{
-  props.handleSupplierExchnageData(data,"exchange_date","supplierExchange")
+const datePickerData1 =(e)=>{
+  console.log(e.target.value)
+  props.handleSupplierExchnageData(e.target.value,"exchange_date","supplierExchange")
 
 }
 const saveExchangeData = ()=>{
-  let obj={}
-  obj.from_currency = customerExchange.from_currency
-  obj.to_currency = customerExchange.to_currency
-  obj.exchange_rate = customerExchange.exchange_rate
-  let date = new Date(customerExchange.exchange_date)
-  let dateInformate = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate()
-  obj.exchange_date =dateInformate
-  props.saveFinanceExchangeData(obj)
-let obj1 ={};
-obj1.from_currency = supplierExchange.from_currency
-obj1.to_currency = supplierExchange.to_currency
-obj1.exchange_rate = supplierExchange.exchange_rate
-let date1 = new Date(supplierExchange.exchange_date)
-let dateInformate1 = date1.getFullYear() + '-' + (date1.getMonth()+1) + '-' + date1.getDate()
-  obj1.exchange_date =dateInformate1
-props.saveSupplierData(obj1)
+  props.saveFinanceExchangeData(customerExchange)
+  props.saveSupplierData(supplierExchange)
 
 }
+useEffect(()=>{
+  props.getAllCustomerExchange()
+  props.getAllSupplierExchange()
+
+},[handleSubmit])
 
   const [startDate, setStartDate] = useState(new Date());
+  console.log(customerExchange)
+
+  let dateInformate = customerExchange.exchange_date
+  let split1 = dateInformate.split("-")
+  let month = split1[1]
+  let date = split1[2]
+  let month1
+  let date1
+  if(month.toString().length ==1) {
+    month1 = "0"+month
+  }else{
+    month1 = month
+
+  }
+  if(month.toString().length ==1) {
+    date1 = "0"+date
+  }else{
+    date1 = date
+
+  }
+  let dateToShow = split1[0]+"-"+month1+"-"+date1
+
+  let dateInformate1 = supplierExchange.exchange_date
+  let split2 = dateInformate1.split("-")
+  let month2 = split2[1]
+  let date2 = split2[2]
+  let month3
+  let date3
+  if(month2.toString().length ==1) {
+    month3 = "0"+month2
+  }else{
+    month3 = month2
+
+  }
+  if(date2.toString().length ==1) {
+    date3 = "0"+date2
+  }else{
+    date3 = date2
+
+  }
+  let dateToShow2 = split2[0]+"-"+month3+"-"+date3
+
+
   return (
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
@@ -151,7 +186,9 @@ props.saveSupplierData(obj1)
                   <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
                         <Row>
                             <Col>
-                            <DatePicker  className="inputBoxDesign2" selected={customerExchange.exchange_date} onChange={datePickerData} id="exchange_date_customer"/>
+                            {/* <DatePicker  className="inputBoxDesign2" selected={customerExchange.exchange_date} onChange={datePickerData} id="exchange_date_customer"/> */}
+                            <input type="date" onChange={datePickerData} className="dateDesign"  
+                                                    value={dateToShow} />
                             </Col>
                         </Row>
               </Col>
@@ -202,7 +239,10 @@ props.saveSupplierData(obj1)
                   <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
                         <Row>
                             <Col>
-                            <DatePicker className="inputBoxDesign2" selected={supplierExchange.exchange_date} onChange={datePickerData1} />
+                            {/* <DatePicker className="inputBoxDesign2" selected={supplierExchange.exchange_date} onChange={datePickerData1} /> */}
+                            {/* dateDesign */}
+                            <input type="date" onChange={datePickerData1} className="dateDesign"  
+                                                    value={dateToShow2} />
                             </Col>
                         </Row>
               </Col>
@@ -241,4 +281,4 @@ const mapStateToProps = (state)=>(
 //   form: 'CS_ExcahangeDetails',
 // })(CS_ExcahangeDetails);
 const form = reduxForm({ form: 'Notification' });
-export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData,handleSupplierExchnageData,saveSupplierData})(form(CS_ExcahangeDetails));
+export default connect(mapStateToProps, {getAllSupplierExchange,getAllCustomerExchange,handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData,handleSupplierExchnageData,saveSupplierData})(form(CS_ExcahangeDetails));

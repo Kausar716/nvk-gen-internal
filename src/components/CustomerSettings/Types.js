@@ -186,6 +186,7 @@ render() {
                                 <div className="row">
                                         <div className="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Type</label>
+                                            
                                             <div>
                                                 <input type="text" className="form-control" placeholder="" id="customer_type" value={customerData.customerTypes.customer_type}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
                                             </div>

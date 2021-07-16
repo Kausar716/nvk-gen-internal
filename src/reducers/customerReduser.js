@@ -28,6 +28,7 @@ import {
     ADD_CUSTOMER_TERMS,
     ADD_CUSTOMER_RETURN_REASON,
     GET_CUSTOMER_RETURN_REASON,
+    GET_EXCHANGE_DATA
 
     
     // ADD_CUSTOMER, 
@@ -55,7 +56,8 @@ const initialSatate = {
     from_currency:"CAD",
     to_currency:"US",
     exchange_rate:0,
-    exchange_date:new Date()
+    exchange_date:new Date().getFullYear()+"-"+(new Date().getMonth().toString().length===1?"0"+(new Date().getMonth()+1):new Date().getMonth())+"-"
+    +(new Date().getDate().toString().length===1?"0"+(new Date().getDate()):new Date().getDate())
 
    },
    customerIntrest:{
@@ -98,6 +100,12 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+        case GET_EXCHANGE_DATA:
+            return{
+                ...state,
+                customerExchange:action.payload.data
+
+            }
         case ADD_CUSTOMER_RETURN_REASON:
             return{
                 ...state,
@@ -194,11 +202,11 @@ const initialSatate = {
             }
       
         case ADD_FINANCES_DATA:
-            let date = action.payload.data.exchange_date.split("-")
-            let dateInformate = new Date(date[0],date[1]-1,date[2])
+            // let date = action.payload.data.exchange_date.split("-")
+            // let dateInformate = new Date(date[0],date[1]-1,date[2])
             return{
                 ...state,
-                customerExchange:{...action.payload.data,"exchange_date":dateInformate}
+                customerExchange:{...action.payload.data}
 
             }
         case HANDLE_INPUT_EXCHANGE:
