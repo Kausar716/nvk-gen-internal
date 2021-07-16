@@ -171,6 +171,9 @@ const SkuList = (props)=>{
        
     }
    }
+   const handleCancel = ()=>{
+    props.plantPageReDirectAction("all","plant")
+   }
 
 
    console.log(props.plantData);
@@ -214,8 +217,8 @@ const SkuList = (props)=>{
         return attributeObj.subattribute_id
         }
         })[0]
-       console.log(selectedForm)
-
+ 
+      
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -352,9 +355,12 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
+                                            
                                             <button type="button" class="btn btn-primary btn-lg" disabled={needAction===true?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU":"Update SKU"}</button>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={needAction===true?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Cancel</button>
+
                                         </div>
                                     </div>
                                 </form>

@@ -298,11 +298,11 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
-                                        <a href='/plantManager'>
+                                        {/* <a href='/plantManager'> */}
                                         <button type="button" class="btn btn-outline-secondary btn-lg"
-                                         onClick={()=>props.plantPageReDirectAction("plant","add")}
+                                         onClick={()=>props.plantPageReDirectAction("all","plant")}
                                         >Cancel</button>
-                                        </a>
+                                        {/* </a> */}
                                         <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>
                                 </div>

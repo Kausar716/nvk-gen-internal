@@ -344,6 +344,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={needAction===true?false:true} onClick={()=>props.updateSkuAction(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
+                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Cancel</button>
                                         </div>
                                     </div>
                                 </form>
