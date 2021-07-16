@@ -7,8 +7,8 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
-import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
-import {handleChangeFilter,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,getAllCustomerType,handleDragDropCustomer} from "../../actions/customerSettingAction";
+
+import {handleCustomerTypeDelete,handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
@@ -28,7 +28,7 @@ import { is } from 'immutable';
             ev.dataTransfer.setData("id",id)
         }
         componentDidMount(){
-            this.props.getAllCustomerType()
+            this.props.getAllDeliveryMethods()
 
         }
 
@@ -39,7 +39,7 @@ import { is } from 'immutable';
 
         onDrop=(ev,cat)=>{
             let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.customerData.customerTypeList
+            let datatoParse = this.props.customerData.customerDeliveryList
             console.log(cat)
 
             let tasks = []
@@ -79,9 +79,9 @@ import { is } from 'immutable';
             }
             if (doProcess === true) {
                
-                let result= this.props.handleDragDropCustomer(tasks[0])
+                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-delivery-method")
                 result.then(res=>{
-                    this.props.getAllCustomerType()
+                    this.props.getAllDeliveryMethods()
                 })   
             }
            }
@@ -98,28 +98,28 @@ import { is } from 'immutable';
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
             console.log(id)
-           let result= this.props.handleCategoryDelete(id)
+           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-delivery-method")
            result.then(res=>{
-            this.props.getAllPlantCategories()
+            this.props.getAllDeliveryMethods()
            })
 
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerTypes")
+            this.props.handleExchangeData(e.target.value,e.target.id,"customerDelivery")
         }
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerdelivery.delivery_method.trim() ===""){
+            if(this.props.customerData.customerDelivery.delivery_method.trim() ===""){
                 
                 this.setState({isOpen1:true,message:["please add both type and shortcode"]})
 
 
             }else{
                 let obj = {}
-                obj.delivery_method = this.props.customerData.customerdelivery.delivery_method
-                let result = this.props.saveCustomerType(obj)
+                obj.delivery_method = this.props.customerData.customerDelivery.delivery_method
+                let result = this.props.saveDeliveryMethod(obj)
                 result.then(data=>{
-                    this.props.getAllCustomerType()
+                    this.props.getAllDeliveryMethods()
                 })
             }
             // this.props.saveCustomerType()
@@ -130,35 +130,11 @@ import { is } from 'immutable';
 
 
 render() {
-    var tasks={
-        inactive:[],
-        active:[],
-    }
+ 
     const {customerData} = this.props
-    if(this.props.plantCategoryList){
-        // tasks=this.props.plantCategoryList
-         this.props.plantCategoryList.forEach((t)=>{
-             console.log(t)
-            if(t.status === "1"){
-                tasks.active.push(t)
-            }
-            else if(t.status=== "0"){
-                tasks.inactive.push(t)
-            }
-         })
-    }
-    console.log(this.props.customerData.customerTypeList)
-    // this.props.plantCategoryList.forEach((t)=>{
-    //         tasks[t.category].push(
-    //             <div key={t.name} onDragStart={(e)=>this.onDragStart(e, t.name)} onDelete={(e)=>this.onDelete(e, t.name)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
-    //                     {t.name}
-    //             </div>
-    //         )
-    // });
 
+    console.log(this.props.customerData.customerDeliveryList)
 
-  
-    
         return (
            
                    <div>
@@ -187,7 +163,7 @@ render() {
                                         {/* <div className="col-md-6">
                                             <label>Type</label>
                                             <div>
-                                                <input type="text" className="form-control" placeholder="" id="customer_type" value={customerData.customerTypes.customer_type}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerTypes.delivery_method}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 {/* <a href="javascript;" className="d-flex align-items-center">
@@ -208,7 +184,7 @@ render() {
                                         <p>Delivery Method</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerdelivery.delivery_method}   placeholder="Delivery Method" onChange={this.handleCategoryInputAction}/>
+                                            <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerDelivery.delivery_method}   placeholder="Delivery Method" onChange={this.handleCategoryInputAction}/>
                                               
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
@@ -231,10 +207,10 @@ render() {
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
-                                                   {this.props.customerData.customerTypeList.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                   {this.props.customerData.customerDeliveryList.inactive.map(t=>{
+                                                    return <li id={t.id} name={t.delivery_method} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.customer_type}</span>
+                                                                <span id="Wheathers">{t.delivery_method}</span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -265,10 +241,10 @@ render() {
                                             </div>
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
-                                                   {this.props.customerData.customerTypeList.active.map(t=>{
-                                                    return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                   {this.props.customerData.customerDeliveryList.active.map(t=>{
+                                                    return <li id={t.id} name={t.delivery_method} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.customer_type}</span>
+                                                                      <span id="Wheathers">{t.delivery_method}</span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -296,14 +272,11 @@ render() {
     }
     )
     export default connect(mapStateToProps,{
-        getAllPlantCategories,
-        handleCategoryInputAction,
-        handleAddCategory,
-        handleDragDrop,
-        handleCategoryDelete,
         handleExchangeData,
-        saveCustomerType,
-        getAllCustomerType,
+        saveDeliveryMethod,
+        getAllDeliveryMethods,
+        handleCustomerTypeDelete,
+        
 handleDragDropCustomer    })(DeliveryMethods)
 
 

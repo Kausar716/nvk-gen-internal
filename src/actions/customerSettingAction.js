@@ -21,9 +21,131 @@
  ADD_CUSTOMER_TYPE,
  GET_ALL_CUSTOMER_TYPES,
  HANDLE_DRAG_CUSTOMER_CATEGORY,
+ GET_CUSTOMER_DELIVERY_LIST,
+ ADD_CUSTOMER_DELIVERY,
+ GET_CUSTOMER_STATUS,
+ ADD_CUSTOMER_STATUS,
+ ADD_CUSTOMER_REASON,
+ GET_CUSTOMER_REASON,
+ GET_CUSTOMER_TERMS,
+ ADD_CUSTOMER_TERMS,
+ ADD_CUSTOMER_RETURN_REASON,
+ GET_CUSTOMER_RETURN_REASON,
  axios,
  config
  } from './types'
+
+
+ export const saveReturnReasonMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-customer-reason",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CUSTOMER_RETURN_REASON,
+                payload:res.data   
+            })
+        })  
+
+}
+ export const getAllReturnReasonMethods = () =>dispatch => {
+    return axios.get("/api/customer-reason-list",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_RETURN_REASON,
+            payload:res.data,
+
+        })
+    })
+
+ }
+ export const saveTermsMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-customer-term",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CUSTOMER_TERMS,
+                payload:res.data   
+            })
+        })  
+
+}
+ export const getAllTermsMethods = () =>dispatch => {
+    return axios.get("/api/customer-term-list",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_TERMS,
+            payload:res.data,
+
+        })
+    })
+
+ }
+ export const saveReasonMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-customer-account-reason",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CUSTOMER_REASON,
+                payload:res.data   
+            })
+        })  
+
+}
+ export const getAllReasonMethods = () =>dispatch => {
+    return axios.get("/api/customer-account-reason-list",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_REASON,
+            payload:res.data,
+
+        })
+    })
+
+ }
+ export const saveStatusMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-customer-account-status",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CUSTOMER_STATUS,
+                payload:res.data   
+            })
+        })  
+
+}
+ export const getAllStatusMethods = () =>dispatch => {
+    return axios.get("/api/customer-account-status-list",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_STATUS,
+            payload:res.data,
+
+        })
+    })
+
+ }
+export const saveDeliveryMethod = (data)=>dispatch=>{
+ 
+    return axios.post("/api/add-customer-delivery-method",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CUSTOMER_DELIVERY,
+                payload:res.data   
+            })
+        })  
+
+}
+ export const getAllDeliveryMethods = () =>dispatch => {
+    return axios.get("/api/customer-delivery-method-list",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_DELIVERY_LIST,
+            payload:res.data,
+
+        })
+    })
+
+ }
 export const handleCustomerTypeDelete = (id,apiName)=>dispatch => {
     let plantCategoryObject={}
     return axios.post(`/api/${apiName}/${id}`,plantCategoryObject,config).then(res=>{ 
@@ -36,7 +158,7 @@ export const handleCustomerTypeDelete = (id,apiName)=>dispatch => {
     })
 }
 
- export const handleDragDropCustomer = (data) =>dispatch=>{
+ export const handleDragDropCustomer = (data,type) =>dispatch=>{
     console.log(data)
     let plantCategoryObject={}
     // plantCategoryObject.name=data
@@ -47,7 +169,8 @@ export const handleCustomerTypeDelete = (id,apiName)=>dispatch => {
     else {
         plantCategoryObject.status=1
     }
-    return axios.post(`/api/update-customer-type/${data.id}`,plantCategoryObject,config).then(res=>{ 
+    // update-customer-type
+    return axios.post(`/api/${type}/${data.id}`,plantCategoryObject,config).then(res=>{ 
         console.log(res)
     dispatch({
             type:HANDLE_DRAG_CUSTOMER_CATEGORY,

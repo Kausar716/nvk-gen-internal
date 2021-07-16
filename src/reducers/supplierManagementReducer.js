@@ -51,7 +51,14 @@ import {
  FILTER_SUPPLIER_BY_SEARCH,
 FILTER_SUPPLIER_BY_ALPHA,
 ADD_FINANCES_SUPPLIER_DATA,
-HANDLE_SUPPLIER_INPUT_EXCHANGE
+HANDLE_SUPPLIER_INPUT_EXCHANGE,
+ADD_SUPPLIER_ACCOUNTS,
+GET_SUPPLIER_ACCOUNTS,
+GET_SUPPLIER_CATEGORY,
+ADD_SUPPLIER_CATEGORY,
+ADD_SUPPLIER_LOCATION,
+GET_SUPPLIER_LOCATION,
+
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
 
@@ -87,12 +94,100 @@ const defaultState={
         exchange_rate:0,
         exchange_date:new Date()
 
+    },
+    supplierReason:{
+        reason:""
+    },
+    supplierReasonList:{
+        active:[],
+        inactive:[]
+    },
+    supplierCategory:{
+        category:""
+
+    },
+    supplierCategoryList:{
+        active:[],
+        inactive:[]
+
+    },
+    supplierLocation:{
+        location: "",
+        address: "",
+        city: "",
+        state: "",
+        country: "",
+        zip: "",
+        lat: "",
+        long: "",
+    },
+    supplierLocationList:{
+        active:[],
+        inactive:[]
+
     }
 };
 
 const supplierManagementReducer =(state=defaultState, action)=>{
     console.log(action.payload)
         switch(action.type){
+
+            case GET_SUPPLIER_LOCATION:
+                return{
+                    ...state,
+                    supplierLocationList:action.payload.data
+
+                }
+                case ADD_SUPPLIER_LOCATION:
+                    return{
+                        ...state,
+                        supplierLocation:{
+                            location: "",
+                            address: "",
+                            city: "",
+                            state: "",
+                            country: "",
+                            zip: "",
+                            lat: "",
+                            long: "",
+                        }
+                        
+                        
+                    }
+
+            case GET_SUPPLIER_CATEGORY:
+                return{
+                    ...state,
+                    supplierCategoryList:action.payload.data
+                   
+
+
+                }
+            case ADD_SUPPLIER_CATEGORY:
+                return{
+                    ...state,
+                    supplierCategory:{
+                        category:""
+                
+                    }
+
+                }
+
+            case ADD_SUPPLIER_ACCOUNTS:
+                return{
+                    ...state,
+                    supplierReason:{
+                        reason:""
+                    }
+
+
+
+                }
+            case GET_SUPPLIER_ACCOUNTS:
+                return{
+                    ...state,
+                    supplierReasonList:action.payload.data
+                }
             // switch(action.type){
       
 
@@ -102,12 +197,12 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     let dateInformate = new Date(date[0],date[1]-1,date[2])
                     return{
                         ...state,
-                        supplierExchange:{...action.payload.data,"exchange_date":dateInformate}
+                        supplierExchange:{...action.payload.data,exchange_date:dateInformate}
                     }
                     case HANDLE_SUPPLIER_INPUT_EXCHANGE:
                         return{
                             ...state,
-                            supplierExchange:{...state.supplierExchange,[action.id]:action.data}
+                            [action.dataType]:{...state[action.dataType],[action.id]:action.data}
                     
                         }
                 case GET_SUPPLIER_LIST :

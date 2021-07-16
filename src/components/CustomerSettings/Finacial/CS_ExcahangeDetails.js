@@ -59,14 +59,14 @@ const CS_ExcahangeDetails = (props) => {
 
   }
   const handleInputData1 =(e)=>{
-    props.handleSupplierExchnageData(e.target.value,e.target.id)
+    props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
 
   }
   const datePickerData =(data)=>{
     props.handleExchangeData(data,"exchange_date","customerExchange")
 }
 const datePickerData1 =(data)=>{
-  props.handleSupplierExchnageData(data,"exchange_date")
+  props.handleSupplierExchnageData(data,"exchange_date","supplierExchange")
 
 }
 const saveExchangeData = ()=>{
