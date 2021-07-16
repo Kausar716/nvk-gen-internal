@@ -42,7 +42,7 @@ export class OrganizationSettings extends React.Component {
         }
     }
     handlImageUpload = (e1)=>{
-        alert(123)
+        //alert(123)
         // const reader = new FileReader();
         // reader.onload=()=>{
         //     if(reader.readyState===2){
@@ -63,6 +63,11 @@ export class OrganizationSettings extends React.Component {
             console.log(res)
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
+
+        setTimeout(function() {
+            window.location.reload();
+         }, 2000);
+        
     }
 
     handleInput = (e) => {
@@ -106,7 +111,7 @@ export class OrganizationSettings extends React.Component {
         //let phoneReg=/^[0-9\b]+$/;
        //let phoneReg=/^((\+[1-9]{1,4}[ \-]*)|(\([0-9]{2,3}\)[ \-]*)|([0-9]{2,4})[ \-]*)*?[0-9]{3,4}?[ \-]*[0-9]{3,4}?$/;
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        let nameReg = /^[a-zA-Z]+$/
+        let nameReg = /^[a-zA-Z0-9]+$/;
         let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
        // let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
@@ -172,6 +177,7 @@ export class OrganizationSettings extends React.Component {
              if(this.state.hadModified.secondartBody === true){
                 updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
              }
+
              if(this.state.imageUploaded)
              updateObject.log=this.props.organizationData.organizationData.logo
                 console.log(updateObject)
@@ -185,7 +191,7 @@ export class OrganizationSettings extends React.Component {
                 alert(JSON.stringify(c))
             })
          }
-        
+         //window.location.reload();
     
 
 
@@ -201,8 +207,8 @@ export class OrganizationSettings extends React.Component {
         })
 
         
-        // this.setState({});
-         window.location.reload();
+         //this.setState({});
+         //window.location.reload();
      }
      componentDidMount(){
          let id = "2"
@@ -212,22 +218,41 @@ export class OrganizationSettings extends React.Component {
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
+        var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
-        var iImage="assets/img/noImage.png";
+       // var iImage="assets/img/noImage.png";
         
         let organizationDataById 
         if(this.props.organizationData.organizationData){
+
              organizationDataById = this.props.organizationData.organizationData
             console.log(organizationDataById)
             if(this.props.organizationData.organizationData.payload){
               // debugger
-                url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
+              if(organizationDataById.payload.logo==null){
+                  url=TempUrl;
+              }
+              else{
+                    url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
+              }
+               
                
             }
             else{
-              // debugger
-               url="assets/img/noImage.png";
-                //url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+
+
+                if(organizationDataById.logo==null){
+                    url=TempUrl;
+                }
+                else{
+                    url="https://zvky.flamingotech.ml/"+organizationDataById.logo
+                }
+                 
+
+              //debugger
+              //iImage="assets/img/noImage.png";
+              
+               
                
             }
         }
