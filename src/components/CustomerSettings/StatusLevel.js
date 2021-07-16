@@ -113,6 +113,7 @@ import { is } from 'immutable';
         handleCategoryInputAction = (e)=>{
             this.props.handleExchangeData(e.target.value,e.target.id,"customerStatus")
         }
+        
         handleAddCategoryData = (e)=>{
             if(this.props.customerData.customerStatus.status_level.trim() ===""){
                 

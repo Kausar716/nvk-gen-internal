@@ -45,9 +45,32 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
             this.props.getAllSubAttribute(16)
            })
         }
+
+        
         handlePositionInputAction = (e)=>{
             this.props.handlePositionInputAction(e.target.name,e.target.value)
         }
+
+        // handleAddCategoryData = (e)=>{
+        //     if(this.props.customerData.customerStatus.status_level.trim() ===""){
+                
+        //         this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+
+
+        //     }else{
+        //         let obj = {}
+        //         obj.status_level = this.props.customerData.customerStatus.status_level
+        //         obj.status = 1
+        //         let result = this.props.saveStatusMethod(obj)
+        //         result.then(data=>{
+        //             this.props.getAllStatusMethods()
+        //         })
+        //     }
+            
+        
+        // }
+
+
         handleAddCategory = (e)=>{
        
             let positionObj={}
@@ -61,6 +84,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
             })
         
         }
+
+
+
         render() {
         console.log(this.props.temp)
         var tasks={

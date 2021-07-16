@@ -85,6 +85,7 @@ export const handleZoneInputAction = (name,value) =>dispatch=>{
  })
 }
 
+
 export const handleAddZone = (data) =>dispatch=>{
     return axios.post(`/api/add-subattribute`,data,config).then(res=>{ 
         console.log(res)
