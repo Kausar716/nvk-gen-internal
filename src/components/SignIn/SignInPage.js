@@ -195,11 +195,11 @@ const SignInPage = (props) => {
                     </div>
                 </div>
             </div>
-            <div class="footerBar py-3 mt-md-8">
+            <div class="footerBar py-3 mt-md-8" style={{position:"fixed", bottom:"0", height:"5em", width:"100%"}}>
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <ul class="list-unstyled list-inline mb-0">
+                            {/* <ul class="list-unstyled list-inline mb-0">
                                 <li class="list-inline-item">
                                     NVKGENESYS.COM
                                 </li>
@@ -209,12 +209,13 @@ const SignInPage = (props) => {
                                 <li class="list-inline-item"> | 
                                     <a href=""> &nbsp; PRIVACY</a>
                                 </li>
-                            </ul>
+                            </ul> */}
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label>
+                        <p>Terms of Use | Privacy Policy <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                            {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                             <small><p>Version Number: 0.0.2.1</p> </small>
                         </div>
                     </div>

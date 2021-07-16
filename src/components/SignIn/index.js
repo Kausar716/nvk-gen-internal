@@ -105,7 +105,7 @@ class SignIn extends Component{
             </div>
                 </div>
                 <footer>
-                    <p>NVKGENESYS.COM | TERMS OF USE | PRIVACY <br></br>&copy; Nurseries. All Rights Reserved</p>
+                    <p>Terms of Use | Privacy Policy <br></br>&copy; © 2021 NVK Holdings Inc. All rights reserved.</p>
                    
                     {/* <p>&copy; Nurseries. All Rights Reserved</p> */}
                    

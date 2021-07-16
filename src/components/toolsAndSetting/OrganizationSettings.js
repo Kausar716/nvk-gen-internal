@@ -15,6 +15,7 @@ export const Component = withRouter(({ history, location }) =>{
 //     const [open,setOpen] = useState(false)
 //     const [message,setMessage] = useState("")
 //     const [type, setType] = useState("")
+// const [submitCount, setSubmitCount] = useState(0)
 export class OrganizationSettings extends React.Component {  
    
     constructor(){
@@ -25,6 +26,8 @@ export class OrganizationSettings extends React.Component {
             actionOpen:false,
             actionMessage:"",
             actionType:"",
+            submitCount:0,
+
 
             mobile:"",
             isError:false,
