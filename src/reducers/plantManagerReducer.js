@@ -327,11 +327,23 @@ export default function(state = initialSatate, action){
                         ...state,
                         plantData:state.backupData
                     }
-                }else{
+                }
+                if(action.payload.plant.trim() ==="" &&  categoryVal !== "0"){
                     return{
                         ...state,
                         plantData:state.backupData.filter(
-                            filterData=>(filterData.genus.indexOf(action.payload.plant.trim().toLowerCase()) > -1 || action.payload.plant==="") &&
+                            filterData=>( action.payload.plant==="") &&
+                            (filterData.archived===optionVal || optionVal===-1) &&
+                            (filterData.category_id === Number(categoryVal) || Number(categoryVal) === 0)
+                            )
+                    }
+                }
+                
+                else{
+                    return{
+                        ...state,
+                        plantData:state.backupData.filter(
+                            filterData=>((filterData.genus?filterData.genus.toLowerCase().indexOf(action.payload.plant.trim().toLowerCase()) > -1:false) || action.payload.plant==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&
                             (filterData.category_id === Number(categoryVal) || Number(categoryVal) === 0)
                             )
