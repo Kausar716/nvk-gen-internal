@@ -2,13 +2,34 @@ import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
+import {connect} from "react-redux";
+import {getAllCustomer,setPageNumber,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
+import initialDetails from './initialDetails';
 
-export default function PurchaseOrders() {
-    const [value, onChange] = useState(new Date());
-    const [purchaseOrderTable, setPurchaseOrderTable] = useState([
-        {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
+
+export class PurchaseOrders extends React.Component {
+
+    constructor(){
+        super()
+        this.state={
+            addCustomerToggle:false,
+            customerListStatus:"active",
+            editCustmerToggle:false,
+            customerObject:{},
+            pageSize:15,
+            alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
+            selectedAlpha:"All",
+            searchValue:"",
+            radioFilter:"active",
+            searchInput: '', 
+            alphabet: '',
+            button: true,
+            alphabetSelect:'',
+
+            purchaseOrderTable:[
+                {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
         supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
-         dispatch:"Pickup", amount:"6,085.00" },
+         dispatch:"Pickup", amount:"6,085.00"},
 
          {status:"closed", poNumber:"WILLSMITH-012301-1", suppliearName:"WILL Smith landscaping", 
          supplierOrder:"2024275", createdBy:"Will Smith", orderDate:"20/06/2021", expectedDate:"20/08/2021",
@@ -29,25 +50,92 @@ export default function PurchaseOrders() {
              {status:"closed", poNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
              supplierOrder:"1024275", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
               dispatch:"Delivery", amount:"6,085.00" }
-    ]);
+            ]
+        }
+    }
+    //const [value, onChange] = useState(new Date());
+   //NEW 
+    // onSearchInputChange = (e) => {
+    //     this.setState({searchInput: e.target.value})
+    //   }
 
-    const [alphabet, setAlpabet]= useState([
-        "A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
-    ]);
 
-    const [selectedAlpha, setSelectedAlpha] ="All";
-    //const [pageSize, setPageSize] =5;
+    onSearchInputChange = (e) => {
+        this.setState({alphabet: e.target.value,alphabetSelect:''})
+        this.setState({
+          button:!this.state.button
+        })
+      }
 
-    const handleAlphabetFilter = (e)=>{
 
-        setSelectedAlpha(e.target.id)
+
+      onAlphabetClick = (e) => {
+        // this.setState({alphabet: e.target.value})
+        this.setState({alphabet: e.target.value,alphabetSelect:e.target.value,button:false})
+      }
+      prepareAlphabets = () => {
+        let result = [];
+        for(let i=65; i<91; i++) {
+          result.push(
+            <button type="button" key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)} >{String.fromCharCode(i)}</button>
+          )
+        }
+        return result;
+      }
+
+
+      elementContainsSearchString = (searchInput, element) => (searchInput ? element.suppliearName.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) : false);
+      filterItems = (initialDetails) => {
+        let result = [];
+        const { searchInput,alphabet } = this.state;
+        if(initialDetails &&  (searchInput || alphabet)) {
+            result = initialDetails.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
+            this.elementContainsSearchString(searchInput, element) 
+            );
+          }
+        else {
+          result = initialDetails || [];
+        }
+
+        result = result.map((item)=>(
+                 item
+                 
+        
+        ))
+        // result = result.map((item1, key)=> (
+
+       
+        //     <div>
+
+                
+
+
+        //             {item1.suppliearName}
+        //     </div>
+        // ))
+
+        return result;
+      }
+
+//END
+     handleAlphabetFilter = (e)=>{
+
+        this.setState({selectedAlpha:e.target.id})
        // this.setState({selectedAlpha:e.target.id})
-        // this.props.handleAplhabetFilter(e.target.id)
+        this.props.handleSearchFilterByAlpha(e.target.id, this.state.purchaseOrderTable)
 
     }
 
-    console.log("purchaseOrderTable", purchaseOrderTable)
+    //console.log("purchaseOrderTable", purchaseOrderTable)
+    render(){
+        //let purchaseOrderData = [];
+      
+      let initialDetails1 = initialDetails
 
+              const filteredList = this.filterItems(initialDetails1);
+
+              console.log("filteredList", filteredList)
+       // console.log(this.props.purchaseOrderData)
     return (
 
 
@@ -116,7 +204,9 @@ export default function PurchaseOrders() {
                                                 <label class="custom-control-label" for="customRadio2">Last 30 Days</label>
                                             </div>
                                             <div class="ml-3">
-                                                <DatePicker onChange={onChange} value={value} />
+                                                <DatePicker 
+                                                // onChange={onChange} value={value} 
+                                                />
                                             </div>
                                         </div>
                                     </div>
@@ -128,7 +218,7 @@ export default function PurchaseOrders() {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" placeholder="Search Supplier Name/Number"/>
+                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange}  placeholder="Search Supplier Name/Number"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
@@ -219,19 +309,27 @@ export default function PurchaseOrders() {
                                     </div>
                                 </div> */}
 
-                            <div class="form-group row mt-4">
+
+                        {/* <input type="search" onChange={this.onSearchInputChange} /> */}
+                        <button className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
+                        {this.prepareAlphabets()}
+                        <ul>
+                            {/* {filteredList} */}
+                            </ul>
+
+                            {/* <div class="form-group row mt-4">
                                 <div class="col-md-12 col-lg-12">
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        <li><a  class={selectedAlpha =="All"?"active":""} onClick={handleAlphabetFilter} id="All">All</a></li>
+                                        <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li>
                                         {
-                                           alphabet.map(alphabet=>{
-                                                return(<li><a  class={selectedAlpha ==alphabet?"active":""} onClick={handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+                                            this.state.alphabets.map(alphabet=>{
+                                                return(<li><a style={{cursor:"pointer"}}  class={this.state.selectedAlpha ==alphabet?"open":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
 
                                             })
                                         }
                                     </ul>
                                 </div>
-                                </div>
+                            </div> */}
 
 
 
@@ -253,9 +351,7 @@ export default function PurchaseOrders() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {purchaseOrderTable.map(pOrderList=>{
-                                                    
-                                               
+                                                {filteredList.map(pOrderList=>{
                                                     return <tr>
                                                     <td><span  class='stsBadge stsClosed'>{pOrderList.status}</span></td>
                                                     <td><a href="">{pOrderList.poNumber}</a></td>
@@ -344,3 +440,16 @@ export default function PurchaseOrders() {
         </div>
     )
 }
+}
+
+
+const mapStateToProps = (state)=> (
+    // console.log(state.customerReducer.payload)
+    {
+        purchaseOrderData:state.PurchaseOrderReducer
+    }
+
+)
+
+
+export default connect(mapStateToProps,{handleSearchFilterByAlpha})(PurchaseOrders)
