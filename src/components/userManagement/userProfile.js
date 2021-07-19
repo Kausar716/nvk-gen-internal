@@ -18,6 +18,7 @@ export class UserProfile extends Component {
             phone:"",
             email:"",
             position:"",
+            actionType:"",
             locationAccess:false,
             displayDeletedRecords:false,
             profileImage:"",
@@ -133,6 +134,7 @@ export class UserProfile extends Component {
         }  
         this.setState({errorObj,errorCount})
     }
+
     validate = () =>{
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -249,7 +251,18 @@ export class UserProfile extends Component {
         //   }
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
+        setTimeout(function() {
+            window.location.reload();
+         }, 2000);
+
     }
+
+
+
+
+
+
+    
     handleRemoveImage = (e) =>{
         // this.setState({logo:""})
         let data = this.props.removeImage(this.props.selectedUser.id)
@@ -334,16 +347,115 @@ export class UserProfile extends Component {
         this.setState({open:false})
     }
     render() {
+        const { actionType } = this.state;
         let roles=[]
         console.log(this.props.roles)
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
         let noImageURL="assets/img/noImage.png";
+
+
+
+
+        const confirm = ()=>{
+            const { history } = this.props;
+            if(actionType==="goBack"){
+                history.push("/Dashboard")
+
+                // setTimeout(function() {
+                //     history.push("/")
+                //  }, 4000);
+            //    props.deleteProductAction(id)
+    
+            }
+
+            else if(actionType==="save"){
+                this.handleSubmit();
+            }
+
+            else if(actionType==="upload"){
+
+                this.handlImageUpload();
+            }
+            else if(actionType==="deleteImage"){
+
+                this.handleRemoveImage();
+            }
+            else{
+                //
+            }
+
+            this.setState({
+                actionOpen:false,
+                actionId:0,
+                actionType:"",
+                actionMessage:""
+            })
+      
+         
+       }
+
+       const confirmAction = (actionType)=>{
+       
+        //let history = useHistory();
+
+        if(actionType==="goBack"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to go back"})
+
+        }
+        else if(actionType==="save"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to save Changes"})
+            
+        }
+
+        else if(actionType==="upload"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to Upload Image"})
+        }
+
+        else if(actionType==="deleteImage"){
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to Delete Image"})
+
+        }
+        
+        
+        
+        else{
+            this.setState({actionType})
+            this.setState({actionMessage:"Are you sure you want to duplicate this product and all its related SKU and plant information?"})
+       
+        }
+        this.setState({
+            actionOpen:true,
+            // actionId:id
+        })
+
+        // setOpen(true)
+        // setId(id)
+    }
+
+    const cancel = ()=>{
+        this.setState({
+            actionOpen:false,
+            actionId:0,
+            actionType:"",
+            actionMessage:""
+        })
+       
+         
+     }
+
+
+
+
      
     return (
         <>
-         <ActionModal cancel={this.cancel} confirm={this.confirm} open={this.state.open} message={this.state.message}/>
+         <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
         {/* <div clas="userManagementSection"> */}
                {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">
@@ -399,7 +511,10 @@ export class UserProfile extends Component {
                                                     <img src="assets/img/upload-ic-white.svg" alt=""/>
                                                 </a>
                                                 <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
-                                                    <span class="d-flex align-items-center justify-content-around" onClick={this.handleRemoveImage}>
+                                                    <span class="d-flex align-items-center justify-content-around" 
+                                                      onClick={()=>{confirmAction("deleteImage"); }}
+                                                    // onClick={this.handleRemoveImage}
+                                                    >
                                                         <span class="f-s-20 text-danger">Remove</span>
                                                     </span>
                                                     <img src="assets/img/bin-ic-red.svg" alt=""/>
@@ -449,18 +564,8 @@ export class UserProfile extends Component {
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-12">
-
-                                                
-
-                                                    
-                                                                 
-                                                                    
+              
                                                     <label>Location Assigned</label>
-
-
-                                                 
-
-
                                                     <div class="locAssignBox">
 
 
@@ -546,7 +651,11 @@ export class UserProfile extends Component {
                                 }
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Update</button>
+                                    <button type="button" class="btn btn-primary btn-lg ml-3"
+                                     onClick={()=>{confirmAction("save"); }}
+                                    //  onClick={this.handleSubmit}
+                                     
+                                     >Update</button>
                                 </div>
                             </div>
                         </div>

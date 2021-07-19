@@ -344,7 +344,6 @@ export class OrganizationSettings extends React.Component {
         else if(actionType==="upload"){
             this.setState({actionType})
             this.setState({actionMessage:"Are you sure you want to Upload Image"})
-
         }
 
         else if(actionType==="deleteImage"){
