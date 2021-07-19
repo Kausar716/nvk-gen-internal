@@ -15,7 +15,7 @@ export class CustomerSettings extends React.Component {
             customerListStatus:"active",
             editCustmerToggle:false,
             customerObject:{},
-            pageSize:5,
+            pageSize:15,
             alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
             selectedAlpha:"All",
             searchValue:"",

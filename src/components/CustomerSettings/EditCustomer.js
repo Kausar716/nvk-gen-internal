@@ -34,7 +34,7 @@ function AddCustomer(props) {
     }
 
     const handleInput= (e)=>{
-        alert("h")
+        // alert("h")
         let indexValue = null
         if(e.target.id ==="type"){
             let type = customerDataById.type
@@ -192,7 +192,7 @@ console.log(customerDataById)
                                         Archive
                                     <div class="switcher ml-2 pr-2">
                                         <input type="checkbox" name="customerStatus" id="customerStatus" value="2"/>
-                                        <label style={{cursor:"pointer"}} for="customerStatus"></label>
+                                        <label for="customerStatus"></label>
                                     </div>
                                    
                                 </div>
@@ -372,7 +372,22 @@ console.log(customerDataById)
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                               
+                                            <div class="col-md-4 mt-3 mt-md-0">
+                                                <label>Payment Terms</label>
+                                                <select class="form-control">
+                                                    <option>Imperial</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mt-3 mt-md-0">
+                                                <label>Currency</label>
+                                                <select class="form-control">
+                                                    <option>Canadian Dollar</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -391,41 +406,7 @@ console.log(customerDataById)
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                                   
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-10 col-lg-10">
-                                        <div class="row">
-                                             <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Payment Terms</label>
-                                                <select class="form-control">
-                                                    <option>Imperial</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
                                             <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Currency</label>
-                                                <select class="form-control">
-                                                    <option>Canadian Dollar</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
-                                            </div>
-                                            </div></div>
-                               
-                                <div class="row mt-3">
-                                <div class="col-md-10 col-lg-10">
-                                    <div class="row">
-                                    <div class="col-md-4">
-                                                <label>Fee%</label>
-                                                <input type="text" class="form-control" value="10.0" />
-                                                </div>
-                                           
-                                            <div class="col-md-3 mt-2 mt-md-3">
                                                 <label>Restock Fees</label>
                                                 <div class="d-flex">
                                                     <div class="custom-control custom-radio">
@@ -438,10 +419,13 @@ console.log(customerDataById)
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 mt-3 mt-md-0">
+                                                <label>Fee%</label>
+                                                <input type="text" class="form-control" value="10.0" />
                                             </div>
-                                            </div>
-                                            </div>
-                                           
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </TabPanel>
