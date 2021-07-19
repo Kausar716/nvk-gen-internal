@@ -5,7 +5,53 @@ import DatePicker from 'react-date-picker';
 
 export default function PurchaseOrders() {
     const [value, onChange] = useState(new Date());
+    const [purchaseOrderTable, setPurchaseOrderTable] = useState([
+        {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
+        supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
+         dispatch:"Pickup", amount:"6,085.00" },
+
+         {status:"closed", poNumber:"WILLSMITH-012301-1", suppliearName:"WILL Smith landscaping", 
+         supplierOrder:"2024275", createdBy:"Will Smith", orderDate:"20/06/2021", expectedDate:"20/08/2021",
+          dispatch:"Pickup", amount:"6,085.00" },
+
+          {status:"open", poNumber:"Scena-012301-1", suppliearName:"John Scena landscaping", 
+          supplierOrder:"1024275", createdBy:"John Scena", orderDate:"20/05/12021", expectedDate:"20/05/12021",
+           dispatch:"Delivery", amount:"6,085.00" },
+
+           {status:"Draft", poNumber:"Jason-012301-1", suppliearName:"Jason Smith landscaping", 
+           supplierOrder:"24275", createdBy:"Jason Smith", orderDate:"20/05/2021", expectedDate:"20/09/2021",
+            dispatch:"Pickup", amount:"6,085.00" },
+
+            {status:"closed", poNumber:"Dweny-012301-1", suppliearName:"Dweny Smith landscaping", 
+            supplierOrder:"1024275", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
+             dispatch:"Pickup", amount:"6,085.00" },
+
+             {status:"closed", poNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
+             supplierOrder:"1024275", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
+              dispatch:"Delivery", amount:"6,085.00" }
+    ]);
+
+    const [alphabet, setAlpabet]= useState([
+        "A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"
+    ]);
+
+    const [selectedAlpha, setSelectedAlpha] ="All";
+    //const [pageSize, setPageSize] =5;
+
+    const handleAlphabetFilter = (e)=>{
+
+        setSelectedAlpha(e.target.id)
+       // this.setState({selectedAlpha:e.target.id})
+        // this.props.handleAplhabetFilter(e.target.id)
+
+    }
+
+    console.log("purchaseOrderTable", purchaseOrderTable)
+
     return (
+
+
+        
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Purchase Orders</h1>
@@ -139,7 +185,7 @@ export default function PurchaseOrders() {
                                     </div>
                                 </div>
 
-                                <div class="form-group row mt-3">
+                                {/* <div class="form-group row mt-3">
                                     <div class="col-md-12 col-lg-12">
                                         <ul class="list-unstyled searchAlpha d-flex flex-wrap mb-0">
                                             <li><a href="#" class="active">All</a></li>
@@ -171,7 +217,24 @@ export default function PurchaseOrders() {
                                             <li><a href="#">Z</a></li>
                                         </ul>
                                     </div>
+                                </div> */}
+
+                            <div class="form-group row mt-4">
+                                <div class="col-md-12 col-lg-12">
+                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
+                                        <li><a  class={selectedAlpha =="All"?"active":""} onClick={handleAlphabetFilter} id="All">All</a></li>
+                                        {
+                                           alphabet.map(alphabet=>{
+                                                return(<li><a  class={selectedAlpha ==alphabet?"active":""} onClick={handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+
+                                            })
+                                        }
+                                    </ul>
                                 </div>
+                                </div>
+
+
+
                                 <div class="form-group row">
                                     <div class="col-md-12 table-responsive">
                                         <table id="plantDetails" class="table table-striped w-100">
@@ -190,16 +253,19 @@ export default function PurchaseOrders() {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td><span class='stsBadge stsClosed'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
+                                                {purchaseOrderTable.map(pOrderList=>{
+                                                    
+                                               
+                                                    return <tr>
+                                                    <td><span  class='stsBadge stsClosed'>{pOrderList.status}</span></td>
+                                                    <td><a href="">{pOrderList.poNumber}</a></td>
+                                                    <td>{pOrderList.suppliearName}</td>
+                                                    <td>{pOrderList.supplierOrder}</td>
+                                                    <td>{pOrderList.createdBy}</td>
+                                                    <td>{pOrderList.orderDate}</td>
+                                                    <td>{pOrderList.expectedDate}</td>
+                                                    <td>{pOrderList.dispatch}</td>
+                                                    <td>{pOrderList.amount}</td>
                                                     <td class="text-center">
                                                         <span>
                                                             <a href="javascript:;">
@@ -208,7 +274,7 @@ export default function PurchaseOrders() {
                                                         </span>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                {/* <tr>
                                                     <td><span class='stsBadge stsClosed'>Closed</span></td>
                                                     <td><a href="">JSMITH-0023555-02</a></td>
                                                     <td>Windham Gardens</td>
@@ -225,8 +291,8 @@ export default function PurchaseOrders() {
                                                             </a>
                                                         </span>
                                                     </td>
-                                                </tr>
-                                                <tr>
+                                                </tr> */}
+                                                {/* <tr>
                                                     <td><span class='stsBadge stsDraft'>Draft</span></td>
                                                     <td><a href="">JSMITH-0023555-02</a></td>
                                                     <td>John Smith landscaping</td>
@@ -243,8 +309,8 @@ export default function PurchaseOrders() {
                                                             </a>
                                                         </span>
                                                     </td>
-                                                </tr>
-                                                <tr>
+                                                </tr> */}
+                                                {/* <tr>
                                                     <td><span class='stsBadge stsOpen'>Closed</span></td>
                                                     <td><a href="">JSMITH-0023555-02</a></td>
                                                     <td>John Smith landscaping</td>
@@ -261,7 +327,11 @@ export default function PurchaseOrders() {
                                                             </a>
                                                         </span>
                                                     </td>
-                                                </tr>
+                                                </tr> */}
+
+
+                                            })}
+
                                             </tbody>
                                         </table>
                                     </div>
