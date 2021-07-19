@@ -208,17 +208,17 @@ console.log(errorObj)
                         <div class="col-md-6">
                             <h2>Customer Details</h2>
                             <div class="d-flex align-items-center">
-                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0" >
+                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
-                                        <input style={{cursor:"pointer"}} type="checkbox" name="switcher_checkbox_alert" id="switcher_checkbox_alert" value="2"/>
-                                        <label style={{cursor:"pointer"}} for="switcher_checkbox_alert"></label>
+                                        <input type="checkbox" name="switcher_checkbox_alert" id="switcher_checkbox_alert" value="2"/>
+                                        <label for="switcher_checkbox_alert"></label>
                                     </div>
                                     Alert
                                 </div>
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
-                                        <input style={{cursor:"pointer"}} type="checkbox" name="switcher_checkbox_Prospect" id="switcher_checkbox_Prospect" value="2"/>
-                                        <label style={{cursor:"pointer"}} for="switcher_checkbox_Prospect"></label>
+                                        <input type="checkbox" name="switcher_checkbox_Prospect" id="switcher_checkbox_Prospect" value="2"/>
+                                        <label for="switcher_checkbox_Prospect"></label>
                                     </div>
                                     Prospect
                                 </div>
@@ -233,7 +233,7 @@ console.log(errorObj)
                                         Archive
                                     <div class="switcher ml-2 pr-2">
                                         <input type="checkbox" name="customerStatus" id="customerStatus" value="2"/>
-                                        <label style={{cursor:"pointer"}} for="customerStatus"></label>
+                                        <label for="customerStatus"></label>
                                     </div>
                                    
                                 </div>
@@ -384,7 +384,22 @@ console.log(errorObj)
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                               
+                                            <div class="col-md-4 mt-3 mt-md-0">
+                                                <label>Payment Terms</label>
+                                                <select class="form-control">
+                                                    <option>Imperial</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 mt-3 mt-md-0">
+                                                <label>Currency</label>
+                                                <select class="form-control">
+                                                    <option>Canadian Dollar</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -403,41 +418,7 @@ console.log(errorObj)
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                                   
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-10 col-lg-10">
-                                        <div class="row">
-                                             <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Payment Terms</label>
-                                                <select class="form-control">
-                                                    <option>Imperial</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
                                             <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Currency</label>
-                                                <select class="form-control">
-                                                    <option>Canadian Dollar</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
-                                            </div>
-                                            </div></div>
-                               
-                                <div class="row mt-3">
-                                <div class="col-md-10 col-lg-10">
-                                    <div class="row">
-                                    <div class="col-md-4">
-                                                <label>Fee%</label>
-                                                <input type="text" class="form-control" value="10.0" />
-                                                </div>
-                                           
-                                            <div class="col-md-3 mt-2 mt-md-3">
                                                 <label>Restock Fees</label>
                                                 <div class="d-flex">
                                                     <div class="custom-control custom-radio">
@@ -450,10 +431,13 @@ console.log(errorObj)
                                                     </div>
                                                 </div>
                                             </div>
+                                            <div class="col-md-4 mt-3 mt-md-0">
+                                                <label>Fee%</label>
+                                                <input type="text" class="form-control" value="10.0" />
                                             </div>
-                                            </div>
-                                            </div>
-                                           
+                                        </div>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </TabPanel>

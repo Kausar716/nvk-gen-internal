@@ -165,14 +165,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <img style={{width:"4em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <img style={{width:"4em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
                                             <div id="delete"  onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <a href="javascript;" className="icDelete">
-                                                <img style={{width:"4em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                                     {/* <i className="fas fa-trash"></i> */}
                                                 </a>
                                             </div>
