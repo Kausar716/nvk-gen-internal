@@ -3,9 +3,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
-import {getAllCustomer,setPageNumber,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
+import TablePagination from '../Pagination/index';
+import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
 import initialDetails from './initialDetails';
-
+import './style.css'
 
 export class PurchaseOrders extends React.Component {
 
@@ -16,7 +17,7 @@ export class PurchaseOrders extends React.Component {
             customerListStatus:"active",
             editCustmerToggle:false,
             customerObject:{},
-            pageSize:15,
+            pageSize:5,
             alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
             selectedAlpha:"All",
             searchValue:"",
@@ -24,7 +25,9 @@ export class PurchaseOrders extends React.Component {
             searchInput: '', 
             alphabet: '',
             button: true,
+           
             alphabetSelect:'',
+            TotalPurchaseOder:39,
 
             purchaseOrderTable:[
                 {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
@@ -59,6 +62,14 @@ export class PurchaseOrders extends React.Component {
     //     this.setState({searchInput: e.target.value})
     //   }
 
+    onSearchInputChange2 = (e) => {
+        this.setState({searchInput: e.target.value})
+      }
+
+      onSearchInputChange3 = (e) => {
+        this.setState({searchInput: e.target.value})
+      }
+
 
     onSearchInputChange = (e) => {
         this.setState({alphabet: e.target.value,alphabetSelect:''})
@@ -69,7 +80,24 @@ export class PurchaseOrders extends React.Component {
 
 
 
+      paginationChange =(event, page)=>{
+        // alert("hg")
+        this.props.setPageNumberPo(page-1)
+    }
+ // <div class="form-group row mt-4">
+        //     <div class="col-md-12 col-lg-12">
+        //     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
+        //     <li> 
+        //         <button key={i} class="active" onClick={this.onAlphabetClick} value={String.fromCharCode(i)}>{String.fromCharCode(i)}</button> 
+        //          </li>
+                
+        //             </ul>
+        //         </div>
+        //     </div>
+
+
       onAlphabetClick = (e) => {
+         // e.preventdefault();
         // this.setState({alphabet: e.target.value})
         this.setState({alphabet: e.target.value,alphabetSelect:e.target.value,button:false})
       }
@@ -77,14 +105,23 @@ export class PurchaseOrders extends React.Component {
         let result = [];
         for(let i=65; i<91; i++) {
           result.push(
-            <button type="button" key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)} >{String.fromCharCode(i)}</button>
+
+            // <button type="button" key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)} >{String.fromCharCode(i)}</button>
+            <button type="button" className={ this.state.alphabetSelect===String.fromCharCode(i)?" buttonStyles selected_alphabet":"unselected_aplphabet buttonStyles"}  key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)}>{String.fromCharCode(i)}</button>
+           
           )
         }
         return result;
       }
 
 
-      elementContainsSearchString = (searchInput, element) => (searchInput ? element.suppliearName.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) : false);
+
+
+ elementContainsSearchString2 = (searchInput, element) => (searchInput ? element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
+
+      elementContainsSearchString = (searchInput, element) => (searchInput ? element.suppliearName.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) || element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
+
+
       filterItems = (initialDetails) => {
         let result = [];
         const { searchInput,alphabet } = this.state;
@@ -102,17 +139,7 @@ export class PurchaseOrders extends React.Component {
                  
         
         ))
-        // result = result.map((item1, key)=> (
-
        
-        //     <div>
-
-                
-
-
-        //             {item1.suppliearName}
-        //     </div>
-        // ))
 
         return result;
       }
@@ -129,10 +156,37 @@ export class PurchaseOrders extends React.Component {
     //console.log("purchaseOrderTable", purchaseOrderTable)
     render(){
         //let purchaseOrderData = [];
+
+        let pageCount =0;
+        let pageNumber = 0;
+        let totalLength = 0;
+        let plantPerPage =0;
+        let pagesVisited = 0;
+        let displayPOList = []
+
+
       
       let initialDetails1 = initialDetails
+        console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
-              const filteredList = this.filterItems(initialDetails1);
+
+      if(initialDetails1){
+        pageNumber = this.props.purchaseOrderData.pageNumber
+        // console.log()
+        initialDetails1 = [...initialDetails1]
+
+
+         totalLength = initialDetails1.length
+         plantPerPage = this.state.pageSize;
+         pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
+         displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
+         pageCount = Math.ceil(initialDetails1.length/plantPerPage)
+
+    }
+
+    console.log("displayPOList",displayPOList)
+
+              const filteredList = this.filterItems(displayPOList);
 
               console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
@@ -158,7 +212,7 @@ export class PurchaseOrders extends React.Component {
                     <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
                         <div>
                             <label>Open P.O.'s</label>
-                            <h1>64</h1>
+                            <h1>{this.state.TotalPurchaseOder}</h1>
                             <div><a href="">View All</a></div>
                         </div>
                     </div>
@@ -218,7 +272,7 @@ export class PurchaseOrders extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange}  placeholder="Search Supplier Name/Number"/>
+                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange2}  placeholder="Search Supplier Name/Number"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
@@ -256,7 +310,7 @@ export class PurchaseOrders extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" placeholder="Search Plants or Products"/>
+                                            <input type="text" class="form-control" onChange={this.onSearchInputChange2} placeholder="Search Plants or Products"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
@@ -265,7 +319,7 @@ export class PurchaseOrders extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" placeholder="Search SKU"/>
+                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange3} placeholder="Search SKU"/>
                                         </div>
                                     </div>
                                 </div>
@@ -311,26 +365,59 @@ export class PurchaseOrders extends React.Component {
 
 
                         {/* <input type="search" onChange={this.onSearchInputChange} /> */}
-                        <button className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
-                        {this.prepareAlphabets()}
-                        <ul>
-                            {/* {filteredList} */}
-                            </ul>
 
-                            {/* <div class="form-group row mt-4">
+
+
+                       
+
+
+                    
+                            <div class="form-group row mt-4">
                                 <div class="col-md-12 col-lg-12">
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li>
-                                        {
-                                            this.state.alphabets.map(alphabet=>{
-                                                return(<li><a style={{cursor:"pointer"}}  class={this.state.selectedAlpha ==alphabet?"open":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+                                        {/* <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li> */}
 
-                                            })
-                                        }
+                                        <button type="button" className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
+                                            {this.prepareAlphabets()}
                                     </ul>
                                 </div>
-                            </div> */}
+                            </div>
+                            <div className="row_1">
+                                <div style={{float:"left",marginBottom:15}}>
+                                {/* <div> */}
+                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                {/* </div> */}
+                                </div>
 
+
+                                    <div >
+                                    <label className="greenText">Show</label>
+                                                <select 
+                                                    value={this.state.pageSize}
+                                                    onChange={e => {
+                                                        this.setState({
+                                                            pageSize:  Number(e.target.value)
+                                                        })
+                                                    }}
+                                                    >
+                                                    {[5,15, 25, 50, 100, 250].map(pageSize => (
+                                                        <option key={pageSize} value={pageSize}>
+                                                        {pageSize}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                        </div>
+
+                
+
+
+
+                                <div style={{float:"right",marginBottom:15}}>
+                                    <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+                                </div>
+                               
+                            </div>
+                            <div style={{clear:"both"}}></div>
 
 
                                 <div class="form-group row">
@@ -352,7 +439,7 @@ export class PurchaseOrders extends React.Component {
                                             </thead>
                                             <tbody>
                                                 {filteredList.map(pOrderList=>{
-                                                    return <tr>
+                                                    return <tr key={pOrderList.suppliearName}>
                                                     <td><span  class='stsBadge stsClosed'>{pOrderList.status}</span></td>
                                                     <td><a href="">{pOrderList.poNumber}</a></td>
                                                     <td>{pOrderList.suppliearName}</td>
@@ -364,7 +451,7 @@ export class PurchaseOrders extends React.Component {
                                                     <td>{pOrderList.amount}</td>
                                                     <td class="text-center">
                                                         <span>
-                                                            <a href="javascript:;">
+                                                            <a href="javascript;">
                                                                 <img src="assets/img/edit.svg" alt=""/>
                                                             </a>
                                                         </span>
@@ -452,4 +539,4 @@ const mapStateToProps = (state)=> (
 )
 
 
-export default connect(mapStateToProps,{handleSearchFilterByAlpha})(PurchaseOrders)
+export default connect(mapStateToProps,{handleSearchFilterByAlpha, setPageNumberPo})(PurchaseOrders)
