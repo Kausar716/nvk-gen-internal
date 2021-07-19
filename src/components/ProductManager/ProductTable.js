@@ -219,7 +219,6 @@ const ProductTable  = (props) => {
                                               {manufactureData.length>0?manufactureData.filter(manufacturerObj=>(manufacturerObj.id===product.manufacturer_id))[0]?manufactureData.filter(manufacturerObj=>(manufacturerObj.id===product.manufacturer_id))[0].name:"":"" }
                                              
                                               </td>
-                                                <td>{product.manu}</td>
                                                 <td  className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" className="custom-control-input" id={id2.concat(product.product_id)}/>
