@@ -140,7 +140,7 @@ handleCreateUpdateFlow = (obj)=>{
             <div class="px-md-3 mt-3">
                 <Tabs>
                     <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}>
-                        <Tab style={{bottom:"0px"}}>User Profile</Tab>
+                        <Tab style={{bottom:"0px"}}>User Profiles</Tab>
                         <Tab style={{bottom:"0px"}}>User Access</Tab>
                         <Tab style={{bottom:"0px"}}>User Positions</Tab>
                     </TabList>

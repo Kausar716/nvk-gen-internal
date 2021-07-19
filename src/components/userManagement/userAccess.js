@@ -492,7 +492,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                     {exestingPermission?exestingPermission.filter(premission => premission.name==="User Profile"  && premission.group_name === "userManagement").map(filteredPermission => (
                                                 <div class="custom-control custom-checkbox mt-2">
                                                 <input type="checkbox" class="custom-control-input" name="User Profile" checked={currentPermissionNames.includes("User Profile") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
-                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>User Profile</label>
+                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>User Profiles</label>
                                             </div>
                                                 )):null}
                                                 {exestingPermission?exestingPermission.filter(premission => premission.name==="User Access(this screen)"  && premission.group_name === "userManagement").map(filteredPermission => (
