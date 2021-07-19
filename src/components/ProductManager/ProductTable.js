@@ -125,10 +125,10 @@ const ProductTable  = (props) => {
     //const reverseData = productData.reverse();
     const displayProductList = productData.slice(pagesVisited,pagesVisited+productPerPage)
     const pageCount = Math.ceil(productData.length/productPerPage)
-    const {categoryData,subCategoryData} = props.categoryData
+    const {categoryData,subCategoryData,manufactureData} = props.categoryData
     //const {categoryData} = props.categoryData
     console.log("subCategoryData", subCategoryData)
-    console.log("categoryDataDATA", categoryData)
+    console.log("manufactureData", manufactureData)
         console.log("displayProductList", displayProductList)
      
     return (
@@ -175,6 +175,8 @@ const ProductTable  = (props) => {
                                                 <th className="text-nowrap">Location</th>
                                                 <th className="text-nowrap">Category</th>
                                                 <th className="text-nowrap">Sub Category</th>
+                                                <th className="text-nowrap">Manufacturer</th>
+
                                                 <th className="text-nowrap text-center">On Website</th>
                                                 <th className="text-nowrap text-center">Actions</th>
                                             </tr>
@@ -183,11 +185,8 @@ const ProductTable  = (props) => {
 
                                         {
                                         displayProductList.map(product=>{
-
+                                            console.log(product.manufacturer_id)
                                             // skuData.map(sku=>{
-
-                                          
-                                           console.log("Product data", product)
                                             //console.log("cacategoryData",categoryData)
                                             //console.log("categoryDatacategoryDataLENGTH", categoryData.length)
                                             let id2 ="onwebsite1"
@@ -199,14 +198,13 @@ const ProductTable  = (props) => {
                                             // var abcd =categoryData.filter(cat=>cat.id===product.category_id)
                                             // console.log("abcd,", abcd);
 
-                                                console.log(product)
 
                                              return(
                                             <tr  key={product.product_id}>
                                                 <td>{product.archived===0?"Active":"Archived"}</td>
                                                 <td>{product.product_id}</td>
                                                 <td>{product.name}</td>
-                                                <td>--</td>
+                                                <td>--</td> 
                                                 <td>
                                               
                                                     {/* {categoryData.length>0 ? categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:""} */}
@@ -215,8 +213,13 @@ const ProductTable  = (props) => {
                                                     {/* {abcd[0].name} */}
                                                     </td>
 
-                                                {/* <td> {subCategoryData.length>0?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]?subCategoryData.filter(sub=>sub.id===product.subcategory_id)[0]["name"]:"":""}</td>  */}
+                                               
                                                 <td>{product.subcategory_id}</td>
+                                                <td>
+                                              {manufactureData.length>0?manufactureData.filter(manufacturerObj=>(manufacturerObj.id===product.manufacturer_id))[0]?manufactureData.filter(manufacturerObj=>(manufacturerObj.id===product.manufacturer_id))[0].name:"":"" }
+                                             
+                                              </td>
+                                                <td>{product.manu}</td>
                                                 <td  className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" className="custom-control-input" id={id2.concat(product.product_id)}/>
