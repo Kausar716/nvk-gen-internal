@@ -28,7 +28,14 @@ import {
     ADD_CUSTOMER_TERMS,
     ADD_CUSTOMER_RETURN_REASON,
     GET_CUSTOMER_RETURN_REASON,
-    GET_EXCHANGE_DATA
+    GET_EXCHANGE_DATA,
+    ADD_NEW_CUSTOMER,
+    EDIT_CUSTOMER,
+    DELETE_CUSTOMER,
+    TYPE_OF_ACTION,
+    GET_CUSTOMER_BY_ID,
+    RESET_CUSTOMER_FILEDS,
+    UPDATE_CUSTOMER
 
     
     // ADD_CUSTOMER, 
@@ -89,7 +96,12 @@ const initialSatate = {
    customerTerm : {term:""},
    customerTermList:{active:[],inactive:[]},
    customerReturnReason:{reason: "",return_to_inventory: 2},
-   customerReturnReasonList:{active:[],inactive:[]}
+   customerReturnReasonList:{active:[],inactive:[]},
+
+   customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0},
+
+    action:""
+
 
 
   }
@@ -100,6 +112,58 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+/////////////customer management add edit delete and show actions/////////////////////////
+case ADD_NEW_CUSTOMER:
+    return{
+        ...state,
+        
+    }
+    case EDIT_CUSTOMER:
+        return{
+            ...state,
+            
+        }
+    case DELETE_CUSTOMER:
+        return{
+            ...state,
+
+        }
+    case TYPE_OF_ACTION:
+        return{
+            ...state,
+            action:action.action
+        }
+    case GET_CUSTOMER_BY_ID:
+        return{
+            ...state,
+            customerDataById:{...action.payload.data,type:JSON.parse(action.payload.data.type)}
+
+        }
+    case RESET_CUSTOMER_FILEDS:
+        return{
+            ...state,
+            customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0}
+        }
+    case UPDATE_CUSTOMER:
+        return {
+            ...state,
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////////////////////////////ends here////////////////////////
         case GET_EXCHANGE_DATA:
             return{
                 ...state,

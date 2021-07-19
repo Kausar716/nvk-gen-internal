@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
+import {connect} from "react-redux";
+import {getAllCustomer,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 
-export default function AddCustomer(props) {
+function AddCustomer(props) {
     const [value, onChange] = useState(new Date());
     const [addCustomertoggle,setAddCustomertoggle] = useState(false)
     const [customerObject,setCustomerObject] = useState({})
@@ -22,122 +24,73 @@ export default function AddCustomer(props) {
     const [dispatchType,setDispatchType] = useState(false)
     const [poRequired,setPoRequired] = useState(false)
     const [reStock,setReStock] = useState(false)
+    const {customerDataById,customerTypeList,action} = props.customerData
     console.log()
     useEffect (()=>{
-        console.log(props.toggle)
-        if(props.toggle === "add")setAddCustomertoggle(true)
-        if(props.toggle === "edit"){
-           
-            console.log(props.customerData)
-            setCustomer_name(props.customerData.name)
-            setType(props.customerData.type)
-            setFax(props.customerData.fax)
-            setWebsiteUrl(props.customerData.website_url)
-            setNotes(props.customerData.notes)
-            setPrimaryContact(props.customerData.contact_id)
-            setAlternativeId(props.customerData.alternativeId)
-            setCustomer_id(props.customerData.customer_id)
-        }
-
-    },[])
+        props.getAllCustomerType()
+    },[reStock])
 
     const validate = () =>{
-        let errorObjforValidation=errorObj
-        let errorCountForValidation = errorCount
-        let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        let nameReg = /^[a-zA-Z]+$/
-        // let phoneReg = new RegExp('^[0-9]+$');
-        let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-    
-        if(customer_name.length === 0){
-           errorObjforValidation.customer_name=1
-           errorCountForValidation++
-        }
-        if(!nameReg.test(customer_name)){
-            errorObjforValidation.customer_name=1
-           errorCountForValidation++
-        }
-        // if(taxExemptNumber.length===0 && taxExemp){
-        //     errorObj.taxExemptNumber=1
-        //     errorCountForValidation++
-        // }
-      
-        if(fax.length !== 8){
-          
-            errorObjforValidation.fax=1
-            errorCountForValidation++
-        }
-        setErrorCount(errorCountForValidation)
-        setErrorObject(errorObjforValidation)
-        return errorCount
     }
 
     const handleInput= (e)=>{
-        let errorCountForValidation = errorCount
-        console.log(e.target.name,e.target.value)
-        if(e.target.name === "customer_name"){
-            setCustomer_name(e.target.value)
-            if(errorObj.customer_name>0){
-                errorObj.customer_name=0
-                errorCountForValidation--
-            }       
+        alert("h")
+        let indexValue = null
+        if(e.target.id ==="type"){
+            let type = customerDataById.type
+            type.map((value,index)=>{
+                if(value === e.target.value)
+                indexValue = index
+            })
+            if(indexValue !== null)
+            type.splice(indexValue,1)
+            else type.push(e.target.value)
+
+                console.log(type)
+            props.handleExchangeData(type,e.target.id,"customerDataById")
+        }else if(e.target.id ==="alert"){
+            let alert = parseInt(customerDataById.alert)==1?0:1
+            props.handleExchangeData(alert,e.target.id,"customerDataById")
+
+        }else if(e.target.id ==="prospect"){
+            let prospect = parseInt(customerDataById.prospect)==1?0:1
+            props.handleExchangeData(prospect,e.target.id,"customerDataById")
         }
-        if(e.target.name === "type"){
-            setType(e.target.value)
+        else{
+            props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
+
         }
-        if(e.target.name === "primaryContact"){
-            setPrimaryContact(e.target.value)
-        }
-        if(e.target.name === "fax"){
-           
-            setFax(e.target.value)
-            if(errorObj.fax>0){
-                errorObj.fax=0
-                errorCountForValidation--
-            }       
-        }
-        if(e.target.name === "taxExemptNo" || e.target.name === "taxExemptYes"  ){
-            setTaxExemp(!taxExemp)
-        }
-        if(e.target.name === "dispatchTypeDelivery" || e.target.name === "dispatchTypePickup"  ){
-            setDispatchType(!dispatchType)
-        }
-        if(e.target.name === "poRequiredNo" || e.target.name === "poRequiredYes"){
-            setPoRequired(!poRequired)
-        }
-        if(e.target.name === "restockNo" || e.target.name === "restockYes"){
-            setPoRequired(!reStock)
-        }
-        if(e.target.name === "taxExemptNumber"){
-            setTaxExemptNumber(e.target.value)
-            if(errorObj.taxExemptNumber>0){
-                errorObj.taxExemptNumber=0
-                errorCountForValidation--
-            }  
-        }
-        if(e.target.name === "website_url"){
-            setWebsiteUrl(e.target.value)
-        }
-        if(e.target.name === "notes"){
-            setNotes(e.target.value)
-        }
-        if(e.target.name === "alternativeId"){
-            setAlternativeId(e.target.value)
-        }
-        setErrorCount(errorCountForValidation)
-        setErrorObject(errorObj)
+       
     }
     const handleSubmit=()=>{
-        let count= validate()
-        console.log(count)
-         if(count === 0){
-         }
+  
     }
     const handleTabClick=()=>{
-        alert("in")
+        // alert("in")
+    }
+    const handleClose  = ()=>{
+        props.resetCustomerFilds()
+        props.getAllCustomer()
+        props.typeOfActionShow("")
+    }
+    const saveCustomerData = ()=>{
+        // delete customerDataById.id
+        props.addCustomerData(customerDataById).then(data=>{
+
+        })
+    }
+    const updateCustomerData = ()=>{
+        props.addCustomerData(customerDataById)
+        
+    }
+    const cancelData= ()=>{
+        props.resetCustomerFilds()
+        props.getAllCustomer()
+        props.typeOfActionShow("")
+      
     }
     
-console.log(errorObj)
+console.log(customerDataById)
   
     return (
         <div>
@@ -197,7 +150,7 @@ console.log(errorObj)
                                     </span>
                                 </a>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                    <img src="assets/img/close-ic.svg" alt=""/>
+                                    <img src="assets/img/close-ic.svg" alt="" onClick={handleClose}/>
                                 </a>
                             </div>
                         </div>
@@ -209,24 +162,30 @@ console.log(errorObj)
                             <h2>Customer Details</h2>
                             <div class="d-flex align-items-center">
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0" >
-                                    <div class="switcher ml-2 pr-2">
-                                        <input style={{cursor:"pointer"}} type="checkbox" name="switcher_checkbox_alert" id="switcher_checkbox_alert" value="2"/>
-                                        <label style={{cursor:"pointer"}} for="switcher_checkbox_alert"></label>
+                                    {/* <div class="switcher ml-2 pr-2" >
+                                        <input type="checkbox" id="alert"  onChange={handleInput} name="switcher_checkbox_alert"  checked={parseInt(customerDataById.alert) ===1?"checked":""}  />
+                                        <label  style={{cursor:"pointer"}} for="switcher_checkbox_alert"></label>
                                     </div>
-                                    Alert
+                                    Alert */}
+                                    <div class="switcher ml-2 pr-2">
+                                                <input type="checkbox" id="alert"  onChange={handleInput}  name="switcher_checkbox_alert"  checked={parseInt(customerDataById.alert) ===1?"checked":""}/>
+                                                <label for="alert"></label>
+                                            </div>
+                                            Alert
                                 </div>
+                                {/* </div> */}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
-                                    <div class="switcher ml-2 pr-2">
-                                        <input style={{cursor:"pointer"}} type="checkbox" name="switcher_checkbox_Prospect" id="switcher_checkbox_Prospect" value="2"/>
-                                        <label style={{cursor:"pointer"}} for="switcher_checkbox_Prospect"></label>
-                                    </div>
-                                    Prospect
+                                <div class="switcher ml-2 pr-2">
+                                                <input type="checkbox" id="prospect"   onChange={handleInput} checked={parseInt(customerDataById.prospect) ===1?"checked":""}  />
+                                                <label for="prospect"></label>
+                                            </div>
+                                         Prospect
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
-                            {addCustomertoggle?"": <div class="mt-3 mt-md-0">
+                            {action!=="add" || action !==""?"": <div class="mt-3 mt-md-0">
                                     <a href="" class="text-danger f-s-18 f-w-600">Delete Customer</a>
                                 </div>}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
@@ -264,28 +223,47 @@ console.log(errorObj)
                                 <h2>Customer Information</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8">
+                                    <div class="col-md-8 col-lg-4">
                                         <label>Customer Name<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="customer_name" value={customer_name} onChange={handleInput} />
-                                        {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
+                                        <input type="text" class="form-control" id="name" value={customerDataById.name} onChange={handleInput} />
+                                        {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                                     </div>
-                                    <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
+                                    {/* <div class="col-md-2 col-lg-2 mt-2 mt-md-0">
                                         <label>Type<span class="text-danger">*</span></label>
-                                        <select class="form-control">
-                                            <option>Landscape Architect</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
+                                        <select class="form-control" onChange={handleInput} id="type">
+                                            {customerTypeList.active.map(type=>{
+                                                return(<option value={type.id}>{type.customer_type}</option>)
+                                            })}
                                         </select>
+                                    </div> */}
+                                    <div class="col-md-8 col-lg-8 mt-2 mt-md-0">
+                                    <label>Type<span class="text-danger">*</span></label>
+                                        <div style={{border:"1px solid lightgray",height:40,borderRadius:3,paddingLeft:10,paddingTop:7}}>
+                                        {customerTypeList.active.map(type=>{
+                                          
+                                                return (<div class="form-check form-check-inline" style={{paddingRight:10}}>
+                                            <input style={{cursor:"pointer"}} class="form-check-input" type="checkbox" name="active" id="type"  value={type.id} checked={customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0} onChange={handleInput}/>
+                                            <label class="form-check-label" for="activePlants">{type.customer_type}  </label>
+                                        </div>)
+                                                
+                                         
+                                    
+                                        })}
+
+
+                                        </div>
+
+                                    
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Primary Contact</label>
-                                        <input type="text" class="form-control" name = "primaryContact" value={primaryContact} onChange={handleInput} />
+                                       <div style={{border:"1px solid lightgray",height:43,borderRadius:3,marginTop:1}}>Data should be pulled from contact</div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>
-                                        <input type="number" class="form-control" name="fax" value={fax} onChange={handleInput} />
+                                        <input type="number" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} />
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
                                 </div>
@@ -293,25 +271,35 @@ console.log(errorObj)
                                     <div class="col-md-8 col-lg-8">
                                         <label>Website</label>
                                         <div class="d-flex">
-                                            <input type="text" class="form-control" name="website_url" value={website_url}  onChange={handleInput}/>
+                                            <input type="text" class="form-control" name="website_url" id="customerDataById" value={customerDataById.website_url}  onChange={handleInput}/>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-2">Visit</button>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
-                                        <input type="text" class="form-control" name="alternativeId" value={alternativeId} onChange={handleInput}/>
+                                        <input type="text" class="form-control" name="alternativeId" id="alternative_id" value={customerDataById.alternative_id} onChange={handleInput} maxLength={5}/>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Customer Notes <small>(Internal Only)</small></label>
-                                        <textarea rows="" cols=""  class="form-control" name="notes" value={notes} onChange={handleInput}/>
+                                        <textarea rows="" cols=""  class="form-control" name="notes" value={customerDataById.notes} onChange={handleInput} id="notes"/>
                                     </div>
                                 </div>
 
-
+                                <div class="row mt-3">
+                                    <div class="col-md-12 text-md-right">
+                                        <a >
+                                        <button type="button" class="btn btn-outline-secondary btn-lg" onClick={cancelData}
+                                       
+                                        >Cancel</button>
+                                        </a>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3"  onClick={action =="add"?saveCustomerData:updateCustomerData}>{action=="add"?"Save":"Update"}</button>
+                                    </div>
+                                </div>
 
                             </form>
+                          
                         </div>
                     </TabPanel>
                     <TabPanel >
@@ -688,3 +676,19 @@ Hannon, Orntario LOR 1PO, Canada.</p>
         </div>
     )
 }
+
+const mapStateToProps = (state)=>(
+    {
+        customerData:state.customerReducer
+    }
+)
+export default connect(mapStateToProps,{
+    typeOfActionShow, getAllCustomerType,
+    handleExchangeData,addCustomerData,resetCustomerFilds,getAllCustomer
+     
+
+
+
+
+
+})(AddCustomer)

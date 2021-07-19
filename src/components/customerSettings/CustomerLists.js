@@ -1,6 +1,6 @@
 import React from 'react'
 import AddCustomer from './EditCustomer'
-import {getAllCustomer,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter} from "../../actions/customerSettingAction";
+import {getAllCustomer,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
@@ -27,16 +27,19 @@ export class CustomerSettings extends React.Component {
         this.props.getAllCustomer(this.state.radioFilter)
     }
 
-    handleAddCustomerClick = () => {
-        this.setState({addCustomerToggle:!this.state.addCustomerToggle})
+    handleAddCustomerClick = (e) => {
+        // alert(e.target.id)
+        this.props.typeOfActionShow("add")
     }
     handleRadioClick = (e)=> {
         this.setState({customerListStatus:e.target.name})
         this.props.handleRadioFilter(e.target.id)
         // alert("hi")
     }    
-    handleEdit = (customerObject) => {
-        this.setState({editCustomerToggle:!this.state.editCustomerToggle,customerObject})   
+    handleEdit = (id) => {
+        this.props.typeOfActionShow("edit")
+        this.props.getCustomerById(id)
+        
     }
     paginationChange =(event, page)=>{
         // alert("hg")
@@ -71,6 +74,7 @@ export class CustomerSettings extends React.Component {
         let displayCustomerList = []
         let pageCount =0
         let pageNumber = 0
+        let {action} = this.props.customerData
         // if(this.props.customerData) {
             // tempArray = this.props.customerData
             // if(this.state.customerListStatus === "active" && this.props.customerData.customerList.active !== undefined) {
@@ -103,18 +107,18 @@ export class CustomerSettings extends React.Component {
         //     customerData = tempArray
         
         // }
-        console.log(customerData)
+        console.log(action)
     return (
         <>
-        {! this.state.addCustomerToggle && !this.state.editCustomerToggle  ? <div>
+        {action ===""? <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
                     <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData.activeData.length}</small></div>
                 </h1>
-                <div class="topbarCtrls mt-3 mt-md-0">
-                    <a href="#" class="btn">
-                        <span class="d-flex align-items-center text-left" onClick={this.handleAddCustomerClick}>
+                <div class="topbarCtrls mt-3 mt-md-0" onClick={this.handleAddCustomerClick} id="add">
+                    <a  class="btn" >
+                        <span class="d-flex align-items-center text-left">
                             <img src="assets/img/add-customer-ic.svg" alt=""/>
                             <span class="ml-2"><b>Add Customer</b></span>
                         </span>
@@ -224,7 +228,7 @@ export class CustomerSettings extends React.Component {
                                                         <td>{customerData.last_order}</td>
                                                         <td>{customerData.outstanding}</td>
                                                         <td class="text-center">
-                                                        <span onClick={()=>{this.handleEdit(customerData)}}>
+                                                        <span onClick={()=>{this.handleEdit(customerData.id)}}>
                                                             <a href="javascript:;">
                                                                 <img src="assets/img/edit.svg" alt=""/>
                                                             </a>
@@ -255,5 +259,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllCustomer,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(CustomerSettings)
+export default connect(mapStateToProps,{getAllCustomer,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(CustomerSettings)
 
