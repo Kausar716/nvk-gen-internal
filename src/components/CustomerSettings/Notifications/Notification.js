@@ -79,7 +79,7 @@ const Notification = (props) => {
                     <div className="row_1_Notification">
 
                       <div className="notification_label">
-                            <label>READY to LATE Notice<span> <FaIcon.FiAlertCircle className="alertIcon" /></span></label>
+                            <label>READY to LATE Notice<span> <FaIcon.FiAlertCircle className="alertIcon" />days (Setting not used if set to 0)</span></label>
                             <Field
                                             name="ReserveExpiryNotice1"
                                             component={renderField2}
@@ -94,7 +94,7 @@ const Notification = (props) => {
                       </div>
 
                       <div className="notification_label">
-                            <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" /></span></label>
+                            <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" />days remaining</span></label>
                             <Field
                                             name="ReserveExpiryNotice2"
                                             component={renderField}
@@ -117,7 +117,7 @@ const Notification = (props) => {
 
             </div> 
                   <div align="right" className="action_area_left">
-                        <button className="button_style_Tools_Setting_Cancel"  disabled={pristine || submitting} onClick={reset} >Cancel</button>
+                        <button class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  disabled={pristine || submitting} onClick={reset} >Cancel</button>
                         <button className="button_style_Tools_Setting_Save" onClick={handleSubmit(onSubmit)} disabled={pristine || submitting}  >Save</button>
                   </div> 
 

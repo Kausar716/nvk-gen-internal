@@ -146,6 +146,14 @@ import {
     const {plantCategoryData} =  props.categoryData
         console.log(props.plantData)
         console.log(plantDataById)
+    let flag=0
+    if(plantDataById){       
+        if(!plantDataById.genus || !plantDataById.species || !plantDataById.category_id){
+            flag=1
+            
+        }
+        
+    }
 
     return (
         <div>
@@ -269,12 +277,12 @@ import {
                                     {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Hardiness Zone</label> */}
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Hardiness Zone<span class="text-danger">*</span></label>
+                                            {/* <label>Hardiness Zone<span class="text-danger">*</span></label>
                                             <select class="form-control" >
                                             <option>None</option>
                                             <option>Areca</option>
                                             <option>Zone</option>
-                                            </select>
+                                            </select> */}
                                         </div>
                                         {/* <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/> */}
                                         
@@ -298,12 +306,12 @@ import {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
-                                        <a href='/plantManager'>
+                                        {/* <a href='/plantManager'> */}
                                         <button type="button" class="btn btn-outline-secondary btn-lg"
-                                         onClick={()=>props.plantPageReDirectAction("plant","add")}
+                                         onClick={()=>props.plantPageReDirectAction("all","plant")}
                                         >Cancel</button>
-                                        </a>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
+                                        {/* </a> */}
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?(needAction===true && flag ===0)?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>
                                 </div>
                             </form>

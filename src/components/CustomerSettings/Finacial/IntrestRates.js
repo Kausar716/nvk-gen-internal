@@ -77,7 +77,7 @@ const InrestRates = (props) => {
   return (
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
-      <Label className="subFont">Interest Rates</Label> 
+      <Label className="subFont">Tax & Interest Rates</Label> 
       <span className="updownSymbolContainer"> 
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -85,7 +85,7 @@ const InrestRates = (props) => {
       <Collapse isOpen={isOpen}>
        
           <div className="docDetails" style={{marginTop:"-12px"}}>
-                   <p className="sub_menu_nameD"> CUSTOMER Orders and Invoices</p>
+                   <p className="sub_menu_nameD"> Displayed on Customer Orders & Invoices</p>
           </div>
 
           <div className="containerBox"> 
@@ -95,36 +95,36 @@ const InrestRates = (props) => {
 
                     <div className="intrestRate_label">
                           <label>Monthly</label>
-                          <input type="number"     className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly} onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label"  style={{marginLeft:"-19em"}}>
                           <label>Yearly</label>
-                          <input type="number"     className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                           <label>Tax Rate</label>
-                          <input type="number"     className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                       <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                             <label>Tax Rate Label</label>
-                            <input type="text"  placeholder={""}    className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label}  onChange={handleChangeData}/>
+                            <input type="text"  placeholder={"Sales Tax(HST) @ 13%"}     className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label!==""?customerIntrest.taxrate_label:""}  onChange={handleChangeData}/>
                       </div>
 
 
                       <div className="intrestRate_label" style={{marginLeft:"-11em"}}>
                             <label>Tax Rate Number</label>
-                            <input type="text"  placeholder={""}    className="textRightTax" id="taxrate_number" value={customerIntrest.taxrate_number}  onChange={handleChangeData}/>
+                            <input type="text"  placeholder={"HST:1233333RT0001"}     className="textRightTax" id="taxrate_number" value={customerIntrest.taxrate_number !==""?customerIntrest.taxrate_number:""}  onChange={handleChangeData}/>
                       </div>
             </div>
             
             <div align="right" className="action_area_left"  >
-                              <button className="button_style_Tools_Setting_Cancel"    >Cancel</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  >Cancel</button>
                               <button className="button_style_Tools_Setting_Save"   onClick={saveExchangeData}>Save</button>
                   </div> 
 

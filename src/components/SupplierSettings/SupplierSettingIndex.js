@@ -32,7 +32,7 @@ class SupplierSettingIndex extends Component {
                     <Tabs>
                         <TabList>
                             <Tab style={{bottom:"0px"}}>Supplier Account Reasons</Tab>
-                            <Tab style={{bottom:"0px"}}>Supplier Delivery Location</Tab> 
+                            <Tab style={{bottom:"0px"}}>Supplier Delivery Locations</Tab> 
                             <Tab style={{bottom:"0px"}}>Supplier Categories</Tab> 
                                                
                         </TabList>

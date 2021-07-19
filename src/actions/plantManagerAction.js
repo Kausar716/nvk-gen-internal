@@ -99,6 +99,7 @@ export const createPlantAction = (plantData,tags) => dispatch => {
     let errorArray=[];
     if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
+    if(plantData.category_id.trim().length ===0 ) errorArray.push("Add Category")
     if(errorArray.length===0){
         plantData["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/add-plant`,plantData,config).then(res=>{
@@ -278,9 +279,18 @@ export const getSpecifiedPlantAction = (id, actionType="edit",pageToOpen="genera
 */
 export const createPlantSkuAction = (id, data, actionType="add") => dispatch => {
     let error = []
-    // if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
-    // if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
-    // if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    let  packagedata =[]
+    console.log(data)
+    if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
+    if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
+    if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.attributes_subattributes){
+         packagedata = data.attributes_subattributes.filter(obj=>{
+            return(obj.attribute_id === 3)
+        })
+    }
+    if(packagedata.length===0)error.push(" Select Packaging ")
     // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
     let copyData = data

@@ -39,7 +39,10 @@ import {
     FILTER_GET_ALL_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
-    HANDLE_SEARCH_PINPUT
+    HANDLE_PRODUCT_SEARCH_INPUT,
+    HANDLE_PRODUCT_RADIO_TOGGLE
+    
+
 
 } from './types';
 
@@ -465,6 +468,21 @@ console.log(id)
 
 }
 
+export const serachProduct = (data) =>dispatch=>{
+    //console.log(data)
+    dispatch({
+        type:HANDLE_PRODUCT_SEARCH_INPUT,
+        payload:data,
+    })
+
+}
+ export const radioSearch = (data) =>dispatch=>{
+     dispatch({
+         type:HANDLE_PRODUCT_RADIO_TOGGLE,
+         payload:data
+     })
+ }
+
 // export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
 //     axios.get(`/api/product/${id}`,config).then(res=>{ 
 
@@ -531,6 +549,8 @@ export const setSkuPageNumber = (skuPageNumber) =>{
 */
 
 export const handleInputAction = (id, value) =>dispatch=>{
+   
+
     dispatch({
         type:HANDLE_INPUT_DATA,
         itemId:id,
@@ -539,9 +559,7 @@ export const handleInputAction = (id, value) =>dispatch=>{
 
 }
 export const handleSkuInputAction =(id,value) =>dispatch=>{
-    console.log(id)
-    console.log(value)
-    dispatch({
+      dispatch({
         type:HANDLE_SKU_INPUT_DATA,
         itemId:id,
         itemValue:value
@@ -601,14 +619,6 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
 
 
 
-export const serachProduct = (data) =>dispatch=>{
-    //console.log(data)
-    dispatch({
-        type:HANDLE_SEARCH_PINPUT,
-        payload:data,
-    })
-
-}
 
 
 

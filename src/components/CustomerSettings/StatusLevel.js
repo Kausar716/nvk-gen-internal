@@ -147,9 +147,10 @@ render() {
                    <div>
                        	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
                <div className="bg-white">
- <h4 className="p-15 mb-0">Customer Account Status Levels(ACTIVE Profiles)</h4>
-                            <h4 className="p-15 mb-0">Status Levels</h4>
-                            <hr className="m-0"/>
+ <h4 className="p-15 mb-0">Customer Account Status Levels (ACTIVE Profiles)</h4>
+ <hr className="m-0"/>
+                            
+                           
                             <div className="ContentSection p-15">
                                 {/* <div className="row">
                                     <div className="col-md-12 col-lg-12">
@@ -188,7 +189,7 @@ render() {
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p>Delivery Method</p>
+                                    <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}>Status Levels</h5>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text" className="form-control" placeholder="" id="status_level" value={customerData.customerStatus.status_level}   placeholder="Status Level" onChange={this.handleCategoryInputAction}/>

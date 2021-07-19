@@ -140,6 +140,7 @@ const PlantTable=(props)=> {
                                              let id2 ="discontinue"
                                              let id3 ="Archived"
                                              let id4 ="Production"
+                                             console.log(status)
                                              return(     
                                             <tr>
                                                 <td style={{color:status==="1" ? "black" :"red"}}>{status === "1" ?"Active":"Inactive"}</td>

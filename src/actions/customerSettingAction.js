@@ -31,11 +31,23 @@
  ADD_CUSTOMER_TERMS,
  ADD_CUSTOMER_RETURN_REASON,
  GET_CUSTOMER_RETURN_REASON,
+ GET_EXCHANGE_DATA,
  axios,
  config
  } from './types'
 
 
+ export const getAllCustomerExchange = (data)=>dispatch=>{
+ 
+    return axios.get("/api/customerexchangedetail",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_EXCHANGE_DATA,
+            payload:res.data,
+
+        })
+    })
+}
  export const saveReturnReasonMethod = (data)=>dispatch=>{
  
     return axios.post("/api/add-customer-reason",data,config).then(res=>{ 

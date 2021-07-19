@@ -15,7 +15,7 @@ export class SupplierManagemnet extends React.Component {
             customerListStatus:"active",
             editCustmerToggle:false,
             customerObject:{},
-            pageSize:5,
+            pageSize:15,
             alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
             selectedAlpha:"All",
             searchValue:"",
@@ -137,21 +137,21 @@ export class SupplierManagemnet extends React.Component {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 mt-2 mt-md-0 pb-2">
-                                    <a onClick={this.handleSearch}>Reset</a>
+                                    <a onClick={this.handleSearch} style={{cursor:"pointer",color:"#5287F5"}}>Reset</a>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <div class="col-md-12">
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="active" id="active" value="" checked={this.state.customerListStatus === "active"?true:false} onClick={this.handleRadioClick}/>
-                                        <label class="form-check-label" for="activePlants">Active Only  </label>
+                                        <input style={{cursor:"pointer"}} class="form-check-input" type="radio" name="active" id="active" value="" checked={this.state.customerListStatus === "active"?true:false} onClick={this.handleRadioClick}/>
+                                        <label style={{cursor:"pointer"}} class="form-check-label" for="activePlants">Active Only  </label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inactive" id="inactive" value="" checked={this.state.customerListStatus === "inactive"?true:false} onClick={this.handleRadioClick}/>
+                                        <input style={{cursor:"pointer"}} class="form-check-input" type="radio" name="inactive" id="inactive" value="" checked={this.state.customerListStatus === "inactive"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="archivedPlants">Inactive Only</label>
                                     </div>
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="All" id="all" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
+                                        <input style={{cursor:"pointer"}} class="form-check-input" type="radio" name="All" id="all" value="" checked={this.state.customerListStatus === "All"?true:false} onClick={this.handleRadioClick}/>
                                         <label class="form-check-label" for="allPlants">All</label>
                                     </div>
                                 </div>
@@ -160,10 +160,10 @@ export class SupplierManagemnet extends React.Component {
                             <div class="form-group row mt-4">
                                 <div class="col-md-12 col-lg-12">
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
+                                        <li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
                                         {
                                             this.state.alphabets.map(alphabet=>{
-                                                return(<li><a  class={this.state.selectedAlpha ==alphabet?"active":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+                                                return(<li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha ==alphabet?"active":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
 
                                             })
                                         }
@@ -173,8 +173,23 @@ export class SupplierManagemnet extends React.Component {
                             <div>
                                 <div style={{float:"left",marginBottom:15}}>
                                 {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber))) : (totalLength>0?(pageNumber+1):0))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
                                 {/* </div> */}
+                                </div>
+                                <div style={{float:"left",marginBottom:15}}>
+                                <label className="greenText">Show</label>
+                                <select
+                                        value={this.state.pageSize}
+                                        onChange={e => {
+                                            this.setState({pageSize:e.target.value})
+                                        }}
+                                        >
+                                        {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                            (<option key={pageSize} value={pageSize}>
+                                            {pageSize} 
+                                            </option>)
+                                        ))}
+                                    </select>
                                 </div>
                                 <div style={{float:"right",marginBottom:15}}>
                                     <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
@@ -207,8 +222,8 @@ export class SupplierManagemnet extends React.Component {
                                                         <td>{"--"}</td>
                                                         <td>{customerData.primary_contact}</td>
                                                         <td>{customerData.contact_id}</td>
-                                                        <td>{customerData.last_order}</td>
-                                                        <td>{customerData.outstanding}</td>
+                                                        <td>N/A</td>
+                                                        <td>$0.00</td>
                                                         <td class="text-center">
                                                         <span onClick={()=>{this.handleEdit(customerData)}}>
                                                             <a href="javascript:;">
