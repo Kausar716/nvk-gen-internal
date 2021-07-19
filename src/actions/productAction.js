@@ -30,6 +30,8 @@ import {
     HANDLE_TAG_INPUT_DATA,
     HANDLE_SKU_INPUT_DATA,
     ERROR_HANDLE,
+    HANDLE_MANUFACTURE_DATA,
+    HANDLE_SELECTED_CATEGORY,
 
     // axios config
     config,
@@ -469,7 +471,7 @@ console.log(id)
 }
 
 export const serachProduct = (data) =>dispatch=>{
-    //console.log(data)
+    console.log(data)
     dispatch({
         type:HANDLE_PRODUCT_SEARCH_INPUT,
         payload:data,
@@ -613,6 +615,20 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
     }
  
 
+}
+export const handleSelectedCategory = (categoryId) =>dispatch=> {
+    dispatch({
+        type:HANDLE_SELECTED_CATEGORY,
+        categoryId:categoryId
+    })
+}
+
+export const handleManufactureData = (manufacture) =>dispatch=> {
+    console.log(manufacture)
+    dispatch({
+        type:HANDLE_MANUFACTURE_DATA,
+        manufacturer_id:manufacture
+    })
 }
 
 

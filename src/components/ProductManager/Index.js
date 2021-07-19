@@ -19,10 +19,12 @@ import {
     getSpecifiedProductAction,
     duplicateProduct,
     getAllSpecifiedSkuProductList,
+    handleManufactureData,
 
     //page Redirects action
     pageReDirectAction,
     subPageReDirectAction,
+    handleSelectedCategory,
 
     //category Filter
     handleCategory,
@@ -77,22 +79,26 @@ const  ProductManagement = (props) =>{
             if(e.target.id ==="category"){
                 // props.handleCategory(e.target.value,"0")
                 if(e.target.value==="All"){
-                    props.handleCategory("All","0")
-                    setDisable(true)
+                 
+                    // props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacture_id})
+                    // setDisable(true)
                     
                 }else{
+                    // props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacture_id})
 
-                    console.log("abcdfrf", e.target.value)
-                    props.handleCategory(e.target.value,"0")
-                    setDisable(false)
+                    // console.log("abcdfrf", e.target.value)
+                    // props.handleCategory(e.target.value,"0")
+                    // setDisable(false)
                 }
 
-                temSub = props.categoryData.subCategoryData.filter(cat=>JSON.stringify(cat.category_id)===e.target.value)
-                console.log("temSub", temSub)
+                props.handleSelectedCategory(e.target.value)
+                props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacture_id})
+                // temSub = props.categoryData.subCategoryData.filter(cat=>JSON.stringify(cat.category_id)===e.target.value)
+                // console.log("temSub", temSub)
                
                 //?subCategoryData.filter(sub=>sub.id===product.subcategory_id)
                 setCategory(e.target.value)
-                setFilterSubCategory(temSub)
+                // setFilterSubCategory(temSub)
 
                 
             }
@@ -103,6 +109,13 @@ const  ProductManagement = (props) =>{
                 setsubCategory(e.target.value)
 
             }
+        }
+        const handleManufactureData =(e)=>{
+            console.log(e.target.value)
+            let selectedId = parseInt(e.target.value)
+           
+            props.serachProduct({product: inputValue, option: selectedRadio, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
+            props.handleManufactureData(selectedId)
         }
 
         const resetFilter = () =>{
@@ -152,20 +165,21 @@ const  ProductManagement = (props) =>{
 
        const getValue = (e)=>{
         console.log(e.target.value)
-        console.log(categoryId)
-        props.serachProduct({product: e.target.value, option: selectedRadio, category: JSON.stringify(categoryId)})
+        console.log(selectedCategory)
+        console.log(props.manufacture_id)
+
+        props.serachProduct({product: e.target.value, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacture_id})
         setInputValue(e.target.value);
     }
        const radioSearchAction =(e)=>{
         console.log(e.target.id)
         //props.radioSearch(e.target.id)
-        props.serachProduct({product: inputValue, option: e.target.id, category: categoryId})
+        props.serachProduct({product: inputValue, option: e.target.id, category: selectedCategory,manufactureId:props.manufacture_id})
         setRadio(e.target.id)
 
     }
     const searchBasedOnCategory = (e) =>{
-        //console.log(e.target.value)
-        //props.searchCategoryApplyAction(e.target.value)
+     
         props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value})
         setCategoryId(e.target.value)
         // searchCategoryApply()
@@ -173,9 +187,10 @@ const  ProductManagement = (props) =>{
 
     
         // eslint-disable-next-line no-unused-vars
-        const {pageToOpen,actionType,productDataById, skuDataById} = props.productData
-        const {categoryData,subCategoryData} = props.categoryData
-        console.log("subCategoprops.productData" ,props.productData)
+        const {pageToOpen,actionType,productDataById, skuDataById,selectedCategory} = props.productData
+        const {categoryData,subCategoryData,manufactureData} = props.categoryData
+        console.log(props.temp.productData)
+  
     return (
         <div>
             <ModalData/>
@@ -228,7 +243,7 @@ const  ProductManagement = (props) =>{
                 
                                 </select>
                                 </div>
-                                <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
+                                {/* <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Sub Category</label>
 
                                  <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleCategoryData}  >
@@ -240,7 +255,21 @@ const  ProductManagement = (props) =>{
                                         
                                 </select>
 
-                                </div>
+                                </div> */}
+                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
+                                    <label for="subCategory">Manufacturer</label>
+
+                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleManufactureData}  >
+                                <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
+                                    {manufactureData.map(manufactureObj=>{
+                                        return(<option  value={manufactureObj.id} key={manufactureObj.id}>{manufactureObj.name}</option>)
+                                    })
+                                    }
+                                        
+                                </select>
+
+                                </div> 
+                                
                                 
                                 <div className="col-md-2 col-lg-2">
                                     <p onClick={resetFilter} className="d-block  resetlink">Reset</p>
@@ -364,6 +393,7 @@ const  ProductManagement = (props) =>{
 const mapStateToProps = (state)=> ({
     productData : state.productData,
     categoryData: state.categoryData,
+    manufacture_id:state.productData.manufacturer_id,
     temp:state,
 })
 
@@ -376,6 +406,7 @@ deleteProductAction ,
 getAllProductAction,
 getSpecifiedProductAction,
 duplicateProduct,
+handleSelectedCategory,
 
 //page Redirects action
 pageReDirectAction,
@@ -394,7 +425,7 @@ getAllManufactureAction,
 handleCategory,
 
 getAllSpecifiedSkuProductList,
-
+handleManufactureData,
 serachProduct
 }
 )(ProductManagement)

@@ -35,6 +35,8 @@ import {
     HANDLE_TAG_INPUT_DATA,
     HANDLE_SKU_INPUT_DATA,
     ERROR_HANDLE,
+    HANDLE_MANUFACTURE_DATA,
+    HANDLE_SELECTED_CATEGORY,
 
     // filter category Data
     FILTER_CATEGORY_DATA,
@@ -99,6 +101,9 @@ const initialSatate = {
     backupData          :[],
     ae_product_id:"",
     productDataBySKUlist:[],
+    manufacturer_id:"None",
+    selectedCategory:"All",
+
 
 }
 
@@ -429,6 +434,7 @@ console.log("actions", action.payload.data)
                 }
         case FILTER_GET_ALL_CATEGORY_DATA:
             console.log("all cat")
+            console.log(action)
             return{
                 ...state,
 
@@ -436,9 +442,12 @@ console.log("actions", action.payload.data)
 
         case FILTER_GET_SLECTED_CATEGORY_DATA:
             // JSON.stringify(product.category_id )===action.categoryId
+            console.log(action)
+            debugger;
             return{
                 ...state,
-                productData:state.backupData.filter(product=>JSON.stringify(product.category_id )===action.categoryId)
+                // productData:state.backupData.filter(product=>JSON.stringify(product.category_id )===action.categoryId),
+                selectedCategory:action.categoryId
             }
         case FILTER_GET_SLECTED_CATEGORY_SUB_DATA:
             //debugger;
@@ -463,6 +472,8 @@ console.log("actions", action.payload.data)
             case HANDLE_PRODUCT_SEARCH_INPUT:
                 var optionVal = -1;
                 var categoryVal = "";
+                let filterManufactur=0
+                let filterCategory = 0
                 console.log(state.backupData)
                 console.log(action)
                 if(action.payload.option ==="active"){
@@ -471,26 +482,51 @@ console.log("actions", action.payload.data)
                 if(action.payload.option ==="archive"){
                     optionVal = 1;
                 }
-                categoryVal = action.payload.category;
+                if(action.payload.manufactureId === "None"){
+                    filterManufactur=1
+                }
+                if(action.payload.category === "All"){
+                    filterCategory =1
+                }         
+              
+                if(action.payload.category !== "All"){
+                    categoryVal = action.payload.category;
+                }
                 if(action.payload.product.trim() ==="" && optionVal === -1 && categoryVal === "0"){
                     return{
                         ...state,
                         productData:state.backupData
                     }
                 }else{
+                    console.log("in",)
+                    console.log(parseInt(categoryVal),"sadfd")
                     return{
                         ...state,
                         productData:state.backupData.filter(
                             filterData=>(filterData.name.trim().toLowerCase().includes(action.payload.product.trim().toLowerCase()) || action.payload.product==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&
-                            (filterData.category_id === parseInt(categoryVal) || parseInt(categoryVal) === 0)
+                            (filterCategory===0?filterData.category_id === parseInt(categoryVal):true) 
+                            &&(filterManufactur===0?(filterData.manufacturer_id === action.payload.manufactureId):true) 
+                            // ((filterData.manufacturer_id === action.payload.manufactureId)||(action.payload.manufactureId ==="None") )
+                                
+                            
                             )
                     }
 
                 }
 
-
-
+        case HANDLE_MANUFACTURE_DATA:{
+            return{
+                ...state,
+                manufacturer_id:action.manufacturer_id
+            }
+        }
+        case HANDLE_SELECTED_CATEGORY:{
+            return{
+                ...state,
+                selectedCategory:action.categoryId
+            }
+        }
         default:
             return state
      
