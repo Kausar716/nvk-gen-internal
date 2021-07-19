@@ -32,11 +32,73 @@
  ADD_CUSTOMER_RETURN_REASON,
  GET_CUSTOMER_RETURN_REASON,
  GET_EXCHANGE_DATA,
+ ADD_NEW_CUSTOMER,
+ EDIT_CUSTOMER,
+ TYPE_OF_ACTION,
+ GET_CUSTOMER_BY_ID,
+ RESET_CUSTOMER_FILEDS,
+
  axios,
  config
  } from './types'
 
+////customer details////////////////////////////////
+export const typeOfActionShow = (type) =>dispatch=>{
+    dispatch({
+      type:TYPE_OF_ACTION,
+      action:type
+    })
+}
+export const getCustomerById = (id) =>dispatch=>{
+    return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_BY_ID,
+            payload:res.data,
 
+        })
+    })
+}
+export const addCustomerData = (data)=>dispatch=>{
+    return axios.post("/api/add-customer",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_NEW_CUSTOMER,
+                payload:res.data   
+            })
+        }) 
+}
+export const UpdateCustomerData = (data)=>dispatch=>{
+    let id = data.id
+    delete data.id
+    return axios.post(`/api/update-customer/${id}`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:UPDATE_CUSTOMER,
+                payload:res.data   
+            })
+        }) 
+}
+export const resetCustomerFilds = (data)=>dispatch => {
+    dispatch({
+        type:RESET_CUSTOMER_FILEDS,
+
+    })
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+/////customer details ends /////////////////
  export const getAllCustomerExchange = (data)=>dispatch=>{
  
     return axios.get("/api/customerexchangedetail",config).then(res=>{ 
@@ -335,19 +397,19 @@ export const showCustomer = (id) => dispatch => {
         })
 }
 
-export const updateCustomer = (customerData) => dispatch => {
-    console.log(customerData)  
-    return axios.post(`/api/update-customer/${customerData.id}`,customerData,config).then(res=>{  
-     console.log(res)     
-     dispatch({
-             type:UPDATE_CUSTOMER,
-             payload:res.data    
-         })
-     })
-     .catch(message=>{
-         console.log(message)
-     })     
-}
+// export const updateCustomer = (customerData) => dispatch => {
+//     console.log(customerData)  
+//     return axios.post(`/api/update-customer/${customerData.id}`,customerData,config).then(res=>{  
+//      console.log(res)     
+//      dispatch({
+//              type:UPDATE_CUSTOMER,
+//              payload:res.data    
+//          })
+//      })
+//      .catch(message=>{
+//          console.log(message)
+//      })     
+// }
 
 export const deleteCustomer= (customerData) => dispatch => {
     console.log(customerData)
