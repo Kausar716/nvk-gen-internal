@@ -4,36 +4,73 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 // import './style.css';
-import {getAllProductManufacturers,handleProductManufacturerInputAction,handleAddProductManufacturer,handleDragDrop,handleProductManufacturerDelete} from '../../actions/productManufacturerAction'
+import {getAllProductManufacturers,handleProductManufacturerInputAction,handleAddProductManufacturer,handleDragDrop,handleManufacturerDragSort,handleProductManufacturerDelete} from '../../actions/productManufacturerAction'
 
 class Manufacturer extends Component {
-
+    constructor(props){
+        super()
+            this.state={
+                errorObj:{
+                    formSku:0
+                },
+                sortId: 0,
+                activeId: 0
+            }
+        
+    }
     onDragOver = (ev)=>{
         ev.preventDefault();
     }
     onDragStart=(ev, id)=>{
         ev.dataTransfer.setData("id",id)
+        let activeId=this.state.activeId
+        activeId=id;
+        this.setState({activeId})
     }
     componentDidMount(){
         this.props.getAllProductManufacturers()
     }
+    onMouseLeave =((ev, id)=>{
+        let sortId=this.state.sortId
+        sortId=id;
+        this.setState({sortId})
+    })
     onDrop=(ev,cat)=>{
         let id= ev.dataTransfer.getData("id");        
         let tasks = this.props.productManufacturerList.filter((task)=>{
             return JSON.stringify(task.id) === id;
         });
         let doProcess = false;
+        let alertmsg = 0;
         if (cat === 'active' && tasks[0].status === 0) {
             doProcess = true;
+            alertmsg = 1;
         }
         if (cat === 'inactive' && tasks[0].status === 1) {
             doProcess = true;
+            alertmsg = 2;
         }
         if (doProcess === true) {
             let result= this.props.handleDragDrop(tasks[0])
             result.then(res=>{
                 this.props.getAllProductManufacturers()
             })  
+        }
+        if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+            let result= this.props.handleManufacturerDragSort(this.state.activeId, this.state.sortId)
+            result.then(res=>{
+                this.props.getAllProductManufacturers()
+            }) 
+            alertmsg = 3;
+        }
+        if (alertmsg === 1){
+            alert('Successfully Moved from Inactive to Active');
+        }
+        if (alertmsg === 2){
+            alert('Successfully Moved from Active to Inactive');
+        }
+        if (alertmsg === 3){
+            alert('Sort Successfully Done');
         }
     }
     onDelete =(ev)=>{
@@ -52,6 +89,7 @@ class Manufacturer extends Component {
         result.then(res=>{
             this.props.getAllProductManufacturers()
         })
+        alert('Added Successfully Done');
     }
         
 }
@@ -123,13 +161,13 @@ render()
                             <div className="col-lg-1">
                                 <div className="midControls d-flex flex-column justify-content-around">
                                     <div>
-                                        <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
+                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                     </div>
                                     <div>
-                                        <img style={{width:"3em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
+                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                     </div>
                                     <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                        <img style={{width:"3em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +179,7 @@ render()
                                     <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                     <ul class="list-unstyled">
                                             {tasks.active.map(t=>{
-                                            return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                            return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                         <a className="d-flex justify-content-between align-items-center">
                                                             <span id="Wheathers">{t.name}</span>
                                                         </a>
@@ -171,6 +209,7 @@ render()
         handleProductManufacturerInputAction,
         handleAddProductManufacturer,
         handleDragDrop,
+        handleManufacturerDragSort,
         handleProductManufacturerDelete        
     })(Manufacturer)
 

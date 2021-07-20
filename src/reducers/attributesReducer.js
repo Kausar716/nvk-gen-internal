@@ -3,6 +3,7 @@ import {
     GET_ALL_ATTRIBUtTES,
     GET_ALL_SUB_ATTRIBUtTES,
     HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+    HANDLE_DRAG_ATTRIBUTE_SORT,
     HANDLE_DELETE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION,
     HANDLE_ADD_ZONE_ATTRIBUTE,
@@ -55,6 +56,11 @@ switch(action.type){
        }
     }
     case HANDLE_DRAG_ATTRIBUTE_CATEGORY:
+        return{
+            ...state
+        
+    }
+    case HANDLE_DRAG_ATTRIBUTE_SORT:
         return{
             ...state
         

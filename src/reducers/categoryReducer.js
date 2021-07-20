@@ -10,6 +10,7 @@ import {
     HANDLE_CATEGORY_INPUT_DATA,
     HANDLE_ADD_PLANT_CATEGORY,
     HANDLE_DRAG_PLANT_CATEGORY,
+    HANDLE_DRAG_CATEGORY_SORT,
     HANDLE_CATEGORY_DELETE,
 
 
@@ -80,6 +81,10 @@ export default function(state = initialSatate, action){
             }
 
         case HANDLE_DRAG_PLANT_CATEGORY:
+            return{
+                ...state
+            }
+        case HANDLE_DRAG_CATEGORY_SORT:
             return{
                 ...state
             }

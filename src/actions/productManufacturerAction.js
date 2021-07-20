@@ -5,6 +5,7 @@ import {
     HANDLE_PRODUCT_MANUFACTURE_INPUT_DATA,
     HANDLE_ADD_PRODUCT_MANUFACTURE,
     HANDLE_DRAG_PRODUCT_MANUFACTURE,
+    HANDLE_DRAG_MANUFACTURER_SORT,
     HANDLE_PRODUCT_MANUFACTURE_DELETE,
 
     // axios config
@@ -62,6 +63,19 @@ export const handleDragDrop = (data) =>dispatch=>{
             type:HANDLE_DRAG_PRODUCT_MANUFACTURE,
             payload:res.data
 
+        })
+    })
+}
+export const handleManufacturerDragSort = (fromId, toId) =>dispatch=>{
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position="up";
+    return axios.post(`/api/drag-sort-manufacturer`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DRAG_MANUFACTURER_SORT,
+            payload:res.data
         })
     })
 }

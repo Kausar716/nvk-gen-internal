@@ -15,6 +15,7 @@ import {
     HANDLE_CATEGORY_INPUT_DATA,
     HANDLE_ADD_PLANT_CATEGORY,
     HANDLE_DRAG_PLANT_CATEGORY,
+    HANDLE_DRAG_CATEGORY_SORT,
     HANDLE_CATEGORY_DELETE,
 
     // axios config
@@ -106,6 +107,19 @@ export const handleDragDrop = (data) =>dispatch=>{
             type:HANDLE_DRAG_PLANT_CATEGORY,
             payload:res.data
 
+        })
+    })
+}
+export const handleCategoryDragSort = (fromId, toId) =>dispatch=>{
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position="up";
+    return axios.post(`/api/drag-sort-category`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DRAG_CATEGORY_SORT,
+            payload:res.data
         })
     })
 }
