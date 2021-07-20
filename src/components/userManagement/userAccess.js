@@ -7,7 +7,11 @@ import {connect} from "react-redux";
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
     handleUserAccessInputAction,handleUserSelect} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
+import { Link ,withRouter} from "react-router-dom";
 
+export const Component = withRouter(({ history, location }) =>{
+
+})
 
 
  class UserAccess extends React.Component{
@@ -97,6 +101,11 @@ import {getUsersList,showUser} from "../../actions/userAction";
     toggleChecked=(e)=>{
         this.setState({displayselectedUSer: !this.state.displayselectedUSer})
             
+    }
+
+    goBackFunction =(e)=>{
+        const { history } = this.props;
+        history.push("/Dashboard")
     }
 
 
@@ -814,7 +823,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                         <div class="row mt-2">
                             {this.state.displayselectedUSer? 
                                 <div class="col-md-12 text-md-right">
-                                    <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.goBackFunction} >Cancel</button>
                                     <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>Update</button>
                                 </div>:null}
                         </div>
@@ -843,9 +852,9 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getRolesList,showRole,showUser,addRoler,updateRole
+export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUser,addRoler,updateRole
     ,deleteRole,getUsersList
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction})(UserAccess)
+,handleUserAccessInputAction})(UserAccess));

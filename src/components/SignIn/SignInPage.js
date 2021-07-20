@@ -107,10 +107,11 @@ const SignInPage = (props) => {
     <>
       
       <div>
-            <div id="header" class="header navbar-default align-items-center">
+            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #629C44"}} class="header navbar-default align-items-center">
                 <div class="navbar-header">
                     <a href="#" class="navbar-brand" style={{float:"left"}}>
-                        <img src="assets/img/logo.svg" alt="" />
+                         <img src="./images/GENESYS_logov2.png" alt="" class="img-fluid" />
+                        {/* <img src="assets/img/logo.svg" alt="" /> */}
                     </a>
                     <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                         <span class="icon-bar"></span>
@@ -120,15 +121,15 @@ const SignInPage = (props) => {
                 </div>
             </div>
             <div class="container" >
-            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"1em"}}>
-                        <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" />
+            <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"3em"}}>
+                        {/* <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" /> */}
                         </div>
                 <div class="row justify-content-center mt-md-8">
                         
                     
 
                     <div class="col-md-6" style={{marginTop:"2em"}}>
-                        <div class="bg-white px-3 py-3 signInContent">
+                        <div class="bg-white px-3 py-3 signInContent" style={{borderRadius:"5px"}}>
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
                                     <div class="col-md-12 text-center">

@@ -23,6 +23,7 @@ export class PurchaseOrders extends React.Component {
             searchValue:"",
             radioFilter:"active",
             searchInput: '', 
+            checkedData:[],
             alphabet: '',
             button: true,
            
@@ -79,6 +80,15 @@ export class PurchaseOrders extends React.Component {
       }
 
 
+      handleClickCheckBox = (e)=>{
+
+        let newCheckedData = initialDetails.filter(newCheck => newCheck.status===e.target.name)
+        //this.setState({alphabet: newCheckedData})
+        this.setState({checkedData: newCheckedData})
+        // console.log("e1",checkedData);
+      }
+
+
 
       paginationChange =(event, page)=>{
         // alert("hg")
@@ -115,6 +125,10 @@ export class PurchaseOrders extends React.Component {
       }
 
 
+     // checkOperation=(checkedData, element)=>(checkedData ? checkedData.filter(newCheck => newCheck.status==="open") : "");
+
+
+
 
 
  elementContainsSearchString2 = (searchInput, element) => (searchInput ? element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
@@ -124,14 +138,21 @@ export class PurchaseOrders extends React.Component {
 
       filterItems = (initialDetails) => {
         let result = [];
-        const { searchInput,alphabet } = this.state;
+        const { searchInput,alphabet , checkedData} = this.state;
         if(initialDetails &&  (searchInput || alphabet)) {
             result = initialDetails.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
             this.elementContainsSearchString(searchInput, element) 
+            //  || this.checkOperation(checkedData,element)
             );
           }
+
+        else if( initialDetails && checkedData){
+
+            result = initialDetails.filter((item)=>item.status)
+
+        }
         else {
-          result = initialDetails || [];
+          result = initialDetails  || [];
         }
 
         result = result.map((item)=>(
@@ -157,6 +178,7 @@ export class PurchaseOrders extends React.Component {
     render(){
         //let purchaseOrderData = [];
 
+        console.log("abcd", this.state.checkedData)
         let pageCount =0;
         let pageNumber = 0;
         let totalLength = 0;
@@ -166,7 +188,7 @@ export class PurchaseOrders extends React.Component {
 
 
       
-      let initialDetails1 = initialDetails
+      let initialDetails1 = initialDetails || this.state.checkedData
         console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
 
@@ -184,7 +206,7 @@ export class PurchaseOrders extends React.Component {
 
     }
 
-    console.log("displayPOList",displayPOList)
+            console.log("displayPOList",displayPOList)
 
               const filteredList = this.filterItems(displayPOList);
 
@@ -229,8 +251,10 @@ export class PurchaseOrders extends React.Component {
                                         <label>Status Levels</label>
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                                <label class="custom-control-label" for="customCheck1">Open</label>
+                                                <input type="checkbox" class="custom-control-input" id="open" 
+                                                name="open"
+                                                onChange={this.handleClickCheckBox} />
+                                                <label class="custom-control-label" for="open" >Open</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2" />

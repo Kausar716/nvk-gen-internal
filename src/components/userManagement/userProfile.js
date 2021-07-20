@@ -20,6 +20,7 @@ export class UserProfile extends Component {
             position:"",
             actionType:"",
             locationAccess:false,
+            checked:{},
             displayDeletedRecords:false,
             profileImage:"",
             displayExestingProfile:false,
@@ -450,7 +451,9 @@ export class UserProfile extends Component {
      }
 
 
-
+     const { checked } = this.state;
+     const checkedCount = Object.keys(checked).filter(key => checked[key]).length;
+     const disabled = checkedCount > 1;
 
      
     return (
@@ -617,7 +620,7 @@ export class UserProfile extends Component {
                                                             {/* <input type="checkbox" class="custom-control-input" id="customCheck5"/>
                                                             <label class="custom-control-label pl-2" for="customCheck5">User has access to all locations </label> */}
                                                             <input
-                                                           
+                                                                        disabled={true}
                                                                         type="checkbox"
                                                                         onClick={this.handleAllChecked}
                                                                         value="checkedall"
