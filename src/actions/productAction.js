@@ -154,7 +154,7 @@ export const deleteProductAction = (id) => dispatch => {
 }
 
 export const getAllProductAction = () => dispatch => {
-    axios.get("/api/products",config).then(res=>{ 
+  return  axios.get("/api/products",config).then(res=>{ 
     dispatch({
             type:GET_ALL_PRODUCT_ACTION,
             payload:res.data
@@ -312,7 +312,7 @@ console.log(data)
  if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
  if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
  if(data.sale_price ===0||data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
- if(data.subcategory ===0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
+ if(data.sub_category_id ===0||data.sub_category_id == null||data.sub_category_id==null) error.push("Select Sub Category")
  if(data.sku_item_name==null ||data.sku_item_name.trim().length ===0 ) error.push("Add Sku Item Name")
    
 

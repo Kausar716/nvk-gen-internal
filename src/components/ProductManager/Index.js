@@ -8,6 +8,7 @@ import { Tab, Tabs, TabList } from 'react-tabs';
  import SkuList from './SkuList'
 import ProductTable from './ProductTable'
 import ActionModal from '../Modal/ActionModal'
+import Loader from '../ProductManager/Loader'
 
 import './style.css';
 import {
@@ -60,6 +61,7 @@ const  ProductManagement = (props) =>{
     const [inputValue, setInputValue] = useState("");
     const [selectedRadio,setRadio] =useState("all")
     const product_idFromGeneral =props.temp.productData.ae_product_id
+    const [loader,setLoader] = useState(false)
     //const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
             props.getAllProductAction()
@@ -119,12 +121,17 @@ const  ProductManagement = (props) =>{
         }
 
         const resetFilter = () =>{
+            setLoader(true)
             setCategory("All")
             setCategoryId("0")
             setsubCategory("0")
             setInputValue("")
             setRadio("all")
-            props.getAllProductAction()
+
+            let response = props.getAllProductAction()
+            response.then(res=>{
+                setLoader(false)
+            })
            // props.handleCategory(category,subCategory) 
 
         }
@@ -315,6 +322,9 @@ const  ProductManagement = (props) =>{
                                         </div>
                             </div>
                              <hr/>
+                             <div className="centerItem">
+                             {loader?  <p > {"Resetting ... " }<Loader /></p>:null}
+                             </div>
                                     <ProductTable />
                             </div>
                         </div>

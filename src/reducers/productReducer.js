@@ -206,6 +206,8 @@ export default function(state = initialSatate, action){
         case GET_SPECIFIED_PRODUCT_ACTION:
            // debugger;
             //console.log("GET_SPECIFIED_PRODUCT_ACTION",action.payload.data)
+            console.log(action)
+            debugger;
             return{
                 ...state,
                 productDataById:action.payload.data,

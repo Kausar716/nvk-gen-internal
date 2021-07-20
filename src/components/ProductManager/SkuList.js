@@ -11,6 +11,7 @@ import DatePicker from 'react-date-picker';
 import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table} from 'reactstrap'
 import {connect} from "react-redux";
 import {} from "../../actions/productAction";
+import {getAllAttributesAction} from "../../actions/attributeAction";
 //import ReactPaginate from 'react-paginate'
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
@@ -77,6 +78,11 @@ const SkuList=(props)=> {
     const [pageSize, setPageSize] =useState(15)
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
+    const [skuEdit,setSkuEdit] = useState(false)
+    const [errorObject,setErrorObject] = useState({each_cost:0,each_price:0,sales_price:0})
+    const [each_costError,setEach_costError] =useState(false)
+    const [each_priceError,setEach_priceError] = useState(false)
+    const [sales_priceError,setSales_priceError] = useState(false)
    
    
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
@@ -88,6 +94,7 @@ const SkuList=(props)=> {
     useEffect(()=>{
         props.getAllSkuAction()
         props.getAllSpecifiedSkuProductList()
+        props.getAllAttributesAction()
     },[])
 
 
@@ -98,13 +105,12 @@ const SkuList=(props)=> {
     console.log(supCategoryIdForFilter)
     console.log("product_id_List", finalPrID)
     console.log(skuDataById)
+    console.log()
    
 
 
     const submitAction = (e) =>{
         e.preventDefault();
-   
-       
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add"){
@@ -128,6 +134,7 @@ const SkuList=(props)=> {
                     console.log(skuDataById)
                    
                     props.updateSkuActionClear(skuid,skuDataById)
+                    props.pageReDirectAction("product","add")
                 }
                 console.log(skuDataById) 
                 console.log(props.productData)  
@@ -153,7 +160,7 @@ const SkuList=(props)=> {
         setSubmitCount(0)
         if((e.target.id === "each_cost" ||e.target.id === "each_price"||e.target.id === "sale_price") ){
           
-            props.handleSkuInputAction(e.target.id,parseFloat(e.target.value))
+            props.handleSkuInputAction(e.target.id,e.target.value)
         
         }
         else if(e.target.id !== "each_cost" && e.target.id !== "each_price"&&e.target.id !== "sale_price"){
@@ -199,6 +206,35 @@ const SkuList=(props)=> {
       props.showSpecifiedSkuAction(id,"edit","sku")
    
    }
+   const handleSKUEdit = (id)=>{
+    setSkuEdit(true)
+   getSpecifiedProduct(id, "edit","sku")
+
+   }
+   const handleBlur =(evt)=>{
+
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    console.log(evt.target.id)
+    let id = evt.target.id
+    let characterCheck = evt.target.value.match(/^\d+(\.\d+)?$/);
+   if(characterCheck === null){
+       if(id === "each_cost"){
+        setEach_costError(true)
+       }
+       if(id === "each_price"){
+        setEach_priceError(true)
+       }
+       if(id=== "sale_price"){
+        setSales_priceError(true)
+       }
+
+   
+    
+   }
+
+
+   
+   }
 
 console.log("temp",props.temp.productData.ae_product_id)
 
@@ -206,7 +242,7 @@ const product_idFromGeneral =props.temp.productData.ae_product_id
    // validation input  data
 console.log("product_idFromGeneral", product_idFromGeneral)
 console.log("PRODUCT.ID", productDataById.product_id)
-   console.log("actionType12345",actionType)
+   console.log("actionType12345",props.temp)
 //    window.addEventListener('scroll', this.listenToScroll)
    //console.log("123",props.productData)
 
@@ -226,6 +262,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
     const displaySkuList = skuData.slice(pagesVisited,pagesVisited+skuPerPAge)
     const pageCount = Math.ceil(skuData.length/skuPerPAge)
+    const {allAttributes} = props.attributeData
     let minMonth = new Date().getMonth()
     let minDate = new Date().getDate()
     let minDateFormate = minDate.toString().length===1?"0"+minDate:minDate
@@ -245,7 +282,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
-    console.log(flag)
+    console.log(props.attributeData)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
@@ -271,7 +308,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="col-md-6 col-lg-4">
                                             <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
-                                            id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} />
+                                            id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={skuEdit} />
                                         </div>
                                         {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         </div> */}
@@ -305,7 +342,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              id="each_cost" onChange={handleInput} 
                                               value={skuDataById.each_cost} 
                                                 // min="0"
+                                                onBlur={handleBlur}
                                               />
+                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
@@ -313,15 +352,19 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             // value="$1.25"
                                             id="each_price"  onChange={handleInput} 
                                              value={skuDataById.each_price} 
+                                             onBlur={handleBlur}
                                             min="0"/>
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="0.00" 
                                             //  value="$1.25"
                                              id="sale_price" onChange={handleInput}
+                                             onBlur={handleBlur}
                                               value={skuDataById.sale_price}
                                                min="0"/>
+                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -349,16 +392,16 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality <span class="text-danger">*</span></label>
-                                            <select class="form-control">
-                                              {/* id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput}  */}
+                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} >
+                                              
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
                                             <option>None</option>
-                                            {/* {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
+                                            {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
-                                                :""} */}
+                                                :""}
                                             </select>
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
@@ -380,15 +423,15 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
-                                             > {actionType==="add"?"Add SKU":"Update SKU"}
+                                             > {!skuEdit?"Add SKU":"Update SKU"}
                                                  {/* Add SKU &amp; Clear */}
                                                  </button>
 
 
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
-                                            disabled={(needAction===true && flag === 0)?false:true} onClick={()=>props.updateSkuAction(skuDataById.id,skuDataById)}>Add SKU &amp; Retain</button>
-                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
-                                            onClick={()=>props.pageReDirectAction("product","add")}>Cancel</button>
+                                            disabled={(needAction===true && flag === 0)?false:true} onClick={()=>actionType==="add"?props.createSkuAction(product_idFromGeneral,skuDataById):props.updateSkuAction(skuDataById.id,skuDataById)}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>
                                     </div>
                                 </form>
@@ -486,7 +529,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <td class="text-center">
                                                 <span>
                                                    
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedProduct(sku.id, "edit","sku")}/>
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>{handleSKUEdit(sku.id)}}/>
                                                    
                                                 </span>
                                                 {/* <span>
@@ -520,7 +563,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
 const mapStateToProps = (state)=> ({
     productData:state.productData,
     temp:state,
-    categoryData:state.categoryData
+    categoryData:state.categoryData,
+    attributeData:state.attributeData
 })
 function validate(values) {
     const errors = {};
@@ -551,6 +595,7 @@ export default reduxForm({
     getAllSkuAction ,
     showSpecifiedSkuAction,
     setSkuPageNumber,
+    getAllAttributesAction,
 
     // product actions
     deleteProductAction ,

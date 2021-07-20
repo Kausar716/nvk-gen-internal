@@ -293,7 +293,7 @@ if(productDataById){
                                        onClick={()=>props.pageReDirectAction("product","add")}
                                         // onClick={goToParentPage}
                                         
-                                        >Cancel</button>
+                                        >Return To Product Manager</button>
                                         {/* <button type="reset" class="btn btn-primary btn-lg ml-3"  
                                         disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} > 
                                         {actionType==="add"?"Add Product":"Update Product"}</button> */}
