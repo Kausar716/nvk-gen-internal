@@ -13,6 +13,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
+import { countryDetails } from '../Help/countryList';
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
@@ -22,7 +23,8 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
     class SupplierDeliveryLocation extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       countZipRegix:null
     }
 
 
@@ -118,14 +120,35 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         validation = () =>{
             let {location,address,city,country,state,zip,lat} = this.props.supplierData.supplierLocation
 
-            if(location ==="" || address ==="" || city===""|| country===""||state===""||zip===""||lat ==="")
-            return 1
+            // if(location ==="" || address ==="" || city===""|| country===""||state===""||zip===""||lat ==="")
+            // return 1
+            // if (zip === "zipcode") {
+                if(zip ==""){
+                     this.setState({message:["Postal/ZIP not valid"]})
+                    // alert("DSaf")
+                    return 1
+
+                }
+                if(zip !== "" ){
+                if ( !zip.trim().match(this.countZipRegix)) {
+                    this.setState({message:["Postal/ZIP not valid"]})
+                    // alert("DSaf")
+                    return 1
+                    // document.getElementById("zipcode-validtor").innerText = "Postal/ZIP not valid"
+                    // errorCount++;
+
+                } else {
+                    // document.getElementById("zipcode-validtor").innerText = ""
+                }
+            }
+
+            // }
         }
         handleAddCategoryData = (e)=>{
             let errorLength =  this.validation()
             if(errorLength ===1){
                 
-                this.setState({isOpen1:true,message:["Please add all fileds"]})
+                this.setState({isOpen1:true,message:[...this.state.message,"Please fill all fileds"]})
 
 
             }else{
@@ -155,6 +178,24 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 render() {
  
     const {supplierData} = this.props
+
+           
+    let allCountry = Object.keys(countryDetails);
+        
+    let allStates ;
+    // let countZipRegix
+    if(supplierData.supplierLocation){
+      
+        if(supplierData.supplierLocation.country && supplierData.supplierLocation.country !== "Select Country"){
+            console.log(countryDetails)
+            console.log(supplierData.supplierLocation.country)
+            console.log(countryDetails[supplierData.supplierLocation.country])
+            allStates = countryDetails[supplierData.supplierLocation.country][0];
+            this.countZipRegix=countryDetails[supplierData.supplierLocation.country][1][0]
+            console.log(this.countZipRegix)
+            // console.log(this.state.clientData.country)
+        }
+    }
 
     console.log(this.props.supplierData.supplierCategoryList)
         return (
@@ -224,20 +265,26 @@ render() {
                                             <div className="col-md-3">
                                                         <label for="Category">Prov/State</label>
                                                             <select className="form-control"  id="state"  value={supplierData.supplierLocation.state}  onChange={this.handleCategoryInputAction}>
-                                                            <option>Select</option>
-                                                                <option value="Ontario" selected={supplierData.supplierLocation.state =="Ontario"?"selected":""}>Ontario</option>
+                                                            <option>{supplierData.supplierLocation.state}</option>
+                                                            {allStates && allStates.map((c, i)=>{
+                                                                    return <option id={allStates[i]}>{allStates[i]}</option>
+                                                            })}
+                                                                {/* <option value="Ontario" selected={supplierData.supplierLocation.state =="Ontario"?"selected":""}>Ontario</option>
                                                                 <option value="Alberta" selected={supplierData.supplierLocation.state =="Alberta"?"selected":""}>Alberta</option>
-                                                                <option value="Quebec" selected={supplierData.supplierLocation.state =="Quebec"?"selected":""}>Quebec</option>
+                                                                <option value="Quebec" selected={supplierData.supplierLocation.state =="Quebec"?"selected":""}>Quebec</option> */}
                                                             </select>
                                             </div>
 
                                             <div className="col-md-3">
                                                         <label for="Category">Country</label>
                                                             <select className="form-control"  id="country"  value={supplierData.supplierLocation.country}   placeholder="country" onChange={this.handleCategoryInputAction}>
-                                                                <option>Select</option>
-                                                                <option value="Canada" selected={supplierData.supplierLocation.country =="Canada"?"selected":""}>Canada</option>
+                                                                <option>{supplierData.supplierLocation.country}</option>
+                                                                {allCountry.map((country, i)=>{
+                                                                    return <option id={allCountry[i]}>{allCountry[i]}</option>
+                                                                })}
+                                                                {/* <option value="Canada" selected={supplierData.supplierLocation.country =="Canada"?"selected":""}>Canada</option>
                                                                 <option value="India" selected={supplierData.supplierLocation.country =="India"?"selected":""}>India</option>
-                                                                <option value="Africa" selected={supplierData.supplierLocation.country =="Africa"?"selected":""}>Africa</option>
+                                                                <option value="Africa" selected={supplierData.supplierLocation.country =="Africa"?"selected":""}>Africa</option> */}
                                                             </select>
                                             </div>
                                             <div className="col-md-3">
@@ -299,22 +346,13 @@ render() {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-angle-double-right"></i> */}
-                                                    <img style={{width:"5em",  marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-arrows-alt"></i> */}
-                                                    <img style={{width:"5em",  marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
-                                            <div>
-                                                <a href="javascript;" className="icDelete">
-                                                <img style={{width:"5em",  marginLeft:"-10px"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
-                                                </a>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                             </div>
                                         </div>
                                     </div>

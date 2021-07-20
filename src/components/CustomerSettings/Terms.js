@@ -224,22 +224,13 @@ render() {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-angle-double-right"></i> */}
-                                                    <img style={{width:"5em",  marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-arrows-alt"></i> */}
-                                                    <img style={{width:"5em",  marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
-                                            <div>
-                                                <a href="javascript;" className="icDelete">
-                                                <img style={{width:"5em",  marginLeft:"-10px"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
-                                                </a>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                             </div>
                                         </div>
                                     </div>

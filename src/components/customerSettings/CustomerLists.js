@@ -1,6 +1,6 @@
 import React from 'react'
 import AddCustomer from './EditCustomer'
-import {getAllCustomer,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
@@ -25,6 +25,7 @@ export class CustomerSettings extends React.Component {
     componentDidMount(){
         // alert("hif")
         this.props.getAllCustomer(this.state.radioFilter)
+        this.props.getAllCustomerType()
     }
 
     handleAddCustomerClick = (e) => {
@@ -39,6 +40,8 @@ export class CustomerSettings extends React.Component {
     handleEdit = (id) => {
         this.props.typeOfActionShow("edit")
         this.props.getCustomerById(id)
+        this.props.handleExchangeData(id,"customer_id","customerContact")
+        this.props.handleExchangeData(id,"customer_id","customerAddress")
         
     }
     paginationChange =(event, page)=>{
@@ -109,7 +112,7 @@ export class CustomerSettings extends React.Component {
         //     customerData = tempArray
         
         // }
-        console.log(action)
+        console.log(displayCustomerList)
     return (
         <>
         {action ===""? <div>
@@ -209,11 +212,18 @@ export class CustomerSettings extends React.Component {
                                                         <td>{customerData.status === 1?"Active":"Inactive" }</td>
                                                         <td>{customerData.id}</td>
                                                         <td>{customerData.name}</td>
-                                                        <td>{JSON.parse(customerData.type).join()}</td>
+                                                        <td>
+                                                            {JSON.parse(customerData.type).map((data,index)=>{
+                                                                let arrayData =this.props.customerData.customerTypeList.active.filter(customerType=>parseInt(customerType.id)==parseInt(data))
+                                                                if(arrayData.length>0)
+                                                                return(<span>{arrayData[0]["customer_type"]}{(index+1)!==JSON.parse(customerData.type).length?", ":""}</span>)
+                                                            })}
+                                                            
+                                                        </td>
                                                         <td>{customerData.telephone}</td>
                                                         <td>{customerData.contact_id}</td>
-                                                        <td>{customerData.last_order}</td>
-                                                        <td>{customerData.outstanding}</td>
+                                                        <td>N/A</td>
+                                                        <td>$0.00</td>
                                                         <td class="text-center">
                                                         <span onClick={()=>{this.handleEdit(customerData.id)}}>
                                                             <a href="javascript:;">
@@ -246,5 +256,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllCustomer,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(CustomerSettings)
+export default connect(mapStateToProps,{getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(CustomerSettings)
 

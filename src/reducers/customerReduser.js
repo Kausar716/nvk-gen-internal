@@ -35,7 +35,20 @@ import {
     TYPE_OF_ACTION,
     GET_CUSTOMER_BY_ID,
     RESET_CUSTOMER_FILEDS,
-    UPDATE_CUSTOMER
+    UPDATE_CUSTOMER,
+    GET_INTEREST_DATA,
+    GET_PRINT_DATA,
+    ADD_CUSTOMER_CONTACT,
+    GET_CUSTOMER_CONTACTS_LIST,
+    GET_CUSTOMER_CONTACT_BY_ID,
+    UPDATE_CUSTOMER_CONTACT,
+    ADD_CONTACT_ADDRESS ,
+    GET_CONTACT_ADDRESSES ,
+    UPDATE_CONTACT_ADDRESS ,
+    GET_CONTACT_ADDRESSES_BY_CONTACTID,
+    RE_SET_ADDRESS_FILED
+    
+
 
     
     // ADD_CUSTOMER, 
@@ -98,13 +111,45 @@ const initialSatate = {
    customerReturnReason:{reason: "",return_to_inventory: 2},
    customerReturnReasonList:{active:[],inactive:[]},
 
-   customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0},
+   customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   tax_exempt: 0,
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:0.00,discount_by_line_item:1,restock_fee:0,fee_percent:0.00},
 
-    action:""
-
-
-
+    action:"",
+    customerContact:{
+        customer_id: 0,
+        first_name: "",
+        last_name: "",
+        email: "",
+        phone1: "",
+        phone1_ext: "",
+        phone2: "",
+        phone2_ext: "",
+        notes: "",
+        primary_contact: 0,
+        all_communication: 0,
+        status: 1,
+    
+      },
+      customerContactList:{active:[],inactive:[]},
+      customerAddress:{
+        customer_id: 0,
+        address1: "",
+        address2: "",
+        city: "",
+        country: "",
+        state: "",
+        zip: "",
+        lat: "",
+        long: "",
+        notes: "",
+        billing_address: 0,
+        delivery_address: 0,
+      },
+      customerAddressList:{active:[],inactive:[]}
   }
+
+
 
  const customerReducer = (state = initialSatate, action)=>{
     console.log(action.payload)
@@ -112,6 +157,96 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+        case RE_SET_ADDRESS_FILED:
+            return{
+                ...state,
+                customerAddress:{
+                    customer_id: 0,
+                    address1: "",
+                    address2: "",
+                    city: "",
+                    country: "",
+                    state: "",
+                    zip: "",
+                    lat: "",
+                    long: "",
+                    notes: "",
+                    billing_address: 0,
+                    delivery_address: 0,
+                  },
+            }
+        case GET_CONTACT_ADDRESSES_BY_CONTACTID:
+            return{
+                ...state,
+                customerAddress: action.payload.data
+            }
+        case GET_CONTACT_ADDRESSES:
+            return{
+                ...state,
+                customerAddressList:action.payload.data
+            }
+        case GET_CUSTOMER_CONTACT_BY_ID:
+            return{
+                ...state,
+                customerContact: action.payload.data
+            }
+        case GET_CUSTOMER_CONTACTS_LIST:
+            return{
+                ...state,
+                customerContactList:action.payload.data
+
+            }
+        case ADD_CUSTOMER_CONTACT:
+            return{
+                ...state,
+                customerContact:{
+                    customer_id: 0,
+                    first_name: "",
+                    last_name: "",
+                    email: "",
+                    phone1: "",
+                    phone1_ext: "",
+                    phone2: "",
+                    phone2_ext: "",
+                    notes: "",
+                    primary_contact: 0,
+                    all_communication: 0,
+                    status: 1,
+                
+                  },
+            }
+        case UPDATE_CUSTOMER_CONTACT:
+            return{
+                ...state,
+                customerContact:{
+                    customer_id: 0,
+                    first_name: "",
+                    last_name: "",
+                    email: "",
+                    phone1: "",
+                    phone1_ext: "",
+                    phone2: "",
+                    phone2_ext: "",
+                    notes: "",
+                    primary_contact: 0,
+                    all_communication: 0,
+                    status: 1,
+                
+                  },
+
+            }
+        case GET_PRINT_DATA:
+            return{
+                ...state,
+                customerTag:action.payload.data
+
+            }
+        case GET_INTEREST_DATA:
+            return{
+                ...state,
+                customerIntrest:action.payload.data
+
+            }
 /////////////customer management add edit delete and show actions/////////////////////////
 case ADD_NEW_CUSTOMER:
     return{
@@ -142,7 +277,41 @@ case ADD_NEW_CUSTOMER:
     case RESET_CUSTOMER_FILEDS:
         return{
             ...state,
-            customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0}
+            customerContact:{
+                customer_id: 0,
+                first_name: "",
+                last_name: "",
+                email: "",
+                phone1: "",
+                phone1_ext: "",
+                phone2: "",
+                phone2_ext: "",
+                notes: "",
+                primary_contact: 0,
+                all_communication: 0,
+                status: 1,
+            
+              },
+              customerContactList:{active:[],inactive:[]},
+              customerAddress:{
+                customer_id: 0,
+                address1: "",
+                address2: "",
+                city: "",
+                country: "",
+                state: "",
+                zip: "",
+                lat: "",
+                long: "",
+                notes: "",
+                billing_address: 0,
+                delivery_address: 0,
+              },
+              customerAddressList:{active:[],inactive:[]},
+
+            customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+            tax_exempt: 0,
+            tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:0.00,discount_by_line_item:1,restock_fee:"Yes",fee_percent:0.00},
         }
     case UPDATE_CUSTOMER:
         return {

@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
 
- const InfoModal = (props) => {
+ const SuccessModal = (props) => {
    const {status,message} = props
   
    console.log(message)
@@ -12,10 +12,10 @@ import {modalAction} from "../../actions/productAction";
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} >
-        <ModalHeader><p style={{fontSize:25,color:"red"}}>Errors</p> </ModalHeader>
+        <ModalHeader><p style={{fontSize:25,color:"#629C44"}}>Success</p></ModalHeader>
         <ModalBody >
         {/* */}
-          <div style={{textAlign:"center"}}>
+          <div >
           {message.map((mess,id)=>{
             return(<p>{mess}</p>)
           })}
@@ -34,4 +34,4 @@ import {modalAction} from "../../actions/productAction";
 }
 
 
-export default InfoModal
+export default SuccessModal

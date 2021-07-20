@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse,   Row, Col, Label} from 'reactstrap';
 import {connect} from "react-redux";
-import {handleChangeFilter,saveNoticationData,savecustomPrintData,handleExchangeData} from "../../../actions/customerSettingAction";
+import {handleChangeFilter,getPrintData,saveNoticationData,savecustomPrintData,handleExchangeData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
+import SuccessModal from '../../Modal/SuccessModal';
 // import * as BiIcons from "react-icons/bs";
 
 const onSubmit = (values) =>{
@@ -40,12 +41,26 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
 const CustomerPrintRates = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
+  const [checkedData,setCheckedData] = useState(false)
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [successMessage,setSuccessMessage] = useState([])
+  const toggle1  = ()=>setIsOpen1(!isOpen);
   const handleInputData =(e)=>{
+    setCheckedData(true)
     props.handleExchangeData(e.target.value,e.target.id,"customerTag")
 
   }
-
+  useEffect(()=>{
+    props.getPrintData()
+  })
+const resetData = ()=> {
+  setCheckedData(false)
+  props.getPrintData()
+}
   const saveExchangeData = ()=>{
+    setCheckedData(false)
+    setIsOpen1(true)
+    setSuccessMessage(["Customer Print Rates Saved successfully"])
     let obj={}
     obj.base_price = customerTag.base_price
     obj.custom_logo = customerTag.custom_logo
@@ -59,6 +74,8 @@ const CustomerPrintRates = (props) => {
   return (
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
+      <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
+      
       <Label className="subFont">Customer Print Rates</Label>
       <span className="updownSymbolContainer"> 
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
@@ -138,8 +155,8 @@ const CustomerPrintRates = (props) => {
               </Col>
               <Col xs="12">
               <div align="right" className="action_area_left">
-                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}>Save</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
+                              <button className="button_style_Tools_Setting_Save" disabled={checkedData==true?false:true} onClick={saveExchangeData}>Save</button>
                         </div> 
             
               </Col>
@@ -192,4 +209,4 @@ const mapStateToProps = (state)=>(
 
 
 const form = reduxForm({ form: 'Notification' });
-export default connect(mapStateToProps, {handleChangeFilter,saveNoticationData,savecustomPrintData,handleExchangeData})(form(CustomerPrintRates));
+export default connect(mapStateToProps, {handleChangeFilter,getPrintData,saveNoticationData,savecustomPrintData,handleExchangeData})(form(CustomerPrintRates));

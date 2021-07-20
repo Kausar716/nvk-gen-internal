@@ -101,6 +101,7 @@ import { is } from 'immutable';
 
 
         onDelete =(ev)=>{
+            // alert("dd")
             let id= ev.dataTransfer.getData("id");
             console.log(id)
            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-account-status")
@@ -211,43 +212,29 @@ render() {
                                             </div>
 
 
-                                            <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
+                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {this.props.customerData.customerStatusList.inactive.map(t=>{
                                                     return <li id={t.id} name={t.status_level} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.status_level}</span>
-                                                                </a>
+                                                                      <span id="Wheathers">{t.status_level}</span>
+                                                                 </a>
                                                             </li>
                                                     })}
                                             </ul>
-                                               
-
-
                                             </div>
                                         </div>
                                     </div>
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-angle-double-right"></i> */}
-                                                    <img style={{width:"5em", marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-arrows-alt"></i> */}
-                                                    <img style={{width:"5em", marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
                                             </div>
-                                            <div>
-                                                <a href="javascript;" className="icDelete">
-                                                <img style={{width:"5em", marginLeft:"-10px"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
-                                                </a>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
                                             </div>
                                         </div>
                                     </div>
@@ -256,6 +243,17 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
+                                            {/* <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
+                                            <ul class="list-unstyled">
+                                                   {this.props.customerData.customerStatusList.active.map(t=>{
+                                                    return <li id={t.id} name={t.status_level} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                 <a className="d-flex justify-content-between align-items-center">
+                                                                      <span id="Wheathers">{t.status_level}</span>
+                                                                 </a>
+                                                            </li>
+                                                    })}
+                                            </ul>
+                                            </div> */}
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {this.props.customerData.customerStatusList.active.map(t=>{

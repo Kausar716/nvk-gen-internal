@@ -17,7 +17,9 @@
  GET_EMAIL_NOTIFICATION,
  HANDLE_INPUT,
  ADD_INTEREST_DATA,
+ GET_INTEREST_DATA,
  ADD_PRINT_DATA,
+ GET_PRINT_DATA,
  ADD_CUSTOMER_TYPE,
  GET_ALL_CUSTOMER_TYPES,
  HANDLE_DRAG_CUSTOMER_CATEGORY,
@@ -37,7 +39,15 @@
  TYPE_OF_ACTION,
  GET_CUSTOMER_BY_ID,
  RESET_CUSTOMER_FILEDS,
-
+ ADD_CUSTOMER_CONTACT,
+ GET_CUSTOMER_CONTACTS_LIST,
+ ADD_CONTACT_ADDRESS ,
+GET_CONTACT_ADDRESSES ,
+UPDATE_CONTACT_ADDRESS ,
+GET_CONTACT_ADDRESSES_BY_CONTACTID,
+UPDATE_CUSTOMER_CONTACT,
+GET_CUSTOMER_CONTACT_BY_ID,
+RE_SET_ADDRESS_FILED,
  axios,
  config
  } from './types'
@@ -85,6 +95,128 @@ export const resetCustomerFilds = (data)=>dispatch => {
 
     })
 }
+
+
+export const addCustomerContact = (data)=>dispatch => {
+    return axios.post(`/api/add-customer-contact`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CUSTOMER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+}
+export const getCustomerContacts = (id) =>dispatch=>{
+    // alert(id)
+    if(id !==0){
+        return axios.get(`api/customer-contacts?customer_id=${id}`,config).then(res=>{ 
+            console.log(res.data)
+        dispatch({
+                type:GET_CUSTOMER_CONTACTS_LIST,
+                payload:res.data,
+    
+            })
+        })
+
+    }else{
+
+    }
+  
+}
+
+export const getDataByContactId = (id) =>dispatch =>{
+    return axios.get(`api/customer-contact/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_CONTACT_BY_ID,
+            payload:res.data,
+
+        })
+    })
+
+}
+export const updateContactData =(data) =>dispatch => {
+    let id = data.id
+    delete data.id
+    return axios.post(`/api/update-customer-contact/${id}`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:UPDATE_CUSTOMER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+
+}
+
+//customer addresses
+
+export const addcustomerAddress =(data)=>dispatch => {
+    return axios.post("/api/add-customer-address",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_CONTACT_ADDRESS,
+                payload:res.data   
+            })
+        })
+    }
+    // customer-addresses?customer_id=3 
+    // dispatch({
+    //     type:ADD_CONTACT_ADDRESS ,
+
+    // })
+
+
+export const getcustomerAddress =(id)=>dispatch => {
+    if(id !==0){
+        return axios.get(`api/customer-addresses?customer_id=${id}`,config).then(res=>{ 
+            console.log(res.data)
+            dispatch({
+                type:GET_CONTACT_ADDRESSES ,
+                payload:res.data,
+        
+            })
+        })
+
+    }else{
+
+    }
+   
+
+}
+export const updatecustomerAddress =(data)=>dispatch => {
+    let id = data.id
+    delete data.id
+    return axios.post(`/api/update-customer-address/${id}`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:UPDATE_CONTACT_ADDRESS,
+                payload:res.data   
+            })
+        }) 
+
+}
+export const getcustomerAddressByaddressId =(id)=>dispatch => {
+    return axios.get(`api/customer-address/${id}`,config).then(res=>{ 
+        console.log(res.data)
+        dispatch({
+            type:GET_CONTACT_ADDRESSES_BY_CONTACTID ,
+            payload:res.data,
+    
+        })
+    })
+
+
+}
+export const resetAddressFileds =()=>dispatch => {
+    dispatch({
+        type:RE_SET_ADDRESS_FILED ,
+
+    })
+
+}
+
+    
+
 
 
 
@@ -294,6 +426,28 @@ export const saveCustomerType = (data)=>dispatch=>{
         })
 
  }
+ export const getIntrestData =(data)=>dispatch =>{
+        axios.get("/api/customerorderinvoice",config).then(res=>{ 
+            console.log(res.data)
+        dispatch({
+                type:GET_INTEREST_DATA,
+                payload:res.data,
+    
+            })
+        })
+
+ }
+ export const getPrintData =(data)=>dispatch =>{
+    axios.get("/api/show-tag",config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_PRINT_DATA,
+            payload:res.data,
+
+        })
+    })
+
+}
  export const saveIntrestData =(data)=>dispatch =>{
     axios.post("/api/add-customerorderinvoice",data,config).then(res=>{ 
         console.log(res)
@@ -348,7 +502,7 @@ export const saveCustomerType = (data)=>dispatch=>{
     })
  }
  export const getAllCustomer = (dataType) => dispatch => {
-    axios.get("/api/customers-list",config).then(res=>{ 
+    return axios.get("/api/customers-list",config).then(res=>{ 
         console.log(res.data)
     dispatch({
             type:GET_CUSTOMER_LIST,

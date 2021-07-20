@@ -43,14 +43,21 @@ const EmailSetting = props => {
     const [isOpen, setIsOpen] = useState(false);
 	const [isOpen1, setIsOpen1] = useState(false);
 	const [message,setMessage] = useState([]);
+  const [checkedData,setCheckedData] = useState(false)
     const toggle = () => setIsOpen(!isOpen);
 	const toggle1 = () => setIsOpen1(!isOpen1);
 
 
 	const handleDataChange = (e)=>{
-		props.handleChangeFilter(e.target.value,e.target.id)
+    setCheckedData(true)
+    props.handleChangeFilter(e.target.value,e.target.id)
+		// props.getEmailData(e.target.value,e.target.id)
 
 	}
+  const resetData = ()=>{
+    props.getNotificationData()
+
+  }
 	const handleSaveData = (e)=>{
 		if(parseInt(first_notice)==0 && parseInt(second_notice) ==0 && parseInt(quote_set_to_inactive==0)){
 
@@ -62,11 +69,14 @@ const EmailSetting = props => {
 			setIsOpen1(true)
 
 		}else if(parseInt(second_notice)>parseInt(quote_set_to_inactive)){
-			alert()
+			// alert()
 
 			setMessage(["Quote set to inactive should be greater than second Notice"])
 			setIsOpen1(true)
 		}else{
+      setMessage(["Customer Quote Reminders Saved successfully"])
+			setIsOpen1(true)
+
 			let obj = {}
 			obj.first_notice = first_notice
 			obj.second_notice = second_notice
@@ -167,8 +177,8 @@ const EmailSetting = props => {
                     <Col>
                     
                     <div align="right" className="action_area_left">
-                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}>Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={handleSaveData}>Save</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
+                              <button className="button_style_Tools_Setting_Save" onClick={handleSaveData} disabled={checkedData==true?false:true}>Save</button>
                         </div> 
                     </Col>
                     </Row>
