@@ -22,6 +22,7 @@ constructor(){
         email:"",
         locationAccess:false,
         displayDeletedRecords:false,
+        visbleTrue:false,
         profileImage:"",
         displayExestingProfile:false,
         errorObj:{
@@ -60,6 +61,7 @@ constructor(){
      console.log(selectedUser)
      this.setState({selectedUser:selectedUser[0]})
      this.setState({displayUpdateProfile:true})
+     this.setState({visbleTrue:true})
 }
 handleCreate = (e) => {
     this.setState({displayCreate:true})
@@ -71,6 +73,7 @@ handleCancle = () => {
     this.props.getUsersList()
     this.props.getRolesList()
     this.setState({displayUpdateProfile:false,displayCreate:false})
+    this.setState({visbleTrue:false})
 }
 componentDidMount(){
     this.props.getUsersList()
@@ -91,6 +94,11 @@ handleCreateUpdateFlow = (obj)=>{
     // selectedProfile:
 }
 
+
+handleActiveUser =(e)=>{
+    console.log("eeee", e.target.value)
+}
+
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -99,8 +107,9 @@ handleCreateUpdateFlow = (obj)=>{
         let roleList = []
         console.log(this.props)
         console.log(this.props.users.active)
+        console.log(this.props.users.inactive)
         // console.log([...this.props.users.active,...this.props.users.inactive])
-        if(this.props.users.active || this.props.users.inactive){ 
+        if(this.props.users.active && this.props.users.inactive){ 
         if(this.props.users && (this.state.displatDeletedRecord === "off")){
              userProfiles =  [...this.props.users.active,...this.props.users.inactive]
              let userWithOutDeletedRecords = userProfiles.filter(user=>{
@@ -149,12 +158,25 @@ handleCreateUpdateFlow = (obj)=>{
                          <div class="f-s-24 px-3 py-3 f-w-500" >User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
                          
                                                     {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
-                                                        <span style={{float:"right", marginRight:"3em", marginLeft:"-5em"}}>Active</span>
-                                                        <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"8px"}}>
-                                                            <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2"
-                                                              />
-                                                            <label for="switcher_checkbox_date"></label>
-                                                        </div>
+                                                            {this.state.visbleTrue!==false  ? 
+                                                            <div>
+                                                                <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
+                                                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>
+                                                                    <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value={userProfiles.map(a=>a.status)} checked={userProfiles.map(a=>a.status? true : false) } onChange={this.handleActiveUser}
+                                                                    />
+                                                                    <label for="switcher_checkbox_date"></label>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            :
+                                                            <div >
+
+                                                            </div>
+
+                                                        
+                                                        }
+                                                                                        
+
                                                     {/* </div> */}
                          
                          

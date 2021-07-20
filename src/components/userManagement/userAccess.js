@@ -7,7 +7,11 @@ import {connect} from "react-redux";
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
     handleUserAccessInputAction,handleUserSelect} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
+import { Link ,withRouter} from "react-router-dom";
 
+export const Component = withRouter(({ history, location }) =>{
+
+})
 
 
  class UserAccess extends React.Component{
@@ -97,6 +101,11 @@ import {getUsersList,showUser} from "../../actions/userAction";
     toggleChecked=(e)=>{
         this.setState({displayselectedUSer: !this.state.displayselectedUSer})
             
+    }
+
+    goBackFunction =(e)=>{
+        const { history } = this.props;
+        history.push("/Dashboard")
     }
 
 
@@ -237,7 +246,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                                     <label for="switcher_checkbox_date"></label>
                                                 </div> */}
 
-                                                <div class="switcher switcher-sm ml-2 pr-2" style={{marginRight:"5em"}}>
+                                                {/* <div class="switcher switcher-sm ml-2 pr-2" style={{marginRight:"5em"}}>
                                                             <input type="checkbox" name="turnOn" id="turnOn"
                                                            // value="2"
                                                              value={!this.state.displayselectedUSer}
@@ -246,19 +255,19 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                             // value={skuDataById.status}
                                                               />
                                                             <label for="turnOn"></label>
-                                                        </div>
+                                                        </div> */}
 
-                                    {/* <div class="custom-control custom-checkbox" >
+                                    <div class="custom-control custom-checkbox" >
                                         <input type="checkbox" class="custom-control-input" id="turnOn"  onChange={this.handleCheckBox} name="turnOn"/>
                                         <label class="custom-control-label pl-2" for="turnOn"> Turn All Permissions On</label>
-                                    </div> */}
-                                    {/* <div class="custom-control custom-checkbox ml-2">
+                                    </div>
+                                    <div class="custom-control custom-checkbox ml-2">
                                         <input type="checkbox" class="custom-control-input" id="turnOff"  onClick={this.handleCheckBox} name="turnOff"/>
                                         <label class="custom-control-label pl-2" for="turnOff"> Turn All Permissions Off</label>
-                                    </div> */}
+                                    </div>
 
 
-                                    <span style={{float:"right", marginRight:"0em", marginLeft:"-5em"}}>Turn All Permissions Off</span>
+                                    {/* <span style={{float:"right", marginRight:"0em", marginLeft:"-5em"}}>Turn All Permissions Off</span>
                                     <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" name="turnOff" id="turnOff"
                                                            // value="2"
@@ -268,7 +277,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                                                             // value={skuDataById.status}
                                                               />
                                                             <label for="turnOff"></label>
-                                    </div>
+                                    </div> */}
 
 
 
@@ -814,7 +823,7 @@ import {getUsersList,showUser} from "../../actions/userAction";
                         <div class="row mt-2">
                             {this.state.displayselectedUSer? 
                                 <div class="col-md-12 text-md-right">
-                                    <button type="button" class="btn btn-outline-secondary btn-lg">Cancel</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.goBackFunction} >Cancel</button>
                                     <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>Update</button>
                                 </div>:null}
                         </div>
@@ -843,9 +852,9 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getRolesList,showRole,showUser,addRoler,updateRole
+export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUser,addRoler,updateRole
     ,deleteRole,getUsersList
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction})(UserAccess)
+,handleUserAccessInputAction})(UserAccess));
