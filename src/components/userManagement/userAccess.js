@@ -246,7 +246,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                                     <label for="switcher_checkbox_date"></label>
                                                 </div> */}
 
-                                                <div class="switcher switcher-sm ml-2 pr-2" style={{marginRight:"5em"}}>
+                                                {/* <div class="switcher switcher-sm ml-2 pr-2" style={{marginRight:"5em"}}>
                                                             <input type="checkbox" name="turnOn" id="turnOn"
                                                            // value="2"
                                                              value={!this.state.displayselectedUSer}
@@ -255,19 +255,19 @@ export const Component = withRouter(({ history, location }) =>{
                                                             // value={skuDataById.status}
                                                               />
                                                             <label for="turnOn"></label>
-                                                        </div>
+                                                        </div> */}
 
-                                    {/* <div class="custom-control custom-checkbox" >
+                                    <div class="custom-control custom-checkbox" >
                                         <input type="checkbox" class="custom-control-input" id="turnOn"  onChange={this.handleCheckBox} name="turnOn"/>
                                         <label class="custom-control-label pl-2" for="turnOn"> Turn All Permissions On</label>
-                                    </div> */}
-                                    {/* <div class="custom-control custom-checkbox ml-2">
+                                    </div>
+                                    <div class="custom-control custom-checkbox ml-2">
                                         <input type="checkbox" class="custom-control-input" id="turnOff"  onClick={this.handleCheckBox} name="turnOff"/>
                                         <label class="custom-control-label pl-2" for="turnOff"> Turn All Permissions Off</label>
-                                    </div> */}
+                                    </div>
 
 
-                                    <span style={{float:"right", marginRight:"0em", marginLeft:"-5em"}}>Turn All Permissions Off</span>
+                                    {/* <span style={{float:"right", marginRight:"0em", marginLeft:"-5em"}}>Turn All Permissions Off</span>
                                     <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" name="turnOff" id="turnOff"
                                                            // value="2"
@@ -277,7 +277,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                             // value={skuDataById.status}
                                                               />
                                                             <label for="turnOff"></label>
-                                    </div>
+                                    </div> */}
 
 
 

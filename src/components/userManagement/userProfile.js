@@ -53,6 +53,7 @@ export class UserProfile extends Component {
             open:false,
             cancel:false,
             logo:"",
+            checkedActive:false,
             deleted_at:null,
             locations: [
                 { id: 1, value: "Form A",address:"1105 HWY5, Dundas, CN", isChecked: false },
@@ -257,11 +258,6 @@ export class UserProfile extends Component {
          }, 2000);
 
     }
-
-
-
-
-
 
     
     handleRemoveImage = (e) =>{
@@ -620,7 +616,7 @@ export class UserProfile extends Component {
                                                             {/* <input type="checkbox" class="custom-control-input" id="customCheck5"/>
                                                             <label class="custom-control-label pl-2" for="customCheck5">User has access to all locations </label> */}
                                                             <input
-                                                                        disabled={true}
+                                                                        disabled={!true}
                                                                         type="checkbox"
                                                                         onClick={this.handleAllChecked}
                                                                         value="checkedall"
@@ -661,6 +657,22 @@ export class UserProfile extends Component {
                                      >Update</button>
                                 </div>
                             </div>
+
+                            {/* <div style={{float:"left", marginLeft:"2em"}}>
+
+                                    <span style={{float:"right", marginRight:"3em", marginLeft:"-5em"}}>Active</span>
+                                        <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"8px"}}>
+                                            <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value={this.state.checkedActive} checked={(this.state.checkedActive === true ? true : false)}  onChange={this.handleActive}
+                                            />
+                                            <label for="switcher_checkbox_date"></label>
+                                        </div> 
+                            </div> */}
+
+
+
+
+
+
                         </div>
                         </TabPanel>
                         <TabPanel>
