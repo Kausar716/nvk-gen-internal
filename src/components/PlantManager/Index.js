@@ -107,7 +107,7 @@ const productFormAction = ()=>{
         const radioSearchAction =(e)=>{
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
-            props.serachPlant({product: inputValue, option: e.target.id, category: categoryId})
+            props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
             setRadio(e.target.id)
 
         }

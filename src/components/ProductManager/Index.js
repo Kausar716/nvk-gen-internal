@@ -80,11 +80,11 @@ const  ProductManagement = (props) =>{
                 // props.handleCategory(e.target.value,"0")
                 if(e.target.value==="All"){
                  
-                    // props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacture_id})
+                    // props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacturer_id})
                     // setDisable(true)
                     
                 }else{
-                    // props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacture_id})
+                    // props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacturer_id})
 
                     // console.log("abcdfrf", e.target.value)
                     // props.handleCategory(e.target.value,"0")
@@ -92,7 +92,7 @@ const  ProductManagement = (props) =>{
                 }
 
                 props.handleSelectedCategory(e.target.value)
-                props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacture_id})
+                props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacturer_id})
                 // temSub = props.categoryData.subCategoryData.filter(cat=>JSON.stringify(cat.category_id)===e.target.value)
                 // console.log("temSub", temSub)
                
@@ -113,15 +113,17 @@ const  ProductManagement = (props) =>{
         const handleManufactureData =(e)=>{
             console.log(e.target.value)
             let selectedId = parseInt(e.target.value)
-           
-            props.serachProduct({product: inputValue, option: selectedRadio, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
             props.handleManufactureData(selectedId)
+            props.serachProduct({product: inputValue, option: selectedRadio, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
+           
         }
 
         const resetFilter = () =>{
             setCategory("All")
             setCategoryId("0")
             setsubCategory("0")
+            setInputValue("")
+            setRadio("all")
             props.getAllProductAction()
            // props.handleCategory(category,subCategory) 
 
@@ -168,13 +170,13 @@ const  ProductManagement = (props) =>{
         console.log(selectedCategory)
         console.log(props.manufacture_id)
 
-        props.serachProduct({product: e.target.value, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacture_id})
+        props.serachProduct({product: e.target.value, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
         setInputValue(e.target.value);
     }
        const radioSearchAction =(e)=>{
         console.log(e.target.id)
         //props.radioSearch(e.target.id)
-        props.serachProduct({product: inputValue, option: e.target.id, category: selectedCategory,manufactureId:props.manufacture_id})
+        props.serachProduct({product: inputValue, option: e.target.id, category: selectedCategory,manufactureId:props.manufacturer_id})
         setRadio(e.target.id)
 
     }
@@ -189,7 +191,9 @@ const  ProductManagement = (props) =>{
         // eslint-disable-next-line no-unused-vars
         const {pageToOpen,actionType,productDataById, skuDataById,selectedCategory} = props.productData
         const {categoryData,subCategoryData,manufactureData} = props.categoryData
-        console.log(props.temp.productData)
+        console.log(props.temp)
+        console.log(selectedCategory)
+        console.log(props.manufacturer_id)
   
     return (
         <div>
@@ -233,8 +237,9 @@ const  ProductManagement = (props) =>{
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
 
-                                <select className="form-control"  id="category" onChange={handleCategoryData}   >
-                                    <option value="All" selected={category==="All"?"selected":""}>All</option>
+                                <select className="form-control"  id="category" onChange={handleCategoryData} value={parseInt(selectedCategory)}   >
+                                    {/* <option value="All" selected={category==="All"?"selected":""}>All</option> */}
+                                    <option value="All">All</option>
                                     {categoryData.map(categoryData=>{
                                         return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
                                     })
@@ -259,7 +264,7 @@ const  ProductManagement = (props) =>{
                                  <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Manufacturer</label>
 
-                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleManufactureData}  >
+                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleManufactureData} value={parseInt(props.manufacturer_id)}   >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {manufactureData.map(manufactureObj=>{
                                         return(<option  value={manufactureObj.id} key={manufactureObj.id}>{manufactureObj.name}</option>)
@@ -393,7 +398,7 @@ const  ProductManagement = (props) =>{
 const mapStateToProps = (state)=> ({
     productData : state.productData,
     categoryData: state.categoryData,
-    manufacture_id:state.productData.manufacturer_id,
+    manufacturer_id:state.productData.manufacturer_id,
     temp:state,
 })
 

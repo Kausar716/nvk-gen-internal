@@ -266,7 +266,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3">
                                             <label>Form</label>
                                             <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.id ==1)[0]["id"]:"form"} onChange={handleInput} 
-                                            value={selectedForm?selectedForm.subattribute_id:""}>
+                                            value={selectedForm?selectedForm.subattribute_id:""} disabled={(actionType === "sku")}>
                                                  <option>None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -279,7 +279,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Caliper</label>
                                             <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}
-                                            value={selectedCaliper?selectedCaliper.subattribute_id:""}>
+                                            value={selectedCaliper?selectedCaliper.subattribute_id:""} disabled={(actionType === "sku")}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -292,7 +292,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Height</label>
                                             <select class="form-control" id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}
-                                            value={selectedHeight?selectedHeight.subattribute_id:""}>
+                                            value={selectedHeight?selectedHeight.subattribute_id:""} disabled={( actionType === "sku")}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -305,7 +305,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Packaging <span class="text-danger">*</span></label>
                                             <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}
-                                            value={selectedPackaging?selectedPackaging.subattribute_id:""}>
+                                            value={selectedPackaging?selectedPackaging.subattribute_id:""} disabled={(actionType === "sku")}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{

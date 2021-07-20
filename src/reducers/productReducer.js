@@ -185,12 +185,13 @@ export default function(state = initialSatate, action){
 
         //product action
         case GET_ALL_PRODUCT_ACTION:
-//debugger;
-console.log("actions", action.payload.data)
+            console.log("actions", action.payload.data)
             return{
                  ...state,
                 productData:action.payload.data,
                 backupData:action.payload.data,
+                manufacturer_id:"None",
+                selectedCategory:"All",
             }
 
         case GET_SKU_SPECIFIED_PRODUCT:
@@ -482,7 +483,7 @@ console.log("actions", action.payload.data)
                 if(action.payload.option ==="archive"){
                     optionVal = 1;
                 }
-                if(action.payload.manufactureId === "None"){
+                if(action.payload.manufactureId === "None" || action.payload.manufactureId === 0 ){
                     filterManufactur=1
                 }
                 if(action.payload.category === "All"){
@@ -498,7 +499,7 @@ console.log("actions", action.payload.data)
                         productData:state.backupData
                     }
                 }else{
-                    console.log("in",)
+                    console.log("in",action)
                     console.log(parseInt(categoryVal),"sadfd")
                     return{
                         ...state,
@@ -516,6 +517,7 @@ console.log("actions", action.payload.data)
                 }
 
         case HANDLE_MANUFACTURE_DATA:{
+            console.log(action)
             return{
                 ...state,
                 manufacturer_id:action.manufacturer_id
