@@ -4,19 +4,38 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
     class InventoryReasons extends Component {
+        constructor(props){
+            super()
+                this.state={
+                    errorObj:{
+                        formSku:0
+                    },
+                    sortId: 0,
+                    activeId: 0
+                }
+            
+        }
          onDragOver = (ev)=>{
             ev.preventDefault();
         }
         onDragStart=(ev, id)=>{
             console.log("dragstart:", id);
             ev.dataTransfer.setData("id",id)
+            let activeId=this.state.activeId
+            activeId=id;
+            this.setState({activeId})
         }
         componentDidMount(){
             this.props.getAllSubAttribute(13)
         }
+        onMouseLeave =((ev, id)=>{
+            let sortId=this.state.sortId
+            sortId=id;
+            this.setState({sortId})
+        })
         onDrop=(ev,cat)=>{
             let id= ev.dataTransfer.getData("id");
             let tasks = this.props.zoneCategoryList.filter((task)=>{                
@@ -28,17 +47,36 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
         //     this.props.getAllSubAttribute(13)
         //    })
             let doProcess = false;
+            let alertmsg = 0;
             if (cat === 'active' && tasks[0].status === 0) {
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
             if (doProcess === true) {
                 let result= this.props.handleAttributeDragDrop(tasks[0])
                 result.then(res=>{
                     this.props.getAllSubAttribute(13)
                 })   
+            }
+            if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+                let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
+                result.then(res=>{
+                    this.props.getAllSubAttribute(13)
+                }) 
+                alertmsg = 3;
+            }
+            if (alertmsg === 1){
+                alert('Successfully Moved from Inactive to Active');
+            }
+            if (alertmsg === 2){
+                alert('Successfully Moved from Active to Inactive');
+            }
+            if (alertmsg === 3){
+                alert('Sort Successfully Done');
             }
         }
         onDelete =(ev)=>{
@@ -64,6 +102,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             result.then(res=>{
                 this.props.getAllSubAttribute(13)
             })
+            alert('Added Successfully Done');
         }
         
         }
@@ -154,7 +193,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
-                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                 <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 </a>
@@ -186,6 +225,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
     export default connect(mapStateToProps,{
         getAllSubAttribute,
         handleAttributeDragDrop,
+        handleAttributeDragSort,
         handleAttributeDelete,
         handleZoneInputAction,
         handleAddZone      

@@ -40,6 +40,9 @@ const SkuList = (props)=>{
     const [pageSize, setPageSize] =useState(15)
     const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0  })
     const [errorCount,setErrorCount] = useState(0)
+    const [each_costError,setEach_costError] =useState(false)
+    const [each_priceError,setEach_priceError] = useState(false)
+    const [sales_priceError,setSales_priceError] = useState(false)
     const handleChange=(date)=> {
         setStartDate(date)
       }
@@ -67,14 +70,17 @@ const SkuList = (props)=>{
         if(e.target.id  === "each_cost" ){
             errorobj.each_cost=0
             errorcount--
+            setEach_costError(false)
         }
         if(e.target.id  === "each_price" ){
             errorobj.each_price=0
             errorcount--
+            setEach_priceError(false)
         }
         if(e.target.id  === "sale_price" ){
             errorobj.sale_price=0
             errorcount--
+            setSales_priceError(false)
         }
         setErrorObj(errorobj)
        setErrorCount(errorcount)
@@ -238,6 +244,28 @@ const SkuList = (props)=>{
             }
             
         }
+        const handleBlur =(evt)=>{
+
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            console.log(evt.target.id)
+            let id = evt.target.id
+            let characterCheck = evt.target.value.match(/^\d+(\.\d+)?$/);
+           if(characterCheck === null){
+               if(id === "each_cost"){
+                setEach_costError(true)
+               }
+               if(id === "each_price"){
+                setEach_priceError(true)
+               }
+               if(id=== "sale_price"){
+                setSales_priceError(true)
+               }
+        
+           
+            
+           }
+           
+           }
      
  
       
@@ -320,15 +348,18 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
+                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
+                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -337,7 +368,7 @@ const SkuList = (props)=>{
                                                     <div>
                                                         {/* <DatePicker value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate}
                                                          onChange={handleChange1}/> */}
-                                                    <input type="date" onChange={handleChange1} className="dateDesign" 
+                                                    <input type="date" onChange={handleChange1} className="dateDesign" disabled={plantSkuDataById.status==0?true:false}
                                                      value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} />
 
                                                     </div>

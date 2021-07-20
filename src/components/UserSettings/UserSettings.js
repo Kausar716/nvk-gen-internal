@@ -4,37 +4,74 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handlePositionInputAction,handleAddPosition} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition} from '../../actions/attributeAction'
 
     class Categories extends Component {
-     
+        constructor(props){
+            super()
+                this.state={
+                    errorObj:{
+                        formSku:0
+                    },
+                    sortId: 0,
+                    activeId: 0
+                }
+            
+        }
          onDragOver = (ev)=>{
             ev.preventDefault();
         }
         onDragStart=(ev, id)=>{
             console.log("dragstart:", id);
             ev.dataTransfer.setData("id",id)
+            let activeId=this.state.activeId
+            activeId=id;
+            this.setState({activeId})
         }
         componentDidMount(){
             this.props.getAllSubAttribute(16)
         }
+        onMouseLeave =((ev, id)=>{
+            let sortId=this.state.sortId
+            sortId=id;
+            this.setState({sortId})
+        })
         onDrop=(ev,cat)=>{
             let id= ev.dataTransfer.getData("id");
             let tasks = this.props.positionCategoryList.filter((task)=>{                
                    return JSON.stringify(task.id) === id;
             });
             let doProcess = false;
+            let alertmsg = 0;
             if (cat === 'active' && tasks[0].status === 0) {
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
             if (doProcess === true) {
                 let result= this.props.handleAttributeDragDrop(tasks[0])
                 result.then(res=>{
                     this.props.getAllSubAttribute(16)
                 })   
+            }
+            if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+                let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
+                result.then(res=>{
+                    this.props.getAllSubAttribute(16)
+                }) 
+                alertmsg = 3;
+            }
+            if (alertmsg === 1){
+                alert('Successfully Moved from Inactive to Active');
+            }
+            if (alertmsg === 2){
+                alert('Successfully Moved from Active to Inactive');
+            }
+            if (alertmsg === 3){
+                alert('Sort Successfully Done');
             }
         }
         onDelete =(ev)=>{
@@ -62,7 +99,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
             result.then(res=>{
                 this.props.getAllSubAttribute(16)
             })
-        
+            alert('Added Successfully Done');
         }
 
 
@@ -149,7 +186,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
-                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 </a>
@@ -181,6 +218,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleP
     export default connect(mapStateToProps,{
         getAllSubAttribute,
         handleAttributeDragDrop,
+        handleAttributeDragSort,
         handleAttributeDelete,
         handlePositionInputAction,
         handleAddPosition      

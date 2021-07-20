@@ -5,6 +5,7 @@ import {
     HANDLE_PRODUCT_MANUFACTURE_INPUT_DATA,
     HANDLE_ADD_PRODUCT_MANUFACTURE,
     HANDLE_DRAG_PRODUCT_MANUFACTURE,
+    HANDLE_DRAG_MANUFACTURER_SORT,
     HANDLE_PRODUCT_MANUFACTURE_DELETE
 
 } from '../actions/types';
@@ -43,6 +44,10 @@ export default function(state = initialSatate, action){
             }
 
         case HANDLE_DRAG_PRODUCT_MANUFACTURE:
+            return{
+                ...state
+            }
+        case HANDLE_DRAG_MANUFACTURER_SORT:
             return{
                 ...state
             }

@@ -5,6 +5,7 @@ import {
     CREATE_ALL_ATTRIBUTES,
     GET_ALL_SUB_ATTRIBUtTES,
     HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+    HANDLE_DRAG_ATTRIBUTE_SORT,
     HANDLE_DELETE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION,
     HANDLE_ADD_ZONE_ATTRIBUTE,
@@ -60,6 +61,19 @@ export const handleAttributeDragDrop = (data) =>dispatch=>{
         console.log(res)
     dispatch({
             type:HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+            payload:res.data
+        })
+    })
+}
+export const handleAttributeDragSort = (fromId, toId) =>dispatch=>{
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position="up";
+    return axios.post(`/api/drag-sort-subattribute`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DRAG_ATTRIBUTE_SORT,
             payload:res.data
         })
     })
