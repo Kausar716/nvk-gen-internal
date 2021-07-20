@@ -245,7 +245,7 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
     
     //debugger;
     let error = []
-    //debugger;
+    
     //console.log("DATADATA", data);
     console.log("DATADATA", FinalData);
     if(skuData.each_cost===0||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
@@ -255,9 +255,11 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
     if(skuData.sku_item_name==null ||skuData.sku_item_name.length ===0 ) error.push("Add Sku Item Name")
     if(error.length===0){
         delete skuData["id"]
-     console.log(FinalData)
+     
         // FinalData.subcategory_id =FinalData.subcategory
         delete FinalData.subcategory
+        console.log(FinalData,id)
+        debugger;
         axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
            
             console.log("createSKU", res)

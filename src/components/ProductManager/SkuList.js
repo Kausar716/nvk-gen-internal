@@ -111,7 +111,7 @@ const SkuList=(props)=> {
 
     const submitAction = (e) =>{
         e.preventDefault();
-         if(submitCount === 0){
+         if(submitCount === 0 && (!each_costError&& !each_priceError&& !sales_priceError)){
             if(needAction){
                 if(actionType ==="add"){
                     console.log(product_idFromGeneral)
@@ -147,6 +147,21 @@ const SkuList=(props)=> {
             }
         }
           
+     }
+     const handleUpdateAndClear = ()=>{
+       if(!each_costError&& !each_priceError&& !sales_priceError){
+        if(!skuEdit){
+           let idFromGeneral = props.productData.productDataById.product_id
+           console.log(idFromGeneral)
+           console.log(skuDataById)
+          
+            props.createSkuAction(idFromGeneral,skuDataById)
+        }
+        else{
+            props.updateSkuAction(skuDataById.id,skuDataById)
+        }
+    }
+
      }
 
     const paginationChange =(event, page)=>{
@@ -282,7 +297,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
-    console.log(props.attributeData)
+    console.log(actionType)
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
                 <div>
@@ -371,7 +386,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <input type="date" onChange={handleChange1} className="dateDesign"  
+                                                    <input type="date" onChange={handleChange1} className="dateDesign"  disabled={skuDataById.status===0?true:false}
                                                     value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>
                                                    
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
@@ -392,12 +407,13 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality <span class="text-danger">*</span></label>
-                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} >
+                                            <select class="form-control"  id={"volume_quantity"} onChange={handleInput} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        console.log(subData)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -429,7 +445,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
 
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
-                                            disabled={(needAction===true && flag === 0)?false:true} onClick={()=>actionType==="add"?props.createSkuAction(product_idFromGeneral,skuDataById):props.updateSkuAction(skuDataById.id,skuDataById)}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>
                                              <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
                                             onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>

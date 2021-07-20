@@ -207,7 +207,6 @@ export default function(state = initialSatate, action){
            // debugger;
             //console.log("GET_SPECIFIED_PRODUCT_ACTION",action.payload.data)
             console.log(action)
-            debugger;
             return{
                 ...state,
                 productDataById:action.payload.data,
@@ -446,7 +445,7 @@ export default function(state = initialSatate, action){
         case FILTER_GET_SLECTED_CATEGORY_DATA:
             // JSON.stringify(product.category_id )===action.categoryId
             console.log(action)
-            debugger;
+          
             return{
                 ...state,
                 // productData:state.backupData.filter(product=>JSON.stringify(product.category_id )===action.categoryId),
