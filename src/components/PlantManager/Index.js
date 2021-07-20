@@ -11,6 +11,7 @@ import { Tab, Tabs, TabList } from 'react-tabs';
 
 import PlantTable from './PlantTable'
 import GeneralSettings from './GeneralSettings'
+import Loader from '../ProductManager/Loader'
 
 import ActionModal from '../Modal/ActionModal';
 import SkuList from './SkuList'
@@ -48,6 +49,7 @@ const  PlantManger=(props)=> {
     const [type, setType] = useState("")
     const [categoryId,setCategoryId] = useState(0)
     const [inputValue, setInputValue] = useState("");
+    const [loader,setLoader] = useState(false)
     const [errorObj,setErrorObj] = useState({ genusError:0,lastNameError:0,phoneError:0,emailError:0,positionError:0})
 const productFormAction = ()=>{
         this.props.getProductPage("general")
@@ -126,7 +128,11 @@ const productFormAction = ()=>{
 
         // }
         const resetData = () =>{
-            props.getAllPlantAction()
+            setLoader(true)
+            let result = props.getAllPlantAction()
+            result.then(res=>{
+                setLoader(false)
+            })
             setRadio("all")
             setCategoryId(0);
             setInputValue("");
@@ -238,6 +244,9 @@ const productFormAction = ()=>{
                                         </div>
                                     </div>
                                     <hr/>
+                                    <div className="centerItem">
+                                    {loader?  <p > {"Resetting ... " }<Loader /></p>:null}
+                                    </div>
                                     <PlantTable/>
                                 </div>
                             </div>

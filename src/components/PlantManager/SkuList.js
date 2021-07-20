@@ -155,6 +155,7 @@ const SkuList = (props)=>{
    }
    const submitAction = (e) => {
        console.log(props.plantData)
+    if(!each_costError&& !each_priceError&& !sales_priceError){
     if(e.target.id === "dontRetain"){
     if(actionType ==="add" || actionType === "edit"){
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
@@ -175,6 +176,7 @@ const SkuList = (props)=>{
             props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
         }
        
+    }
     }
    }
    const handleCancel = ()=>{
@@ -266,7 +268,15 @@ const SkuList = (props)=>{
            }
            
            }
-     
+           let volumeQualityList=[]
+           if(allAttributes.length>0)
+           volumeQualityList= allAttributes.filter(formData=>formData.id === 6)
+        //   .map(filterData=>{
+        //     return (filterData.sub_attributes.map(subData=>{
+        //         return(<option value={subData.id}>{subData.value}</option>)
+        //     }))
+        // })      value                    
+        
  
       
         return(
@@ -386,7 +396,7 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality <span class="text-danger">*</span></label>
-                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality")[0]["id"]:"Volume_Quality"} onChange={handleInput} 
+                                            <select class="form-control" id={"volume_quantity"} onChange={handleInput} 
                                             value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}>
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
@@ -468,6 +478,7 @@ const SkuList = (props)=>{
 
                                         {
                         displayPlantSkuList.map(skuData=>{
+                           
                             return(
                                             <tr>
                                                 <td>{skuData.archived ===0?"Active":"Inactive"}</td>
@@ -481,6 +492,7 @@ const SkuList = (props)=>{
                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                     </div>
                                                 </td>
+
                                                 <td>{skuData.volume_price_per_unit}</td>
                                                 <td>{skuData.volume_quantity}</td>
                                                 <td class="text-center">

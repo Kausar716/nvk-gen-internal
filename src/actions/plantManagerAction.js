@@ -239,7 +239,7 @@ export const duplicatePlant = (id) =>dispatch=>{
 
 }
 export const getAllPlantAction = () => dispatch => {
-    axios.get("/api/plants",config).then(res=>{ 
+  return  axios.get("/api/plants",config).then(res=>{ 
         dispatch({
                 type:GET_ALL_PLANT_ACTION,
                 payload:res.data.data
