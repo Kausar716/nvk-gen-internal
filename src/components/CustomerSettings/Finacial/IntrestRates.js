@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse ,Row,  Label} from 'reactstrap';
 import {connect} from "react-redux";
-import {handleExchangeData,saveNoticationData,getNotificationData,saveIntrestData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
+import {handleExchangeData,getIntrestData,saveNoticationData,getNotificationData,saveIntrestData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
+import SuccessModal from '../../Modal/SuccessModal';
 // import * as BiIcons from "react-icons/bs";
 
 
@@ -54,13 +55,31 @@ const onSubmit = (values) =>{
 
 const InrestRates = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [showData,setData] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+  const [checkedData,setCheckedData] = useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [successMessage,setSuccessMessage] = useState([])
+  const toggle1  = ()=>setIsOpen1(!isOpen);
   const handleChangeData = (e) =>{
+    setCheckedData(true)
     props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
 
   }
+  const resetData = () =>{
+    setCheckedData(false)
+    props.getIntrestData()
+  }
+  useEffect(()=>{
+    // alert("jj")
+    props.getIntrestData()
+
+  },[showData])
 
   const saveExchangeData = ()=>{
+    setCheckedData(true)
+    setIsOpen1(true)
+    setSuccessMessage(["Tax & Interest Rates Saved Successfully"])
     let obj={}
     obj.monthly = customerIntrest.monthly
     obj.yearly = customerIntrest.yearly
@@ -77,6 +96,7 @@ const InrestRates = (props) => {
   return (
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
+      <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       <Label className="subFont">Tax & Interest Rates</Label> 
       <span className="updownSymbolContainer"> 
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
@@ -124,8 +144,8 @@ const InrestRates = (props) => {
             </div>
             
             <div align="right" className="action_area_left"  >
-                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  >Cancel</button>
-                              <button className="button_style_Tools_Setting_Save"   onClick={saveExchangeData}>Save</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
+                              <button className="button_style_Tools_Setting_Save"   onClick={saveExchangeData} disabled={checkedData==true?false:true}>Save</button>
                   </div> 
 
                 </div>
@@ -146,4 +166,4 @@ const mapStateToProps = (state)=>(
 )
 
 const form = reduxForm({ form: 'Notification' });
-export default connect(mapStateToProps, {handleExchangeData,saveIntrestData,saveFinanceExchangeData})(form(InrestRates));
+export default connect(mapStateToProps, {handleExchangeData,getIntrestData,saveIntrestData,saveFinanceExchangeData})(form(InrestRates));

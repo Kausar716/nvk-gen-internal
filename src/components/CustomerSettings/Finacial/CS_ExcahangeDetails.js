@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {handleChangeFilter,getAllCustomerExchange,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
 import {saveSupplierData,handleSupplierExchnageData,getAllSupplierExchange} from "../../../actions/supplierManagementAction";
 import DatePicker from "react-datepicker";
+import SuccessModal from '../../Modal/SuccessModal';
 import "react-datepicker/dist/react-datepicker.css";
 
 import * as BiIcons from "react-icons/bs";
@@ -47,6 +48,10 @@ import * as BiIcons from "react-icons/bs";
 const CS_ExcahangeDetails = (props) => {
   const [isOpen, setIsOpen] = useState(true);
   const toggle = () => setIsOpen(!isOpen);
+  const [checkedData,setCheckedData] =useState(false);
+  const [isOpen1, setIsOpen1] = useState(false);
+  const [successMessage,setSuccessMessage] = useState([])
+  const toggle1  = ()=>setIsOpen1(!isOpen);
   // const [customerExchange,setCustomerExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
   // const [supplierExchange,setSupplierExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
 
@@ -55,24 +60,37 @@ const CS_ExcahangeDetails = (props) => {
 
 
   const handleInputData =(e)=>{
+    setCheckedData(true)
     props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
 
   }
   const handleInputData1 =(e)=>{
+    setCheckedData(true)
     props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
 
   }
   const datePickerData =(e)=>{
+    setCheckedData(true)
     props.handleExchangeData(e.target.value,"exchange_date","customerExchange")
 }
 const datePickerData1 =(e)=>{
   console.log(e.target.value)
+  setCheckedData(true)
   props.handleSupplierExchnageData(e.target.value,"exchange_date","supplierExchange")
 
 }
 const saveExchangeData = ()=>{
+  setCheckedData(false)
+  setSuccessMessage(["Customer Exchange Rates Saved successfully"])
+  // toggle1(true)
+  setIsOpen1(true)
   props.saveFinanceExchangeData(customerExchange)
   props.saveSupplierData(supplierExchange)
+
+}
+const resetData = ()=>{
+  props.getAllCustomerExchange()
+  props.getAllSupplierExchange()
 
 }
 useEffect(()=>{
@@ -127,7 +145,9 @@ useEffect(()=>{
 
   return (
     <>
+    
       <div color="primary" onClick={toggle}  className="SubHeader">
+      <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       <Label className="subFont">Customer and Supplier Exchange Details</Label>
         <span className="updownSymbolContainer"> 
         {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
@@ -249,8 +269,8 @@ useEffect(()=>{
               <Col xs="12">
               
           <div align="right" className="action_area_left">
-                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}>Cancel</button>
-                        <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}>Save</button>
+                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
+                        <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}  disabled={checkedData==true?false:true}>Save</button>
                   </div>
                   </Col> 
 

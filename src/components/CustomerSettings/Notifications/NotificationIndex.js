@@ -3,6 +3,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Collapse, Label} from 'reactstrap';
 import {connect} from "react-redux";
 import {handleChangeFilter,saveNoticationData,getNotificationData} from "../../../actions/customerSettingAction";
+import SuccessModal from '../../Modal/SuccessModal';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 //import validators from './validators'
@@ -31,6 +32,9 @@ const minValue2 = minValue(2)
 
 const Notification = (props) => {
     const [isOpen, setIsOpen] = useState(true);
+    const [isOpen1, setIsOpen1] = useState(false);
+    const [successMessage,setSuccessMessage] = useState([])
+    const toggle1  = ()=>setIsOpen1(!isOpen);
     const toggle = () => setIsOpen(!isOpen);
     const [notificationError,setNotificationError] = useState(["",""])
     const [checkedData,setCheckedData] = useState(false)
@@ -39,8 +43,12 @@ const Notification = (props) => {
       props.getNotificationData()
     },[isOpen]);
 
-  
+    const resetData = ()=>{
+      props.getNotificationData()
+
+    }
  const handleDataChange = (e)=>{
+   setCheckedData(true)
   //  alert("hi")
   const some_array = [...notificationError]
 
@@ -84,6 +92,9 @@ const Notification = (props) => {
 
  }
  const saveNotfication = ()=>{
+  setIsOpen1(true)
+   setSuccessMessage(["Notfication saved successfully"])
+ 
    let obj = {}
    obj.ready_to_late_notice = ready_to_late_notice
    obj.reserve_expiry_notice = reserve_expiry_notice
@@ -100,6 +111,7 @@ const Notification = (props) => {
     <>
 
       <div color="primary" onClick={toggle} className="SubHeader">
+      <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       
       <Label className="subFont">Customer Notifications</Label>
       <span className="updownSymbolContainer"  style={{paddingTop:4}}> 
@@ -148,9 +160,9 @@ const Notification = (props) => {
 
                     </div>
                     <div align="right" className="action_area_left" style={{marginRight:180}}>
-                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}>Cancel</button>
+                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} onClick={resetData} disabled={checkedData==true?false:true}>Cancel</button>
                         <button className={"button_style_Tools_Setting_Save"}
-                        onClick={saveNotfication}>Save</button>
+                        onClick={saveNotfication}  disabled={checkedData==true?false:true}>Save</button>
                   </div> 
 
                         
