@@ -103,7 +103,7 @@ const initialSatate = {
             // console.log(action.permissionName === "quotesAll" && action.cheked)
             if(action.permissionName === "quotesAll"){
                
-                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
+                const quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
                 console.log(quotesArray)
                 quotesArray.map(premission=>{
                     if(permissionArray.length>0){
@@ -131,6 +131,127 @@ const initialSatate = {
 
                 
             } 
+
+
+
+            // if(action.permissionName === "quotesAll"){
+            //     let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
+            //     console.log(quotesArray)
+            //     quotesArray.map(premission=>{
+            //         if(permissionArray.length>0){
+            //         if(!permissionArray.includes(premission.id)){
+            //             permissionArray.push(premission.id)
+            //             currentPermissionNames.push(premission.name)
+            //         }
+            //     }
+            //     else  {
+            //         permissionArray.push(premission.id)
+            //         currentPermissionNames.push(premission.name)
+            //     }
+            //     })
+            //     console.log(currentPermissionNames)
+            //     console.log(permissionArray)
+            //     let quotesIndex = currentPermissionNames.indexOf("quotesNone")
+            //     console.log(quotesIndex)
+            //     if(quotesIndex>=0){
+            //     currentPermissionNames.splice(quotesIndex,1)
+                
+            //     }
+            //     else if(quotesIndex === -1){
+            //         currentPermissionNames.push(action.permissionName)
+            //     }
+
+            // } 
+
+
+
+         
+
+
+            else if(action.permissionName === "quotesNone" ){
+                let quotesIndex = currentPermissionNames.indexOf("quotesNone")
+                currentPermissionNames.splice(quotesIndex,1)
+                currentPermissionNames.push(action.permissionName)
+                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
+                console.log(quotesArray)
+                quotesArray.map(premission=>{
+                    if(permissionArray.length>0){
+                    if(permissionArray.includes(premission.id)){
+                        // currentPermissionNames.push(premission.name)
+                        let index = permissionArray.indexOf(premission.id)
+                        permissionArray.splice(index,1)
+                        currentPermissionNames.splice(index,1)
+                        
+                    }
+                }
+                
+                })
+                console.log(currentPermissionNames)
+                console.log(permissionArray)
+
+                
+            }
+
+
+            
+
+
+            else 
+            if(action.permissionName === "poNone"){
+                let quotesIndex = currentPermissionNames.indexOf("poNone")
+                if(quotesIndex>=0){
+                    currentPermissionNames.splice(quotesIndex,1)                
+                }
+                else if(quotesIndex === -1){
+                    currentPermissionNames.push(action.permissionName)
+                }
+                let quotesArray = state.permissionListBackup.filter(permission=>
+                    ((permission.group_name==="purchaseOrders")))
+                console.log(quotesArray)
+                quotesArray.map(premission=>{
+                    if(permissionArray.length>0){
+                        if(permissionArray.includes(premission.id)){
+                            // currentPermissionNames.push(premission.name)
+                            let index = permissionArray.indexOf(premission.id)
+                            permissionArray.splice(index,1)
+                            currentPermissionNames.splice(index,1)
+                            
+                        }
+                }
+                
+                })
+                console.log(currentPermissionNames)
+                console.log(permissionArray)
+
+                
+            }
+
+            // else if(action.permissionName === "poNone" ){
+            //     let quotesIndex = currentPermissionNames.indexOf("poAll")
+
+
+
+            //     currentPermissionNames.splice(quotesIndex,1)
+            //     currentPermissionNames.push(action.permissionName)
+            //     let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="purchaseOrders")
+            //     console.log(quotesArray)
+            //     quotesArray.map(premission=>{
+            //         if(permissionArray.length>0){
+            //         if(permissionArray.includes(premission.id)){
+            //             // currentPermissionNames.push(premission.name)
+            //             let index = permissionArray.indexOf(premission.id)
+            //             permissionArray.splice(index,1)
+            //             currentPermissionNames.splice(index,1)
+                        
+            //         }
+            //     }
+                
+            //     })
+            //     console.log(currentPermissionNames)
+            //     console.log(permissionArray)
+
+                
+            // }
 
             if(action.permissionName === "poAll"){
                
@@ -316,8 +437,8 @@ const initialSatate = {
             }
 
             else
-            if(action.permissionName === "Inventory Managaement"){
-                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="Inventory Managaement")
+            if(action.permissionName === "InventoryManagaement"){
+                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="InventoryManagement")
                 console.log(quotesArray)
                 quotesArray.map(premission=>{
                     if(permissionArray.length>0){
@@ -486,56 +607,14 @@ const initialSatate = {
                 
             }
            
-            else if(action.permissionName === "quotesNone" ){
+           
 
-                let quotesIndex = currentPermissionNames.indexOf("quotesAll")
-                console.log("quotesIndex", quotesIndex)
-                currentPermissionNames.splice(quotesIndex,1)
-                currentPermissionNames.push(action.permissionName)
-                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
-                console.log(quotesArray)
-                quotesArray.map(premission=>{
-                    if(permissionArray.length>0){
-                    if(permissionArray.includes(premission.id)){
-                        // currentPermissionNames.push(premission.name)
-                        let index = permissionArray.indexOf(premission.id)
-                        permissionArray.splice(index,1)
-                        currentPermissionNames.splice(index,1)
-                        
-                    }
-                }
-                
-                })
-                console.log(currentPermissionNames)
-                console.log(permissionArray)
-
-                
-            }
+   
 
 
-            else if(action.permissionName === "poNone" ){
-                let quotesIndex = currentPermissionNames.indexOf("poNone")
-                currentPermissionNames.splice(quotesIndex,1)
-                currentPermissionNames.push(action.permissionName)
-                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="purchaseOrders")
-                console.log(quotesArray)
-                quotesArray.map(premission=>{
-                    if(permissionArray.length>0){
-                    if(permissionArray.includes(premission.id)){
-                        // currentPermissionNames.push(premission.name)
-                        let index = permissionArray.indexOf(premission.id)
-                        permissionArray.splice(index,1)
-                        currentPermissionNames.splice(index,1)
-                        
-                    }
-                }
-                
-                })
-                console.log(currentPermissionNames)
-                console.log(permissionArray)
 
-                
-            }
+        
+
             else  if(action.permissionName === "turnOn"){  
                 //debugger;      
                 // let quotesArray2 = state.permissionListBackup.filter(permission=>
@@ -563,24 +642,27 @@ const initialSatate = {
 
                 
             }
+
+
             else  if(action.permissionName === "turnOff"){ 
                 currentPermissionNames=[]
                 permissionArray=[]
 
              }
             else {
+               // debugger;
             let permissionSelectedObject = state.permissionListBackup.filter(permission=>permission.name===action.permissionName)
-            console.log(permissionSelectedObject)
-            if(!permissionArray.includes(permissionSelectedObject[0].id)){
-                permissionArray.push(permissionSelectedObject[0].id)
-                currentPermissionNames.push(permissionSelectedObject[0].name)
-            }
+            console.log("permissionSelectedObject",permissionSelectedObject)
+            // if(!permissionArray.includes(permissionSelectedObject[0].id)){
+            //     permissionArray.push(permissionSelectedObject[0].id)
+            //     currentPermissionNames.push(permissionSelectedObject[0].name)
+            // }
            
-            else {
-               let index = permissionArray.indexOf(permissionSelectedObject[0].id)
-               permissionArray.splice(index,1)
-               currentPermissionNames.splice(index,1)
-            }
+            // else {
+            //    let index = permissionArray.indexOf(permissionSelectedObject[0].id)
+            //    permissionArray.splice(index,1)
+            //    currentPermissionNames.splice(index,1)
+            // }
         }
             console.log(permissionArray)
             console.log(currentPermissionNames)

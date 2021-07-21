@@ -307,7 +307,7 @@ export const Component = withRouter(({ history, location }) =>{
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Supervisor Role"  && premission.group_name === "quotesAndOrders").map(filteredPermission => (
                                            
                                            <div class="custom-control custom-checkbox">
-                                           <input type="checkbox" class="custom-control-input"  id={filteredPermission.id} name="Supervisor Role"  checked={currentPermissionNames.includes("Supervisor Role")} onChange={this.handleCheckBox}/>
+                                           <input type="checkbox" class="custom-control-input"  name="Supervisor Role"  checked={currentPermissionNames.includes("Supervisor Role")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                            <label class="custom-control-label pl-2" for={filteredPermission.id}>Supervisor Role (all access)</label>
                                            </div>
                                        )):null}
@@ -379,7 +379,7 @@ export const Component = withRouter(({ history, location }) =>{
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="Shipped Invoices Adjustment"  && premission.group_name === "quotesAndOrders").map(filteredPermission => (
                                           <div class="custom-control custom-checkbox">
                                           <input type="checkbox" class="custom-control-input" name="Shipped Invoices Adjustment" checked={currentPermissionNames.includes("Shipped Invoices Adjustment")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
-                                          <label class="custom-control-label pl-2" for={filteredPermission.id}>  Shipped, Invoices & Adjustments</label>
+                                          <label class="custom-control-label pl-2" for={filteredPermission.id}>  Shipped, Invoices &amp; Adjustments</label>
                                       </div>
                                        )):null}
                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="Receive Invoices"  && premission.group_name === "quotesAndOrders").map(filteredPermission => (
@@ -502,9 +502,9 @@ export const Component = withRouter(({ history, location }) =>{
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-4">
-                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="User Management"  && premission.group_name === "userManagement").map(filteredPermission => (
+                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="UserManagementInA"  && premission.group_name === "userManagement").map(filteredPermission => (
                                                     <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="User Management" checked={currentPermissionNames.includes("User Management") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                    <input type="checkbox" class="custom-control-input" name="UserManagementInA" checked={currentPermissionNames.includes("UserManagementInA") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                                     <label class="custom-control-label pl-2" for={filteredPermission.id}>User Management</label>
                                                 </div>
                                                 )):null}
@@ -615,10 +615,10 @@ export const Component = withRouter(({ history, location }) =>{
                                             </div>
                                        )):null}  
 
-                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="Actions: Close Open Orders"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
+                                        {exestingPermission?exestingPermission.filter(premission => premission.name==="ActionsCloseOpenOrders"  && premission.group_name === "purchaseOrders").map(filteredPermission => (
                                            
                                            <div class="custom-control custom-checkbox mt-2">
-                                                <input type="checkbox" class="custom-control-input" name="Actions: Close Open Orders" checked={currentPermissionNames.includes("Actions: Close Open Orders")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                <input type="checkbox" class="custom-control-input" name="ActionsCloseOpenOrders" checked={currentPermissionNames.includes("ActionsCloseOpenOrders")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                                 <label class="custom-control-label pl-2" for={filteredPermission.id}>Actions: Close Open Orders</label>
                                             </div>
                                        )):null} 
@@ -650,9 +650,9 @@ export const Component = withRouter(({ history, location }) =>{
 
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-4">
-                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="Supervisor Role in Inventory"  && premission.group_name === "SupervisorInINV").map(filteredPermission => (
+                                                {exestingPermission?exestingPermission.filter(premission => premission.name==="1SupervisorRoleInInventory"  && premission.group_name ==="SupervisorInINV").map(filteredPermission => (
                                                     <div class="custom-control custom-checkbox">
-                                                    <input type="checkbox" class="custom-control-input" name="Supervisor Role in Inventory" checked={currentPermissionNames.includes("Supervisor Role in Inventory") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                    <input type="checkbox" class="custom-control-input" name="1SupervisorRoleInInventory" checked={currentPermissionNames.includes("1SupervisorRoleInInventory") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                                     <label class="custom-control-label pl-2" for={filteredPermission.id}>Supervisor Role (all access)</label>
                                                 </div>
                                             )):null} 
@@ -773,9 +773,9 @@ export const Component = withRouter(({ history, location }) =>{
 
 
                                             <div class="pl-3">
-                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="Task Queue Modify"  && premission.group_name === "InventoryManagement").map(filteredPermission => (
+                                                            {exestingPermission?exestingPermission.filter(premission => premission.name==="taskQueueModify"  && premission.group_name === "InventoryManagement").map(filteredPermission => (
                                                             <div class="custom-control custom-checkbox mt-2">
-                                                            <input type="checkbox" class="custom-control-input" name="Task Queue Modify" checked={currentPermissionNames.includes("Task Queue Modify") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
+                                                            <input type="checkbox" class="custom-control-input" name="taskQueueModify" checked={currentPermissionNames.includes("taskQueueModify") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
                                                             <label class="custom-control-label pl-2" for={filteredPermission.id}>Task Queue (Modify)</label>
                                                         </div>
                                                         )):null}
