@@ -9,7 +9,8 @@ import {
     HANDLE_ADD_ZONE_ATTRIBUTE,
     HANDLE_POSITION_INPUT_ACTION,
     HANDLE_ADD_POSITION_ATTRIBUTE,
-    HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE
+    HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
+    HANDLE_UPDATE_ATTRIBUTE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
@@ -65,6 +66,14 @@ switch(action.type){
             ...state
         
     }
+
+    case HANDLE_UPDATE_ATTRIBUTE:
+        return{
+            ...state
+        }
+
+
+
     case HANDLE_DELETE_ATTRIBUTE:
         return{
             ...state

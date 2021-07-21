@@ -3,8 +3,9 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate} from '../../actions/attributeAction'
 
     class Categories extends Component {
         constructor(props){
@@ -14,7 +15,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         formSku:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    positionEdit:false,
                 }
             
         }
@@ -74,6 +76,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 alert('Sort Successfully Done');
             }
         }
+
         onDelete =(ev)=>{
            let id= ev.dataTransfer.getData("id");
            console.log(id)
@@ -83,6 +86,17 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
            })
         }
 
+
+        updateSubAttList =(e,id)=>{
+            this.setState({
+                positionEdit:true
+            })
+
+            this.props.handleSubAttributeUpdate(id)
+           // let id= e.dataTransfer.getData("id");
+            console.log("aaa", e.target.id, id)
+
+        }
         
         handlePositionInputAction = (e)=>{
             this.props.handlePositionInputAction(e.target.name,e.target.value)
@@ -188,7 +202,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
+
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                 onClick={(e)=>this.updateSubAttList(e, t.id)} 
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -220,6 +238,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleAttributeDragDrop,
         handleAttributeDragSort,
         handleAttributeDelete,
+        handleSubAttributeUpdate,
         handlePositionInputAction,
         handleAddPosition      
     })(Categories)
