@@ -106,13 +106,13 @@ const handleMainSelection= (id) => {
                   handleSubSelection("orderList1")}}><Link to="/comingsoon">Order List</Link></li>
                 <li class= {(selectedSubBar === "orderList2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList2")}}><Link to="/comingsoon">New Order</Link></li>
+                  handleSubSelection("orderList2")}}><Link to="/QuoteAndOrdersManagement">New Order</Link></li>
                 <li class= {(selectedSubBar === "orderList3")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList3")}}><Link to="/comingsoon">Quick Pick</Link></li>
+                  handleSubSelection("orderList3")}}><Link to="/OrderReady">Quick Pick</Link></li>
                 <li class= {(selectedSubBar === "orderList4")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList4")}}><Link to="/comingsoon">Reserve</Link></li>
+                  handleSubSelection("orderList4")}}><Link to="/OrderReserve">Reserve</Link></li>
                 <li class= {(selectedSubBar === "orderList5")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList5")}}><Link to="/comingsoon">Invoices & Adjustments</Link></li>
@@ -146,18 +146,12 @@ const handleMainSelection= (id) => {
               <Link to="/inventoryLists">
               <b class="caret"></b>
                 <img src="assets/img/inventory.svg" alt=""/>
-                <span>Inventory</span> 
+                <span>Inventory Management</span> 
               </Link>
               <ul class="sub-menu">
                 <li class= {(selectedSubBar === "inventory1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("inventory1")}}><Link to="/inventoryLists">Inventory Lists</Link></li>
-                <li class= {(selectedSubBar === "inventory2")?"active":""} onClick={(e)=>{
-                  e.stopPropagation()
-                  handleSubSelection("inventory2")}}><Link to="/comingsoon">Master Inventory</Link></li>
-                <li class= {(selectedSubBar === "inventory3")?"active":""} onClick={(e)=>{
-                  e.stopPropagation()
-                  handleSubSelection("inventory3")}}><Link to="/comingsoon">Task Queue</Link></li>
+                  handleSubSelection("inventory1")}}><Link to="/inventoryLists">Inventory Manager</Link></li>
                 <li class= {(selectedSubBar === "inventory4")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("inventory4")}}><Link to="/plantManager">Plant Manager</Link></li>
@@ -173,6 +167,9 @@ const handleMainSelection= (id) => {
                 <li class= {(selectedSubBar === "inventory8")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("inventory8")}}><Link to="/InventorySettings">Inventory Settings</Link></li>
+                <li class= {(selectedSubBar === "inventory3")?"active":""} onClick={(e)=>{
+                  e.stopPropagation()
+                  handleSubSelection("inventory3")}}><Link to="/comingsoon">Task Queue</Link></li>
               </ul>
             </li>
             <li class={selectedMainBar === "CustomerManagement"?"active":""} onClick={()=>{handleMainSelection("CustomerManagement")}}>
