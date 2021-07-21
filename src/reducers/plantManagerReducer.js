@@ -127,8 +127,7 @@ export default function(state = initialSatate, action){
                     in_production: 1,
                     archived: 0,
                     discontinued: 0,
-                    notes: "",
-                    ae_plant_id: ""
+                    notes: ""
                 },
                 plantSkuDataById         :   {
                     sku_code: "",

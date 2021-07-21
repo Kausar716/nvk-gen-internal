@@ -38,7 +38,7 @@ const SkuList = (props)=>{
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
     const [pageSize, setPageSize] =useState(15)
-    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0  })
+    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0,volume_price_per_unit:0  })
     const [errorCount,setErrorCount] = useState(0)
     const [each_costError,setEach_costError] =useState(false)
     const [each_priceError,setEach_priceError] = useState(false)
@@ -257,7 +257,7 @@ const SkuList = (props)=>{
             var charCode = (evt.which) ? evt.which : evt.keyCode;
             console.log(evt.target.id)
             let id = evt.target.id
-            let characterCheck = evt.target.value.match(/^\d+(\.\d+)?$/);
+            let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
            if(characterCheck === null){
                if(id === "each_cost"){
                 setEach_costError(true)
