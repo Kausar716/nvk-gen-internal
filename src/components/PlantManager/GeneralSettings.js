@@ -30,7 +30,7 @@ import {
  const GeneralSettings = (props) =>{
     const [submitCount, setSubmitCount] = useState(0)
     const [count, setCount] = useState(0)
-    const [tags, setTags] = useState(["Areca", "Fern"]);
+    const [tags, setTags] = useState([]);
     const [toggleForTagInput,setToggle] = useState(true)
     const [errorObj,setErrorObj] = useState({ genus:0,species:0  })
     const [errorCount,setErrorCount] = useState(0)
@@ -49,8 +49,42 @@ import {
         }
         setErrorObj(errorobj)
        setErrorCount(errorcount)
-        if(e.target.id ==="archived") props.handlePlantInputAction(e.target.id,parseInt(e.target.value) ===1?0:1)
-        else if(e.target.id ==="discontinued") props.handlePlantInputAction(e.target.id,parseInt(e.target.value) ===1?0:1)
+        if(e.target.id ==="in_production") {
+            if (parseInt(e.target.value) ==="1") {
+                props.handlePlantInputAction(e.target.id,"0")
+                props.handlePlantInputAction("archived",0)
+                props.handlePlantInputAction("discontinued",1)
+            }
+            else if (parseInt(e.target.value) ==="0") {
+                props.handlePlantInputAction(e.target.id,"1")
+                props.handlePlantInputAction("archived",0)
+                props.handlePlantInputAction("discontinued",0)
+            }
+        }
+        else if(e.target.id ==="archived") {
+            if (parseInt(e.target.value) ===1) {
+                props.handlePlantInputAction(e.target.id,0)
+                props.handlePlantInputAction("in_production","1")
+                props.handlePlantInputAction("discontinued",0)
+            }
+            else if (parseInt(e.target.value) ===0) {
+                props.handlePlantInputAction(e.target.id,1)
+                props.handlePlantInputAction("in_production","0")
+                props.handlePlantInputAction("discontinued",0)
+            }
+        }
+        else if(e.target.id ==="discontinued") {
+            if (parseInt(e.target.value) ===1) {
+                props.handlePlantInputAction(e.target.id,0)
+                props.handlePlantInputAction("in_production","1")
+                props.handlePlantInputAction("archived",0)
+            }
+            else if (parseInt(e.target.value) ===0) {
+                props.handlePlantInputAction(e.target.id,1)
+                props.handlePlantInputAction("in_production","0")
+                props.handlePlantInputAction("archived",0)
+            }
+        }
         else props.handlePlantInputAction(e.target.id,e.target.value)
 
     }
@@ -102,14 +136,12 @@ import {
         if(submitCount === 0){
            if(needAction){
                if(actionType ==="add"){
-                props.createPlantAction(plantDataById,tagsData)
+                props.createPlantAction(plantDataById,tags)
                }
               
   
                if(actionType ==="edit"){
-                   console.log(plantDataById)
-                   console.log(plantDataById.plant_id)
-               props.updatePlantAction(plantDataById,plantDataById.plant_id,tagsData)}
+               props.updatePlantAction(plantDataById,plantDataById.plant_id,tags)}
 
                setSubmitCount(1)
            }
@@ -142,15 +174,13 @@ import {
     for (var i = 0; i < countOfYear; i++) {
         indents.push(currentYear+i);
     }
-    const {plantData,plantDataById,tagsData,actionType,needAction} = props.plantData
+    const {plantData,plantDataById,tagsData, actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData
-        console.log(props.plantData)
-        console.log(plantDataById)
+        console.log("kkm", tags)
     let flag=0
     if(plantDataById){       
         if(!plantDataById.genus || !plantDataById.species || !plantDataById.category_id){
             flag=1
-            
         }
         
     }
@@ -163,7 +193,7 @@ import {
                                 {actionType!=="add"?<div class="col-md-12 d-md-flex flex-wrap align-items-center">
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={plantDataById.in_production===0?false:true}/>
+                                                <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={plantDataById.in_production==="0"?false:true}/>
                                                 <label for="in_production"></label>
                                             </div>
                                             In Production
@@ -173,7 +203,7 @@ import {
                                                 <input type="checkbox" id="discontinued"  onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
                                                 <label for="discontinued"></label>
                                             </div>
-                                            Discountiued
+                                            Discontinued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
@@ -237,8 +267,8 @@ import {
 
 
                                         <ReactTagInput 
-                                                    tags={tags} 
-                                                    onChange={(tagsData) => setTags(tagsData)}
+                                                    tags={tagsData} 
+                                                    onChange={(tags) => setTags(tags)}
                                                     />
                                     </div>
 
@@ -309,7 +339,7 @@ import {
                                         {/* <a href='/plantManager'> */}
                                         <button type="button" class="btn btn-outline-secondary btn-lg"
                                          onClick={()=>props.plantPageReDirectAction("all","plant")}
-                                        >Cancel</button>
+                                        >Return to Plant Manager</button>
                                         {/* </a> */}
                                         <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?(needAction===true && flag ===0)?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>

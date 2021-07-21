@@ -38,7 +38,7 @@ const GeneralSettings=(props)=> {
     const [submitCount, setSubmitCount] = useState(0)
 
     const [currentTagText, setCurrentTagText] = useState("");
-    const [tags, setTags] = useState(["Areca", "Fern"]);
+    const [tags, setTags] = useState([]);
  
     const {productData,productDataById,tagsData,actionType,needAction} = props.productData
     const {categoryData,manufactureData} = props.categoryData
@@ -168,7 +168,7 @@ if(productDataById){
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued}
-                                                //  checked={productDataById.discontinued===0?false:true}
+                                                 checked={productDataById.discontinued===0?false:true}
                                                   />
                                                 <label for="discontinued"></label>
                                             </div>
@@ -177,7 +177,7 @@ if(productDataById){
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived}
-                                                //  checked={productDataById.archived===0?false:true}
+                                                 checked={productDataById.archived===0?false:true}
                                                  />
                                                 <label for="archived"></label>
                                             </div>
@@ -217,7 +217,7 @@ if(productDataById){
 
 
                                         <ReactTagInput 
-                                                    tags={tags} 
+                                                    tags={tagsData} 
                                                     onChange={(tagsData) => setTags(tagsData)}
                                                     />
 
