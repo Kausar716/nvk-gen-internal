@@ -124,7 +124,7 @@ export class PlantInventory extends Component {
         <div class="row mt-3">
     <div class="col-md-6 col-lg-4">
         <label>Location</label>
-        <select class="form-control" onChange={this.handleFilterChange}>
+        <select class="form-control" name="location" onChange={this.handleFilterChange}>
             <option>All</option>
             {locationList.map(category=>{
             return  <option value={category.id}>{category.address}</option>
@@ -133,7 +133,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Category</label>
-        <select class="form-control" onChange={this.handleFilterChange}>
+        <select class="form-control" name="category" onChange={this.handleFilterChange}>
             <option>All</option>
             {plantCategoryList.map(category=>{
             return  <option value={category.id}>{category.name}</option>
@@ -142,7 +142,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Supplier</label>
-        <select class="form-control" onChange={this.handleFilterChange}>
+        <select class="form-control" name="supplier" onChange={this.handleFilterChange}>
             <option>All</option>
             {supplierList.map(category=>{
             return  <option value={category.id}>{category.supplier_name}</option>
