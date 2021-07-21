@@ -130,3 +130,5 @@ export const removeImage = (organizationId) => dispatch => {
          console.log(err)
      })
 }
+
+
