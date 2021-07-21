@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getCategoryList} from "../../actions/inventoryManagementAction";
+import {getLocationList,getCategoryList,getPlantList,getFilterResult} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
@@ -13,16 +13,91 @@ export class PlantInventory extends Component {
     constructor(){
         super()
         this.state={
-          
+            selectedLocationId:"",
+            selecredCategoryID:"",
+            selectedSupplierId:"",
+            plantSearchName:"",
+            skuSearchName:"",
+            plantRadio:"All",
+            skuRadio:"All"
         }
     }
     componentDidMount(){
         this.props.getLocationList()   
         this.props.getCategoryList()
         this.props.getAllSupplierAction()
+        this.props.getPlantList()
+        
     }
      handleCategoryChange = () => {
 
+    }
+    handlePlantSearch = (e) =>{
+        this.props.handleInput(e.target.name,e.target.value)
+    }
+    handleFilterChange = (e)=>{
+        let {name,value} = e.target
+        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,plantRadio,skuRadio} = this.state
+        if(name==="location"){
+            this.setState({selectedLocationId:value})
+            this.props.getFilterResult({
+                selectedLocationId:value,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "category"){
+            this.setState({selecredCategoryID:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID:value,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "supplier"){
+            this.setState({selectedSupplierId:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId:value,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name=== "plantSearch"){
+            this.setState({plantSearchName:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName:value,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "skuSearch"){
+            this.setState({skuSearchName:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName:value,
+                plantRadio,
+                skuRadio
+            })
+        }       
     }
          
   
@@ -42,14 +117,14 @@ export class PlantInventory extends Component {
             if(this.props.supplierList && this.props.supplierList.data)
             supplierList = this.props.supplierList.data.active
         }
-        // console.log(this.props.supplierList.data.active)
+        console.log(this.props.plantInventoryData)
     
     return (
         <>
         <div class="row mt-3">
     <div class="col-md-6 col-lg-4">
         <label>Location</label>
-        <select class="form-control" onChange={this.handleCategoryChange}>
+        <select class="form-control" onChange={this.handleFilterChange}>
             <option>All</option>
             {locationList.map(category=>{
             return  <option value={category.id}>{category.address}</option>
@@ -58,7 +133,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Category</label>
-        <select class="form-control" onChange={this.handleCategoryChange}>
+        <select class="form-control" onChange={this.handleFilterChange}>
             <option>All</option>
             {plantCategoryList.map(category=>{
             return  <option value={category.id}>{category.name}</option>
@@ -67,7 +142,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Supplier</label>
-        <select class="form-control" onChange={this.handleCategoryChange}>
+        <select class="form-control" onChange={this.handleFilterChange}>
             <option>All</option>
             {supplierList.map(category=>{
             return  <option value={category.id}>{category.supplier_name}</option>
@@ -82,7 +157,7 @@ export class PlantInventory extends Component {
             <button type="submit" class="btn btn-search">
                 <img src="assets/img/search.svg" alt=""/>
             </button>
-            <input type="text" class="form-control" placeholder="Search"/>
+            <input type="text" class="form-control" placeholder="Search" name="plantSearch" onChange={this.handleFilterChange}/>
         </div>
         <div class="form-group row mt-2">
             <div class="col-md-12">
@@ -103,7 +178,7 @@ export class PlantInventory extends Component {
             <button type="submit" class="btn btn-search">
                 <img src="assets/img/search.svg" alt=""/>
             </button>
-            <input type="text" class="form-control" placeholder="Search"/>
+            <input type="text" class="form-control" placeholder="Search" name="skuSearch" onChange={this.handleFilterChange}/>
         </div>
         <div class="form-group row mt-2">
             <div class="col-md-12">
@@ -383,9 +458,10 @@ const mapStateToProps = (state)=> (
         plantCategoryList:state.inventoryManagementReducer.plantCategoryList,
         locationList:state.inventoryManagementReducer.locationList,
         supplierList:state.supplierData.supplierInfo,
+        plantInventoryData:state.inventoryManagementReducer.plantInventoryData,
         temp:state
 }
 
 )
 
-export default connect(mapStateToProps,{getCategoryList,getLocationList,getAllSupplierAction})(PlantInventory)
+export default connect(mapStateToProps,{getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
