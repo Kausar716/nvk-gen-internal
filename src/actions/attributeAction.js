@@ -9,6 +9,7 @@ import {
     HANDLE_DELETE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION,
     HANDLE_ADD_ZONE_ATTRIBUTE,
+    SHOW_SUB_ATTRIBUTE,
     HANDLE_POSITION_INPUT_ACTION,
     HANDLE_ADD_POSITION_ATTRIBUTE,
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
@@ -42,6 +43,7 @@ export const createSubAttributeAction = (name,status) => dispatch => {
 }
 export const getAllSubAttribute = (id) => dispatch => {
     axios.get(`/api/show-attribute/${id}`,config).then(res=>{ 
+        //debugger
         console.log(res.data)
     dispatch({
             type:GET_ALL_SUB_ATTRIBUtTES,
@@ -49,6 +51,22 @@ export const getAllSubAttribute = (id) => dispatch => {
         })
     })
 }
+
+
+export const showSubSubAttribute = (id) => dispatch => {
+    axios.get(`/api/show-subattribute/${id}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_SUB_ATTRIBUTE,
+            payload:res.data
+        })
+    })
+}
+
+
+
+
 export const handleAttributeDragDrop = (data) =>dispatch=>{
     console.log(data)
     let attributeObject={}

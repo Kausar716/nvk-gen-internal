@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 
     class Categories extends Component {
         constructor(props){
@@ -17,6 +17,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     sortId: 0,
                     activeId: 0,
                     positionEdit:false,
+                    todo:"123",
+                    currentList:{value:"1"},
+                    positionName:'',
+                   // postData:this.props.showSpeciSubA
                 }
             
         }
@@ -32,6 +36,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         componentDidMount(){
             this.props.getAllSubAttribute(16)
+            this.props.showSubSubAttribute()
         }
         onMouseLeave =((ev, id)=>{
             let sortId=this.state.sortId
@@ -89,8 +94,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
         updateSubAttList =(e,id)=>{
             this.setState({
-                positionEdit:true
-            })
+                 ...this.state.currentList, text:e.target.value 
+            });
+            console.log("currentList", this.state.currentList)
 
             this.props.handleSubAttributeUpdate(id)
            // let id= e.dataTransfer.getData("id");
@@ -100,6 +106,22 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         
         handlePositionInputAction = (e)=>{
             this.props.handlePositionInputAction(e.target.name,e.target.value)
+        }
+
+        handlePositionInputActionEdit = (e)=>{
+
+
+            this.setState({
+               // positionName: {...this.props.showSpeciSubA.value, value:e.target.value }
+                // positionName:this.props.handlePositionInputAction(e.target.name,e.target.value), value:e.target.value
+            })
+            
+            // const {target:{name,value,id}} =e;
+            // this.setState({[name]:value})
+            this.props.showSubSubAttribute(e.target.id)
+
+          
+           // this.props.handlePositionInputAction(e.target.name,e.target.value)
         }
 
         handleAddCategory = (e)=>{
@@ -117,13 +139,42 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
 
 
+
+        handleEditClick2 =(t)=> {
+            // let positionObj={}
+            // positionObj.status=1
+            // positionObj.id=id
+            this.props.showSubSubAttribute(t.id)
+
+
+
+
+            // set editing to true
+            //setIsEditing(true);
+            // set the currentTodo to the todo item that was clicked
+            //setCurrentTodo({ ...todo });
+          }
+
+          handleEditInputChange=(e)=>{
+          
+
+
+            this.props.handleSubAttributeUpdate()
+
+          }
+
+
         render() {
+
+          //  console.log("showSpeciSubA",this.state.postData)
         console.log(this.props.temp)
         var tasks={
             inactive:[],
             active:[],
         }
+
         if(this.props.positionCategoryList){
+
             this.props.positionCategoryList.forEach((t)=>{
                 console.log(t)
                 if(t.status === 1){
@@ -144,9 +195,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                 <div className="row">
                                     <div className="col-md-12 col-lg-12">
                                         <p>Position</p>
+
                                         <div className="row d-flex align-items-center">
                                         <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="position" value={this.props.name}   placeholder="" onChange={this.handlePositionInputAction}/>
+                                                <input type="text" className="form-control" name="position" 
+                                                 value={this.props.name} 
+                                                // value={this.state.positionName}
+                                                 placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
@@ -154,6 +209,25 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 </a>
                                             </div>
                                         </div>
+
+
+                                        <div className="row d-flex align-items-center">
+                                        <div className="col-md-6 col-lg-9">  
+                                                <input type="text" className="form-control" name="position" 
+                                                 // value={this.props.name} 
+                                                 value={this.props.showSpeciSubA.value}  
+                                                 id={this.props.showSpeciSubA.id}  placeholder="" 
+                                                onChange={this.handlePositionInputActionEdit}/>
+                                            </div>
+                                            <div className="col-md-6 col-lg-3" onChange={this.handleEditInputChange}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Edit New Position
+                                                </a>
+                                            </div>
+                                        </div>
+
+
+
                                     </div>
                                 </div>
                                 <div class="row mt-5 mb-4">
@@ -204,9 +278,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                  <a className="d-flex justify-content-between align-items-center">
 
                                                                 <span id="Wheathers">{t.value}</span>
-                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                <button onClick={() =>this.handleEditClick2(t)}>Edit</button>
+                                                                {/* <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                  onClick={(e)=>this.updateSubAttList(e, t.id)} 
-                                                                /></span>
+                                                                /></span> */}
                                                                 </a>
                                                             </li>
                                                     })}
@@ -230,7 +305,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
    positionCategoryList:state.attributeData.subAttribute,
     temp:state,
     // name:state.categoryData.name
-    positionName:state.attributeData.subAttributeName.position
+    positionName:state.attributeData.subAttributeName.position,
+    showSpeciSubA: state.attributeData.specificSubAttribute
     }
     )
     export default connect(mapStateToProps,{
@@ -240,7 +316,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleAttributeDelete,
         handleSubAttributeUpdate,
         handlePositionInputAction,
-        handleAddPosition      
+        handleAddPosition ,
+        showSubSubAttribute     
     })(Categories)
 
 
