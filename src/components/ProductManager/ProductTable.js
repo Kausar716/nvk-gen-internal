@@ -76,7 +76,7 @@ const ProductTable  = (props) => {
 
        }else{
            setType(type)
-           setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+           setMessage("Are you sure you want to duplicate this product and all its related SKU and product information?")
       
        }
        setOpen(true)
@@ -174,7 +174,7 @@ const ProductTable  = (props) => {
 
                                                 <th className="text-nowrap">Location</th>
                                                 <th className="text-nowrap">Category</th>
-                                                <th className="text-nowrap">Sub Category</th>
+                                                {/* <th className="text-nowrap">Sub Category</th> */}
                                                 <th className="text-nowrap">Manufacturer</th>
 
                                                 <th className="text-nowrap text-center">On Website</th>
@@ -214,7 +214,7 @@ const ProductTable  = (props) => {
                                                     </td>
 
                                                
-                                                <td>{product.subcategory_id}</td>
+                                                {/* <td>{product.subcategory_id}</td> */}
                                                 <td>
                                               {manufactureData.length>0?manufactureData.filter(manufacturerObj=>(manufacturerObj.id===product.manufacturer_id))[0]?manufactureData.filter(manufacturerObj=>(manufacturerObj.id===product.manufacturer_id))[0].name:"":"" }
                                              
