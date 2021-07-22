@@ -36,10 +36,32 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                 plantCategoryListBackup:action.payload              
             }
             case GET_ALL_PLANT_INVENTORY_ACTION:
+                let plantSearchResult1={}
+                if(action.payload.length>0)
+                plantSearchResult1=action.payload.reduce((acc1, obj1) => {
+                    const key1 = obj1["id"];
+                    if (!acc1[key1]) {
+                       acc1[key1] = [];
+                    }
+                    // Add object to list for given key's value
+                    acc1[key1].push(obj1);
+                    return acc1;
+                })
+                let plantList1=[]
+                for(let key1 in plantSearchResult1 ){
+                    console.log(plantSearchResult1[key1])
+                    if(plantSearchResult1[key1]){
+                    if(plantSearchResult1[key1][0]){
+                        if(typeof(plantSearchResult1[key1][0]) === "object")
+                        plantList1.push(plantSearchResult1[key1])
+                    }
+                    
+                    }
+                }
 
                 return{
                     ...state,
-                    plantInventoryData:action.payload,
+                    plantInventoryData:plantList1,
                     backupPlantInventoryData:action.payload
     
                 }
