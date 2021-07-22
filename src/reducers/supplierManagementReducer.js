@@ -21,7 +21,7 @@ import {
     // GET_SPECIFIED_SUPPLIER_CATEGORY, 
    
     // UPDATE_SUPPLIER ,
-    // UPDATE_SUPPLIER_REASON ,
+     UPDATE_SUPPLIER_REASON ,
     // UPDATE_SUPPLIER_ADDRESS,
     // UPDATE_SUPPLIER_CONTACT,
     // UPDATE_SUPPLIER_DELIVERY_LOCATION, 
@@ -59,6 +59,10 @@ ADD_SUPPLIER_CATEGORY,
 ADD_SUPPLIER_LOCATION,
 GET_SUPPLIER_LOCATION,
 GET_EXCHANGE_SUPPLIER_DATA,
+SHOW_SPECIFIC_SUPPLIER_REASON,
+HANDLE_REASON_INPUT_ACTION,
+SHOW_SPECIFIC_SUPPLIER_CATEGORY,
+UPDATE_SUPPLIER_CATEGORY,
 
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
@@ -80,7 +84,11 @@ GET_EXCHANGE_SUPPLIER_DATA,
 
 const defaultState={
     supplierInfo:[],
+    specificSubAttribute:[],
+    supplierCategoryList:[],
+    specificCategorySubAttribute:[],
     error:null,
+    subAttributeName:{},
     isLoading:false,
     supplierList:[],
     pageNumber:0,
@@ -196,7 +204,44 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     ...state,
                     supplierReasonList:action.payload.data
                 }
-            // switch(action.type){
+
+                case UPDATE_SUPPLIER_REASON:
+                    return{
+                        ...state,
+                        supplierReasonList:action.payload.data
+                    }
+
+                    case UPDATE_SUPPLIER_CATEGORY:
+                        return{
+                            ...state,
+                            supplierCategoryList:action.payload.data
+                        }
+
+                    case SHOW_SPECIFIC_SUPPLIER_REASON:{
+                        // debugger;
+                         //console.log(action.payload.data[0].subattributes)UPDATE_SUPPLIER_CATEGORY
+                         return{
+                              ...state,
+                             specificSubAttribute:action.payload.data
+                        }
+                     }
+
+
+                     case SHOW_SPECIFIC_SUPPLIER_CATEGORY:{
+                        // debugger;
+                         //console.log(action.payload.data[0].subattributes)
+                         return{
+                              ...state,
+                             specificCategorySubAttribute:action.payload.data
+                        }
+                     }
+
+                     case HANDLE_REASON_INPUT_ACTION:
+                        return{
+                            ...state,
+                            subAttributeName:{...state.subAttributeName,[action.name]:action.value}
+                        }
+            // switch(action.type){UPDATE_SUPPLIER_REASON
       
 
                 // plant page redirects

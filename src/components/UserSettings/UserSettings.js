@@ -16,11 +16,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     },
                     sortId: 0,
                     activeId: 0,
-                    positionEdit:false,
-                    todo:"123",
-                    currentList:{value:"1"},
                     positionName:'',
-                   postData:'',
+                 
                    isEditing:false,
                    name:''
                 }
@@ -105,21 +102,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             console.log("12344", e.target.name,e.target.value)
         }
 
-        handlePositionInputActionEdit = (e)=>{
-                this.setState({
-                    postData:this.props.showSpeciSubA.value, [e.target.name]:e.target.value
-                })
-               // positionName: {...this.props.showSpeciSubA.value, value:e.target.value }
-                // positionName:this.props.handlePositionInputAction(e.target.name,e.target.value), value:e.target.value
-          
-            
-            // const {target:{name,value,id}} =e;
-            // this.setState({[name]:value})
-            this.props.showSubSubAttribute(e.target.id)
-
-          
-           // this.props.handlePositionInputAction(e.target.name,e.target.value)
-        }
+      
 
         handleAddCategory = (e)=>{
        
@@ -138,10 +121,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
 
         handleAddCategoryUpdate=(e)=>{
+           // debugger;
             // this.props.handleSubAttributeUpdate(e.target.id)
+            let valueName = this.state.name
             let updateID = parseInt(this.props.showSpeciSubA.id)
             let updateObject={}
-            updateObject.value=this.props.positionName
+            updateObject.value=valueName
+
+            console.log("positionName",this.props.positionName)
            // updateObject.id=this.props.showSpeciSubA.id
                
          let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
@@ -159,38 +146,20 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
 
         handleEditClick2 =(t)=> {
-
-               // debugger;
-                
+               // debugger;  
             this.setState({
                 name: t.value,
                 isEditing:true
             })
-        
             this.props.handlePositionInputAction("position",...this.state.name)
             this.props.showSubSubAttribute(t.id)
             console.log("ttttttt", t,  this.props.handlePositionInputAction())
-
-
-
           }
 
-          handleEditInputChange=(e)=>{
-
-        //     let updateID = parseInt(this.props.showSpeciSubA.id)
-        //     let updateObject={}
-        //     updateObject.value=this.props.positionName
-        //    // updateObject.id=this.props.showSpeciSubA.id
-               
-        //     this.props.handleSubAttributeUpdate(updateID, updateObject)
-
-          }
+   
 
 
         render() {
-
-           
-
             console.log("positionName",this.props.positionName)
         console.log(this.props.temp)
         var tasks={
@@ -212,6 +181,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
 
         console.log("nameeee", this.props.showSpeciSubA.id, this.props.positionName)
+        console.log("finalSubAttributeList", this.props.finalSubAttributeList)
         return (
            
                <div>
@@ -225,7 +195,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
                                         <div className="row d-flex align-items-center">
                                         <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="position" 
+                                                <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } name="position" 
                                                 value={this.state.name}
                                                  placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
@@ -250,12 +220,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 )}                                            
                                            </div> 
 
-                                            
-
-                                       
-
-
-
+                                           
                                     </div>
                                 </div>
                                 <div class="row mt-5 mb-4">
@@ -306,10 +271,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                  <a className="d-flex justify-content-between align-items-center">
 
                                                                 <span id="Wheathers">{t.value}</span>
-                                                                {/* <button onClick={() =>this.handleEditClick2(t)}>Edit</button> */}
                                                                 <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
-                                                                //  onClick={(e)=>this.updateSubAttList(e, t.id)} 
                                                                 /></span>
                                                                 </a>
                                                             </li>
@@ -335,7 +298,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
     temp:state,
     // name:state.categoryData.name
     positionName:state.attributeData.subAttributeName.position,
-    showSpeciSubA: state.attributeData.specificSubAttribute
+    showSpeciSubA: state.attributeData.specificSubAttribute,
+    finalSubAttributeList: state.attributeData.finalSubAttributeList
     }
     )
     export default connect(mapStateToProps,{

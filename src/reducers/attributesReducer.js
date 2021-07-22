@@ -19,6 +19,7 @@ import {
 
 const initialSatate = {
     allAttributes:{},
+    finalSubAttributeList:[],
     subAttribute:[],
     specificSubAttribute:[],
     subAttributeName:{
@@ -82,7 +83,9 @@ switch(action.type){
 
     case HANDLE_UPDATE_ATTRIBUTE:
         return{
-            ...state
+            ...state,
+            finalSubAttributeList:action.payload.data
+
         }
 
 

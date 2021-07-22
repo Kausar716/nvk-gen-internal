@@ -118,7 +118,7 @@ export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
     let attributeObject={}
 
     return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
-       // debugger;
+       //debugger;
         console.log(res)
     dispatch({
             type:HANDLE_UPDATE_ATTRIBUTE,

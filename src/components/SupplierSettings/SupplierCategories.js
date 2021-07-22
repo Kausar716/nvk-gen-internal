@@ -11,18 +11,21 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
-import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,saveSupplierCategoryMethod,getAllSupplierCategoryMethods}   from "../../actions/supplierManagementAction"
+import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,saveSupplierCategoryMethod,getAllSupplierCategoryMethods,showSpecificCategorySubAttribute,updateSupplierCategory}   from "../../actions/supplierManagementAction"
 
 
     class SupplierCategories extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:''
     }
 
 
@@ -113,6 +116,9 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
         }
         handleCategoryInputAction = (e)=>{
+            this.setState({
+                name:e.target.value
+            })
             this.props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierCategory")
         }
         handleAddCategoryData = (e)=>{
@@ -135,6 +141,54 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         }
 
 
+        handleEditClick2 =(t)=> {
+            //debugger;
+            console.log("tttt", t)
+               this.setState({
+             name: t.category,
+             isEditing:true
+         })
+
+         this.props.handleSupplierExchnageData(...this.state.name,"category","supplierCategory")
+            //this.props.handleReasonInputAction("supplierReason", ...this.state.name)
+            this.props.showSpecificCategorySubAttribute(t.id)
+
+           // console.log("ttttttt", t,  this.props.handleReasonInputAction())
+            // debugger;  
+        //  this.setState({
+        //      name: t.value,
+        //      isEditing:true
+        //  })
+   
+       }
+
+
+       handleAddCategoryUpdate=()=>{
+
+        debugger;
+      // this.props.handleSubAttributeUpdate(e.target.id)
+      
+      let updateID = parseInt(this.props.showSpecificCategory.id)
+      let updateObject={}
+      updateObject.category=this.state.name
+     // updateObject.id=this.props.showSpeciSubA.id
+         
+          let res1=  this.props.updateSupplierCategory(updateID, updateObject)
+          res1.then(res=>{
+              this.props.getAllSupplierCategoryMethods()
+          })
+
+          this.setState({
+              isEditing:false,
+              name:""
+          })
+
+          
+
+  }
+
+
+
 
 
 render() {
@@ -142,6 +196,8 @@ render() {
     const {supplierData} = this.props
 
     console.log(this.props.supplierData.supplierCategoryList)
+
+    console.log("showSpecificCategory", this.props.showSpecificCategory)
 
         return (
            
@@ -152,54 +208,43 @@ render() {
                 
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                               
                                 <div className="row">
-                                        {/* <div className="col-md-6">
-                                            <label>Type</label>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerTypes.delivery_method}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
-                                            {/* </div> */}
-                                        {/* </div>  */}
-                                        {/* <div className="col-md-6">
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
-                                                </a>
-                                            </div>
-                                        </div> */}
+                                       
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
                                         <p>Reasons</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="category" id="category" value={supplierData.supplierCategory.category}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                              
+                                            <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } placeholder="category" id="category"
+                                            // value={supplierData.supplierCategory.category} 
+                                            value={this.state.name}
+                                                onChange={this.handleCategoryInputAction}/>
                                             </div>
+
+
+                                          
+
+                                            {this.state.isEditing ? (
+                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
+                                                </a>
+                                            </div>  
+
+                                                ):
+                                                (
+
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                                 </a>
                                             </div>
+                                                )}     
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -253,6 +298,9 @@ render() {
                                                     return <li id={t.id} name={t.category} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.category}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -272,7 +320,8 @@ render() {
      const mapStateToProps = (state)=> (
         // console.log(state)
          {
-            supplierData:state.supplierData
+            supplierData:state.supplierData,
+            showSpecificCategory:state.supplierData.specificCategorySubAttribute
         
    
     }
@@ -288,6 +337,8 @@ render() {
         handleSupplierExchnageData,
         getAllSupplierCategoryMethods,
         saveSupplierCategoryMethod,
+        showSpecificCategorySubAttribute,
+        updateSupplierCategory,
 
         
 handleDragDropCustomer    })((SupplierCategories))

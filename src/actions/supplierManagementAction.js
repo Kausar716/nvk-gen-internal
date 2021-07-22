@@ -96,6 +96,12 @@ import {
  ADD_SUPPLIER_LOCATION ,
 GET_SUPPLIER_LOCATION ,
 GET_EXCHANGE_SUPPLIER_DATA,
+SHOW_SPECIFIC_SUPPLIER_REASON,
+HANDLE_REASON_INPUT_ACTION,
+SHOW_SPECIFIC_SUPPLIER_CATEGORY,
+UPDATE_SUPPLIER_CATEGORY,
+
+
 
 
 
@@ -161,6 +167,76 @@ export const saveSupplierReasonMethod = (data)=>dispatch=>{
     })
 
  }
+
+
+// export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
+//     //debugger;
+//     console.log(id)
+//     let attributeObject={}
+
+//     return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
+//        // debugger;
+//         console.log(res)
+//     dispatch({
+//             type:HANDLE_UPDATE_ATTRIBUTE,
+//             payload:res.data
+//         })
+//     })
+// }
+
+
+ export const updateSupplierReasonMethods = (id, data) =>dispatch => {
+    return axios.post(`/api/update-supplier-reasons/${id}`,data,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:UPDATE_SUPPLIER_REASON,
+            payload:res.data,
+
+        })
+    })
+
+ }
+
+
+ export const updateSupplierCategory = (id, data) =>dispatch => {
+     debugger;
+    return axios.post(`/api/update-supplier-category/${id}`,data,config).then(res=>{ 
+        debugger;
+        console.log(res.data)
+    dispatch({
+            type:UPDATE_SUPPLIER_CATEGORY,
+            payload:res.data.data,
+
+        })
+    })
+
+ }
+
+
+export const showSpecificSubAttribute = (id) => dispatch => {
+    axios.get(`api/supplier-reasons/${id}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_SPECIFIC_SUPPLIER_REASON,
+            payload:res.data
+        })
+    })
+}
+
+export const showSpecificCategorySubAttribute = (id) => dispatch => {
+    axios.get(`api/supplier-category/${id}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_SPECIFIC_SUPPLIER_CATEGORY,
+            payload:res.data
+        })
+    })
+}
+
+
+
  export const saveSupplierCategoryMethod = (data)=>dispatch=>{
  
     return axios.post("/api/add-supplier-category",data,config).then(res=>{ 
@@ -183,6 +259,21 @@ export const saveSupplierReasonMethod = (data)=>dispatch=>{
     })
 
  }
+
+
+
+ export const handleReasonInputAction = (name,value) =>dispatch=>{
+    
+    console.log("handleReasonInputAction",name, value)
+   // debugger
+ dispatch({
+     type:HANDLE_REASON_INPUT_ACTION,
+     name:name,
+     value:value    
+ })
+}
+
+
 
 export const handleSupplierExchnageData =(data,id,dataType)=>dispatch=>{
     dispatch({
@@ -276,7 +367,6 @@ export const createSupplierInfo =(supplierInfo)=>{
     }
 
 }
-
 
 
 
