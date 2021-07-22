@@ -14,7 +14,9 @@ import {
    
 //    export const getUsersList = (dispatch) => {
     export const getRolesList = () => dispatch => {
+       
        axios.get("/api/roles-list",config).then(res=>{ 
+       // debugger
            console.log(res)
            dispatch({
                    type:GET_ROLES_LIST,
@@ -115,7 +117,9 @@ import {
          })
         }
         export const handleUserSelect = (id) =>dispatch=>{
-            axios.get(`/api/show-user/${id}`,config).then(res=>{     
+          
+            axios.get(`/api/show-user/${id}`,config).then(res=>{ 
+                // debugger;    
                 dispatch({
                         type:SHOW_SELECTED_USER,
                         selectedUser:res.data    
