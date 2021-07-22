@@ -149,9 +149,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     this.props.getAllSubAttribute(16)
                 })
 
-                // this.setState({
-                //     name:""
-                // })
+                this.setState({
+                    isEditing:false,
+                    name:""
+                })
 
         }
 
@@ -162,7 +163,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                // debugger;
                 
             this.setState({
-                name: t.value
+                name: t.value,
+                isEditing:true
             })
         
             this.props.handlePositionInputAction("position",...this.state.name)
@@ -186,6 +188,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
 
         render() {
+
+           
 
             console.log("positionName",this.props.positionName)
         console.log(this.props.temp)
@@ -227,20 +231,26 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             </div>
 
 
-                                            
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                            {this.state.isEditing ? (
+
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
+                                                    </a>
+                                                    </div>
+                                                       
+
+                                            ):
+                                            (
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Position
                                                 </a>
-                                            </div>
+                                                </div>  
+                                                )}                                            
+                                           </div> 
 
-
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
-                                                <a href="javascript:" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
-                                                </a>
-                                            </div>
-                                        </div>
+                                            
 
                                        
 
