@@ -11,7 +11,8 @@ import {
     HANDLE_ADD_POSITION_ATTRIBUTE,
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     HANDLE_UPDATE_ATTRIBUTE,
-    SHOW_SUB_ATTRIBUTE
+    SHOW_SUB_ATTRIBUTE,
+    HANDLE_UPDATE_SUB_ATTRIBUTE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";

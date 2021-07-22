@@ -20,7 +20,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     todo:"123",
                     currentList:{value:"1"},
                     positionName:'',
-                   // postData:this.props.showSpeciSubA
+                   postData:'',
+                   isEditing:false,
+                   name:''
                 }
             
         }
@@ -92,29 +94,24 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
 
 
-        updateSubAttList =(e,id)=>{
-            this.setState({
-                 ...this.state.currentList, text:e.target.value 
-            });
-            console.log("currentList", this.state.currentList)
-
-            this.props.handleSubAttributeUpdate(id)
-           // let id= e.dataTransfer.getData("id");
-            console.log("aaa", e.target.id, id)
-
-        }
         
         handlePositionInputAction = (e)=>{
-            this.props.handlePositionInputAction(e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value
+            })
+           // debugger;
+            this.props.handlePositionInputAction("position",e.target.value)
+
+            console.log("12344", e.target.name,e.target.value)
         }
 
         handlePositionInputActionEdit = (e)=>{
-
-
-            this.setState({
+                this.setState({
+                    postData:this.props.showSpeciSubA.value, [e.target.name]:e.target.value
+                })
                // positionName: {...this.props.showSpeciSubA.value, value:e.target.value }
                 // positionName:this.props.handlePositionInputAction(e.target.name,e.target.value), value:e.target.value
-            })
+          
             
             // const {target:{name,value,id}} =e;
             // this.setState({[name]:value})
@@ -130,7 +127,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             positionObj.attribute_id=16
             positionObj.value = this.props.positionName
             positionObj.status=1
-            console.log(positionObj)
+            console.log("positionObj",positionObj, this.props.positionName)
             let result = this.props.handleAddPosition(positionObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(16)
@@ -140,33 +137,57 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
 
 
+        handleAddCategoryUpdate=(e)=>{
+            // this.props.handleSubAttributeUpdate(e.target.id)
+            let updateID = parseInt(this.props.showSpeciSubA.id)
+            let updateObject={}
+            updateObject.value=this.props.positionName
+           // updateObject.id=this.props.showSpeciSubA.id
+               
+         let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                res.then(res=>{
+                    this.props.getAllSubAttribute(16)
+                })
+
+                // this.setState({
+                //     name:""
+                // })
+
+        }
+
+
+
         handleEditClick2 =(t)=> {
-            // let positionObj={}
-            // positionObj.status=1
-            // positionObj.id=id
+
+               // debugger;
+                
+            this.setState({
+                name: t.value
+            })
+        
+            this.props.handlePositionInputAction("position",...this.state.name)
             this.props.showSubSubAttribute(t.id)
+            console.log("ttttttt", t,  this.props.handlePositionInputAction())
 
 
 
-
-            // set editing to true
-            //setIsEditing(true);
-            // set the currentTodo to the todo item that was clicked
-            //setCurrentTodo({ ...todo });
           }
 
           handleEditInputChange=(e)=>{
-          
 
-
-            this.props.handleSubAttributeUpdate()
+        //     let updateID = parseInt(this.props.showSpeciSubA.id)
+        //     let updateObject={}
+        //     updateObject.value=this.props.positionName
+        //    // updateObject.id=this.props.showSpeciSubA.id
+               
+        //     this.props.handleSubAttributeUpdate(updateID, updateObject)
 
           }
 
 
         render() {
 
-          //  console.log("showSpeciSubA",this.state.postData)
+            console.log("positionName",this.props.positionName)
         console.log(this.props.temp)
         var tasks={
             inactive:[],
@@ -185,6 +206,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }
             })
         }
+
+        console.log("nameeee", this.props.showSpeciSubA.id, this.props.positionName)
         return (
            
                <div>
@@ -199,32 +222,27 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <div className="row d-flex align-items-center">
                                         <div className="col-md-6 col-lg-9">  
                                                 <input type="text" className="form-control" name="position" 
-                                                 value={this.props.name} 
-                                                // value={this.state.positionName}
+                                                value={this.state.name}
                                                  placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
+
+
+                                            
                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Position
                                                 </a>
                                             </div>
-                                        </div>
 
 
-                                        <div className="row d-flex align-items-center">
-                                        <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="position" 
-                                                 // value={this.props.name} 
-                                                 value={this.props.showSpeciSubA.value}  
-                                                 id={this.props.showSpeciSubA.id}  placeholder="" 
-                                                onChange={this.handlePositionInputActionEdit}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onChange={this.handleEditInputChange}>
+                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                 <a href="javascript:" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Edit New Position
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
                                                 </a>
                                             </div>
                                         </div>
+
+                                       
 
 
 
@@ -278,10 +296,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                  <a className="d-flex justify-content-between align-items-center">
 
                                                                 <span id="Wheathers">{t.value}</span>
-                                                                <button onClick={() =>this.handleEditClick2(t)}>Edit</button>
-                                                                {/* <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                 onClick={(e)=>this.updateSubAttList(e, t.id)} 
-                                                                /></span> */}
+                                                                {/* <button onClick={() =>this.handleEditClick2(t)}>Edit</button> */}
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                //  onClick={(e)=>this.updateSubAttList(e, t.id)} 
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}

@@ -14,6 +14,7 @@ import {
     HANDLE_ADD_POSITION_ATTRIBUTE,
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     HANDLE_UPDATE_ATTRIBUTE,
+    HANDLE_UPDATE_SUB_ATTRIBUTE,
     // axios config
     config,
     axios
@@ -111,11 +112,13 @@ export const handleAttributeDelete = (id) =>dispatch=>{
 }
 
 
-export const handleSubAttributeUpdate = (id) =>dispatch=>{
+export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
+    //debugger;
     console.log(id)
     let attributeObject={}
 
-    return axios.post(`/api/update-subattribute/${id}`,attributeObject,config).then(res=>{ 
+    return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
+       // debugger;
         console.log(res)
     dispatch({
             type:HANDLE_UPDATE_ATTRIBUTE,
@@ -123,6 +126,10 @@ export const handleSubAttributeUpdate = (id) =>dispatch=>{
         })
     })
 }
+
+
+
+
 
 
 export const handleZoneInputAction = (name,value) =>dispatch=>{
@@ -144,7 +151,9 @@ export const handleAddZone = (data) =>dispatch=>{
     })
 }
 export const handlePositionInputAction = (name,value) =>dispatch=>{
-    console.log(name)
+    
+    console.log("handlePositionInputAction",name, value)
+   // debugger
  dispatch({
      type:HANDLE_POSITION_INPUT_ACTION,
      name:name,
