@@ -217,8 +217,8 @@ if(productDataById){
 
 
                                         <ReactTagInput 
-                                                    tags={tagsData} 
-                                                    onChange={(tagsData) => setTags(tagsData)}
+                                                    tags={tags} 
+                                                    onChange={(tags) => setTags(tags)}
                                                     />
 
                                 {/* <div className="masterStackDiv">

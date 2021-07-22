@@ -267,7 +267,7 @@ import {
 
 
                                         <ReactTagInput 
-                                                    tags={tagsData} 
+                                                    tags={tags} 
                                                     onChange={(tags) => setTags(tags)}
                                                     />
                                     </div>
