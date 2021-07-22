@@ -118,6 +118,7 @@ export class PlantInventory extends Component {
             supplierList = this.props.supplierList.data.active
         }
         console.log(this.props.plantInventoryData)
+        let PlantListForTable = this.props.plantInventoryData
     
     return (
         <>
@@ -222,6 +223,26 @@ export class PlantInventory extends Component {
                     </tr>
                 </thead>
                 <tbody>
+                {PlantListForTable.map(plant=>{
+                    console.log(plant)
+                    // <>
+                    //  <tr class="tblLinks">
+                    //     <td colspan="12">
+                    //         <a href="">Abeliophyllum (White Forsythia)</a>
+                    //     </td>
+                    //     <td class="text-center">
+                    //        <span class="mx-2">
+                    //             <img src="assets/img/check-ic.svg" alt=""/>
+                    //        </span>
+                    //        <span class="ml-4">
+                    //            <a href="">
+                    //                 <img src="assets/img/up-arrow-ic.svg" alt=""/>
+                    //             </a>
+                    //        </span>
+                    //     </td>
+                    // </tr>
+                    // </>
+                })}
                     <tr class="tblLinks">
                         <td colspan="12">
                             <a href="">Abeliophyllum (White Forsythia)</a>

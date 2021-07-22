@@ -12,6 +12,14 @@ export class ProductInventory extends Component {
     constructor(){
         super()
         this.state={
+         
+                selectedLocationId:"",
+                selecredCategoryID:"",
+                selectedSupplierId:"",
+                plantSearchName:"",
+                skuSearchName:"",
+                plantRadio:"All",
+                skuRadio:"All"
           
         }
     }
@@ -19,9 +27,73 @@ export class ProductInventory extends Component {
         this.props.getLocationList()   
         this.props.getCategoryList()
         this.props.getAllSupplierAction()
+        this.props.getProductList()
     }
 
-   
+    handleFilterChange = (e)=>{
+        let {name,value} = e.target
+        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,plantRadio,skuRadio} = this.state
+        if(name==="location"){
+            this.setState({selectedLocationId:value})
+            this.props.getFilterResult({
+                selectedLocationId:value,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "category"){
+            this.setState({selecredCategoryID:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID:value,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "supplier"){
+            this.setState({selectedSupplierId:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId:value,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name=== "plantSearch"){
+            this.setState({plantSearchName:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName:value,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "skuSearch"){
+            this.setState({skuSearchName:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName:value,
+                plantRadio,
+                skuRadio
+            })
+        }       
+    }
   
     render() {
         let plantCategoryList =[]
@@ -77,7 +149,7 @@ export class ProductInventory extends Component {
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search"/>
+                                                    <input type="text" class="form-control" placeholder="Search" onChange={this.handleFilterChange}/>
                                                 </div>
                                                 <div class="form-group row mt-2">
                                                     <div class="col-md-12">
@@ -98,7 +170,7 @@ export class ProductInventory extends Component {
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search"/>
+                                                    <input type="text" class="form-control" placeholder="Search" onChange={this.handleFilterChange}/>
                                                 </div>
                                                 <div class="form-group row mt-2">
                                                     <div class="col-md-12">

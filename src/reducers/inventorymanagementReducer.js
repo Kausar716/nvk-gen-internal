@@ -3,6 +3,7 @@ import {
     GET_Plant_CATEGORY_LIST, 
     GETSUPPLIER_LIST,
     GET_ALL_PLANT_INVENTORY_ACTION,
+
     PLANT_INVENTORY_FILTER
    } from '../actions/types';
 
@@ -30,6 +31,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                 locationListBackup:action.payload              
             }
         case GET_Plant_CATEGORY_LIST:
+
             return{
                 ...state,
                 plantCategoryList:action.payload,
@@ -39,7 +41,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                 let plantSearchResult1={}
                 if(action.payload.length>0)
                 plantSearchResult1=action.payload.reduce((acc1, obj1) => {
-                    const key1 = obj1["id"];
+                    const key1 = obj1["plant_id"];
                     if (!acc1[key1]) {
                        acc1[key1] = [];
                     }
@@ -47,6 +49,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                     acc1[key1].push(obj1);
                     return acc1;
                 })
+                console.log(plantSearchResult1)
                 let plantList1=[]
                 for(let key1 in plantSearchResult1 ){
                     console.log(plantSearchResult1[key1])
