@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
-import {getAllCustomer,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -44,6 +44,7 @@ function AddCustomer(props) {
 	// const [message2,setMessage2] = useState([]);
 	const toggleForContact = () => {
         setactionType("add")
+        props.resetContact()
         setisOpenContacs(!isOpenContacs)
     }
 
@@ -150,46 +151,92 @@ function AddCustomer(props) {
         setCheckedData(false)
         // delete customerDataById.id
         // alert("hello")
-        props.addCustomerData(customerDataById).then(data=>{
+        if(customerDataById.id== undefined){
+            props.addCustomerData(customerDataById).then(data=>{
            
           
-            if(type =="done"){
-                props.resetCustomerFilds()
-               
-                setMessage2(["Customer Saved successfully"])
-                setIsOpen2(true)
-                props.resetCustomerFilds()
-                props.getAllCustomer().then(data=>{
+                if(type =="done"){
+                    props.resetCustomerFilds()
+                   
+                    setMessage2(["Customer Saved successfully"])
+                    setIsOpen2(true)
+                    // props.resetCustomerFilds()
+                    props.getAllCustomer().then(data=>{
+                        
+    
+    
+                        setTimeout(
+                            function() {
+                                props.typeOfActionShow("")
+                            }
+                            .bind(this),
+                            1000
+                        );
+    
+                    })
+                   
+                    // props.typeOfActionShow("")
+                    // setTimeout(cancelData()(), 100000);
                     
+    
+                }else{
+                    setIsOpen2(true)
+                    setMessage2(["Customer Saved successfully"])
+                    // props.resetCustomerFilds()
+                    // props.typeOfActionShow("")
+    
+                }
+              
+    
+                // else 
+    
+    
+            })
 
-
-                    setTimeout(
-                        function() {
-                            props.typeOfActionShow("")
-                        }
-                        .bind(this),
-                        1000
-                    );
-
-                })
-               
-                // props.typeOfActionShow("")
-                // setTimeout(cancelData()(), 100000);
-                
-
-            }else{
-                setIsOpen2(true)
-                setMessage2(["Customer Saved successfully"])
-                props.resetCustomerFilds()
-                // props.typeOfActionShow("")
-
-            }
+        }else{
+            props.UpdateCustomerData(customerDataById).then(data=>{
+           
           
-
-            // else 
-
-
-        })
+                if(type =="done"){
+                    props.resetCustomerFilds()
+                   
+                    setMessage2(["Customer Data Updated Successfully"])
+                    setIsOpen2(true)
+                    props.resetCustomerFilds()
+                    props.getAllCustomer().then(data=>{
+                        
+    
+    
+                        setTimeout(
+                            function() {
+                                props.typeOfActionShow("")
+                            }
+                            .bind(this),
+                            1000
+                        );
+    
+                    })
+                   
+                    // props.typeOfActionShow("")
+                    // setTimeout(cancelData()(), 100000);
+                    
+    
+                }else{
+                    setIsOpen2(true)
+                    setMessage2(["Customer Data Updated Successfully"])
+                    // props.resetCustomerFilds()
+                    // props.typeOfActionShow("")
+    
+                }
+              
+    
+                // else 
+    
+    
+            })
+            
+        }
+   
     }
     const updateCustomerData = (e)=>{
         e.preventDefault()
@@ -405,7 +452,7 @@ function AddCustomer(props) {
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>
-                                        <input type="number" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} />
+                                        <input type="number" id="fax" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} />
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
                                 </div>
@@ -770,7 +817,7 @@ const mapStateToProps = (state)=>(
     }
 )
 export default connect(mapStateToProps,{
-    typeOfActionShow, getAllCustomerType,
+    typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      
 

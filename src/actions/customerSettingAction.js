@@ -48,6 +48,7 @@ GET_CONTACT_ADDRESSES_BY_CONTACTID,
 UPDATE_CUSTOMER_CONTACT,
 GET_CUSTOMER_CONTACT_BY_ID,
 RE_SET_ADDRESS_FILED,
+RESET_CONTACT,
  axios,
  config
  } from './types'
@@ -77,6 +78,9 @@ export const addCustomerData = (data)=>dispatch=>{
                 payload:res.data   
             })
         }) 
+}
+export const resetContact = () =>dispatch=>{
+    dispatch({type:RESET_CONTACT})
 }
 export const UpdateCustomerData = (data)=>dispatch=>{
     let id = data.id

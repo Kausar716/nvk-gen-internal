@@ -1,6 +1,6 @@
 import React from 'react'
 import AddSupplier from './AddSupplier'
-import {getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter} from "../../actions/supplierManagementAction";
+import {getAllSuppliers,resetSupplierFilds,getsupplierById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
@@ -27,16 +27,19 @@ export class SupplierManagemnet extends React.Component {
         this.props.getAllSuppliers(this.state.radioFilter)
     }
 
-    handleAddCustomerClick = () => {
-        this.setState({addCustomerToggle:!this.state.addCustomerToggle})
+    handleAddSupplierClick = (e) => {
+        // alert(e.target.id)
+        this.props.resetSupplierFilds()
+        this.props.typeOfsupplierActionShow("add")
     }
     handleRadioClick = (e)=> {
         this.setState({customerListStatus:e.target.name})
         this.props.handleRadioFilter(e.target.id)
         // alert("hi")
     }    
-    handleEdit = (customerObject) => {
-        this.setState({editCustomerToggle:!this.state.editCustomerToggle,customerObject})   
+    handleEdit = (id) => {
+        this.props.typeOfsupplierActionShow("edit")
+        this.props.getsupplierById(id)
     }
     paginationChange =(event, page)=>{
         // alert("hg")
@@ -66,6 +69,7 @@ export class SupplierManagemnet extends React.Component {
         let customerData = [] 
         let tempArray = []
         console.log(this.props.customerData)
+        const {action } = this.props.supplierData
         let totalLength = 0
         let plantPerPage =0;
         let pagesVisited = 0;
@@ -107,7 +111,7 @@ export class SupplierManagemnet extends React.Component {
         console.log(this.props.supplierData)
     return (
         <>
-        {! this.state.addCustomerToggle && !this.state.editCustomerToggle  ? <div>
+        {action ===""? <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
@@ -115,7 +119,7 @@ export class SupplierManagemnet extends React.Component {
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
-                        <span class="d-flex align-items-center text-left" onClick={this.handleAddCustomerClick}>
+                        <span class="d-flex align-items-center text-left" onClick={this.handleAddSupplierClick}>
                             <img src="assets/img/add-customer-ic.svg" alt=""/>
                             <span class="ml-2"><b>Add Supplier</b></span>
                         </span>
@@ -225,7 +229,7 @@ export class SupplierManagemnet extends React.Component {
                                                         <td>N/A</td>
                                                         <td>$0.00</td>
                                                         <td class="text-center">
-                                                        <span onClick={()=>{this.handleEdit(customerData)}}>
+                                                        <span onClick={()=>{this.handleEdit(customerData.id)}}>
                                                             <a href="javascript:;">
                                                                 <img src="assets/img/edit.svg" alt=""/>
                                                             </a>
@@ -256,5 +260,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(SupplierManagemnet)
+export default connect(mapStateToProps,{resetSupplierFilds,getsupplierById,typeOfsupplierActionShow,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(SupplierManagemnet)
 

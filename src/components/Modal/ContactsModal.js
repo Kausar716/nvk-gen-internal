@@ -1,4 +1,4 @@
-import React from 'react';
+import {React,useState,useEffect} from 'react';
 import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
@@ -7,9 +7,15 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
  const ContactsModal = (props) => {
      const {status,type} =props
    const {customerContact,customerDataById} = props.customerData
-  
+   const [error,setError] = useState("")
+   
+   useEffect(() => {
+    setError("")
+
+},[customerDataById])
    console.log(customerContact)
    const handleInput= (e)=>{
+    setError("")
        if(e.target.id =="primary_contact"){
            let primary = customerContact.primary_contact ==1?0:1
            props.handleExchangeData(primary,e.target.id,"customerContact")
@@ -24,24 +30,33 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
     const saveData =(e)=>{
         e.preventDefault();
         // alert("saving")
-        if(type=="add"){
-            props.addCustomerContact(customerContact).then(data=>{
-                props.modalAction()
-             console.log(customerDataById)
-                // alert(customerDataById.customer_id)
-                props.getCustomerContacts(customerDataById.id)
-                // props.getCustomerContacts(customerDataById.customer_id)
-                
-            })
+       
+        if(customerDataById.id !== undefined){
+            setError("")
+            customerContact.customer_id  = customerDataById.id
+            if(type=="add"){
+                props.addCustomerContact(customerContact).then(data=>{
+                    props.modalAction()
+                 console.log(customerDataById)
+                    // alert(customerDataById.customer_id)
+                    props.getCustomerContacts(customerDataById.id)
+                    // props.getCustomerContacts(customerDataById.customer_id)
+                    
+                })
+    
+            }else{
+                props.updateContactData(customerContact).then(data=>{
+                    props.modalAction()
+                    console.log(customerDataById)
+                    props.getCustomerContacts(customerDataById.id)
+                    
+                })
+    
+
+        }
 
         }else{
-            props.updateContactData(customerContact).then(data=>{
-                props.modalAction()
-                console.log(customerDataById)
-                props.getCustomerContacts(customerDataById.id)
-                
-            })
-
+            setError("Please add customer first")
         }
      
       
@@ -56,6 +71,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contacts</p> </ModalHeader>
         <form onSubmit={saveData}>
         <ModalBody >
+            <p style={{color:"red"}}>{error}</p>
           
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
