@@ -18,7 +18,7 @@ export class PlantInventory extends Component {
             selectedSupplierId:"",
             plantSearchName:"",
             skuSearchName:"",
-            plantRadio:"All",
+            allPlantRadio:true,
             skuRadio:"All"
         }
     }
@@ -35,9 +35,27 @@ export class PlantInventory extends Component {
     handlePlantSearch = (e) =>{
         this.props.handleInput(e.target.name,e.target.value)
     }
+    handleRadio = (e) => {
+        let allPlantRadio = false
+        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,skuRadio} = this.state
+
+        if(e.target.name === "all" ){
+            allPlantRadio = true
+        }
+        this.setState({allPlantRadio:allPlantRadio})
+        this.props.getFilterResult({
+            selectedLocationId,
+            selecredCategoryID,
+            selectedSupplierId,
+            plantSearchName,
+            skuSearchName,
+            allPlantRadio,
+            skuRadio
+        })
+    }
     handleFilterChange = (e)=>{
         let {name,value} = e.target
-        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,plantRadio,skuRadio} = this.state
+        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,allPlantRadio,skuRadio} = this.state
         if(name==="location"){
             this.setState({selectedLocationId:value})
             this.props.getFilterResult({
@@ -46,7 +64,7 @@ export class PlantInventory extends Component {
                 selectedSupplierId,
                 plantSearchName,
                 skuSearchName,
-                plantRadio,
+                allPlantRadio,
                 skuRadio
             })
         }
@@ -58,7 +76,7 @@ export class PlantInventory extends Component {
                 selectedSupplierId,
                 plantSearchName,
                 skuSearchName,
-                plantRadio,
+                allPlantRadio,
                 skuRadio
             })
         }
@@ -70,11 +88,11 @@ export class PlantInventory extends Component {
                 selectedSupplierId:value,
                 plantSearchName,
                 skuSearchName,
-                plantRadio,
+                allPlantRadio,
                 skuRadio
             })
         }
-        if(name=== "plantSearch"){
+        if(name=== "plantSearch"){ 
             this.setState({plantSearchName:value})
             this.props.getFilterResult({
                 selectedLocationId,
@@ -82,7 +100,7 @@ export class PlantInventory extends Component {
                 selectedSupplierId,
                 plantSearchName:value,
                 skuSearchName,
-                plantRadio,
+                allPlantRadio,
                 skuRadio
             })
         }
@@ -94,7 +112,7 @@ export class PlantInventory extends Component {
                 selectedSupplierId,
                 plantSearchName,
                 skuSearchName:value,
-                plantRadio,
+                allPlantRadio,
                 skuRadio
             })
         }       
@@ -127,7 +145,7 @@ export class PlantInventory extends Component {
     <div class="col-md-6 col-lg-4">
         <label>Location</label>
         <select class="form-control" name="location" onChange={this.handleFilterChange}>
-            <option>All</option>
+            <option value={0}>All</option>
             {locationList.map(category=>{
             return  <option value={category.id}>{category.address}</option>
             })}
@@ -136,7 +154,7 @@ export class PlantInventory extends Component {
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Category</label>
         <select class="form-control" name="category" onChange={this.handleFilterChange} value={parseInt(this.state.selecredCategoryID)}>
-            <option>All</option>
+            <option valoue={0}>All</option>
             {plantCategoryList.map(category=>{
             return  <option value={category.id}>{category.name}</option>
             })}
@@ -145,7 +163,7 @@ export class PlantInventory extends Component {
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Supplier</label>
         <select class="form-control" name="supplier" onChange={this.handleFilterChange}>
-            <option>All</option>
+            <option value={0}>All</option>
             {supplierList.map(category=>{
             return  <option value={category.id}>{category.supplier_name}</option>
             })}
@@ -164,12 +182,12 @@ export class PlantInventory extends Component {
         <div class="form-group row mt-2">
             <div class="col-md-12">
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/>
-                    <label class="form-check-label" for="activePlants">Active Plants</label>
+                    <input class="form-check-input" type="radio" name="active" id="activePlants" value="" checked={!this.state.allPlantRadio} onChange={this.handleRadio}/>
+                    <label class="form-check-label" for="active">Active Plants</label>
                 </div>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/>
-                    <label class="form-check-label" for="allPlants">All Plants</label>
+                    <input class="form-check-input" type="radio" name="all" id="allPlants" value="" checked={this.state.allPlantRadio} onChange={this.handleRadio}/>
+                    <label class="form-check-label" for="all">All Plants</label>
                 </div>
             </div>
         </div>
@@ -225,7 +243,8 @@ export class PlantInventory extends Component {
                 </thead>
                 <tbody>
                 {PlantListForTable.map(plant=>{
-                    return<>
+                                    
+                    return <>
                     <tr class="tblLinks">
                             <td colspan="12">
                                 <a href="">{plant[0].genus}</a>
