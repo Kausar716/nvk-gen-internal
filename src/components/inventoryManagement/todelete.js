@@ -54,7 +54,7 @@ export class PlantInventory extends Component {
             this.setState({selecredCategoryID:value})
             this.props.getFilterResult({
                 selectedLocationId,
-                selecredCategoryID:parseInt(value),
+                selecredCategoryID:value,
                 selectedSupplierId,
                 plantSearchName,
                 skuSearchName,
@@ -117,9 +117,8 @@ export class PlantInventory extends Component {
             if(this.props.supplierList && this.props.supplierList.data)
             supplierList = this.props.supplierList.data.active
         }
-        console.log(this.props.temp)
-        let PlantListForTable = []
-        PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
+        console.log(this.props.plantInventoryData)
+        let PlantListForTable = this.props.plantInventoryData
     
     return (
         <>
@@ -135,7 +134,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Category</label>
-        <select class="form-control" name="category" onChange={this.handleFilterChange} value={parseInt(this.state.selecredCategoryID)}>
+        <select class="form-control" name="category" onChange={this.handleFilterChange}>
             <option>All</option>
             {plantCategoryList.map(category=>{
             return  <option value={category.id}>{category.name}</option>
@@ -225,68 +224,64 @@ export class PlantInventory extends Component {
                 </thead>
                 <tbody>
                 {PlantListForTable.map(plant=>{
-                    return<>
-                    <tr class="tblLinks">
-                            <td colspan="12">
-                                <a href="">{plant[0].genus}</a>
-                            </td>
-                            <td class="text-center">
-                            <span class="mx-2">
-                                    <img src="assets/img/check-ic.svg" alt=""/>
-                            </span>
-                            <span class="ml-4">
-                                <a href="">
-                                        <img src="assets/img/up-arrow-ic.svg" alt=""/>
-                                    </a>
-                            </span>
-                            </td>
-                        </tr>
-                        {plant.map(skuObj=>{
-                            return  <tr>
-                            <td colspan="13" class="p-0">
-                                <table class="table table-striped" width="100%">
-                                    <tr>
-                                        <td class="text-nowrap" width="15%">
-                                            <a href="">{skuObj.sku_code}</a>
-                                        </td>
-                                        <td width="10%">{skuObj.volume_quantity}</td>
-                                        <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                        <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                        <td width="6%">25.478</td>
-                                        <td width="5%">5.75</td>
-                                        <td width="5%">5.00</td>
-                                        <td width="6%">18.569 
-                                            <small class="text-green d-block">-23.0%</small></td>
-                                        <td width="6%" class="text-nowrap">
-                                            <span class="border">5.95</span>
-                                            <small class="text-green d-block">+1.74%</small>
-                                        </td>
-                                        <td width="5%"> 
-                                            <span class="border">5.95</span>
-                                            <small class="text-green d-block">+1.74%</small>
-                                        </td>
-                                        <td width="6%"> 
-                                            <span class="border">5.95</span>
-                                            <small class="text-green d-block">-</small>
-                                        </td>
-                                        <td width="6%"> 
-                                            <span class="border">5.95</span>
-                                            <small class="text-green d-block">-</small>
-                                        </td>
-                                        <td width="10%"></td>
-                                    </tr>
-                             
-                                   
-                                </table>
-                            </td>
-                        </tr>
-                        })}
+                    // console.log(plant)
+                   return <>
+                     <tr class="tblLinks">
+                        <td colspan="12">
+                        <a href="">{plant[0].genus}</a>
+                        </td>
+                        <td class="text-center">
+                           <span class="mx-2">
+                                <img src="assets/img/check-ic.svg" alt=""/>
+                           </span>
+                           <span class="ml-4">
+                               <a href="">
+                                    <img src="assets/img/up-arrow-ic.svg" alt=""/>
+                                </a>
+                           </span>
+                        </td>
+                    </tr>                   
+                    <tr>
+                    {plant.map(skuObj=>{
+                       return <td colspan="13" class="p-0">
+                        <table class="table table-striped" width="100%">
+                        <tr>
+                                    <td class="text-nowrap" width="15%">
+                                        <a href="">{skuObj.sku_code}</a>
+                                    </td>
+                                    <td width="10%">{skuObj.volume_quantity}</td>
+                                    <td width="10%" class="text-nowrap"><strong>125</strong></td>
+                                    <td width="10%" class="text-nowrap"><strong>125</strong></td>
+                                    <td width="6%">25.478</td>
+                                    <td width="5%">5.75</td>
+                                    <td width="5%">5.00</td>
+                                    <td width="6%">18.569 
+                                        <small class="text-green d-block">-23.0%</small></td>
+                                    <td width="6%" class="text-nowrap">
+                                        <span class="border">5.95</span>
+                                        <small class="text-green d-block">+1.74%</small>
+                                    </td>
+                                    <td width="5%"> 
+                                        <span class="border">5.95</span>
+                                        <small class="text-green d-block">+1.74%</small>
+                                    </td>
+                                    <td width="6%"> 
+                                        <span class="border">5.95</span>
+                                        <small class="text-green d-block">-</small>
+                                    </td>
+                                    <td width="6%"> 
+                                        <span class="border">5.95</span>
+                                        <small class="text-green d-block">-</small>
+                                    </td>
+                                    <td width="10%"></td>
+                                </tr>
+                        </table>
+                        </td>
+                        
+                    })}
+                    </tr>                   
                     </>
-                    
-                })}
-                  
-                   
-             
+                })}                                  
                    
                 </tbody>
             </table>

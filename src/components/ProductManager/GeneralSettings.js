@@ -49,8 +49,28 @@ const GeneralSettings=(props)=> {
 
     const handleInput =(e)=>{
         setSubmitCount(0)
-        if(e.target.id ==="archived") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
-        else if(e.target.id ==="discontinued") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
+        // if(e.target.id ==="archived") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
+        // else if(e.target.id ==="discontinued") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
+        if(e.target.id ==="archived") {
+            if (parseInt(e.target.value) ===1) {
+                props.handleInputAction(e.target.id,0)
+                props.handleInputAction("discontinued",0)
+            }
+            else if (parseInt(e.target.value) ===0) {
+                props.handleInputAction(e.target.id,1)
+                props.handleInputAction("discontinued",0)
+            }
+        }
+        else if(e.target.id ==="discontinued") {
+            if (parseInt(e.target.value) ===1) {
+                props.handleInputAction(e.target.id,0)
+                props.handleInputAction("archived",0)
+            }
+            else if (parseInt(e.target.value) ===0) {
+                props.handleInputAction(e.target.id,1)
+                props.handleInputAction("archived",0)
+            }
+        }
         else props.handleInputAction(e.target.id,e.target.value)
 
     }

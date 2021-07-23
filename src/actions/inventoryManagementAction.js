@@ -3,7 +3,9 @@ import {
     GET_Plant_CATEGORY_LIST,   
     GETSUPPLIER_LIST,
     PLANT_INVENTORY_FILTER,
+    PRODUCT_INVENTORY_FILTER,
     GET_ALL_PLANT_INVENTORY_ACTION,
+    GET_ALL_PRODUCT_INVENTORY_ACTION,
     config,
     axios
     // DELETE_USER 
@@ -36,7 +38,7 @@ export const getFilterResult = (data) => dispatch => {
     console.log(data)
     let obj={}
     obj["supplier_id"]=0
-    obj["category"]=3
+    obj["category"]=data.selecredCategoryID
     obj["plant_search"]="genus"
     obj["plant_search_param"]=data.plantSearchName
     obj["sku_search"]="sku_code"
@@ -49,7 +51,7 @@ export const getFilterResult = (data) => dispatch => {
    
     return  axios.post("/api/plant-search",obj,config).then(res=>{ 
         console.log(res)
-      
+      debugger;
         dispatch({
                 type:PLANT_INVENTORY_FILTER,
                 payload:res.data.data
@@ -59,9 +61,10 @@ export const getFilterResult = (data) => dispatch => {
 
 }
 export const getPlantList = () => dispatch => {
+let obj={}
 
-
-    return  axios.get("/api/skus/plants",config).then(res=>{ 
+    return  axios.post("/api/plant-inventory-search",obj,config).then(res=>{ 
+        console.log(res)
         dispatch({
                 type:GET_ALL_PLANT_INVENTORY_ACTION,
                 payload:res.data.data
@@ -70,4 +73,45 @@ export const getPlantList = () => dispatch => {
         })
 
 }
-  
+export const getProductList = () => dispatch => {
+    let obj={}
+    
+        return  axios.post("/api/product-search",obj,config).then(res=>{ 
+            console.log(res)
+           
+            dispatch({
+                    type:GET_ALL_PRODUCT_INVENTORY_ACTION,
+                    payload:res.data.data
+        
+                })
+            })
+    
+    }
+
+
+    export const getProductFilterResult = (data) => dispatch => {
+        console.log(data)
+        let obj={}
+        obj["supplier_id"]=0
+        obj["category"]=3
+        obj["plant_search"]="genus"
+        obj["plant_search_param"]=data.productSearchName
+        obj["sku_search"]="sku_code"
+        obj["sku_search_param"]=data.skuSearchName
+        obj["location"]=""
+        obj["batch_code"]=""
+    
+    
+    
+       
+        return  axios.post("/api/product-search",obj,config).then(res=>{ 
+            console.log(res)
+          
+            dispatch({
+                    type:PRODUCT_INVENTORY_FILTER,
+                    payload:res.data.data
+        
+                })
+            })
+    
+    }
