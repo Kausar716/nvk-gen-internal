@@ -15,6 +15,8 @@ import {
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     HANDLE_UPDATE_ATTRIBUTE,
     HANDLE_UPDATE_SUB_ATTRIBUTE,
+    HANDLE_ZONE_INPUT_ACTION2,
+    HANDLE_ZONE_INPUT_ACTION3,
     // axios config
     config,
     axios
@@ -113,12 +115,12 @@ export const handleAttributeDelete = (id) =>dispatch=>{
 
 
 export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
-    //debugger;
-    console.log(id)
-    let attributeObject={}
+   // debugger;
+    console.log(id, data)
+    //let attributeObject={}
 
     return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
-       //debugger;
+      // debugger;
         console.log(res)
     dispatch({
             type:HANDLE_UPDATE_ATTRIBUTE,
@@ -140,6 +142,26 @@ export const handleZoneInputAction = (name,value) =>dispatch=>{
      value:value    
  })
 }
+
+export const handleZoneInputAction2 = (name,value) =>dispatch=>{
+    console.log(name)
+ dispatch({
+     type:HANDLE_ZONE_INPUT_ACTION2,
+     name:name,
+     value:value    
+ })
+}
+
+
+export const handleZoneInputAction3 = (name,value) =>dispatch=>{
+    console.log(name)
+ dispatch({
+     type:HANDLE_ZONE_INPUT_ACTION3,
+     name:name,
+     value:value    
+ })
+}
+
 
 
 export const handleAddZone = (data) =>dispatch=>{

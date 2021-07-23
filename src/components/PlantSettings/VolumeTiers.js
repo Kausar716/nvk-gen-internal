@@ -3,8 +3,10 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
+    handleZoneInputAction,handleAddZone, showSubSubAttribute, handleSubAttributeUpdate,handleZoneInputAction2} from '../../actions/attributeAction'
 
     class VolumeTiers extends Component {
         constructor(props){
@@ -14,7 +16,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         formSku:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    isEditing:false,
+                    name:'',
                 }
             
         }
@@ -88,7 +92,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
            })
         }
         handleZoneInputAction = (e)=>{
-            this.props.handleZoneInputAction(e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value
+            })
+
+            this.props.handleZoneInputAction("volume",e.target.value)
         }
         handleAddCategory = (e)=>{
        
@@ -106,6 +114,47 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         
         }
+
+
+        handleAddCategoryUpdate=(e)=>{
+            // debugger;
+             // this.props.handleSubAttributeUpdate(e.target.id)
+             let valueName = this.state.name
+             let updateID = parseInt(this.props.showSpeciSubA.id)
+             let updateObject={}
+             updateObject.value=valueName
+ 
+             //console.log("positionName",this.props.positionName)
+            // updateObject.id=this.props.showSpeciSubA.id
+                
+          let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                 res.then(res=>{
+                     this.props.getAllSubAttribute(11)
+                 })
+ 
+                 this.setState({
+                     isEditing:false,
+                     name:""
+                 })
+ 
+         }
+
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+            // debugger;  
+         this.setState({
+             name: t.value,
+             isEditing:true
+         })
+         this.props.handleZoneInputAction("volume",this.state.name)
+         this.props.showSubSubAttribute(t.id)
+         console.log("ttttttt", t,  )
+       }
+
+
+
+
+
         render() {
         console.log(this.props.temp)
         var tasks={
@@ -135,13 +184,34 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <p>Volume Tier</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="volume" value={this.props.volume}   placeholder="Tier" onChange={this.handleZoneInputAction}/>
+                                                <input type="text"
+                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 name="volume"
+                                                  value={this.state.name}
+                                                  placeholder="Tier" onChange={this.handleZoneInputAction}/>
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Volume Tier
-                                                </a>
-                                            </div>
+
+
+                                            {this.state.isEditing ? (
+
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                            <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Volume Tier
+                                                        </a>
+                                                        </div>
+                                                        
+
+                                                        ):
+                                                        (
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Volume Tier
+                                                        </a>
+                                                        </div>  
+                                             )}   
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -196,6 +266,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -219,7 +292,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
    zoneCategoryList:state.attributeData.subAttribute,
     temp:state,
     // name:state.categoryData.name
-    volume:state.attributeData.subAttributeName.volume
+    volume:state.attributeData.subAttributeName.volume,
+    showSpeciSubA: state.attributeData.specificSubAttribute,
     }
     )
     export default connect(mapStateToProps,{
@@ -228,6 +302,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleAttributeDragSort,
         handleAttributeDelete,
         handleZoneInputAction,
-        handleAddZone      
+        showSubSubAttribute,
+        handleAddZone,
+        handleSubAttributeUpdate ,
+        handleZoneInputAction2     
     })(VolumeTiers)
 

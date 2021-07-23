@@ -199,7 +199,7 @@ export const saveSupplierReasonMethod = (data)=>dispatch=>{
 
 
  export const updateSupplierCategory = (id, data) =>dispatch => {
-     debugger;
+     //debugger;
     return axios.post(`/api/update-supplier-category/${id}`,data,config).then(res=>{ 
         debugger;
         console.log(res.data)

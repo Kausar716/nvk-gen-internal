@@ -7,6 +7,8 @@ import {
     HANDLE_DRAG_PRODUCT_MANUFACTURE,
     HANDLE_DRAG_MANUFACTURER_SORT,
     HANDLE_PRODUCT_MANUFACTURE_DELETE,
+    SHOW_SPECIFIC_PRODUCT_SETTING_MANUFACTURES,
+    UPDATE_PRODUCT_SETTING_MANUFACTURES,
 
     // axios config
     config,
@@ -26,6 +28,38 @@ export const getAllProductManufacturers = ()=> dispatch =>{
     })
 
 }
+
+
+export const updateProductSettingManufacture = (id, data) =>dispatch => {
+    //debugger;
+   return axios.post(`/api/update-manufacture/${id}`,data,config).then(res=>{ 
+      // debugger;
+       console.log(res.data)
+   dispatch({
+           type:UPDATE_PRODUCT_SETTING_MANUFACTURES,
+           payload:res.data.data,
+
+       })
+   })
+
+}
+
+
+export const showSpecificProductSettingManufacture = (id) => dispatch => {
+   axios.get(`api/show-manufacture/${id}`,config).then(res=>{ 
+     
+       console.log(res.data)
+   dispatch({
+           type:SHOW_SPECIFIC_PRODUCT_SETTING_MANUFACTURES,
+           payload:res.data
+       })
+   })
+}
+
+
+
+
+
 export const handleProductManufacturerInputAction = (name) =>dispatch=>{
     console.log(name)
  dispatch({
@@ -34,6 +68,8 @@ export const handleProductManufacturerInputAction = (name) =>dispatch=>{
     
  })
 }
+
+
 export const handleAddProductManufacturer = (data) =>dispatch=>{
     console.log(data)
     let productManufactureObject={}
