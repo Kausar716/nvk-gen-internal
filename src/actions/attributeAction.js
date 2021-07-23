@@ -9,10 +9,12 @@ import {
     HANDLE_DELETE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION,
     HANDLE_ADD_ZONE_ATTRIBUTE,
+    SHOW_SUB_ATTRIBUTE,
     HANDLE_POSITION_INPUT_ACTION,
     HANDLE_ADD_POSITION_ATTRIBUTE,
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     HANDLE_UPDATE_ATTRIBUTE,
+    HANDLE_UPDATE_SUB_ATTRIBUTE,
     // axios config
     config,
     axios
@@ -42,6 +44,7 @@ export const createSubAttributeAction = (name,status) => dispatch => {
 }
 export const getAllSubAttribute = (id) => dispatch => {
     axios.get(`/api/show-attribute/${id}`,config).then(res=>{ 
+        //debugger
         console.log(res.data)
     dispatch({
             type:GET_ALL_SUB_ATTRIBUtTES,
@@ -49,6 +52,22 @@ export const getAllSubAttribute = (id) => dispatch => {
         })
     })
 }
+
+
+export const showSubSubAttribute = (id) => dispatch => {
+    axios.get(`/api/show-subattribute/${id}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_SUB_ATTRIBUTE,
+            payload:res.data
+        })
+    })
+}
+
+
+
+
 export const handleAttributeDragDrop = (data) =>dispatch=>{
     console.log(data)
     let attributeObject={}
@@ -93,11 +112,13 @@ export const handleAttributeDelete = (id) =>dispatch=>{
 }
 
 
-export const handleSubAttributeUpdate = (id) =>dispatch=>{
+export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
+    //debugger;
     console.log(id)
     let attributeObject={}
 
-    return axios.post(`/api/update-subattribute/${id}`,attributeObject,config).then(res=>{ 
+    return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
+       //debugger;
         console.log(res)
     dispatch({
             type:HANDLE_UPDATE_ATTRIBUTE,
@@ -105,6 +126,10 @@ export const handleSubAttributeUpdate = (id) =>dispatch=>{
         })
     })
 }
+
+
+
+
 
 
 export const handleZoneInputAction = (name,value) =>dispatch=>{
@@ -126,7 +151,9 @@ export const handleAddZone = (data) =>dispatch=>{
     })
 }
 export const handlePositionInputAction = (name,value) =>dispatch=>{
-    console.log(name)
+    
+    console.log("handlePositionInputAction",name, value)
+   // debugger
  dispatch({
      type:HANDLE_POSITION_INPUT_ACTION,
      name:name,

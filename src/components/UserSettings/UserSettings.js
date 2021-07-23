@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 
     class Categories extends Component {
         constructor(props){
@@ -16,7 +16,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     },
                     sortId: 0,
                     activeId: 0,
-                    positionEdit:false,
+                    positionName:'',
+                 
+                   isEditing:false,
+                   name:''
                 }
             
         }
@@ -32,6 +35,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         componentDidMount(){
             this.props.getAllSubAttribute(16)
+            this.props.showSubSubAttribute()
         }
         onMouseLeave =((ev, id)=>{
             let sortId=this.state.sortId
@@ -87,20 +91,18 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
 
 
-        updateSubAttList =(e,id)=>{
-            this.setState({
-                positionEdit:true
-            })
-
-            this.props.handleSubAttributeUpdate(id)
-           // let id= e.dataTransfer.getData("id");
-            console.log("aaa", e.target.id, id)
-
-        }
         
         handlePositionInputAction = (e)=>{
-            this.props.handlePositionInputAction(e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value
+            })
+           // debugger;
+            this.props.handlePositionInputAction("position",e.target.value)
+
+            console.log("12344", e.target.name,e.target.value)
         }
+
+      
 
         handleAddCategory = (e)=>{
        
@@ -108,7 +110,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             positionObj.attribute_id=16
             positionObj.value = this.props.positionName
             positionObj.status=1
-            console.log(positionObj)
+            console.log("positionObj",positionObj, this.props.positionName)
             let result = this.props.handleAddPosition(positionObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(16)
@@ -117,13 +119,56 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
 
 
+
+        handleAddCategoryUpdate=(e)=>{
+           // debugger;
+            // this.props.handleSubAttributeUpdate(e.target.id)
+            let valueName = this.state.name
+            let updateID = parseInt(this.props.showSpeciSubA.id)
+            let updateObject={}
+            updateObject.value=valueName
+
+            console.log("positionName",this.props.positionName)
+           // updateObject.id=this.props.showSpeciSubA.id
+               
+         let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                res.then(res=>{
+                    this.props.getAllSubAttribute(16)
+                })
+
+                this.setState({
+                    isEditing:false,
+                    name:""
+                })
+
+        }
+
+
+
+        handleEditClick2 =(t)=> {
+               // debugger;  
+            this.setState({
+                name: t.value,
+                isEditing:true
+            })
+            this.props.handlePositionInputAction("position",...this.state.name)
+            this.props.showSubSubAttribute(t.id)
+            console.log("ttttttt", t,  this.props.handlePositionInputAction())
+          }
+
+   
+
+
         render() {
+            console.log("positionName",this.props.positionName)
         console.log(this.props.temp)
         var tasks={
             inactive:[],
             active:[],
         }
+
         if(this.props.positionCategoryList){
+
             this.props.positionCategoryList.forEach((t)=>{
                 console.log(t)
                 if(t.status === 1){
@@ -134,6 +179,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }
             })
         }
+
+        console.log("nameeee", this.props.showSpeciSubA.id, this.props.positionName)
+        console.log("finalSubAttributeList", this.props.finalSubAttributeList)
         return (
            
                <div>
@@ -144,16 +192,35 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                 <div className="row">
                                     <div className="col-md-12 col-lg-12">
                                         <p>Position</p>
+
                                         <div className="row d-flex align-items-center">
                                         <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="position" value={this.props.name}   placeholder="" onChange={this.handlePositionInputAction}/>
+                                                <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } name="position" 
+                                                value={this.state.name}
+                                                 placeholder="" onChange={this.handlePositionInputAction}/>
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+
+
+                                            {this.state.isEditing ? (
+
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
+                                                    </a>
+                                                    </div>
+                                                       
+
+                                            ):
+                                            (
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Position
                                                 </a>
-                                            </div>
-                                        </div>
+                                                </div>  
+                                                )}                                            
+                                           </div> 
+
+                                           
                                     </div>
                                 </div>
                                 <div class="row mt-5 mb-4">
@@ -205,7 +272,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
                                                                 <span id="Wheathers">{t.value}</span>
                                                                 <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                 onClick={(e)=>this.updateSubAttList(e, t.id)} 
+                                                                onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
                                                                 </a>
                                                             </li>
@@ -230,7 +297,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
    positionCategoryList:state.attributeData.subAttribute,
     temp:state,
     // name:state.categoryData.name
-    positionName:state.attributeData.subAttributeName.position
+    positionName:state.attributeData.subAttributeName.position,
+    showSpeciSubA: state.attributeData.specificSubAttribute,
+    finalSubAttributeList: state.attributeData.finalSubAttributeList
     }
     )
     export default connect(mapStateToProps,{
@@ -240,7 +309,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleAttributeDelete,
         handleSubAttributeUpdate,
         handlePositionInputAction,
-        handleAddPosition      
+        handleAddPosition ,
+        showSubSubAttribute     
     })(Categories)
 
 

@@ -10,14 +10,18 @@ import {
     HANDLE_POSITION_INPUT_ACTION,
     HANDLE_ADD_POSITION_ATTRIBUTE,
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
-    HANDLE_UPDATE_ATTRIBUTE
+    HANDLE_UPDATE_ATTRIBUTE,
+    SHOW_SUB_ATTRIBUTE,
+    HANDLE_UPDATE_SUB_ATTRIBUTE
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
 
 const initialSatate = {
     allAttributes:{},
+    finalSubAttributeList:[],
     subAttribute:[],
+    specificSubAttribute:[],
     subAttributeName:{
         zone:"",
         bloomColor:"",
@@ -40,10 +44,10 @@ const initialSatate = {
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
-console.log(action)
+console.log("action",action)
 
 switch(action.type){
-    // plant page redirects
+    // plant page redirects  SHOW_SUB_ATTRIBUTE
     case GET_ALL_ATTRIBUtTES:
         return{
             ...state,
@@ -54,6 +58,16 @@ switch(action.type){
         return{
              ...state,
             subAttribute:action.payload.data[0].subattributes
+       }
+    }
+
+
+    case SHOW_SUB_ATTRIBUTE:{
+       // debugger;
+        //console.log(action.payload.data[0].subattributes)
+        return{
+             ...state,
+            specificSubAttribute:action.payload.data
        }
     }
     case HANDLE_DRAG_ATTRIBUTE_CATEGORY:
@@ -69,7 +83,9 @@ switch(action.type){
 
     case HANDLE_UPDATE_ATTRIBUTE:
         return{
-            ...state
+            ...state,
+            finalSubAttributeList:action.payload.data
+
         }
 
 

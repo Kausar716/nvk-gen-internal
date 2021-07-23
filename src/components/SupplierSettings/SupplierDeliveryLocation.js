@@ -207,42 +207,26 @@ render() {
                 
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                               
                                 <div className="row">
                                         <div className="col-md-4">
                                             {/* <p>Location</p> */}
                                             <label for="Category">Location</label>
                                             <div>
-                                                <input type="text" className="form-control"  id="location" value={supplierData.supplierLocation.location}   placeholder="location" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text" className="form-control"  id="location"
+                                                 value={supplierData.supplierLocation.location}  
+                                                  placeholder="location" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                             </div>
                                         </div>
                                         <div className="col-md-4">
-                                            {/* <p>Address</p> */}
                                             <label for="Category">Address</label>
                                             <div>
-                                            <input type="text" className="form-control" placeholder="" id="address" value={supplierData.supplierLocation.address}   placeholder="address" onChange={this.handleCategoryInputAction}/>
-                                                {/* <Field
-                                                        name="Imperial in Height"
-                                                        component={renderField}
-                                                        type="text"
-                                                        validate={[ required]}
-                                                    /> */}
+                                            <input type="text" className="form-control"  id="address" 
+                                            value={supplierData.supplierLocation.address}  
+                                             placeholder="address" onChange={this.handleCategoryInputAction}/>
+
                                             </div>
                                         </div>
 
@@ -250,13 +234,11 @@ render() {
                                             {/* <p>City</p> */}
                                             <label for="Category">City</label>
                                             <div>
-                                                <input type="text" className="form-control" placeholder="" id="city" value={supplierData.supplierLocation.city}   placeholder="city" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text" className="form-control" 
+                                                 id="city" value={supplierData.supplierLocation.city}  
+                                                  placeholder="city" onChange={this.handleCategoryInputAction}/>
                                             </div>
-                                            {/* <div className="d-flex justify-content-md-end mt-2">
-                                                <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Height
-                                                </a>
-                                            </div> */}
+                                           
                                         </div>
                                     </div>
 
@@ -269,9 +251,7 @@ render() {
                                                             {allStates && allStates.map((c, i)=>{
                                                                     return <option id={allStates[i]}>{allStates[i]}</option>
                                                             })}
-                                                                {/* <option value="Ontario" selected={supplierData.supplierLocation.state =="Ontario"?"selected":""}>Ontario</option>
-                                                                <option value="Alberta" selected={supplierData.supplierLocation.state =="Alberta"?"selected":""}>Alberta</option>
-                                                                <option value="Quebec" selected={supplierData.supplierLocation.state =="Quebec"?"selected":""}>Quebec</option> */}
+                                                               
                                                             </select>
                                             </div>
 
@@ -282,16 +262,17 @@ render() {
                                                                 {allCountry.map((country, i)=>{
                                                                     return <option id={allCountry[i]}>{allCountry[i]}</option>
                                                                 })}
-                                                                {/* <option value="Canada" selected={supplierData.supplierLocation.country =="Canada"?"selected":""}>Canada</option>
-                                                                <option value="India" selected={supplierData.supplierLocation.country =="India"?"selected":""}>India</option>
-                                                                <option value="Africa" selected={supplierData.supplierLocation.country =="Africa"?"selected":""}>Africa</option> */}
+                                                                
                                                             </select>
                                             </div>
                                             <div className="col-md-3">
                                             {/* <p></p> */}
                                             <label for="Category">Postal/ZIP</label>
                                             <div>
-                                                <input type="text" className="form-control" id="zip" value={supplierData.supplierLocation.zip}   placeholder="zip" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text" className="form-control" id="zip" 
+                                                value={supplierData.supplierLocation.zip}  
+                                                 placeholder="zip" 
+                                                 onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                             </div>
@@ -302,7 +283,9 @@ render() {
                                             {/* <p></p> */}
                                             <label for="Category">Lat/Long</label>
                                             <div>
-                                                <input type="text" className="form-control" placeholder="" id="lat" value={supplierData.supplierLocation.lat}   placeholder="lat" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text" className="form-control"  id="lat" 
+                                                value={supplierData.supplierLocation.lat}   placeholder="lat" 
+                                                onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">

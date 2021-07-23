@@ -2,10 +2,13 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import React, { Component } from 'react'
+import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
 // import './style.css';
+//import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 
+import {showSubSubAttribute} from '../../actions/attributeAction'
     class Categories extends Component {
         constructor(props){
             super()
@@ -14,7 +17,9 @@ import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,h
                         formSku:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    isEditing:false,
+                    name:''
                 }
             
         }
@@ -128,6 +133,55 @@ import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,h
 
 
 
+        handlePositionInputAction = (e)=>{
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleCategoryInputAction(e.target.value)
+
+            // console.log("12344", e.target.name,e.target.value)
+        }
+
+
+        handleAddCategoryUpdate=(e)=>{
+            // this.props.handleSubAttributeUpdate(e.target.id)
+            let updateID = parseInt(this.props.showSpeciSubA.id)
+            let updateObject={}
+            updateObject.value=this.props.positionName
+           // updateObject.id=this.props.showSpeciSubA.id
+               
+         let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                res.then(res=>{
+                    this.props.getAllSubAttribute(16)
+                })
+
+                this.setState({
+                    isEditing:false,
+                    name:""
+                })
+
+        }
+
+
+        handleEditClick2 =(t)=> {
+
+            // debugger;
+             
+         this.setState({
+             name: t.value,
+             isEditing:true
+         })
+     
+          this.props.handleCategoryInputAction("Category",...this.state.name)
+          this.props.showSubSubAttribute(t.id)
+        //  console.log("ttttttt", t,  this.props.handlePositionInputAction())
+
+
+
+       }
+
+
+
 
 render() {
     var tasks={
@@ -168,7 +222,8 @@ render() {
                                 <div className="row">
                                     <div className="col-md-12 col-lg-12">
                                         <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
+
+                                        {/* <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                                 <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
                                             </div>
@@ -177,7 +232,39 @@ render() {
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                                 </a>
                                             </div>
-                                        </div>
+                                        </div> */}
+                                        <div className="row d-flex align-items-center">
+                                        <div className="col-md-6 col-lg-9">  
+                                                <input type="text" className="form-control" name="Category" 
+                                                value={this.state.name}
+                                                 placeholder="Category" onChange={this.handlePositionInputAction}/>
+                                            </div>
+
+
+                                            {this.state.isEditing ? (
+
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Category
+                                                    </a>
+                                                    </div>
+                                                       
+
+                                            ):
+                                            (
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
+                                                </a>
+                                                </div>  
+                                                )}                                            
+                                           </div> 
+
+
+
+
+
+
                                     </div>
                                 </div>
                                 <div class="row mt-5 mb-4">
@@ -230,6 +317,10 @@ render() {
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -261,6 +352,8 @@ render() {
         handleAddCategory,
         handleDragDrop,
         handleCategoryDragSort,
-        handleCategoryDelete        
+        handleCategoryDelete,
+        
+        showSubSubAttribute
     })(Categories)
 

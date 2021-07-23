@@ -3,7 +3,6 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import UserSettings from './UserSettings';
 
-
 class UserSettingsIndex extends Component {
     render() {
         return (
@@ -38,6 +37,7 @@ class UserSettingsIndex extends Component {
 
                     </Tabs>
                 </div>
+
             </div>
         )
     }

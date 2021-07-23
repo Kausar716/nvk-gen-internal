@@ -11,18 +11,21 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
-// import './style.css';
+import * as MdIcons from "react-icons/md";
+import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
-import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData}   from "../../actions/supplierManagementAction"
-
+import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData, showSpecificSubAttribute,handleReasonInputAction, updateSupplierReasonMethods}   from "../../actions/supplierManagementAction"
+//import {handlePositionInputAction} from '../../actions/attributeAction'
 
     class SupplierAccountReasons extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:''
     }
 
 
@@ -113,6 +116,12 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
         }
         handleCategoryInputAction = (e)=>{
+
+            this.setState({
+                name:e.target.value
+            })
+            console.log("eeeee", e.target.value,)
+            //this.props.handleReasonInputAction("supplierReason", e.target.value)
             this.props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierReason")
         }
         handleAddCategoryData = (e)=>{
@@ -130,18 +139,65 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
                     this.props.getAllSupplierReasonMethods()
                 })
             }
-            // this.props.saveCustomerType()
+            // this.props.saveCustomerType()handleReasonInputAction
         
         }
 
 
+        handleEditClick2 =(t)=> {
+            //debugger;
+            console.log("tttt", t)
+               this.setState({
+             name: t.reason,
+             isEditing:true
+         })
+
+         this.props.handleSupplierExchnageData(...this.state.name,"reason","supplierReason")
+            //this.props.handleReasonInputAction("supplierReason", ...this.state.name)
+            this.props.showSpecificSubAttribute(t.id)
+
+            console.log("ttttttt", t,  this.props.handleReasonInputAction())
+            // debugger;  
+        //  this.setState({
+        //      name: t.value,
+        //      isEditing:true
+        //  })
+   
+       }
+
+
+       handleAddCategoryUpdate=()=>{
+          // debugger;
+        // this.props.handleSubAttributeUpdate(e.target.id)
+        
+        let updateID = parseInt(this.props.showSpeciSubA.id)
+        let updateObject={}
+        updateObject.reason=this.state.name
+       // updateObject.id=this.props.showSpeciSubA.id
+           
+            let res1=   this.props.updateSupplierReasonMethods(updateID, updateObject)
+            res1.then(res=>{
+                this.props.getAllSupplierReasonMethods()
+            })
+
+            this.setState({
+                isEditing:false,
+                name:""
+            })
+
+            
+
+    }
 
 
 render() {
+
+    console.log("showSpeciSubA", this.props.showSpeciSubA)
  
     const {supplierData} = this.props
 
     console.log(this.props.supplierData.supplierReasonList)
+    let inActiveList = this.props.supplierData.supplierReasonList.inactive;
 
         return (
            
@@ -152,54 +208,41 @@ render() {
                 
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                              
                                 <div className="row">
-                                        {/* <div className="col-md-6">
-                                            <label>Type</label>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerTypes.delivery_method}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
-                                            {/* </div> */}
-                                        {/* </div>  */}
-                                        {/* <div className="col-md-6">
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
-                                                </a>
-                                            </div>
-                                        </div> */}
+                                      
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
                                         <p style={{fontWeight:"bold"}}>Reasons</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="Reason" id="reason" value={supplierData.supplierReason.reason}   placeholder="Reason" onChange={this.handleCategoryInputAction}/>
+                                            <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } placeholder="Reason" id="reason" name="supplierReason"
+                                            // value={supplierData.supplierReason.reason}  
+                                            value={this.state.name}
+                                               onChange={this.handleCategoryInputAction}/>
                                               
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+
+                                            {this.state.isEditing ? (
+                                             <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
+                                                </a>
+                                                </div>  
+
+                                                ):
+                                                (
+
+
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Reason
                                                 </a>
                                             </div>
+
+                                                )}     
+
                                         </div>
                                     </div>
                                 </div>
@@ -215,7 +258,8 @@ render() {
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierReasonList.inactive.map(t=>{
+                                                   {
+                                                  inActiveList && inActiveList.map(t=>{
                                                     return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.reason}</span>
@@ -223,9 +267,6 @@ render() {
                                                             </li>
                                                     })}
                                             </ul>
-                                               
-
-
                                             </div>
                                         </div>
                                     </div>
@@ -249,10 +290,13 @@ render() {
                                             </div>
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierReasonList.active.map(t=>{
+                                                   {this.props.supplierData.supplierReasonList.active && this.props.supplierData.supplierReasonList.active.map(t=>{
                                                     return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.reason}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -272,7 +316,8 @@ render() {
      const mapStateToProps = (state)=> (
         // console.log(state)
          {
-            supplierData:state.supplierData
+            supplierData:state.supplierData,
+            showSpeciSubA: state.supplierData.specificSubAttribute
         
    
     }
@@ -286,6 +331,9 @@ render() {
         getAllSupplierReasonMethods,
         saveSupplierReasonMethod,
         handleSupplierExchnageData,
+        showSpecificSubAttribute,
+        handleReasonInputAction,
+        updateSupplierReasonMethods,
 
         
 handleDragDropCustomer    })((SupplierAccountReasons))
