@@ -38,7 +38,7 @@ const GeneralSettings=(props)=> {
     const [submitCount, setSubmitCount] = useState(0)
 
     const [currentTagText, setCurrentTagText] = useState("");
-    const [tags, setTags] = useState(["Areca", "Fern"]);
+    const [tags, setTags] = useState([]);
  
     const {productData,productDataById,tagsData,actionType,needAction} = props.productData
     const {categoryData,manufactureData} = props.categoryData
@@ -49,8 +49,28 @@ const GeneralSettings=(props)=> {
 
     const handleInput =(e)=>{
         setSubmitCount(0)
-        if(e.target.id ==="archived") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
-        else if(e.target.id ==="discontinued") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
+        // if(e.target.id ==="archived") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
+        // else if(e.target.id ==="discontinued") props.handleInputAction(e.target.id,e.target.value ===1?0:1)
+        if(e.target.id ==="archived") {
+            if (parseInt(e.target.value) ===1) {
+                props.handleInputAction(e.target.id,0)
+                props.handleInputAction("discontinued",0)
+            }
+            else if (parseInt(e.target.value) ===0) {
+                props.handleInputAction(e.target.id,1)
+                props.handleInputAction("discontinued",0)
+            }
+        }
+        else if(e.target.id ==="discontinued") {
+            if (parseInt(e.target.value) ===1) {
+                props.handleInputAction(e.target.id,0)
+                props.handleInputAction("archived",0)
+            }
+            else if (parseInt(e.target.value) ===0) {
+                props.handleInputAction(e.target.id,1)
+                props.handleInputAction("archived",0)
+            }
+        }
         else props.handleInputAction(e.target.id,e.target.value)
 
     }
@@ -168,7 +188,7 @@ if(productDataById){
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued}
-                                                //  checked={productDataById.discontinued===0?false:true}
+                                                 checked={productDataById.discontinued===0?false:true}
                                                   />
                                                 <label for="discontinued"></label>
                                             </div>
@@ -177,7 +197,7 @@ if(productDataById){
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived}
-                                                //  checked={productDataById.archived===0?false:true}
+                                                 checked={productDataById.archived===0?false:true}
                                                  />
                                                 <label for="archived"></label>
                                             </div>
@@ -218,7 +238,7 @@ if(productDataById){
 
                                         <ReactTagInput 
                                                     tags={tags} 
-                                                    onChange={(tagsData) => setTags(tagsData)}
+                                                    onChange={(tags) => setTags(tags)}
                                                     />
 
                                 {/* <div className="masterStackDiv">

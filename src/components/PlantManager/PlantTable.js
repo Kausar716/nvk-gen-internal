@@ -136,7 +136,7 @@ const PlantTable=(props)=> {
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, Discontinued, archived, patent,category_id,plant_id,genus})=>{
+                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus})=>{
                                              let id2 ="discontinue"
                                              let id3 ="Archived"
                                              let id4 ="Production"
@@ -152,13 +152,13 @@ const PlantTable=(props)=> {
                                                     </td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" className="custom-control-input" id={id4.concat(plant_id)} />
+                                                        <input type="checkbox" className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4.concat(plant_id)} />
                                                         <label className="custom-control-label" for={id4.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" className="custom-control-input" id={id2.concat(plant_id)} />
+                                                        <input type="checkbox" className="custom-control-input" checked={discontinued===1?"checked":""} id={id2.concat(plant_id)} />
                                                         <label className="custom-control-label" for={id2.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
@@ -180,7 +180,7 @@ const PlantTable=(props)=> {
                                                     </span>
                                                     <span>
                                                         {/* <a href="javascript;"> */}
-                                                            <img src="assets/img/duplicate.svg" alt=""  onClick={()=>props.duplicatePlant(plant_id)} />
+                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>{confirmAction(plant_id,"duplicate"); }} />
                                                         {/* </a> */}
                                                     </span>
                                                     <span>

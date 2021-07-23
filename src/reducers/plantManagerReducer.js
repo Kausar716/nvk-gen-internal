@@ -68,7 +68,7 @@ const initialSatate = {
     royality: "",
     patent: "",
     category_id: "",
-    in_production: "",
+    in_production: 1,
     archived: 0,
     discontinued: 0,
     notes: "",
@@ -124,10 +124,10 @@ export default function(state = initialSatate, action){
                     royality: "",
                     patent: "",
                     category_id: "",
-                    in_production: "",
+                    in_production: 1,
                     archived: 0,
                     discontinued: 0,
-                    notes: "",
+                    notes: ""
                 },
                 plantSkuDataById         :   {
                     sku_code: "",
@@ -199,7 +199,7 @@ export default function(state = initialSatate, action){
                     plantPageNumber:action.pageNumber
                 }
             case GET_SPECIFIED_PLANT_ACTION:{
-                console.log(action)
+                
                 return{
                     ...state,
                     ...state,
@@ -208,7 +208,6 @@ export default function(state = initialSatate, action){
                     needAction:false,
                     actionType:action.actionType,
                     ae_plant_id:action.payload.data.plant_id
-
                 }
             }
         case HANDLE_PLANT_INPUT_DATA:{

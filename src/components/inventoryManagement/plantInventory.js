@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getCategoryList} from "../../actions/inventoryManagementAction";
+import {getLocationList,getCategoryList,getPlantList,getFilterResult} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
@@ -13,16 +13,91 @@ export class PlantInventory extends Component {
     constructor(){
         super()
         this.state={
-          
+            selectedLocationId:"",
+            selecredCategoryID:"",
+            selectedSupplierId:"",
+            plantSearchName:"",
+            skuSearchName:"",
+            plantRadio:"All",
+            skuRadio:"All"
         }
     }
     componentDidMount(){
         this.props.getLocationList()   
         this.props.getCategoryList()
         this.props.getAllSupplierAction()
+        this.props.getPlantList()
+        
     }
      handleCategoryChange = () => {
 
+    }
+    handlePlantSearch = (e) =>{
+        this.props.handleInput(e.target.name,e.target.value)
+    }
+    handleFilterChange = (e)=>{
+        let {name,value} = e.target
+        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,plantRadio,skuRadio} = this.state
+        if(name==="location"){
+            this.setState({selectedLocationId:value})
+            this.props.getFilterResult({
+                selectedLocationId:value,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "category"){
+            this.setState({selecredCategoryID:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID:parseInt(value),
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "supplier"){
+            this.setState({selectedSupplierId:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId:value,
+                plantSearchName,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name=== "plantSearch"){
+            this.setState({plantSearchName:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName:value,
+                skuSearchName,
+                plantRadio,
+                skuRadio
+            })
+        }
+        if(name === "skuSearch"){
+            this.setState({skuSearchName:value})
+            this.props.getFilterResult({
+                selectedLocationId,
+                selecredCategoryID,
+                selectedSupplierId,
+                plantSearchName,
+                skuSearchName:value,
+                plantRadio,
+                skuRadio
+            })
+        }       
     }
          
   
@@ -42,14 +117,16 @@ export class PlantInventory extends Component {
             if(this.props.supplierList && this.props.supplierList.data)
             supplierList = this.props.supplierList.data.active
         }
-        // console.log(this.props.supplierList.data.active)
+        console.log(this.props.temp)
+        let PlantListForTable = []
+        PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
     
     return (
         <>
         <div class="row mt-3">
     <div class="col-md-6 col-lg-4">
         <label>Location</label>
-        <select class="form-control" onChange={this.handleCategoryChange}>
+        <select class="form-control" name="location" onChange={this.handleFilterChange}>
             <option>All</option>
             {locationList.map(category=>{
             return  <option value={category.id}>{category.address}</option>
@@ -58,7 +135,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Category</label>
-        <select class="form-control" onChange={this.handleCategoryChange}>
+        <select class="form-control" name="category" onChange={this.handleFilterChange} value={parseInt(this.state.selecredCategoryID)}>
             <option>All</option>
             {plantCategoryList.map(category=>{
             return  <option value={category.id}>{category.name}</option>
@@ -67,7 +144,7 @@ export class PlantInventory extends Component {
     </div>
     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
         <label>Supplier</label>
-        <select class="form-control" onChange={this.handleCategoryChange}>
+        <select class="form-control" name="supplier" onChange={this.handleFilterChange}>
             <option>All</option>
             {supplierList.map(category=>{
             return  <option value={category.id}>{category.supplier_name}</option>
@@ -82,7 +159,7 @@ export class PlantInventory extends Component {
             <button type="submit" class="btn btn-search">
                 <img src="assets/img/search.svg" alt=""/>
             </button>
-            <input type="text" class="form-control" placeholder="Search"/>
+            <input type="text" class="form-control" placeholder="Search" name="plantSearch" onChange={this.handleFilterChange}/>
         </div>
         <div class="form-group row mt-2">
             <div class="col-md-12">
@@ -103,7 +180,7 @@ export class PlantInventory extends Component {
             <button type="submit" class="btn btn-search">
                 <img src="assets/img/search.svg" alt=""/>
             </button>
-            <input type="text" class="form-control" placeholder="Search"/>
+            <input type="text" class="form-control" placeholder="Search" name="skuSearch" onChange={this.handleFilterChange}/>
         </div>
         <div class="form-group row mt-2">
             <div class="col-md-12">
@@ -147,224 +224,69 @@ export class PlantInventory extends Component {
                     </tr>
                 </thead>
                 <tbody>
+                {PlantListForTable.map(plant=>{
+                    return<>
                     <tr class="tblLinks">
-                        <td colspan="12">
-                            <a href="">Abeliophyllum (White Forsythia)</a>
-                        </td>
-                        <td class="text-center">
-                           <span class="mx-2">
-                                <img src="assets/img/check-ic.svg" alt=""/>
-                           </span>
-                           <span class="ml-4">
-                               <a href="">
-                                    <img src="assets/img/up-arrow-ic.svg" alt=""/>
-                                </a>
-                           </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="13" class="p-0">
-                            <table class="table table-striped" width="100%">
-                                <tr>
-                                    <td class="text-nowrap" width="15%">
-                                        <a href="">393-TF-1259-1G</a>
-                                    </td>
-                                    <td width="10%">6</td>
-                                    <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                    <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                    <td width="6%">25.478</td>
-                                    <td width="5%">5.75</td>
-                                    <td width="5%">5.00</td>
-                                    <td width="6%">18.569 
-                                        <small class="text-green d-block">-23.0%</small></td>
-                                    <td width="6%" class="text-nowrap">
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td width="5%"> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td width="6%"> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td width="6%"> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td width="10%"></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-nowrap">
-                                        <a href="">393-TF-1259-1G</a>
-                                    </td>
-                                    <td>6</td>
-                                    <td class="text-nowrap"><strong>105</strong></td>
-                                    <td class="text-nowrap"><strong>115</strong></td>
-                                    <td>25.478</td>
-                                    <td>5.75</td>
-                                    <td>5.00</td>
-                                    <td>18.569 <small class="text-green  d-block">-23.0%</small></td>
-                                    <td class="text-nowrap">
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-nowrap">
-                                        <a href="">393-TF-1259-1G</a>
-                                    </td>
-                                    <td>6</td>
-                                    <td class="text-nowrap"><strong>165</strong></td>
-                                    <td class="text-nowrap"><strong>145</strong></td>
-                                    <td>25.478</td>
-                                    <td>5.75</td>
-                                    <td>5.00</td>
-                                    <td>18.569 <small class="text-green  d-block">-23.0%</small></td>
-                                    <td class="text-nowrap">
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                    <tr class="tblLinks">
-                        <td colspan="12">
-                            <a href="">Abeliophyllum (White Forsythia)</a>
-                        </td>
-                        <td class="text-center">
-                           <span class="mx-2">
-                                <img src="assets/img/check-ic.svg" alt=""/>
-                           </span>
-                           <span class="ml-4">
-                               <a href="">
-                                    <img src="assets/img/up-arrow-ic.svg" alt=""/>
-                                </a>
-                           </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="13" class="p-0">
-                            <table class="table table-striped" width="100%">
-                                <tr>
-                                    <td class="text-nowrap" width="15%">
-                                        <a href="">393-TF-1259-1G</a>
-                                    </td>
-                                    <td width="10%">6</td>
-                                    <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                    <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                    <td width="6%">25.478</td>
-                                    <td width="5%">5.75</td>
-                                    <td width="5%">5.00</td>
-                                    <td width="6%">18.569 
-                                        <small class="text-green d-block">-23.0%</small></td>
-                                    <td width="6%" class="text-nowrap">
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td width="5%"> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td width="6%"> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td width="6%"> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td width="10%"></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-nowrap">
-                                        <a href="">393-TF-1259-1G</a>
-                                    </td>
-                                    <td>6</td>
-                                    <td class="text-nowrap"><strong>105</strong></td>
-                                    <td class="text-nowrap"><strong>115</strong></td>
-                                    <td>25.478</td>
-                                    <td>5.75</td>
-                                    <td>5.00</td>
-                                    <td>18.569 <small class="text-green  d-block">-23.0%</small></td>
-                                    <td class="text-nowrap">
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="text-nowrap">
-                                        <a href="">393-TF-1259-1G</a>
-                                    </td>
-                                    <td>6</td>
-                                    <td class="text-nowrap"><strong>165</strong></td>
-                                    <td class="text-nowrap"><strong>145</strong></td>
-                                    <td>25.478</td>
-                                    <td>5.75</td>
-                                    <td>5.00</td>
-                                    <td>18.569 <small class="text-green  d-block">-23.0%</small></td>
-                                    <td class="text-nowrap">
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">+1.74%</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td> 
-                                        <span class="border">5.95</span>
-                                        <small class="text-green d-block">-</small>
-                                    </td>
-                                    <td></td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
+                            <td colspan="12">
+                                <a href="">{plant[0].genus}</a>
+                            </td>
+                            <td class="text-center">
+                            <span class="mx-2">
+                                    <img src="assets/img/check-ic.svg" alt=""/>
+                            </span>
+                            <span class="ml-4">
+                                <a href="">
+                                        <img src="assets/img/up-arrow-ic.svg" alt=""/>
+                                    </a>
+                            </span>
+                            </td>
+                        </tr>
+                        {plant.map(skuObj=>{
+                            return  <tr>
+                            <td colspan="13" class="p-0">
+                                <table class="table table-striped" width="100%">
+                                    <tr>
+                                        <td class="text-nowrap" width="15%">
+                                            <a href="">{skuObj.sku_code}</a>
+                                        </td>
+                                        <td width="10%">{skuObj.volume_quantity}</td>
+                                        <td width="10%" class="text-nowrap"><strong>125</strong></td>
+                                        <td width="10%" class="text-nowrap"><strong>125</strong></td>
+                                        <td width="6%">25.478</td>
+                                        <td width="5%">5.75</td>
+                                        <td width="5%">5.00</td>
+                                        <td width="6%">18.569 
+                                            <small class="text-green d-block">-23.0%</small></td>
+                                        <td width="6%" class="text-nowrap">
+                                            <span class="border">5.95</span>
+                                            <small class="text-green d-block">+1.74%</small>
+                                        </td>
+                                        <td width="5%"> 
+                                            <span class="border">5.95</span>
+                                            <small class="text-green d-block">+1.74%</small>
+                                        </td>
+                                        <td width="6%"> 
+                                            <span class="border">5.95</span>
+                                            <small class="text-green d-block">-</small>
+                                        </td>
+                                        <td width="6%"> 
+                                            <span class="border">5.95</span>
+                                            <small class="text-green d-block">-</small>
+                                        </td>
+                                        <td width="10%"></td>
+                                    </tr>
+                             
+                                   
+                                </table>
+                            </td>
+                        </tr>
+                        })}
+                    </>
+                    
+                })}
+                  
+                   
+             
                    
                 </tbody>
             </table>
@@ -383,9 +305,10 @@ const mapStateToProps = (state)=> (
         plantCategoryList:state.inventoryManagementReducer.plantCategoryList,
         locationList:state.inventoryManagementReducer.locationList,
         supplierList:state.supplierData.supplierInfo,
+        plantInventoryData:state.inventoryManagementReducer.plantInventoryData,
         temp:state
 }
 
 )
 
-export default connect(mapStateToProps,{getCategoryList,getLocationList,getAllSupplierAction})(PlantInventory)
+export default connect(mapStateToProps,{getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)

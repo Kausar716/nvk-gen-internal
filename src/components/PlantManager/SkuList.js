@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 /* eslint-disable eqeqeq */
@@ -38,11 +39,12 @@ const SkuList = (props)=>{
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
     const [pageSize, setPageSize] =useState(15)
-    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0  })
+    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0,volume_price_per_unit:0  })
     const [errorCount,setErrorCount] = useState(0)
     const [each_costError,setEach_costError] =useState(false)
     const [each_priceError,setEach_priceError] = useState(false)
     const [sales_priceError,setSales_priceError] = useState(false)
+    const [volume_priceError, setVolume_priceError] = useState(false)
     const handleChange=(date)=> {
         setStartDate(date)
       }
@@ -81,6 +83,11 @@ const SkuList = (props)=>{
             errorobj.sale_price=0
             errorcount--
             setSales_priceError(false)
+        }
+        if(e.target.id === "volume_price_per_unit"){
+            errorobj.volume_price_per_unit=0
+            errorcount--
+            setVolume_priceError(false)
         }
         setErrorObj(errorobj)
        setErrorCount(errorcount)
@@ -155,7 +162,7 @@ const SkuList = (props)=>{
    }
    const submitAction = (e) => {
        console.log(props.plantData)
-    if(!each_costError&& !each_priceError&& !sales_priceError){
+    if(!each_costError&& !each_priceError&& !sales_priceError && !volume_priceError){
     if(e.target.id === "dontRetain"){
     if(actionType ==="add" || actionType === "edit"){
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
@@ -251,7 +258,7 @@ const SkuList = (props)=>{
             var charCode = (evt.which) ? evt.which : evt.keyCode;
             console.log(evt.target.id)
             let id = evt.target.id
-            let characterCheck = evt.target.value.match(/^\d+(\.\d+)?$/);
+            let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
            if(characterCheck === null){
                if(id === "each_cost"){
                 setEach_costError(true)
@@ -262,7 +269,9 @@ const SkuList = (props)=>{
                if(id=== "sale_price"){
                 setSales_priceError(true)
                }
-        
+               if(id=== "volume_price_per_unit"){
+                setVolume_priceError(true)
+               }
            
             
            }
@@ -358,18 +367,18 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
-                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
+                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
-                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
-                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
+                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sale Price</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -410,8 +419,8 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            <input type="text" class="form-control text-right" placeholder="" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
-
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
                                         </div>
@@ -422,7 +431,7 @@ const SkuList = (props)=>{
                                             <button type="button" class="btn btn-primary btn-lg" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU":"Update SKU"}</button>
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Cancel</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Return to Plant Manager</button>
 
                                         </div>
                                     </div>
@@ -483,9 +492,9 @@ const SkuList = (props)=>{
                                             <tr>
                                                 <td>{skuData.archived ===0?"Active":"Inactive"}</td>
                                                 <td>{skuData.sku_code}</td>
-                                                <td class="text-center">{skuData.each_cost}</td>
-                                                <td class="text-center">{skuData.each_price}</td>
-                                                <td class="text-center">{skuData.sale_price}</td>
+                                                <td class="text-right">{skuData.each_cost}</td>
+                                                <td class="text-right">{skuData.each_price}</td>
+                                                <td class="text-right">{skuData.sale_price}</td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1 text-center">
                                                         <input type="checkbox" class="custom-control-input"checked={skuData.status==0?false:true}/>
@@ -493,8 +502,8 @@ const SkuList = (props)=>{
                                                     </div>
                                                 </td>
 
-                                                <td>{skuData.volume_price_per_unit}</td>
-                                                <td>{skuData.volume_quantity}</td>
+                                                <td class="text-right">{skuData.volume_price_per_unit}</td>
+                                                <td class="text-right">{skuData.volume_quantity}</td>
                                                 <td class="text-center">
                                                     <span>
                                                         {/* <a href="javascript:;"> */}

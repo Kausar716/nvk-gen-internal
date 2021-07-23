@@ -287,40 +287,46 @@ const  ProductManagement = (props) =>{
                                     <p onClick={resetFilter} className="d-block  resetlink">Reset</p>
                                     {/* <a href="javascript:;" onClick={handleFilter} className="d-block topSpace">Search</a> */}
                                 </div>
-                                <div className="col-md-5 col-lg-5">
-                                            <label for="plantSearch">Product Search</label>
-                                            <div className="searchInput">
-                                                <button type="submit" className="btn btn-search">
-                                                    <img src="assets/img/search.svg" alt=""/>
-                                                </button>
-                                                {/* <input type="text" className="form-control" placeholder="Search"/> */}
-                                                <input className="form-control" 
-                                                        type="text" 
-                                                        autocomplete={"off"}
-                                                        placeholder="Search" 
-                                                        value={inputValue}
-                                                        onChange={getValue} 
-                                                        id="search"/>
-                                            </div>
-                                        </div>
-                                        <div className="col-md-12">
-                                            <div className="form-check form-check-inline">
-                                            <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
-                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
-                                                <label className="form-check-label" for="activePlants">Active</label>
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
-                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
-                                                <label className="form-check-label" for="archivedPlants">Archived</label>
-                                            </div>
-                                            <div className="form-check form-check-inline">
-                                            <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
-                                                {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
-                                                <label className="form-check-label" for="allPlants"> &nbsp;All</label>
-                                            </div>
-                                        </div>
+                                
+                                
                             </div>
+                            <div className="form-group row">
+                                    <div className="col-md-5 col-lg-5">
+                                        <label for="plantSearch">Product Search</label>
+                                        <div className="searchInput">
+                                            <button type="submit" className="btn btn-search">
+                                                <img src="assets/img/search.svg" alt=""/>
+                                            </button>
+                                            {/* <input type="text" className="form-control" placeholder="Search"/> */}
+                                            <input className="form-control" 
+                                                    type="text" 
+                                                    autocomplete={"off"}
+                                                    placeholder="Search" 
+                                                    value={inputValue}
+                                                    onChange={getValue} 
+                                                    id="search"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="form-group row">
+                                    <div className="col-md-12">
+                                        <div className="form-check form-check-inline">
+                                        <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
+                                            {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
+                                            <label className="form-check-label" for="activePlants">Active</label>
+                                        </div>
+                                        <div className="form-check form-check-inline">
+                                        <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                            {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
+                                            <label className="form-check-label" for="archivedPlants">Archived</label>
+                                        </div>
+                                        <div className="form-check form-check-inline">
+                                        <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
+                                            {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
+                                            <label className="form-check-label" for="allPlants"> &nbsp;All</label>
+                                        </div>
+                                    </div>
+                                </div>
                              <hr/>
                              <div className="centerItem">
                              {loader?  <p > {"Resetting ... " }<Loader /></p>:null}

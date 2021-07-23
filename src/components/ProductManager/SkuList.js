@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -79,10 +80,13 @@ const SkuList=(props)=> {
     const [id,setId] = useState(0)
     const [open,setOpen] = useState(false)
     const [skuEdit,setSkuEdit] = useState(false)
-    const [errorObject,setErrorObject] = useState({each_cost:0,each_price:0,sales_price:0})
+    // const [errorObject,setErrorObject] = useState({each_cost:0,each_price:0,sales_price:0,volume_price_per_unit:0})
+    const [errorObj,setErrorObj] = useState({ each_cost:0,each_price:0,sale_price:0,volume_price_per_unit:0  })
+    const [errorCount,setErrorCount] = useState(0)
     const [each_costError,setEach_costError] =useState(false)
     const [each_priceError,setEach_priceError] = useState(false)
     const [sales_priceError,setSales_priceError] = useState(false)
+    const [volume_priceError,setVolume_priceError] = useState(false)
    
    
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
@@ -111,12 +115,14 @@ const SkuList=(props)=> {
 
     const submitAction = (e) =>{
         e.preventDefault();
-         if(submitCount === 0 && (!each_costError&& !each_priceError&& !sales_priceError)){
+        alert(e.target.id)
+         if(submitCount === 0 && (!each_costError&& !each_priceError&& !sales_priceError && !volume_priceError)){
             if(needAction){
                 if(actionType ==="add"){
                     console.log(product_idFromGeneral)
                     console.log(skuDataById)
                 props.createSkuAction(product_idFromGeneral,skuDataById)
+                
                    props.pageReDirectAction("product","add")
                 }
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
@@ -149,7 +155,7 @@ const SkuList=(props)=> {
           
      }
      const handleUpdateAndClear = ()=>{
-       if(!each_costError&& !each_priceError&& !sales_priceError){
+       if(!each_costError&& !each_priceError&& !sales_priceError && !volume_priceError){
         if(!skuEdit){
            let idFromGeneral = props.productData.productDataById.product_id
            console.log(idFromGeneral)
@@ -168,10 +174,30 @@ const SkuList=(props)=> {
         props.setSkuPageNumber(page-1)
     }
     const handleInput =(e)=>{
-        console.log(e.target.id,e.target.value)
-        console.log(parseFloat(e.target.id))
-        console.log(!parseFloat(e.target.value) )
-        console.log(e.target.id === "each_cost" && isNaN(parseFloat(e.target.value)))
+        let errorcount =errorCount
+        let errorobj =errorObj
+        if(e.target.id  === "each_cost" ){
+            errorobj.each_cost=0
+            errorcount--
+            setEach_costError(false)
+        }
+        if(e.target.id  === "each_price" ){
+            errorobj.each_price=0
+            errorcount--
+            setEach_priceError(false)
+        }
+        if(e.target.id  === "sale_price" ){
+            errorobj.sale_price=0
+            errorcount--
+            setSales_priceError(false)
+        }
+        if(e.target.id === "volume_price_per_unit"){
+            errorobj.volume_price_per_unit=0
+            errorcount--
+            setVolume_priceError(false)
+        }
+        setErrorObj(errorobj)
+       setErrorCount(errorcount)
         setSubmitCount(0)
         if((e.target.id === "each_cost" ||e.target.id === "each_price"||e.target.id === "sale_price") ){
           
@@ -231,7 +257,7 @@ const SkuList=(props)=> {
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     console.log(evt.target.id)
     let id = evt.target.id
-    let characterCheck = evt.target.value.match(/^\d+(\.\d+)?$/);
+    let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
    if(characterCheck === null){
        if(id === "each_cost"){
         setEach_costError(true)
@@ -242,7 +268,9 @@ const SkuList=(props)=> {
        if(id=== "sale_price"){
         setSales_priceError(true)
        }
-
+       if(id=== "volume_price_per_unit"){
+        setVolume_priceError(true)
+       }
    
     
    }
@@ -320,14 +348,14 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-4">
+                                    <div class="col-md-6 col-lg-3">
                                             <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                             id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={skuEdit} />
                                         </div>
                                         {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         </div> */}
-                                        <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sub-Category <span class="text-danger">*</span></label>
                                             <select class="form-control"  id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
                                             <option value="0">None</option>
@@ -340,7 +368,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
                                             <select class="form-control">
                                                 <option>Select</option>
@@ -359,7 +387,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 // min="0"
                                                 onBlur={handleBlur}
                                               />
-                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
+                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
@@ -369,7 +397,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              value={skuDataById.each_price} 
                                              onBlur={handleBlur}
                                             min="0"/>
-                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
@@ -379,7 +407,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              onBlur={handleBlur}
                                               value={skuDataById.sale_price}
                                                min="0"/>
-                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Number</span>:""}
+                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -423,8 +451,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            <input type="text" class="form-control text-right" placeholder="" value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
-
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
                                         </div>
@@ -435,7 +463,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             // type="button" class="btn btn-primary btn-lg"
                                             className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
                                             disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} 
-                                            onClick={submitAction}
+                                            onClick={submitAction} id="dontRetain"
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
@@ -444,8 +472,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                  </button>
 
 
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
-                                            disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
+                                            disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
                                              <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
                                             onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>

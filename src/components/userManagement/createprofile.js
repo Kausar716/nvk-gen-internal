@@ -8,6 +8,15 @@ import {getUsersList,showUser,updateUser,addUser,uploadImage} from "../../action
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
+
+const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+
+const handleInput2 = (value) => {
+  return (
+    value.replace(phoneRegex, '($1) $2-$3')
+  )
+}
+
 export class CreateUserProfile extends Component {  
     constructor(){
         super()
@@ -15,6 +24,7 @@ export class CreateUserProfile extends Component {
             firstName:"",
             lastName:"",
             phone:"",
+            value: '',
             email:"",
             position:"",
             locationAccess:false,
@@ -70,7 +80,9 @@ export class CreateUserProfile extends Component {
         console.log(e.target.value)
         const {target:{name,value}} =e
         let {errorObj,errorCount} = this.state
+        //this.setState({phone: e.target.value})
         this.setState({[name]:value})
+
         if(name === "firstName" ){
             if(errorObj.firstNameError>0){
                 errorObj.firstNameError=0
@@ -121,9 +133,10 @@ export class CreateUserProfile extends Component {
     validate = () =>{
         //debugger;
         let {errorObj,errorCount}=this.state
-        let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+        //let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+          let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z]+$/
-        // let phoneReg = new RegExp('^[0-9]+$');
+        // let phoneReg = new RegExp('^[0-9]+$');/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
         if(this.state.firstName.length === 0){
@@ -221,8 +234,18 @@ export class CreateUserProfile extends Component {
         this.setState({open:false})
     }
     render() {
+
+        const { phone} = this.state;
         // const { classes } = this.props;
         const { selected, hasError } = this.state;
+
+
+
+     const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+     let phno = phone ||'';
+        let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
+  
+           
 
         console.log("this.state.errorObj.positionError",this.state.errorObj.positionError, this.state.errorObj.lastNameError)
      console.log(this.props.roles)
@@ -281,11 +304,49 @@ export class CreateUserProfile extends Component {
                                                    
                                                 </div>
 
-                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                {/* <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"  value={this.state.phone} onChange={this.handleInput} name="phone"/>
                                                     {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
+                                                </div> */}
+
+                                                <div class="col-md-6 mt-3 mt-md-0">
+                                                    <label>Phone<span class="text-danger">*</span></label>
+                                                    {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control" 
+                                                    value={finalPhno}
+
+                                                    //  value={this.state.phone} 
+                                                    // onChange={this.handleInput}
+                                                     onChange={
+                                                        (event) => this.setState({value: event.target.value})
+                                                       } 
+                                                     pattern="[0-9]*"
+                                                     maxLength="10"
+                                                     name="phone"/> */}
+
+                                                <input
+                                                    class="form-control"  
+                                                    type="text"
+                                                    name="phone"
+                                                    placeholder="(xxx) xxx-xxxx"
+                                                    value={finalPhno}
+                                                    pattern="[0-9]*"
+                                                   // value={organizationDataById.phone}
+                                                    // value={this.state.phone}
+                                                   // onChange={this.handleInput} 
+                                                     //onChange={this.handleChange}
+                                                     maxLength="10"
+                                                     onChange={
+                                                        (event) => this.setState({phone: event.target.value})
+                                                       } 
+                                                   
+                                                />
+
+                                                    {/* {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""} */}
                                                 </div>
+
+
+
                                             </div>
                                             <div class="row form-group">
                                                 <div class="col-md-6">

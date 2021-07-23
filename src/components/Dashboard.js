@@ -1,6 +1,7 @@
+/* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {Component} from 'react'
+import React from 'react'
 import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
@@ -20,7 +21,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
             <div class="row">
                 
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("orderList")}}>
-                <Link to="/comingsoon" >
+                <Link to="/QuoteAndOrdersManagement" >
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Customer Quotes &amp; Orders</h3>
                         <div class="text-center my-4 dashIcon">
@@ -41,7 +42,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                 </div>
               
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("purchaseOrder")}}>
-                <Link to="/comingsoon">
+                <Link to="/PurchaseOrderList">
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Purchase Orders</h3>
                         <div class="text-center my-4 dashIcon">
@@ -61,7 +62,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
                     </Link>
                 </div>
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("inventory")}}>
-                <Link to="/comingsoon">
+                <Link to="/inventoryLists">
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Inventory Management</h3>
                         <span class="lockIcon"><a href=""><img src="./assets/img/lock.svg" /></a></span>
