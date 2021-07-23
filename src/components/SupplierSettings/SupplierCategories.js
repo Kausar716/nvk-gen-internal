@@ -260,7 +260,7 @@ render() {
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierCategoryList.inactive.map(t=>{
+                                                   {this.props.supplierData.supplierCategoryList && this.props.supplierData.supplierCategoryList.inactive.map(t=>{
                                                     return <li id={t.id} name={t.category} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.category}</span>
@@ -294,7 +294,7 @@ render() {
                                             </div>
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierCategoryList.active.map(t=>{
+                                                   {this.props.supplierData.supplierCategoryList ? this.props.supplierData.supplierCategoryList.active.map(t=>{
                                                     return <li id={t.id} name={t.category} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.category}</span>
@@ -303,7 +303,11 @@ render() {
                                                                 /></span>
                                                                  </a>
                                                             </li>
-                                                    })}
+                                                    })
+                                                    :
+                                                    "Loading..."
+                                                    
+                                                    }
                                             </ul>
                                             </div>
                                         </div>
