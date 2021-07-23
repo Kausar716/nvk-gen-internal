@@ -67,7 +67,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
-        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contacts</p> </ModalHeader>
+        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Address</p> </ModalHeader>
         <form onSubmit={saveData}>
         <ModalBody >
           
