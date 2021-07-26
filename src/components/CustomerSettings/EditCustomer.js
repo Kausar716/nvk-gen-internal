@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
-import {UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -260,6 +260,12 @@ function AddCustomer(props) {
         props.getAllCustomer()
         props.typeOfActionShow("")
       
+    }
+    const deleteCustomerContactData =(id)=>{
+        props.deleteCustomerContact(id).then(data=>{
+            props.getCustomerContacts()
+        })
+
     }
     const editContact=(id)=>{
         setisOpenContacs(true)
@@ -712,7 +718,7 @@ function AddCustomer(props) {
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>editContact(contactData.id)}/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(contactData.id)}/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -829,7 +835,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps,{deleteCustomerContact,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      

@@ -49,6 +49,7 @@ UPDATE_CUSTOMER_CONTACT,
 GET_CUSTOMER_CONTACT_BY_ID,
 RE_SET_ADDRESS_FILED,
 RESET_CONTACT,
+DELETE_CUSTOMER_CONTACT,
 
  axios,
  config
@@ -61,15 +62,16 @@ export const typeOfActionShow = (type) =>dispatch=>{
       action:type
     })
 }
-export const deleteCustomerContact = (id) =>dispatch=>{
-    return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
-        console.log(res.data)
-    dispatch({
-            type:GET_CUSTOMER_BY_ID,
-            payload:res.data,
-
-        })
-    })
+export const deleteCustomerContact= (id) => dispatch => {
+    // console.log(customerData)
+    return axios.post(`/api/delete-customer-contact/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_CUSTOMER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+     
 }
 
 export const getCustomerById = (id) =>dispatch=>{
@@ -592,6 +594,7 @@ export const deleteCustomer= (id) => dispatch => {
         }) 
      
 }
+
 export const setPageNumber = (pageNumber) => {
     return{
           type:SET_PAGE_NUMBER,
