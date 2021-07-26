@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
-import {deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {deleteCustomerAddress,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -70,6 +70,7 @@ function AddCustomer(props) {
 
     const handleInput= (e)=>{
         // alert("hi")
+        console.log(e.target.value,e.target.id)
         setCheckedData(true)
         let indexValue = null
         if(e.target.id ==="type"){
@@ -264,6 +265,12 @@ function AddCustomer(props) {
     const deleteCustomerContactData =(id)=>{
         props.deleteCustomerContact(id).then(data=>{
             props.getCustomerContacts()
+        })
+
+    }
+    const deleteAddress =(id)=>{
+        props.deleteCustomerAddress(id).then(data=>{
+            props.getcustomerAddress()
         })
 
     }
@@ -784,7 +791,7 @@ function AddCustomer(props) {
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>{deleteAddress(data.id)}}/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -835,7 +842,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{deleteCustomerContact,
+export default connect(mapStateToProps,{deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      

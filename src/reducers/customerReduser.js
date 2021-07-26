@@ -49,6 +49,7 @@ import {
     RE_SET_ADDRESS_FILED,
     RESET_CONTACT,
     ADD_SUPPLIER_ADDRESS,
+    DELETE_CUSTOMER_ADDRESS,
 GET_SUPPLIER_ADDRESS,
 DELETE_CUSTOMER_CONTACT,
 GET_ALL_SUPPLIER_ADDRESS,
@@ -72,6 +73,7 @@ SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
 
 UPDATE_CUSTOMER_TERMS_SETTING,
 SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
+HANDLE_INPUT_EXCHANGE1,
 
 
     
@@ -651,12 +653,12 @@ case ADD_NEW_CUSTOMER:
                 customerExchange:{...action.payload.data}
 
             }
-        // case HANDLE_INPUT_EXCHANGE:
-        //     return{
-        //         ...state,
-        //         [action.dataType]:{...state[action.dataType],[action.id]:action.data}
+        case HANDLE_INPUT_EXCHANGE1:
+            return{
+                ...state,
+                [action.dataType]:{...state[action.dataType],[action.id]:action.data}
 
-        //     }
+            }
         case ADD_EMAIL:
             return{
                 ...state,
