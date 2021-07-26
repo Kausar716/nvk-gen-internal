@@ -7,7 +7,9 @@ import {
     GET_ALL_PLANT_INVENTORY_ACTION,
     PRODUCT_INVENTORY_FILTER,
     GET_ALL_PRODUCT_INVENTORY_ACTION,
-    PLANT_INVENTORY_FILTER
+    PLANT_INVENTORY_FILTER,
+    GET_ALL_PLANTMANAGER_INVENTORY_ACTION,
+    GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION
    } from '../actions/types';
 
 
@@ -113,6 +115,14 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                     ...state,
                     productInventoryData:returnProducAlltList
                 }
+            case GET_ALL_PLANTMANAGER_INVENTORY_ACTION:
+                return{
+
+                }
+            case GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION:
+            return{
+
+            }
             default:
                 return state
     }

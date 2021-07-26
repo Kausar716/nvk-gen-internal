@@ -5,7 +5,7 @@ export default function Nav() {
   return (
     <div id="header" class="header navbar-default align-items-center">
       <div class="navbar-header">
-        <a href="index.html" class="navbar-brand">
+        <a href="#" class="navbar-brand">
           <img src="assets/img/logo.svg" alt=""/>
         </a>
         <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
