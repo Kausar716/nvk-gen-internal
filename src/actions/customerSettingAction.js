@@ -239,7 +239,7 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
  }
  
  export const showSpecificAccountReasonSettings = (id) => dispatch => {
-     axios.get(`api/show-customer-term/${id}`,config).then(res=>{ 
+     axios.get(`api/show-customer-account-status/${id}`,config).then(res=>{ 
        
          console.log(res.data)
      dispatch({
