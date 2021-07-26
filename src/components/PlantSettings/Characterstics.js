@@ -187,14 +187,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         </div> */}
 
                                             {this.state.isEditing ? (
-                                                    <div style={{display:"flex"}}>
+                                                    <div className="d-flex justify-content-md-end mt-2">
                                                         <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryUpdate}>
                                                             <a href="javascript:" className="d-flex align-items-center">
                                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Section
                                                             </a>
                                                         </div>
 
-                                                            <div className="col-md-6 col-lg-3" style={{marginLeft:"6em", marginTop:"1em"}} onClick={()=>{this.setState({isEditing:false})}}>
+                                                            <div className="d-flex justify-content-md-end mt-2" style={{marginLeft:"2.5em",  marginTop:"-6px"}} onClick={()=>{this.setState({isEditing:false})}}>
                                                                 <a href="javascript:" className="d-flex align-items-center">
                                                                     Cancel 
                                                                 </a>
@@ -256,11 +256,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             <div>
                                                 <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
                                             </div>
-                                            <div id="delete"  onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                            {/* <div id="delete" className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
                                                 <a href="javascript;" className="icDelete">
                                                 <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
                                                 </a>
+                                            </div> */}
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
                                             </div>
                                         </div>
                                     </div>

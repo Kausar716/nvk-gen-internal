@@ -167,14 +167,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         //  updateObject.attribute_id=1
          updateObject.status=1
 
-         updateObject["sub_attributeschild"] =[
+         updateObject["childrens"] =[
             {
-            value:caliperName,
-            name:'Imperial'
+                children_value:caliperName,
+                children_id:this.props.showSpeciSubA.sub_attributeschild[0].id,
+                children_name:'Imperial'
             },
             {
-                value:skuName,
-                name:'SKU value'
+                children_value:skuName,
+                children_id:this.props.showSpeciSubA.sub_attributeschild[1].id,
+                children_name:'SKU value'
                 }
         ]
             
@@ -231,6 +233,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             
         }
         render() {
+            console.log("ABCDEFG",this.props.showSpeciSubA)
         console.log(this.props.temp)
         var tasks={
             inactive:[],
@@ -300,11 +303,18 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             </div> */}
 
                                             {this.state.isEditing ? (
-
-                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
+                                                    <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} onClick={this.handleAddCategoryUpdate}>
+                                                    <div >
                                                     <a href="javascript:" className="d-flex align-items-center">
                                                         <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Caliper
                                                     </a>
+                                                    </div>
+
+
+                                                        <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                           
+                                                        </div>
                                                     </div>
 
 

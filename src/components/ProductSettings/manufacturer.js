@@ -186,11 +186,29 @@ render()
 
                                     {this.state.isEditing ? (
 
+                                                // <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                // <a href="javascript:" className="d-flex align-items-center">
+                                                //     <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Manufacturer
+                                                // </a>
+                                                // </div>
+
+
                                                 <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
-                                                <a href="javascript:" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Manufacturer
-                                                </a>
+                                                        <div>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                            <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Manufacturer
+                                                        </a>
+                                                        </div>  
+
+                                                        <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                        <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"13em"}}>
+                                                            Cancel 
+                                                        </a>
+                                                        </div>
                                                 </div>
+
+
+
                                                 
 
                                                 ):

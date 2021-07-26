@@ -194,7 +194,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <p>Position</p>
 
                                         <div className="row d-flex align-items-center">
-                                        <div className="col-md-6 col-lg-9">  
+                                        <div className="col-md-6 col-lg-6">  
                                                 <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } name="position" 
                                                 value={this.state.name}
                                                  placeholder="" onChange={this.handlePositionInputAction}/>
@@ -203,11 +203,26 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
                                             {this.state.isEditing ? (
 
-                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
-                                                    <a href="javascript:" className="d-flex align-items-center">
-                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
-                                                    </a>
-                                                    </div>
+                                                    // <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                    // <a href="javascript:" className="d-flex align-items-center">
+                                                    //     <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
+                                                    // </a>
+                                                    // </div>
+
+                                                    
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                <div>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
+                                                </a>
+                                                </div>  
+
+                                                <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"11em"}}>
+                                                    Cancel 
+                                                </a>
+                                                </div>
+                                        </div>
                                                        
 
                                             ):

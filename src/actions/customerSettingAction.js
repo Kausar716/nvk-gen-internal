@@ -49,6 +49,26 @@ UPDATE_CUSTOMER_CONTACT,
 GET_CUSTOMER_CONTACT_BY_ID,
 RE_SET_ADDRESS_FILED,
 RESET_CONTACT,
+UPDATE_CUSTOMER_TYPE_SETTING,
+SHOW_SPECIFIC_CUSTOMER_TYPE_SETTING,
+HANDLE_CUSTOMER_SETTIING_INPUT_DATA,
+SHOW_SPECIFIC_CUSTOMER_DELIVERY_METHOD_SETTING,
+UPDATE_CUSTOMER_DELIVERY_METHOD_SETTING,
+
+
+UPDATE_CUSTOMER_STATUS_LEVEL_SETTING,
+SHOW_SPECIFIC_CUSTOMER_STATUS_LEVEL_SETTING,
+
+UPDATE_CUSTOMER_RETURN_REASON_SETTING,
+SHOW_SPECIFIC_CUSTOMER_RETURN_REASON_SETTING,
+
+UPDATE_CUSTOMER_ACCOUNT_REASON_SETTING,
+SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
+
+UPDATE_CUSTOMER_TERMS_SETTING,
+SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
+
+
  axios,
  config
  } from './types'
@@ -93,6 +113,211 @@ export const UpdateCustomerData = (data)=>dispatch=>{
             })
         }) 
 }
+
+
+
+export const updateCustomerTypeSettings = (id, data) =>dispatch => {
+    //debugger;
+   return axios.post(`/api/update-customer-type/${id}`,data,config).then(res=>{ 
+     // debugger;
+       console.log(res.data)
+   dispatch({
+           type:UPDATE_CUSTOMER_TYPE_SETTING,
+           payload:res.data.data,
+
+       })
+   })
+
+}
+
+export const showSpecificCustomerSettingType = (id) => dispatch => {
+    axios.get(`api/show-customer-type/${id}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_SPECIFIC_CUSTOMER_TYPE_SETTING,
+            payload:res.data
+        })
+    })
+ }
+
+
+
+
+export const updateCustomerDeliveryMethodSettings = (id, data) =>dispatch => {
+   // debugger;
+   return axios.post(`/api/update-customer-delivery-method/${id}`,data,config).then(res=>{ 
+     //debugger;
+       console.log(res.data)
+   dispatch({
+           type:UPDATE_CUSTOMER_DELIVERY_METHOD_SETTING,
+           payload:res.data.data,
+
+       })
+   })
+
+}
+
+export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
+    axios.get(`api/show-customer-delivery-method/${id}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_SPECIFIC_CUSTOMER_DELIVERY_METHOD_SETTING,
+            payload:res.data
+        })
+    })
+ }
+
+
+//StatusLevel
+ export const updateCustomerStatusLevelSettings = (id, data) =>dispatch => {
+    // debugger;
+    return axios.post(`/api/update-customer-account-status/${id}`,data,config).then(res=>{ 
+      //debugger;
+        console.log(res.data)
+    dispatch({
+            type:UPDATE_CUSTOMER_STATUS_LEVEL_SETTING,
+            payload:res.data.data,
+ 
+        })
+    })
+ 
+ }
+ 
+ export const showSpecificStatusLevelSettings = (id) => dispatch => {
+     axios.get(`api/show-customer-account-status/${id}`,config).then(res=>{ 
+       
+         console.log(res.data)
+     dispatch({
+             type:SHOW_SPECIFIC_CUSTOMER_STATUS_LEVEL_SETTING,
+             payload:res.data
+         })
+     })
+  }
+
+  //CustomerReturnReason
+  export const updateCustomerReturnReasonSettings = (id, data) =>dispatch => {
+    // debugger;
+    return axios.post(`/api/update-customer-reason/${id}`,data,config).then(res=>{ 
+      //debugger;
+        console.log(res.data)
+    dispatch({
+            type:UPDATE_CUSTOMER_RETURN_REASON_SETTING,
+            payload:res.data.data,
+ 
+        })
+    })
+ 
+ }
+ 
+ export const showSpecificReturnReasonSettings = (id) => dispatch => {
+     axios.get(`api/show-customer-reason/${id}`,config).then(res=>{ 
+       
+         console.log(res.data)
+     dispatch({
+             type:SHOW_SPECIFIC_CUSTOMER_RETURN_REASON_SETTING,
+             payload:res.data
+         })
+     })
+  }
+ 
+  //CustomerAccountReason
+
+  export const updateCustomerAccountReasonlSettings = (id, data) =>dispatch => {
+    // debugger;
+    return axios.post(`/api/update-customer-account-reason/${id}`,data,config).then(res=>{ 
+      //debugger;
+        console.log(res.data)
+    dispatch({
+            type:UPDATE_CUSTOMER_ACCOUNT_REASON_SETTING,
+            payload:res.data.data,
+ 
+        })
+    })
+ 
+ }
+ 
+ export const showSpecificAccountReasonSettings = (id) => dispatch => {
+     axios.get(`api/show-customer-account-reason/${id}`,config).then(res=>{ 
+       
+         console.log(res.data)
+     dispatch({
+             type:SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
+             payload:res.data
+         })
+     })
+  }
+
+  //Terms
+  export const updateCustomerTermslSettings = (id, data) =>dispatch => {
+    // debugger;
+    return axios.post(`/api/update-customer-account-reason/${id}`,data,config).then(res=>{ 
+      //debugger;
+        console.log(res.data)
+    dispatch({
+            type:UPDATE_CUSTOMER_TERMS_SETTING,
+            payload:res.data.data,
+ 
+        })
+    })
+ 
+ }
+ 
+ export const showSpecificTermsSettings = (id) => dispatch => {
+     axios.get(`api/show-customer-account-reason/${id}`,config).then(res=>{ 
+       
+         console.log(res.data)
+     dispatch({
+             type:SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
+             payload:res.data
+         })
+     })
+  }
+
+
+
+
+
+
+
+ export const handleExchangeData2 = (data,dataType) =>dispatch=>{
+    //console.log(name)
+ dispatch({
+     type:HANDLE_CUSTOMER_SETTIING_INPUT_DATA,
+     data:data,
+    //  id:id,
+     dataType:dataType   
+ })
+}
+
+export const handleExchangeData = (data,dataType) =>dispatch=>{
+    dispatch({
+        type:HANDLE_INPUT_EXCHANGE,
+        data:data,
+        // id:id,
+        dataType:dataType
+
+    })
+
+}
+
+// export const handleExchangeData2 = (data,id,dataType) =>dispatch=>{
+//     dispatch({
+//         type:HANDLE_INPUT_EXCHANGE,
+//         data:data,
+//         id:id,
+//         dataType:dataType
+
+//     })
+
+// }
+ 
+
+
+
+
+
 export const resetCustomerFilds = (data)=>dispatch => {
     dispatch({
         type:RESET_CUSTOMER_FILEDS,
@@ -516,16 +741,7 @@ export const saveCustomerType = (data)=>dispatch=>{
         })
     })
 }
-export const handleExchangeData = (data,id,dataType) =>dispatch=>{
-    dispatch({
-        type:HANDLE_INPUT_EXCHANGE,
-        data:data,
-        id:id,
-        dataType:dataType
 
-    })
-
-}
 export const handleChangeFilter = (data,id) =>dispatch =>{
     dispatch({
         type:HANDLE_INPUT,
@@ -534,6 +750,8 @@ export const handleChangeFilter = (data,id) =>dispatch =>{
 
     })
 }
+
+
 
 export const addCustomer = (data) => dispatch => {
     console.log(data)

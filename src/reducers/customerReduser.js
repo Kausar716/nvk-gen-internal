@@ -53,6 +53,26 @@ GET_SUPPLIER_ADDRESS,
 GET_ALL_SUPPLIER_ADDRESS,
 DELETE_SUPPLIER_ADDRESS,
 UPDATE_SUPPLIER_ADDRESS,
+UPDATE_CUSTOMER_TYPE_SETTING,
+SHOW_SPECIFIC_CUSTOMER_TYPE_SETTING,
+HANDLE_CUSTOMER_SETTIING_INPUT_DATA,
+SHOW_SPECIFIC_CUSTOMER_DELIVERY_METHOD_SETTING,
+UPDATE_CUSTOMER_DELIVERY_METHOD_SETTING,
+
+
+UPDATE_CUSTOMER_STATUS_LEVEL_SETTING,
+SHOW_SPECIFIC_CUSTOMER_STATUS_LEVEL_SETTING,
+
+UPDATE_CUSTOMER_RETURN_REASON_SETTING,
+SHOW_SPECIFIC_CUSTOMER_RETURN_REASON_SETTING,
+
+UPDATE_CUSTOMER_ACCOUNT_REASON_SETTING,
+SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
+
+UPDATE_CUSTOMER_TERMS_SETTING,
+SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
+
+
     
 
 
@@ -65,6 +85,30 @@ UPDATE_SUPPLIER_ADDRESS,
    
 
 const initialSatate = {
+
+    updatedCustomerSettingStatusLevel:[],
+    showSpecificCustomerSettingSatausLevel:[],
+
+    updatedCustomerSettingReturnReason:[],
+    showSpecificCustomerSettingReturnReason:[],
+
+    updatedCustomerSettingAccountReason:[],
+    showSpecificCustomerSettingAccountReason:[],
+
+    updatedCustomerSettingTerms:[],
+    showSpecificCustomerSettingTerms:[],
+
+//
+    updatedCustomerSettingType:[],
+    showSpecificCustomerSettingType:[],
+
+    updatedCustomerSettingDeliveryMethod:[],
+    showSpecificCustomerDeliveryMethod:[],
+
+
+    CustomerSettingName1:{},
+    CustomerSettingName2:{},
+    name:"",
    customerList:[],
    pageNumber:0,
    duplicateData:[],
@@ -352,6 +396,128 @@ case ADD_NEW_CUSTOMER:
 
 
 
+// UPDATE_CUSTOMER_ACCOUNT_REASON_SETTING,
+// SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
+
+// UPDATE_CUSTOMER_TERMS_SETTING,
+// SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
+
+
+
+
+
+            case UPDATE_CUSTOMER_TERMS_SETTING:
+                return{
+                    ...state,
+                    updatedCustomerSettingTerms:action.payload.data
+                }
+            case SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING:
+                
+                return{
+                    ...state,
+                    showSpecificCustomerSettingTerms:action.payload.data
+                }
+
+            case UPDATE_CUSTOMER_ACCOUNT_REASON_SETTING:
+                return{
+                    ...state,
+                    updatedCustomerSettingAccountReason:action.payload.data
+                }
+            case SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING:
+                
+                return{
+                    ...state,
+                    showSpecificCustomerSettingAccountReason:action.payload.data
+                }
+
+
+
+
+            case UPDATE_CUSTOMER_RETURN_REASON_SETTING:
+                return{
+                    ...state,
+                    updatedCustomerSettingReturnReason:action.payload.data
+                }
+            case SHOW_SPECIFIC_CUSTOMER_RETURN_REASON_SETTING:
+                
+                return{
+                    ...state,
+                    showSpecificCustomerSettingReturnReason:action.payload.data
+                }
+
+
+
+
+        case UPDATE_CUSTOMER_STATUS_LEVEL_SETTING:
+            return{
+                ...state,
+                updatedCustomerSettingStatusLevel:action.payload.data
+            }
+        case SHOW_SPECIFIC_CUSTOMER_STATUS_LEVEL_SETTING:
+            
+            return{
+                ...state,
+                showSpecificCustomerSettingSatausLevel:action.payload.data
+            }
+
+
+
+
+        case UPDATE_CUSTOMER_TYPE_SETTING:
+            return{
+                ...state,
+                updatedCustomerSettingType:action.payload.data
+            }
+        case SHOW_SPECIFIC_CUSTOMER_TYPE_SETTING:
+            
+            return{
+                ...state,
+                showSpecificCustomerSettingType:action.payload.data
+            }
+
+
+
+
+
+
+
+
+            case UPDATE_CUSTOMER_DELIVERY_METHOD_SETTING:
+                return{
+                    ...state,
+                    updatedCustomerSettingDeliveryMethod:action.payload.data
+                }
+            case SHOW_SPECIFIC_CUSTOMER_DELIVERY_METHOD_SETTING:
+                
+                return{
+                    ...state,
+                    showSpecificCustomerDeliveryMethod:action.payload.data
+                }
+
+            //SHOW_SPECIFIC_CUSTOMER_DELIVERY_METHOD_SETTING,
+//UPDATE_CUSTOMER_DELIVERY_METHOD_SETTING,
+
+                case HANDLE_CUSTOMER_SETTIING_INPUT_DATA:
+                    return{
+                        ...state,
+                        CustomerSettingName1:{...state.CustomerSettingName1,[action.name]:action.value}
+                    }
+
+
+                    case HANDLE_INPUT_EXCHANGE:
+                        return{
+                            ...state,
+                            CustomerSettingName2:{...state.CustomerSettingName2,[action.name]:action.value}
+                           // [action.dataType]:{...state[action.dataType],[action.id]:action.data}
+            
+                        }
+                    // return{
+                    //     ...state,
+                    //     [action.dataType]:{...state[action.dataType],[action.id]:action.data}
+                                     
+                    // }
+
+
 
 
 
@@ -363,6 +529,18 @@ case ADD_NEW_CUSTOMER:
 
 
 ////////////////////////////ends here////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
         case GET_EXCHANGE_DATA:
             return{
                 ...state,
@@ -472,12 +650,12 @@ case ADD_NEW_CUSTOMER:
                 customerExchange:{...action.payload.data}
 
             }
-        case HANDLE_INPUT_EXCHANGE:
-            return{
-                ...state,
-                [action.dataType]:{...state[action.dataType],[action.id]:action.data}
+        // case HANDLE_INPUT_EXCHANGE:
+        //     return{
+        //         ...state,
+        //         [action.dataType]:{...state[action.dataType],[action.id]:action.data}
 
-            }
+        //     }
         case ADD_EMAIL:
             return{
                 ...state,
@@ -598,6 +776,9 @@ case ADD_NEW_CUSTOMER:
                     customerList:searchedData1,
                     alphabetSearch:action.alphaData
                 }
+
+
+                
     
         default:
                 return state
