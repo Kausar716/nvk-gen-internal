@@ -183,10 +183,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
     
               
     
-             updateObject["sub_attributeschild"] =[
+             updateObject["childrens"] =[
                 {
-                value:skuName,
-                name:'SKU value'
+                    children_value:skuName,
+                    children_id:this.props.showSpeciSubA.sub_attributeschild[0].id,
+                    children_id_name:'SKU value'
             }
             ]
                 

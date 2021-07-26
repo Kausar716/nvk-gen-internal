@@ -172,14 +172,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         //  updateObject.attribute_id=1
          updateObject.status=1
 
-         updateObject["sub_attributeschild"] =[
+         updateObject["childrens"] =[
             {
-            value:imperialName,
-            name:'Imperial'
+                children_value:imperialName,
+                children_name:'Imperial',
+                children_id:this.props.showSpeciSubA.sub_attributeschild[0].id,
             },
             {
-                value:skuName,
-                name:'SKU value'
+                children_value:skuName,
+                children_name:'SKU value',
+                children_id:this.props.showSpeciSubA.sub_attributeschild[1].id,
                 }
         ]
             

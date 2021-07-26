@@ -176,6 +176,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
        handleAddCategoryUpdate=(e)=>{
         // debugger;
+console.log("showSpeciSubA", this.props.showSpeciSubA)
          // this.props.handleSubAttributeUpdate(e.target.id)
          let valueName = this.state.name
          let skuName = this.state.subName
@@ -185,10 +186,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         //  updateObject.attribute_id=1
          updateObject.status=1
 
-         updateObject["sub_attributeschild"] =[
+         updateObject["childrens"] =[
             {
-            value:skuName,
-            name:'SKU value'
+            children_value:skuName,
+            children_id:this.props.showSpeciSubA.sub_attributeschild[0].id,
+            children_name:'SKU value'
         }
         ]
             
@@ -214,6 +216,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
 
         render() {
+            // let childID = this.props.showSpeciSubA.sub_attributeschild[0].id
+            // console.log("showSpeciSubARENDER", childID)
         console.log(this.props.temp)
         var tasks={
             inactive:[],

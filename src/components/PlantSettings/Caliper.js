@@ -167,14 +167,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         //  updateObject.attribute_id=1
          updateObject.status=1
 
-         updateObject["sub_attributeschild"] =[
+         updateObject["childrens"] =[
             {
-            value:caliperName,
-            name:'Imperial'
+                children_value:caliperName,
+                children_id:this.props.showSpeciSubA.sub_attributeschild[0].id,
+                children_name:'Imperial'
             },
             {
-                value:skuName,
-                name:'SKU value'
+                children_value:skuName,
+                children_id:this.props.showSpeciSubA.sub_attributeschild[1].id,
+                children_name:'SKU value'
                 }
         ]
             
@@ -231,6 +233,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             
         }
         render() {
+            console.log("ABCDEFG",this.props.showSpeciSubA)
         console.log(this.props.temp)
         var tasks={
             inactive:[],
