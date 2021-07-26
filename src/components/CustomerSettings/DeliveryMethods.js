@@ -5,17 +5,21 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
-import {handleCustomerTypeDelete,handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
+import {handleCustomerTypeDelete,handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,
+    saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods, showSpecificCustomerDeliveryMethodSettings, updateCustomerDeliveryMethodSettings} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
     class DeliveryMethods extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:'',
     }
 
 
@@ -106,17 +110,22 @@ import { is } from 'immutable';
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerDelivery")
+            this.setState({
+                name:e.target.value
+            })
+
+            this.props.handleExchangeData("customerDelivery", e.target.value)
         }
+
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerDelivery.delivery_method.trim() ===""){
+            if(this.state.name.trim() ===""){
                 
                 this.setState({isOpen1:true,message:["please add both type and shortcode"]})
 
 
             }else{
                 let obj = {}
-                obj.delivery_method = this.props.customerData.customerDelivery.delivery_method
+                obj.delivery_method = this.state.name
                 let result = this.props.saveDeliveryMethod(obj)
                 result.then(data=>{
                     this.props.getAllDeliveryMethods()
@@ -127,10 +136,51 @@ import { is } from 'immutable';
         }
 
 
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+
+            this.setState({
+                name: t.delivery_method,
+                isEditing:true
+            })
+
+            this.props.handleExchangeData("customerDelivery",...this.state.name)
+            this.props.showSpecificCustomerDeliveryMethodSettings(t.id)
+  
+       }
+
+
+       handleAddCategoryUpdate=(e)=>{
+        //debugger;
+        console.log("showSpeciSubA", this.props.showSpecificCustomerDeliveryM)
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+        
+         let updateID = parseInt(this.props.showSpecificCustomerDeliveryM.id)
+         let updateObject={}
+         updateObject.delivery_method=valueName
+       
+            
+      let res=   this.props.updateCustomerDeliveryMethodSettings(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllDeliveryMethods()
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:"",
+                
+             })
+
+     }
+
+
 
 
 render() {
- 
+
+
+  console.log("showSpeciSubARENDER", this.props.showSpecificCustomerDeliveryM)
     const {customerData} = this.props
 
     console.log(this.props.customerData.customerDeliveryList)
@@ -153,14 +203,64 @@ render() {
                                         <h5 className="p-15 mb-0" style={{marginLeft:"-10px"}}>Delivery Method</h5>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerDelivery.delivery_method}   placeholder="Delivery Method" onChange={this.handleCategoryInputAction}/>
+                                            <input type="text" 
+                                            className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            placeholder=""  name="customerDelivery"
+                                            // id="delivery_method"
+                                            value={this.state.name}
+                                            //  value={customerData.customerDelivery.delivery_method} 
+                                              onChange={this.handleCategoryInputAction}/>
                                               
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+
+
+
+
+
+
+                                            {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Delivery Method
                                                 </a>
-                                            </div>
+                                            </div> */}
+
+
+                   
+
+
+
+                                                {this.state.isEditing ? (
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                        <div  >
+                                                            <a href="javascript:" className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Delivery Method
+                                                            </a>
+                                                        </div>
+
+                                                            <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"15em"}}>
+                                                                    Cancel 
+                                                                </a>
+                                                            </div>
+                                                    </div>
+
+                                                        ):
+                                                        (
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Delivery Method
+                                                        </a>
+                                                        </div>  
+                                                  )}        
+
+
+
+
+
+
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -212,8 +312,16 @@ render() {
                                             <ul class="list-unstyled">
                                                    {this.props.customerData.customerDeliveryList.active.map(t=>{
                                                     return <li id={t.id} name={t.delivery_method} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
+                                                                 <a 
+                                                                className="d-flex justify-content-between align-items-center" 
+                                                                  //className={this.state.isEditing===false ? "form-d-flex justify-content-between align-items-center" : "formControl2 abcd" }
+                                                                //   className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                                  
+                                                                  >
                                                                       <span id="Wheathers">{t.delivery_method}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -237,7 +345,8 @@ render() {
     plantCategoryList:state.categoryData.plantCategoryData,
     temp:state,
     name:state.categoryData.name,
-    customerData:state.customerReducer
+    customerData:state.customerReducer,
+    showSpecificCustomerDeliveryM: state.customerReducer.showSpecificCustomerDeliveryMethod
     }
     )
     export default connect(mapStateToProps,{
@@ -245,6 +354,8 @@ render() {
         saveDeliveryMethod,
         getAllDeliveryMethods,
         handleCustomerTypeDelete,
+        updateCustomerDeliveryMethodSettings,
+        showSpecificCustomerDeliveryMethodSettings,
         
 handleDragDropCustomer    })(DeliveryMethods)
 

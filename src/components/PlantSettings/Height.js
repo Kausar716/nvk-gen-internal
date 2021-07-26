@@ -308,9 +308,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             {this.state.isEditing ? (
 
                                                 <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
-                                                <a href="javascript:" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Height
-                                                </a>
+                                                    <div >
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Height
+                                                    </a>
+                                                    </div>
+
+                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                    <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                    
+                                                    </div>
                                                 </div>
 
 
