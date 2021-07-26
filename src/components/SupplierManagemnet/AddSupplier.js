@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
 import {connect} from "react-redux";
 import 'react-tabs/style/react-tabs.css';
@@ -69,7 +69,7 @@ function AddSupplier(props) {
 	const toggleForAddress = () => {
         setactionTypeAddress("add")
         setisOpenAddress(!isOpenAddress)
-        // alert("hi")
+        // //alert("hi")
     }
 
     const validate = () =>{
@@ -110,7 +110,7 @@ function AddSupplier(props) {
 
     const handleInput= (e)=>{
         setCheckedData(true)
-        // alert(e.target.id)
+        // //alert(e.target.id)
         // let errorCountForValidation = errorCount
         // console.log(e.target.name,e.target.value)
         if(e.target.id =="delivery")  props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
@@ -173,7 +173,7 @@ function AddSupplier(props) {
          }
     }
     const handleTabClick=()=>{
-        // alert("in")
+        // //alert("in")
     }
     const closeAddSupplier = ()=>{
         props.typeOfsupplierActionShow("")
@@ -194,11 +194,11 @@ function AddSupplier(props) {
 
 
         // }
-        // alert("ds")
+        // //alert("ds")
         setCheckedData(false)
-        // alert(supplierDataById.id)
+        // //alert(supplierDataById.id)
         // // delete customerDataById.id
-        // // alert("hello")
+        // // //alert("hello")
         if(supplierDataById.id== undefined){
             props.addSupplierDetails(supplierDataById).then(data=>{
            
@@ -298,6 +298,13 @@ function AddSupplier(props) {
         props.getAddressById(id)
         setactionTypeAddress("edit")
     }
+    const deleteAddress =(id)=>{
+        // setisOpenAddress(true)
+        props.deleteSupplierAddress(id).then(data=>{
+            props.getAllAddress(supplierDataById.id)
+        })
+        // setactionTypeAddress("edit")
+    }
     const addAdrress=()=>{
         // props.resetAddressFileds()
         setisOpenAddress(true)
@@ -309,6 +316,9 @@ function AddSupplier(props) {
 
         })
     }
+    // const getSupplierAddressById = (id)=>{
+
+    // }
 console.log(supplierDataById)
   
     return (
@@ -388,10 +398,10 @@ console.log(supplierDataById)
                             <div class="d-flex align-items-center">
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
-                                        <input type="checkbox" name="switcher_checkbox_alert" id="switcher_checkbox_alert" value="2"/>
-                                        <label for="switcher_checkbox_alert"></label>
+                                        <input type="checkbox" name="switcher_checkbox_//alert" id="switcher_checkbox_//alert" value="2"/>
+                                        <label for="switcher_checkbox_//alert"></label>
                                     </div>
-                                    Alert
+                                alert
                                 </div>
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
@@ -701,14 +711,14 @@ console.log(supplierDataById)
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
                                                     <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
+                                                        <img src="assets/img/moreDetails-ic.svg" alt="" />
                                                     </a>
-                                                    <a href="#" class=" ml-2">
+                                                    <a  class=" ml-2"  onClick={()=>editAddress(address.id)}>
                                                         <img src="assets/img/edit.svg" alt=""/>
                                                     </a>
                                                 </div>
-                                                <div class="col-md-6 text-right">
-                                                    <a href="#" class=" ml-2">
+                                                <div class="col-md-6 text-right" >
+                                                    <a  class=" ml-2" onClick={()=>deleteAddress(address.id)}>
                                                         <img src="assets/img/delete.svg" alt=""/>
                                                     </a>
                                                 </div>
@@ -765,4 +775,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
+export default connect(mapStateToProps,{deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
