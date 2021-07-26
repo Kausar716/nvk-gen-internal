@@ -1,6 +1,7 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
@@ -11,7 +12,10 @@ import { is } from 'immutable';
     class ReturnReasons extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:'',
+       return_to_inventoryNo:2,
     }
 
 
@@ -102,6 +106,7 @@ import { is } from 'immutable';
 
         }
         handleCategoryInputAction = (e)=>{
+
             this.props.handleExchangeData(e.target.value,e.target.id,"customerReturnReason")
         }
         handleAddCategoryData = (e)=>{
@@ -131,7 +136,7 @@ render() {
  
     const {customerData} = this.props
 
-    console.log(this.props.customerData.customerReasonList)
+    console.log("Aforapple",this.props.customerData.customerReturnReason)
 
 
     // customerReturnReason:{reason: "",return_to_inventory: ""},

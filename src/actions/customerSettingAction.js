@@ -239,7 +239,7 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
  }
  
  export const showSpecificAccountReasonSettings = (id) => dispatch => {
-     axios.get(`api/show-customer-account-reason/${id}`,config).then(res=>{ 
+     axios.get(`api/show-customer-term/${id}`,config).then(res=>{ 
        
          console.log(res.data)
      dispatch({
@@ -252,7 +252,7 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
   //Terms
   export const updateCustomerTermslSettings = (id, data) =>dispatch => {
     // debugger;
-    return axios.post(`/api/update-customer-account-reason/${id}`,data,config).then(res=>{ 
+    return axios.post(`/api/update-customer-term/${id}`,data,config).then(res=>{ 
       //debugger;
         console.log(res.data)
     dispatch({
@@ -265,7 +265,7 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
  }
  
  export const showSpecificTermsSettings = (id) => dispatch => {
-     axios.get(`api/show-customer-account-reason/${id}`,config).then(res=>{ 
+     axios.get(`api/show-customer-term/${id}`,config).then(res=>{ 
        
          console.log(res.data)
      dispatch({
