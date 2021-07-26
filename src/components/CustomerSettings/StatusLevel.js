@@ -13,7 +13,10 @@ import {connect} from "react-redux";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
-import {saveStatusMethod,saveReasonMethod,getAllReasonMethods,getAllStatusMethods,handleCustomerTypeDelete,handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
+import {saveStatusMethod,saveReasonMethod,getAllReasonMethods,getAllStatusMethods,handleCustomerTypeDelete,
+    handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,saveNoticationData,getNotificationData,
+    handleExchangeData,getAllDeliveryMethods,   updateCustomerStatusLevelSettings,
+    showSpecificStatusLevelSettings,} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
@@ -283,7 +286,8 @@ render() {
     plantCategoryList:state.categoryData.plantCategoryData,
     temp:state,
     name:state.categoryData.name,
-    customerData:state.customerReducer
+    customerData:state.customerReducer,
+    showSpecificCustomerStatusLevel: state.customerReducer.showSpecificCustomerSettingSatausLevel
     }
     )
     export default connect(mapStateToProps,{
@@ -295,6 +299,8 @@ render() {
         saveStatusMethod,
         saveReasonMethod,
         getAllReasonMethods,
+        updateCustomerStatusLevelSettings,
+        showSpecificStatusLevelSettings,
 
         
 handleDragDropCustomer    })(StatusLevel)

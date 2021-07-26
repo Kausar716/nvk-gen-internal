@@ -4,7 +4,7 @@
 import React, { Component } from 'react';
 import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
-// import './style.css';
+ import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone, showSubSubAttribute, handleSubAttributeUpdate} from '../../actions/attributeAction'
 
     class BloomFoliageColors extends Component {
@@ -202,21 +202,21 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Color
-                                                </a>
+                                                </a>style={{display:"flex"}} style={{marginLeft:"6em", marginTop:"1em"}}
                                             </div> */}
 
 
 
                                             {this.state.isEditing ? (
-                                                    <div style={{display:"flex"}}>
-                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                        <div  >
                                                             <a href="javascript:" className="d-flex align-items-center">
                                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Color
                                                             </a>
                                                         </div>
 
-                                                            <div className="col-md-6 col-lg-3" style={{marginLeft:"6em", marginTop:"1em"}} onClick={()=>{this.setState({isEditing:false})}}>
-                                                                <a href="javascript:" className="d-flex align-items-center">
+                                                            <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center cancel_signlebox">
                                                                     Cancel 
                                                                 </a>
                                                             </div>

@@ -39,6 +39,8 @@ import InventorySettings from "./components/inventorysetting/InventorySettings";
 import QuoteAndOrdersManagement from "./components/QuoteAndOrdersManagement/QuoteAndOrdersManagement";
 import OrderReady from "./components/QuoteAndOrdersManagement/OrderReady";
 import OrderReserve from "./components/QuoteAndOrdersManagement/OrderReserve";
+import InvoiceList from "./components/QuoteAndOrdersManagement/InvoiceList";
+import OrderAdjusted from "./components/QuoteAndOrdersManagement/OrderAdjusted";
 
 export const history = createBrowserHistory({forceRefresh: true})
 
@@ -203,6 +205,16 @@ function App(props) {
                   <Nav />
                   <Left />
                 <OrderReserve/>
+              </Route>
+              <Route path="/InvoiceList">
+                  <Nav />
+                  <Left />
+                  <InvoiceList />
+              </Route>
+              <Route path="/OrderAdjusted">
+                  <Nav />
+                  <Left />
+                  <OrderAdjusted />
               </Route>
                   <Route path="/comingsoon">
                   <Nav />

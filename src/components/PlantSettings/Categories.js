@@ -236,7 +236,7 @@ render() {
                                             </div>
                                         </div> */}
                                         <div className="row d-flex align-items-center">
-                                        <div className="col-md-6 col-lg-9">  
+                                        <div className="col-md-6 col-lg-6">  
                                                 <input type="text" 
                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                 name="Category" 
@@ -246,13 +246,19 @@ render() {
 
 
                                             {this.state.isEditing ? (
-
-                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                    <div >
                                                     <a href="javascript:" className="d-flex align-items-center">
                                                         <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Category
                                                     </a>
                                                     </div>
-                                                       
+
+                                                    <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                    <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"12em"}}>
+                                                        Cancel 
+                                                    </a>
+                                                    </div>
+                                                </div>  
 
                                             ):
                                             (

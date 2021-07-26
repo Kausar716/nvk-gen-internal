@@ -104,7 +104,6 @@ const initialSatate = {
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
     console.log(action)
-    
     switch(action.type){
         // plant page redirects
         case PAGE_PLANT_REDIRECT_ACTION:
@@ -130,27 +129,28 @@ export default function(state = initialSatate, action){
                     notes: ""
                 },
                 plantSkuDataById         :   {
-                    sku_code: "",
-    plant_id: "",
-    each_cost: null,
-    each_price: null,
-    sale_price: null,
-    sale_expiry_date: null,
-    volume_quantity: null,
-    volume_price_per_unit: null,
-    sku_item_name: null,
-    subcategory: null,
-    archived: 0,
-    discontinued: 0,
-    location: null,
-    status: 1,
-    attributes_subattributes:[]           
+                sku_code: "",
+                plant_id: "",
+                each_cost: null,
+                each_price: null,
+                sale_price: null,
+                sale_expiry_date: null,
+                volume_quantity: null,
+                volume_price_per_unit: null,
+                sku_item_name: null,
+                subcategory: null,
+                archived: 0,
+                discontinued: 0,
+                location: null,
+                status: 1,
+                attributes_subattributes:[]           
             
                 },
                 message:"",
                 needAction:false,
                 tagsData:[],
-                actionType:"add"
+                actionType:"add",
+                plantSkuDataList:[]
 
 
             }

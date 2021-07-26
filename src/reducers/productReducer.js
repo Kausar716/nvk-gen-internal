@@ -145,6 +145,7 @@ export default function(state = initialSatate, action){
             
             
                 },
+                productDataBySKUlist:[],
                 message:[],
                 needAction:false,
                 tagsData:[],

@@ -3,17 +3,23 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
-import {handleCustomerTypeDelete,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,getAllCustomerType,handleDragDropCustomer} from "../../actions/customerSettingAction";
+import {handleCustomerTypeDelete,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,
+    getAllCustomerType,handleDragDropCustomer,updateCustomerTypeSettings, showSpecificCustomerSettingType,handleExchangeData2} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
     class Types extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:'',
+       subName:'',
+       subName2:''
     }
 
 
@@ -105,18 +111,32 @@ import { is } from 'immutable';
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerTypes")
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleExchangeData("customerTypes", e.target.value)
         }
+
+        handleCategoryInputAction2 = (e)=>{
+            this.setState({
+                subName:e.target.value
+            })
+            this.props.handleExchangeData2("short_code",e.target.value)
+        }
+
+
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerTypes.customer_type.trim() ==="" || this.props.customerData.customerTypes.short_code.trim() ===""){
+            if( this.state.name.trim() ==="" ||  this.state.subName.trim() ===""){
                 
                 this.setState({isOpen1:true,message:["please add both type and shortcode"]})
 
 
             }else{
                 let obj = {}
-                obj.customer_type = this.props.customerData.customerTypes.customer_type
-                obj.short_code = this.props.customerData.customerTypes.short_code
+                obj.customer_type = this.state.name
+                //this.props.customerData.customerTypes.customer_type
+                obj.short_code = this.state.subName
+                //this.props.customerData.customerTypes.short_code
                 obj.status = 1
                 let result = this.props.saveCustomerType(obj)
                 result.then(data=>{
@@ -128,9 +148,55 @@ import { is } from 'immutable';
         }
 
 
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+
+            this.setState({
+                name: t.customer_type,
+                subName:t.short_code,
+                isEditing:true
+            })
+
+            this.props.handleExchangeData("customerTypes",...this.state.name)
+            this.props.handleExchangeData("short_code",...this.state.subName)
+            this.props.showSpecificCustomerSettingType(t.id)
+  
+       }
+
+       handleAddCategoryUpdate=(e)=>{
+        //debugger;
+        console.log("showSpeciSubA", this.props.showSpecificCustomerSetting)
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+         let shortCode = this.state.subName
+         let updateID = parseInt(this.props.showSpecificCustomerSetting.id)
+         let updateObject={}
+         updateObject.customer_type=valueName
+         updateObject.short_code=shortCode
+        //  updateObject.attribute_id=1
+         //updateObject.status=1
+
+      
+            
+      let res=   this.props.updateCustomerTypeSettings(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllCustomerType()
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:"",
+                 subName:""
+             })
+
+     }
+
 
 
 render() {
+    console.log("showSpeciSubA", this.props.showSpecificCustomerSetting)
+
+    console.log("this.props.customerData.customerTypes.customer_type", this.props.customerData.customerTypes,)
     var tasks={
         inactive:[],
         active:[],
@@ -168,45 +234,75 @@ render() {
                             <h4 className="p-15 mb-0">Categories</h4>
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                               
                                 <div className="row">
                                         <div className="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Type</label>
                                             
                                             <div>
-                                                <input type="text" className="form-control" placeholder="" id="customer_type" value={customerData.customerTypes.customer_type}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
+                                                <input type="text"
+                                                  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                  placeholder="" name="customerTypes" 
+                                               // value={customerData.customerTypes.customer_type}  
+                                               value={this.state.name} 
+                                                onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
+                                                
                                             </div>
                                         </div>
                                         <div className="col-md-6">
                                             <label>Short Code</label> <span style={{fontSize:"10px", marginTop:"0em"}}> (Upto 8 Char)</span>
                                             <div>
-                                                <input type="text" className="form-control" placeholder="" id="short_code" value={customerData.customerTypes.short_code}   placeholder="Short Code" onChange={this.handleCategoryInputAction} maxLength={8}/>
+                                                <input type="text"
+                                                  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 placeholder="" name="short_code"
+                                                 value={this.state.subName} 
+                                                //  value={customerData.customerTypes.short_code} 
+                                                   onChange={this.handleCategoryInputAction2} maxLength={8}/>
                                             
                                             </div>
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
+
+
+
+
+
+                                            {/* <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
                                                 <a className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
                                                 </a>
-                                            </div>
+                                            </div> */}
+                                            {this.state.isEditing ? (
+                                                <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} onClick={this.handleAddCategoryUpdate}>
+                                                    <div >
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                            <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Type
+                                                        </a>
+                                                    </div>
+
+                                                        <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                           
+                                                        </div>
+
+                                                </div>
+
+
+                                                    ):
+                                                    (
+                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryData}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
+                                                    </a>
+                                                    </div>  
+                                         )}   
+
+
+
+
+
+
+
                                         </div>
                                     </div>
                                 <div class="row mt-5 mb-4">
@@ -259,6 +355,9 @@ render() {
                                                     return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.customer_type}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -282,7 +381,8 @@ render() {
     plantCategoryList:state.categoryData.plantCategoryData,
     temp:state,
     name:state.categoryData.name,
-    customerData:state.customerReducer
+    customerData:state.customerReducer,
+    showSpecificCustomerSetting: state.customerReducer.showSpecificCustomerSettingType,
     }
     )
     export default connect(mapStateToProps,{
@@ -294,5 +394,8 @@ render() {
         handleExchangeData,
         saveCustomerType,
         getAllCustomerType,
+        updateCustomerTypeSettings, 
+        showSpecificCustomerSettingType,
+        handleExchangeData2,
 handleDragDropCustomer    })(Types)
 
