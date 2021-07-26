@@ -1,6 +1,8 @@
 import {
     GET_LOCATION_LIST,
-    GET_Plant_CATEGORY_LIST, 
+    GET_PLANT_CATEGORY_LIST, 
+    GET_PRODUCT_CATEGORY_LIST,
+    GET_MANUFACTURER_CATEGORY_LIST,
     GETSUPPLIER_LIST,
     GET_ALL_PLANT_INVENTORY_ACTION,
     PRODUCT_INVENTORY_FILTER,
@@ -16,7 +18,14 @@ const initialSatate = {
  plantCategoryListBackup:[],
  plantInventoryData:[],
  backupPlantInventoryData:[],
- PlantNameToBeSearched:""
+ PlantNameToBeSearched:"",
+ productCategoryList:[],
+ productCategoryListBackup:[],
+ productInventoryData:[],
+ productInventoryDataBackup:[],
+ manufacturerList:[],
+ manufacturerListDataBackup:[]
+
 }
 
 const groupArray =(objectToBeReduced)=>{
@@ -47,22 +56,31 @@ const groupArray =(objectToBeReduced)=>{
 }
 
 const inventoryManagementReducer = (state = initialSatate, action)=> {
-   
-
-    switch(action.type){
-        
+    switch(action.type){        
         case GET_LOCATION_LIST:
             return{
                 ...state,
                 locationList:action.payload,
                 locationListBackup:action.payload              
             }
-        case GET_Plant_CATEGORY_LIST:
-
+        case GET_PLANT_CATEGORY_LIST:
             return{
                 ...state,
                 plantCategoryList:action.payload,
                 plantCategoryListBackup:action.payload              
+            }
+        case GET_PRODUCT_CATEGORY_LIST:
+            return{ 
+                ...state,
+                productCategoryList:action.payload,
+                productCategoryListBackup:action.payload   
+            }
+        case GET_MANUFACTURER_CATEGORY_LIST:
+            console.log(action.payload)
+            return{
+                    ...state,
+                    manufacturerList:action.payload,
+                    manufacturerListDataBackup:action.payload   
             }
             case GET_ALL_PLANT_INVENTORY_ACTION:
                 let returnPlantAllList=[]

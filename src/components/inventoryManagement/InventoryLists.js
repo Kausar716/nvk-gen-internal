@@ -77,9 +77,9 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                 <Tabs>
                     <TabList>
                         <Tab>Plant Management</Tab>
-                        <Tab>Plant Master SKUs</Tab>
-                        <Tab>Products Management</Tab>
-                        <Tab>Product Master SKUs</Tab>
+                        <Tab>Plant Master SKU</Tab>
+                        <Tab>Product Management</Tab>
+                        <Tab>Product Master SKU</Tab>
                         <Tab>Task List <span class="badge badge-pill badge-success">25</span></Tab>
                         <Tab>Task Queue</Tab>
                        

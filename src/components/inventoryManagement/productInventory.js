@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getCategoryList,getProductList} from "../../actions/inventoryManagementAction";
+import {getLocationList,getProductCategoryList,getProductList,getManufacturerList,getProductFilterResult} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -15,104 +15,104 @@ export class ProductInventory extends Component {
          
                 selectedLocationId:"",
                 selecredCategoryID:"",
-                selectedSupplierId:"",
-                plantSearchName:"",
-                skuSearchName:"",
-                plantRadio:"All",
-                skuRadio:"All"
+                selectedManufacturerId:"",
+                productSearchName:"",
+                productSkuSearchName:"",
+                productRadio:"All",
+                productSkuRadio:"All"
           
         }
     }
     componentDidMount(){
         this.props.getLocationList()   
-        this.props.getCategoryList()
-        this.props.getAllSupplierAction()
+        this.props.getProductCategoryList()
+        this.props.getManufacturerList()
         this.props.getProductList()
     }
 
     handleFilterChange = (e)=>{
         let {name,value} = e.target
-        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,plantRadio,skuRadio} = this.state
+        let {selectedLocationId,selecredCategoryID,selectedManufacturerId,productSearchName,productSkuSearchName,productRadio,productSkuRadio} = this.state
         if(name==="location"){
             this.setState({selectedLocationId:value})
-            this.props.getFilterResult({
+            this.props.getProductFilterResult({
                 selectedLocationId:value,
                 selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio
+                selectedManufacturerId,
+                productSearchName,
+                productSkuSearchName,
+                productRadio,
+                productSkuRadio
             })
         }
         if(name === "category"){
             this.setState({selecredCategoryID:value})
-            this.props.getFilterResult({
+            this.props.getProductFilterResult({
                 selectedLocationId,
                 selecredCategoryID:value,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio
+                selectedManufacturerId,
+                productSearchName,
+                productSkuSearchName,
+                productRadio,
+                productSkuRadio
             })
         }
         if(name === "manufacturer"){
-            this.setState({selectedSupplierId:value})
-            this.props.getFilterResult({
+            this.setState({selectedManufacturerId:value})
+            this.props.getProductFilterResult({
                 selectedLocationId,
                 selecredCategoryID,
-                selectedSupplierId:value,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio
+                selectedManufacturerId:value,
+                productSearchName,
+                productSkuSearchName,
+                productRadio,
+                productSkuRadio
             })
         }
-        if(name=== "plantSearch"){
-            this.setState({plantSearchName:value})
-            this.props.getFilterResult({
+        if(name=== "productSearch"){
+            this.setState({productSearchName:value})
+            this.props.getProductFilterResult({
                 selectedLocationId,
                 selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName:value,
-                skuSearchName,
-                plantRadio,
-                skuRadio
+                selectedManufacturerId,
+                productSearchName:value,
+                productSkuSearchName,
+                productRadio,
+                productSkuRadio
             })
         }
         if(name === "skuSearch"){
-            this.setState({skuSearchName:value})
-            this.props.getFilterResult({
+            this.setState({productSkuSearchName:value})
+            this.props.getProductFilterResult({
                 selectedLocationId,
                 selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName:value,
-                plantRadio,
-                skuRadio
+                selectedManufacturerId,
+                productSearchName,
+                productSkuSearchName:value,
+                productRadio,
+                productSkuRadio
             })
         }       
     }
   
     render() {
-        let plantCategoryList =[]
+        let productCategoryList =[]
         let locationList = []
-        let supplierList = []
-        if(this.props.plantCategoryList)
-        if(this.props.plantCategoryList.active){
-            plantCategoryList = [...this.props.plantCategoryList.active,...this.props.plantCategoryList.inactive]
+        let manufacturerList = []
+        if(this.props.productCategoryList)
+        if(this.props.productCategoryList.active){
+            productCategoryList = [...this.props.productCategoryList.active,...this.props.productCategoryList.inactive]
         }
         if(this.props.locationList)
         if(this.props.locationList.active){
             locationList = [...this.props.locationList.active,...this.props.locationList.inactive]
         }
-        if(this.props.supplierList){
-            if(this.props.supplierList && this.props.supplierList.data)
-            supplierList = this.props.supplierList.data.active
+        if(this.props.manufacturerList){
+            if(this.props.manufacturerList && this.props.manufacturerList.active)
+            manufacturerList = this.props.manufacturerList.active
         }
-        console.log(locationList)
-        console.log(this.props.productInventoryData)
+        console.log(manufacturerList)
+        // console.log(this.props.productInventoryData)
         let ProductListForTable = []
         ProductListForTable = this.props.productInventoryData?this.props.productInventoryData:[]
     return (
@@ -120,7 +120,7 @@ export class ProductInventory extends Component {
  <div class="row mt-3">
                                             <div class="col-md-6 col-lg-4">
                                                 <label>Location</label>
-                                                <select class="form-control" name="location" onChange={this.handleCategoryChange}>
+                                                <select class="form-control" name="location" value={this.state.selectedLocationId} onChange={this.handleFilterChange}>
                                                 <option>All</option>
                                                 {locationList.map(category=>{
                                                 return  <option value={category.id}>{category.address}</option>
@@ -129,19 +129,21 @@ export class ProductInventory extends Component {
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                                 <label>Category</label>
-                                                <select class="form-control" name="category"  onChange={this.handleCategoryChange}>
+                                                <select class="form-control" name="category" value={this.state.selecredCategoryID}  onChange={this.handleFilterChange}>
                                                 <option>All</option>
-                                                {plantCategoryList.map(category=>{
+                                                {productCategoryList.map(category=>{
                                                 return  <option value={category.id}>{category.name}</option>
                                                 })}
                                             </select>
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                                 <label>Manufacture</label>
-                                                <select class="form-control" name="manufacturer" >
+                                                <select class="form-control" name="manufacturer" value={this.state.selectedManufacturerId} >
                                                     <option>All</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                    {manufacturerList.map(category=>{
+                                                        console.log(category)
+                                                return  <option value={category.id}>{category.name}</option>
+                                                })}
                                                 </select>
                                             </div>
                                         </div>
@@ -152,7 +154,7 @@ export class ProductInventory extends Component {
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search" onChange={this.handleFilterChange}/>
+                                                    <input type="text" class="form-control" placeholder="Search" name="productSearch" value={this.state.productSearchName} onChange={this.handleFilterChange}/>
                                                 </div>
                                                 <div class="form-group row mt-2">
                                                     <div class="col-md-12">
@@ -291,12 +293,12 @@ export class ProductInventory extends Component {
 
 const mapStateToProps = (state)=> (
     {
-    plantCategoryList:state.inventoryManagementReducer.plantCategoryList,
+    productCategoryList:state.inventoryManagementReducer.productCategoryList,
     locationList:state.inventoryManagementReducer.locationList,
-    supplierList:state.supplierData.supplierInfo,
+    manufacturerList:state.inventoryManagementReducer.manufacturerList,
     productInventoryData:state.inventoryManagementReducer.productInventoryData,
     temp:state
     }
 )
 
-export default connect(mapStateToProps,{getCategoryList,getLocationList,getAllSupplierAction,getProductList})(ProductInventory)
+export default connect(mapStateToProps,{getProductCategoryList,getLocationList,getAllSupplierAction,getProductList,getManufacturerList,getProductFilterResult})(ProductInventory)
