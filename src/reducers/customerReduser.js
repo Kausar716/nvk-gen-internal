@@ -46,7 +46,13 @@ import {
     GET_CONTACT_ADDRESSES ,
     UPDATE_CONTACT_ADDRESS ,
     GET_CONTACT_ADDRESSES_BY_CONTACTID,
-    RE_SET_ADDRESS_FILED
+    RE_SET_ADDRESS_FILED,
+    RESET_CONTACT,
+    ADD_SUPPLIER_ADDRESS,
+GET_SUPPLIER_ADDRESS,
+GET_ALL_SUPPLIER_ADDRESS,
+DELETE_SUPPLIER_ADDRESS,
+UPDATE_SUPPLIER_ADDRESS,
     
 
 
@@ -112,7 +118,7 @@ const initialSatate = {
    customerReturnReasonList:{active:[],inactive:[]},
 
    customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-   tax_exempt: 0,
+   tax_exempt: 0,fax:0,
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:0.00,discount_by_line_item:1,restock_fee:0,fee_percent:0.00},
 
     action:"",
@@ -146,7 +152,8 @@ const initialSatate = {
         billing_address: 0,
         delivery_address: 0,
       },
-      customerAddressList:{active:[],inactive:[]}
+      customerAddressList:{active:[],inactive:[]},
+   
   }
 
 
@@ -157,6 +164,27 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+        
+        case RESET_CONTACT:
+            return{
+                ...state,
+                customerContact:{
+                    customer_id: 0,
+                    first_name: "",
+                    last_name: "",
+                    email: "",
+                    phone1: "",
+                    phone1_ext: "",
+                    phone2: "",
+                    phone2_ext: "",
+                    notes: "",
+                    primary_contact: 0,
+                    all_communication: 0,
+                    status: 1,
+                
+                  },
+
+            }
         case RE_SET_ADDRESS_FILED:
             return{
                 ...state,
@@ -249,8 +277,10 @@ const initialSatate = {
             }
 /////////////customer management add edit delete and show actions/////////////////////////
 case ADD_NEW_CUSTOMER:
+    console.log(action.payload.data.user)
     return{
         ...state,
+        customerDataById:{...action.payload.data.user,type:JSON.parse(action.payload.data.user.type)}
         
     }
     case EDIT_CUSTOMER:
@@ -310,7 +340,7 @@ case ADD_NEW_CUSTOMER:
               customerAddressList:{active:[],inactive:[]},
 
             customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-            tax_exempt: 0,
+            tax_exempt: 0,fax:0,
             tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:0.00,discount_by_line_item:1,restock_fee:"Yes",fee_percent:0.00},
         }
     case UPDATE_CUSTOMER:

@@ -43,15 +43,15 @@ import {
 
     ADD_SUPPLIER,
     ADD_SUPPLIER_DELIVERY_LOCATION,
-    ADD_SUPPLIER_CONTACT ,
+    // ADD_SUPPLIER_CONTACT ,
     ADD_SUPPLIER_CATEGORY, 
     GET_SUPPLIER_CATEGORY,
     CREATE_SUPPLIER_ADDRESS,
     ADD_SUPPLIER_REASON, 
    
     GET_ALL_SUPPLIER ,
-    GET_ALL_SUPPLIER_ADDRESS,
-    GET_ALL_SUPPLIER_CONTACT ,
+    // GET_ALL_SUPPLIER_ADDRESS,
+    // GET_ALL_SUPPLIER_CONTACT ,
     GET_ALL_SUPPLIER_DELIVERY_LOCATION, 
     GET_ALL_SUPPLIER_CATEGORIES,
     GET_ALL_SUPPLIER_REASONS, 
@@ -64,16 +64,16 @@ import {
    
     UPDATE_SUPPLIER ,
     UPDATE_SUPPLIER_REASON ,
-    UPDATE_SUPPLIER_ADDRESS,
-    UPDATE_SUPPLIER_CONTACT,
+    // UPDATE_SUPPLIER_ADDRESS,
+    // UPDATE_SUPPLIER_CONTACT,
     UPDATE_SUPPLIER_DELIVERY_LOCATION, 
     UPDATE_DELIVERY_CATEGORY,
    
     DELETE_SUPPLIER ,
     DELETE_SUPPLIER_REASON, 
-    DELETE_SUPPLIER_ADDRESS ,
+    // DELETE_SUPPLIER_ADDRESS ,
     DELETE_SUPPLIER_DELIVERY_LOCATION,
-    DELETE_SUPPLIER_CONTACT,
+    // DELETE_SUPPLIER_CONTACT,
     DELETE_SUPPLIER_CATEGORY,
    
     REMOVE_SUPPLIER_REASON_FROM_ACTIVE_TO_INACTIVE ,
@@ -100,6 +100,29 @@ SHOW_SPECIFIC_SUPPLIER_REASON,
 HANDLE_REASON_INPUT_ACTION,
 SHOW_SPECIFIC_SUPPLIER_CATEGORY,
 UPDATE_SUPPLIER_CATEGORY,
+TYPE_OF_SUPPLIER_ACTION,
+GET_SUPPLIER_BY_ID,
+RESET_SUPPLIER_FILED,
+RESET_SUPPLIER_CONTACT,
+
+
+
+//supplier contacts
+
+ADD_SUPPLIER_CONTACT,
+GET_SUPPLIER_CONTACT,
+GET_ALL_SUPPLIER_CONTACT,
+DELETE_SUPPLIER_CONTACT,
+UPDATE_SUPPLIER_CONTACT,
+
+
+//supplier address
+ADD_SUPPLIER_ADDRESS,
+GET_SUPPLIER_ADDRESS,
+GET_ALL_SUPPLIER_ADDRESS,
+DELETE_SUPPLIER_ADDRESS,
+UPDATE_SUPPLIER_ADDRESS,
+
 
 
 
@@ -110,9 +133,180 @@ UPDATE_SUPPLIER_CATEGORY,
 
 } from './types';
 
+//supplier contact information
 
+export const getAllAddress =(id)=>dispatch => {
+    if(id !==0){
+        return axios.get(`api/supplier-addresses?supplier_id=${id}`,config).then(res=>{ 
+            console.log(res.data)
+        dispatch({
+                type:GET_ALL_SUPPLIER_ADDRESS,
+                payload:res.data,
+    
+            })
+        })
+
+    }else{
+
+    }
+
+
+}
+
+export const deleteContact= (id)=>dispatch => {
+    return axios.post(`/api/delete-supplier-contact/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_SUPPLIER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+
+
+}
+export const addSupplierAddress= (data)=>dispatch => {
+    return axios.post(`/api/add-supplier-address`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_SUPPLIER_ADDRESS,
+                payload:res.data   
+            })
+        }) 
+
+}
+export const getAddressById =(id)=>dispatch => {
+    return axios.get(`/api/supplier-address/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_ADDRESS,
+            payload:res.data,
+
+        })
+    })
+    
+}
+export const UpdateAddress =(data)=>dispatch => {
+    let id = data.id
+    delete data.id
+    return axios.post(`/api/update-supplier-address/${id}`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:UPDATE_SUPPLIER_ADDRESS,
+                payload:res.data   
+            })
+        }) 
+    
+}
+export const getAddressBysupplierId =(id)=>dispatch => {
+  
+    
+}
+export const resetSupplierContact=()=>dispatch => {
+    dispatch({
+        type:RESET_SUPPLIER_CONTACT
+    })
+
+}
+export const getSupplierContact=(id)=>dispatch => {
+    return axios.get(`api/supplier-contact/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_CONTACT,
+            payload:res.data,
+
+        })
+    })
+
+
+}
+export const getAllSuppliersContact=(id)=>dispatch => {
+    if(id !==0){
+        return axios.get(`api/suppliers-contacts?supplier_id=${id}`,config).then(res=>{ 
+            console.log(res.data)
+        dispatch({
+                type:GET_ALL_SUPPLIER_CONTACT,
+                payload:res.data,
+    
+            })
+        })
+
+    }else{
+
+    }
+
+}
+
+export const updateSupplierContact=(data)=>dispatch => {
+    let id = data.id
+    delete data.id
+    return axios.post(`/api/update-supplier-contact/${id}`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:UPDATE_SUPPLIER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+
+}
+
+export const deleteSuppluerContact=()=>dispatch => {
+
+}
+
+export const addSuppplierContact=(data)=>dispatch => {
+    return axios.post(`/api/add-supplier-contact`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_SUPPLIER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+
+}
+
+
+export const resetSupplierFilds = ()=>dispatch=>{
+    dispatch({
+        type:RESET_SUPPLIER_FILED,
+        // payload:res.data,
+
+    })
+
+}
+export const getsupplierById = (id) =>dispatch => {
+    return axios.get(`/api/supplier/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_SUPPLIER_BY_ID,
+            payload:res.data,
+
+        })
+    })
+
+}
+export const updateSupplierData = (data) =>dispatch => {
+    let id = data.id
+    delete data.id
+    console.log(data)
+    data.product_categories =  JSON.parse(data.product_categories)
+    return axios.post(`/api/update-supplier/${id}`,data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:UPDATE_SUPPLIER,
+                payload:res.data   
+            })
+        }) 
+
+}
+export const typeOfsupplierActionShow = (type) =>dispatch=>{
+    dispatch({
+      type:TYPE_OF_SUPPLIER_ACTION,
+      action:type
+    })
+}
 //CREATE
 export const getAllSupplierExchange = ()=>dispatch=>{
+    
  
     return axios.get("/api/supplierexchangedetail",config).then(res=>{ 
         console.log(res.data)
@@ -469,24 +663,17 @@ export const getSupplierData =()=>{
 }
 
 
-export const addSupplierDetails = (userObj)=>{
-    return(dispatch)=>{
-        axios.post("/api/add-supplier",config, userObj)
-        .then(response=>{
-            console.log("Addresponse", response)
-            
-            dispatch({
-                type:'ADD_SUPPLIER',
-                payload:response.data
-
+export const addSupplierDetails = (data)=>dispatch=>{
+    return axios.post("/api/add-supplier",data,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:ADD_SUPPLIER,
+                payload:res.data   
             })
-        })
+        }) 
 
-        .catch(error =>{
-            console.log("ADD_SUPPLIER Error", error)
-         });
-        
-    }
+
+
 
 }
 

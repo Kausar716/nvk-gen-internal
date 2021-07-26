@@ -20,8 +20,9 @@ import {
     // GET_SPECIFIED_SUPPLIER ,
     // GET_SPECIFIED_SUPPLIER_CATEGORY, 
    
-    // UPDATE_SUPPLIER ,
+    UPDATE_SUPPLIER ,
      UPDATE_SUPPLIER_REASON ,
+     RESET_SUPPLIER_FILED,
     // UPDATE_SUPPLIER_ADDRESS,
     // UPDATE_SUPPLIER_CONTACT,
     // UPDATE_SUPPLIER_DELIVERY_LOCATION, 
@@ -63,6 +64,24 @@ SHOW_SPECIFIC_SUPPLIER_REASON,
 HANDLE_REASON_INPUT_ACTION,
 SHOW_SPECIFIC_SUPPLIER_CATEGORY,
 UPDATE_SUPPLIER_CATEGORY,
+TYPE_OF_SUPPLIER_ACTION,
+GET_SUPPLIER_BY_ID,
+
+ADD_SUPPLIER_CONTACT,
+GET_SUPPLIER_CONTACT,
+GET_ALL_SUPPLIER_CONTACT,
+DELETE_SUPPLIER_CONTACT,
+UPDATE_SUPPLIER_CONTACT,
+
+
+//supplier address
+ADD_SUPPLIER_ADDRESS,
+GET_SUPPLIER_ADDRESS,
+GET_ALL_SUPPLIER_ADDRESS,
+DELETE_SUPPLIER_ADDRESS,
+UPDATE_SUPPLIER_ADDRESS,
+
+RESET_SUPPLIER_CONTACT,
 
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
@@ -135,12 +154,198 @@ const defaultState={
         active:[],
         inactive:[]
 
-    }
-};
+    },
+    supplierDataById:{
+    supplier_name: "",
+    fax: "",
+    primary_contact: 0,
+    alternative_id: "",
+    website: "",
+    supplier_notes: "",
+    dispatch_type: 0,
+    discount: 0.00,
+    currency: "",
+    units: "",
+    status: 1,
+    product_categories:[1]
+    },
+    supplierContact:{
+        supplier_id: 0,
+        contact_name: "",
+        contact_email: "",
+        phone1: "",
+        primary_contact: 0,
+        receives_all: 0,
+        status: 1,
+    
+      },
+    supplierContactList:{active:[],inactive:[]},
+    supplierAddress:{
+        supplier_id: 0,
+        supplier_address: "",
+        address2: "",
+        city: "",
+        country: "",
+        state: "",
+        zip: "",
+        lat: "",
+        long: "",
+        billing_address: 0,
+        shipping_address: 0,
+        status:1
 
+    },
+    supplierAddressList:{
+        active:[],inactive:[]
+
+    },
+    action:""
+
+
+};
+// resetSupplierContact
 const supplierManagementReducer =(state=defaultState, action)=>{
     console.log(action.payload)
         switch(action.type){
+            case GET_SUPPLIER_ADDRESS:
+                return{
+                    ...state,
+                    supplierAddress:action.payload.data
+
+                }
+            case ADD_SUPPLIER_ADDRESS:
+                return{
+                ...state,
+                supplierAddress:action.payload.data
+            }
+            case GET_ALL_SUPPLIER_ADDRESS:
+                return{
+                    ...state,
+                    supplierAddressList:action.payload.data
+
+                }
+            case ADD_SUPPLIER_CONTACT:
+                return{
+                    ...state,
+                    supplierContact:{
+                        supplier_id: 0,
+                        contact_name: "",
+                        contact_email: "",
+                        phone1: "",
+                        primary_contact: 0,
+                        receives_all: 0,
+                        status: 1,
+                    
+                      },
+                }
+            case RESET_SUPPLIER_CONTACT:
+                return{
+                    ...state,
+                    supplierContact:{
+                        supplier_id: 0,
+                        first_name: "",
+                        last_name: "",
+                        email: "",
+                        phone1: "",
+                        phone1_ext: "",
+                        phone2: "",
+                        phone2_ext: "",
+                        notes: "",
+                        primary_contact: 0,
+                        all_communication: 0,
+                        status: 1,
+                    
+                      }
+
+                }
+            
+            case GET_SUPPLIER_CONTACT:{
+                return{
+                    ...state,
+                    supplierContact:action.payload.data
+                }
+                
+            }
+            case UPDATE_SUPPLIER_ADDRESS:
+                return{
+                    ...state,
+                    supplierAddress:{
+                        supplier_id: 0,
+                        supplier_address: "",
+                        address2: "",
+                        city: "",
+                        country: "",
+                        state: "",
+                        zip: "",
+                        lat: "",
+                        long: "",
+                        billing_address: 0,
+                        shipping_address: 0,
+                        status:1
+                
+                    },
+
+                }
+            case UPDATE_SUPPLIER_CONTACT:{
+                return{
+                    ...state,
+                  
+                }
+                
+            }
+            case DELETE_SUPPLIER_CONTACT:{
+                return{
+                    ...state,
+                    supplierContactList:action.payload.data
+                }
+                
+            }
+            case GET_ALL_SUPPLIER_CONTACT:{
+                return{
+                    ...state,
+                    supplierContactList:action.payload.data
+                }
+                
+            }
+
+            case RESET_SUPPLIER_FILED:
+                return{
+                    ...state,
+                    action:"",
+                    supplierDataById:{
+                        supplier_name: "",
+                        fax: "",
+                        primary_contact: 0,
+                        alternative_id: "",
+                        website: "",
+                        supplier_notes: "",
+                        dispatch_type: 0,
+                        discount: 0.00,
+                        currency: "",
+                        units: "",
+                        status: 1,
+                        product_categories:[]
+                        }
+
+                }
+            case UPDATE_SUPPLIER:
+                return{
+                    ...state,
+                    supplierDataById:action.payload.data
+
+                }
+            case GET_SUPPLIER_BY_ID:
+                let categories = action.payload.data.product_categories==undefined?[]:action.payload.data.product_categories
+                return{
+                    ...state,
+                    supplierDataById:{...action.payload.data,product_categories:categories}
+
+                }
+            case TYPE_OF_SUPPLIER_ACTION:
+                return{
+                    ...state,
+                    action:action.action
+                }
             case GET_EXCHANGE_SUPPLIER_DATA:
                 return{
                     ...state,
@@ -353,8 +558,10 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     
 
             case ADD_SUPPLIER:
-                const suppliers = state.suppliers.concat(action.payload);
-                return {...state, suppliers}
+                        return{
+                            ...state,
+                            supplierDataById:action.payload.data
+                        }
 
             default:
                 return state;

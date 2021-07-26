@@ -1,9 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import {getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {getAllCategoriesAction} from "../../actions/categoryAction";
+import {connect} from "react-redux";
 import 'react-tabs/style/react-tabs.css';
+import InfoModal from "../../components/Modal/InfoModal"
+import SuccessModal from "../../components/Modal/SuccessModal"
+import ContactsModal from "../../components/Modal/ContactsModal"
+import AddressModal from "../../components/Modal/AddressModal"
+import SupplierAddressModal from "../../components/Modal/SupplierAddressModal"
+import SupplierContactModal from "../../components/Modal/SupplierContactModal"
 import DatePicker from 'react-date-picker';
 
-export default function AddSupplier(props) {
+function AddSupplier(props) {
     const [value, onChange] = useState(new Date());
     const [addCustomertoggle,setAddCustomertoggle] = useState(false)
     const [customerObject,setCustomerObject] = useState({})
@@ -14,6 +23,7 @@ export default function AddSupplier(props) {
     const [website_url,setWebsiteUrl] = useState("")
     const [notes,setNotes] = useState("")
     const [ alternativeId,setAlternativeId] =  useState("")
+    const [checkedData,setCheckedData] = useState(false)
     const [customer_id,setCustomer_id] = useState("")
     const [errorObj,setErrorObject] = useState({customer_name:0,fax:0,taxExemptNumber:0})
     const [errorCount, setErrorCount] = useState(0)
@@ -22,110 +32,139 @@ export default function AddSupplier(props) {
     const [dispatchType,setDispatchType] = useState(false)
     const [poRequired,setPoRequired] = useState(false)
     const [reStock,setReStock] = useState(false)
-    console.log()
+    const [isOpen1, setIsOpen1] = useState(false);
+	const [message2,setMessage2] = useState([]);
+    const [message,setMessage] = useState([]);
+	const toggle2 = () => setIsOpen2(!isOpen2);
+    const {supplierDataById,supplierContactList,supplierAddressList} = props.supplierData
+    const {categoryData} = props.categoryData
+    const [isOpen2, setIsOpen2] = useState(false);
+    console.log(supplierAddressList)
+    const toggle1 = () => setIsOpen1(!isOpen1);
     useEffect (()=>{
-        console.log(props.toggle)
-        if(props.toggle === "add")setAddCustomertoggle(true)
-        if(props.toggle === "edit"){
-           
-            console.log(props.customerData)
-            setCustomer_name(props.customerData.name)
-            setType(props.customerData.type)
-            setFax(props.customerData.fax)
-            setWebsiteUrl(props.customerData.website_url)
-            setNotes(props.customerData.notes)
-            setPrimaryContact(props.customerData.contact_id)
-            setAlternativeId(props.customerData.alternativeId)
-            setCustomer_id(props.customerData.customer_id)
-        }
+        props.getAllCategoriesAction()
+        props.getAllSuppliersContact(supplierDataById.id)
+        props.getAllAddress(supplierDataById.id)
+ 
 
-    },[])
+    },[website_url])
+    const[actionType,setactionType] = useState("add")
+    const[actionTypeAddress,setactionTypeAddress] = useState("add")
+	// const toggle1 = () => setIsOpen1(!isOpen1);
+
+    // const [isOpen2, setIsOpen2] = useState(false);
+	// const [message2,setMessage2] = useState([]);
+	// const toggle2 = () => setIsOpen2(!isOpen2);
+
+    const [isOpenContacs, setisOpenContacs] = useState(false);
+	// const [message2,setMessage2] = useState([]);
+	const toggleForContact = () => {
+        setactionType("add")
+        props.resetSupplierContact()
+        setisOpenContacs(!isOpenContacs)
+    }
+
+    const [isOpenAddress, setisOpenAddress] = useState(false);
+	// const [message2,setMessage2] = useState([]);
+	const toggleForAddress = () => {
+        setactionTypeAddress("add")
+        setisOpenAddress(!isOpenAddress)
+        // alert("hi")
+    }
 
     const validate = () =>{
         let errorObjforValidation=errorObj
-        let errorCountForValidation = errorCount
+        let errorCountForValidation = 0
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z]+$/
+        let message = []
         // let phoneReg = new RegExp('^[0-9]+$');
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
     
-        if(customer_name.length === 0){
-           errorObjforValidation.customer_name=1
+        if(supplierDataById.supplier_name.trim().length === 0){
+          
            errorCountForValidation++
-        }
-        if(!nameReg.test(customer_name)){
-            errorObjforValidation.customer_name=1
-           errorCountForValidation++
+           message.push("Add Supplier Name")
         }
         // if(taxExemptNumber.length===0 && taxExemp){
         //     errorObj.taxExemptNumber=1
         //     errorCountForValidation++
         // }
       
-        if(fax.length !== 8){
+        if(supplierDataById.fax.trim().length == 0){
           
-            errorObjforValidation.fax=1
+            // errorObjforValidation.fax=1
             errorCountForValidation++
+            message.push("Add Supplier Fax Number")
         }
-        setErrorCount(errorCountForValidation)
-        setErrorObject(errorObjforValidation)
-        return errorCount
+        if(supplierDataById.alternative_id.trim().length ==0){
+            message.push("Add Supplier Alternative Id")
+            errorCountForValidation++
+
+        }
+        setMessage(message)
+        // setErrorCount(errorCountForValidation)
+        // setErrorObject(errorObjforValidation)
+        return errorCountForValidation
     }
 
     const handleInput= (e)=>{
-        let errorCountForValidation = errorCount
-        console.log(e.target.name,e.target.value)
-        if(e.target.name === "customer_name"){
-            setCustomer_name(e.target.value)
-            if(errorObj.customer_name>0){
-                errorObj.customer_name=0
-                errorCountForValidation--
-            }       
-        }
-        if(e.target.name === "type"){
-            setType(e.target.value)
-        }
-        if(e.target.name === "primaryContact"){
-            setPrimaryContact(e.target.value)
-        }
-        if(e.target.name === "fax"){
+        setCheckedData(true)
+        // alert(e.target.id)
+        // let errorCountForValidation = errorCount
+        // console.log(e.target.name,e.target.value)
+        if(e.target.id =="delivery")  props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
+        else if(e.target.id =="pickup")props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
+        else if(e.target.id =="both")props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
+        else props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierDataById")
+        // if(e.target.name === "customer_name"){
+        //     setCustomer_name(e.target.value)
+        //     if(errorObj.customer_name>0){
+        //         errorObj.customer_name=0
+        //         errorCountForValidation--
+        //     }       
+        // }
+        // if(e.target.name === "type"){
+        //     setType(e.target.value)
+        // }
+        // if(e.target.name === "primaryContact"){
+        //     setPrimaryContact(e.target.value)
+        // }
+        // if(e.target.name === "fax"){
            
-            setFax(e.target.value)
-            if(errorObj.fax>0){
-                errorObj.fax=0
-                errorCountForValidation--
-            }       
-        }
-        if(e.target.name === "taxExemptNo" || e.target.name === "taxExemptYes"  ){
-            setTaxExemp(!taxExemp)
-        }
-        if(e.target.name === "dispatchTypeDelivery" || e.target.name === "dispatchTypePickup"  ){
-            setDispatchType(!dispatchType)
-        }
-        if(e.target.name === "poRequiredNo" || e.target.name === "poRequiredYes"){
-            setPoRequired(!poRequired)
-        }
-        if(e.target.name === "restockNo" || e.target.name === "restockYes"){
-            setPoRequired(!reStock)
-        }
-        if(e.target.name === "taxExemptNumber"){
-            setTaxExemptNumber(e.target.value)
-            if(errorObj.taxExemptNumber>0){
-                errorObj.taxExemptNumber=0
-                errorCountForValidation--
-            }  
-        }
-        if(e.target.name === "website_url"){
-            setWebsiteUrl(e.target.value)
-        }
-        if(e.target.name === "notes"){
-            setNotes(e.target.value)
-        }
-        if(e.target.name === "alternativeId"){
-            setAlternativeId(e.target.value)
-        }
-        setErrorCount(errorCountForValidation)
-        setErrorObject(errorObj)
+        //     setFax(e.target.value)
+        //     if(errorObj.fax>0){
+        //         errorObj.fax=0
+        //         errorCountForValidation--
+        //     }       
+        // }
+        // if(e.target.name === "dispatchTypeDelivery" || e.target.name === "dispatchTypePickup"  ){
+        //     setDispatchType(!dispatchType)
+        // }
+        // if(e.target.name === "poRequiredNo" || e.target.name === "poRequiredYes"){
+        //     setPoRequired(!poRequired)
+        // }
+        // if(e.target.name === "restockNo" || e.target.name === "restockYes"){
+        //     setPoRequired(!reStock)
+        // }
+        // if(e.target.name === "taxExemptNumber"){
+        //     setTaxExemptNumber(e.target.value)
+        //     if(errorObj.taxExemptNumber>0){
+        //         errorObj.taxExemptNumber=0
+        //         errorCountForValidation--
+        //     }  
+        // }
+        // if(e.target.name === "website_url"){
+        //     setWebsiteUrl(e.target.value)
+        // }
+        // if(e.target.name === "notes"){
+        //     setNotes(e.target.value)
+        // }
+        // if(e.target.name === "alternativeId"){
+        //     setAlternativeId(e.target.value)
+        // }
+        // setErrorCount(errorCountForValidation)
+        // setErrorObject(errorObj)
     }
     const handleSubmit=()=>{
         let count= validate()
@@ -134,13 +173,152 @@ export default function AddSupplier(props) {
          }
     }
     const handleTabClick=()=>{
-        alert("in")
+        // alert("in")
     }
+    const closeAddSupplier = ()=>{
+        props.typeOfsupplierActionShow("")
+    }
+    const saveCustomerData1 = (type)=>{
+        // e.preventDefault()
+        let errorCount = validate()
+        if(errorCount>0){
+            setIsOpen1(true)
+            // setMessage(errorCount)
+            return
+
+        }
+        // if(errorCount.length>0){
+        //     setIsOpen1(true)
+        //     setMessage(errorCount)
+        //     return
+
+
+        // }
+        // alert("ds")
+        setCheckedData(false)
+        // alert(supplierDataById.id)
+        // // delete customerDataById.id
+        // // alert("hello")
+        if(supplierDataById.id== undefined){
+            props.addSupplierDetails(supplierDataById).then(data=>{
+           
+          
+                if(type =="done"){
+                    props.resetSupplierFilds()
+                   
+                    setMessage2(["Supplier Saved successfully"])
+                    setIsOpen2(true)
+                    // props.resetCustomerFilds()
+                    props.getAllSuppliers().then(data=>{
+                        
     
-console.log(errorObj)
+    
+                        setTimeout(
+                            function() {
+                                props.typeOfsupplierActionShow("")
+                            }
+                            .bind(this),
+                            1000
+                        );
+    
+                    })
+                   
+                    // props.typeOfActionShow("")
+                    // setTimeout(cancelData()(), 100000);
+                    
+    
+                }else{
+                    setIsOpen2(true)
+                    setMessage2(["Supplier Saved successfully"])
+                    props.getAllSuppliers()
+                    // props.resetCustomerFilds()
+                    // props.typeOfActionShow("")
+    
+                }
+              
+    
+                // else 
+    
+    
+            })
+
+        }else{
+            props.updateSupplierData(supplierDataById).then(data=>{
+           
+          
+                if(type =="done"){
+                    props.resetSupplierFilds()
+                   
+                    setMessage2(["Supplier Data Updated Successfully"])
+                    setIsOpen2(true)
+                    props.resetSupplierFilds()
+                    props.getAllSuppliers().then(data=>{
+                        
+    
+    
+                        setTimeout(
+                            function() {
+                                props.typeOfActionShow("")
+                            }
+                            .bind(this),
+                            1000
+                        );
+    
+                    })
+                   
+                    // props.typeOfActionShow("")
+                    // setTimeout(cancelData()(), 100000);
+                    
+    
+                }else{
+                    setIsOpen2(true)
+                    setMessage2(["Supplier Data Updated Successfully"])
+                    props.getAllSuppliers()
+                    // props.resetCustomerFilds()
+                    // props.typeOfActionShow("")
+    
+                }
+              
+    
+                // else 
+    
+    
+            })
+            
+        }
+   
+    }
+    const editContact=(id)=>{
+        setisOpenContacs(true)
+        props.getSupplierContact(id)
+        setactionType("edit")
+    }
+    const editAddress =(id)=>{
+        setisOpenAddress(true)
+        props.getAddressById(id)
+        setactionTypeAddress("edit")
+    }
+    const addAdrress=()=>{
+        // props.resetAddressFileds()
+        setisOpenAddress(true)
+
+    }
+    const deleteContactData =(id)=>{
+        props.deleteContact(id).then(data=>{
+            props.getAllSuppliersContact(supplierDataById.id)
+
+        })
+    }
+console.log(supplierDataById)
   
     return (
         <div>
+             	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
+                <SuccessModal status={isOpen2} message={message2} modalAction={toggle2}/>
+                <SupplierContactModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
+                <SupplierAddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/>
+                {/* <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
+                <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/> */}
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
             <h1 class="page-header mb-0"><img src="assets/img/customer-ic-lg.svg" alt=""/>{addCustomertoggle?"Add":"Edit"} supplier <span class="text-green">{addCustomertoggle?"":customer_id}</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
@@ -184,20 +362,20 @@ console.log(errorObj)
                                         <span class="ml-2"><b>Contact PDF</b></span>
                                     </span>
                                 </a>}
-                                <a href="#" class="btn ml-2">
-                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
+                                <a href="#" class="btn ml-2" onClick={()=>checkedData==true?saveCustomerData1("save"):""}>
+                                    <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/save-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Save  </b></span>
                                     </span>
                                 </a>
-                                <a href="#" class="btn ml-2 mt-3 mt-md-0">
+                                <a href="#" class="btn ml-2 mt-3 mt-md-0"  onClick={()=>checkedData==true?saveCustomerData1("done"):""}>
                                     <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/saveDone-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Save &amp; Done</b></span>
                                     </span>
                                 </a>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                    <img src="assets/img/close-ic.svg" alt=""/>
+                                    <img src="assets/img/close-ic.svg" alt="" onClick={closeAddSupplier}/>
                                 </a>
                             </div>
                         </div>
@@ -224,7 +402,7 @@ console.log(errorObj)
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 text-md-right">
+                        {/* <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
                             {addCustomertoggle?"": <div class="mt-3 mt-md-0">
                                     <a href="" class="text-danger f-s-18 f-w-600">Delete Supplier</a>
@@ -245,7 +423,7 @@ console.log(errorObj)
                                     </select>
                                 </div>
                             </div>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
                 <Tabs>
@@ -265,46 +443,40 @@ console.log(errorObj)
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Supplier Name<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="customer_name" value={customer_name} onChange={handleInput} />
+                                        <input type="text" class="form-control" name="supplier_name" value={supplierDataById.supplier_name} onChange={handleInput} id="supplier_name"/>
                                         {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
-                                        <label>Type<span class="text-danger">*</span></label>
-                                        <select class="form-control">
-                                            <option>Landscape Architect</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8">
-                                        <label>Primary Contact</label>
-                                        <input type="text" class="form-control" name = "primaryContact" value={primaryContact} onChange={handleInput} />
-                                    </div>
-                                    <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
-                                        <label>Fax</label>
-                                        <input type="number" class="form-control" name="fax" value={fax} onChange={handleInput} />
+                                    <label>Fax</label>
+                                        <input type="number" class="form-control" name="fax" value={supplierDataById.fax} onChange={handleInput} id="fax"/>
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
-                                        <label>Website</label>
-                                        <div class="d-flex">
-                                            <input type="text" class="form-control" name="website_url" value={website_url}  onChange={handleInput}/>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-2">Visit</button>
-                                        </div>
+                                        <label>Primary Contact</label>
+                                        <p>No Primary Contact Yet</p>
+                                        {/* <input type="text" class="form-control" name = "primaryContact" value={primaryContact} onChange={handleInput} /> */}
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
-                                        <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
-                                        <input type="text" class="form-control" name="alternativeId" value={alternativeId} onChange={handleInput}/>
+                                    <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
+                                        <input type="text" class="form-control" name="alternative_id" value={supplierDataById.alternative_id} onChange={handleInput} id="alternative_id"/>
+                                     
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-12 mt-12 mt-md-0">
+                                    <label>Website</label>
+                                        <div class="d-flex">
+                                            <input type="url" class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+                                            <a href={supplierDataById.website} target="_blank" class="btn btn-outline-secondary btn-lg ml-2">Visit</a>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Supplier Notes <small>(Internal Only)</small></label>
-                                        <textarea rows="" cols=""  class="form-control" name="notes" value={notes} onChange={handleInput}/>
+                                        <textarea rows="" cols=""  class="form-control" name="supplier_notes" value={supplierDataById.supplier_notes} onChange={handleInput} id="supplier_notes"/>
                                     </div>
                                 </div>
 
@@ -323,116 +495,108 @@ console.log(errorObj)
                                         <label>Dispatch Type</label>
                                         <div class="d-flex">
                                             <div class="custom-control custom-radio">
-                                                <input type="radio" id="dispatchTypeDelivery" name="dispatchTypeDelivery" class="custom-control-input" checked = {!dispatchType?true:false} onClick={handleInput}/>
-                                                <label class="custom-control-label" for="dispatchTypeDelivery">Delivery</label>
+                                                <input type="radio" id="delivery" value={0} name="delivery" class="custom-control-input" checked = {parseInt(supplierDataById.dispatch_type)==0?true:false} onClick={handleInput}/>
+                                                <label class="custom-control-label" for="delivery">Incoming Delivery</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
-                                                <input type="radio" id="dispatchTypePickup" name="dispatchTypePickup" class="custom-control-input"checked = {dispatchType?true:false} onClick={handleInput} />
-                                                <label class="custom-control-label" for="dispatchTypePickup">Pickup</label>
+                                                <input type="radio" id="pickup"  value={1} name="pickup" class="custom-control-input" checked = {parseInt(supplierDataById.dispatch_type)==1?true:false} onClick={handleInput} />
+                                                <label class="custom-control-label" for="pickup">Pickup</label>
+                                            </div>
+                                            <div class="custom-control custom-radio ml-4">
+                                                <input type="radio" id="both"  value={2} name="both" class="custom-control-input" checked = {parseInt(supplierDataById.dispatch_type)==2?true:false} onClick={handleInput}/>
+                                                <label class="custom-control-label" for="both">Delivery & Pickup</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-3 col-lg-2">
-                                        <label>Tax Exempt</label>
-                                        <div class="d-flex">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="taxExemptNo" name="taxExemptNo" checked = {!taxExemp?true:false} class="custom-control-input" onClick={handleInput} />
-                                               
-                                                <label class="custom-control-label" for="taxExemptNo">No</label>
-                                            </div>
-                                            <div class="custom-control custom-radio ml-4">
-                                                <input type="radio" id="taxExemptYes" name="taxExemptYes" checked = {taxExemp?true:false} onClick={handleInput} class="custom-control-input" />
-                                                <label class="custom-control-label" for="taxExemptYes">Yes</label>
-                                            </div>
-                                        </div>
+                                    <div class="col-md-3 col-lg-3">
+                                        <label>Discount</label>
+                                      <input type="number" class="form-control" onChange={handleInput} placeholder="" id="discount" value={supplierDataById.discount} step="0.00"/>
+                                       
                                     </div>
-                                    <div class="col-md-6 col-lg-2 mt-3 mt-md-0">
-                                        <div class="d-flex">
-                                            <div>
-                                                <label>Tax Exempt Number</label>
-                                                <input type="number" class="form-control" name={"taxExemptNumber"} value={taxExemptNumber} onChange={handleInput} />
-                                                {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
-
-                                            </div>
-                                        </div>
-                                    </div>
+                                
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-3 col-lg-2">
-                                        <label>P.O. Required</label>
-                                        <div class="d-flex">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="poRequiredNo" name="poRequiredNo" class="custom-control-input" checked = {!poRequired?true:false} onClick={handleInput} />
-                                                <label class="custom-control-label" for="poRequiredNo">No</label>
-                                            </div>
-                                            <div class="custom-control custom-radio ml-4">
-                                                <input type="radio" id="poRequiredYes" name="poRequiredYes" class="custom-control-input" checked = {poRequired?true:false} onClick={handleInput} />
-                                                <label class="custom-control-label" for="poRequiredYes">Yes</label>
-                                            </div>
-                                        </div>
-                                    </div>
+                        
                                     <div class="col-md-9 col-lg-10 mt-3 mt-md-0">
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Units</label>
-                                                <select class="form-control">
-                                                    <option>Imperial</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Payment Terms</label>
-                                                <select class="form-control">
-                                                    <option>Imperial</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" onChange={handleInput} id="unit_of_measurement">
+                                                    <option selected={supplierDataById.units =="Metric"?"selected":""} value="Metric">Metric</option>
+                                                    <option selected={supplierDataById.units =="Imperial"?"selected":""} value="Imperial">Imperial</option>
+        
                                                 </select>
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0">
                                                 <label>Currency</label>
-                                                <select class="form-control">
-                                                    <option>Canadian Dollar</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" onChange={handleInput} id="currency">
+                                                    <option value={"Canadian Dollar"} selected={supplierDataById.currency=="Canadian Dollar"?"selected":""}>Canadian Dollar</option>
+                                                    <option  value={"U.S. Dollar"} selected={supplierDataById.currency=="U.S. Dollar"?"selected":""}>U.S. Dollar</option>
+                                                   
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-10 col-lg-10">
+                                    <div class="col-md-12 col-lg-12">
                                         <div class="row">
-                                            <div class="col-md-4">
-                                                <label>Discount</label>
-                                                <input type="text" class="form-control" value="3%" />
-                                            </div>
-                                            <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Discount By Line Item</label>
-                                                <select class="form-control">
-                                                    <option>Canadian Dollar</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Restock Fees</label>
-                                                <div class="d-flex">
-                                                    <div class="custom-control custom-radio">
-                                                        <input type="radio" id="restockNo" name="restockNo" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="restockNo">No</label>
-                                                    </div>
-                                                    <div class="custom-control custom-radio ml-4">
-                                                        <input type="radio" id="restockYes" name="restockYes" class="custom-control-input" />
-                                                        <label class="custom-control-label" for="restockYes">Yes</label>
+                                         
+                                            <div class="col-md-12 mt-12" style={{width:"20%"}}>
+                                                <label>Product Categories</label>
+                                                <div></div>
+                                                {categoryData.map(data=>{
+                                                    return(
+                                                        <div class="col-md-6 col-lg-6" style={{display:"inline-block",width:"15%"}}>
+                                                    <div className="custom-control custom-checkbox mb-1" >
+                                                        <input type="checkbox" className="custom-control-input" id={data.id} onChange={handleInput} />
+                                                        <label className="custom-control-label" for={data.id}>{data.name}</label>
                                                     </div>
                                                 </div>
+                                                    )
+                                                })}
+                                                {/* <div style={{display:"flex"}}>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <div className="custom-control custom-checkbox mb-1" >
+                                                        <input type="checkbox" className="custom-control-input" id={"all_communication"} onChange={handleInput} />
+                                                        <label className="custom-control-label" for={"all_communication"}>Finished Plants</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <div className="custom-control custom-checkbox mb-1">
+                                                        <input type="checkbox" className="custom-control-input" id={"Liners"} onChange={handleInput} />
+                                                        <label className="custom-control-label" for={"Liners"}>Liners</label>
+                                                    </div>
+                                                </div>
+
+                                                </div>
+                                                <div style={{display:"flex"}}>
+                                        
+                                                <div class="col-md-2 col-lg-2">
+                                                    <div className="custom-control custom-checkbox mb-1" >
+                                                        <input type="checkbox" className="custom-control-input" id={"all_communication"} onChange={handleInput} />
+                                                        <label className="custom-control-label" for={"all_communication"}>Office Supplies</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 col-lg-2">
+                                                    <div className="custom-control custom-checkbox mb-1">
+                                                        <input type="checkbox" className="custom-control-input" id={"all_communication"} onChange={handleInput} />
+                                                        <label className="custom-control-label" for={"all_communication"}>Services</label>
+                                                    </div>
+                                                </div>
+                                                </div> */}
+                                                <div style={{display:"flex"}}>
+                                        
+                                        <div class="col-md-2 col-lg-2">
+                                            <div className="custom-control custom-checkbox mb-1" >
+                                                <input type="checkbox" className="custom-control-input" id={"all_communication"} onChange={handleInput} />
+                                                <label className="custom-control-label" for={"all_communication"}>Growing Supplies</label>
                                             </div>
-                                            <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Fee%</label>
-                                                <input type="text" class="form-control" value="10.0" />
+                                        </div>
+                                        </div>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -446,14 +610,16 @@ console.log(errorObj)
                                 <h2>Contacts</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-4">
+                                    {supplierContactList.active.map(contact=>{
+                                        return(
+                                            <div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
-                                            <p class="mb-0 f-w-600">John Smith - President</p>
-                                            <label class="text-muted f-w-400">Jsmith@johnsmithlandscaping.com</label>
+                                            <p class="mb-0 f-w-600">{contact.contact_name}</p>
+                                            <label class="text-muted f-w-400">{contact.contact_email}</label>
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> 416 - 555 - 8888</label>
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> 416 - 555 - 8888</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong>{contact.phone1}</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong>{contact.phone2}</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> 123</label>
@@ -461,11 +627,11 @@ console.log(errorObj)
                                             </div>
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked/>
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contact.primary_contact)==1?true:false}/>
                                                     <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(contact.receives_all)==1?true:false}/>
                                                     <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
                                                 </div>
                                             </div>
@@ -475,51 +641,52 @@ console.log(errorObj)
                                                         <img src="assets/img/moreDetails-ic.svg" alt=""/>
                                                     </a>
                                                     <a href="#" class=" ml-2">
-                                                        <img src="assets/img/edit.svg" alt=""/>
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>editContact(contact.id)}/>
                                                     </a>
                                                 </div>
-                                                <div class="col-md-6 text-right">
-                                                    <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
+                                                <div class="col-md-6 text-right" onClick={()=>deleteContactData(contact.id)}>
+                                                    <a  class=" ml-2">
+                                                        <img src="assets/img/delete.svg" alt="" />
                                                     </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                        )
+                                    })}
                                    
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3">Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact}>Add</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                     </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
+                
                     <TabPanel>
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
                             <form>
                                 <h2>Addresses</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-4">
+                                    {supplierAddressList.active.map(address=>{
+                                        return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
-                                            <p class="mb-0 f-s-16 f-w-600">7049 twenty Rd. E.<br/>
-Hannon, Orntario LOR 1PO, Canada.</p>
+                                            <p class="mb-0 f-s-16 f-w-600">{address.supplier_address}<br/>
+.</p>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked/>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(address.billing_address)==1?true:false} disabled/>
                                                         <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(address.shipping_address)==1?true:false} disabled/>
                                                         <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
                                                     </div>
                                                 </div>
@@ -547,97 +714,15 @@ Hannon, Orntario LOR 1PO, Canada.</p>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4">
-                                        <div class="contactCard">
-                                            <p class="mb-0 f-s-16 f-w-600">7049 twenty Rd. E.<br/>
-Hannon, Orntario LOR 1PO, Canada.</p>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked/>
-                                                        <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                        <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-12">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/location-pin.svg" alt=""/> Show on Google Maps
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-6">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
-                                                    </a>
-                                                    <a href="#" class=" ml-2">
-                                                        <img src="assets/img/edit.svg" alt=""/>
-                                                    </a>
-                                                </div>
-                                                <div class="col-md-6 text-right">
-                                                    <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-4 mt-md-3 mt-lg-0">
-                                        <div class="contactCard">
-                                            <p class="mb-0 f-s-16 f-w-600">7049 twenty Rd. E.<br/>
-Hannon, Orntario LOR 1PO, Canada.</p>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked/>
-                                                        <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                        <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-12">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/location-pin.svg" alt=""/> Show on Google Maps
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="row mt-3">
-                                                <div class="col-md-6">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
-                                                    </a>
-                                                    <a href="#" class=" ml-2">
-                                                        <img src="assets/img/edit.svg" alt=""/>
-                                                    </a>
-                                                </div>
-                                                <div class="col-md-6 text-right">
-                                                    <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </div>)
+                                    })}
+                               
 
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3">Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -671,3 +756,13 @@ Hannon, Orntario LOR 1PO, Canada.</p>
         </div>
     )
 }
+const mapStateToProps = (state)=> (
+    // console.log(state.customerReducer.payload)
+    {
+        supplierData:state.supplierData,
+        categoryData:state.categoryData
+    }
+
+)
+
+export default connect(mapStateToProps,{deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
