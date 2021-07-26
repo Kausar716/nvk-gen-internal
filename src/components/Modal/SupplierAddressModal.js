@@ -14,7 +14,125 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
        setError("")
 
    },[])
-  
+   const onSaveClicked = () => {
+    // let clientDetailsData = JSON.parse(JSON.stringify(this.state.clientData));
+
+    let errorList = "";
+    let errorCount = 0;
+    let validationList = {  "country": "country", "state": "state", "city": "city", "zip": "zip","supplier_address":"supplier_address","address2":"address2"};
+    Object.keys(validationList).map((object, i) => {
+        var element = document.getElementById(object);
+        if (object === "city") {
+            if (element.value === "") {
+                document.getElementById("city-validtor").innerText = "Enter  City"
+                errorCount++;
+
+            } else {
+                document.getElementById("city-validtor").innerText = ""
+            }
+
+        }
+        if (object === "supplier_address") {
+            if (element.value === "") {
+                document.getElementById("supplier_address-validtor").innerText = "Enter  Address 1"
+                errorCount++;
+
+            } else {
+                document.getElementById("supplier_address-validtor").innerText = ""
+            }
+
+        }
+        // if (object === "address2") {
+        //     if (element.value === "") {
+        //         document.getElementById("address2-validtor").innerText = "Enter  Address 2"
+        //         errorCount++;
+
+        //     } else {
+        //         document.getElementById("address2-validtor").innerText = ""
+        //     }
+
+        // }
+     
+        // if (object === "contactFN") {
+        //     if (element.value === "") {
+        //         document.getElementById("contactFN-validtor").innerText = "First Name is not valid"
+        //         errorCount++;
+
+        //     } else {
+        //         document.getElementById("contactFN-validtor").innerText = ""
+        //     }
+
+
+        // }
+        // if (object === "contactLN") {
+        //     if (element.value === "") {
+        //         document.getElementById("contactLN-validtor").innerText = "Last Name is not valid"
+        //         errorCount++;
+
+        //     } else {
+        //         document.getElementById("contactLN-validtor").innerText = ""
+        //     }
+
+
+        // }
+
+        // if (object === "contactAddress") {
+        //     if (element.value === "") {
+        //         document.getElementById("contactAddress-validtor").innerText = "Address is not valid"
+        //         errorCount++;
+
+        //     } else {
+        //         document.getElementById("contactAddress-validtor").innerText = ""
+        //     }
+
+
+        // }
+        if (object === "country") {
+            if (element.value === "") {
+                // clientDetailsData.country="Canada"
+                document.getElementById("country-validtor").innerText = "Select Country"
+                errorCount++;
+
+            } else {
+                document.getElementById("country-validtor").innerText = ""
+            }
+
+
+        }
+        if (object === "state") {
+            if (element.value === "") {
+                document.getElementById("state-validtor").innerText = "Select State"
+                errorCount++;
+
+
+            } else {
+                document.getElementById("state-validtor").innerText = ""
+            }
+
+
+        }
+        if (object === "zip") {
+            if(element.value == ""){
+            // if ( !element.value.trim().match(this.countZipRegix)) {
+                document.getElementById("zip-validtor").innerText = "Enter Postal/ZIP "
+                errorCount++;
+
+            }else {
+                document.getElementById("zip-validtor").innerText = ""
+            }
+        }
+
+        // }
+
+    });
+    return errorCount
+    // if (errorCount > 0) {
+    //     this.setState((state) => { state.validationError = this.state.errorArrayList + " is not valid"; state.validErrorList = this.state.errorArrayList; return state; });
+    //     errorList = false;
+    // } else {
+    //     this.props.onSaveClicked(clientDetailsData,this.props.clientData);
+    // }
+}
              
    let allCountry = Object.keys(countryDetails);
         
@@ -44,6 +162,9 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
     }
     const saveData =(e)=>{
         e.preventDefault();
+        let errors = onSaveClicked()
+        if(errors!==0)
+        return
         // alert("saving")
        
         if(supplierDataById.id !== undefined){
@@ -92,6 +213,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             <div class="col-md-3 col-lg-3">
                 <label>City<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="city" value={supplierAddress.city} onChange={handleInput}/>
+                {<span style={{fontSize:"small",color:"red"}} id="city-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-3 col-lg-3">
@@ -105,6 +227,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                     <option value="India" selected={supplierData.supplierLocation.country =="India"?"selected":""}>India</option>
                     <option value="Africa" selected={supplierData.supplierLocation.country =="Africa"?"selected":""}>Africa</option> */}
                 </select>
+                {<span style={{fontSize:"small",color:"red"}} id="country-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-3 col-lg-3">
@@ -118,36 +241,42 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                     <option value="Alberta" selected={supplierData.supplierLocation.state =="Alberta"?"selected":""}>Alberta</option>
                     <option value="Quebec" selected={supplierData.supplierLocation.state =="Quebec"?"selected":""}>Quebec</option> */}
                 </select>
+                {<span style={{fontSize:"small",color:"red"}} id="state-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>Zip<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="zip" value={""}  value={supplierAddress.zip}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="zip-validtor"></span>}
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6 col-lg-6">
-                <label>Address 1<span class="text-danger">*</span></label>
+            <div class="col-md-12 col-lg-12">
+                <label>Address<span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="supplier_address" value={""} value={supplierAddress.supplier_address}  onChange={handleInput}></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="supplier_address-validtor"></span>}
             </div>
-            <div class="col-md-6 col-lg-6">
+            {/* <div class="col-md-6 col-lg-6">
                 <label>Address 2<span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="supplier_address1" value={""} value={supplierAddress.supplier_address1}  onChange={handleInput}></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
-            </div>
+                {/* {<span style={{fontSize:"small",color:"red"}} id="address2-validtor"></span>} */}
+            {/* </div> */} 
         </div>
    
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
-                <label>Lat<span class="text-danger">*</span></label>
+                <label>Lat</label>
                 <input type="number" class="form-control" id="lat" value={""} value={supplierAddress.lat}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="lat-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>Lang<span class="text-danger">*</span></label>
+                <label>Lang</label>
                 <input type="number" class="form-control" id="long" value={""}  value={supplierAddress.long}  onChange={handleInput}/>
+                {<span style={{fontSize:"small",color:"red"}} id="long-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
         </div>

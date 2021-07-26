@@ -10,6 +10,7 @@
  FILTER_DATA_BY_ALPHA,
  HANLE_DATA_CHANGE,
  HANDLE_INPUT_EXCHANGE,
+ HANDLE_INPUT_EXCHANGE1,
  ADD_NOTIFICATION,
  ADD_FINANCES_DATA,
  ADD_EMAIL,
@@ -37,6 +38,7 @@
  ADD_NEW_CUSTOMER,
  EDIT_CUSTOMER,
  TYPE_OF_ACTION,
+ DELETE_CUSTOMER_ADDRESS,
  GET_CUSTOMER_BY_ID,
  RESET_CUSTOMER_FILEDS,
  ADD_CUSTOMER_CONTACT,
@@ -49,6 +51,7 @@ UPDATE_CUSTOMER_CONTACT,
 GET_CUSTOMER_CONTACT_BY_ID,
 RE_SET_ADDRESS_FILED,
 RESET_CONTACT,
+DELETE_CUSTOMER_CONTACT,
 UPDATE_CUSTOMER_TYPE_SETTING,
 SHOW_SPECIFIC_CUSTOMER_TYPE_SETTING,
 HANDLE_CUSTOMER_SETTIING_INPUT_DATA,
@@ -80,6 +83,29 @@ export const typeOfActionShow = (type) =>dispatch=>{
       action:type
     })
 }
+export const deleteCustomerContact= (id) => dispatch => {
+    // console.log(customerData)
+    return axios.post(`/api/delete-customer-contact/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_CUSTOMER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+     
+}
+export const deleteCustomerAddress= (id) => dispatch => {
+    // console.log(customerData)
+    return axios.post(`/api/delete-customer-address/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_CUSTOMER_ADDRESS,
+                payload:res.data   
+            })
+        }) 
+     
+}
+
 export const getCustomerById = (id) =>dispatch=>{
     return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
         console.log(res.data)
@@ -279,6 +305,24 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
 
 
 
+//   export const handleExchangeData2 =(data,id,dataType)=>dispatch=>{
+//     dispatch({
+//         type:HANDLE_CUSTOMER_SETTIING_INPUT_DATA,
+//         data:data,
+//         id:id,
+//         dataType:dataType
+
+//     })
+// }
+export const handleExchangeData =(data,id,dataType)=>dispatch=>{
+    dispatch({
+        type:HANDLE_INPUT_EXCHANGE1,
+        data:data,
+        id:id,
+        dataType:dataType
+
+    })
+}
 
 
  export const handleExchangeData2 = (data,dataType) =>dispatch=>{
@@ -291,16 +335,16 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
  })
 }
 
-export const handleExchangeData = (data,dataType) =>dispatch=>{
-    dispatch({
-        type:HANDLE_INPUT_EXCHANGE,
-        data:data,
-        // id:id,
-        dataType:dataType
+// export const handleExchangeData = (data,dataType) =>dispatch=>{
+//     dispatch({
+//         type:HANDLE_INPUT_EXCHANGE,
+//         data:data,
+//         // id:id,
+//         dataType:dataType
 
-    })
+//     })
 
-}
+// }
 
 // export const handleExchangeData2 = (data,id,dataType) =>dispatch=>{
 //     dispatch({
@@ -787,21 +831,18 @@ export const showCustomer = (id) => dispatch => {
 //      })     
 // }
 
-export const deleteCustomer= (customerData) => dispatch => {
-    console.log(customerData)
-    return axios.post(`/api/delete-customer/${customerData.id}`,config).then(res=>{  
-     console.log(res)  
-   
-     dispatch({
-             type:DELETE_CUSTOMER,
-             payload:res.data    
-         })
-     })
-     .catch(message=>{
-         console.log(message)
-     })
+export const deleteCustomer= (id) => dispatch => {
+    // console.log(customerData)
+    return axios.post(`/api/delete-customer/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_CUSTOMER,
+                payload:res.data   
+            })
+        }) 
      
 }
+
 export const setPageNumber = (pageNumber) => {
     return{
           type:SET_PAGE_NUMBER,

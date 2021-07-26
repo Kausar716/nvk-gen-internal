@@ -3,7 +3,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
-import {UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {deleteCustomerAddress,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -70,6 +70,7 @@ function AddCustomer(props) {
 
     const handleInput= (e)=>{
         // alert("hi")
+        console.log(e.target.value,e.target.id)
         setCheckedData(true)
         let indexValue = null
         if(e.target.id ==="type"){
@@ -88,7 +89,11 @@ function AddCustomer(props) {
         }else if(e.target.id ==="prospect"){
             let prospect = parseInt(customerDataById.prospect)==1?0:1
             props.handleExchangeData(prospect,e.target.id,"customerDataById")
-        }else if(e.target.id =="delivery"){
+        }else if(e.target.id ==="status"){
+            let prospect = parseInt(customerDataById.status)==1?0:1
+            props.handleExchangeData(prospect,e.target.id,"customerDataById")
+        }
+        else if(e.target.id =="delivery"){
             props.handleExchangeData("Delivery","dispatch_type","customerDataById")
 
         }
@@ -130,14 +135,22 @@ function AddCustomer(props) {
         props.typeOfActionShow("")
     }
     const validation  = ()=>{
+        // alert(customerDataById.reason)
         let errosList = []
         if(customerDataById.name==="")
         errosList.push("Please Add Name")
         if(customerDataById.type.length ===0)
         errosList.push("Please Select Type")
-        return errosList
+        if(customerDataById.status==0 && (customerDataById.notes ===null || customerDataById.notes ==="")){
+            errosList.push("Please add reason")
+            return errosList
 
+        }
+        
+        else  return errosList
     }
+    
+  
     const saveCustomerData1 = (type)=>{
         // e.preventDefault()
         let errorCount = validation()
@@ -249,11 +262,24 @@ function AddCustomer(props) {
         props.typeOfActionShow("")
       
     }
+    const deleteCustomerContactData =(id)=>{
+        props.deleteCustomerContact(id).then(data=>{
+            props.getCustomerContacts()
+        })
+
+    }
+    const deleteAddress =(id)=>{
+        props.deleteCustomerAddress(id).then(data=>{
+            props.getcustomerAddress()
+        })
+
+    }
     const editContact=(id)=>{
         setisOpenContacs(true)
         props.getDataByContactId(id)
         setactionType("edit")
     }
+
     const editAddress =(id)=>{
         setisOpenAddress(true)
         props.getcustomerAddressByaddressId(id)
@@ -699,7 +725,7 @@ function AddCustomer(props) {
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(contactData.id)}/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -765,7 +791,7 @@ function AddCustomer(props) {
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>{deleteAddress(data.id)}}/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -816,7 +842,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps,{deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      
