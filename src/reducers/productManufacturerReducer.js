@@ -6,7 +6,10 @@ import {
     HANDLE_ADD_PRODUCT_MANUFACTURE,
     HANDLE_DRAG_PRODUCT_MANUFACTURE,
     HANDLE_DRAG_MANUFACTURER_SORT,
-    HANDLE_PRODUCT_MANUFACTURE_DELETE
+    HANDLE_PRODUCT_MANUFACTURE_DELETE,
+    UPDATE_PRODUCT_SETTING_MANUFACTURES,
+    SHOW_SPECIFIC_PRODUCT_SETTING_MANUFACTURES,
+    
 
 } from '../actions/types';
 
@@ -14,7 +17,9 @@ import {
 const initialSatate = {
     productManufacturerData:[],
     name:"",
-    status:""  
+    status:"",
+    updatedProductManufatureData:[],
+    showSpecificProductManufacture:[],
     
 }
 
@@ -30,8 +35,21 @@ export default function(state = initialSatate, action){
                 name:""
 
             }
-            default:
-                return state
+
+
+            case UPDATE_PRODUCT_SETTING_MANUFACTURES:
+                return{
+                    ...state,
+                    updatedPlantCategoryData:action.payload.data
+                }
+                case SHOW_SPECIFIC_PRODUCT_SETTING_MANUFACTURES:
+                    return{
+                        ...state,
+                        showSpecificProductManufacture:action.payload.data
+                    }
+
+
+           
         case HANDLE_PRODUCT_MANUFACTURE_INPUT_DATA:
             return{
                 ...state,
@@ -55,6 +73,9 @@ export default function(state = initialSatate, action){
             return{
                 ...state
             }
+
+            default:
+                return state
     }
  
         

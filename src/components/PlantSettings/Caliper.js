@@ -3,8 +3,10 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
+    handleZoneInputAction,handleAddZone, handleZoneInputAction2, handleZoneInputAction3, showSubSubAttribute, handleSubAttributeUpdate} from '../../actions/attributeAction'
 
     class Caliper extends Component {
         constructor(props){
@@ -16,7 +18,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         caliperImperial:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    isEditing:false,
+                        name:'',
+                        subName:'',
+                        subName2:'',
                 }
             
         }
@@ -90,25 +96,113 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
            })
         }
         handleZoneInputAction = (e)=>{
+            console.log("whichNAME", e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value
+            })
+
+            this.props.handleZoneInputAction(e.target.name,e.target.value)
+        }
+
+        handleZoneInputAction2 = (e)=>{
+            //debugger;
+            console.log("inputAction", e.target.name,e.target.value)
+            this.setState({
+                subName:e.target.value,
+                
+            })
+            let errorObj=this.state.errorObj
+            if(e.target.name === "caliperImperial"){
+                errorObj.caliperImperial=0
+                this.setState({errorObj})}
+
+            this.props.handleZoneInputAction2("caliperImperial",e.target.value)
+        }
+
+
+        handleZoneInputAction3 = (e)=>{
+            this.setState({
+                subName2:e.target.value,
+                
+            })
             let errorObj=this.state.errorObj
             if(e.target.name === "caliperSku"){
             errorObj.caliperSku=0
             this.setState({errorObj})}
-            if(e.target.name === "caliperImperial"){
-                errorObj.caliperImperial=0
-                this.setState({errorObj})}
-            this.props.handleZoneInputAction(e.target.name,e.target.value)
+            //debugger;
+            console.log("inputAction", e.target.name,e.target.value)
+           
+            this.props.handleZoneInputAction3("caliperSku",e.target.value)
         }
+
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+            // debugger;  
+         this.setState({
+             name: t.value,
+             subName:t.sub_attributeschild[0].value,
+             subName2:t.sub_attributeschild[1].value,
+             isEditing:true
+         })
+        //  let formValue={}
+        //  formValue={...this.state.name, ...this.state.subName}
+
+         this.props.handleZoneInputAction("caliperName",...this.state.name)
+         this.props.handleZoneInputAction2("caliperImperial",...this.state.subName)
+         this.props.handleZoneInputAction3("caliperSku",...this.state.subName2)
+         this.props.showSubSubAttribute(t.id)
+         //console.log("ttttttt", t,  )
+       }
+
+
+       handleAddCategoryUpdate=(e)=>{
+        // debugger;
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+         let caliperName = this.state.subName
+         let skuName = this.state.subName2
+         let updateID = parseInt(this.props.showSpeciSubA.id)
+         let updateObject={}
+         updateObject.value=valueName
+        //  updateObject.attribute_id=1
+         updateObject.status=1
+
+         updateObject["sub_attributeschild"] =[
+            {
+            value:caliperName,
+            name:'Imperial'
+            },
+            {
+                value:skuName,
+                name:'SKU value'
+                }
+        ]
+            
+      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllSubAttribute(5)
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:"",
+                 subName:"",
+                 subName2:""
+             })
+
+     }
+
+
         handleAddCategory = (e)=>{
        
             let zoneObj={}
             zoneObj.attribute_id=5
-            zoneObj.value = this.props.caliperName           
+            zoneObj.value = this.state.name          
             zoneObj["childrens"] =[
                 {'children_name':'SKU value',
-                'children_value':this.props.caliperSku},
+                'children_value':this.state.subName},
                 {'children_name':'Imperial',
-                'children_value':this.props.caliperImperial}
+                'children_value':this.state.subName2}
             ]
             zoneObj.status=1
             console.log(zoneObj)
@@ -164,7 +258,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <div className="col-md-4">
                                             <p>Caliper Name</p>
                                             <div>
-                                                <input type="text" className="form-control"  placeholder="Name"  name="caliperName" value={this.props.caliperName}    onChange={this.handleZoneInputAction}/>
+                                                <input type="text" 
+                                               className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 placeholder="Name"  name="caliperName" 
+                                               value={this.state.name}
+                                                 onChange={this.handleZoneInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 {/* <a href="javascript;" className="d-flex align-items-center">
@@ -176,21 +274,50 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <div className="col-md-4">
                                             <p>Imperial<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                <input type="text" className="form-control" placeholder=""  name="caliperImperial" value={this.props.caliperImperial}    onChange={this.handleZoneInputAction}/>
+                                                <input type="text" 
+                                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                placeholder=""
+                                                  name="caliperImperial"
+                                                   value={this.state.subName}
+                                                      onChange={this.handleZoneInputAction2}/>
                                                 {this.state.errorObj.caliperImperial!==0?<span style={{fontSize:"small",color:"red"}}>Enter Imperial Value</span>:""}
                                             </div>
                                         </div>
                                         <div className="col-md-4">
                                             <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                             <div>
-                                                <input type="text" className="form-control" placeholder="Value"  name="caliperSku" value={this.props.caliperSku}    onChange={this.handleZoneInputAction}/>
+                                                <input type="text" 
+                                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 placeholder="Value"  name="caliperSku" value={this.state.subName2}    onChange={this.handleZoneInputAction3}/>
                                                 {this.state.errorObj.caliperSku!==0?<span style={{fontSize:"small",color:"red"}}>Enter SKU Value</span>:""}
                                             </div>
+
+                                            {/* 
                                             <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Caliper
                                                 </a>
-                                            </div>
+                                            </div> */}
+
+                                            {this.state.isEditing ? (
+
+                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Caliper
+                                                    </a>
+                                                    </div>
+
+
+                                                    ):
+                                                    (
+                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategory}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Caliper
+                                                    </a>
+                                                    </div>  
+                                            )}   
+
+
                                         </div>
                                     </div>
                                    
@@ -244,6 +371,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -269,7 +399,8 @@ temp:state,
 // name:state.categoryData.name 
 caliperName:state.attributeData.subAttributeName.caliperName,
 caliperSku:state.attributeData.subAttributeName.caliperSku,
-caliperImperial:state.attributeData.subAttributeName.caliperImperial
+caliperImperial:state.attributeData.subAttributeName.caliperImperial,
+showSpeciSubA: state.attributeData.specificSubAttribute,
 
 }
 )
@@ -279,5 +410,10 @@ export default connect(mapStateToProps,{
     handleAttributeDragSort,
     handleAttributeDelete,
     handleZoneInputAction,
-    handleAddZone      
+    handleZoneInputAction2,
+    handleZoneInputAction3,
+    handleAddZone,
+    showSubSubAttribute,
+    handleSubAttributeUpdate
+
 })(Caliper)

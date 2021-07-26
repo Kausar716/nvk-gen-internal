@@ -6,7 +6,8 @@ import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
 // import './style.css';
 //import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
-import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
+import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,handleAddCategory,
+    updatePlantSettingCategory, showSpecificPlantSettingAttribute, handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 
 import {showSubSubAttribute} from '../../actions/attributeAction'
     class Categories extends Component {
@@ -139,45 +140,44 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
             })
             this.props.handleCategoryInputAction(e.target.value)
 
-            // console.log("12344", e.target.name,e.target.value)
         }
 
 
-        handleAddCategoryUpdate=(e)=>{
-            // this.props.handleSubAttributeUpdate(e.target.id)
-            let updateID = parseInt(this.props.showSpeciSubA.id)
-            let updateObject={}
-            updateObject.value=this.props.positionName
-           // updateObject.id=this.props.showSpeciSubA.id
-               
-         let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
-                res.then(res=>{
-                    this.props.getAllSubAttribute(16)
-                })
+        handleAddCategoryUpdate=()=>{
+            // debugger;
+          // this.props.handleSubAttributeUpdate(e.target.id)
+          
+          let updateID = parseInt(this.props.showSpecificPlantCategory.id)
+          let updateObject={}
+          updateObject.name=this.state.name
+         // updateObject.id=this.props.showSpeciSubA.id
+             
+              let res1=   this.props.updatePlantSettingCategory(updateID, updateObject)
+              res1.then(res=>{
+                  this.props.getAllPlantCategories()
+              })
+  
+              this.setState({
+                  isEditing:false,
+                  name:""
+              })
+      }
 
-                this.setState({
-                    isEditing:false,
-                    name:""
-                })
 
-        }
 
 
         handleEditClick2 =(t)=> {
 
+            console.log("ttt", t)
             // debugger;
              
          this.setState({
-             name: t.value,
+             name: t.name,
              isEditing:true
          })
-     
-          this.props.handleCategoryInputAction("Category",...this.state.name)
-          this.props.showSubSubAttribute(t.id)
-        //  console.log("ttttttt", t,  this.props.handlePositionInputAction())
-
-
-
+         this.props.handleCategoryInputAction(...this.state.name)
+         // this.props.handleCategoryInputAction("Category",...this.state.name)
+          this.props.showSpecificPlantSettingAttribute(t.id)
        }
 
 
@@ -201,6 +201,8 @@ render() {
          })
     }
     console.log(this.props.temp)
+
+    console.log("showSpecificPlantCategory", this.props.showSpecificPlantCategory)
     // this.props.plantCategoryList.forEach((t)=>{
     //         tasks[t.category].push(
     //             <div key={t.name} onDragStart={(e)=>this.onDragStart(e, t.name)} onDelete={(e)=>this.onDelete(e, t.name)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
@@ -235,7 +237,9 @@ render() {
                                         </div> */}
                                         <div className="row d-flex align-items-center">
                                         <div className="col-md-6 col-lg-9">  
-                                                <input type="text" className="form-control" name="Category" 
+                                                <input type="text" 
+                                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                name="Category" 
                                                 value={this.state.name}
                                                  placeholder="Category" onChange={this.handlePositionInputAction}/>
                                             </div>
@@ -343,7 +347,8 @@ render() {
         
     plantCategoryList:state.categoryData.plantCategoryData,
     temp:state,
-    name:state.categoryData.name
+    name:state.categoryData.name,
+    showSpecificPlantCategory:state.categoryData.showSpecificPlantCategory
     }
     )
     export default connect(mapStateToProps,{
@@ -353,7 +358,8 @@ render() {
         handleDragDrop,
         handleCategoryDragSort,
         handleCategoryDelete,
-        
+        showSpecificPlantSettingAttribute,
+        updatePlantSettingCategory,
         showSubSubAttribute
     })(Categories)
 

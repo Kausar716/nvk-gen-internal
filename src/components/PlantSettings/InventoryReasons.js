@@ -3,8 +3,9 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone,   handleSubAttributeUpdate, showSubSubAttribute     } from '../../actions/attributeAction'
 
     class InventoryReasons extends Component {
         constructor(props){
@@ -14,7 +15,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         formSku:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    isEditing:false,
+                    name:''
                 }
             
         }
@@ -88,7 +91,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
            })
         }
         handleZoneInputAction = (e)=>{
-            this.props.handleZoneInputAction(e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleZoneInputAction("reason",e.target.value)
         }
         handleAddCategory = (e)=>{
        
@@ -104,8 +110,53 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             })
             alert('Added Successfully Done');
         }
-        
-        }
+ 
+    }
+
+
+        handleAddCategoryUpdate=(e)=>{
+            // debugger;
+             // this.props.handleSubAttributeUpdate(e.target.id)
+             let valueName = this.state.name
+             let updateID = parseInt(this.props.showSpeciSubA.id)
+             let updateObject={}
+             updateObject.value=valueName
+ 
+             //console.log("positionName",this.props.positionName)
+            // updateObject.id=this.props.showSpeciSubA.id
+                
+          let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                 res.then(res=>{
+                     this.props.getAllSubAttribute(13)
+                 })
+ 
+                 this.setState({
+                     isEditing:false,
+                     name:""
+                 })
+ 
+         }
+
+        handleEditClick2 =(t)=> {
+            // debugger;  
+            console.log("abcdefg", t)
+         this.setState({
+             name: t.value,
+             isEditing:true
+         })
+         this.props.handleZoneInputAction("reason",this.state.name)
+         this.props.showSubSubAttribute(t.id)
+         //console.log("ttttttt", t,  this.props.handlePositionInputAction())
+       }
+
+
+
+
+
+
+
+
+       
         render() {
         console.log(this.props.temp)
         var tasks={
@@ -135,13 +186,39 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <p>Reason Value</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="reason" value={this.props.reason}   placeholder="Value" onChange={this.handleZoneInputAction}/>
+                                                <input type="text" 
+                                               className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                name="reason" 
+                                                 value={this.state.name}
+                                                 placeholder="Value" onChange={this.handleZoneInputAction}/>
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                            {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Reason
                                                 </a>
+                                            </div> */}
+
+                                            {this.state.isEditing ? (
+
+                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                            <a href="javascript:" className="d-flex align-items-center">
+                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Volume Tier
+                                            </a>
                                             </div>
+
+
+                                            ):
+                                            (
+                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                            <a href="javascript:" className="d-flex align-items-center">
+                                            <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Volume Tier
+                                            </a>
+                                            </div>  
+                                            )}   
+
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -196,6 +273,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                 <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -219,7 +299,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
    zoneCategoryList:state.attributeData.subAttribute,
     temp:state,
     // name:state.categoryData.name
-    reason:state.attributeData.subAttributeName.reason
+    reason:state.attributeData.subAttributeName.reason,
+    showSpeciSubA: state.attributeData.specificSubAttribute,
     }
     )
     export default connect(mapStateToProps,{
@@ -228,6 +309,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleAttributeDragSort,
         handleAttributeDelete,
         handleZoneInputAction,
-        handleAddZone      
+        handleAddZone ,
+        handleSubAttributeUpdate, 
+        showSubSubAttribute,    
     })(InventoryReasons)
 

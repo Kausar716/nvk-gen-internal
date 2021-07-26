@@ -12,7 +12,9 @@ import {
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     HANDLE_UPDATE_ATTRIBUTE,
     SHOW_SUB_ATTRIBUTE,
-    HANDLE_UPDATE_SUB_ATTRIBUTE
+    HANDLE_UPDATE_SUB_ATTRIBUTE,
+    HANDLE_ZONE_INPUT_ACTION2,
+    HANDLE_ZONE_INPUT_ACTION3,
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
@@ -22,6 +24,8 @@ const initialSatate = {
     finalSubAttributeList:[],
     subAttribute:[],
     specificSubAttribute:[],
+    subAttributeName2:{},
+    subAttributeName3:{},
     subAttributeName:{
         zone:"",
         bloomColor:"",
@@ -54,7 +58,7 @@ switch(action.type){
             allAttributes:[...action.payload.data.active,...action.payload.data.inactive]
         }
     case GET_ALL_SUB_ATTRIBUtTES:{
-        console.log(action.payload.data[0].subattributes)
+       // console.log(action.payload.data[0].subattributes)
         return{
              ...state,
             subAttribute:action.payload.data[0].subattributes
@@ -82,6 +86,7 @@ switch(action.type){
     }
 
     case HANDLE_UPDATE_ATTRIBUTE:
+       // debugger;
         return{
             ...state,
             finalSubAttributeList:action.payload.data
@@ -99,6 +104,23 @@ switch(action.type){
             ...state,
             subAttributeName:{...state.subAttributeName,[action.name]:action.value}
         }
+
+        //
+
+        case HANDLE_ZONE_INPUT_ACTION2:
+            return{
+                ...state,
+                subAttributeName2:{...state.subAttributeName2,[action.name]:action.value}
+            }
+
+
+            case HANDLE_ZONE_INPUT_ACTION3:
+                return{
+                    ...state,
+                    subAttributeName3:{...state.subAttributeName3,[action.name]:action.value}
+                }
+
+
     case HANDLE_ADD_ZONE_ATTRIBUTE:
         return{
             ...state

@@ -3,8 +3,10 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,
+    handleAddZone,showSubSubAttribute, handleSubAttributeUpdate, handleZoneInputAction2, } from '../../actions/attributeAction'
 
     class Packaging extends Component {
         constructor(props){
@@ -15,7 +17,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         packagingSku:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    isEditing:false,
+                    name:'',
+                    subName:'',
                 }
             
         }
@@ -89,20 +94,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             this.props.getAllSubAttribute(4)
            })
         }
-        handleZoneInputAction = (e)=>{
-            let errorObj=this.state.errorObj
-            if(e.target.name === "packagingSku"){
-            errorObj.packagingSku=0
-            this.setState({errorObj})}
-            this.props.handleZoneInputAction(e.target.name,e.target.value)
-        }
+    
         handleAddCategory = (e)=>{       
             let zoneObj={}
             zoneObj.attribute_id=4
-            zoneObj.value = this.props.packagingName           
+            zoneObj.value = this.state.name        
             zoneObj["childrens"] =[
                 {'children_name':'SKU value',
-                'children_value':this.props.packagingSku
+                'children_value':this.state.subName
             }
             ]
             zoneObj.status=1
@@ -125,6 +124,88 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             return true
             
         }
+
+        handleZoneInputAction = (e)=>{
+            this.setState({
+                subName:e.target.value
+            })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "packagingSku"){
+            errorObj.packagingSku=0
+            this.setState({errorObj})}
+            this.props.handleZoneInputAction(e.target.name,e.target.value)
+        }
+
+
+        handleZoneInputAction2 = (e)=>{
+            //debugger;
+            console.log("inputAction", e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value,
+                //subName:e.target.value
+            })
+
+
+
+            this.props.handleZoneInputAction2("packagingName",e.target.value)
+        }
+
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+            // debugger;  
+         this.setState({
+             name: t.value,
+             subName:t.sub_attributeschild[0].value,
+             isEditing:true
+         })
+        //  let formValue={}
+        //  formValue={...this.state.name, ...this.state.subName}
+
+         this.props.handleZoneInputAction("packagingSku",...this.state.subName)
+         this.props.handleZoneInputAction2("packagingName",...this.state.name)
+         this.props.showSubSubAttribute(t.id)
+         //console.log("ttttttt", t,  )
+       }
+
+        handleAddCategoryUpdate=(e)=>{
+            // debugger;
+             // this.props.handleSubAttributeUpdate(e.target.id)
+             let valueName = this.state.name
+             let skuName = this.state.subName
+             let updateID = parseInt(this.props.showSpeciSubA.id)
+             let updateObject={}
+             updateObject.value=valueName
+            //  updateObject.attribute_id=1
+             updateObject.status=1
+             //updateObject.sub_attributeschild[0].value=skuName
+             //updateObject.sub_attributeschild[].value=skuName
+    
+              
+    
+             updateObject["sub_attributeschild"] =[
+                {
+                value:skuName,
+                name:'SKU value'
+            }
+            ]
+                
+          let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                 res.then(res=>{
+                     this.props.getAllSubAttribute(4)
+                 })
+    
+                 this.setState({
+                     isEditing:false,
+                     name:"",
+                     subName:""
+                 })
+    
+         }
+
+
+
+
         render() {
         console.log(this.props.temp)
         var tasks={
@@ -142,6 +223,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }
             })
         }
+
+
+       
         
     return (
         <>
@@ -153,7 +237,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                     <div className="col-md-6">
                                         <p>Packaging Name</p>
                                         <div>
-                                            <input type="text" className="form-control" name="packagingName" value={this.props.packagingName}   placeholder="Name" onChange={this.handleZoneInputAction}/>
+                                            <input type="text" 
+                                           className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                             name="packagingName"
+                                              value={this.state.name}
+                                            //  value={this.props.packagingName}  
+                                              placeholder="Name" onChange={this.handleZoneInputAction2}/>
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2">
                                             {/* <a href="javascript;" className="d-flex align-items-center">
@@ -165,14 +254,44 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                         <div>
 
-                                            <input type="text" className="form-control" placeholder="Value" name="packagingSku" value={this.props.packagingSku}    onChange={this.handleZoneInputAction}/>
+                                            <input type="text" 
+                                           className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                             placeholder="Value" name="packagingSku"
+                                              value={this.state.subName}
+                                            //  value={this.props.packagingSku}   
+                                              onChange={this.handleZoneInputAction}/>
                                             {this.state.errorObj.packagingSku!==0?<span style={{fontSize:"small",color:"red"}}>Enter SKU Value</span>:""}
                                         </div>
-                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
+
+
+
+                                        {/* <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
                                             <a href="javascript:" className="d-flex align-items-center">
                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Packaging
                                             </a>
-                                        </div>
+                                        </div> */}
+
+
+                                        {this.state.isEditing ? (
+
+                                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Packaging
+                                                </a>
+                                                </div>
+
+
+                                                ):
+                                                (
+                                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategory}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                <i className="fa fa-plus-circle fa-2x mr-2"></i>  Add New Packaging
+                                                </a>
+                                                </div>  
+                                         )}   
+
+
+
                                     </div>
                                 </div>
                                 <div class="row mt-5 mb-4">
@@ -221,6 +340,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -244,7 +366,8 @@ zoneCategoryList:state.attributeData.subAttribute,
 temp:state,
 // name:state.categoryData.name 
 packagingName:state.attributeData.subAttributeName.packagingName,
-packagingSku:state.attributeData.subAttributeName.packagingSku
+packagingSku:state.attributeData.subAttributeName.packagingSku,
+showSpeciSubA: state.attributeData.specificSubAttribute,
 }
 )
 export default connect(mapStateToProps,{
@@ -253,5 +376,8 @@ export default connect(mapStateToProps,{
     handleAttributeDragSort,
     handleAttributeDelete,
     handleZoneInputAction,
-    handleAddZone      
+    handleAddZone,
+    showSubSubAttribute,
+    handleSubAttributeUpdate, 
+    handleZoneInputAction2,       
 })(Packaging)

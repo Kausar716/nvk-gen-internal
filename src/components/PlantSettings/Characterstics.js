@@ -1,10 +1,13 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
+
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone,   showSubSubAttribute,
+    handleSubAttributeUpdate  } from '../../actions/attributeAction'
 
     class Characterstics extends Component {
             constructor(props){
@@ -12,7 +15,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                     this.state={
                         errorObj:{
                             formSku:0
-                        }
+                        },
+                        isEditing:false,
+                        name:''
                     }
                 
             }
@@ -59,6 +64,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
            })
         }
         handleZoneInputAction = (e)=>{
+            this.setState({
+                name:e.target.value
+            })
             let errorObj=this.state.errorObj
             if(e.target.name === "characterSectionName"){
             errorObj.formSku=0
@@ -84,6 +92,50 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
             })
         // }        
         }
+
+
+
+        handleEditClick2 =(t)=> {
+            // debugger;  
+         this.setState({
+             name: t.value,
+             isEditing:true
+         })
+         this.props.handleZoneInputAction("characterSectionName",...this.state.name)
+        //  this.props.handlePositionInputAction("position",...this.state.name)
+         this.props.showSubSubAttribute(t.id)
+        //  console.log("ttttttt", t,  this.props.handlePositionInputAction())
+       }
+
+
+       handleAddCategoryUpdate=(e)=>{
+        // debugger;
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+         let updateID = parseInt(this.props.showSpeciSubA.id)
+         let updateObject={}
+         updateObject.value=valueName
+
+        // console.log("bloomName",this.props.bloomColor)
+        // updateObject.id=this.props.showSpeciSubA.id
+            
+      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllSubAttribute(1)
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:""
+             })
+
+     }
+
+
+
+
+
+
         validate = ()=>{
             let errorObj = this.state.errorObj
             if(this.props.formSku.length === 0){
@@ -121,13 +173,47 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-md-6">
                                         <p>Section Name</p>
                                         <div>
-                                            <input type="text" className="form-control" placeholder="Section" name="characterSectionName" value={this.props.characterSectionName}  onChange={this.handleZoneInputAction}/>
+                                            <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } placeholder="Section" 
+                                            name="characterSectionName" 
+                                            value={this.state.name}
+                                              onChange={this.handleZoneInputAction}/>
                                         </div>
-                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
+
+
+                                        {/* <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
                                             <a href="javascript:" className="d-flex align-items-center">
                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
                                             </a>
-                                        </div>
+                                        </div> */}
+
+                                            {this.state.isEditing ? (
+                                                    <div style={{display:"flex"}}>
+                                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryUpdate}>
+                                                            <a href="javascript:" className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Section
+                                                            </a>
+                                                        </div>
+
+                                                            <div className="col-md-6 col-lg-3" style={{marginLeft:"6em", marginTop:"1em"}} onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center">
+                                                                    Cancel 
+                                                                </a>
+                                                            </div>
+                                                    </div>
+
+                                                        ):
+                                                        (
+                                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
+                                                        </a>
+                                                        </div>  
+                                            )}        
+
+
+
+
+
                                     </div>
                                     <div className="col-md-6">
                                         <p>Feature Name</p>
@@ -191,6 +277,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                 </a>
                                                             </li>                                                            
                                                     })}
@@ -214,7 +303,8 @@ const mapStateToProps = (state)=> (
 zoneCategoryList:state.attributeData.subAttribute,
 temp:state,
 // name:state.categoryData.name 
-characterSectionName:state.attributeData.subAttributeName.characterSectionName
+characterSectionName:state.attributeData.subAttributeName.characterSectionName,
+showSpeciSubA: state.attributeData.specificSubAttribute,
 }
 )
 export default connect(mapStateToProps,{
@@ -222,5 +312,7 @@ export default connect(mapStateToProps,{
     handleAttributeDragDrop,
     handleAttributeDelete,
     handleZoneInputAction,
-    handleAddZone      
+    handleAddZone,
+    showSubSubAttribute,
+    handleSubAttributeUpdate     
 })(Characterstics)

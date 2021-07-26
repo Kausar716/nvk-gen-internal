@@ -1,10 +1,11 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
 // import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
+import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone, showSubSubAttribute, handleSubAttributeUpdate} from '../../actions/attributeAction'
 
     class BloomFoliageColors extends Component {
         constructor(props){
@@ -14,7 +15,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         formSku:0
                     },
                     sortId: 0,
-                    activeId: 0
+                    activeId: 0,
+                    isEditing:false,
+                    name:''
                 }
             
         }
@@ -88,9 +91,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             this.props.getAllSubAttribute(14)
            })
         }
+
         handleZoneInputAction = (e)=>{
-            this.props.handleZoneInputAction(e.target.name,e.target.value)
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleZoneInputAction("bloomColor",e.target.value)
         }
+
         handleAddCategory = (e)=>{
        
             let zoneObj={}
@@ -105,8 +113,52 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             })
             alert('Added Successfully Done');
         }
+
+
+        // this.setState({
+        //     name:""
+        // })
         
         }
+
+        handleEditClick2 =(t)=> {
+            // debugger;  
+         this.setState({
+             name: t.value,
+             isEditing:true
+         })
+         this.props.handleZoneInputAction("bloomColor",...this.state.name)
+        //  this.props.handlePositionInputAction("position",...this.state.name)
+         this.props.showSubSubAttribute(t.id)
+        //  console.log("ttttttt", t,  this.props.handlePositionInputAction())
+       }
+
+       handleAddCategoryUpdate=(e)=>{
+        // debugger;
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+         let updateID = parseInt(this.props.showSpeciSubA.id)
+         let updateObject={}
+         updateObject.value=valueName
+
+         console.log("bloomName",this.props.bloomColor)
+        // updateObject.id=this.props.showSpeciSubA.id
+            
+      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllSubAttribute(14)
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:""
+             })
+
+     }
+
+
+
+
         render() {
         var tasks={
             inactive:[],
@@ -123,6 +175,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }
             })
         }
+
+      
+
         return (
            
                <div>
@@ -135,13 +190,48 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <p>Color Name</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="bloomColor" value={this.props.bloomColor}   placeholder="Colour" onChange={this.handleZoneInputAction}/>
+                                                <input type="text" 
+                                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 name="bloomColor" 
+                                                 value={this.state.name}
+                                                  placeholder="Colour"
+                                                 onChange={this.handleZoneInputAction}/>
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+
+
+                                            {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Color
                                                 </a>
-                                            </div>
+                                            </div> */}
+
+
+
+                                            {this.state.isEditing ? (
+                                                    <div style={{display:"flex"}}>
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                            <a href="javascript:" className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Color
+                                                            </a>
+                                                        </div>
+
+                                                            <div className="col-md-6 col-lg-3" style={{marginLeft:"6em", marginTop:"1em"}} onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center">
+                                                                    Cancel 
+                                                                </a>
+                                                            </div>
+                                                    </div>
+
+                                                        ):
+                                                        (
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Color
+                                                        </a>
+                                                        </div>  
+                                            )}        
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -165,9 +255,6 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                             </li>
                                                     })}
                                             </ul>
-                                             
-                                               
-
 
                                             </div>
                                         </div>
@@ -196,6 +283,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers">{t.value}</span>
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                 </a>
                                                             </li>
                                                     })}
@@ -219,7 +309,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
    zoneCategoryList:state.attributeData.subAttribute,
     temp:state,
     // name:state.categoryData.name
-    bloomColor:state.attributeData.subAttributeName.bloomColor
+    bloomColor:state.attributeData.subAttributeName.bloomColor,
+    showSpeciSubA: state.attributeData.specificSubAttribute,
     }
     )
     export default connect(mapStateToProps,{
@@ -228,6 +319,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleAttributeDragSort,
         handleAttributeDelete,
         handleZoneInputAction,
-        handleAddZone      
+        handleAddZone ,
+        showSubSubAttribute,
+        handleSubAttributeUpdate     
     })(BloomFoliageColors)
 

@@ -12,6 +12,8 @@ import {
     HANDLE_DRAG_PLANT_CATEGORY,
     HANDLE_DRAG_CATEGORY_SORT,
     HANDLE_CATEGORY_DELETE,
+    UPDATE_PLANT_SETTING_CATEGORY,
+    SHOW_SPECIFIC_PLANT_SETTING_ATTRIBUTE,
 
 
     // GET_ALL_PLANT_CATEGORIES
@@ -25,6 +27,8 @@ const initialSatate = {
     subCategoryData:[],
     manufactureData:[],
     plantCategoryData:[],
+    updatedPlantCategoryData:[],
+    showSpecificPlantCategory:[],
     name:"",
     status:""  
     
@@ -62,6 +66,7 @@ export default function(state = initialSatate, action){
             }
             default:
                 return state
+
         case GET_ALL_PLANT_CATEGORIES:
             return{
                 ...state,
@@ -69,6 +74,21 @@ export default function(state = initialSatate, action){
                 name:""
 
             }
+//SHOW_SPECIFIC_PLANT_SETTING_ATTRIBUTE
+            case UPDATE_PLANT_SETTING_CATEGORY:
+                    return{
+                        ...state,
+                        updatedPlantCategoryData:action.payload.data
+                    }
+                    case SHOW_SPECIFIC_PLANT_SETTING_ATTRIBUTE:
+                        return{
+                            ...state,
+                            showSpecificPlantCategory:action.payload.data
+                        }
+
+
+
+
         case HANDLE_CATEGORY_INPUT_DATA:
             return{
                 ...state,

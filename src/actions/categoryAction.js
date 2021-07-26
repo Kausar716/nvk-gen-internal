@@ -18,6 +18,10 @@ import {
     HANDLE_DRAG_CATEGORY_SORT,
     HANDLE_CATEGORY_DELETE,
 
+    UPDATE_PLANT_SETTING_CATEGORY,
+    SHOW_SPECIFIC_PLANT_SETTING_ATTRIBUTE,
+
+
     // axios config
     config,
     axios
@@ -57,6 +61,8 @@ export const getAllManufactureAction = () => dispatch =>{
         })
     })
 }
+
+//PLANTCATEGORY
 export const getAllPlantCategories = ()=> dispatch =>{
     axios.get("/api/plant-categories",config).then(res=>{ 
         console.log(res)
@@ -68,6 +74,38 @@ export const getAllPlantCategories = ()=> dispatch =>{
     })
 
 }
+
+
+export const updatePlantSettingCategory = (id, data) =>dispatch => {
+    //debugger;
+   return axios.post(`/api/plant-update-category/${id}`,data,config).then(res=>{ 
+      // debugger;
+       console.log(res.data)
+   dispatch({
+           type:UPDATE_PLANT_SETTING_CATEGORY,
+           payload:res.data.data,
+
+       })
+   })
+
+}
+
+
+export const showSpecificPlantSettingAttribute = (id) => dispatch => {
+   axios.get(`api/plant-category/${id}`,config).then(res=>{ 
+     
+       console.log(res.data)
+   dispatch({
+           type:SHOW_SPECIFIC_PLANT_SETTING_ATTRIBUTE,
+           payload:res.data
+       })
+   })
+}
+
+
+
+
+
 export const handleCategoryInputAction = (name) =>dispatch=>{
     console.log(name)
  dispatch({

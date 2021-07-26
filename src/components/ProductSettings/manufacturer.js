@@ -1,10 +1,12 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
 // import './style.css';
-import {getAllProductManufacturers,handleProductManufacturerInputAction,handleAddProductManufacturer,handleDragDrop,handleManufacturerDragSort,handleProductManufacturerDelete} from '../../actions/productManufacturerAction'
+import {getAllProductManufacturers,handleProductManufacturerInputAction,handleAddProductManufacturer,
+    handleDragDrop,handleManufacturerDragSort,handleProductManufacturerDelete, showSpecificProductSettingManufacture, updateProductSettingManufacture} from '../../actions/productManufacturerAction'
 
 class Manufacturer extends Component {
     constructor(props){
@@ -14,7 +16,9 @@ class Manufacturer extends Component {
                     formSku:0
                 },
                 sortId: 0,
-                activeId: 0
+                activeId: 0,
+                isEditing:false,
+                name:'',
             }
         
     }
@@ -81,6 +85,9 @@ class Manufacturer extends Component {
         })
     }
     handleProductManufacturerInputAction = (e)=>{
+        this.setState({
+            name:e.target.value
+        })
         this.props.handleProductManufacturerInputAction(e.target.value)
     }
     handleAddProductManufacturer = (e)=>{
@@ -93,6 +100,48 @@ class Manufacturer extends Component {
     }
         
 }
+
+
+handleAddCategoryUpdate=()=>{
+    // debugger;
+  // this.props.handleSubAttributeUpdate(e.target.id)
+  
+  let updateID = parseInt(this.props.showSpecificProductManufacture.id)
+  let updateObject={}
+  updateObject.name=this.state.name
+ // updateObject.id=this.props.showSpeciSubA.id
+     
+      let res1=   this.props.updateProductSettingManufacture(updateID, updateObject)
+      res1.then(res=>{
+          this.props.getAllProductManufacturers()
+      })
+
+      this.setState({
+          isEditing:false,
+          name:""
+      })
+}
+
+
+
+
+handleEditClick2 =(t)=> {
+
+    console.log("ttt", t)
+    // debugger;
+     
+ this.setState({
+     name: t.name,
+     isEditing:true
+ })
+ this.props.handleProductManufacturerInputAction(...this.state.name)
+ // this.props.handleCategoryInputAction("Category",...this.state.name)
+  this.props.showSpecificProductSettingManufacture(t.id)
+}
+
+
+
+
 
 render() 
 {
@@ -122,13 +171,40 @@ render()
                                 <p>Manufacturer Name</p>
                                 <div className="row d-flex align-items-center">
                                     <div className="col-md-6 col-lg-6">  
-                                        <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Name" onChange={this.handleProductManufacturerInputAction}/>
+                                        <input type="text" 
+                                        className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                        name="manufacture"
+                                        value={this.state.name}
+                                          placeholder="Name" onChange={this.handleProductManufacturerInputAction}/>
                                     </div>
-                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddProductManufacturer}>
+
+                                    {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddProductManufacturer}>
                                         <a href="javascript:" className="d-flex align-items-center">
                                             <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Manufacturer
                                         </a>
-                                    </div>
+                                    </div> */}
+
+                                    {this.state.isEditing ? (
+
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Manufacturer
+                                                </a>
+                                                </div>
+                                                
+
+                                                ):
+                                                (
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                                <a href="javascript:" className="d-flex align-items-center">
+                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Manufacturer
+                                                </a>
+                                                </div>  
+                                    )}   
+
+
+
+
                                 </div>
                             </div>
                         </div>
@@ -182,6 +258,9 @@ render()
                                             return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                         <a className="d-flex justify-content-between align-items-center">
                                                             <span id="Wheathers">{t.name}</span>
+                                                            <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                         </a>
                                                     </li>
                                             })}
@@ -201,7 +280,8 @@ render()
          {
     productManufacturerList:state.productManufacturerData.productManufacturerData,
     temp:state,
-    name:state.productManufacturerData.name
+    name:state.productManufacturerData.name,
+    showSpecificProductManufacture:state.productManufacturerData.showSpecificProductManufacture
     }
     )
     export default connect(mapStateToProps,{
@@ -210,6 +290,8 @@ render()
         handleAddProductManufacturer,
         handleDragDrop,
         handleManufacturerDragSort,
-        handleProductManufacturerDelete        
+        handleProductManufacturerDelete,
+        updateProductSettingManufacture,
+        showSpecificProductSettingManufacture,      
     })(Manufacturer)
 
