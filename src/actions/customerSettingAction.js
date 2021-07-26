@@ -49,6 +49,7 @@ UPDATE_CUSTOMER_CONTACT,
 GET_CUSTOMER_CONTACT_BY_ID,
 RE_SET_ADDRESS_FILED,
 RESET_CONTACT,
+
  axios,
  config
  } from './types'
@@ -60,6 +61,17 @@ export const typeOfActionShow = (type) =>dispatch=>{
       action:type
     })
 }
+export const deleteCustomerContact = (id) =>dispatch=>{
+    return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_BY_ID,
+            payload:res.data,
+
+        })
+    })
+}
+
 export const getCustomerById = (id) =>dispatch=>{
     return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
         console.log(res.data)
@@ -569,19 +581,15 @@ export const showCustomer = (id) => dispatch => {
 //      })     
 // }
 
-export const deleteCustomer= (customerData) => dispatch => {
-    console.log(customerData)
-    return axios.post(`/api/delete-customer/${customerData.id}`,config).then(res=>{  
-     console.log(res)  
-   
-     dispatch({
-             type:DELETE_CUSTOMER,
-             payload:res.data    
-         })
-     })
-     .catch(message=>{
-         console.log(message)
-     })
+export const deleteCustomer= (id) => dispatch => {
+    // console.log(customerData)
+    return axios.post(`/api/delete-customer/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_CUSTOMER,
+                payload:res.data   
+            })
+        }) 
      
 }
 export const setPageNumber = (pageNumber) => {

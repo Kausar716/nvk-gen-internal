@@ -2,6 +2,7 @@ import {React,useState,useEffect} from 'react';
 import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
+import InputMask from 'react-input-mask';
 import {addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
 
  const ContactsModal = (props) => {
@@ -26,10 +27,158 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
        }else{
         props.handleExchangeData(e.target.value,e.target.id,"customerContact")
        } 
+
+    }
+    const onSaveClicked = () => {
+        // let clientDetailsData = JSON.parse(JSON.stringify(this.state.clientData));
+
+        let errorList = "";
+        let errorCount = 0;
+        let validationList = {  "first_name": "first_name", "last_name": "last_name", "phone1": "phone1", "phone2": "phone2","email":"email","text":"text","phone1_ext":"phone1_ext","phone2_ext":"phone2_ext" };
+        Object.keys(validationList).map((object, i) => {
+            var element = document.getElementById(object);
+            if (object === "first_name") {
+                if (element.value === "") {
+                    document.getElementById("first_name-validtor").innerText = "Enter  First Name"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("first_name-validtor").innerText = ""
+                }
+
+            }
+            if (object === "last_name") {
+                if (element.value === "") {
+                    document.getElementById("last_name-validtor").innerText = "Enter Last Name"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("last_name-validtor").innerText = ""
+                }
+
+            }
+            if (object === "phone1") {
+             
+                if(element.value !== ""){
+                    let enteredNumber = element.value.trim().match(/\d/g)
+                    
+                    if (enteredNumber.join("").length<10 || enteredNumber.value === "") {
+                        document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
+                        errorCount++;
+                    } else {
+                        // alert("ff")
+                        document.getElementById("phone1-validtor").innerText = ""
+                    }
+    
+                }
+                else if(element.value === ""){
+                    document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
+                    errorCount++;
+                }
+
+            }
+            if (object === "phone2") {
+                if(element.value !== ""){
+                    let enteredNumber = element.value.trim().match(/\d/g)
+                    if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+                        document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+                        errorCount++;
+                    } else {
+                        document.getElementById("phone2-validtor").innerText = ""
+                    }
+    
+                }
+                else if(element.value === ""){
+                    document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+                    errorCount++;
+                }
+
+            }
+   
+
+            if (object === "phone2_ext") {
+                if (element.value === "") {
+                    document.getElementById("phone2_ext-validtor").innerText = "Enter  Phone 2"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("phone2_ext-validtor").innerText = ""
+                }
+
+            }
+            if (object === "phone1_ext") {
+                if (element.value === "") {
+                    document.getElementById("phone1_ext-validtor").innerText = "Enter  Phone 2"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("phone1_ext-validtor").innerText = ""
+                }
+
+            }
+            if (object === "email") {
+                if (element.value === "") {
+                    document.getElementById("email-validtor").innerText = "Enter Email"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("email-validtor").innerText = ""
+                }
+            }
+            if (object === "text") {
+                if (element.value === "") {
+                    document.getElementById("text-validtor").innerText = "Enter Notes"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("text-validtor").innerText = ""
+                }
+            }
+
+
+            // }
+            // if (object === "contactLN") {
+            //     if (element.value === "") {
+            //         document.getElementById("contactLN-validtor").innerText = "Last Name is not valid"
+            //         errorCount++;
+
+            //     } else {
+            //         document.getElementById("contactLN-validtor").innerText = ""
+            //     }
+
+
+            // }
+
+            // if (object === "contactAddress") {
+            //     if (element.value === "") {
+            //         document.getElementById("contactAddress-validtor").innerText = "Address is not valid"
+            //         errorCount++;
+
+            //     } else {
+            //         document.getElementById("contactAddress-validtor").innerText = ""
+            //     }
+
+
+            // }
+
+
+            // }
+
+        });
+        return errorCount
+        // if (errorCount > 0) {
+        //     this.setState((state) => { state.validationError = this.state.errorArrayList + " is not valid"; state.validErrorList = this.state.errorArrayList; return state; });
+        //     errorList = false;
+        // } else {
+        //     this.props.onSaveClicked(clientDetailsData,this.props.clientData);
+        // }
     }
     const saveData =(e)=>{
         e.preventDefault();
         // alert("saving")
+        let errors = onSaveClicked()
+        if(errors!==0)
+        return
        
         if(customerDataById.id !== undefined){
             setError("")
@@ -78,36 +227,43 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                 <label>First Name<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="first_name" value={customerContact.first_name} onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="first_name-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Last Name<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="last_name" value={""}  value={customerContact.last_name}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="last_name-validtor"></span>}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Phone 1<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="phone1" value={""} value={customerContact.phone1}  onChange={handleInput}/>
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone1"} value={customerContact.phone1} onChange={handleInput} />
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone1-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>phone1 ext<span class="text-danger">*</span></label>
+                <label>Phone1 Ext<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="phone1_ext" value={""}  value={customerContact.phone1_ext}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone1_ext-validtor"></span>}
             </div>
         </div>
    
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Phone 2<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="phone2" value={""} value={customerContact.phone2}  onChange={handleInput}/>
+                {/* <input type="number" class="form-control" id="phone2" value={""} value={customerContact.phone2}  onChange={handleInput}/> */}
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone2"} value={customerContact.phone2} onChange={handleInput} />
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>phone2 ext<span class="text-danger">*</span></label>
+                <label>Phone 2 Ext<span class="text-danger">*</span></label>
                 <input type="text" class="form-control" id="phone2_ext" value={""}  value={customerContact.phone2_ext}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone2_ext-validtor"></span>}
             </div>
         </div>
         <div class="row mt-3">
@@ -115,6 +271,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                 <label>Email <span class="text-danger">*</span></label>
                 <input type="email" class="form-control" id="email" value={""} value={customerContact.email}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="email-validtor"></span>}
             </div>
         
         </div>
@@ -123,6 +280,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                 <label>Notes <span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="text" value={""}  value={customerContact.Notes}  onChange={handleInput}></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="text-validtor"></span>}
             </div>
         
         </div>

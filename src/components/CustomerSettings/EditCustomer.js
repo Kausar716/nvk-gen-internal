@@ -88,7 +88,11 @@ function AddCustomer(props) {
         }else if(e.target.id ==="prospect"){
             let prospect = parseInt(customerDataById.prospect)==1?0:1
             props.handleExchangeData(prospect,e.target.id,"customerDataById")
-        }else if(e.target.id =="delivery"){
+        }else if(e.target.id ==="status"){
+            let prospect = parseInt(customerDataById.status)==1?0:1
+            props.handleExchangeData(prospect,e.target.id,"customerDataById")
+        }
+        else if(e.target.id =="delivery"){
             props.handleExchangeData("Delivery","dispatch_type","customerDataById")
 
         }
@@ -130,14 +134,22 @@ function AddCustomer(props) {
         props.typeOfActionShow("")
     }
     const validation  = ()=>{
+        // alert(customerDataById.reason)
         let errosList = []
         if(customerDataById.name==="")
         errosList.push("Please Add Name")
         if(customerDataById.type.length ===0)
         errosList.push("Please Select Type")
-        return errosList
+        if(customerDataById.status==0 && (customerDataById.notes ===null || customerDataById.notes ==="")){
+            errosList.push("Please add reason")
+            return errosList
 
+        }
+        
+        else  return errosList
     }
+    
+  
     const saveCustomerData1 = (type)=>{
         // e.preventDefault()
         let errorCount = validation()
@@ -254,6 +266,7 @@ function AddCustomer(props) {
         props.getDataByContactId(id)
         setactionType("edit")
     }
+
     const editAddress =(id)=>{
         setisOpenAddress(true)
         props.getcustomerAddressByaddressId(id)
@@ -699,7 +712,7 @@ function AddCustomer(props) {
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a href="#" class=" ml-2">
-                                                        <img src="assets/img/delete.svg" alt=""/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>editContact(contactData.id)}/>
                                                     </a>
                                                 </div>
                                             </div>
