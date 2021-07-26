@@ -179,11 +179,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 children_name:'SKU value'
                 }
         ]
-            
+        if(this.validate()){
       let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
              res.then(res=>{
                  this.props.getAllSubAttribute(5)
              })
+             alert('Updated Successfully Done');
+
+            }
 
              this.setState({
                  isEditing:false,
@@ -219,12 +222,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.caliperImperial.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.caliperImperial=1
                 this.setState({errorObj})
                 return false
             }
-            if(this.props.caliperSku.length === 0){
+            if(this.state.subName2.length === 0){
                 errorObj.caliperSku=1
                 this.setState({errorObj})
                 return false
