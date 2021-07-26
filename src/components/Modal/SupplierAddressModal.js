@@ -3,17 +3,17 @@ import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
 import { countryDetails } from '../Help/countryList';
-import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddress,updateContactData,getCustomerContacts,updatecustomerAddress} from "../../actions/customerSettingAction";
+import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSupplierAddress,getAllAddress} from "../../actions/supplierManagementAction";
 
- const AddressModal = (props) => {
+ const SupplierAddressModal = (props) => {
      const {status,type} =props
-   const {customerAddress,customerDataById} = props.customerData
+   const {supplierAddress,supplierAddressList,supplierDataById} = props.supplierData
    const [error,setError] = useState("")
 
    useEffect(() => {
        setError("")
 
-   },[customerDataById])
+   },[])
   
              
    let allCountry = Object.keys(countryDetails);
@@ -22,9 +22,9 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
    // let countZipRegix
 //    if(supplierData.supplierLocation){
      
-       if(customerAddress.country && customerAddress.country !== "Select Country"){
-        if(countryDetails[customerAddress.country])
-           allStates = countryDetails[customerAddress.country][0];
+       if(supplierAddress.country && supplierAddress.country !== "Select Country"){
+        if(countryDetails[supplierAddress.country])
+           allStates = countryDetails[supplierAddress.country][0];
         //    this.countZipRegix=countryDetails[customerAddress.country][1][0]
         //    console.log(this.countZipRegix)
            // console.log(this.state.clientData.country)
@@ -32,43 +32,47 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 //    }
    const handleInput= (e)=>{
        if(e.target.id =="billing_address"){
-           let primary = parseInt(customerAddress.primary_contact) ==1?0:1
-           props.handleExchangeData(primary,e.target.id,"customerAddress")
-       }else if(e.target.id =="delivery_address"){
-        let all = parseInt(customerAddress.delivery_address) ==1?0:1
-        props.handleExchangeData(all,e.target.id,"customerAddress")
+           let primary = parseInt(supplierAddress.billing_address) ==1?0:1
+           props.handleSupplierExchnageData(primary,e.target.id,"supplierAddress")
+       }else if(e.target.id =="shipping_address"){
+        let all = parseInt(supplierAddress.shipping_address) ==1?0:1
+        props.handleSupplierExchnageData(all,e.target.id,"supplierAddress")
 
        }else{
-        props.handleExchangeData(e.target.value,e.target.id,"customerAddress")
+        props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierAddress")
        } 
     }
     const saveData =(e)=>{
         e.preventDefault();
         // alert("saving")
-        if(customerDataById.id !== undefined){
-            customerAddress.customer_id  = customerDataById.id
-            customerAddress.status  = 1
-            if(type=="add"){
-            props.addcustomerAddress(customerAddress).then(data=>{
-                props.modalAction()
-                // alert(customerDataById.customer_id)
-                props.getcustomerAddress(customerDataById.id)
-                // props.getCustomerContacts(customerDataById.customer_id)
-                
-            })
-
-        }else{
-            props.updatecustomerAddress(customerAddress).then(data=>{
-                props.modalAction()
-                console.log(customerDataById)
-                props.getcustomerAddress(customerDataById.id)
-                
-            })
+       
+        if(supplierDataById.id !== undefined){
+            setError("")
+            supplierAddress.supplier_id  = supplierDataById.id
+            if(supplierAddress.id == undefined){
+                props.addSupplierAddress(supplierAddress).then(data=>{
+                    props.modalAction()
+                 console.log(supplierDataById)
+                    // alert(customerDataById.customer_id)
+                    props.getAllAddress(supplierDataById.id)
+                    // props.getsupplierContacts(customerDataById.customer_id)
+                    
+                })
+    
+            }else{
+                props.UpdateAddress(supplierAddress).then(data=>{
+                    props.modalAction()
+                    console.log(supplierDataById)
+                    props.getAllAddress(supplierDataById.id)
+                    
+                })
+    
 
         }
-    }else{
-        setError("Please add customer first")
-    }
+
+        }else{
+            setError("Please add Supplier first")
+        }
      
       
 
@@ -87,13 +91,13 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         <div class="row mt-3">
             <div class="col-md-3 col-lg-3">
                 <label>City<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="city" value={customerAddress.city} onChange={handleInput}/>
+                <input type="text" class="form-control" id="city" value={supplierAddress.city} onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>Country<span class="text-danger">*</span></label>
-                <select className="form-control"  id="country"  value={customerAddress.country}   placeholder="country" onChange={handleInput}>
-                    <option>{customerAddress.country}</option>
+                <select className="form-control"  id="country"  value={supplierAddress.country}   placeholder="country" onChange={handleInput}>
+                    <option>{supplierAddress.country}</option>
                     {allCountry.map((country, i)=>{
                         return <option id={allCountry[i]}>{allCountry[i]}</option>
                     })}
@@ -105,8 +109,8 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>State<span class="text-danger">*</span></label>
-                <select className="form-control"  id="state"  value={customerAddress.state}  onChange={handleInput}>
-                <option>{customerAddress.state}</option>
+                <select className="form-control"  id="state"  value={supplierAddress.state}  onChange={handleInput}>
+                <option>{supplierAddress.state}</option>
                 {allStates && allStates.map((c, i)=>{
                         return <option id={allStates[i]}>{allStates[i]}</option>
                 })}
@@ -118,19 +122,19 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>Zip<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="zip" value={""}  value={customerAddress.zip}  onChange={handleInput}/>
+                <input type="text" class="form-control" id="zip" value={""}  value={supplierAddress.zip}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Address 1<span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="address1" value={""} value={customerAddress.address1}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="supplier_address" value={""} value={supplierAddress.supplier_address}  onChange={handleInput}></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Address 2<span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="address2" value={""} value={customerAddress.address2}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="supplier_address1" value={""} value={supplierAddress.supplier_address1}  onChange={handleInput}></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
         </div>
@@ -138,36 +142,36 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Lat<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="lat" value={""} value={customerAddress.lat}  onChange={handleInput}/>
+                <input type="number" class="form-control" id="lat" value={""} value={supplierAddress.lat}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Lang<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="long" value={""}  value={customerAddress.long}  onChange={handleInput}/>
+                <input type="number" class="form-control" id="long" value={""}  value={supplierAddress.long}  onChange={handleInput}/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
         </div>
-        <div class="row mt-3">
+        {/* <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Notes <span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="notes" value={""} value={customerAddress.notes}  onChange={handleInput}></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
-            </div>
+            {/* </div> */}
         
-        </div>
+        {/* </div>  */}
   
         <div class="row mt-3">
         {/* <div class="d-flex"> */}
         <div class="col-md-6 col-lg-6">
             <div className="custom-control custom-checkbox mb-1">
-                <input type="checkbox" className="custom-control-input" id={"billing_address"} name="billing_address" onChange={handleInput} checked={parseInt(customerAddress.billing_address)==1?true:false}/>
+                <input type="checkbox" className="custom-control-input" id={"billing_address"} name="billing_address" onChange={handleInput} checked={parseInt(supplierAddress.billing_address)==1?true:false}/>
                 <label className="custom-control-label" for={"billing_address"}>billing_address</label>
             </div>
             </div>
             <div class="col-md-6 col-lg-6">
             <div className="custom-control custom-checkbox mb-1">
-                <input type="checkbox" className="custom-control-input" id={"delivery_address"} name="delivery_address" onChange={handleInput}  checked={parseInt(customerAddress.delivery_address)==1?true:false}/>
-                <label className="custom-control-label" for={"delivery_address"}>delivery_address</label>
+                <input type="checkbox" className="custom-control-input" id={"shipping_address"} name="shipping_address" onChange={handleInput}  checked={parseInt(supplierAddress.shipping_address)==1?true:false}/>
+                <label className="custom-control-label" for={"shipping_address"}>delivery_address</label>
             </div>
             {/* </div> */}
             {/* <div class="custom-control custom-radio">
@@ -197,15 +201,15 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
 const mapStateToProps = (state)=>(
     {
-        customerData:state.customerReducer
+        supplierData:state.supplierData
     }
 )
 export default connect(mapStateToProps,{
-addCustomerContact,handleExchangeData,updateContactData,getCustomerContacts,getcustomerAddress,addcustomerAddress,updatecustomerAddress
+    handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSupplierAddress,getAllAddress
      
 
 
 
 
 
-})(AddressModal)
+})(SupplierAddressModal)

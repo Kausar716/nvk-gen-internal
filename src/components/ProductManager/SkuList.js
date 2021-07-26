@@ -1,3 +1,4 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -347,14 +348,14 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div>
                                     </div>
                                     <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-4">
+                                    <div class="col-md-6 col-lg-3">
                                             <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
                                             id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={skuEdit} />
                                         </div>
                                         {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         </div> */}
-                                        <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sub-Category <span class="text-danger">*</span></label>
                                             <select class="form-control"  id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
                                             <option value="0">None</option>
@@ -367,7 +368,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             </select>
                                         </div>
 
-                                        <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                        <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
                                             <select class="form-control">
                                                 <option>Select</option>
