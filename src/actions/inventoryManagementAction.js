@@ -8,6 +8,8 @@ import {
     GET_ALL_PLANT_INVENTORY_ACTION,
     GET_PRODUCT_CATEGORY_LIST,
     GET_ALL_PRODUCT_INVENTORY_ACTION,
+    GET_ALL_PLANTMANAGER_INVENTORY_ACTION,
+    GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION,
     config,
     axios
     // DELETE_USER 
@@ -96,6 +98,32 @@ let obj={}
         })
 
 }
+export const getInventoryPlantManagerList = () => dispatch => {
+    let obj={}
+    
+        return  axios.post("/api/plant-inventory-search",obj,config).then(res=>{ 
+            console.log(res)
+            dispatch({
+                    type:GET_ALL_PLANTMANAGER_INVENTORY_ACTION,
+                    payload:res.data.data
+        
+                })
+            })
+    
+    }
+    export const getInventoryProductManagerList = () => dispatch => {
+        let obj={}
+        
+            return  axios.post("/api/plant-inventory-search",obj,config).then(res=>{ 
+                console.log(res)
+                dispatch({
+                        type:GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION,
+                        payload:res.data.data
+            
+                    })
+                })
+        
+        }
 export const getProductList = () => dispatch => {
     let obj={}
     
@@ -111,6 +139,7 @@ export const getProductList = () => dispatch => {
     
     }
 
+    
 
     export const getProductFilterResult = (data) => dispatch => {
         console.log(data)

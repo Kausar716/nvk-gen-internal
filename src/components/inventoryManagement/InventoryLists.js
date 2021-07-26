@@ -4,10 +4,10 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
+import PlantInventorySku from './plantInventorySku'
+import ProductInventorySku from './plantInventorySku'
 import PlantInventory from './plantInventory'
 import ProductInventory from './productInventory'
-import PlantInventory1 from './plantInventorySku'
-import ProductInventory1 from './productSku'
 import {connect} from "react-redux";
 import {getLocationList,getCategoryList} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
@@ -85,16 +85,16 @@ import {getAllSupplierAction} from "../../actions/supplierManagementAction";
                        
                     </TabList>
                     <TabPanel>
-                       <PlantInventory1/>
+                       <PlantInventory/>
                     </TabPanel>
                     <TabPanel>
-                    <PlantInventory/>
-                    </TabPanel>
-                    <TabPanel>
-                    <ProductInventory1/>
+                    <PlantInventorySku/>
                     </TabPanel>
                     <TabPanel>
                     <ProductInventory/>
+                    </TabPanel>
+                    <TabPanel>
+                    <ProductInventorySku/>
                     </TabPanel>
                 
                    
