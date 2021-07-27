@@ -1,17 +1,22 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
-import {getAllTermsMethods,saveTermsMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
+import {getAllTermsMethods,saveTermsMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,
+    saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods,      updateCustomerTermslSettings,
+    showSpecificTermsSettings,} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
     class Terms extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:'',
     }
 
 
@@ -102,17 +107,21 @@ import { is } from 'immutable';
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerTerm")
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleExchangeData("customerTerm", e.target.value)
+           // this.props.handleExchangeData(e.target.value,e.target.id,"customerTerm")
         }
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerTerm.term.trim() ===""){
+            if(this.state.name.trim() ===""){
                 
                 this.setState({isOpen1:true,message:["please add both type and shortcode"]})
 
 
             }else{
                 let obj = {}
-                obj.term = this.props.customerData.customerTerm.term
+                obj.term = this.state.name
                 obj.status = 1
                 let result = this.props.saveTermsMethod(obj)
                 result.then(data=>{
@@ -122,6 +131,46 @@ import { is } from 'immutable';
             // this.props.saveCustomerType()
         
         }
+
+
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+
+            this.setState({
+                name: t.term,
+                isEditing:true
+            })
+
+            this.props.handleExchangeData("customerTerm",...this.state.name)
+            this.props.showSpecificTermsSettings(t.id)
+  
+       }
+
+
+       handleAddCategoryUpdate=(e)=>{
+        //debugger;
+        console.log("showSpeciSubA", this.props.showSpecificCustomerTerms)
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+        
+         let updateID = parseInt(this.props.showSpecificCustomerTerms.id)
+         let updateObject={}
+         updateObject.term=valueName
+       
+            
+      let res=   this.props.updateCustomerTermslSettings(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllTermsMethods()
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:"",
+                
+             })
+
+     }
+
 
 
 
@@ -184,14 +233,43 @@ render() {
                                         <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}>Term</h5>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="Term" id="term" value={customerData.customerTerm.term}    onChange={this.handleCategoryInputAction}/>
+                                            <input type="text"
+                                              className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                             name="customerTerm"
+                                              placeholder="Term" id="term"
+                                               value={this.state.name} 
+                                                onChange={this.handleCategoryInputAction}/>
                                               
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+                                            {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i>Add New Term
                                                 </a>
-                                            </div>
+                                            </div> */}
+                                             {this.state.isEditing ? (
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                        <div  >
+                                                            <a href="javascript:" className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Term
+                                                            </a>
+                                                        </div>
+
+                                                            <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"10em"}}>
+                                                                    Cancel 
+                                                                </a>
+                                                            </div>
+                                                    </div>
+
+                                                        ):
+                                                        (
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Term
+                                                        </a>
+                                                        </div>  
+                                                  )} 
+
                                         </div>
                                     </div>
                                 </div>
@@ -245,6 +323,9 @@ render() {
                                                     return <li id={t.id} name={t.term} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers">{t.term}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -268,7 +349,8 @@ render() {
     plantCategoryList:state.categoryData.plantCategoryData,
     temp:state,
     name:state.categoryData.name,
-    customerData:state.customerReducer
+    customerData:state.customerReducer,
+    showSpecificCustomerTerms: state.customerReducer.showSpecificCustomerSettingTerms
     }
     )
     export default connect(mapStateToProps,{
@@ -279,6 +361,8 @@ render() {
         getAllReasonMethods,
         saveTermsMethod,
         getAllTermsMethods,
+        updateCustomerTermslSettings,
+        showSpecificTermsSettings,
 
         
 handleDragDropCustomer    })(Terms)

@@ -184,11 +184,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 children_id:this.props.showSpeciSubA.sub_attributeschild[1].id,
                 }
         ]
+
+        if(this.validate() ){
             
       let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
              res.then(res=>{
                  this.props.getAllSubAttribute(3)
              })
+
+             alert('Updated Successfully Done');
+            }
 
              this.setState({
                  isEditing:false,
@@ -212,9 +217,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             zoneObj.value = this.props.heightName           
             zoneObj["childrens"] =[
                 {'children_name':'SKU value',
-                'children_value':this.props.heightSku},
+                'children_value':this.state.subName2},
                 {'children_name':'Imperial',
-                'children_value':this.props.heightImperial}
+                'children_value':this.state.subName}
             ]
             zoneObj.status=1
             console.log(zoneObj)
@@ -229,12 +234,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.heightImperial.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.heightImperial=1
                 this.setState({errorObj})
                 return false
             }
-            if(this.props.heightSku.length === 0){
+            if(this.state.subName2.length === 0){
                 errorObj.heightSku=1
                 this.setState({errorObj})
                 return false

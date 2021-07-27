@@ -174,7 +174,7 @@ export class OrganizationSettings extends React.Component {
         let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
        // let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
-        console.log(emailReg.test(organizationData.sending_email_address))
+        console.log("eMAIL123",emailReg.test(organizationData.sending_email_address))
         console.log(organizationData.sending_email_address)
 
         //organizationData.phone.replace(phoneReg, '($1) $2-$3')
@@ -199,6 +199,13 @@ export class OrganizationSettings extends React.Component {
             errorObj.sendingEmailError=1
             errorCount++
         }
+        else{
+              
+            errorObj.sendingEmailError=0
+            errorCount--
+        }
+
+
         if(!nameReg.test(organizationData.name)){
             errorObj.firstNameError=1
            errorCount++
@@ -231,13 +238,15 @@ export class OrganizationSettings extends React.Component {
              console.log(this.state.hadModified.name)
 
              if(this.state.hadModified.name === true){
-                 debugger;
+                 //debugger;
                 updateObject.name = this.props.organizationData.organizationData.name
              }
 
              if(this.state.hadModified.sending_email_address === true){
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
              }
+
+
 
              if(this.state.hadModified.phone === true){
                 // debugger;
@@ -361,10 +370,13 @@ export class OrganizationSettings extends React.Component {
 
             else if(actionType==="save"){
 
-                this.handleSubmit();
-                setTimeout(function() {
-                    window.location.reload();
-                 }, 200);
+                if((this.validate()===0) ){
+                    this.handleSubmit();
+                    // setTimeout(function() {
+                    //     window.location.reload();
+                    //  }, 200);
+                }
+               
             }
 
             else if(actionType==="upload"){

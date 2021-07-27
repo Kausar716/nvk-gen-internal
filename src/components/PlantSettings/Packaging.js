@@ -116,7 +116,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.packagingSku.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.packagingSku=1
                 this.setState({errorObj})
                 return false
@@ -190,11 +190,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     children_id_name:'SKU value'
             }
             ]
-                
+            if(this.validate() ){
           let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
                  res.then(res=>{
                      this.props.getAllSubAttribute(4)
                  })
+
+                 alert('Updated Successfully Done');
+                }
     
                  this.setState({
                      isEditing:false,
@@ -275,8 +278,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
                                         {this.state.isEditing ? (
 
-                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
-                                                <div >
+                                            <div className="d-flex justify-content-md-end mt-2" >
+                                                <div  onClick={this.handleAddCategoryUpdate}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Packaging
                                                 </a>
