@@ -280,17 +280,37 @@ export const getSpecifiedPlantAction = (id, actionType="edit",pageToOpen="genera
 export const createPlantSkuAction = (id, data, actionType="add") => dispatch => {
     let error = []
     let  packagedata =[]
-    console.log(data)
-    if(data.each_cost==0||data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
-    if(data.each_price ==0||data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
-    if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
-    if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    let  formdata =[]
+    let  caliperdata =[]
+    let  heightdata =[]
+    if(data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
+    if(data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
+    if(data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
     if(data.attributes_subattributes){
          packagedata = data.attributes_subattributes.filter(obj=>{
             return(obj.attribute_id === 3)
         })
     }
     if(packagedata.length===0)error.push(" Select Packaging ")
+    if(data.attributes_subattributes){
+        formdata = data.attributes_subattributes.filter(obj=>{
+           return(obj.attribute_id === 1)
+       })
+    }
+    if(formdata.length===0)error.push(" Select Form ")
+    if(data.attributes_subattributes){
+        caliperdata = data.attributes_subattributes.filter(obj=>{
+           return(obj.attribute_id === 5)
+       })
+    }
+    if(data.attributes_subattributes){
+        heightdata = data.attributes_subattributes.filter(obj=>{
+           return(obj.attribute_id === 4)
+       })
+    }
+    if(caliperdata.length===0 && heightdata.length===0)error.push(" Select Caliper / Height ")
+    if(caliperdata.length!==1 && heightdata.length!==1)error.push(" Select any one Caliper / Height ")
     // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
     let copyData = data
@@ -353,7 +373,6 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             })
             // dispatch(plantPageReDirectAction(actionType = "all"))
             }).catch(error1=>{
-                console.log(error1)
                 error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,
