@@ -244,10 +244,12 @@ const productFormAction = ()=>{
                                         </div>
                                     </div>
                                     <hr/>
-                                    <div className="centerItem">
+                                  
+                                    <PlantTable/>
+                                      <div className="centerItem">
                                     {loader?  <p > {"Resetting ... " }<Loader /></p>:null}
                                     </div>
-                                    <PlantTable/>
+                                    
                                 </div>
                             </div>
                         </div>

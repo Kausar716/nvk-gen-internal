@@ -54,6 +54,10 @@ const PlantTable=(props)=> {
         setType("")
         setMessage("")
     }
+    useEffect(()=>{
+        props.getAllPlantAction()
+
+    },[])
 
     
     const paginationChange =(event, page)=>{
@@ -70,6 +74,7 @@ const PlantTable=(props)=> {
     console.log("plantData.length",plantData.length)
     console.log("pageCountpageCount", pageCount)
     const {plantCategoryData} =  props.categoryData
+ 
 
    const abcd = props.dPageNumberList
    console.log("abcd", abcd)

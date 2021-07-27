@@ -328,9 +328,9 @@ const  ProductManagement = (props) =>{
                                     </div>
                                 </div>
                              <hr/>
-                             <div className="centerItem">
+                             {/* <div className="centerItem">
                              {loader?  <p > {"Resetting ... " }<Loader /></p>:null}
-                             </div>
+                             </div> */}
                                     <ProductTable />
                             </div>
                         </div>

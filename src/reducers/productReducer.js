@@ -220,7 +220,8 @@ export default function(state = initialSatate, action){
             return{
                 ...state,
                 needAction:false,
-                ae_product_id:action.ae_product_id
+                ae_product_id:action.ae_product_id,
+                actionType:"edit"
 
             }
         case UPDATE_PRODUCT_ACTION:
