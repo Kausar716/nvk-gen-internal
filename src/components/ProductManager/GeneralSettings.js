@@ -280,7 +280,7 @@ if(productDataById){
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
                                         <label>Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" id="category_id" onChange={handleInput}>
+                                        <select class="form-control" style={{cursor:"pointer"}} id="category_id" onChange={handleInput}>
                                         <option value="0" selected>Select...</option>
                                             {categoryData.map(category=>{
                                                 return (<option value={category.id} selected={category.id===productDataById.category_id?"selected":""}>{category.name}</option>)
@@ -291,7 +291,7 @@ if(productDataById){
                                    
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Manufacturer <span class="text-danger">*</span></label>
-                                        <select class="form-control"  id="manufacturer_id"  onChange={handleInput}>
+                                        <select class="form-control" style={{cursor:"pointer"}} id="manufacturer_id"  onChange={handleInput}>
                                         <option value="0" selected>None</option>
                                             {manufactureData.map(manufacture=>{
                                                 return(<option value={manufacture.id} selected={manufacture.id===productDataById.manufacturer_id?"selected":""}>{manufacture.name}</option>)
@@ -319,7 +319,7 @@ if(productDataById){
                                         {actionType==="add"?"Add Product":"Update Product"}</button> */}
 
                                         <button className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
-                                            disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} onClick={submitAction}>
+                                           style={{cursor:"pointer"}} disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} onClick={submitAction}>
                                             {actionType==="add"?"Add Product":"Update Product"}
                                         </button>
                                     </div>

@@ -244,7 +244,7 @@ const  ProductManagement = (props) =>{
                                 <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="Category">Category</label>
 
-                                <select className="form-control"  id="category" onChange={handleCategoryData} value={parseInt(selectedCategory)}   >
+                                <select className="form-control"  id="category" style={{cursor:"pointer"}} onChange={handleCategoryData} value={parseInt(selectedCategory)}   >
                                     {/* <option value="All" selected={category==="All"?"selected":""}>All</option> */}
                                     <option value="All">All</option>
                                     {categoryData.map(categoryData=>{
@@ -271,7 +271,7 @@ const  ProductManagement = (props) =>{
                                  <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="subCategory">Manufacturer</label>
 
-                                 <select className="form-control"   disabled={disable?true:false}   id="subcategory" onChange={handleManufactureData} value={parseInt(props.manufacturer_id)}   >
+                                 <select className="form-control" style={{cursor:"pointer"}}  disabled={disable?true:false}   id="subcategory" onChange={handleManufactureData} value={parseInt(props.manufacturer_id)}   >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {manufactureData.map(manufactureObj=>{
                                         return(<option  value={manufactureObj.id} key={manufactureObj.id}>{manufactureObj.name}</option>)
@@ -311,17 +311,17 @@ const  ProductManagement = (props) =>{
                                 <div className="form-group row">
                                     <div className="col-md-12">
                                         <div className="form-check form-check-inline">
-                                        <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
+                                        <input className="form-check-input"  type="radio" style={{cursor:"pointer"}} checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
                                             {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
-                                            <label className="form-check-label" for="activePlants">Active</label>
+                                            <label className="form-check-label" for="activePlants" >Active</label>
                                         </div>
                                         <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                        <input className="form-check-input" type="radio" style={{cursor:"pointer"}} name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
                                             {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
                                             <label className="form-check-label" for="archivedPlants">Archived</label>
                                         </div>
                                         <div className="form-check form-check-inline">
-                                        <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  onClick={radioSearchAction} id="all"/>
+                                        <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}style={{cursor:"pointer"}}  onClick={radioSearchAction} id="all"/>
                                             {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
                                             <label className="form-check-label" for="allPlants"> &nbsp;All</label>
                                         </div>

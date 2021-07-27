@@ -106,6 +106,7 @@ const PlantTable=(props)=> {
                                         onChange={e => {
                                             setPageSize(Number(e.target.value))
                                         }}
+                                        style={{cursor:"pointer"}}
                                         >
                                         {[15, 25, 50, 100, 250,500].map(pageSize => (
                                             <option key={pageSize} value={pageSize}>
@@ -152,22 +153,22 @@ const PlantTable=(props)=> {
                                                     </td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4.concat(plant_id)} />
-                                                        <label className="custom-control-label" for={id4.concat(plant_id)}></label>
+                                                        <input type="checkbox"  className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4.concat(plant_id)} />
+                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id4.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox" className="custom-control-input" checked={discontinued===1?"checked":""} id={id2.concat(plant_id)} />
-                                                        <label className="custom-control-label" for={id2.concat(plant_id)}></label>
+                                                        <input type="checkbox"  className="custom-control-input" checked={discontinued===1?"checked":""} id={id2.concat(plant_id)} />
+                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id2.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 
 
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                            <input type="checkbox" className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
-                                                            <label className="custom-control-label" for={id3.concat(plant_id)}></label>
+                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
+                                                            <label className="custom-control-label" style={{cursor:"pointer"}} for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
 
@@ -175,17 +176,17 @@ const PlantTable=(props)=> {
                                                 <td className="text-center">
                                                     <span>
                                                         {/* <a href="javascript;"> */}
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>props.getSpecifiedPlantAction(plant_id)}/>
+                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>props.getSpecifiedPlantAction(plant_id)} style={{cursor:"pointer"}}/>
                                                         {/* </a> */}
                                                     </span>
                                                     <span>
                                                         {/* <a href="javascript;"> */}
-                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>{confirmAction(plant_id,"duplicate"); }} />
+                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>{confirmAction(plant_id,"duplicate"); }} style={{cursor:"pointer"}} />
                                                         {/* </a> */}
                                                     </span>
                                                     <span>
                                                         {/* <a href="javascript;"> */}
-                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(plant_id,"delete")}/>
+                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(plant_id,"delete")} style={{cursor:"pointer"}}/>
                                                         {/* </a> */}
                                                     </span>
                                                 </td>

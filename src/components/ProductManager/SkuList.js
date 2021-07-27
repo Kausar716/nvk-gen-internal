@@ -342,7 +342,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                     <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} 
                                                     // checked={skuDataById.archived===0?false:true}
                                                     />
-                                                    <label for="archived"></label>
+                                                    <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -357,7 +357,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div> */}
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sub-Category <span class="text-danger">*</span></label>
-                                            <select class="form-control"  id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
+                                            <select class="form-control" style={{cursor:"pointer"}} id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
                                             <option value="0">None</option>
                             {subCategoryData.map(subcategory=>{
                                 if(parseInt(supCategoryIdForFilter) === subcategory.category_id)
@@ -370,7 +370,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
-                                            <select class="form-control">
+                                            <select class="form-control" style={{cursor:"pointer"}}>
                                                 <option>Select</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
@@ -421,10 +421,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                         Active
                                                         <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2"
-                                                            onChange={handleInput} value={skuDataById.status}
+                                                            onChange={handleInput} value={skuDataById.status} 
                                                             //  checked={skuDataById.status===0?false:true}
                                                               />
-                                                            <label for="switcher_checkbox_date"></label>
+                                                            <label for="switcher_checkbox_date" style={{cursor:"pointer"}}></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -435,7 +435,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality <span class="text-danger">*</span></label>
-                                            <select class="form-control"  id={"volume_quantity"} onChange={handleInput} >
+                                            <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
                                             <option>None</option>
@@ -463,7 +463,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             // type="button" class="btn btn-primary btn-lg"
                                             className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
                                             disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} 
-                                            onClick={submitAction} id="dontRetain"
+                                            onClick={submitAction} id="dontRetain" style={{cursor:"pointer"}}
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
@@ -474,7 +474,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            <button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
                                              <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
                                             onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>
@@ -502,6 +502,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                 onChange={e => {
                                     setPageSize(Number(e.target.value))
                                 }}
+                                style={{cursor:"pointer"}}
                                 >
 
                                 {[15, 25, 50, 100, 250,500].map(pageSize => (
