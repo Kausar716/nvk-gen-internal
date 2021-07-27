@@ -341,7 +341,7 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Form</label>
-                                            <select class="form-control"  id={allAttributes.length>0?allAttributes.filter(formData=>formData.id ==1)[0]["id"]:"form"} onChange={handleInput} 
+                                            <select class="form-control" style={{cursor:"pointer"}}  id={allAttributes.length>0?allAttributes.filter(formData=>formData.id ==1)[0]["id"]:"form"} onChange={handleInput} 
                                             value={selectedForm?selectedForm.subattribute_id:""} disabled={(actionType === "sku")}>
                                                  <option value="">None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
@@ -354,7 +354,7 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Caliper</label>
-                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}
+                                            <select class="form-control" style={{cursor:"pointer"}} id={allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Caliper")[0]["id"]:"caliper"} onChange={handleInput}
                                             value={selectedCaliper?selectedCaliper.subattribute_id:""} disabled={(actionType === "sku")}>
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
@@ -367,7 +367,7 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Height</label>
-                                            <select class="form-control" id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}
+                                            <select class="form-control" style={{cursor:"pointer"}} id="height" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Height")[0]["id"]:"height"} onChange={handleInput}
                                             value={selectedHeight?selectedHeight.subattribute_id:""} disabled={( actionType === "sku")}>
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
@@ -380,7 +380,7 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Packaging <span class="text-danger">*</span></label>
-                                            <select class="form-control" id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}
+                                            <select class="form-control" style={{cursor:"pointer"}} id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}
                                             value={selectedPackaging?selectedPackaging.subattribute_id:""} disabled={(actionType === "sku")}>
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
@@ -424,7 +424,7 @@ const SkuList = (props)=>{
                                                         Active
                                                         <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" id="status" onChange={handleInput} value={plantSkuDataById.status} checked={plantSkuDataById.status==0?false:true}/>
-                                                            <label for="status"></label>
+                                                            <label for="status" style={{cursor:"pointer"}}></label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -434,7 +434,7 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality</label>
-                                            <select class="form-control" id={"volume_quantity"} onChange={handleInput} 
+                                            <select class="form-control" id={"volume_quantity"} style={{cursor:"pointer"}} onChange={handleInput} 
                                             value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}>
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
@@ -458,8 +458,8 @@ const SkuList = (props)=>{
                                         <div class="col-md-12 text-md-right">
                                             
                                         <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Return to Plant Manager</button>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
-                                            <button type="button" class="btn btn-primary btn-lg ml-3" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
+                                            <button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>
+                                            <button type="button" style={{cursor:"pointer"}} class="btn btn-primary btn-lg ml-3" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU & Clear":"Update SKU & Clear"}</button>
                                             
 
@@ -481,6 +481,7 @@ const SkuList = (props)=>{
                                 onChange={e => {
                                     setPageSize(Number(e.target.value))
                                 }}
+                                style={{cursor:"pointer"}}
                                 >
 
                                 {[15, 25, 50, 100, 250,500].map(pageSize => (

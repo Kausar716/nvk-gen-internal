@@ -181,7 +181,8 @@ export default function(state = initialSatate, action){
                     ...state,
                     needAction:false,
                     ae_plant_id:action.ae_plant_id,
-                    createdPlantData:action.createdPlantData
+                    createdPlantData:action.createdPlantData,
+                    actionType:"edit"
     
                 }
              case UPDATE_PLANT_ACTION:
