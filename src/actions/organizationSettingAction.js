@@ -38,11 +38,11 @@ import {
    }
 
    export const updateorganization = (organizationData) => dispatch => {
-       debugger;
+      // debugger;
        console.log(organizationData)
 
     return axios.post(`/api/update-organization/${organizationData.id}`,organizationData,config).then(res=>{  
-        debugger;   
+       // debugger;   
         dispatch({
                 type:UPDATE_ORGANIZATION,
                 payload:res.data    
