@@ -33,16 +33,17 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
         let errors = onSaveClicked()
         if(errors!==0)
         return
-        // alert("saving")
+        // //alert("saving")
        
         if(supplierDataById.id !== undefined){
             setError("")
             supplierContact.supplier_id  = supplierDataById.id
             if(supplierContact.id == undefined){
                 props.addSuppplierContact(supplierContact).then(data=>{
+                    //alert("data")
                     props.modalAction()
                  console.log(supplierDataById)
-                    // alert(customerDataById.customer_id)
+                    // //alert(customerDataById.customer_id)
                     props.getAllSuppliersContact(supplierDataById.id)
                     // props.getsupplierContacts(customerDataById.customer_id)
                     
@@ -93,7 +94,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
                         document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
                         errorCount++;
                     } else {
-                        // alert("ff")
+                        // //alert("ff")
                         document.getElementById("phone1-validtor").innerText = ""
                     }
     

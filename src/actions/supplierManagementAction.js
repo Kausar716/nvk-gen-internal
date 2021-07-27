@@ -71,7 +71,7 @@ import {
    
     DELETE_SUPPLIER ,
     DELETE_SUPPLIER_REASON, 
-    // DELETE_SUPPLIER_ADDRESS ,
+    DELETE_SUPPLIER_ADDRESS ,
     DELETE_SUPPLIER_DELIVERY_LOCATION,
     // DELETE_SUPPLIER_CONTACT,
     DELETE_SUPPLIER_CATEGORY,
@@ -120,7 +120,7 @@ UPDATE_SUPPLIER_CONTACT,
 ADD_SUPPLIER_ADDRESS,
 GET_SUPPLIER_ADDRESS,
 GET_ALL_SUPPLIER_ADDRESS,
-DELETE_SUPPLIER_ADDRESS,
+// DELETE_SUPPLIER_ADDRESS,
 UPDATE_SUPPLIER_ADDRESS,
 
 
@@ -135,6 +135,18 @@ UPDATE_SUPPLIER_ADDRESS,
 
 //supplier contact information
 
+
+export const deleteSupplier= (id)=>dispatch => {
+    return axios.post(`/api/delete-supplier/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_SUPPLIER,
+                payload:res.data   
+            })
+        }) 
+
+
+}
 export const getAllAddress =(id)=>dispatch => {
     if(id !==0){
         return axios.get(`api/supplier-addresses?supplier_id=${id}`,config).then(res=>{ 
@@ -158,6 +170,17 @@ export const deleteContact= (id)=>dispatch => {
         console.log(res)
         dispatch({
                 type:DELETE_SUPPLIER_CONTACT,
+                payload:res.data   
+            })
+        }) 
+
+
+}
+export const deleteSupplierAddress= (id)=>dispatch => {
+    return axios.post(`/api/delete-supplier-address/${id}`,null,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+                type:DELETE_SUPPLIER_ADDRESS,
                 payload:res.data   
             })
         }) 
@@ -249,9 +272,9 @@ export const updateSupplierContact=(data)=>dispatch => {
 
 }
 
-export const deleteSuppluerContact=()=>dispatch => {
+// export const deleteSuppluerContact=()=>dispatch => {
 
-}
+// }
 
 export const addSuppplierContact=(data)=>dispatch => {
     return axios.post(`/api/add-supplier-contact`,data,config).then(res=>{ 
