@@ -120,27 +120,27 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         validation = () =>{
             let {location,address,city,country,state,zip,lat} = this.props.supplierData.supplierLocation
 
-            // if(location ==="" || address ==="" || city===""|| country===""||state===""||zip===""||lat ==="")
-            // return 1
+            if(location ==="" || address ==="" || city===""|| country===""||state===""||zip===""||lat ==="")
+            return 1
             // if (zip === "zipcode") {
-                if(zip ==""){
-                     this.setState({message:["Postal/ZIP not valid"]})
-                    // alert("DSaf")
-                    return 1
+                // if(zip ==""){
+                //      this.setState({message:["Postal/ZIP not valid"]})
+                //     // alert("DSaf")
+                //     return 1
 
-                }
-                if(zip !== "" ){
-                if ( !zip.trim().match(this.countZipRegix)) {
-                    this.setState({message:["Postal/ZIP not valid"]})
+                // }
+                // if(zip !== "" ){
+                // if ( !zip.trim().match(this.countZipRegix)) {
+                    // this.setState({message:["Postal/ZIP not valid"]})
                     // alert("DSaf")
-                    return 1
+                    // return 1
                     // document.getElementById("zipcode-validtor").innerText = "Postal/ZIP not valid"
                     // errorCount++;
 
-                } else {
+                // } else {
                     // document.getElementById("zipcode-validtor").innerText = ""
-                }
-            }
+                // }
+            // }
 
             // }
         }
@@ -148,7 +148,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             let errorLength =  this.validation()
             if(errorLength ===1){
                 
-                this.setState({isOpen1:true,message:[...this.state.message,"Please fill all fileds"]})
+                this.setState({isOpen1:true,message:["Please fill all fileds"]})
 
 
             }else{
