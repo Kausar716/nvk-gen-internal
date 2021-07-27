@@ -74,6 +74,7 @@ SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
 UPDATE_CUSTOMER_TERMS_SETTING,
 SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
 HANDLE_INPUT_EXCHANGE1,
+DELETE_SUPPLIER_CONTACT
 
 
     
@@ -211,6 +212,10 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+        case DELETE_SUPPLIER_CONTACT:
+            return{
+                ...state,
+            }
         
         case RESET_CONTACT:
             return{

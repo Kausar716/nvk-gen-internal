@@ -146,7 +146,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.formSku.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.formSku=1
                 this.setState({errorObj})
                 return false
@@ -167,8 +167,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         //  let formValue={}
         //  formValue={...this.state.name, ...this.state.subName}
 
-         this.props.handleZoneInputAction("formSku",...this.state.subName)
-         this.props.handleZoneInputAction2("formName",...this.state.name)
+         this.props.handleZoneInputAction("formSku",this.state.subName)
+         this.props.handleZoneInputAction2("formName",this.state.name)
          this.props.showSubSubAttribute(t.id)
          //console.log("ttttttt", t,  )
        }
@@ -194,10 +194,14 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
         }
         ]
             
+        if(this.validate()){
       let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
              res.then(res=>{
                  this.props.getAllSubAttribute(1)
              })
+             alert('Added Successfully Done');
+            }
+          
 
              this.setState({
                  isEditing:false,

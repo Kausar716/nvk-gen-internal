@@ -1,17 +1,28 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
-import {getAllReturnReasonMethods,saveReturnReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
+import {getAllReturnReasonMethods,saveReturnReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,
+    handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,
+    getAllDeliveryMethods,  updateCustomerReturnReasonSettings,handleExchangeData2,
+    showSpecificReturnReasonSettings,} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
 
     class ReturnReasons extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:'',
+       return_to_inventoryNo:2,
+      
+       selectedOption:false,
+       selectedID:'',
+       //return_to_inventoryNumber:0,
     }
 
 
@@ -102,18 +113,43 @@ import { is } from 'immutable';
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerReturnReason")
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleExchangeData("customerReturnReason", e.target.value)
+
+            //this.props.handleExchangeData(e.target.value,e.target.id,"customerReturnReason")
         }
+
+        handleCategoryInputAction2 = (e)=>{
+
+            this.setState({
+                selectedOption:e.currentTarget.value
+            })
+            // if(e.target.id ==="return_to_inventoryYes")this.props.handleExchangeData2("return_to_inventoryNo", e.target.value)
+            // else if(e.target.id ==="return_to_inventoryNo")this.props.handleExchangeData2("return_to_inventoryNo", e.target.value)
+
+            
+           // this.props.handleExchangeData2("return_to_inventory",e.currentTarget.value)
+            
+
+            //this.props.handleExchangeData(e.target.value,e.target.id,"customerReturnReason")
+        }
+
+
+
+
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerReturnReason.reason.trim() ==="" || this.props.customerData.customerReturnReason.return_to_inventory ==="2"){
+            if(this.state.name.trim() ==="" || this.props.customerData.customerReturnReason.return_to_inventory ==="2"){
                 
                 this.setState({isOpen1:true,message:["Please add Reason "]})
 
 
             }else{
                 let obj = {}
-                obj.reason = this.props.customerData.customerReturnReason.reason
-                obj.return_to_inventory = this.props.customerData.customerReturnReason.return_to_inventory
+                obj.reason = this.state.name
+                obj.return_to_inventory = this.state.selectedOption
+                //this.props.customerData.customerReturnReason.return_to_inventory
                 obj.status = 1
                 let result = this.props.saveReturnReasonMethod(obj)
                 result.then(data=>{
@@ -124,6 +160,51 @@ import { is } from 'immutable';
         
         }
 
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+
+            this.setState({
+                name: t.reason,
+                selectedOption:t.return_to_inventory,
+                isEditing:true,
+                selectedID:t.id
+            })
+
+            this.props.handleExchangeData("customerReturnReason",...this.state.name)
+            this.props.handleExchangeData2("return_to_inventory",this.state.selectedOption)
+            this.props.showSpecificReturnReasonSettings(t.id)
+  
+       }
+
+
+
+       handleAddCategoryUpdate=(e)=>{
+        //debugger;
+        console.log("showSpeciSubA", this.props.showSpecificCustomerReturnReason)
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+        
+         let updateID = parseInt(this.props.showSpecificCustomerReturnReason.id)
+         let updateObject={}
+         updateObject.return_to_inventory=this.state.selectedOption
+       
+            
+      let res=   this.props.updateCustomerReturnReasonSettings(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllReturnReasonMethods()
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:"",
+                
+             })
+
+     }
+
+
+
+
 
 
 
@@ -131,7 +212,7 @@ render() {
  
     const {customerData} = this.props
 
-    console.log(this.props.customerData.customerReasonList)
+    console.log("Aforapple",this.props.customerData.customerReturnReason)
 
 
     // customerReturnReason:{reason: "",return_to_inventory: ""},
@@ -146,40 +227,9 @@ render() {
                 
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                           
                                 <div className="row">
-                                        {/* <div className="col-md-6">
-                                            <label>Type</label>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerTypes.delivery_method}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
-                                            {/* </div> */}
-                                        {/* </div>  */}
-                                        {/* <div className="col-md-6">
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
-                                                </a>
-                                            </div>
-                                        </div> */}
+                                       
                                     </div>
                                     
                                 <div className="row">
@@ -187,7 +237,12 @@ render() {
                                         {/* <p>Reason</p> */}
                                         <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}> Reason</h5>
                                         <div>
-                                            <input type="text" className="form-control" placeholder="" id="reason" value={customerData.customerReturnReason.reason}   placeholder="Reason" onChange={this.handleCategoryInputAction}/>
+                                            <input type="text"
+                                             className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            placeholder="" id="reason" name="customerReturnReason"
+                                            value={this.state.name} 
+                                            // value={customerData.customerReturnReason.reason}
+                                                onChange={this.handleCategoryInputAction}/>
                                         </div>
                                         {/* <div className="d-flex justify-content-md-end mt-2">
                                             <a href="javascript;" className="d-flex align-items-center">
@@ -195,15 +250,24 @@ render() {
                                             </a>
                                         </div> */}
                                     </div>
-                                    <div className="col-md-2">
+                                    <div className="col-md-2" style={{marginTop:"1em"}}>
                                         <p>Return to Inventory</p>
-                                        <div style={{marginTop:"20px"}}>
+                                        <div style={{marginTop:"16px"}}>
                                         <label class="containerC">Yes
-                                                        <input type="radio"  name="radio1" id={"return_to_inventory"} value={1} onChange={this.handleCategoryInputAction} checked={customerData.customerReturnReason.return_to_inventory ==1?true:false}/>
+                                                        <input type="radio"  name="return_to_inventory" id={"return_to_inventoryYes"}
+                                                         value={1} onChange={this.handleCategoryInputAction2} 
+                                                         checked = {parseInt(this.state.selectedOption)===1?true:false}
+                                                         //checked={this.props.customerData.customerReturnReason.return_to_inventory ==1?true:false}
+                                                         />
                                                         <span class="checkmark"></span>
                                                         </label>
                                                         <label class="containerC">No
-                                                        <input type="radio" name="radio1"  id={"return_to_inventory"}  value={0} onChange={this.handleCategoryInputAction} checked={customerData.customerReturnReason.return_to_inventory ==0?true:false}/>
+                                                        <input type="radio" name="return_to_inventory"  id={"return_to_inventoryNo"}  value={0} 
+                                                        onChange={this.handleCategoryInputAction2}
+                                                        checked = {parseInt(this.state.selectedOption)===0?true:false} 
+                                                        //checked={this.props.customerData.customerReturnReason.return_to_inventory ==0?true:false}
+                                                        //  checked={customerData.customerReturnReason.return_to_inventory ==0?true:false}
+                                                        />
                                                         <span class="checkmark"></span>
                                                 </label>
                                         </div>
@@ -215,11 +279,33 @@ render() {
                                     </div>
 
                                     
-                                    <div className="col-md-2" style={{marginTop:"2.3em"}} onClick={this.handleAddCategoryData}>
-                                                <a  className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Reason
-                                                </a>
-                                    </div>
+                                  
+
+
+                                                {this.state.isEditing ? (
+                                                    <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryUpdate}>
+                                                        <div style={{marginTop:"2.5em"}}>
+                                                            <a href="javascript:" className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Reason
+                                                            </a>
+                                                        </div>
+
+                                                            <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"4em", marginTop:"1.5em"}}>
+                                                                    Cancel 
+                                                                </a>
+                                                            </div>
+                                                    </div>
+
+                                                        ):
+                                                        (
+                                                            <div className="col-md-2" style={{marginTop:"3.3em"}} onClick={this.handleAddCategoryData}>
+                                                            <a  className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Reason
+                                                            </a>
+                                                        </div>
+                                                  )} 
+
                                    
 
 
@@ -280,7 +366,7 @@ render() {
                                         </div>
                                     </div>
                                     <div class="col">
-                                        <div class="card midCard">
+                                        <div class="card midCard" >
                                             <div class="card-header">
                                                 Active
                                             </div>
@@ -289,7 +375,14 @@ render() {
                                                    {this.props.customerData.customerReturnReasonList.active.map(t=>{
                                                     return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.reason}</span>
+                                                                      <span id="Wheathers"
+                                                                     
+                                                                       className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}
+                                                                    
+                                                                       > <p style={{paddingTop:"12px"}}>{t.reason}</p></span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -313,7 +406,9 @@ render() {
     plantCategoryList:state.categoryData.plantCategoryData,
     temp:state,
     name:state.categoryData.name,
-    customerData:state.customerReducer
+    customerData:state.customerReducer,
+    showSpecificCustomerReturnReason:state.customerReducer.showSpecificCustomerSettingReturnReason
+
     }
     )
     export default connect(mapStateToProps,{
@@ -324,6 +419,10 @@ render() {
         getAllReasonMethods,
         getAllReturnReasonMethods,
         saveReturnReasonMethod,
+        updateCustomerReturnReasonSettings,
+        showSpecificReturnReasonSettings,
+        handleExchangeData2,
+
 
         
 handleDragDropCustomer    })(ReturnReasons)

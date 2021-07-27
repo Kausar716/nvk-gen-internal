@@ -142,7 +142,7 @@ export default function(state = initialSatate, action){
                 archived: 0,
                 discontinued: 0,
                 location: null,
-                status: 1,
+                status: 0,
                 attributes_subattributes:[]           
             
                 },

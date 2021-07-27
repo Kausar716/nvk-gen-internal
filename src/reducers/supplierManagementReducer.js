@@ -28,7 +28,7 @@ import {
     // UPDATE_SUPPLIER_DELIVERY_LOCATION, 
     // UPDATE_DELIVERY_CATEGORY,
    
-    // DELETE_SUPPLIER ,
+    DELETE_SUPPLIER ,
     // DELETE_SUPPLIER_REASON, 
     // DELETE_SUPPLIER_ADDRESS ,
     // DELETE_SUPPLIER_DELIVERY_LOCATION,
@@ -207,11 +207,24 @@ const defaultState={
 const supplierManagementReducer =(state=defaultState, action)=>{
     console.log(action.payload)
         switch(action.type){
+
+            case DELETE_SUPPLIER:
+                return{
+                    ...state,
+                    
+                }
             case GET_SUPPLIER_ADDRESS:
                 return{
                     ...state,
                     supplierAddress:action.payload.data
 
+                }
+
+            case DELETE_SUPPLIER_ADDRESS:
+                {
+                    return{
+                        ...state,
+                    }
                 }
             case ADD_SUPPLIER_ADDRESS:
                 return{
@@ -296,7 +309,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
             case DELETE_SUPPLIER_CONTACT:{
                 return{
                     ...state,
-                    supplierContactList:action.payload.data
+                    // supplierContactList:action.payload.data
                 }
                 
             }

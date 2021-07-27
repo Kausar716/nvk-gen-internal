@@ -176,7 +176,6 @@ import {
     }
     const {plantData,plantDataById,tagsData, actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData
-        console.log("kkm", tags)
     let flag=0
     if(plantDataById){       
         if(!plantDataById.genus || !plantDataById.species || !plantDataById.category_id){

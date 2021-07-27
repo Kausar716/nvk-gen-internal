@@ -474,7 +474,58 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Primary Contact</label>
-                                       <div style={{border:"1px solid lightgray",height:43,borderRadius:3,marginTop:1}}>Data should be pulled from contact</div>
+                                       <div style={{height:"auto",borderRadius:3,marginTop:1}}>{
+                                       
+                                        customerContactList.active.map(contactData=>{
+                                            
+                                            if(parseInt(contactData.primary_contact) ==1){
+                                                return(
+                                                    <div>
+                                                    <div >
+                                                    {/* <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p> */}
+                                            <label class="text-muted f-w-400">{contactData.email}</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1}</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2}</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
+                                                </div>
+                                            </div>
+                                            {/* <div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={contactData.primary_contact==1?true:false} disabled={true}/>
+                                                    <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={contactData.all_communication==1?true:false} disabled={true}/>
+                                                    <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
+                                                </div>
+                                            </div> */}
+                                            {/* <div class="row mt-3">
+                                                <div class="col-md-6">
+                                                    <a href="#" class="">
+                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
+                                                    </a>
+                                                    <a  class=" ml-2" onClick={()=>editContact(contactData.id)}>
+                                                        <img src="assets/img/edit.svg" alt="" />
+                                                    </a>
+                                                </div>
+                                                <div class="col-md-6 text-right">
+                                                    <a href="#" class=" ml-2">
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(contactData.id)}/>
+                                                    </a>
+                                                </div>
+                                            </div> */}
+                                                        </div>
+                                                        </div>
+                                                )
+                                                
+                                            }
+                                        })
+                                           
+                                           }</div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>

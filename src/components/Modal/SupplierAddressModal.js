@@ -165,7 +165,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         let errors = onSaveClicked()
         if(errors!==0)
         return
-        // alert("saving")
+        // //alert("saving")
        
         if(supplierDataById.id !== undefined){
             setError("")
@@ -174,7 +174,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                 props.addSupplierAddress(supplierAddress).then(data=>{
                     props.modalAction()
                  console.log(supplierDataById)
-                    // alert(customerDataById.customer_id)
+                    // //alert(customerDataById.customer_id)
                     props.getAllAddress(supplierDataById.id)
                     // props.getsupplierContacts(customerDataById.customer_id)
                     

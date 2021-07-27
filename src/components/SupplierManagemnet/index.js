@@ -1,6 +1,6 @@
 import React from 'react'
 import AddSupplier from './AddSupplier'
-import {getAllSuppliers,resetSupplierFilds,getsupplierById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {deleteSupplier,getAllSuppliers,resetSupplierFilds,getsupplierById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
@@ -23,36 +23,42 @@ export class SupplierManagemnet extends React.Component {
         }
     }
     componentDidMount(){
-        // alert("hif")
+        // //alert("hif")
         this.props.getAllSuppliers(this.state.radioFilter)
     }
 
     handleAddSupplierClick = (e) => {
-        // alert(e.target.id)
+        // //alert(e.target.id)
         this.props.resetSupplierFilds()
         this.props.typeOfsupplierActionShow("add")
     }
     handleRadioClick = (e)=> {
         this.setState({customerListStatus:e.target.name})
         this.props.handleRadioFilter(e.target.id)
-        // alert("hi")
+        // //alert("hi")
     }    
     handleEdit = (id) => {
         this.props.typeOfsupplierActionShow("edit")
         this.props.getsupplierById(id)
     }
     paginationChange =(event, page)=>{
-        // alert("hg")
+        // //alert("hg")
         this.props.setPageNumber(page-1)
     }
     handleAlphabetFilter = (e)=>{
-        // alert(e.target.id)
+        // //alert(e.target.id)
         this.setState({selectedAlpha:e.target.id})
         this.props.handleAplhabetFilter(e.target.id)
 
     }
+    deleteSupplierData = (id)=>{
+        this.props.deleteSupplier(id).then(data=>{
+            this.props.getAllSuppliers()
+
+        })
+    }
     handleSearch = (e)=>{
-        // alert(e.target.value)
+        // //alert(e.target.value)
         if(e.target.value === undefined){
             this.setState({searchValue:""})
             this.props.handleSearchFilter("")
@@ -62,7 +68,7 @@ export class SupplierManagemnet extends React.Component {
             this.props.handleSearchFilter(e.target.value)
         }
         
-        // alert(e.target.value)
+        // //alert(e.target.value)
 
     }
     render(){
@@ -230,8 +236,13 @@ export class SupplierManagemnet extends React.Component {
                                                         <td>$0.00</td>
                                                         <td class="text-center">
                                                         <span onClick={()=>{this.handleEdit(customerData.id)}}>
-                                                            <a href="javascript:;">
+                                                            <a href="javascript:;" style={{marginRight:3}}>
                                                                 <img src="assets/img/edit.svg" alt=""/>
+                                                            </a>
+                                                        </span>
+                                                        <span onClick={()=>{this.deleteSupplierData(customerData.id)}}>
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/delete.svg" alt=""/>
                                                             </a>
                                                         </span>
                                                         </td> 
@@ -260,5 +271,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{resetSupplierFilds,getsupplierById,typeOfsupplierActionShow,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(SupplierManagemnet)
+export default connect(mapStateToProps,{deleteSupplier,resetSupplierFilds,getsupplierById,typeOfsupplierActionShow,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(SupplierManagemnet)
 
