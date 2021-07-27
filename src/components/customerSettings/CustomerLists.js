@@ -1,6 +1,6 @@
 import React from 'react'
 import AddCustomer from './EditCustomer'
-import {getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
@@ -51,6 +51,13 @@ export class CustomerSettings extends React.Component {
     handleAlphabetFilter = (e)=>{
         this.setState({selectedAlpha:e.target.id})
         this.props.handleAplhabetFilter(e.target.id)
+
+    }
+    deleteCustomerData =(id)=>{
+        // alert(id)
+       this.props.deleteCustomer(id).then(data=>{
+           this.props.getAllCustomer()
+       })
 
     }
     handleSearch = (e)=>{
@@ -226,8 +233,13 @@ export class CustomerSettings extends React.Component {
                                                         <td>$0.00</td>
                                                         <td class="text-center">
                                                         <span onClick={()=>{this.handleEdit(customerData.id)}}>
-                                                            <a href="javascript:;">
+                                                            <a href="javascript:;" style={{marginRight:3}}>
                                                                 <img src="assets/img/edit.svg" alt=""/>
+                                                            </a>
+                                                        </span>
+                                                        <span onClick={()=>{this.deleteCustomerData(customerData.id)}}>
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/delete.svg" alt=""/>
                                                             </a>
                                                         </span>
                                                         </td>
@@ -256,5 +268,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(CustomerSettings)
+export default connect(mapStateToProps,{deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(CustomerSettings)
 
