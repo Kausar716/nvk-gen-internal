@@ -150,7 +150,8 @@ export default function(state = initialSatate, action){
                 needAction:false,
                 tagsData:[],
                 actionType:"add",
-                plantSkuDataList:[]
+                plantSkuDataList:[],
+                ae_plant_id:""
 
 
             }

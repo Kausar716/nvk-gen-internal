@@ -118,6 +118,7 @@ export default function(state = initialSatate, action){
                 ...state,
                 pageToOpen:action.page,
                 actionType:action.actionType,
+                ae_product_id:"",
                 productDataById     :   {
                     name:"",
                     category_id:null,
