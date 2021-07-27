@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
 import {checkLogin} from "../actions/authAction";
+import {pageReDirectAction} from '../actions/productAction'
 
 
 const Left = (props)=>{
@@ -45,6 +46,10 @@ const handleMainSelection= (id) => {
   }
   updateObject.mainMenu=id
   props.updateMenuItems(updateObject)
+  if(id.includes("inventory")){
+    props.pageReDirectAction("product","add")
+    props.plantPageReDirectAction("all","plant")
+  }
 }
 
  
@@ -61,8 +66,13 @@ const handleMainSelection= (id) => {
    }
    setSelectedMainBar(id)
    updateObject.submenu=id
+
   // setSelectedSubBar(id)
   props.updateMenuItems(updateObject)
+  if(id.includes("inventory")){
+    props.pageReDirectAction("product","add")
+    props.plantPageReDirectAction("all","plant")
+  }
  }
 
  const handleSideMenuEnter=() => {
@@ -248,4 +258,4 @@ const mapStateToProps = (state)=> (
 }
 )
 
-export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin})(Left)
+export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin,pageReDirectAction})(Left)
