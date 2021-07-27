@@ -179,19 +179,16 @@ export class OrganizationSettings extends React.Component {
 
         //organizationData.phone.replace(phoneReg, '($1) $2-$3')
         if(! phoneReg.test(organizationData.phone)){
-           
-           
             //debugger;
             if(organizationData.phone.length > 10){
-               
             errorObj.phoneError=1
             errorCount++
             }
-            else{
+            // else{
               
-                errorObj.phoneError=0
-                errorCount--
-            }
+            //     errorObj.phoneError=0
+            //     errorCount--
+            // }
 
         }   
 
@@ -199,11 +196,11 @@ export class OrganizationSettings extends React.Component {
             errorObj.sendingEmailError=1
             errorCount++
         }
-        else{
+        // else{
               
-            errorObj.sendingEmailError=0
-            errorCount--
-        }
+        //     errorObj.sendingEmailError=0
+        //     errorCount--
+        // }
 
 
         if(!nameReg.test(organizationData.name)){
@@ -214,17 +211,17 @@ export class OrganizationSettings extends React.Component {
         return errorCount
     }
     handleSubmit = (e) => {
-
+            debugger;
         // e.preventDefault();
-    const error = validateInput(this.state.phone);
+    // const error = validateInput(this.state.phone);
     
-    this.setState({ error }, () => {
-       if(!error) {
-         setTimeout(() => {
-           alert(JSON.stringify(this.state, null, 4));
-         }, 300)
-       }
-    })
+    // this.setState({ error }, () => {
+    //    if(!error) {
+    //      setTimeout(() => {
+    //        alert(JSON.stringify(this.state, null, 4));
+    //      }, 300)
+    //    }
+    // })
 
 
         let count= this.validate()
@@ -370,12 +367,13 @@ export class OrganizationSettings extends React.Component {
 
             else if(actionType==="save"){
 
-                if((this.validate()===0) ){
-                    this.handleSubmit();
-                    // setTimeout(function() {
-                    //     window.location.reload();
-                    //  }, 200);
-                }
+                this.handleSubmit();
+                // if((this.validate()) ){
+                //     this.handleSubmit();
+                //     // setTimeout(function() {
+                //     //     window.location.reload();
+                //     //  }, 200);
+                // }
                
             }
 
@@ -412,23 +410,23 @@ export class OrganizationSettings extends React.Component {
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to go back"})
+            this.setState({actionMessage:"Are you sure you want to go back ?"})
 
         }
         else if(actionType==="save"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to save Changes"})
+            this.setState({actionMessage:"Are you sure you want to save Changes ?"})
             
         }
 
         else if(actionType==="upload"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to Upload Image"})
+            this.setState({actionMessage:"Are you sure you want to Upload this Image ?"})
         }
 
         else if(actionType==="deleteImage"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to Delete Image"})
+            this.setState({actionMessage:"Are you sure you want to delete this image ?"})
 
         }
         
@@ -510,9 +508,9 @@ export class OrganizationSettings extends React.Component {
                                             //   src={this.state.imagePreviewURL}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"250px",width:"240px"}}/>
+                                            style={{height:"250px",width:"240px", borderRadius:"7em"}}/>
                                         </div>
-                                        <p><small>Image should print quality PNG or JPG</small></p>
+                                        <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" 
@@ -570,7 +568,7 @@ export class OrganizationSettings extends React.Component {
                                            
                                             {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                         </div>
-                                    </div> */}
+                                    </div>  */}
 
 
                                     <div class="row form-group">
@@ -583,7 +581,7 @@ export class OrganizationSettings extends React.Component {
                                                     placeholder="(xxx) xxx-xxxx"
                                                     value={finalPhno}
                                                     pattern="[0-9]*"
-                                                   // value={organizationDataById.phone}
+                                                    //value={organizationDataById.phone}
                                                     // value={this.state.phone}
                                                     onChange={this.handleInput} 
                                                      //onChange={this.handleChange}
