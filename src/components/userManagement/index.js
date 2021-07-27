@@ -99,6 +99,11 @@ handleActiveUser =(e)=>{
     console.log("eeee", e.target.value)
 }
 
+
+chengeFunction =(e)=>{
+console.log("eeeABCD", e)
+}
+
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -138,6 +143,9 @@ handleActiveUser =(e)=>{
         roleList = this.props.roles.payload
     }
     console.log(this.props.temp.userReduser)
+
+
+
         
     return (
         <div clas="userManagementSection">
@@ -198,9 +206,9 @@ handleActiveUser =(e)=>{
                                         <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
-                                            <option>Select</option>
+                                            <option ></option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                return  <option value={userObj.id}>{userObj.name}</option>
+                                                return  <option value={userObj.id}>{userObj.name} {userObj.last_name}</option>
                                             }):null}
                                             </select>
                                         </div>
@@ -210,10 +218,10 @@ handleActiveUser =(e)=>{
                                                 <label class="custom-control-label pl-2" for="customCheck1"> Display deleted records only</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-lg-4 text-center mt-3 mt-md-0" onClick={this.handleCreate}>
+                                        <div class="col-md-4 col-lg-4 text-center mt-3 mt-md-0" >
                                             <span class="f-w-500">Create New User</span>
                                             <a href="javascript:;" class="d-md-block mt-md-2 ml-3 ml-md-0">
-                                               <img src="assets/img/create-new-user-ic.svg" />
+                                               <img src="assets/img/create-new-user-ic.svg"  onClick={this.handleCreate} />
                                             </a>
                                         </div>
                                     </div>:null}

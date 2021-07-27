@@ -399,23 +399,23 @@ export class UserProfile extends Component {
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to go back"})
+            this.setState({actionMessage:"Are you sure you want to go back ?"})
 
         }
         else if(actionType==="save"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to save Changes"})
+            this.setState({actionMessage:"Are you sure you want to save this Changes ?"})
             
         }
 
         else if(actionType==="upload"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to Upload Image"})
+            this.setState({actionMessage:"Are you sure you want to Upload Image ?"})
         }
 
         else if(actionType==="deleteImage"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to Delete Image"})
+            this.setState({actionMessage:"Are you sure you want to delete this image ?"})
 
         }
         
@@ -423,7 +423,7 @@ export class UserProfile extends Component {
         
         else{
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to duplicate this product and all its related SKU and plant information?"})
+            this.setState({actionMessage:"Are you sure you want to duplicate this product and all its related SKU and plant information ?"})
        
         }
         this.setState({
@@ -507,7 +507,7 @@ export class UserProfile extends Component {
                                                     <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
-                                                    <img src="assets/img/upload-ic-white.svg" alt=""/>
+                                                    <img src="assets/img/upload-ic-white.svg" alt="" style={{borderRadius:"7em"}}/>
                                                 </a>
                                                 <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                                     <span class="d-flex align-items-center justify-content-around" 

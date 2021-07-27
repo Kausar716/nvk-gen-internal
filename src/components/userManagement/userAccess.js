@@ -105,7 +105,11 @@ export const Component = withRouter(({ history, location }) =>{
 
     goBackFunction =(e)=>{
         const { history } = this.props;
-        history.push("/Dashboard")
+        setTimeout(function() {
+            history.push("/usermanagement")
+            window.location.reload();
+         }, 1000);
+       
     }
 
 
@@ -185,7 +189,8 @@ export const Component = withRouter(({ history, location }) =>{
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
                                                         <img src=
-                                                         {this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null ?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
+                                                         {
+                                                        this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
                                                          class="img-fluid" style={{borderRadius:"3em"}} />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                     </div>
