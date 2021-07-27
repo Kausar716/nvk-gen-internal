@@ -7,6 +7,9 @@ import {connect} from "react-redux";
 import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
 import {checkLogin} from "../actions/authAction";
 import {pageReDirectAction} from '../actions/productAction'
+import {plantPageReDirectAction} from '../actions/plantManagerAction'
+
+
 
 
 const Left = (props)=>{
@@ -258,4 +261,4 @@ const mapStateToProps = (state)=> (
 }
 )
 
-export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin,pageReDirectAction})(Left)
+export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)

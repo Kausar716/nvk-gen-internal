@@ -319,7 +319,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
     console.log(skuDataById.sub_category_id)
     let flag =0
     if(skuDataById){       
-        if(!skuDataById.each_cost || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
+        if(!skuDataById.each_cost||skuDataById.sub_category_id  === "0" || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
             flag=1
             
         }

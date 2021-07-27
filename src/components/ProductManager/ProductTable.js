@@ -259,7 +259,7 @@ const ProductTable  = (props) => {
                                     </table>
 
                                     <div className="centerItem">
-                                    <p > {productData.length===0?"Product data loading ... " :""}  <Loader /></p>
+                                    <p > {productData.length===0?"No records found..." :""}  <Loader /></p>
                                     </div>
 
                                     {/* <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>

@@ -202,7 +202,7 @@ const PlantTable=(props)=> {
                                         </tbody>
                                     </table>
                                     <div className="centerItem">
-                                    <p >{plantData.length===0?"Plant Data loading ":""} <Loader /></p>
+                                    <p >{plantData.length===0?"No records found... ":""} <Loader /></p>
                                     </div>
                                    
                                 </div>

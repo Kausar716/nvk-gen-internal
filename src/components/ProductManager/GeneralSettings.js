@@ -168,10 +168,10 @@ const GeneralSettings=(props)=> {
 //         history.push("/productManager")
 
 // }
-console.log(actionType)
+console.log(productDataById.manufacturer_id)
 let flag =0
 if(productDataById){       
-    if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id){
+    if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id ||productDataById.category_id === "0"|| productDataById.manufacturer_id === "0"){
         flag=1
         
     }
