@@ -9,6 +9,7 @@ import { Link ,withRouter} from "react-router-dom";
 export const Component = withRouter(({ history, location }) =>{
 
 })
+
 const normalizeInput = (value, previousValue) => {
     if (!value) return value;
     const currentValue = value.replace(/[^\d]/g, '');
@@ -221,7 +222,7 @@ export class OrganizationSettings extends React.Component {
 
 
     handleSubmit = (e) => {
-            debugger;
+           // debugger;
         // e.preventDefault();
      const phoneError = validateInput(this.state.phoneNumberInOrganization);
     
@@ -237,7 +238,7 @@ export class OrganizationSettings extends React.Component {
     let finalNumber= this.state.phoneNumberInOrganization 
     finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
     let removedNumber = finalNumber.split(" ").join("");
-    //removedNumber = parseInt(removedNumber)
+    removedNumber = parseInt(removedNumber)
 console.log("removedNumber",removedNumber)
 
 

@@ -5,7 +5,7 @@ import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
 import { Link ,withRouter} from "react-router-dom";
 
@@ -37,6 +37,7 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
+        this.props.resetUserData()
        
     }
    
@@ -113,9 +114,14 @@ export const Component = withRouter(({ history, location }) =>{
     }
 
 
+    reseUserData=()=>{
+
+    }
+
+
     render(){
 
-
+        console.log("swithchigTAB", )
         console.log("getRolesList", this.props.roles)
         let userProfiles = []  
         let selectedUser = this.props.user.data
@@ -188,6 +194,7 @@ export const Component = withRouter(({ history, location }) =>{
                                             <div class="bg-grey-transparent-2 px-3 py-3">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
+                                                        
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
@@ -874,4 +881,4 @@ export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUse
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction})(UserAccess));
+,handleUserAccessInputAction, resetUserData})(UserAccess));

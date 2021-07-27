@@ -55,6 +55,7 @@ const initialSatate = {
                 removedData:action
             }
         }
+
         case DELETE_USER:{
             return{
                 ...state,

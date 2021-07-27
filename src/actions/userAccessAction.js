@@ -9,8 +9,18 @@ import {
     HANDLE_USER_ACCESS_INPUT_DATA,
     GET_PERMISSION_LIST,
     SHOW_SELECTED_USER,
-    UPDATE_USER_PERMISSION 
+    UPDATE_USER_PERMISSION ,
+    RESET_USERDATA
    } from './types';
+
+
+
+   export const resetUserData=()=>dispatch=>{
+    dispatch({
+        type:RESET_USERDATA,
+        
+    })
+   }
    
 //    export const getUsersList = (dispatch) => {
     export const getRolesList = () => dispatch => {
