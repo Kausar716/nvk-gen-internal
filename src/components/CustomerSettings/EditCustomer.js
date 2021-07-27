@@ -8,6 +8,7 @@ import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
 import ContactsModal from "../../components/Modal/ContactsModal"
+import InputMask from 'react-input-mask';
 import AddressModal from "../../components/Modal/AddressModal"
 
 function AddCustomer(props) {
@@ -529,7 +530,8 @@ function AddCustomer(props) {
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>
-                                        <input type="number" id="fax" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} />
+                                        <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"fax"} value={customerDataById.fax} onChange={handleInput} />
+                                        {/* <input type="number" id="fax" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} /> */}
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
                                 </div>

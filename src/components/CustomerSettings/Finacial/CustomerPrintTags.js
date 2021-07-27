@@ -76,7 +76,7 @@ const resetData = ()=> {
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       
-      <Label className="subFont">Customer Print Rates</Label>
+      <Label className="subFont">Customer Print & Tag Rates</Label>
       <span className="updownSymbolContainer"> 
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>

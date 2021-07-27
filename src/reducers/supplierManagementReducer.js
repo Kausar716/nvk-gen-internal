@@ -508,9 +508,35 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         }
                     case FILTER_SUPPLIER_DATA_BY_RADIO:
                         let radioData = []
-                        if(action.actionType === "active") radioData = state.activeData
-                        if(action.actionType === "inactive") radioData = state.inactiveData
-                        if(action.actionType === "all") radioData = state.duplicateData
+                        // if(action.actionType === "active") radioData = state.activeData
+                        // if(action.actionType === "inactive") radioData = state.inactiveData
+                        // if(action.actionType === "all") radioData = state.duplicateData
+
+
+
+
+
+
+
+
+                        if(action.actionType === "active" && state.searchFilter ==="" && state.alphabetSearch ==="All")radioData = state.activeData
+                        else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.activeData.filter(data=>data.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
+                        else if(action.actionType === "active" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.activeData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
+        
+                        else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.activeData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                            ////////////////////////////////
+                            if(action.actionType === "inactive" && state.searchFilter ==="" && state.alphabetSearch ==="All") radioData = state.inactiveData
+                            else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.inactiveData.filter(data=>data.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
+            
+                            else if(action.actionType === "inactive" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.inactiveData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
+            
+                            else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.inactiveData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+        
+                            ////////////////////////////////
+                            if(action.actionType === "all" && state.searchFilter ==="" && state.alphabetSearch ==="All") radioData = state.duplicateData
+                            else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.duplicateData.filter(data=>data.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
+                            else if(action.actionType === "all" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.duplicateData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
+                            else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.duplicateData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
                     return{
                         ...state,
                         supplierList:radioData,

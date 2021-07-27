@@ -11,6 +11,7 @@ import AddressModal from "../../components/Modal/AddressModal"
 import SupplierAddressModal from "../../components/Modal/SupplierAddressModal"
 import SupplierContactModal from "../../components/Modal/SupplierContactModal"
 import DatePicker from 'react-date-picker';
+import InputMask from 'react-input-mask';
 
 function AddSupplier(props) {
     const [value, onChange] = useState(new Date());
@@ -77,6 +78,7 @@ function AddSupplier(props) {
         let errorCountForValidation = 0
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z]+$/
+    
         let message = []
         // let phoneReg = new RegExp('^[0-9]+$');
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -102,6 +104,13 @@ function AddSupplier(props) {
             errorCountForValidation++
 
         }
+        var res = supplierDataById.website.match( /^(http[s]?:\/\/){0,1}(w{3,3}\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/);
+        if(res == null)
+           {
+            message.push("Add Valid url and should contain https")
+            errorCountForValidation++
+               
+           }
         setMessage(message)
         // setErrorCount(errorCountForValidation)
         // setErrorObject(errorObjforValidation)
@@ -458,7 +467,8 @@ console.log(supplierDataById)
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                     <label>Fax</label>
-                                        <input type="number" class="form-control" name="fax" value={supplierDataById.fax} onChange={handleInput} id="fax"/>
+                                    <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"fax"} value={supplierDataById.fax} onChange={handleInput} />
+                                        {/* <input type="number" class="form-control" name="fax" value={supplierDataById.fax} onChange={handleInput} id="fax"/> */}
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
                                 </div>
