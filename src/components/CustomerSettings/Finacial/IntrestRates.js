@@ -97,7 +97,7 @@ const InrestRates = (props) => {
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      <Label className="subFont">Tax & Interest Rates</Label> 
+      <Label className="subFont">Customer Tax & Interest Rates</Label> 
       <span className="updownSymbolContainer"> 
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -133,7 +133,7 @@ const InrestRates = (props) => {
 
                       <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                             <label>Tax Rate Label</label>
-                            <input type="text"  placeholder={"Sales Tax(HST) @ 13%"}     className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label!==""?customerIntrest.taxrate_label:""}  onChange={handleChangeData}/>
+                            <input type="text"  placeholder={"Sales Tax(HST) @ 13.0%"}     className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label!==""?customerIntrest.taxrate_label:""}  onChange={handleChangeData}/>
                       </div>
 
 

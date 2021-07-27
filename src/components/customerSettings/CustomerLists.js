@@ -152,7 +152,7 @@ export class CustomerSettings extends React.Component {
                                     </div>
                                 </div>
                                 <div class="col-md-4 col-lg-4 mt-2 mt-md-0 pb-2">
-                                    <a onClick={this.handleSearch}>Reset</a>
+                                    <a onClick={this.handleSearch}  style={{cursor:"pointer",color:"#5287F5"}}>Reset</a>
                                 </div>
                             </div>
                             <div class="form-group row">

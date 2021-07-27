@@ -166,7 +166,7 @@ const initialSatate = {
    customerReturnReasonList:{active:[],inactive:[]},
 
    customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-   tax_exempt: 0,fax:0,
+   tax_exempt: 0,fax:"",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:0.00,discount_by_line_item:1,restock_fee:0,fee_percent:0.00},
 
     action:"",
@@ -389,10 +389,24 @@ case ADD_NEW_CUSTOMER:
                 billing_address: 0,
                 delivery_address: 0,
               },
+              customerAddressNew:{
+                customer_id: 0,
+                address1: "",
+                address2: "",
+                city: "",
+                country: "",
+                state: "",
+                zip: "",
+                lat: "",
+                long: "",
+                notes: "",
+                billing_address: 0,
+                delivery_address: 0,
+              },
               customerAddressList:{active:[],inactive:[]},
 
             customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-            tax_exempt: 0,fax:0,
+            tax_exempt: 0,fax:"",
             tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:0.00,discount_by_line_item:1,restock_fee:"Yes",fee_percent:0.00},
         }
     case UPDATE_CUSTOMER:
