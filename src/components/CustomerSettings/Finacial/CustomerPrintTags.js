@@ -102,7 +102,7 @@ const resetData = ()=> {
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price>"0"?props.customerData.customerTag.base_price:""}  onChange={handleInputData}/>
                               </Col>
                             
 
@@ -117,7 +117,7 @@ const resetData = ()=> {
                         <Row>
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo>"0"?props.customerData.customerTag.custom_logo:""}  onChange={handleInputData}/>
                             </Col>
                            
                             <Col sm="0">
@@ -133,7 +133,7 @@ const resetData = ()=> {
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
 
-                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing>"0"?props.customerData.customerTag.custom_pricing:""}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -149,7 +149,7 @@ const resetData = ()=> {
                             <Col sm="4">
 
                            
-                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application>"0"?props.customerData.customerTag.custom_application:""}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>

@@ -140,7 +140,7 @@ const Notification = (props) => {
                                   <span id={ready_to_late_notice} disabled>Set the number of days after the requested date for order in READY
 state waiting for pickup or shipment.</span>
                               </ReactTooltip> </span></label>
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
                                 </div> 
@@ -153,7 +153,7 @@ state waiting for pickup or shipment.</span>
                                   <span id={reserve_expiry_notice}>Set the number of days remaining on the order reservation date</span>
                               </ReactTooltip>
                             </span></label>
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[1]}</span>}
                                 </div> 
