@@ -1,11 +1,5 @@
 
 
-
-
-
-
-
-
   /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -25,7 +19,8 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
      isOpen1:false,
        message:[],
        isEditing:false,
-       name:''
+       name:'',
+       selectedID:''
     }
 
 
@@ -149,6 +144,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             console.log("tttt", t)
                this.setState({
              name: t.reason,
+             selectedID:t.id,
              isEditing:true
          })
 
@@ -302,7 +298,7 @@ render() {
                                                    {this.props.supplierData.supplierReasonList.active && this.props.supplierData.supplierReasonList.active.map(t=>{
                                                     return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.reason}</span>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.reason}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

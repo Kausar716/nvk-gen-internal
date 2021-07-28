@@ -117,7 +117,7 @@ const ForgotPassword = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" style={{backgroundColor:"#5287f5"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">

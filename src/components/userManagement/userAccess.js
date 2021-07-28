@@ -194,12 +194,15 @@ export const Component = withRouter(({ history, location }) =>{
                                             <div class="bg-grey-transparent-2 px-3 py-3">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
-                                                        
+                                                        {/* <div className="profImg" style={{width:"60%", height:"60%"}}> */}
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                         class="img-fluid" style={{borderRadius:"3em"}} />
+                                                          class="img-fluid" style={{borderRadius:"7em", width:"7em", height:"7em"}}
+                                                          />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
+                                                        {/* </div> */}
+                                                       
                                                     </div>
                                                     {this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
@@ -693,15 +696,6 @@ export const Component = withRouter(({ history, location }) =>{
                                                             </div>
                                                         )):null} 
                                                     </div>
-
-
-
-
-
-
-
-
-
 
 
                                                     {exestingPermission?exestingPermission.filter(premission => premission.name==="Product Manager"  && premission.group_name === "productManager").map(filteredPermission => (

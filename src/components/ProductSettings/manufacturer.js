@@ -132,7 +132,8 @@ handleEditClick2 =(t)=> {
      
  this.setState({
      name: t.name,
-     isEditing:true
+     isEditing:true,
+     selectedID:t.id
  })
  this.props.handleProductManufacturerInputAction(...this.state.name)
  // this.props.handleCategoryInputAction("Category",...this.state.name)
@@ -275,7 +276,7 @@ render()
                                             {tasks.active.map(t=>{
                                             return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                         <a className="d-flex justify-content-between align-items-center">
-                                                            <span id="Wheathers">{t.name}</span>
+                                                            <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
                                                             <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

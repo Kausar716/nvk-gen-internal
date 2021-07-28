@@ -13,7 +13,7 @@ import {
     // GET_ALL_SUPPLIER_DELIVERY_LOCATION, 
     // GET_ALL_SUPPLIER_CATEGORIES,
     // GET_ALL_SUPPLIER_REASONS, 
-    // GET_SPECIFIED_SUPPLIER_DELIVERY_LOCATION ,
+     GET_SPECIFIED_SUPPLIER_DELIVERY_LOCATION ,
     // GET_SPECIFIED_SUPPLIER_REASON, 
     // GET_SPECIFIED_SUPPLIER_ADDRESS,
     // GET_SPECIFIED_SUPPLIER_CONTACT,
@@ -25,7 +25,7 @@ import {
      RESET_SUPPLIER_FILED,
     // UPDATE_SUPPLIER_ADDRESS,
     // UPDATE_SUPPLIER_CONTACT,
-    // UPDATE_SUPPLIER_DELIVERY_LOCATION, 
+     UPDATE_SUPPLIER_DELIVERY_LOCATION, 
     // UPDATE_DELIVERY_CATEGORY,
    
     DELETE_SUPPLIER ,
@@ -72,6 +72,7 @@ GET_SUPPLIER_CONTACT,
 GET_ALL_SUPPLIER_CONTACT,
 DELETE_SUPPLIER_CONTACT,
 UPDATE_SUPPLIER_CONTACT,
+RESET_SUPPLIER_DATA,
 
 
 //supplier address
@@ -82,6 +83,7 @@ DELETE_SUPPLIER_ADDRESS,
 UPDATE_SUPPLIER_ADDRESS,
 
 RESET_SUPPLIER_CONTACT,
+GET_ALL_SUPPLIER_DELIVERY_LOCATION,
 
     // EDIT_SUPPLIER_ERROR,
     // EDIT_SUPPLIER_SUCCESS,
@@ -103,6 +105,8 @@ RESET_SUPPLIER_CONTACT,
 
 const defaultState={
     supplierInfo:[],
+    specificSupplierDeliveryList:[],
+    supplierUpdatedDeliveryList:[],
     specificSubAttribute:[],
     supplierCategoryList:[],
     specificCategorySubAttribute:[],
@@ -203,7 +207,7 @@ const defaultState={
 
 
 };
-// resetSupplierContact
+// resetSupplierContact supplierDataById
 const supplierManagementReducer =(state=defaultState, action)=>{
     console.log(action.payload)
         switch(action.type){
@@ -213,6 +217,26 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     ...state,
                     
                 }
+
+
+                case RESET_SUPPLIER_DATA:
+                    return{
+                        ...state,
+                        supplierLocation:{
+                            location: "",
+                            address: "",
+                            city: "",
+                            state: "Select State",
+                            country: "Select Country" ,
+                            zip: "",
+                            lat: "",
+                            long: "",
+                        },
+                        
+                    }
+
+
+
             case GET_SUPPLIER_ADDRESS:
                 return{
                     ...state,
@@ -428,6 +452,26 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         ...state,
                         supplierReasonList:action.payload.data
                     }
+
+
+
+                    case GET_SPECIFIED_SUPPLIER_DELIVERY_LOCATION:
+                        return{
+                            ...state,
+                            specificSupplierDeliveryList:action.payload.data
+                        }
+        
+                        case UPDATE_SUPPLIER_DELIVERY_LOCATION:
+                            return{
+                                ...state,
+                                supplierUpdatedDeliveryList:action.payload.data
+                            }
+
+
+
+
+
+                    //
 
                     case UPDATE_SUPPLIER_CATEGORY:
                         return{

@@ -19,7 +19,8 @@ import { is } from 'immutable';
        isEditing:false,
        name:'',
        subName:'',
-       subName2:''
+       subName2:'',
+       selectedID:'',
     }
 
 
@@ -154,6 +155,7 @@ import { is } from 'immutable';
             this.setState({
                 name: t.customer_type,
                 subName:t.short_code,
+                selectedID:t.id,
                 isEditing:true
             })
 
@@ -354,7 +356,7 @@ render() {
                                                    {this.props.customerData.customerTypeList.active.map(t=>{
                                                     return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.customer_type}</span>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.customer_type}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

@@ -20,6 +20,7 @@ import { is } from 'immutable';
        message:[],
        isEditing:false,
        name:'',
+       selectedID:'',
     }
 
 
@@ -141,7 +142,8 @@ import { is } from 'immutable';
 
             this.setState({
                 name: t.delivery_method,
-                isEditing:true
+                isEditing:true,
+                selectedID:t.id,
             })
 
             this.props.handleExchangeData("customerDelivery",...this.state.name)
@@ -318,7 +320,7 @@ render() {
                                                                 //   className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                                   
                                                                   >
-                                                                      <span id="Wheathers">{t.delivery_method}</span>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.delivery_method}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
