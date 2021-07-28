@@ -499,7 +499,7 @@ console.log(supplierDataById)
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                     <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
-                                        <input type="text" class="form-control" name="alternative_id" value={supplierDataById.alternative_id} onChange={handleInput} id="alternative_id"/>
+                                        <input type="text" class="form-control" name="alternative_id" value={supplierDataById.alternative_id} onChange={handleInput} id="alternative_id" maxlength={5}/>
                                      
                                     </div>
                                 </div>

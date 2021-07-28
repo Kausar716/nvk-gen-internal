@@ -194,7 +194,7 @@ useEffect(()=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" className="inputBoxDesign2" placeholder={""} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate"/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  value={customerExchange.exchange_rate>"0"?customerExchange.exchange_rate:""} onChange={handleInputData} id="exchange_rate" step=".001"/> 
                             </div>
                            
                             
@@ -246,7 +246,7 @@ useEffect(()=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" className="inputBoxDesign2" placeholder={""} value={supplierExchange.exchange_rate} onChange={handleInputData1} id="exchange_rate"/> 
+                                <input type="number" step=".001" className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate>"0"?supplierExchange.exchange_rate:""}    onChange={handleInputData1} id="exchange_rate"/> 
                             </div>
                            
                            

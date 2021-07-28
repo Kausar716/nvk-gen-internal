@@ -10,24 +10,38 @@ import {
     GET_ALL_PRODUCT_INVENTORY_ACTION,
     GET_ALL_PLANTMANAGER_INVENTORY_ACTION,
     GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION,
+    GET_PLANT_DATA,
     config,
     axios
     // DELETE_USER 
    } from './types';
    
 
-    export const getLocationList = () => dispatch => {
-       axios.get("/api/location-list",config).then(res=>{ 
+    export const getAllPlants = () => dispatch => {
+       return axios.post("/api/plant-search",null,config).then(res=>{ 
            console.log(res)
            
         
            dispatch({
-                   type:GET_LOCATION_LIST,
-                   payload:res.data.data
+                   type:GET_PLANT_DATA,
+                   payload:res.data
        
                })
            })
    }
+   
+   export const getLocationList = () => dispatch => {
+    axios.get("/api/location-list",config).then(res=>{ 
+        console.log(res)
+        
+     
+        dispatch({
+                type:GET_LOCATION_LIST,
+                payload:res.data.data
+    
+            })
+        })
+}
    export const getCategoryList = () => dispatch => {
     axios.get("/api/plant-categories",config).then(res=>{ 
         console.log(res)
