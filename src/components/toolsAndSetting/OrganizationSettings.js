@@ -5,7 +5,7 @@ import {showorganization,updateorganization,handleOrganizationSettingsInputActio
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal';
 import { Link ,withRouter} from "react-router-dom";
-
+import InputMask from 'react-input-mask';
 export const Component = withRouter(({ history, location }) =>{
 
 })
@@ -83,7 +83,8 @@ export class OrganizationSettings extends React.Component {
             logo:"",
             imageUploaded:false,
             initilaImages :false,
-            imagePreviewURL:"assets/img/noImage.png"
+            imagePreviewURL:"assets/img/noImage.png",
+            isDisable:false,
         }
     }
   
@@ -107,20 +108,22 @@ export class OrganizationSettings extends React.Component {
         let data =  this.props.uploadImage(imageData,id)
         data.then(res=>{
             console.log(res)
+           
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
 
         setTimeout(function() {
             window.location.reload();
-         }, 1100);
+            alert("image successfully uploaded")
+            
+         },1100);
         
+         
     }
 
    
 
-    handleChange=({ target: { value } })=> {   
-        this.setState(prevState=> ({ phone: normalizeInput(value, prevState.phone) }));
-      };
+  
 
     handleInput = (e) => {
       
@@ -212,8 +215,9 @@ export class OrganizationSettings extends React.Component {
     }
 
 
-    handleChange=({ target: { value } })=> {   
+    handleChange=({ target: { value } })=> {  
         this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
+       
       };
 
 
@@ -488,7 +492,7 @@ console.log("removedNumber",removedNumber)
      }
 
 
-     let phno = organizationDataById.phone || '';
+     let phno = organizationDataById.phone;
 
     //  const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
     //  let phno = organizationDataById.phone ||'';
@@ -602,7 +606,8 @@ console.log("removedNumber",removedNumber)
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
-                                            <input
+                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} id={"phone1"} value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization}  onChange={this.handleChange} />
+                                            {/* <input
                                                     class="form-control"  
                                                     type="text"
                                                     name="phone"
@@ -615,7 +620,7 @@ console.log("removedNumber",removedNumber)
                                                      onChange={this.handleChange}
                                                      //maxLength="10"
                                                    
-                                                />
+                                                /> */}
                                                 {this.state.phoneError && <span style={{fontSize:"small",color:"red"}} >{this.state.phoneError}</span>}
                                         </div>
                                     </div>

@@ -10,6 +10,10 @@ import {
     UPLOAD_ORGANIZATION_IMAGE,
     REMOVE_ORGANIZATION_IMAGE 
    } from './types';
+
+
+
+   
    
 //    export const getUsersList = (dispatch) => {
     export const addorganization = (data) => dispatch => {

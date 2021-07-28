@@ -698,15 +698,6 @@ export const Component = withRouter(({ history, location }) =>{
                                                     </div>
 
 
-
-
-
-
-
-
-
-
-
                                                     {exestingPermission?exestingPermission.filter(premission => premission.name==="Product Manager"  && premission.group_name === "productManager").map(filteredPermission => (
                                                     <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" name="Product Manager" checked={currentPermissionNames.includes("Product Manager") } onChange={this.handleCheckBox} id={filteredPermission.id}/>

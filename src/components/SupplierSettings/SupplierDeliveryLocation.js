@@ -11,20 +11,25 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 import { countryDetails } from '../Help/countryList';
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
-import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,saveSupplierCategoryMethod,getAllSupplierCategoryMethods,getAllSupplierLocationMethods,saveSupplierLocationMethod}   from "../../actions/supplierManagementAction"
+import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,
+    saveSupplierCategoryMethod,getAllSupplierCategoryMethods,getAllSupplierLocationMethods,
+    saveSupplierLocationMethod,  updateSupplierLocation, showSpecificDeliveryLocation,resetSupplierData}   from "../../actions/supplierManagementAction"
 
 
     class SupplierDeliveryLocation extends Component {
     state ={
      isOpen1:false,
        message:[],
-       countZipRegix:null
+       countZipRegix:null,
+       isEditing:false,
+       selectedID:'',
     }
 
 
@@ -38,7 +43,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         }
         componentDidMount(){
             this.props.getAllSupplierLocationMethods()
-
+            this.props.resetSupplierData()
         }
 
 
@@ -173,13 +178,74 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
     }
 
 
+    handleAddCategoryUpdate=()=>{
+         //debugger;
+      // this.props.handleSubAttributeUpdate(e.target.id)
+      
+      let updateID = parseInt(this.props.specificSupplierDelivery.id)
+      let updateObject={}
+      updateObject.location = this.props.supplierData.supplierLocation.location
+      updateObject.address = this.props.supplierData.supplierLocation.address
+        updateObject.city = this.props.supplierData.supplierLocation.city
+        updateObject.country = this.props.supplierData.supplierLocation.country
+        updateObject.state = this.props.supplierData.supplierLocation.state
+        updateObject.zip = this.props.supplierData.supplierLocation.zip
+        updateObject.lat = this.props.supplierData.supplierLocation.lat
+   
+     // updateObject.id=this.props.showSpeciSubA.id
+         
+          let res1=   this.props.updateSupplierLocation(updateID, updateObject)
+          res1.then(res=>{
+              this.props.getAllSupplierLocationMethods()
+          })
+
+          this.setState({
+              isEditing:false,
+              
+          })
+
+          
+
+  }
+
+
+
+
+    handleEditClick2 =(t)=> {
+        //debugger;
+        console.log("tttt", t)
+           this.setState({
+         isEditing:true,
+         selectedID:t.id,
+     })
+
+     this.props.handleSupplierExchnageData(t.location,"location","supplierLocation")
+     this.props.handleSupplierExchnageData(t.address,"address","supplierLocation")
+     this.props.handleSupplierExchnageData(t.city,"city","supplierLocation")
+     this.props.handleSupplierExchnageData(t.country,"country","supplierLocation")
+     this.props.handleSupplierExchnageData(t.lat,"lat","supplierLocation")
+     this.props.handleSupplierExchnageData(t.state,"state","supplierLocation")
+     this.props.handleSupplierExchnageData(t.zip,"zip","supplierLocation")
+    //  this.props.handleSupplierExchnageData(...this.state.name,"reason","supplierReason")
+        //this.props.handleReasonInputAction("supplierReason", ...this.state.name)zip
+        this.props.showSpecificDeliveryLocation(t.id)
+
+       // console.log("ttttttt", t,  this.props.handleReasonInputAction())
+        // debugger;  
+    //  this.setState({
+    //      name: t.value,
+    //      isEditing:true
+    //  })
+
+   }
+
 
 
 render() {
  
     const {supplierData} = this.props
 
-           
+    console.log("showSpeciSubA",this.props.specificSupplierDelivery)
     let allCountry = Object.keys(countryDetails);
         
     let allStates ;
@@ -287,12 +353,49 @@ render() {
                                                 value={supplierData.supplierLocation.lat}   placeholder="lat" 
                                                 onChange={this.handleCategoryInputAction}/>
                                             </div>
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
+
+
+                                         {/* <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Location
                                                 </a>
-                                                {/* <a href="javascript;" className="d-flex align-items-center" style={{marginLeft:"1em"}}> Reset</a> */}
-                                            </div>
+                                               
+                                            </div>  */}
+
+
+                                            {this.state.isEditing ? (
+                                                    <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} onClick={this.handleAddCategoryUpdate}>
+                                                    <div >
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Location
+                                                    </a>
+                                                    </div>
+
+
+                                                        <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false});  this.props.resetSupplierData()}}>
+                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                           
+                                                        </div>
+                                                    </div>
+
+
+                                                    ):
+                                                    (
+                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryData}>
+                                                    <a href="javascript:" className="d-flex align-items-center">
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Location
+                                                    </a>
+                                                    </div>  
+                                            )}   
+
+
+
+
+
+
+
+
+
                                         </div>
                                     </div>
 
@@ -349,7 +452,10 @@ render() {
                                                    {this.props.supplierData.supplierLocationList.active.map(t=>{
                                                     return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.location}</span>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.location}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -369,9 +475,9 @@ render() {
      const mapStateToProps = (state)=> (
         // console.log(state)
          {
-            supplierData:state.supplierData
+            supplierData:state.supplierData,
+            specificSupplierDelivery:state.supplierData.specificSupplierDeliveryList
         
-   
     }
     )
     export default connect(mapStateToProps,{
@@ -387,9 +493,10 @@ render() {
         saveSupplierCategoryMethod,
         getAllSupplierLocationMethods,
         saveSupplierLocationMethod,
-
-        
-handleDragDropCustomer    })((SupplierDeliveryLocation))
+        updateSupplierLocation,
+        showSpecificDeliveryLocation,
+        handleDragDropCustomer,
+        resetSupplierData,    })((SupplierDeliveryLocation))
 
 
 
