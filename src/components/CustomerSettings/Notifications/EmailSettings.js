@@ -117,7 +117,7 @@ const EmailSetting = props => {
                         <Row className="spacebelow">
                             <Col>
                               	<div>
-        							<input type="number" placeholder={""}   className="textRightESetting" id="first_notice" value={first_notice} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"} step="0"  className="textRightESetting" id="first_notice" value={first_notice>"0"?first_notice:""} onChange={handleDataChange}/>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -137,7 +137,7 @@ const EmailSetting = props => {
                             <Row>
 							<Col>
                               	<div>
-        							<input type="number" placeholder={""}   className="textRightESetting" id="second_notice" value={second_notice} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"}  step="0"  className="textRightESetting" id="second_notice" value={second_notice>"0"?second_notice:""} onChange={handleDataChange}/>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -158,7 +158,7 @@ const EmailSetting = props => {
                             <Row>
 							<Col>
                               	<div>
-        							<input type="number" placeholder={""}   className="textRightESetting" id="quote_set_to_inactive" value={quote_set_to_inactive} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"}   step="0" className="textRightESetting" id="quote_set_to_inactive" value={quote_set_to_inactive>"0"?quote_set_to_inactive:""} onChange={handleDataChange}/>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>

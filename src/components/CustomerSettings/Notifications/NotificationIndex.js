@@ -134,11 +134,13 @@ const Notification = (props) => {
                     <div className="row_1_Notification">
 
                       <div className="notification_label">
-                            <label>READY to LATE Notice <span><FaIcon.FiAlertCircle data-tip data-for={"data"}  className="alertIcon" />                           
-                              <ReactTooltip className="customeTheme" id={"data"} backgroundColor="gray">
-                                  <span id={ready_to_late_notice} >READY to LATE Notice</span>
+                            <label>READY to LATE Notice <span><i data-tip data-for={"data"}  style={{borderRadius:"50%",fontSize:"12px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:2,color:"#5287F5"}} class="fa fa-info" aria-hidden="true"></i>
+                              {/* <a  >i</a>                            */}
+                              <ReactTooltip className="" id={"data"} backgroundColor="gray">
+                                  <span id={ready_to_late_notice} disabled>Set the number of days after the requested date for order in READY
+state waiting for pickup or shipment.</span>
                               </ReactTooltip> </span></label>
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
                                 </div> 
@@ -146,12 +148,12 @@ const Notification = (props) => {
                       </div>
 
                       <div className="notification_label">
-                            <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" data-tip data-for={"data1"} />
-                            <ReactTooltip className="customeTheme" id={"data1"} backgroundColor="gray">
-                                  <span id={reserve_expiry_notice}>Reserve Expiry Notice</span>
+                            <label>Reserve Expiry Notice <span><i data-tip data-for={"data1"}  style={{borderRadius:"50%",fontSize:"12px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:2,color:"#5287F5"}} class="fa fa-info" aria-hidden="true"></i>
+                            <ReactTooltip className="" id={"data1"} backgroundColor="gray">
+                                  <span id={reserve_expiry_notice}>Set the number of days remaining on the order reservation date</span>
                               </ReactTooltip>
                             </span></label>
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[1]}</span>}
                                 </div> 

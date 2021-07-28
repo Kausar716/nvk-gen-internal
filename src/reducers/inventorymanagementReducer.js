@@ -9,7 +9,8 @@ import {
     GET_ALL_PRODUCT_INVENTORY_ACTION,
     PLANT_INVENTORY_FILTER,
     GET_ALL_PLANTMANAGER_INVENTORY_ACTION,
-    GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION
+    GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION,
+    GET_PLANT_DATA
    } from '../actions/types';
 
 
@@ -26,7 +27,8 @@ const initialSatate = {
  productInventoryData:[],
  productInventoryDataBackup:[],
  manufacturerList:[],
- manufacturerListDataBackup:[]
+ manufacturerListDataBackup:[],
+ plantData:[]
 
 }
 
@@ -58,7 +60,13 @@ const groupArray =(objectToBeReduced)=>{
 }
 
 const inventoryManagementReducer = (state = initialSatate, action)=> {
-    switch(action.type){        
+    switch(action.type){    
+        case GET_PLANT_DATA:
+            return{
+                ...state,
+                plantData:action.payload.data
+            }
+          
         case GET_LOCATION_LIST:
             return{
                 ...state,
