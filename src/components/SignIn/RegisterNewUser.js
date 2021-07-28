@@ -119,7 +119,7 @@ const RegisterNewUser = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" className="btn btn-block btnSignIn"  style={{backgroundColor:"#5287f5"}} disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                        <button type="submit" className="btn btn-block btnSignIn"  style={{backgroundColor:"#5287f2"}} disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">
