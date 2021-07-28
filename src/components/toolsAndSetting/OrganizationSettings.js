@@ -23,12 +23,12 @@ const normalizeInput = (value, previousValue) => {
   };
   
   const validateInput = value => {
-    let error = ""
+    let error1 = ""
     
-    if (!value) error = "Required!"
-    else if (value.length !== 14) error = "Invalid phone format. ex: (555) 555-5555";
+    if (!value) error1 = "Required!"
+    else if (value.length !== 14) error1 = "Invalid phone format. ex: (555) 555-5555";
     
-    return error;
+    return error1;
   };
 
   
@@ -121,29 +121,39 @@ export class OrganizationSettings extends React.Component {
          
     }
 
+
+    validation = () =>{
+        // let {location,address,city,country,state,zip,lat} = this.props.supplierData.supplierLocation
+
+        // if(location ==="" || address ==="" || city===""|| country===""||state===""||zip===""||lat ==="")
+        // return 1
+  
+    }
    
 
   
 
     handleInput = (e) => {
+
       
+      debugger
        // this.setState({value1: e.target.value})
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state        
         // this.setState({[name]:value})    
         //this.setState({value1: event.target.value} 
            // this.setState({[name]:value})     
-         if(name === "phone" ){
-             //debugger;
-            hadModified.phone = true
-            // this.setState({value1: e.target.value})
-           // value.replace(phoneReg, '($1) $2-$3')handleInput2
-            if(errorObj.phoneError>0){
-            errorObj.phoneError=0
-            errorCount--
-            }
-        }
-        else if(name === "sending_email_address" ){
+        //  if(name === "phone" ){
+        //      //debugger;
+        //     hadModified.phone = true
+        //     // this.setState({value1: e.target.value})
+        //    // value.replace(phoneReg, '($1) $2-$3')handleInput2
+        //     if(errorObj.phoneError>0){
+        //     errorObj.phoneError=0
+        //     errorCount--
+        //     }
+        // }
+         if(name === "sending_email_address" ){
             hadModified.sending_email_address=true
             if(errorObj.sendingEmailError>0){
                 errorObj.sendingEmailError=0
@@ -157,23 +167,34 @@ export class OrganizationSettings extends React.Component {
                 errorCount--
             }           
         }
-        console.log(hadModified[name],name)
-        // if(hadModified[name]  === name){
-            hadModified[name] = true
-        // }
+                    //console.log(hadModified[name],name)
+                    // if(hadModified[name]  === name){
+                        //hadModified[name] = true
+                    // }
        // this.setState(prevState=> ({ phone: normalizeInput(value, prevState.phone) }));
         this.setState({errorObj,errorCount,hadModified})
        // let allValue =[...value, this.state.value1]
-        this.props.handleOrganizationSettingsInputAction(name,value)   
+        this.props.handleOrganizationSettingsInputAction(name,value)
+        
     }
+
+
+    // handleInput2=(e)=>{
+    //     this.setState({name:e.target.value})
+    //     this.props.handleOrganizationSettingsInputAction("name",e.target.value)   
+    // }
+
+
+
+
     validate = () =>{
         let {errorObj,errorCount}=this.state
         //var phoneNumber = 8660039954;
         //let phoneReg=/^[0-9\b]+$/;
-        let phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+        let phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
        
        // let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-        let nameReg = /^[a-zA-Z0-9]+$/;
+        let nameReg = /^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$/;
         let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
        // let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
@@ -199,11 +220,7 @@ export class OrganizationSettings extends React.Component {
             errorObj.sendingEmailError=1
             errorCount++
         }
-        // else{
-              
-        //     errorObj.sendingEmailError=0
-        //     errorCount--
-        // }
+       
 
 
         if(!nameReg.test(organizationData.name)){
@@ -226,9 +243,11 @@ export class OrganizationSettings extends React.Component {
 
 
     handleSubmit = (e) => {
-           // debugger;
+            debugger;
         // e.preventDefault();
-     const phoneError = validateInput(this.state.phoneNumberInOrganization);
+       // if(this.state.phoneNumberInOrganization)
+        let phoneNUMBER = this.state.phoneNumberInOrganization === " " ? this.props.organizationData.organizationData.phone : this.state.phoneNumberInOrganization;
+     const phoneError = validateInput(phoneNUMBER);
     
     this.setState({ phoneError }, () => {
        if(!phoneError) {
@@ -240,7 +259,7 @@ export class OrganizationSettings extends React.Component {
 
 
     let finalNumber= this.state.phoneNumberInOrganization 
-    finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+     finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
     let removedNumber = finalNumber.split(" ").join("");
     removedNumber = parseInt(removedNumber)
 console.log("removedNumber",removedNumber)
@@ -258,8 +277,8 @@ console.log("removedNumber",removedNumber)
              let updateObject={}
              updateObject.phone = removedNumber
              updateObject.id=this.props.organizationData.organizationData.id
-             console.log(this.state.hadModified.name)
-
+             console.log("hadModified",this.state.hadModified.name)
+             //updateObject.name = this.props.organizationData.organizationData.name
              if(this.state.hadModified.name === true){
                  //debugger;
                 updateObject.name = this.props.organizationData.organizationData.name
@@ -333,7 +352,7 @@ console.log("removedNumber",removedNumber)
     //  let history = useHistory();
     render(){
 
-       
+       console.log("organizationData",this.props.organizationData.organizationData)
         const { actionType } = this.state;
         console.log(this.state)
         console.log(this.props.organizationData)
@@ -444,7 +463,7 @@ console.log("removedNumber",removedNumber)
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to go back ?"})
+            this.setState({actionMessage:"You have unsaved changes, Are you sure you want to go back ?"})
 
         }
         else if(actionType==="save"){
@@ -569,8 +588,10 @@ console.log("removedNumber",removedNumber)
                                         <div class="col-md-12">
                                             <label style={{fontWeight:"bold"}}>Name</label>
                                             <input type="text" placeholder="Name" class="form-control" name="name" 
-                                            value={organizationDataById.name} onChange={this.handleInput}  />
-                                            {/* {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Numbers are not allowed</span>:""} */}
+                                            // value={organizationDataById.name} 
+                                            value={this.state.name}
+                                             onChange={this.handleInput2}  />
+                                            {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Required</span>:""}
                                         </div>
                                     </div>
 
@@ -606,13 +627,16 @@ console.log("removedNumber",removedNumber)
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
-                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} id={"phone1"} value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization}  onChange={this.handleChange} />
+                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} 
+                                             id={"phone1"} 
+                                            value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization} 
+                                             onChange={this.handleChange} />
                                             {/* <input
                                                     class="form-control"  
                                                     type="text"
                                                     name="phone"
                                                     placeholder="(xxx) xxx-xxxx"
-                                                    value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization}
+                                                    value={this.state.phoneNumberInOrganization==="" ? phno : this.state.phoneNumberInOrganization}
                                                    // pattern="[0-9]*"
                                                     //value={organizationDataById.phone}
                                                     // value={this.state.phone}

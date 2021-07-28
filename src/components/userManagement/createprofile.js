@@ -176,7 +176,7 @@ export class CreateUserProfile extends Component {
             errorCount++
         }
         else{
-            errorObj.lastNameError=0
+            errorObj.positionError=0
         }
 
 
@@ -205,7 +205,7 @@ export class CreateUserProfile extends Component {
            // userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
             userObject['phone'] = userStateObject.phone
-           // userObject['position'] = userStateObject.position
+            userObject['position'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 
 
@@ -277,7 +277,7 @@ export class CreateUserProfile extends Component {
                                                 </div>
                                             </div>
                                             <div class="row form-group">
-                                                {/* <div class="col-md-6">
+                                                <div class="col-md-6">
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
                                                     <option>Select</option>
@@ -287,11 +287,11 @@ export class CreateUserProfile extends Component {
                                                         }):null}                                                        
                                                     </select>
                                                     {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
-                                                </div> */}
+                                                </div>
 
 
                                                 
-                                                <div class="col-md-6" error={hasError}>
+                                                {/* <div class="col-md-6" error={hasError}>
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"   onChange={event => this.handleChange2(event.target.value)} value={selected}>
                                                     <option> </option>
@@ -302,7 +302,7 @@ export class CreateUserProfile extends Component {
                                                     </select>
                                                     {hasError && <p style={{fontSize:"small",color:"red"}}>Select Position</p>}
                                                    
-                                                </div>
+                                                </div> */}
 
                                                 {/* <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
