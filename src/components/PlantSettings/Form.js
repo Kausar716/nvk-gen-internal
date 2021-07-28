@@ -20,7 +20,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         isEditing:false,
                         name:'',
                         subName:'',
-                        subName2:''
+                        subName2:'',
+                        selectedID:''
                     }
                 
             }
@@ -114,6 +115,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             console.log("inputAction", e.target.name,e.target.value)
             this.setState({
                 name:e.target.value,
+                
                 //subName:e.target.value
             })
 
@@ -146,7 +148,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.formSku.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.formSku=1
                 this.setState({errorObj})
                 return false
@@ -162,13 +164,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
          this.setState({
              name: t.value,
              subName:t.sub_attributeschild[0].value,
-             isEditing:true
+             isEditing:true,
+             selectedID:t.id,
          })
         //  let formValue={}
         //  formValue={...this.state.name, ...this.state.subName}
 
-         this.props.handleZoneInputAction("formSku",...this.state.subName)
-         this.props.handleZoneInputAction2("formName",...this.state.name)
+         this.props.handleZoneInputAction("formSku",this.state.subName)
+         this.props.handleZoneInputAction2("formName",this.state.name)
          this.props.showSubSubAttribute(t.id)
          //console.log("ttttttt", t,  )
        }
@@ -194,10 +197,14 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
         }
         ]
             
+        if(this.validate()){
       let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
              res.then(res=>{
                  this.props.getAllSubAttribute(1)
              })
+             alert('Added Successfully Done');
+            }
+          
 
              this.setState({
                  isEditing:false,
@@ -359,7 +366,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.value}</span>
+                                                                <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
                                                                 <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

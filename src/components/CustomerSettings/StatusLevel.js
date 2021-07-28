@@ -10,6 +10,7 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
@@ -23,7 +24,10 @@ import { is } from 'immutable';
     class StatusLevel extends Component {
     state ={
      isOpen1:false,
-       message:[]
+       message:[],
+       isEditing:false,
+       name:'',
+       selectedID:'',
     }
 
 
@@ -115,7 +119,11 @@ import { is } from 'immutable';
 
         }
         handleCategoryInputAction = (e)=>{
-            this.props.handleExchangeData(e.target.value,e.target.id,"customerStatus")
+            this.setState({
+                name:e.target.value
+            })
+            this.props.handleExchangeData("customerStatus", e.target.value)
+           // this.props.handleExchangeData(e.target.value,e.target.id,"customerStatus")
         }
         
         handleAddCategoryData = (e)=>{
@@ -138,6 +146,47 @@ import { is } from 'immutable';
         }
 
 
+        handleEditClick2 =(t)=> {
+            console.log("abcdefg", t  )
+
+            this.setState({
+                name: t.status_level,
+                isEditing:true,
+                selectedID:t.id
+            })
+
+            this.props.handleExchangeData("customerStatus",...this.state.name)
+            this.props.showSpecificStatusLevelSettings(t.id)
+  
+       }
+
+
+       handleAddCategoryUpdate=(e)=>{
+        //debugger;
+        console.log("showSpeciSubA", this.props.showSpecificCustomerStatusLevel)
+         // this.props.handleSubAttributeUpdate(e.target.id)
+         let valueName = this.state.name
+        
+         let updateID = parseInt(this.props.showSpecificCustomerStatusLevel.id)
+         let updateObject={}
+         updateObject.status_level=valueName
+       
+            
+      let res=   this.props.updateCustomerStatusLevelSettings(updateID, updateObject)
+             res.then(res=>{
+                 this.props.getAllStatusMethods()
+             })
+
+             this.setState({
+                 isEditing:false,
+                 name:"",
+                
+             })
+
+     }
+
+
+
 
 
 render() {
@@ -156,54 +205,58 @@ render() {
                             
                            
                             <div className="ContentSection p-15">
-                                {/* <div className="row">
-                                    <div className="col-md-12 col-lg-12">
-                                        <p>Category Name</p>
-                                        <div className="row d-flex align-items-center">
-                                            <div className="col-md-6 col-lg-6">  
-                                                <input type="text" className="form-control" name="name" value={this.props.name}   placeholder="Category" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
-                                                <a href="javascript:" className="d-flex align-items-center" >
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div> */}
+                          
                                 <div className="row">
-                                        {/* <div className="col-md-6">
-                                            <label>Type</label>
-                                            <div>
-                                                <input type="text" className="form-control" placeholder="" id="delivery_method" value={customerData.customerTypes.delivery_method}   placeholder="Type" onChange={this.handleCategoryInputAction}/>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2">
-                                                {/* <a href="javascript;" className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                </a> */}
-                                            {/* </div> */}
-                                        {/* </div>  */}
-                                        {/* <div className="col-md-6">
-                                            <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryData}>
-                                                <a className="d-flex align-items-center">
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
-                                                </a>
-                                            </div>
-                                        </div> */}
+                        
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
                                     <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}>Status Levels</h5>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
-                                            <input type="text" className="form-control" placeholder="" id="status_level" value={customerData.customerStatus.status_level}   placeholder="Status Level" onChange={this.handleCategoryInputAction}/>
+                                            <input type="text"
+                                             className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                             id="status_level" 
+                                             name="customerStatus"
+                                             value={this.state.name}  
+                                              placeholder="Status Level" 
+                                              onChange={this.handleCategoryInputAction}/>
                                               
                                             </div>
-                                            <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+
+                                            {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Level
                                                 </a>
-                                            </div>
+                                            </div> */}
+
+
+
+                                            {this.state.isEditing ? (
+                                                    <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
+                                                        <div  >
+                                                            <a href="javascript:" className="d-flex align-items-center">
+                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Level
+                                                            </a>
+                                                        </div>
+
+                                                            <div className="col-md-6 col-lg-3"  onClick={()=>{this.setState({isEditing:false})}}>
+                                                                <a href="javascript:" className="d-flex align-items-center cancel_signlebox" style={{marginLeft:"10em"}}>
+                                                                    Cancel 
+                                                                </a>
+                                                            </div>
+                                                    </div>
+
+                                                        ):
+                                                        (
+                                                        <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
+                                                        <a href="javascript:" className="d-flex align-items-center">
+                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Level
+                                                        </a>
+                                                        </div>  
+                                                  )}    
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -262,7 +315,12 @@ render() {
                                                    {this.props.customerData.customerStatusList.active.map(t=>{
                                                     return <li id={t.id} name={t.status_level} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.status_level}</span>
+                                                                      <span id="Wheathers" 
+                                                                       className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}
+                                                                      >{t.status_level}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                                  </a>
                                                             </li>
                                                     })}

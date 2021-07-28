@@ -176,7 +176,6 @@ import {
     }
     const {plantData,plantDataById,tagsData, actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData
-        console.log("kkm", tags)
     let flag=0
     if(plantDataById){       
         if(!plantDataById.genus || !plantDataById.species || !plantDataById.category_id){
@@ -281,7 +280,7 @@ import {
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
                                         <label>Category <span class="text-danger">*</span></label>
-                                        <select class="form-control"  onChange={handleInput} id="category_id" value={plantDataById.category_id} >
+                                        <select class="form-control"  onChange={handleInput} id="category_id" value={plantDataById.category_id} style={{cursor:"pointer"}} >
                                         <option>None</option>
                                         {plantCategoryData.map(plantCategory=>{
                                                     return(
@@ -319,7 +318,7 @@ import {
                                     {/* </div> */}
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Introduction Year</label>
-                                        <select class="form-control" id="introduction_year" onChange={handleInput} value={plantDataById.introduction_year}>
+                                        <select class="form-control" id="introduction_year" onChange={handleInput} style={{cursor:"pointer"}} value={plantDataById.introduction_year}>
                                         {
                                         indents.map(year=>{
                                             return(<option value={year} selected={plantDataById.introduction_year===year?"selected":""}>{year}</option>)
@@ -341,7 +340,7 @@ import {
                                          onClick={()=>props.plantPageReDirectAction("all","plant")}
                                         >Return to Plant Manager</button>
                                         {/* </a> */}
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={submitCount===0?(needAction===true && flag ===0)?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" style={{cursor:"pointer"}} disabled={submitCount===0?(needAction===true && flag ===0)?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>
                                 </div>
                             </form>

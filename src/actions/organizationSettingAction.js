@@ -10,6 +10,10 @@ import {
     UPLOAD_ORGANIZATION_IMAGE,
     REMOVE_ORGANIZATION_IMAGE 
    } from './types';
+
+
+
+   
    
 //    export const getUsersList = (dispatch) => {
     export const addorganization = (data) => dispatch => {
@@ -38,9 +42,11 @@ import {
    }
 
    export const updateorganization = (organizationData) => dispatch => {
+      // debugger;
        console.log(organizationData)
 
-    return axios.post(`/api/update-organization/${organizationData.id}`,organizationData,config).then(res=>{     
+    return axios.post(`/api/update-organization/${organizationData.id}`,organizationData,config).then(res=>{  
+       // debugger;   
         dispatch({
                 type:UPDATE_ORGANIZATION,
                 payload:res.data    

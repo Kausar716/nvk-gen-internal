@@ -146,6 +146,7 @@ const ProductTable  = (props) => {
                                         onChange={e => {
                                             setPageSize(Number(e.target.value))
                                         }}
+                                        style={{cursor:"pointer"}}
                                         >
                                         {[15, 25, 50, 100, 250,500].map(pageSize => (
                                             <option key={pageSize} value={pageSize}>
@@ -229,7 +230,7 @@ const ProductTable  = (props) => {
 
                                                     <span>
                                                                                                                                                         {/* Add here for path handleEdit(product); */}
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>{ props.getSpecifiedProductAction(product.product_id);
+                                                            <img src="assets/img/edit.svg" style={{cursor:"pointer"}} alt="" onClick={()=>{ props.getSpecifiedProductAction(product.product_id);
                                                                                                                        // getSpecifiedProduct1(product.product_id);
                                                                                                                     //getSpecifiedProduct(skuData.map(sku=>sku.id), "edit","sku")
                                                                                                                    // props.getAllSpecifiedSkuProductList(product.product_id);
@@ -238,12 +239,12 @@ const ProductTable  = (props) => {
                                                     </span>
                                                     <span>
                                                         {/* <a href="javascript;"> */}
-                                                            <img src="assets/img/duplicate.svg" alt="" onClick={()=>{confirmAction(product.product_id,"duplicate"); }}/>
+                                                            <img src="assets/img/duplicate.svg" style={{cursor:"pointer"}} alt="" onClick={()=>{confirmAction(product.product_id,"duplicate"); }}/>
                                                         {/* </a> */}
                                                     </span>
                                                     <span>
                                                        
-                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(product.product_id,"delete")} />
+                                                            <img src="assets/img/delete.svg" style={{cursor:"pointer"}} alt="" onClick={()=>confirmAction(product.product_id,"delete")} />
                                                        
                                                     </span>
                                                 </td>
@@ -258,7 +259,7 @@ const ProductTable  = (props) => {
                                     </table>
 
                                     <div className="centerItem">
-                                    <p > {productData.length===0?"Product data loading ... " :""}  <Loader /></p>
+                                    <p > {productData.length===0?"No records found..." :""}  <Loader /></p>
                                     </div>
 
                                     {/* <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>

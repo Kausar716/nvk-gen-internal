@@ -5,7 +5,7 @@ import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
 import { Link ,withRouter} from "react-router-dom";
 
@@ -37,6 +37,7 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
+        this.props.resetUserData()
        
     }
    
@@ -105,13 +106,22 @@ export const Component = withRouter(({ history, location }) =>{
 
     goBackFunction =(e)=>{
         const { history } = this.props;
-        history.push("/Dashboard")
+        setTimeout(function() {
+            history.push("/usermanagement")
+            window.location.reload();
+         }, 1000);
+       
+    }
+
+
+    reseUserData=()=>{
+
     }
 
 
     render(){
 
-
+        console.log("swithchigTAB", )
         console.log("getRolesList", this.props.roles)
         let userProfiles = []  
         let selectedUser = this.props.user.data
@@ -184,10 +194,15 @@ export const Component = withRouter(({ history, location }) =>{
                                             <div class="bg-grey-transparent-2 px-3 py-3">
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
+                                                        {/* <div className="profImg" style={{width:"60%", height:"60%"}}> */}
                                                         <img src=
-                                                         {this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null ?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                         class="img-fluid" style={{borderRadius:"3em"}} />
+                                                         {
+                                                        this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
+                                                          class="img-fluid" style={{borderRadius:"7em", width:"7em", height:"7em"}}
+                                                          />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
+                                                        {/* </div> */}
+                                                       
                                                     </div>
                                                     {this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
@@ -683,15 +698,6 @@ export const Component = withRouter(({ history, location }) =>{
                                                     </div>
 
 
-
-
-
-
-
-
-
-
-
                                                     {exestingPermission?exestingPermission.filter(premission => premission.name==="Product Manager"  && premission.group_name === "productManager").map(filteredPermission => (
                                                     <div class="custom-control custom-checkbox">
                                                     <input type="checkbox" class="custom-control-input" name="Product Manager" checked={currentPermissionNames.includes("Product Manager") } onChange={this.handleCheckBox} id={filteredPermission.id}/>
@@ -869,4 +875,4 @@ export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUse
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction})(UserAccess));
+,handleUserAccessInputAction, resetUserData})(UserAccess));

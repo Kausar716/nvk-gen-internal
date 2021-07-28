@@ -17,7 +17,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     sortId: 0,
                     activeId: 0,
                     isEditing:false,
-                    name:''
+                    name:'',
+                    selectedID:''
                 }
             
         }
@@ -125,7 +126,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             // debugger;  
          this.setState({
              name: t.value,
-             isEditing:true
+             isEditing:true,
+             selectedID:t.id,
          })
          this.props.handleZoneInputAction("bloomColor",...this.state.name)
         //  this.props.handlePositionInputAction("position",...this.state.name)
@@ -282,7 +284,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.value}</span>
+                                                                <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
                                                                 <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

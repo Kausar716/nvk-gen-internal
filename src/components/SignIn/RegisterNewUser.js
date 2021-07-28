@@ -76,12 +76,17 @@ const RegisterNewUser = (props) => {
     <>
       
       <div>
-            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #629C44"}} class="header navbar-default align-items-center">
+            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #757575", boxShadow: "0 2px 5px 0 #757575"}} class="header navbar-default align-items-center">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand" style={{float:"left"}}>
-                        {/* <img src="assets/img/logo.svg" alt="" /> */}
-                        <img src="./images/GENESYS_logov2.png" alt="" class="img-fluid" />
-                    </a>
+
+                <div className="imgSizeHeader">
+                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{width:"15em", height:"4.5em"}} />
+                    </div>
+
+                {/* <div className="imgSizeHeader">
+                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{width:"15em", height:"4.5em"}} />
+                    </div> */}
+                 
                     <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -114,7 +119,7 @@ const RegisterNewUser = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" className="btn btn-block btnSignIn"  style={{backgroundColor:"#348fe2"}} disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                        <button type="submit" className="btn btn-block btnSignIn"  style={{backgroundColor:"#5287f2"}} disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">

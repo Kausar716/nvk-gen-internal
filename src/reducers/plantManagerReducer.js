@@ -26,7 +26,7 @@ import {
         HANDLE_PLANT_INPUT_DATA,
        // HANDLE_PLANT_TAG_INPUT_DATA,
         HANDLE_PLANT_SKU_INPUT_DATA,
-
+        CLEAR_SKU_FIELDS_PLANT,
         // pagination
         SET_PLANT_PAGE_NUMBER,
         SET_PLANT_SKU_PAGE_NUMBER,
@@ -142,7 +142,7 @@ export default function(state = initialSatate, action){
                 archived: 0,
                 discontinued: 0,
                 location: null,
-                status: 1,
+                status: 0,
                 attributes_subattributes:[]           
             
                 },
@@ -150,7 +150,8 @@ export default function(state = initialSatate, action){
                 needAction:false,
                 tagsData:[],
                 actionType:"add",
-                plantSkuDataList:[]
+                plantSkuDataList:[],
+                ae_plant_id:""
 
 
             }
@@ -180,7 +181,8 @@ export default function(state = initialSatate, action){
                     ...state,
                     needAction:false,
                     ae_plant_id:action.ae_plant_id,
-                    createdPlantData:action.createdPlantData
+                    createdPlantData:action.createdPlantData,
+                    actionType:"edit"
     
                 }
              case UPDATE_PLANT_ACTION:
@@ -394,6 +396,29 @@ export default function(state = initialSatate, action){
                     needAction:false
                     // skuData:[...action.payload.data]
                 };
+            case CLEAR_SKU_FIELDS_PLANT:
+                return{
+                    ...state,
+                    plantSkuDataById         :   {
+                        sku_code: "",
+                        plant_id: "",
+                        each_cost: "",
+                        each_price: "",
+                        sale_price: "",
+                        sale_expiry_date: "",
+                        volume_quantity: "",
+                        volume_price_per_unit: "",
+                        sku_item_name: "",
+                        subcategory: "",
+                        archived: 0,
+                        discontinued: 0,
+                        location: "",
+                        status: 0,
+                        attributes_subattributes:[]           
+                    
+                        }
+
+                }
             case GET_SINGLE_PLANT_SKU:
                 console.log(action)
                 return{

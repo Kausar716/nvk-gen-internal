@@ -8,7 +8,8 @@ import {
     GET_PERMISSION_LIST,
     HANDLE_USER_ACCESS_INPUT_DATA,
     SHOW_SELECTED_USER,
-    UPDATE_USER_PERMISSION
+    UPDATE_USER_PERMISSION,
+    RESET_USERDATA
    } from '../actions/types';
 
 const initialSatate = {
@@ -53,6 +54,17 @@ const initialSatate = {
                 users:action              
             }
         }
+
+
+        case RESET_USERDATA:{
+            return{
+                ...state,
+                selectedUser:{}
+                
+            }
+
+        }
+
         case GET_PERMISSION_LIST:{
             console.log(action)          
             return{

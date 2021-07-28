@@ -95,3 +95,11 @@ footer p {
   min-width: 50px;
   /* text-align: center; */
 }
+
+.imgSizeHeader {
+  width: 18em;
+  height: 5em;
+
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}

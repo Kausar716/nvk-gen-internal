@@ -23,6 +23,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     name:'',
                     subName:'',
                     subName2:'',
+                    selectedID:'',
                 }
             
         }
@@ -147,7 +148,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
              name: t.value,
              subName:t.sub_attributeschild[0].value,
              subName2:t.sub_attributeschild[1].value,
-             isEditing:true
+             isEditing:true,
+             selectedID:t.id,
          })
         //  let formValue={}
         //  formValue={...this.state.name, ...this.state.subName}
@@ -184,11 +186,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 children_id:this.props.showSpeciSubA.sub_attributeschild[1].id,
                 }
         ]
+
+        if(this.validate() ){
             
       let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
              res.then(res=>{
                  this.props.getAllSubAttribute(3)
              })
+
+             alert('Updated Successfully Done');
+            }
 
              this.setState({
                  isEditing:false,
@@ -212,9 +219,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             zoneObj.value = this.props.heightName           
             zoneObj["childrens"] =[
                 {'children_name':'SKU value',
-                'children_value':this.props.heightSku},
+                'children_value':this.state.subName2},
                 {'children_name':'Imperial',
-                'children_value':this.props.heightImperial}
+                'children_value':this.state.subName}
             ]
             zoneObj.status=1
             console.log(zoneObj)
@@ -229,12 +236,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.heightImperial.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.heightImperial=1
                 this.setState({errorObj})
                 return false
             }
-            if(this.props.heightSku.length === 0){
+            if(this.state.subName2.length === 0){
                 errorObj.heightSku=1
                 this.setState({errorObj})
                 return false
@@ -387,7 +394,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.value}</span>
+                                                                <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
                                                                 <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

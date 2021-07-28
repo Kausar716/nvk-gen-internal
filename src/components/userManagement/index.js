@@ -99,6 +99,11 @@ handleActiveUser =(e)=>{
     console.log("eeee", e.target.value)
 }
 
+
+chengeFunction =(e)=>{
+console.log("eeeABCD", e)
+}
+
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -138,6 +143,9 @@ handleActiveUser =(e)=>{
         roleList = this.props.roles.payload
     }
     console.log(this.props.temp.userReduser)
+
+
+
         
     return (
         <div clas="userManagementSection">
@@ -198,23 +206,23 @@ handleActiveUser =(e)=>{
                                         <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
-                                            <option>Select</option>
+                                            <option >select</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                return  <option value={userObj.id}>{userObj.name}</option>
+                                                return  <option value={userObj.id}>{userObj.name} {userObj.last_name}</option>
                                             }):null}
                                             </select>
                                         </div>
-                                        <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0">  
+                                        <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0" style={{cursor:"default"}}>  
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck1" value={this.state.displatDeletedRecord} checked={(this.state.displatDeletedRecord === "on")? true:false} onChange={this.hanleCheckBox}/>
                                                 <label class="custom-control-label pl-2" for="customCheck1"> Display deleted records only</label>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-lg-4 text-center mt-3 mt-md-0" onClick={this.handleCreate}>
-                                            <span class="f-w-500">Create New User</span>
-                                            <a href="javascript:;" class="d-md-block mt-md-2 ml-3 ml-md-0">
-                                               <img src="assets/img/create-new-user-ic.svg" />
-                                            </a>
+                                        <div class="col-md-4 col-lg-4 text-center mt-3 mt-md-0" >
+                                            <span class="f-w-500" >Create New User</span>
+                                            <p  class="d-md-block mt-md-2 ml-3 ml-md-0" >
+                                               <img src="assets/img/create-new-user-ic.svg" style={{cursor:"pointer"}} onClick={this.handleCreate} />
+                                            </p>
                                         </div>
                                     </div>:null}
                                     {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  />:null}

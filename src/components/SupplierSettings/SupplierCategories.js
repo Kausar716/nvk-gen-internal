@@ -25,7 +25,8 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
      isOpen1:false,
        message:[],
        isEditing:false,
-       name:''
+       name:'',
+       selectedID:''
     }
 
 
@@ -146,7 +147,8 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             console.log("tttt", t)
                this.setState({
              name: t.category,
-             isEditing:true
+             isEditing:true,
+             selectedID:t.id,
          })
 
          this.props.handleSupplierExchnageData(...this.state.name,"category","supplierCategory")
@@ -165,7 +167,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
        handleAddCategoryUpdate=()=>{
 
-        debugger;
+       // debugger;
       // this.props.handleSubAttributeUpdate(e.target.id)
       
       let updateID = parseInt(this.props.showSpecificCategory.id)
@@ -313,7 +315,7 @@ render() {
                                                    {this.props.supplierData.supplierCategoryList ? this.props.supplierData.supplierCategoryList.active.map(t=>{
                                                     return <li id={t.id} name={t.category} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers">{t.category}</span>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.category}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

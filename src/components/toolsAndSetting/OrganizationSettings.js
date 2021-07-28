@@ -5,17 +5,10 @@ import {showorganization,updateorganization,handleOrganizationSettingsInputActio
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal';
 import { Link ,withRouter} from "react-router-dom";
-
+import InputMask from 'react-input-mask';
 export const Component = withRouter(({ history, location }) =>{
 
 })
-//import noImageI from '../../../public/images/noImage.png';
-
-// const [ActionId,setActionId] = useState(0)
-//     const [open,setOpen] = useState(false)
-//     const [message,setMessage] = useState("")
-//     const [type, setType] = useState("")
-// const [submitCount, setSubmitCount] = useState(0)
 
 const normalizeInput = (value, previousValue) => {
     if (!value) return value;
@@ -40,6 +33,9 @@ const normalizeInput = (value, previousValue) => {
 
   
 
+
+
+
 export class OrganizationSettings extends React.Component {  
    
     constructor(){
@@ -52,13 +48,17 @@ export class OrganizationSettings extends React.Component {
             actionType:"",
             submitCount:0,
 
+            phoneNumberInOrganization:" ",
+            phoneError:"",
+
+
 
 
             mobile:"",
             isError:false,
             name:"",
             sending_email_address:"",
-            phone:"",
+            // phone:"",
             value1: '',
             error:"",
             main_title:"",
@@ -83,7 +83,8 @@ export class OrganizationSettings extends React.Component {
             logo:"",
             imageUploaded:false,
             initilaImages :false,
-            imagePreviewURL:"assets/img/noImage.png"
+            imagePreviewURL:"assets/img/noImage.png",
+            isDisable:false,
         }
     }
   
@@ -107,20 +108,22 @@ export class OrganizationSettings extends React.Component {
         let data =  this.props.uploadImage(imageData,id)
         data.then(res=>{
             console.log(res)
+           
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
 
         setTimeout(function() {
             window.location.reload();
-         }, 2000);
+            alert("image successfully uploaded")
+            
+         },1100);
         
+         
     }
 
    
 
-    handleChange=({ target: { value } })=> {   
-        this.setState(prevState=> ({ phone: normalizeInput(value, prevState.phone) }));
-      };
+  
 
     handleInput = (e) => {
       
@@ -174,24 +177,21 @@ export class OrganizationSettings extends React.Component {
         let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
        // let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
-        console.log(emailReg.test(organizationData.sending_email_address))
+        console.log("eMAIL123",emailReg.test(organizationData.sending_email_address))
         console.log(organizationData.sending_email_address)
 
         //organizationData.phone.replace(phoneReg, '($1) $2-$3')
         if(! phoneReg.test(organizationData.phone)){
-           
-           
             //debugger;
             if(organizationData.phone.length > 10){
-               
             errorObj.phoneError=1
             errorCount++
             }
-            else{
+            // else{
               
-                errorObj.phoneError=0
-                errorCount--
-            }
+            //     errorObj.phoneError=0
+            //     errorCount--
+            // }
 
         }   
 
@@ -199,6 +199,13 @@ export class OrganizationSettings extends React.Component {
             errorObj.sendingEmailError=1
             errorCount++
         }
+        // else{
+              
+        //     errorObj.sendingEmailError=0
+        //     errorCount--
+        // }
+
+
         if(!nameReg.test(organizationData.name)){
             errorObj.firstNameError=1
            errorCount++
@@ -206,32 +213,55 @@ export class OrganizationSettings extends React.Component {
         this.setState({errorObj,errorCount})
         return errorCount
     }
-    handleSubmit = (e) => {
 
+
+    handleChange=({ target: { value } })=> {  
+        this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
+       
+      };
+
+
+
+
+
+
+    handleSubmit = (e) => {
+           // debugger;
         // e.preventDefault();
-    const error = validateInput(this.state.phone);
+     const phoneError = validateInput(this.state.phoneNumberInOrganization);
     
-    this.setState({ error }, () => {
-       if(!error) {
-         setTimeout(() => {
-           alert(JSON.stringify(this.state, null, 4));
-         }, 300)
+    this.setState({ phoneError }, () => {
+       if(!phoneError) {
+        //  setTimeout(() => {
+        //    alert(JSON.stringify(this.state, null, 4));
+        //  }, 300)
        }
-    })
+    })   
+
+
+    let finalNumber= this.state.phoneNumberInOrganization 
+    finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+    let removedNumber = finalNumber.split(" ").join("");
+    removedNumber = parseInt(removedNumber)
+console.log("removedNumber",removedNumber)
+
+
+            
 
 
         let count= this.validate()
         console.log(count)
         console.log(this.state.errorObj)
-         if(count === 0){
+         if(count === 0 && phoneError===""){
              console.log(this.state)
              console.log("success")
              let updateObject={}
+             updateObject.phone = removedNumber
              updateObject.id=this.props.organizationData.organizationData.id
              console.log(this.state.hadModified.name)
 
              if(this.state.hadModified.name === true){
-                 debugger;
+                 //debugger;
                 updateObject.name = this.props.organizationData.organizationData.name
              }
 
@@ -239,12 +269,15 @@ export class OrganizationSettings extends React.Component {
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
              }
 
-             if(this.state.hadModified.phone === true){
-                // debugger;
-                 console.log("this.state.hadModified.phone",this.state.hadModified.phone)
-                 //updateObject.phone= updateObject.phone.replace(phoneReg, '($1) $2-$3')
-                updateObject.phone = this.props.organizationData.organizationData.phone
-             }
+
+
+            //  if(this.state.hadModified.phone === true){
+            //     // debugger;
+            //      console.log("this.state.hadModified.phone",this.state.hadModified.phone)
+            //      //updateObject.phone= updateObject.phone.replace(phoneReg, '($1) $2-$3')
+            //     updateObject.phone = this.state.phoneNumberInOrganization
+            //     //this.props.organizationData.organizationData.phone
+            //  }
              
              if(this.state.hadModified.main_title === true){
                 updateObject.main_title = this.props.organizationData.organizationData.main_title
@@ -260,6 +293,10 @@ export class OrganizationSettings extends React.Component {
              if(this.state.imageUploaded)
              updateObject.log=this.props.organizationData.organizationData.logo
                 console.log(updateObject)
+
+
+            
+               
              
             let res=  this.props.updateorganization(updateObject)
             res.then(r=>{
@@ -295,6 +332,8 @@ export class OrganizationSettings extends React.Component {
 
     //  let history = useHistory();
     render(){
+
+       
         const { actionType } = this.state;
         console.log(this.state)
         console.log(this.props.organizationData)
@@ -361,10 +400,15 @@ export class OrganizationSettings extends React.Component {
 
             else if(actionType==="save"){
 
+
                 this.handleSubmit();
-                setTimeout(function() {
-                    window.location.reload();
-                 }, 200);
+                // if((this.validate()) ){
+                //     this.handleSubmit();
+                //     // setTimeout(function() {
+                //     //     window.location.reload();
+                //     //  }, 200);
+                // }
+               
             }
 
             else if(actionType==="upload"){
@@ -400,23 +444,23 @@ export class OrganizationSettings extends React.Component {
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to go back"})
+            this.setState({actionMessage:"Are you sure you want to go back ?"})
 
         }
         else if(actionType==="save"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to save Changes"})
+            this.setState({actionMessage:"Are you sure you want to save Changes ?"})
             
         }
 
         else if(actionType==="upload"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to Upload Image"})
+            this.setState({actionMessage:"Are you sure you want to Upload this Image ?"})
         }
 
         else if(actionType==="deleteImage"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to Delete Image"})
+            this.setState({actionMessage:"Are you sure you want to delete this image ?"})
 
         }
         
@@ -448,18 +492,16 @@ export class OrganizationSettings extends React.Component {
      }
 
 
-     const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-     let phno = organizationDataById.phone ||'';
-        let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
+     let phno = organizationDataById.phone;
+
+    //  const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+    //  let phno = organizationDataById.phone ||'';
+    //     let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
   
-     //let abcd =  value.replace(phoneReg, '($1) $2-$3')
+    
   
      console.log("phoneNumber", this.state.value)
-        //    actionId:0,
-        //     actionOpen:false,
-        //     actionMessage:"",
-        //     actionType:"",
-
+      
         const { value1} = this.state;
     return (
         <div clas="userManagementSection">
@@ -498,16 +540,16 @@ export class OrganizationSettings extends React.Component {
                                             //   src={this.state.imagePreviewURL}
                                            // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
                                            // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"250px",width:"240px"}}/>
+                                            style={{height:"250px",width:"240px", borderRadius:"7em"}}/>
                                         </div>
-                                        <p><small>Image should print quality PNG or JPG</small></p>
+                                        <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" 
                                               onChange={this.handlImageUpload} 
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
-                                                <span class="f-s-20" style={{position:"absolute"}}>Upload</span>
+                                                <span class="f-s-20" style={{position:"absolute"}} >Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                         </a>
@@ -558,27 +600,28 @@ export class OrganizationSettings extends React.Component {
                                            
                                             {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                         </div>
-                                    </div> */}
+                                    </div>  */}
 
 
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
-                                            <input
+                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} id={"phone1"} value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization}  onChange={this.handleChange} />
+                                            {/* <input
                                                     class="form-control"  
                                                     type="text"
                                                     name="phone"
                                                     placeholder="(xxx) xxx-xxxx"
-                                                    value={finalPhno}
-                                                    pattern="[0-9]*"
-                                                   // value={organizationDataById.phone}
+                                                    value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization}
+                                                   // pattern="[0-9]*"
+                                                    //value={organizationDataById.phone}
                                                     // value={this.state.phone}
-                                                    onChange={this.handleInput} 
-                                                     //onChange={this.handleChange}
-                                                     maxLength="10"
+                                                    //onChange={this.handleInput} 
+                                                     onChange={this.handleChange}
+                                                     //maxLength="10"
                                                    
-                                                />
-                                                {this.state.error && <span style={{fontSize:"small",color:"red"}} >{this.state.error}</span>}
+                                                /> */}
+                                                {this.state.phoneError && <span style={{fontSize:"small",color:"red"}} >{this.state.phoneError}</span>}
                                         </div>
                                     </div>
 

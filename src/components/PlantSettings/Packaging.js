@@ -21,6 +21,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     isEditing:false,
                     name:'',
                     subName:'',
+                    selectedID:'',
                 }
             
         }
@@ -116,7 +117,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
-            if(this.props.packagingSku.length === 0){
+            if(this.state.subName.length === 0){
                 errorObj.packagingSku=1
                 this.setState({errorObj})
                 return false
@@ -157,7 +158,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
          this.setState({
              name: t.value,
              subName:t.sub_attributeschild[0].value,
-             isEditing:true
+             isEditing:true,
+             selectedID:t.id,
          })
         //  let formValue={}
         //  formValue={...this.state.name, ...this.state.subName}
@@ -190,11 +192,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     children_id_name:'SKU value'
             }
             ]
-                
+            if(this.validate() ){
           let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
                  res.then(res=>{
                      this.props.getAllSubAttribute(4)
                  })
+
+                 alert('Updated Successfully Done');
+                }
     
                  this.setState({
                      isEditing:false,
@@ -275,8 +280,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
                                         {this.state.isEditing ? (
 
-                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
-                                                <div >
+                                            <div className="d-flex justify-content-md-end mt-2" >
+                                                <div  onClick={this.handleAddCategoryUpdate}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Packaging
                                                 </a>
@@ -348,7 +353,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.value}</span>
+                                                                <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
                                                                 <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>

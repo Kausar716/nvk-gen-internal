@@ -76,16 +76,20 @@ const ForgotPassword = (props) => {
     <>
       
       <div>
-            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #629C44"}} class="header navbar-default align-items-center">
+            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #757575", boxShadow: "0 2px 5px 0 #757575"}} class="header navbar-default align-items-center">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand" style={{float:"left"}}>
+
+                <div className="imgSizeHeader">
+                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{width:"15em", height:"4.5em"}} />
+                    </div>
+                    {/* <a href="#" class="navbar-brand" style={{float:"left"}}>
                     <img src="./images/GENESYS_logov2.png" alt="" class="img-fluid" />
-                    </a>
-                    <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
+                    </a> */}
+                    {/* <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
-                    </button>
+                    </button> */}
                 </div>
             </div>
             <div class="container">
@@ -113,7 +117,7 @@ const ForgotPassword = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" style={{backgroundColor:"#348fe2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
+                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={handleSubmit(onSubmit)}>
                                             Click Here <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                         <Link to="/">

@@ -44,7 +44,9 @@ export default function(state = initialSatate, action){
         case GET_ALL_PRODUCT_CATEGORIES_ACTION:
             return{
                 ...state,
-                categoryData:[...action.payload.data.active,...action.payload.data.inactive]
+                // categoryData:[...action.payload.data.active,...action.payload.data.inactive]
+                categoryData:[...action.payload.data.active]
+
             }
 
            //sub category data
@@ -70,7 +72,9 @@ export default function(state = initialSatate, action){
         case GET_ALL_PLANT_CATEGORIES:
             return{
                 ...state,
-                plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive],
+                // plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive],
+                plantCategoryData:[...action.payload.data.active],
+
                 name:""
 
             }

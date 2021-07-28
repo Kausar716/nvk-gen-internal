@@ -122,18 +122,24 @@ GET_SUPPLIER_ADDRESS,
 GET_ALL_SUPPLIER_ADDRESS,
 // DELETE_SUPPLIER_ADDRESS,
 UPDATE_SUPPLIER_ADDRESS,
-
-
-
-
-
-
+RESET_SUPPLIER_DATA,
     config,
     axios,
 
 } from './types';
 
 //supplier contact information
+
+export const resetSupplierData=()=>dispatch=>{
+    dispatch({
+        type:RESET_SUPPLIER_DATA,
+        
+    })
+   }
+
+
+
+
 
 
 export const deleteSupplier= (id)=>dispatch => {
@@ -412,6 +418,42 @@ export const saveSupplierReasonMethod = (data)=>dispatch=>{
     })
 
  }
+
+
+//
+export const updateSupplierLocation = (id, data) =>dispatch => {
+    //debugger;
+   return axios.post(`/api/update-delivery-supplier/${id}`,data,config).then(res=>{ 
+      // debugger;
+       console.log(res.data)
+   dispatch({
+           type:UPDATE_SUPPLIER_DELIVERY_LOCATION,
+           payload:res.data,
+
+       })
+   })
+
+}
+
+
+export const showSpecificDeliveryLocation = (id) => dispatch => {
+   axios.get(`api/delivery-supplier/${id}`,config).then(res=>{ 
+     
+       console.log(res.data)
+   dispatch({
+           type:GET_SPECIFIED_SUPPLIER_DELIVERY_LOCATION,
+           payload:res.data
+       })
+   })
+}
+//
+
+
+
+
+
+
+
 
 
  export const updateSupplierCategory = (id, data) =>dispatch => {

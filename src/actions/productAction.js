@@ -43,7 +43,11 @@ import {
     FILTER_GET_SLECTED_CATEGORY_DATA,
     FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
     HANDLE_PRODUCT_SEARCH_INPUT,
-    HANDLE_PRODUCT_RADIO_TOGGLE
+    HANDLE_PRODUCT_RADIO_TOGGLE,
+    CLEAR_SKU_FIELDS_PRODUCT
+
+    
+    
     
 
 
@@ -260,8 +264,8 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
         // FinalData.subcategory_id =FinalData.subcategory
         delete FinalData.subcategory
         console.log(FinalData,id)
-        debugger;
-        axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
+       
+     return   axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
            
             console.log("createSKU", res)
             //dispatch(getAllProductAction())
@@ -283,6 +287,7 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
                 message:error,
                 status:true
             })
+            
             }).catch(error1=>{
                 error.push("Please add Product first")
                 dispatch({
@@ -570,6 +575,13 @@ export const handleSkuInputAction =(id,value) =>dispatch=>{
         itemValue:value
     })
 
+}
+export const clearSkuFields = ()=>dispatch=>{
+    dispatch({
+        type:CLEAR_SKU_FIELDS_PRODUCT,
+        // actionType:actionType
+    })
+    
 }
 export const handleTagAction = (id, value) =>dispatch=>{
 

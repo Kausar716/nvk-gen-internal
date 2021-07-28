@@ -107,12 +107,14 @@ const SignInPage = (props) => {
     <>
       
       <div>
-            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #629C44"}} class="header navbar-default align-items-center">
+            <div id="header" style={{backgroundColor:"none", background:"none" ,borderBottom:"2px solid #757575", boxShadow: "0 2px 5px 0 #757575"}} class="header navbar-default align-items-center">
                 <div class="navbar-header">
-                    <a href="#" class="navbar-brand" style={{float:"left"}}>
-                         <img src="./images/GENESYS_logov2.png" alt="" class="img-fluid" />
-                        {/* <img src="assets/img/logo.svg" alt="" /> */}
-                    </a>
+                    {/* <a href="#" class="navbar-brand" style={{float:"left"}}> */}
+                    <div className="imgSizeHeader">
+                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{width:"15em", height:"4.5em"}} />
+                    </div>
+                       
+                  
                     <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
@@ -178,7 +180,7 @@ const SignInPage = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">
-                                        <button type="submit" style={{backgroundColor:"#348fe2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={successFullLogin}>
+                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={successFullLogin}>
                                             Sign In <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                     </div>
@@ -223,7 +225,7 @@ const SignInPage = (props) => {
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.3.0 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.3.1 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
                             {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                            
                         </div>

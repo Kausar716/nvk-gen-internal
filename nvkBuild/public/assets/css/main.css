@@ -53556,6 +53556,17 @@ ul.list-unstyled.searchAlpha li a:hover {
 }
 .w-60 { width:60px;}
 .w-80 { width:80px;}
+.w-100px { width:100px;}
+.w-120 { width:120px;}
+.w-160 { width:160px;}
+.modal-body {
+    font-size: 16px;
+    font-weight: 600;
+}
+.modal-body .custom-control label {
+    font-weight: 400;
+}
+
 .table-no-border td {
     border: none !important;
 }
@@ -53579,6 +53590,7 @@ ul.list-unstyled.searchAlpha li a:hover {
     margin-top: -28px;
     position: absolute;
     left: 30px;
+    color: #707070;
 }
 .tblBgWhite, .tblBgWhite td {
     background-color: #fff !important;
@@ -53705,6 +53717,7 @@ ul.list-unstyled.searchAlpha li a:hover {
 }
 .modal-body h4 {
     background: #629C44;
+    text-transform: uppercase;
     color: #fff;
     padding: 20px;
     border: none;
@@ -53770,6 +53783,10 @@ ul.list-unstyled.searchAlpha li a:hover {
     background-color: #D4BCFF !important;
     color: #8B51F5;
 }
+.tabstsTagAdjusted {
+    background-color: #E9A3DE !important;
+    color: #C200A4;
+}
 .pickTotal {
     background-color: #FBE1A7;
     padding: 4px 20px;
@@ -53803,6 +53820,30 @@ ul.list-unstyled.searchAlpha li a:hover {
     color: #8B51F5;
     text-align: center;
 }
+.batchCountLbl {
+    font-size: 32px;
+    font-weight: bold;
+    margin-bottom: 0;
+    line-height: 32px;
+}
+.txtboxAdjust {
+    background-color: #E9A3DE;
+    border: 1px solid #C716AC;
+}
+.orderAdjustTbl .descLbl {
+    margin-top: -38px;
+}
+.additionalAdjustmentTab {
+    background-color: #F4D1EE !important;
+}
+.additionalAdjustmentTab h4 {
+   text-transform: uppercase;
+   color: #CC11AF;
+}
+.movePanel > td {
+    padding: 16px;
+}
+
 
 
 
@@ -53825,9 +53866,24 @@ ul.list-unstyled.searchAlpha li a:hover {
     .midControls > div a:after {
         display: none;
     }
+    .table select.form-control {
+        min-width: 120px; 
+    }
+    .table .form-control {
+        min-width: 80px; 
+    }
+    .wid-m-80 {
+        width: 80px;
+    }
 }
 @media (min-width:561px) {
    
+}
+@media (max-width:768px) {
+    .table-responsive .table td {
+        width: auto !important;
+        white-space: nowrap;
+    }
 }
 @media (max-width:991px) {
     .descLbl {
