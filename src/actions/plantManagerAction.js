@@ -26,6 +26,7 @@ import {
     HANDLE_PLANT_INPUT_DATA,
     //HANDLE_PLANT_TAG_INPUT_DATA,
     HANDLE_PLANT_SKU_INPUT_DATA,
+    CLEAR_SKU_FIELDS_PLANT,
 
     // axios config
     config,
@@ -575,7 +576,13 @@ export const handlePlantCategory = (category,subCategory) =>dispatch=>{
 
 }
 
-
+export const clearSkuFieldsPLant = ()=>dispatch=>{
+    dispatch({
+        type:CLEAR_SKU_FIELDS_PLANT,
+        // actionType:actionType
+    })
+    
+}
 
 
 

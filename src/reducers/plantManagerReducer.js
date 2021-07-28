@@ -26,7 +26,7 @@ import {
         HANDLE_PLANT_INPUT_DATA,
        // HANDLE_PLANT_TAG_INPUT_DATA,
         HANDLE_PLANT_SKU_INPUT_DATA,
-
+        CLEAR_SKU_FIELDS_PLANT,
         // pagination
         SET_PLANT_PAGE_NUMBER,
         SET_PLANT_SKU_PAGE_NUMBER,
@@ -396,6 +396,29 @@ export default function(state = initialSatate, action){
                     needAction:false
                     // skuData:[...action.payload.data]
                 };
+            case CLEAR_SKU_FIELDS_PLANT:
+                return{
+                    ...state,
+                    plantSkuDataById         :   {
+                        sku_code: "",
+                        plant_id: "",
+                        each_cost: "",
+                        each_price: "",
+                        sale_price: "",
+                        sale_expiry_date: "",
+                        volume_quantity: "",
+                        volume_price_per_unit: "",
+                        sku_item_name: "",
+                        subcategory: "",
+                        archived: 0,
+                        discontinued: 0,
+                        location: "",
+                        status: 0,
+                        attributes_subattributes:[]           
+                    
+                        }
+
+                }
             case GET_SINGLE_PLANT_SKU:
                 console.log(action)
                 return{

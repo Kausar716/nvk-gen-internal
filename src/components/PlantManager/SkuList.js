@@ -24,7 +24,8 @@ deletePlantAction,
 deleteSkuAction,
 getSpecifiedPlantAction,
 showSinglePlantSkuAction,
-plantPageReDirectAction
+plantPageReDirectAction,
+clearSkuFieldsPLant
    
 } from "../../actions/plantManagerAction";
 import {
@@ -166,7 +167,9 @@ const SkuList = (props)=>{
     if(e.target.id === "dontRetain"){
     if(actionType ==="add" || actionType === "edit"){
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
-    props.plantPageReDirectAction("all","plant")
+    // props.plantPageReDirectAction("all","plant")
+  
+    props.clearSkuFieldsPLant()
     }
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
@@ -583,5 +586,6 @@ export default connect(mapStateToProps,{
     deleteSkuAction,
     getSpecifiedPlantAction,
     showSinglePlantSkuAction,
-    plantPageReDirectAction
+    plantPageReDirectAction,
+    clearSkuFieldsPLant
 })(SkuList)

@@ -22,6 +22,7 @@ import {
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
     UPDATE_PLANT_SKU_ACTION,
+    CLEAR_SKU_FIELDS_PRODUCT,
 
     //PAGE REDIRECTS ACTION
 
@@ -201,7 +202,7 @@ export default function(state = initialSatate, action){
            return {
                 ...state,
                 productDataBySKUlist:action.payload.data,
-                //backupData:action.payload.data,
+                //backupData:action.payload.data, 
 
             }
             
@@ -296,15 +297,7 @@ export default function(state = initialSatate, action){
                 return{
                     ...state,
                     actionType:"add",
-                    productDataById     :   {
-                        name:"",
-                        category_id:null,
-                        subcategory_id:null,
-                        manufacturer_id:null,
-                        archived:0,
-                        internal_notes:"",
-                        discontinued:0
-                    },
+                   
                     skuDataById         :   {
                         each_cost:null,
                         each_price:null,
@@ -533,6 +526,26 @@ export default function(state = initialSatate, action){
                 selectedCategory:action.categoryId
             }
         }
+        case CLEAR_SKU_FIELDS_PRODUCT:{
+            let obj={   
+            each_cost:"",
+            each_price:"",
+            sale_price:"",
+            sale_expiry_date:null,
+            sku_item_name:"",
+            subcategory:null,
+            discontinued:0,
+            status:1,
+            archived:0,
+            supplier_id:1,
+            id:null,
+            volume_price_per_unit:null,
+            volume_quantity:null}
+            return{
+                ...state,
+                skuDataById:obj
+            }
+        }
         default:
             return state
      
@@ -540,4 +553,4 @@ export default function(state = initialSatate, action){
         
     }
 
-}
+} 
