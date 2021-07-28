@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getCategoryList,getPlantList,getFilterResult} from "../../actions/inventoryManagementAction";
+import {getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
@@ -28,7 +28,7 @@ export class PlantInventory extends Component {
         this.props.getLocationList()   
         this.props.getCategoryList()
         this.props.getAllSupplierAction()
-        // this.props.getPlantList()
+        this.props.getAllPlants()
         
     }
      handleCategoryChange = () => {
@@ -182,6 +182,16 @@ export class PlantInventory extends Component {
         console.log(this.props.temp)
         let PlantListForTable = []
         PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
+
+        // console.log()
+        const {plantData} = this.props.plantData
+        let plantIdsAll = plantData.map(plantData=>plantData.plant_id)
+        let plantId = plantIdsAll.filter(function( plant, index, array ) {
+            return array.indexOf(plant) === index;
+     });
+     console.log(plantId)
+
+    
     
     return (
          <div class="bg-white px-3 py-3 mt-3">
@@ -365,10 +375,19 @@ export class PlantInventory extends Component {
                                                     </tr>
                                                     {/* className="text-nowrap text-center" */}
                                                 </thead>
-                                                <tbody>
-                                                    <tr class="tblLinks">
+                                                {/* <tbody> */}
+                                                    {plantId.map(plantId=>{
+                                                        console.log(JSON.parse(plantId))
+                                                       let count =0
+                                                            return plantData.map((plant,index)=>{
+                                                             
+                                                                if(JSON.parse(plantId)===parseInt(plant["plant_id"])){
+                                                                if(count===0){
+                                                                    count++
+                                                                    return(
+                                                                        <tbody><tr style={{backgroundColor:"#EFEFEF"}}>
                                                         <td colspan="5">
-                                                            <a href="">Abies alba Green Spiral (Green Spiral Silver Fir)</a>
+                                                            <a href="">{plant.genus}</a>
                                                         </td>
                                                         <td colspan="8">
                                                             <a href="">View Sales Orders</a>
@@ -377,7 +396,7 @@ export class PlantInventory extends Component {
                                                             <a href=""> New Batch ID</a>
                                                         </td>
                                                     </tr>
-                                                    <tr>
+                                                    <tr >
                                                         <td class="text-center">
                                                             <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="customCheck2" />
@@ -385,10 +404,10 @@ export class PlantInventory extends Component {
                                                             </div>
                                                         </td>
                                                         <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
+                                                        {plant.batch_code}
                                                         </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
+                                                        <td>{plant.supplier_id}</td>
+                                                        <td class="text-nowrap">{plant.batch_code}</td>
                                                         <td class="text-nowrap">25-05-2019</td>
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
@@ -407,18 +426,26 @@ export class PlantInventory extends Component {
                                                             </a>
                                                         </td>
                                                     </tr>
+                                                    </tbody>
+
+                                                    )
+
+                                                        }else{
+                                                            count++
+                                                        return(
+                                                        <tbody>
                                                     <tr>
                                                         <td class="text-center">
                                                             <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck3" />
-                                                                <label class="custom-control-label" for="customCheck3"></label>
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                                <label class="custom-control-label" for="customCheck2"></label>
                                                             </div>
                                                         </td>
                                                         <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
+                                                        {plant.batch_code}
                                                         </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
+                                                        <td>{plant.supplier_id}</td>
+                                                        <td class="text-nowrap">{plant.batch_code}</td>
                                                         <td class="text-nowrap">25-05-2019</td>
                                                         <td>-</td>
                                                         <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
@@ -426,7 +453,7 @@ export class PlantInventory extends Component {
                                                         <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}> 50</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
                                                         <td class="invTblAction">
                                                             <a href="">
@@ -437,157 +464,18 @@ export class PlantInventory extends Component {
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck4" />
-                                                                <label class="custom-control-label" for="customCheck4"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
-                                                        </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
-                                                        <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td class="invTblAction">
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
-                                                            </a>
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck5" />
-                                                                <label class="custom-control-label" for="customCheck5"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
-                                                        </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
-                                                        <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td class="invTblAction">
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
-                                                            </a>
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck6" />
-                                                                <label class="custom-control-label" for="customCheck6"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
-                                                        </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
-                                                        <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td class="invTblAction">
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
-                                                            </a>
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck7" />
-                                                                <label class="custom-control-label" for="customCheck7"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
-                                                        </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
-                                                        <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td class="invTblAction">
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
-                                                            </a>
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck8" />
-                                                                <label class="custom-control-label" for="customCheck8"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                            <a href="">393-20-2G</a>
-                                                        </td>
-                                                        <td>NVK</td>
-                                                        <td class="text-nowrap">393-NVK-20-15</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
-                                                        <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td ><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td class="invTblAction">
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
-                                                            </a>
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
+                                                    </tbody>
+                                                                    )
+                                                                }
+                                                               
+                                                            }   
+                                                        })
+
+                                                       
+                                                    
+                                                    })}
+                                                    
+                                                {/* </tbody> */}
                                             </table>
                                         </div>
                                     </div>
@@ -607,9 +495,10 @@ const mapStateToProps = (state)=> (
         locationList:state.inventoryManagementReducer.locationList,
         supplierList:state.supplierData.supplierInfo,
         plantInventoryData:state.inventoryManagementReducer.plantInventoryData,
+        plantData:state.inventoryManagementReducer,
         temp:state
 }
 
 )
 
-export default connect(mapStateToProps,{getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
+export default connect(mapStateToProps,{getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)

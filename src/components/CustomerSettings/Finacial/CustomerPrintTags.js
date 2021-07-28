@@ -44,15 +44,18 @@ const CustomerPrintRates = (props) => {
   const [checkedData,setCheckedData] = useState(false)
   const [isOpen1, setIsOpen1] = useState(false);
   const [successMessage,setSuccessMessage] = useState([])
+  const [data,setData] = useState("")
   const toggle1  = ()=>setIsOpen1(!isOpen);
   const handleInputData =(e)=>{
     setCheckedData(true)
+    console.log(e.target.value,e.target.id)
     props.handleExchangeData(e.target.value,e.target.id,"customerTag")
+    // props.handleExchangeData(e.target.value,"base_price","customerTag")
 
   }
   useEffect(()=>{
     props.getPrintData()
-  })
+  },[data])
 const resetData = ()=> {
   setCheckedData(false)
   props.getPrintData()
@@ -99,7 +102,7 @@ const resetData = ()=> {
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" style={{width:"115%"}} id="base_price" value={customerTag.base_price}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData}/>
                               </Col>
                             
 
@@ -114,7 +117,7 @@ const resetData = ()=> {
                         <Row>
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_logo" value={customerTag.custom_logo}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData}/>
                             </Col>
                            
                             <Col sm="0">
@@ -130,7 +133,7 @@ const resetData = ()=> {
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
 
-                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_pricing" value={customerTag.custom_pricing}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -146,7 +149,7 @@ const resetData = ()=> {
                             <Col sm="4">
 
                            
-                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_application" value={customerTag.custom_application}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
