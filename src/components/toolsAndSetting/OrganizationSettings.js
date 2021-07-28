@@ -4,6 +4,7 @@ import React from 'react'
 import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal';
+import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
 import InputMask from 'react-input-mask';
 export const Component = withRouter(({ history, location }) =>{
@@ -22,11 +23,11 @@ const normalizeInput = (value, previousValue) => {
     }
   };
   
-  const validateInput = value => {
+  const validateInput22 = value => {
     let error1 = ""
     
     if (!value) error1 = "Required!"
-    else if (value.length !== 14) error1 = "Invalid phone format. ex: (555) 555-5555";
+    else if (value.length !== 14 && value.length > 10) error1 = "Invalid phone format. ex: (555) 555-5555";
     
     return error1;
   };
@@ -41,7 +42,8 @@ export class OrganizationSettings extends React.Component {
     constructor(){
         super()
         this.state={
-
+            isOpen1:false,
+            message:[],
             actionId:0,
             actionOpen:false,
             actionMessage:"",
@@ -121,13 +123,20 @@ export class OrganizationSettings extends React.Component {
          
     }
 
+    toggle1 =()=>{
+        this.setState({isOpen1:false})
+    }
+
 
     validation = () =>{
-        // let {location,address,city,country,state,zip,lat} = this.props.supplierData.supplierLocation
+         let {name,phone,sending_email_address, main_body, main_title, secondary_body,secondary_title} = this.props.organizationData.organizationData
 
-        // if(location ==="" || address ==="" || city===""|| country===""||state===""||zip===""||lat ==="")
-        // return 1
-  
+        if(phone ==="" || name==="" || sending_email_address==="" || main_body ==="" || main_title ==="" || secondary_body ==="" || secondary_title ===""){
+        return 1
+        }
+        else{
+            return 0
+        }
     }
    
 
@@ -136,7 +145,7 @@ export class OrganizationSettings extends React.Component {
     handleInput = (e) => {
 
       
-      debugger
+     // debugger
        // this.setState({value1: e.target.value})
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state        
@@ -167,6 +176,16 @@ export class OrganizationSettings extends React.Component {
                 errorCount--
             }           
         }
+
+      
+
+
+
+
+
+
+
+
                     //console.log(hadModified[name],name)
                     // if(hadModified[name]  === name){
                         //hadModified[name] = true
@@ -202,19 +221,19 @@ export class OrganizationSettings extends React.Component {
         console.log(organizationData.sending_email_address)
 
         //organizationData.phone.replace(phoneReg, '($1) $2-$3')
-        if(! phoneReg.test(organizationData.phone)){
-            //debugger;
-            if(organizationData.phone.length > 10){
-            errorObj.phoneError=1
-            errorCount++
-            }
-            // else{
+        // if(! phoneReg.test(organizationData.phone)){
+        //     //debugger;
+        //     if(organizationData.phone.length > 10){
+        //     errorObj.phoneError=1
+        //     errorCount++
+        //     }
+        //     // else{
               
-            //     errorObj.phoneError=0
-            //     errorCount--
-            // }
+        //     //     errorObj.phoneError=0
+        //     //     errorCount--
+        //     // }
 
-        }   
+        // }   
 
          if(! emailReg.test(organizationData.sending_email_address)){
             errorObj.sendingEmailError=1
@@ -223,19 +242,22 @@ export class OrganizationSettings extends React.Component {
        
 
 
-        if(!nameReg.test(organizationData.name)){
-            errorObj.firstNameError=1
-           errorCount++
-        }
+        // if(!nameReg.test(organizationData.name)){
+        //     debugger;
+        //     errorObj.firstNameError=1
+        //    errorCount++
+        // }
         this.setState({errorObj,errorCount})
         return errorCount
     }
 
 
     handleChange=({ target: { value } })=> {  
+        //debugger;
+        console.log("enteredVALUES", this.state.phoneNumberInOrganization)
         this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
        
-      };
+      }
 
 
 
@@ -243,11 +265,16 @@ export class OrganizationSettings extends React.Component {
 
 
     handleSubmit = (e) => {
-            debugger;
+            //debugger;
+
+           
         // e.preventDefault();
        // if(this.state.phoneNumberInOrganization)
         let phoneNUMBER = this.state.phoneNumberInOrganization === " " ? this.props.organizationData.organizationData.phone : this.state.phoneNumberInOrganization;
-     const phoneError = validateInput(phoneNUMBER);
+        if(this.state.phoneNumberInOrganization === undefined){
+            window.location.reload();
+    }
+     const phoneError = validateInput22(phoneNUMBER);
     
     this.setState({ phoneError }, () => {
        if(!phoneError) {
@@ -258,29 +285,53 @@ export class OrganizationSettings extends React.Component {
     })   
 
 
-    let finalNumber= this.state.phoneNumberInOrganization 
+    let finalNumber= phoneNUMBER;
      finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
     let removedNumber = finalNumber.split(" ").join("");
     removedNumber = parseInt(removedNumber)
-console.log("removedNumber",removedNumber)
-
-
-            
+        console.log("removedNumber",removedNumber)
 
 
         let count= this.validate()
         console.log(count)
         console.log(this.state.errorObj)
-         if(count === 0 && phoneError===""){
+
+        let errorLength =  this.validation()
+        if(errorLength ===1){
+            this.setState({isOpen1:true,message:["Please fill all fileds with valid inputs"]})
+        }
+
+        // else{
+
+        //     let updateObject={}
+        //     updateObject.id=this.props.organizationData.organizationData.id
+        //     updateObject.phone = removedNumber
+        //     updateObject.name = this.props.organizationData.organizationData.name
+        //     updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
+        //     updateObject.main_title = this.props.organizationData.organizationData.main_title
+        //     updateObject.secondary_title = this.props.organizationData.organizationData.secondary_title
+        //     updateObject.main_body = this.props.organizationData.organizationData.main_body
+        //     updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
+        //     updateObject.log=this.props.organizationData.organizationData.logo
+        //     let result = this.props.updateorganization(updateObject)
+        //     result.then(data=>{
+        //         this.props.showorganization(2)
+        //     })
+
+            
+        // }
+
+
+       
+      else  if(count === 0 && phoneError===""){
              console.log(this.state)
              console.log("success")
              let updateObject={}
              updateObject.phone = removedNumber
              updateObject.id=this.props.organizationData.organizationData.id
              console.log("hadModified",this.state.hadModified.name)
-             //updateObject.name = this.props.organizationData.organizationData.name
+            
              if(this.state.hadModified.name === true){
-                 //debugger;
                 updateObject.name = this.props.organizationData.organizationData.name
              }
 
@@ -288,26 +339,17 @@ console.log("removedNumber",removedNumber)
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
              }
 
-
-
-            //  if(this.state.hadModified.phone === true){
-            //     // debugger;
-            //      console.log("this.state.hadModified.phone",this.state.hadModified.phone)
-            //      //updateObject.phone= updateObject.phone.replace(phoneReg, '($1) $2-$3')
-            //     updateObject.phone = this.state.phoneNumberInOrganization
-            //     //this.props.organizationData.organizationData.phone
-            //  }
              
-             if(this.state.hadModified.main_title === true){
+            //  if(this.state.hadModified.main_title === true){
                 updateObject.main_title = this.props.organizationData.organizationData.main_title
-             } if(this.state.hadModified.secondary_title === true){
+            //  } if(this.state.hadModified.secondary_title === true){
                 updateObject.secondary_title = this.props.organizationData.organizationData.secondary_title
-             } if(this.state.hadModified.main_body === true){
+            //  } if(this.state.hadModified.main_body === true){
                 updateObject.main_body = this.props.organizationData.organizationData.main_body
-             }
-             if(this.state.hadModified.secondartBody === true){
+            //  }
+            //  if(this.state.hadModified.secondartBody === true){
                 updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
-             }
+            //  }
 
              if(this.state.imageUploaded)
              updateObject.log=this.props.organizationData.organizationData.logo
@@ -326,6 +368,9 @@ console.log("removedNumber",removedNumber)
                 alert(JSON.stringify(c))
             })
          }
+
+
+
     
      }
 
@@ -524,6 +569,7 @@ console.log("removedNumber",removedNumber)
         const { value1} = this.state;
     return (
         <div clas="userManagementSection">
+            	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
                     <h1 class="page-header mb-0 d-flex align-items-center">
@@ -588,9 +634,9 @@ console.log("removedNumber",removedNumber)
                                         <div class="col-md-12">
                                             <label style={{fontWeight:"bold"}}>Name</label>
                                             <input type="text" placeholder="Name" class="form-control" name="name" 
-                                            // value={organizationDataById.name} 
-                                            value={this.state.name}
-                                             onChange={this.handleInput2}  />
+                                             value={organizationDataById.name} 
+                                           // value={this.state.name}
+                                             onChange={this.handleInput}  />
                                             {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Required</span>:""}
                                         </div>
                                     </div>
@@ -636,7 +682,7 @@ console.log("removedNumber",removedNumber)
                                                     type="text"
                                                     name="phone"
                                                     placeholder="(xxx) xxx-xxxx"
-                                                    value={this.state.phoneNumberInOrganization==="" ? phno : this.state.phoneNumberInOrganization}
+                                                    value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization}
                                                    // pattern="[0-9]*"
                                                     //value={organizationDataById.phone}
                                                     // value={this.state.phone}
