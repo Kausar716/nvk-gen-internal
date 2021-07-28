@@ -70,7 +70,7 @@ function AddSupplier(props) {
 	const toggleForAddress = () => {
         setactionTypeAddress("add")
         setisOpenAddress(!isOpenAddress)
-        // //alert("hi")
+        // ////alert("hi")
     }
 
     const validate = () =>{
@@ -118,13 +118,31 @@ function AddSupplier(props) {
     }
 
     const handleInput= (e)=>{
+        // //alert("hi")
+        //alert(e.target.id+"   "+e.target.value)
         setCheckedData(true)
-        // //alert(e.target.id)
+        
+        // ////alert(e.target.id)
         // let errorCountForValidation = errorCount
         // console.log(e.target.name,e.target.value)
+        let indexValue = null
         if(e.target.id =="delivery")  props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
         else if(e.target.id =="pickup")props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
         else if(e.target.id =="both")props.handleSupplierExchnageData(e.target.value,"dispatch_type","supplierDataById")
+        else if(e.target.value=="product"){
+            // //alert("gg")
+            let product_categories = supplierDataById.product_categories
+            console.log(product_categories)
+            product_categories.map((value,index)=>{
+                if(value === e.target.id) indexValue = index
+            })
+            // //alert(indexValue)
+            if(indexValue !== null) product_categories.splice(indexValue,1)
+            else product_categories.push(e.target.id)
+            console.log(product_categories)
+            props.handleSupplierExchnageData(product_categories,"product_categories","supplierDataById")
+            
+        } 
         else props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierDataById")
         // if(e.target.name === "customer_name"){
         //     setCustomer_name(e.target.value)
@@ -182,7 +200,7 @@ function AddSupplier(props) {
          }
     }
     const handleTabClick=()=>{
-        // //alert("in")
+        // ////alert("in")
     }
     const closeAddSupplier = ()=>{
         props.typeOfsupplierActionShow("")
@@ -203,11 +221,12 @@ function AddSupplier(props) {
 
 
         // }
-        // //alert("ds")
+        // ////alert("ds")
         setCheckedData(false)
-        // //alert(supplierDataById.id)
+        // ////alert(supplierDataById.id)
         // // delete customerDataById.id
-        // // //alert("hello")
+        // // ////alert("hello")
+        console.log(supplierDataById)
         if(supplierDataById.id== undefined){
             props.addSupplierDetails(supplierDataById).then(data=>{
            
@@ -407,8 +426,8 @@ console.log(supplierDataById)
                             <div class="d-flex align-items-center">
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
-                                        <input type="checkbox" name="switcher_checkbox_//alert" id="switcher_checkbox_//alert" value="2"/>
-                                        <label for="switcher_checkbox_//alert"></label>
+                                        <input type="checkbox" name="switcher_checkbox_////alert" id="switcher_checkbox_////alert" value="2"/>
+                                        <label for="switcher_checkbox_////alert"></label>
                                     </div>
                                 alert
                                 </div>
@@ -543,17 +562,17 @@ console.log(supplierDataById)
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Units</label>
-                                                <select class="form-control" onChange={handleInput} id="unit_of_measurement">
-                                                    <option selected={supplierDataById.units =="Metric"?"selected":""} value="Metric">Metric</option>
-                                                    <option selected={supplierDataById.units =="Imperial"?"selected":""} value="Imperial">Imperial</option>
+                                                <select class="form-control" onChange={handleInput} id="units">
+                                                    <option selected={supplierDataById.units ==="Metric"?"selected":""} value="Metric">Metric</option>
+                                                    <option selected={supplierDataById.units ==="Imperial"?"selected":""} value="Imperial">Imperial</option>
         
                                                 </select>
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0">
                                                 <label>Currency</label>
                                                 <select class="form-control" onChange={handleInput} id="currency">
-                                                    <option value={"Canadian Dollar"} selected={supplierDataById.currency=="Canadian Dollar"?"selected":""}>Canadian Dollar</option>
-                                                    <option  value={"U.S. Dollar"} selected={supplierDataById.currency=="U.S. Dollar"?"selected":""}>U.S. Dollar</option>
+                                                    <option value={"Canadian Dollar"} selected={supplierDataById.currency==="Canadian Dollar"?"selected":""}>Canadian Dollar</option>
+                                                    <option  value={"U.S. Dollar"} selected={supplierDataById.currency==="U.S. Dollar"?"selected":""}>U.S. Dollar</option>
                                                    
                                                 </select>
                                             </div>
@@ -571,7 +590,7 @@ console.log(supplierDataById)
                                                     return(
                                                         <div class="col-md-6 col-lg-6" style={{display:"inline-block",width:"15%"}}>
                                                     <div className="custom-control custom-checkbox mb-1" >
-                                                        <input type="checkbox" className="custom-control-input" id={data.id} onChange={handleInput} />
+                                                        <input type="checkbox" className="custom-control-input" id={data.id} onChange={handleInput} value="product" checked={supplierDataById.product_categories.filter(id=>parseInt(id) ===parseInt(data.id)).length}/>
                                                         <label className="custom-control-label" for={data.id}>{data.name}</label>
                                                     </div>
                                                 </div>
@@ -679,7 +698,7 @@ console.log(supplierDataById)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={supplierDataById.id === undefined?true:false} onClick={toggleForContact}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -742,7 +761,7 @@ console.log(supplierDataById)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id === undefined?true:false}>Add</button>
                                     </div>
                                 </div>
                             </form>

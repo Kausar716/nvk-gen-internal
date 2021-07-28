@@ -97,7 +97,7 @@ const InrestRates = (props) => {
     <>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      <Label className="subFont">Customer Tax & Interest Rates</Label> 
+      <Label className="subFont">Tax & Interest Rates</Label> 
       <span className="updownSymbolContainer"> 
       {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
