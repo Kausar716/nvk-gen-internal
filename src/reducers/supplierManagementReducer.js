@@ -495,7 +495,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         else datatoShow = state.duplicateData
         
                         if(state.alphabetSearch ==="All" && action.searchData !=="")searchedData = datatoShow.filter(filterData=>filterData.supplier_name.toLowerCase().includes(action.searchData.toLowerCase()))
-                        else if(action.searchData !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===action.searchData.toLowerCase().charAt(0)))
+                        else if(action.searchData !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
                         else if(action.searchData  ==="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
                         else if(action.searchData  ==="" && state.alphabetSearch  ==="All") searchedData = datatoShow
         
@@ -523,20 +523,20 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.activeData.filter(data=>data.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
                         else if(action.actionType === "active" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.activeData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
         
-                        else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.activeData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                        else if(action.actionType === "active" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.activeData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
                             ////////////////////////////////
                             if(action.actionType === "inactive" && state.searchFilter ==="" && state.alphabetSearch ==="All") radioData = state.inactiveData
                             else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.inactiveData.filter(data=>data.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
             
                             else if(action.actionType === "inactive" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.inactiveData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
             
-                            else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.inactiveData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                            else if(action.actionType === "inactive" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.inactiveData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
         
                             ////////////////////////////////
                             if(action.actionType === "all" && state.searchFilter ==="" && state.alphabetSearch ==="All") radioData = state.duplicateData
                             else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch ==="All")radioData =state.duplicateData.filter(data=>data.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
                             else if(action.actionType === "all" && state.searchFilter ==="" && state.alphabetSearch !=="All")radioData =state.duplicateData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)=== state.alphabetSearch.toLowerCase()))
-                            else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.duplicateData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                            else if(action.actionType === "all" && state.searchFilter !=="" && state.alphabetSearch !=="All")radioData = state.duplicateData.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
                     return{
                         ...state,
                         supplierList:radioData,
@@ -553,7 +553,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         if(state.searchFilter ==="" && action.alphaData !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.supplier_name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0))
                         else if(state.searchFilter !=="" && action.alphaData ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
                         // else if(action.alphaData ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                        else if(state.searchFilter !=="" && action.alphaData !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                        else if(state.searchFilter !=="" && action.alphaData !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0)) &&(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
                         else if(state.searchFilter ==="" && action.alphaData ==="All")searchedData1 = datatoShow1
                        
         
