@@ -133,7 +133,7 @@ const Notification = (props) => {
 
                       <div className="notification_label">
                             <label>READY to LATE Notice<span><FaIcon.FiAlertCircle data-tip data-for={ready_to_late_notice} />                           
-                              <ReactTooltip  id={ready_to_late_notice} backgroundColor="gray" border="1px solid red">
+                              <ReactTooltip  id={ready_to_late_notice} backgroundColor="gray">
                                   <span id={ready_to_late_notice} >READY to LATE Notice</span>
                               </ReactTooltip> </span></label>
                             <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>

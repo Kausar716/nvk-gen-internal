@@ -311,7 +311,6 @@ export const updateSupplierData = (data) =>dispatch => {
     let id = data.id
     delete data.id
     console.log(data)
-    data.product_categories =  JSON.parse(data.product_categories)
     return axios.post(`/api/update-supplier/${id}`,data,config).then(res=>{ 
         console.log(res)
         dispatch({
@@ -516,7 +515,7 @@ export const saveSupplierData = (data)=>dispatch =>{
 
 }
 export const getAllSuppliers = () => dispatch => {
-    axios.get("/api/suppliers",config).then(res=>{ 
+    return axios.get("/api/suppliers",config).then(res=>{ 
         console.log(res.data)
     dispatch({
             type:GET_SUPPLIER_LIST,

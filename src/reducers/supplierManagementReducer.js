@@ -167,7 +167,7 @@ const defaultState={
     currency: "",
     units: "",
     status: 1,
-    product_categories:[1]
+    product_categories:[]
     },
     supplierContact:{
         supplier_id: 0,
@@ -344,14 +344,14 @@ const supplierManagementReducer =(state=defaultState, action)=>{
             case UPDATE_SUPPLIER:
                 return{
                     ...state,
-                    supplierDataById:action.payload.data
+                    supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories)}
 
                 }
             case GET_SUPPLIER_BY_ID:
                 let categories = action.payload.data.product_categories==undefined?[]:action.payload.data.product_categories
                 return{
                     ...state,
-                    supplierDataById:{...action.payload.data,product_categories:categories}
+                    supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories)}
 
                 }
             case TYPE_OF_SUPPLIER_ACTION:
@@ -599,7 +599,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
             case ADD_SUPPLIER:
                         return{
                             ...state,
-                            supplierDataById:action.payload.data
+                            supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories)}
                         }
 
             default:
