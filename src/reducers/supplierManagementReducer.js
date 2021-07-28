@@ -488,7 +488,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                             pageNumber:action.pageNumber
                         }
                     case FILTER_SUPPLIER_BY_SEARCH:
-                        alert(action.searchData)
+                        // alert(action.searchData)
                         let datatoShow = []
                         let searchedData = []
                         if(state.radioFilter === "active") datatoShow = state.activeData
