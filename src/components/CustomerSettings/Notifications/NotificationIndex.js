@@ -134,27 +134,20 @@ const Notification = (props) => {
                     <div className="row_1_Notification">
 
                       <div className="notification_label">
-                            <label>READY to LATE Notice<span><FaIcon.FiAlertCircle data-tip data-for={ready_to_late_notice}  className="alertIcon" />                           
-                              <ReactTooltip className="customeTheme" id={ready_to_late_notice} backgroundColor="gray">
+                            <label>READY to LATE Notice <span><FaIcon.FiAlertCircle data-tip data-for={"data"}  className="alertIcon" />                           
+                              <ReactTooltip className="customeTheme" id={"data"} backgroundColor="gray">
                                   <span id={ready_to_late_notice} >READY to LATE Notice</span>
                               </ReactTooltip> </span></label>
                             <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
                                 </div> 
-                            {/* <Field
-                                            name="ReserveExpiryNotice1"
-                                            component={renderField2}
-                                            type="text"
-                                            label="2"
-                                            validate={[ required, number, minValue2]}
-                                            value={props.customerData.customerNotification[0]}
-                                        /> */}
+    
                       </div>
 
                       <div className="notification_label">
-                            <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" data-tip data-for={reserve_expiry_notice}/>
-                            <ReactTooltip className="customeTheme" id={reserve_expiry_notice} backgroundColor="gray">
+                            <label>Reserve Expiry Notice <span><FaIcon.FiAlertCircle className="alertIcon" data-tip data-for={"data1"} />
+                            <ReactTooltip className="customeTheme" id={"data1"} backgroundColor="gray">
                                   <span id={reserve_expiry_notice}>Reserve Expiry Notice</span>
                               </ReactTooltip>
                             </span></label>

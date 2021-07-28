@@ -293,7 +293,7 @@ function AddCustomer(props) {
     }
     
 
-  
+    console.log(customerDataById)
     return (
         <div>
             	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
@@ -795,7 +795,7 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact} disabled={customerDataById.id === undefined?true:false}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -855,7 +855,7 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={customerDataById.id === undefined?true:false}>Add</button>
                                     </div>
                                 </div>
                             </form>

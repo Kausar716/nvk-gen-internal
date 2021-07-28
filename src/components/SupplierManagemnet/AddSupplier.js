@@ -679,7 +679,7 @@ console.log(supplierDataById)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={supplierDataById.id === undefined?true:false} onClick={toggleForContact}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -742,7 +742,7 @@ console.log(supplierDataById)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id === undefined?true:false}>Add</button>
                                     </div>
                                 </div>
                             </form>
