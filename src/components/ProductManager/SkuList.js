@@ -475,7 +475,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
-                                             > {!skuEdit?"Add SKU":"Update SKU"}
+                                             > {!skuEdit?"Add SKU & Clear":"Update SKU & Clear"}
                                                  {/* Add SKU &amp; Clear */}
                                                  </button>
 
