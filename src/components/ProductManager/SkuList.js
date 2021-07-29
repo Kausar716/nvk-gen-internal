@@ -126,7 +126,7 @@ const SkuList=(props)=> {
                 }
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
-                if(actionType ==="edit"){  
+                if(actionType ==="edit"){ 
                 let skuid = skuDataById.id
                 if(skuDataById.id === undefined){
                      skuid= props.productData.productDataById.product_id
@@ -141,16 +141,10 @@ const SkuList=(props)=> {
                     
                 }
                 else{
-                   
                     skuDataById.subcategory = skuDataById.sub_category_id
-                    console.log(skuDataById)
-                  
                     props.updateSkuActionClear(skuid,skuDataById)
                     // props.pageReDirectAction("product","add")
                 }
-                console.log(skuDataById) 
-                console.log(props.productData)  
-                console.log(skuid) 
             }
                     
                
