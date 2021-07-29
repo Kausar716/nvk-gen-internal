@@ -108,7 +108,7 @@ const handleMainSelection= (id) => {
               </Link>
             </li>
             <li class={selectedMainBarData.includes("orderList")?"active":""} onClick={()=>{handleMainSelection("orderList")}} >             
-              <Link to="/comingsoon">
+              <Link to="/OrderList">
               <b class="caret"></b>
                 <img src="assets/img/customer-quotes.svg" alt=""/>
                 <span>Customer Quotes &amp; Orders</span>
@@ -141,7 +141,7 @@ const handleMainSelection= (id) => {
               </ul>          
             </li>
             <li class={selectedMainBarData.includes("purchaseOrder")?"active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>
-              <Link to="/comingsoon">
+              <Link to="/PurchaseOrderList">
               <b class="caret"></b>
                 <img src="assets/img/purchase-orders.svg" alt=""/>
                 <span>Purchase Orders</span>
