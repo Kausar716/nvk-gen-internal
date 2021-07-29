@@ -198,7 +198,7 @@ export class UserProfile extends Component {
                 if(this.props.selectedUser.last_name !== userStateObject.lastName)userObject['last_name'] = userStateObject.lastName
                 if(this.props.selectedUser.email !== userStateObject.email)userObject['email'] = userStateObject.email
                 if(this.props.selectedUser.phone !== userStateObject.phone)userObject['phone'] = userStateObject.phone
-                if(this.props.selectedUser.position !== userStateObject.position)userObject['role'] = userStateObject.position
+                if(this.props.selectedUser.position !== userStateObject.position)userObject['position'] = userStateObject.position
 
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
