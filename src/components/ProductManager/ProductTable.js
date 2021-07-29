@@ -223,7 +223,7 @@ const ProductTable  = (props) => {
                                                 <td  className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox" className="custom-control-input" id={id2.concat(product.product_id)}/>
-                                                        <label className="custom-control-label" for={id2.concat(product.product_id)}></label>
+                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id2.concat(product.product_id)}></label>
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
@@ -259,7 +259,7 @@ const ProductTable  = (props) => {
                                     </table>
 
                                     <div className="centerItem">
-                                    <p > {productData.length===0?"No records found..." :""}  <Loader /></p>
+                                    <p > {productData.length===0?props.loaderMessage :""}  <Loader /></p>
                                     </div>
 
                                     {/* <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>
