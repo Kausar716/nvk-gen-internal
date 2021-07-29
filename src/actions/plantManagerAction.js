@@ -7,12 +7,14 @@ import {
     GET_ALL_PLANT_ACTION,
     GET_SPECIFIED_PLANT_ACTION,
     DUPLICTE_PLANT,
+    CHECK_BOX,
 
     // Plant SKU ACTION
     CREATE_PLANT_SKU_ACTION,
     UPDATE_PLANT_SKU_ACTION,
     DELETE_PLANT_SKU_ACTION,
     GET_ALL_PLANT_SKU_ACTION,
+    UPDATE_CHECK_BOX,
 
     GET_PLANT_SPECIFIED_SKU_ACTION,
     GET_SINGLE_PLANT_SKU,
@@ -145,7 +147,30 @@ export const createPlantAction = (plantData,tags) => dispatch => {
 }
 
 
+export const updateCheckBox = (id,index,type,obj)=>dispatch=>{
+    return axios.post(`/api/update-plant/${id}`, obj, config).then(res=>{
 
+        dispatch({
+            type:UPDATE_CHECK_BOX,
+            id:id,
+            type:type,
+            index:index,
+            obj:obj
+
+        })
+    })
+}
+export const checkBox =(id,index,type,obj) =>dispatch=>{
+    dispatch({
+        type:CHECK_BOX,
+        id:id,
+        type:type,
+        index:index,
+        obj:obj
+
+    })
+    
+}
 export const updatePlantAction = (data,id,tag) => dispatch => {
    
     data["common_name"] = tag

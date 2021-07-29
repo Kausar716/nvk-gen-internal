@@ -15,7 +15,9 @@ import {
      duplicatePlant,
      setPlantPageNumber,
      plantPageReDirectAction,
-    plantSubPageReDirectAction
+    plantSubPageReDirectAction,
+    updateCheckBox,
+    checkBox,
 
 
     
@@ -32,6 +34,7 @@ const PlantTable=(props)=> {
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
+    const [edit,setEditData] = useState("")
 
     const [pageSize, setPageSize] =useState(15)
     const cancel = ()=>{
@@ -54,10 +57,7 @@ const PlantTable=(props)=> {
         setType("")
         setMessage("")
     }
-    useEffect(()=>{
-        props.getAllPlantAction()
-
-    },[])
+   
 
     
     const paginationChange =(event, page)=>{
@@ -74,7 +74,11 @@ const PlantTable=(props)=> {
     console.log("plantData.length",plantData.length)
     console.log("pageCountpageCount", pageCount)
     const {plantCategoryData} =  props.categoryData
- 
+    useEffect(()=>{
+        // alert("kk")
+        props.getAllPlantAction()
+
+    },[edit])
 
    const abcd = props.dPageNumberList
    console.log("abcd", abcd)
@@ -90,6 +94,18 @@ const PlantTable=(props)=> {
     }
     setOpen(true)
     setId(id)
+}
+const handleCheckBox =(id,index,type)=>{
+    let obj = {}
+    obj[type] = parseInt(displayPlantList[index][type])===1?0:1
+   
+    console.log((plantPageNumber))
+    props.updateCheckBox(id,index,type,obj) 
+    // props.checkBox(id,plantPageNumber*((index)),type,obj)
+    .then(data=>{
+        props.getAllPlantAction()
+    })
+
 }
 
     return (
@@ -142,10 +158,10 @@ const PlantTable=(props)=> {
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus})=>{
-                                             let id2 ="discontinue"
-                                             let id3 ="Archived"
-                                             let id4 ="Production"
+                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus},index)=>{
+                                             let id2 ="discontinued"
+                                             let id3 ="archived"
+                                             let id4 ="in_production"
                                              console.log(status)
                                              return(     
                                             <tr>
@@ -158,22 +174,22 @@ const PlantTable=(props)=> {
                                                     </td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox"  className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4.concat(plant_id)} />
-                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id4.concat(plant_id)}></label>
+                                                        <input type="checkbox"  className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id4)}/>
+                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id4+"_"+plant_id}></label>
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox"  className="custom-control-input" checked={discontinued===1?"checked":""} id={id2.concat(plant_id)} />
-                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id2.concat(plant_id)}></label>
+                                                        <input type="checkbox"  className="custom-control-input" checked={discontinued===1?"checked":""} id={id2+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id2)}/>
+                                                        <label className="custom-control-label" style={{cursor:"pointer"}} for={id2+"_"+plant_id}></label>
                                                     </div>
                                                 </td>
 
 
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
-                                                            <label className="custom-control-label" style={{cursor:"pointer"}} for={id3.concat(plant_id)}></label>
+                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id3)}/>
+                                                            <label className="custom-control-label" style={{cursor:"pointer"}} for={id3+"_"+plant_id}></label>
                                                     </div>
                                                 </td>
 
@@ -225,6 +241,8 @@ export default connect(mapStateToProps,{  //plant actions
      duplicatePlant,
      setPlantPageNumber,
      dPageNumberList,
+     updateCheckBox,
      plantPageReDirectAction,
+     checkBox,
      plantSubPageReDirectAction
     })(PlantTable)
