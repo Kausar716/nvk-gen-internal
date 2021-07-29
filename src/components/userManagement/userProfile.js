@@ -8,12 +8,39 @@ import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} fro
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
+import InputMask from 'react-input-mask';
+
+
+// const normalizeInput = (value, previousValue) => {
+//     if (!value) return value;
+//     const currentValue = value.replace(/[^\d]/g, '');
+//     const cvLength = currentValue.length;
+    
+//     if (!previousValue || value.length > previousValue.length) {
+//       if (cvLength < 4) return currentValue;
+//       if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
+//       return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
+//     }
+//   };
+  
+//   const validateInput22 = value => {
+//     let error1 = ""
+    
+//     if (!value) error1 = "Required!"
+//     else if (value.length !== 14 && value.length > 10) error1 = "Invalid phone format. ex: (555) 555-5555";
+    
+//     return error1;
+//   };
+
+  
+
 
 export class UserProfile extends Component {  
     constructor(){
         super()
         this.state={
             firstName:"",
+            phoneNumberInOrganization:" ",
             lastName:"",
             phone:"",
             email:"",
@@ -166,7 +193,7 @@ export class UserProfile extends Component {
             errorObj.phoneError=1
             errorCount++
         }
-        if(this.state.phone.length>13){
+        if(this.state.phone.length>14){
             errorObj.phoneError=1
             errorCount++
         }
@@ -183,7 +210,7 @@ export class UserProfile extends Component {
         return errorCount
     }
     handleSubmit = (e) => {
-        debugger;
+   
         let count= this.validate()
         console.log(count)
          if(count === 0){
@@ -220,6 +247,16 @@ export class UserProfile extends Component {
  
  
      }
+
+    //  handleChange=({ target: { value } })=> {  
+    //     //debugger;
+    //     console.log("enteredVALUES", this.state.phoneNumberInOrganization)
+    //     this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
+       
+    //   }
+
+
+
      handlImageUpload = (e) => {
         console.log(e)
         console.log(e.target.files[0])
@@ -551,7 +588,16 @@ export class UserProfile extends Component {
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
-                                                    <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control" value={this.state.phone} onChange={this.handleInput} name="phone"/>
+                                                    <InputMask type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
+                                                     mask="(999) 999-9999" maskChar={" "} 
+                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
+                                                     />
+
+
+                                                    {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
+                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
+                                                     /> */}
+                                                    
                                                     {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
                                                 </div>
                                             </div>
@@ -699,4 +745,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,uploadImage,deleteUser})(UserProfile)
+export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,showUser,uploadImage,deleteUser})(UserProfile)
