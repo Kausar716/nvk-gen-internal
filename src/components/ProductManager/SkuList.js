@@ -110,8 +110,6 @@ const SkuList=(props)=> {
     console.log(supCategoryIdForFilter)
     console.log("product_id_List", finalPrID)
     console.log(skuDataById)
-    console.log()
-   
 
 
     const submitAction = (e) =>{
@@ -139,17 +137,16 @@ const SkuList=(props)=> {
                     let x= props.createSkuAction(skuid,skuDataById)
                     x.then(res=>{
                         props.clearSkuFields()
-                    })
-                     
+                    })                   
                     
                 }
                 else{
                    
                     skuDataById.subcategory = skuDataById.sub_category_id
                     console.log(skuDataById)
-                   
+                  
                     props.updateSkuActionClear(skuid,skuDataById)
-                    props.pageReDirectAction("product","add")
+                    // props.pageReDirectAction("product","add")
                 }
                 console.log(skuDataById) 
                 console.log(props.productData)  
@@ -215,7 +212,7 @@ const SkuList=(props)=> {
         }
         else if(e.target.id !== "each_cost" && e.target.id !== "each_price"&&e.target.id !== "sale_price"){
          
-        if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
+        if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ==="1"?"0":"1")
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,parseInt(e.target.value) ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)
         }
@@ -349,7 +346,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 Archive
                                                 <div class="switcher ml-2">
                                                     <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} 
-                                                    // checked={skuDataById.archived===0?false:true}
+                                                    checked={skuDataById.archived==="0"?false:true}
                                                     />
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
@@ -566,7 +563,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                         return(
 
                                         <tr key={sku.id}>
-                                            <td>{sku.archived===0?"Active":"Archived"}</td>
+                                            <td>{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_cost}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_price}</td>
