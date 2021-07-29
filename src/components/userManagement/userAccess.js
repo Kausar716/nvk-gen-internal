@@ -340,7 +340,7 @@ export const Component = withRouter(({ history, location }) =>{
                                            
                                            <div class="custom-control custom-checkbox mt-2">
                                            <input type="checkbox" class="custom-control-input"  name="QuoteInQuoteOrderPermissions" checked={currentPermissionNames.includes("QuoteInQuoteOrderPermissions")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
-                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>Quote (create, modify &amp; convert)</label>
+                                           <label class="custom-control-label pl-2" for={filteredPermission.id}>Quotes (create, modify &amp; convert)</label>
                                        </div>
                                        )):null}
 
@@ -357,7 +357,7 @@ export const Component = withRouter(({ history, location }) =>{
                                            
                                            <div class="custom-control custom-checkbox mt-2">
                                                 <input type="checkbox" class="custom-control-input" name="actionDeleteOrderInQuoteOrderPermissions" checked={currentPermissionNames.includes("actionDeleteOrderInQuoteOrderPermissions")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
-                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>Action: Delete Order</label>
+                                                <label class="custom-control-label pl-2" for={filteredPermission.id}>Action: Delete Orders</label>
                                             </div>
                                        )):null}
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="actionCreateQuotesInQuoteOrderPermissions"  && premission.group_name === "QuoteOrderPermissions").map(filteredPermission => (
@@ -396,7 +396,7 @@ export const Component = withRouter(({ history, location }) =>{
                                             {exestingPermission?exestingPermission.filter(premission => premission.name==="actionReturnToOrdersInQuoteOrderPermissions"  && premission.group_name === "QuoteOrderPermissions").map(filteredPermission => (
                                            <div class="custom-control custom-checkbox mt-2">
                                            <input type="checkbox" class="custom-control-input" name="actionReturnToOrdersInQuoteOrderPermissions" checked={currentPermissionNames.includes("actionReturnToOrdersInQuoteOrderPermissions")} onChange={this.handleCheckBox} id={filteredPermission.id}/>
-                                           <label class="custom-control-label pl-2" for={filteredPermission.id}> Action: Return to Orders</label>
+                                           <label class="custom-control-label pl-2" for={filteredPermission.id}> Action: Return to Order</label>
                                        </div>
                                        )):null}
                                         {exestingPermission?exestingPermission.filter(premission => premission.name==="reservationsInQuoteOrderPermissions"  && premission.group_name === "QuoteOrderPermissions").map(filteredPermission => (
