@@ -32,7 +32,7 @@ const Left = (props)=>{
 //  }
 const handleMainSelection= (id) => {
   let reduxObject = props.updateObject
-  console.log(reduxObject)
+  console.log("reduxObject",reduxObject)
   setSelectedMainBar(id)
   if(!reduxObject.submenu.includes(id)){
   }

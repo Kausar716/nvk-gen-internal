@@ -457,11 +457,11 @@ export const Component = withRouter(({ history, location }) =>{
                                         <div class="col-md-12 d-flex justify-content-md-end">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="QuoteOrderPermissionsAll" checked={currentPermissionNames.includes("QuoteOrderPermissionsAll") } onClick={this.handleCheckBox} name="QuoteOrderPermissionsAll"/>
-                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsAll"> Select AllQUOT</label>
+                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsAll"> Select All</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-2">
                                                 <input type="checkbox" class="custom-control-input" id="QuoteOrderPermissionsNone" checked={currentPermissionNames.includes("QuoteOrderPermissionsNone") } onClick={this.handleCheckBox} name="QuoteOrderPermissionsNone" />
-                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsNone"> Select NoneQUPT</label>
+                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsNone"> Select None</label>
                                             </div>
                                         </div>
                                     </div>

@@ -8,14 +8,17 @@ import {
     DELETE_ORGANIZATION,
     HANDLE_ORGANIZATION_INPUT_DATA,
     UPLOAD_ORGANIZATION_IMAGE,
-    REMOVE_ORGANIZATION_IMAGE 
+    REMOVE_ORGANIZATION_IMAGE ,
+    DATA_CHANGES_ALERT
    } from './types';
 
 
 
 
    export const dataChangingAlert =()=>dispatch=>{
-            
+    dispatch({
+        type:DATA_CHANGES_ALERT,
+    })
    }
 
    
