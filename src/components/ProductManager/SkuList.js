@@ -121,7 +121,7 @@ const SkuList=(props)=> {
                 if(actionType ==="add"){
                     console.log(product_idFromGeneral)
                     console.log(skuDataById)
-                props.createSkuAction(product_idFromGeneral,skuDataById)
+                    props.createSkuAction(product_idFromGeneral,skuDataById)
                 
                 //    props.pageReDirectAction("product","add")
                
@@ -129,15 +129,16 @@ const SkuList=(props)=> {
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
                 if(actionType ==="edit"){  
-                console.log(skuDataById.id)
                 let skuid = skuDataById.id
                 if(skuDataById.id === undefined){
                      skuid= props.productData.productDataById.product_id
+                     if(props.productData.productDataById.product_id)
+                     skuid= props.productData.productDataById.product_id
+                     else
+                     skuid = props.productData.ae_product_id
                     let x= props.createSkuAction(skuid,skuDataById)
                     x.then(res=>{
                         props.clearSkuFields()
-                        debugger;
-                        console.log(props.temp)
                     })
                      
                     
@@ -422,7 +423,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <input type="date" onChange={handleChange1} className="dateDesign"  disabled={skuDataById.status===0?true:false}
+                                                    <input type="date" onChange={handleChange1} className="dateDesign"style={{cursor:"pointer"}}  disabled={skuDataById.status===0?true:false}
                                                     value={skuDataById.sale_expiry_date}  min={minDateFormate +"-"+minMonthFormate+"-"+new Date().getFullYear()} value={skuDataById.sale_expiry_date}/>
                                                    
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
@@ -442,14 +443,13 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Volume Quality <span class="text-danger">*</span></label>
+                                            <label>Volume Quantity <span class="text-danger">*</span></label>
                                             <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
-                                                    return (filterData.sub_attributes.map(subData=>{
-                                                       
+                                                    return (filterData.sub_attributes.map(subData=>{                                                       
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -583,7 +583,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <td class="text-center">
                                                 <span>
                                                    
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>{handleSKUEdit(sku.id)}}/>
+                                                        <img src="assets/img/edit.svg" alt="" style={{cursor:"pointer"}} onClick={()=>{handleSKUEdit(sku.id)}}/>
                                                    
                                                 </span>
                                                 {/* <span>
