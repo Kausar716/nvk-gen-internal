@@ -6,7 +6,8 @@ import {
     DELETE_ORGANIZATION, 
     HANDLE_ORGANIZATION_INPUT_DATA,
     UPLOAD_ORGANIZATION_IMAGE,
-    REMOVE_USER_IMAGE
+    REMOVE_USER_IMAGE,
+    DATA_CHANGES_ALERT
    } from '../actions/types';
 
 const initialSatate = {
@@ -26,6 +27,16 @@ const initialSatate = {
      console.log(state)
   
     switch(action.type){
+
+        case DATA_CHANGES_ALERT:{
+            return{
+                ...state,
+                organizationData:{...state.organizationData, }
+                
+                
+            }
+
+        }
         
         case GET_ORGANIZATION_LIST:
             return{

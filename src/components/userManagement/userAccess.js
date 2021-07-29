@@ -198,7 +198,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                          class="img-fluid" style={{borderRadius:"7em", width:"7em", height:"7em"}}
+                                                          class="img-fluid" style={{ width:"7em", height:"7em"}}
                                                           />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                         {/* </div> */}
@@ -457,11 +457,11 @@ export const Component = withRouter(({ history, location }) =>{
                                         <div class="col-md-12 d-flex justify-content-md-end">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="QuoteOrderPermissionsAll" checked={currentPermissionNames.includes("QuoteOrderPermissionsAll") } onClick={this.handleCheckBox} name="QuoteOrderPermissionsAll"/>
-                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsAll"> Select AllQUOT</label>
+                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsAll"> Select All</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-2">
                                                 <input type="checkbox" class="custom-control-input" id="QuoteOrderPermissionsNone" checked={currentPermissionNames.includes("QuoteOrderPermissionsNone") } onClick={this.handleCheckBox} name="QuoteOrderPermissionsNone" />
-                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsNone"> Select NoneQUPT</label>
+                                                <label class="custom-control-label pl-2" for="QuoteOrderPermissionsNone"> Select None</label>
                                             </div>
                                         </div>
                                     </div>
