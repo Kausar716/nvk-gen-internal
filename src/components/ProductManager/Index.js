@@ -62,6 +62,7 @@ const  ProductManagement = (props) =>{
     const [selectedRadio,setRadio] =useState("all")
     const product_idFromGeneral =props.temp.productData.ae_product_id
     const [loader,setLoader] = useState(false)
+    const [loaderMessage,setLoaderMessage]=useState("Loading Data...")
     //const {categoryData,subCategoryData} = props.categoryData
         useEffect(()=>{
             props.getAllProductAction()
@@ -75,8 +76,7 @@ const  ProductManagement = (props) =>{
         const handleCategoryData =(e)=>{
             let temSub =[];
 
-            console.log(e.target.id)
-            console.log("asca0", e.target.value)
+           setLoaderMessage("No Records Found...")
             //console.log("propsSubCategory", props.categoryData.subCategoryData)
             if(e.target.id ==="category"){
                 // props.handleCategory(e.target.value,"0")
@@ -121,6 +121,7 @@ const  ProductManagement = (props) =>{
         }
 
         const resetFilter = () =>{
+            setLoaderMessage("Loading Data...")
             setLoader(true)
             setCategory("All")
             setCategoryId("0")
@@ -331,7 +332,7 @@ const  ProductManagement = (props) =>{
                              {/* <div className="centerItem">
                              {loader?  <p > {"Resetting ... " }<Loader /></p>:null}
                              </div> */}
-                                    <ProductTable />
+                                    <ProductTable loaderMessage={loaderMessage} />
                             </div>
                         </div>
                     </div>

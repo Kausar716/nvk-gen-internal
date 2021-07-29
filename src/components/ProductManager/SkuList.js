@@ -110,8 +110,6 @@ const SkuList=(props)=> {
     console.log(supCategoryIdForFilter)
     console.log("product_id_List", finalPrID)
     console.log(skuDataById)
-    console.log()
-   
 
 
     const submitAction = (e) =>{
@@ -121,7 +119,7 @@ const SkuList=(props)=> {
                 if(actionType ==="add"){
                     console.log(product_idFromGeneral)
                     console.log(skuDataById)
-                props.createSkuAction(product_idFromGeneral,skuDataById)
+                    props.createSkuAction(product_idFromGeneral,skuDataById)
                 
                 //    props.pageReDirectAction("product","add")
                
@@ -129,26 +127,26 @@ const SkuList=(props)=> {
                 //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
    
                 if(actionType ==="edit"){  
-                console.log(skuDataById.id)
                 let skuid = skuDataById.id
                 if(skuDataById.id === undefined){
                      skuid= props.productData.productDataById.product_id
+                     if(props.productData.productDataById.product_id)
+                     skuid= props.productData.productDataById.product_id
+                     else
+                     skuid = props.productData.ae_product_id
                     let x= props.createSkuAction(skuid,skuDataById)
                     x.then(res=>{
                         props.clearSkuFields()
-                        debugger;
-                        console.log(props.temp)
-                    })
-                     
+                    })                   
                     
                 }
                 else{
                    
                     skuDataById.subcategory = skuDataById.sub_category_id
                     console.log(skuDataById)
-                   
+                  
                     props.updateSkuActionClear(skuid,skuDataById)
-                    props.pageReDirectAction("product","add")
+                    // props.pageReDirectAction("product","add")
                 }
                 console.log(skuDataById) 
                 console.log(props.productData)  
@@ -214,7 +212,7 @@ const SkuList=(props)=> {
         }
         else if(e.target.id !== "each_cost" && e.target.id !== "each_price"&&e.target.id !== "sale_price"){
          
-        if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ===1?0:1)
+        if(e.target.id ==="archived") props.handleSkuInputAction(e.target.id,e.target.value ==="1"?"0":"1")
         else if(e.target.id ==="status") props.handleSkuInputAction(e.target.id,parseInt(e.target.value) ===1?0:1)
         else props.handleSkuInputAction(e.target.id,e.target.value)
         }
@@ -348,7 +346,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 Archive
                                                 <div class="switcher ml-2">
                                                     <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} 
-                                                    // checked={skuDataById.archived===0?false:true}
+                                                    checked={skuDataById.archived==="0"?false:true}
                                                     />
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
@@ -422,7 +420,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <input type="date" onChange={handleChange1} className="dateDesign"  disabled={skuDataById.status===0?true:false}
+                                                    <input type="date" onChange={handleChange1} className="dateDesign"style={{cursor:"pointer"}}  disabled={skuDataById.status===0?true:false}
                                                     value={skuDataById.sale_expiry_date}  min={minDateFormate +"-"+minMonthFormate+"-"+new Date().getFullYear()} value={skuDataById.sale_expiry_date}/>
                                                    
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
@@ -442,14 +440,13 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Volume Quality <span class="text-danger">*</span></label>
+                                            <label>Volume Quantity <span class="text-danger">*</span></label>
                                             <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
                                             <option>None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
-                                                    return (filterData.sub_attributes.map(subData=>{
-                                                       
+                                                    return (filterData.sub_attributes.map(subData=>{                                                       
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -566,7 +563,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                         return(
 
                                         <tr key={sku.id}>
-                                            <td>{sku.archived===0?"Active":"Archived"}</td>
+                                            <td>{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_cost}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_price}</td>
@@ -583,7 +580,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <td class="text-center">
                                                 <span>
                                                    
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>{handleSKUEdit(sku.id)}}/>
+                                                        <img src="assets/img/edit.svg" alt="" style={{cursor:"pointer"}} onClick={()=>{handleSKUEdit(sku.id)}}/>
                                                    
                                                 </span>
                                                 {/* <span>

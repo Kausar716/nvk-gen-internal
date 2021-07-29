@@ -340,7 +340,7 @@ console.log(data)
             dispatch({
                 type:UPDATE_SKU_ACTION
             })
-            error.push("Product Updated Successfully")
+            error.push("SKU Updated Successfully")
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
@@ -386,13 +386,15 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
             supplier_id:1,
         };
         const FinalData = {...data1, id, ...data}
+        console.log(FinalData)
+
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{
            console.log(res)
            // error.push("Product Updated Successfully")
         dispatch({
             type:UPDATE_SKU_ACTION_CLEAR
         })
-        error.push("Product updated successfully and cleared Data")
+        error.push("SKU successfully and cleared Data")
         dispatch(getAllSkuAction(id))
         dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
         dispatch({

@@ -50,6 +50,7 @@ const  PlantManger=(props)=> {
     const [categoryId,setCategoryId] = useState(0)
     const [inputValue, setInputValue] = useState("");
     const [loader,setLoader] = useState(false)
+    const [loaderMessage,setLoaderMessage]=useState("Loading Data...")
     const [errorObj,setErrorObj] = useState({ genusError:0,lastNameError:0,phoneError:0,emailError:0,positionError:0})
 const productFormAction = ()=>{
         this.props.getProductPage("general")
@@ -102,11 +103,13 @@ const productFormAction = ()=>{
         setId(id)
     }
         const getValue = (e)=>{
+            setLoaderMessage("No Records Found...")
             console.log(e.target.value)
             props.serachPlant({plant: e.target.value, option: selectedRadio, category: categoryId})
             setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
+            setLoaderMessage("No Records Found...")
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
             props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
@@ -114,6 +117,7 @@ const productFormAction = ()=>{
 
         }
         const searchBasedOnCategory = (e) =>{
+            setLoaderMessage("No Records Found...")
             //console.log(e.target.value)
             //props.searchCategoryApplyAction(e.target.value)
             props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
@@ -128,6 +132,7 @@ const productFormAction = ()=>{
 
         // }
         const resetData = () =>{
+            setLoaderMessage("Loading Data...")
             setLoader(true)
             let result = props.getAllPlantAction()
             result.then(res=>{
@@ -245,10 +250,10 @@ const productFormAction = ()=>{
                                     </div>
                                     <hr/>
                                   
-                                    <PlantTable/>
-                                      <div className="centerItem">
+                                    <PlantTable loaderMessage={loaderMessage}/>
+                                      {/* <div className="centerItem">
                                     {loader?  <p > {"Resetting ... " }<Loader /></p>:null}
-                                    </div>
+                                    </div> */}
                                     
                                 </div>
                             </div>

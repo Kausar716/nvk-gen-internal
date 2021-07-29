@@ -193,21 +193,21 @@ import {
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={plantDataById.in_production==="0"?false:true}/>
-                                                <label for="in_production"></label>
+                                                <label for="in_production" style={{cursor:"pointer"}}></label>
                                             </div>
                                             In Production
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="discontinued"  onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
-                                                <label for="discontinued"></label>
+                                                <input type="checkbox" id="discontinued"   onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
+                                                <label for="discontinued" style={{cursor:"pointer"}}></label>
                                             </div>
                                             Discontinued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="archived"  onChange={handleInput} value={plantDataById.archived} checked={plantDataById.archived===0?false:true}/>
-                                                <label for="archived"></label>
+                                                <label for="archived" style={{cursor:"pointer"}}></label>
                                             </div>
                                             Archive
                                         </div>

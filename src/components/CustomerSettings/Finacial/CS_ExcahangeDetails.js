@@ -2,6 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse, Row, Col, Label} from 'reactstrap';
 import {connect} from "react-redux";
+import ActionModal from '../../Modal/ActionModal';
 import {handleChangeFilter,getAllCustomerExchange,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
 import {saveSupplierData,handleSupplierExchnageData,getAllSupplierExchange} from "../../../actions/supplierManagementAction";
 import DatePicker from "react-datepicker";
@@ -52,6 +53,9 @@ const CS_ExcahangeDetails = (props) => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [successMessage,setSuccessMessage] = useState([])
   const toggle1  = ()=>setIsOpen1(!isOpen);
+  const [open,setOpen] = useState(false)
+  const [message,setMessage] = useState("")
+  const [type, setType] = useState("")
   // const [customerExchange,setCustomerExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
   // const [supplierExchange,setSupplierExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
 
@@ -61,12 +65,14 @@ const CS_ExcahangeDetails = (props) => {
 
   const handleInputData =(e)=>{
     setCheckedData(true)
-    props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+
+    props.handleExchangeData(parseFloat((e.target.value*1.0000)),e.target.id,"customerExchange")
 
   }
   const handleInputData1 =(e)=>{
     setCheckedData(true)
-    props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
+
+    props.handleSupplierExchnageData(parseFloat((e.target.value*1.0000)),e.target.id,"supplierExchange")
 
   }
   const datePickerData =(e)=>{
@@ -141,11 +147,38 @@ useEffect(()=>{
 
   }
   let dateToShow2 = split2[0]+"-"+month3+"-"+date3
+  const cancel = ()=>{
+    setOpen(false)
+    // setId(0)
+    setType("")
+    setMessage("")
+     
+ }
+ const confirm = ()=>{
+     if(type==="save"){
+      saveExchangeData()
+      
 
+     }
+
+    setOpen(false)
+    // setId(0)
+    setType("")
+    setMessage("")
+}
+const confirmAction = (type)=>{
+  if(type=="save"){
+      setType(type)
+      setMessage("Are you sure you want to Save?")
+
+  }
+  setOpen(true)
+  // setId(id)
+}
 
   return (
     <>
-    
+     <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       <Label className="subFont">Customer and Supplier Exchange Details</Label>
@@ -194,7 +227,7 @@ useEffect(()=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  value={customerExchange.exchange_rate>"0"?customerExchange.exchange_rate:""} onChange={handleInputData} id="exchange_rate" step=".001"/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate>"0"?customerExchange.exchange_rate:""} onChange={handleInputData} id="exchange_rate" step=".001"/> 
                             </div>
                            
                             
@@ -246,7 +279,7 @@ useEffect(()=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate>"0"?supplierExchange.exchange_rate:""}    onChange={handleInputData1} id="exchange_rate"/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate>"0"?supplierExchange.exchange_rate:""}    onChange={handleInputData1} id="exchange_rate"/> 
                             </div>
                            
                            
@@ -270,7 +303,7 @@ useEffect(()=>{
               
           <div align="right" className="action_area_left">
                         <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
-                        <button className="button_style_Tools_Setting_Save" onClick={saveExchangeData}  disabled={checkedData==true?false:true}>Save</button>
+                        <button className="button_style_Tools_Setting_Save" onClick={()=>confirmAction("save")}  disabled={checkedData==true?false:true}>Save</button>
                   </div>
                   </Col> 
 

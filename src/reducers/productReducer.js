@@ -81,7 +81,7 @@ const initialSatate = {
         sku_item_name:"",
         subcategory:null,
         discontinued:null,
-        archived:null,
+        archived:"0",
         status:1,
         supplier_id:1,
         volume_price_per_unit:null,
@@ -140,7 +140,7 @@ export default function(state = initialSatate, action){
                     discontinued:0,
                     status:1,
                     supplier_id:1,
-                    archived:0,
+                    archived:"0",
                     volume_price_per_unit:null,
                     volume_quantity:null
                     //id:null
@@ -252,7 +252,7 @@ export default function(state = initialSatate, action){
                     subcategory:null,
                     discontinued:0,
                     status:1,
-                    archived:0,
+                    archived:"0",
                     supplier_id:1,
                     volume_price_per_unit:null,
                     volume_quantity:null
@@ -357,7 +357,7 @@ export default function(state = initialSatate, action){
                 category_id:null,
                 subcategory_id:null,
                 manufacturer_id:null,
-                archived:0,
+                archived:"0",
                 internal_notes:"",
                 discontinued:0
             },

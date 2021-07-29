@@ -190,7 +190,7 @@ if(productDataById){
                                                 <input type="checkbox" name="discontinued"  id="discontinued" onChange={handleInput} value={productDataById.discontinued}
                                                  checked={productDataById.discontinued===0?false:true}
                                                   />
-                                                <label for="discontinued"></label>
+                                                <label for="discontinued" style={{cursor:"pointer"}}></label>
                                             </div>
                                             Discountiued
                                         </div>
@@ -199,7 +199,7 @@ if(productDataById){
                                                 <input type="checkbox"    id="archived"  onChange={handleInput} value={productDataById.archived}
                                                  checked={productDataById.archived===0?false:true}
                                                  />
-                                                <label for="archived"></label>
+                                                <label for="archived" style={{cursor:"pointer"}}></label>
                                             </div>
                                             Archive
                                         </div>

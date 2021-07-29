@@ -336,7 +336,7 @@ const SkuList = (props)=>{
                                                 <div class="switcher ml-2">
                                                     <input type="checkbox" name="archived" 
                                                      id="archived" onChange={handleInput} value={plantSkuDataById.archived} checked={plantSkuDataById.archived==="0"?false:true}/>
-                                                    <label for="archived"></label>
+                                                    <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
                                         </div>
@@ -541,7 +541,7 @@ const SkuList = (props)=>{
                                                 <td class="text-center">
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
-                                                            <img src="assets/img/edit.svg" alt="" onClick={()=>getSpecifiedplant(skuData,"edit","sku")}/>
+                                                            <img src="assets/img/edit.svg" alt="" style={{cursor:"pointer"}} onClick={()=>getSpecifiedplant(skuData,"edit","sku")}/>
                                                         {/* </a> */}
                                                     </span>
                                                     {/* duplicate doesnt exeist for sku */}
@@ -552,7 +552,7 @@ const SkuList = (props)=>{
                                                     {/* </span>  */}
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
-                                                            <img src="assets/img/delete.svg" alt="" onClick={()=>confirmAction(skuData.id,"delete")}/>
+                                                            <img src="assets/img/delete.svg" alt="" style={{cursor:"pointer"}} onClick={()=>confirmAction(skuData.id,"delete")}/>
                                                         {/* </a> */}
                                                     </span>
                                                 </td>
