@@ -134,9 +134,12 @@ export class OrganizationSettings extends React.Component {
 
 
     validation = () =>{
+        let {errorObj,errorCount}=this.state
          let {name,phone,sending_email_address, main_body, main_title, secondary_body,secondary_title} = this.props.organizationData.organizationData
 
-        if(phone ==="" || name==="" || sending_email_address==="" || main_body ==="" || main_title ==="" || secondary_body ==="" || secondary_title ===""){
+        if(phone ==="" || name==="" || sending_email_address==="" || main_body ==="" || main_title ==="" || secondary_body ==="" || secondary_title ===""  ){
+            
+
         return 1
         }
         else{
@@ -246,11 +249,19 @@ export class OrganizationSettings extends React.Component {
 
         // }   
 
+      
+
          if(! emailReg.test(organizationData.sending_email_address)){
             errorObj.sendingEmailError=1
             errorCount++
         }
        
+        if(organizationData.name ===""){
+            errorObj.firstNameError=1
+            errorCount++
+
+        }
+    
 
 
         // if(!nameReg.test(organizationData.name)){
@@ -276,6 +287,8 @@ export class OrganizationSettings extends React.Component {
 
 
     handleSubmit = (e) => {
+
+
             //debugger;
 
            
@@ -285,6 +298,11 @@ export class OrganizationSettings extends React.Component {
         if(this.state.phoneNumberInOrganization === undefined){
             window.location.reload();
     }
+
+    
+
+
+
      const phoneError = validateInput22(phoneNUMBER);
     
     this.setState({ phoneError }, () => {
@@ -309,7 +327,7 @@ export class OrganizationSettings extends React.Component {
 
         let errorLength =  this.validation()
         if(errorLength ===1){
-            this.setState({isOpen1:true,message:["Please fill all fileds with valid inputs"]})
+            this.setState({isOpen1:true,message:["Please fill all fields with valid inputs"]})
         }
 
         // else{
@@ -333,6 +351,8 @@ export class OrganizationSettings extends React.Component {
         // }
 
 
+
+
        
       else  if(count === 0 && phoneError===""){
              console.log(this.state)
@@ -342,9 +362,9 @@ export class OrganizationSettings extends React.Component {
              updateObject.id=this.props.organizationData.organizationData.id
              console.log("hadModified",this.state.hadModified.name)
             
-             if(this.state.hadModified.name === true){
+            //  if(this.state.hadModified.name === true){
                 updateObject.name = this.props.organizationData.organizationData.name
-             }
+            //  }
 
              if(this.state.hadModified.sending_email_address === true){
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
@@ -576,7 +596,7 @@ export class OrganizationSettings extends React.Component {
      let phno = organizationDataById.phone;
 
     //  const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-    //  let phno = organizationDataById.phone ||'';
+    //  let phno = organizationDataById.phone ||'';organizationDataById.name
     //     let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
   
     
@@ -691,12 +711,11 @@ export class OrganizationSettings extends React.Component {
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
-                                            {/* <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} 
+                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} 
                                              id={"phone1"} 
                                             value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization} 
-                                             onChange={this.handleChange} /> */}
-                                            <InputMask
-                                            mask="(999) 999-9999" maskChar={" "}
+                                             onChange={this.handleChange} />
+                                            {/* <input
                                                     class="form-control"  
                                                     type="text"
                                                     name="phone"
@@ -709,7 +728,7 @@ export class OrganizationSettings extends React.Component {
                                                      onChange={this.handleChange}
                                                      //maxLength="10"
                                                    
-                                                />
+                                                /> */}
                                                 {this.state.phoneError && <span style={{fontSize:"small",color:"red"}} >{this.state.phoneError}</span>}
                                         </div>
                                     </div>

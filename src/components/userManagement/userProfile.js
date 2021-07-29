@@ -193,10 +193,14 @@ export class UserProfile extends Component {
             errorObj.phoneError=1
             errorCount++
         }
-        if(this.state.phone.length>14){
-            errorObj.phoneError=1
-            errorCount++
-        }
+
+
+
+       
+        // if(this.state.phone.length>14){
+        //     errorObj.phoneError=1
+        //     errorCount++
+        // }
         if(this.state.position.length === 0){
             console.log(this.state.position)
             errorObj.positionError=1
