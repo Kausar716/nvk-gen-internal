@@ -789,7 +789,9 @@ export class OrganizationSettings extends React.Component {
                         <div class="col-md-12 col-lg-12 text-md-right mt-3 mt-md-0">
                             <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={()=>{confirmAction("goBack"); }}  >Cancel</button>
                             <button type="button" class="btn btn-primary btn-lg ml-3" 
-                             onClick={()=>{confirmAction("save");}}
+                            onClick={this.handleSubmit}
+                                //  ()=>{confirmAction("save");}
+                              
                              
                             // onClick={this.handleSubmit}
                             >Save</button>
