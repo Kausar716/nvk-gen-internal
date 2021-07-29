@@ -267,7 +267,9 @@ import {
 
                                         <ReactTagInput 
                                                     tags={tags} 
-                                                    onChange={(tags) => setTags(tags)}
+                                                    onChange={(tags) =>{
+                                                        props.handlePlantInputAction("tagsData",tags)
+                                                         setTags(tags)}}
                                                     />
                                     </div>
 

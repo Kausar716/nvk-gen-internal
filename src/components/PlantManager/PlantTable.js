@@ -92,7 +92,8 @@ const PlantTable=(props)=> {
     setId(id)
 }
 const handleCheckBoxData =(plantId,index)=>{
-    console.log(plantId,index)
+    // console.log(plantId,index)
+    props.updateCheckboxData(plantId,)
 
 }
 

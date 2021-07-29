@@ -146,6 +146,63 @@ const initialSatate = {
 
 
 
+          else if(action.permissionName === "QuoteOrderPermissionsAll"){
+               
+                const quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="QuoteOrderPermissions")
+                console.log(quotesArray)
+                quotesArray.map(premission=>{
+                    if(permissionArray.length>0){
+                    if(!permissionArray.includes(premission.id)){
+                        permissionArray.push(premission.id)
+                        currentPermissionNames.push(premission.name)
+                    }
+                }
+                else  {
+                    permissionArray.push(premission.id)
+                    currentPermissionNames.push(premission.name)
+                }
+                })
+                console.log(currentPermissionNames)
+                console.log(permissionArray)
+                let quotesIndex = currentPermissionNames.indexOf("QuoteOrderPermissionsNone")
+                console.log(quotesIndex)
+                if(quotesIndex>=0){
+                currentPermissionNames.splice(quotesIndex,1)
+                
+                }
+                else if(quotesIndex === -1){
+                    currentPermissionNames.push(action.permissionName)
+                }
+            } 
+
+
+
+
+
+            else if(action.permissionName === "QuoteOrderPermissionsNone" ){
+                let quotesIndex = currentPermissionNames.indexOf("QuoteOrderPermissionsNone")
+                currentPermissionNames.splice(quotesIndex,1)
+                currentPermissionNames.push(action.permissionName)
+                let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="QuoteOrderPermissions")
+                console.log(quotesArray)
+                quotesArray.map(premission=>{
+                    if(permissionArray.length>0){
+                    if(permissionArray.includes(premission.id)){
+                        // currentPermissionNames.push(premission.name)
+                        let index = permissionArray.indexOf(premission.id)
+                        permissionArray.splice(index,1)
+                        currentPermissionNames.splice(index,1)
+                        
+                    }
+                }
+                
+                })
+                console.log(currentPermissionNames)
+                console.log(permissionArray)
+
+                
+            }
+
             // if(action.permissionName === "quotesAll"){
             //     let quotesArray = state.permissionListBackup.filter(permission=>permission.group_name==="quotesAndOrders")
             //     console.log(quotesArray)
@@ -589,35 +646,35 @@ const initialSatate = {
 
                 
             }
-            else 
-            if(action.permissionName === "additionalPermissionNo"){
-                let quotesIndex = currentPermissionNames.indexOf("additionalPermissionYes")
-                if(quotesIndex>=0){
-                    currentPermissionNames.splice(quotesIndex,1)                
-                }
-                else if(quotesIndex === -1){
-                    currentPermissionNames.push(action.permissionName)
-                }
-                let quotesArray = state.permissionListBackup.filter(permission=>
-                    ((permission.group_name==="userManagement") || (permission.group_name==="customerManagement")||(permission.group_name==="toolsAndSettings")))
-                console.log(quotesArray)
-                quotesArray.map(premission=>{
-                    if(permissionArray.length>0){
-                        if(permissionArray.includes(premission.id)){
-                            // currentPermissionNames.push(premission.name)
-                            let index = permissionArray.indexOf(premission.id)
-                            permissionArray.splice(index,1)
-                            currentPermissionNames.splice(index,1)
+            // else 
+            // if(action.permissionName === "additionalPermissionNo"){
+            //     let quotesIndex = currentPermissionNames.indexOf("additionalPermissionYes")
+            //     if(quotesIndex>=0){
+            //         currentPermissionNames.splice(quotesIndex,1)                
+            //     }
+            //     else if(quotesIndex === -1){
+            //         currentPermissionNames.push(action.permissionName)
+            //     }
+            //     let quotesArray = state.permissionListBackup.filter(permission=>
+            //         ((permission.group_name==="userManagement") || (permission.group_name==="customerManagement")||(permission.group_name==="toolsAndSettings")))
+            //     console.log(quotesArray)
+            //     quotesArray.map(premission=>{
+            //         if(permissionArray.length>0){
+            //             if(permissionArray.includes(premission.id)){
+            //                 // currentPermissionNames.push(premission.name)
+            //                 let index = permissionArray.indexOf(premission.id)
+            //                 permissionArray.splice(index,1)
+            //                 currentPermissionNames.splice(index,1)
                             
-                        }
-                }
+            //             }
+            //     }
                 
-                })
-                console.log(currentPermissionNames)
-                console.log(permissionArray)
+            //     })
+            //     console.log(currentPermissionNames)
+            //     console.log(permissionArray)
 
                 
-            }
+            // }
            
            
 
@@ -662,19 +719,26 @@ const initialSatate = {
 
              }
             else {
-               // debugger;
+                //debugger;
             let permissionSelectedObject = state.permissionListBackup.filter(permission=>permission.name===action.permissionName)
-            console.log("permissionSelectedObject",permissionSelectedObject)
-            // if(!permissionArray.includes(permissionSelectedObject[0].id)){
-            //     permissionArray.push(permissionSelectedObject[0].id)
-            //     currentPermissionNames.push(permissionSelectedObject[0].name)
+            console.log("permissionSelectedObject",permissionSelectedObject, permissionArray)
+            
+            // if(permissionArray.includes(permissionSelectedObject.lenth) < 0 ){
+            //     return 
             // }
+
+
+            if(!permissionArray.includes(permissionSelectedObject[0].id) && action.permissionName ==="QuoteOrderPermissionsNone"){
+
+                permissionArray.push(permissionSelectedObject[0].id)
+                currentPermissionNames.push(permissionSelectedObject[0].name)
+            }
            
-            // else {
-            //    let index = permissionArray.indexOf(permissionSelectedObject[0].id)
-            //    permissionArray.splice(index,1)
-            //    currentPermissionNames.splice(index,1)
-            // }
+            else {
+               let index = permissionArray.indexOf(permissionSelectedObject[0].id)
+               permissionArray.splice(index,1)
+               currentPermissionNames.splice(index,1)
+            }
         }
             console.log(permissionArray)
             console.log(currentPermissionNames)
