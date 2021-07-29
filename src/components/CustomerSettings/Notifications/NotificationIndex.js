@@ -4,8 +4,10 @@ import { Collapse, Label,Tooltip} from 'reactstrap';
 import {connect} from "react-redux";
 import "./main.css"
 import ReactTooltip from 'react-tooltip';
+import CustomerActionModal from '../../Modal/CustomerActionModal';
 import {handleChangeFilter,saveNoticationData,getNotificationData} from "../../../actions/customerSettingAction";
 import SuccessModal from '../../Modal/SuccessModal';
+// import ActionModal from '../../Modal/ActionModal';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 //import validators from './validators'
@@ -41,6 +43,9 @@ const Notification = (props) => {
     const [notificationError,setNotificationError] = useState(["",""])
     const [checkedData,setCheckedData] = useState(false)
     const [tooltipOpen, setTooltipOpen] = useState(false);
+    const [open,setOpen] = useState(false)
+    const [message,setMessage] = useState("")
+    const [type, setType] = useState("")
 
     const toggleTool = () => setTooltipOpen(!tooltipOpen);
     const [tooltipOpen1, setTooltipOpen1] = useState(false);
@@ -111,13 +116,40 @@ const Notification = (props) => {
    props.saveNoticationData(obj)
  }
 
+ const cancel = ()=>{
+  setOpen(false)
+  // setId(0)
+  setType("")
+  setMessage("")
+   
+}
+const confirm = ()=>{
+   if(type==="save"){
+    saveNotfication()
+    
 
+   }
+
+  setOpen(false)
+  // setId(0)
+  setType("")
+  setMessage("")
+}
+const confirmAction = (type)=>{
+if(type=="save"){
+    setType(type)
+    setMessage("Are you sure you want to Save?")
+
+}
+setOpen(true)
+// setId(id)
+}
 
   const {ready_to_late_notice,reserve_expiry_notice} = props.customerData;
   console.log(ready_to_late_notice)
   return (
     <>
-
+<CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle} className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       
@@ -148,12 +180,12 @@ const Notification = (props) => {
     </div> */}
 
                       <div className="notification_label">
-                            <label>READY to LATE Notice <span><i id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5",marginTop:10}} class="fa fa-info" aria-hidden="true"></i>
+                      <p style={{marginBottom:"2px",fontWeight:"bold"}}>READY to LATE Notice <i id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5"}} class="fa fa-info"></i>
        
                             <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
                                 <p>Set the number of days after the requested date for order in READY state waiting for pickup or shipment.</p>
-                            </Tooltip> </span></label>
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                            </Tooltip></p>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
                                 </div> 
@@ -161,12 +193,12 @@ const Notification = (props) => {
                       </div>
 
                       <div className="notification_label">
-                            <label>Reserve Expiry Notice <span><i   style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5"}} class="fa fa-info" id="TooltipExample1"></i>
+                            <p style={{marginBottom:"2px",fontWeight:"bold"}}>Reserve Expiry Notice <i   style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5",marginBottom:"-3px"}} class="fa fa-info" id="TooltipExample1"></i>
                             <Tooltip    className="in" id="tooltip-top1" placement="right" isOpen={tooltipOpen1} target="TooltipExample1" toggle={toggleTool1} >
-                                <p>Set the number of days remaining on the order reservation date</p>
+                                <p>Set the number of days remaining on the order reservation date.</p>
                             </Tooltip> 
-                            </span></label>
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
+                            </p>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[1]}</span>}
                                 </div> 
@@ -176,9 +208,9 @@ const Notification = (props) => {
 
                     </div>
                     <div align="right" className="action_area_left" style={{marginRight:180}}>
-                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} onClick={resetData} disabled={checkedData==true?false:true}>Cancel</button>
+                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} onClick={resetData} disabled={checkedData==true?false:true}>Reset</button>
                         <button className={"button_style_Tools_Setting_Save"}
-                        onClick={saveNotfication}  disabled={checkedData==true?false:true}>Save</button>
+                        onClick={()=>confirmAction("save")}  disabled={checkedData==true?false:true}>Save</button>
                   </div> 
 
                         

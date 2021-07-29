@@ -216,7 +216,7 @@ render() {
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p style={{fontWeight:"bold"}}>Reasons</p>
+                                        <p style={{fontWeight:"bold"}}>Category</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } placeholder="category" id="category"
