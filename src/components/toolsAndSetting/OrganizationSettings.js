@@ -8,6 +8,7 @@ import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
 import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
+import { Prompt } from 'react-router'
 export const Component = withRouter(({ history, location }) =>{
 
 })
@@ -128,6 +129,18 @@ export class OrganizationSettings extends React.Component {
          
     }
 
+
+
+    // componentDidUpdate = () => {
+    //     let dataOrganizationDetails =  this.props.organizationData.organizationData;
+    //     if (!dataOrganizationDetails) {
+    //       window.onbeforeunload = () => true
+    //       this.handleSubmit();
+    //     } else {
+    //       window.onbeforeunload = undefined
+    //     }
+    //   }
+
     toggle1 =()=>{
         this.setState({isOpen1:false})
     }
@@ -156,7 +169,11 @@ export class OrganizationSettings extends React.Component {
      // debugger
        // this.setState({value1: e.target.value})
         const {target:{name,value}} =e
-        let {errorObj,errorCount,hadModified} = this.state        
+        let {errorObj,errorCount,hadModified} = this.state  
+        
+        
+
+
         // this.setState({[name]:value})    
         //this.setState({value1: event.target.value} 
            // this.setState({[name]:value})     
@@ -193,6 +210,16 @@ export class OrganizationSettings extends React.Component {
         this.setState({errorObj,errorCount,hadModified})
        // let allValue =[...value, this.state.value1]
         this.props.handleOrganizationSettingsInputAction(name,value)
+
+
+        if(name === "sending_email_address" || name === "name" ){
+            hadModified.sending_email_address=true
+            hadModified.name=true
+                 
+        }
+
+
+
         
     }
 
@@ -330,26 +357,6 @@ export class OrganizationSettings extends React.Component {
             this.setState({isOpen1:true,message:["Please fill all fields with valid inputs"]})
         }
 
-        // else{
-
-        //     let updateObject={}
-        //     updateObject.id=this.props.organizationData.organizationData.id
-        //     updateObject.phone = removedNumber
-        //     updateObject.name = this.props.organizationData.organizationData.name
-        //     updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
-        //     updateObject.main_title = this.props.organizationData.organizationData.main_title
-        //     updateObject.secondary_title = this.props.organizationData.organizationData.secondary_title
-        //     updateObject.main_body = this.props.organizationData.organizationData.main_body
-        //     updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
-        //     updateObject.log=this.props.organizationData.organizationData.logo
-        //     let result = this.props.updateorganization(updateObject)
-        //     result.then(data=>{
-        //         this.props.showorganization(2)
-        //     })
-
-            
-        // }
-
 
 
 
@@ -422,7 +429,16 @@ export class OrganizationSettings extends React.Component {
      }
      componentDidMount(){
          let id = "2"
+         const { history } = this.props;
        this.props.showorganization(id)
+     let dataOrganizationDetails= this.props.organizationData.organizationData
+       if (dataOrganizationDetails) {
+        window.onbeforeunload = () => true
+        this.handleSubmit();
+      } else {
+        window.onbeforeunload = undefined
+         history.push("/Dashboard")
+      }
      }
 
     //  let history = useHistory();
@@ -606,6 +622,10 @@ export class OrganizationSettings extends React.Component {
         const { value1} = this.state;
     return (
         <div clas="userManagementSection">
+            <Prompt
+      when={organizationDataById}
+      message=' Are you sure you want save and leave?'
+    />
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
