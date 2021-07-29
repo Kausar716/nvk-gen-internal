@@ -3,6 +3,8 @@ import React from 'react'
 
  export class StaffDirectory extends React.Component {  
      render(){
+
+        let TempUrl = "./images/noPerson.png";
     return (
         <div>
             <div class="contentHeader bg-white d-flex align-items-center">
@@ -76,7 +78,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc stsLiked">
@@ -95,7 +97,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc">
@@ -114,7 +116,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc stsLiked">
@@ -133,7 +135,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc">
@@ -152,7 +154,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc stsLiked">
@@ -171,7 +173,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc">
@@ -190,7 +192,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc stsLiked">
@@ -209,7 +211,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc">
@@ -228,7 +230,7 @@ import React from 'react'
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
                                         <a class="media-left" href="javascript:;">
-                                            <img src="assets/img/staff-01.png" alt="" class="media-object rounded" />
+                                            <img src={TempUrl} alt="" class="media-object rounded" />
                                         </a>
                                         <div class="media-body">
                                             <a href="" class="likeIc stsLiked">

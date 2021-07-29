@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal';
 import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
+import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
 export const Component = withRouter(({ history, location }) =>{
 
@@ -104,6 +105,7 @@ export class OrganizationSettings extends React.Component {
         // alert(1)
         // debugger;
         // this.setState({logo:e.target.files[0]})
+      
         console.log(e1.target.files[0])
         let imageData = e1.target.files[0]
         let id="2"
@@ -113,8 +115,10 @@ export class OrganizationSettings extends React.Component {
            
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
-
+           
         setTimeout(function() {
+          
+
             window.location.reload();
             alert("image successfully uploaded")
             
@@ -397,12 +401,15 @@ export class OrganizationSettings extends React.Component {
     //  let history = useHistory();
     render(){
 
+        
+
        console.log("organizationData",this.props.organizationData.organizationData)
         const { actionType } = this.state;
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        var TempUrl="assets/img/noImage.png";
+        let TempUrl = "./images/noPerson.png";
+        // var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
        // var iImage="assets/img/noImage.png";
         
@@ -418,6 +425,8 @@ export class OrganizationSettings extends React.Component {
               }
               else{
                     url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
+
+                     
               }
                
                
@@ -439,6 +448,7 @@ export class OrganizationSettings extends React.Component {
             if(this.state.imageUploaded){
                 url = URL.createObjectURL(organizationDataById.logo)
                 console.log(url)
+
             }
             else{
                 //debugger
@@ -602,10 +612,10 @@ export class OrganizationSettings extends React.Component {
                                             <img 
                                               src={url}
                                               id="imageid"
-                                            //   src={this.state.imagePreviewURL}
-                                           // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
-                                           // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"250px",width:"240px", borderRadius:"7em"}}/>
+                                          
+                                            style={{height:"250px",width:"240px"}}/>
+                                            <p > <Loader /></p> 
+                                             
                                         </div>
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
@@ -617,11 +627,12 @@ export class OrganizationSettings extends React.Component {
                                                 <span class="f-s-20" style={{position:"absolute"}} >Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
+                                            {/* <img src="assets/img/upload-ic-white.svg" alt="" /> */}
                                         </a>
                                         <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                             <span class="d-flex align-items-center justify-content-around"
                                             onClick={()=>{confirmAction("deleteImage"); }}
-                                            // onClick={this.handleRemoveImage}
+                                            // onClick={this.handleRemoveImage}tempImage
                                              >
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>

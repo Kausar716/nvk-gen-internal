@@ -5,6 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,addUser,uploadImage} from "../../actions/userAction";
+import {handleOrganizationSettingsInputAction} from "../../actions/organizationSettingAction"
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -38,6 +39,15 @@ export class CreateUserProfile extends Component {
                 emailError:0,     
                 positionError:0           
             },
+
+            hadModified:{
+                name:false,
+                last_name:false,
+                phone:false,
+                email:false,     
+                position:false,   
+                },
+
             errorCount:0,
             display:false,
             deleteProfile:false,
@@ -77,44 +87,58 @@ export class CreateUserProfile extends Component {
       }
 
     handleInput = (e) => {
+        debugger;
         console.log(e.target.value)
         const {target:{name,value}} =e
-        let {errorObj,errorCount} = this.state
+        let {errorObj,errorCount,hadModified} = this.state
         //this.setState({phone: e.target.value})
         this.setState({[name]:value})
 
+        // if(errorObj.firstNameError>0){
+        //     errorObj.firstNameError=0
+        //     errorCount--
+        // }          
+
         if(name === "firstName" ){
+            hadModified.name=true
             if(errorObj.firstNameError>0){
                 errorObj.firstNameError=0
                 errorCount--
             }           
         }
         else if(name === "lastName" ){
+            hadModified.last_name=true
             if(errorObj.lastNameError>0){
                 errorObj.lastNameError=0
                 errorCount--
             }            
         }
         else if(name === "phone" ){
+            hadModified.phone=true
             if(errorObj.phoneError>0){
                 errorObj.phoneError=0
                 errorCount--
             }            
         }
         else if(name === "email" ){
+            hadModified.email=true
             if(errorObj.emailError>0){
                 errorObj.emailError=0
                 errorCount-- 
             }            
         }
-        else if(name === "postiton"){
+        else if(name === "position"){
+            hadModified.position=true
   
             if(errorObj.positionError>0){
                 errorObj.positionError=0
                 errorCount--
             }            
         }
-        this.setState({errorObj,errorCount})
+
+
+        this.setState({errorObj,errorCount,hadModified})
+        this.props.handleOrganizationSettingsInputAction(name,value)
     }
 
 
@@ -131,7 +155,7 @@ export class CreateUserProfile extends Component {
 
     }
     validate = () =>{
-        //debugger;
+        debugger;
         let {errorObj,errorCount}=this.state
         //let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
           let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -188,6 +212,7 @@ export class CreateUserProfile extends Component {
         return errorCount
     }
     handleSubmit = (e) => {
+        debugger;
        let count= this.validate()
 
        this.setState({ hasError: false });
@@ -280,13 +305,13 @@ export class CreateUserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
-                                                    <option>Select</option>
+                                                    <option>select</option>
                                                         {roles?roles.map(userObj=>{
                                                             console.log(userObj)
                                                             return  <option value={userObj.id}>{userObj.name}</option>
                                                         }):null}                                                        
                                                     </select>
-                                                    {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
+                                                    {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>
 
 
@@ -443,4 +468,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getRolesList,addUser,uploadImage})(CreateUserProfile)
+export default connect(mapStateToProps,{getRolesList,addUser,uploadImage, handleOrganizationSettingsInputAction})(CreateUserProfile)

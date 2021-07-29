@@ -183,6 +183,7 @@ export class UserProfile extends Component {
         return errorCount
     }
     handleSubmit = (e) => {
+        debugger;
         let count= this.validate()
         console.log(count)
          if(count === 0){
@@ -495,9 +496,9 @@ export class UserProfile extends Component {
 
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-3">
-                                            <div class="bg-grey-transparent-2 text-center px-4 py-4">
-                                                <div class="profImg">
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt="" />
+                                            <div class="bg-grey-transparent-2 text-center px-3 py-3">
+                                                <div class="logCircle mb-3" key={new Date().getTime()}>
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"240px"}}/>
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
 
