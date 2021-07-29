@@ -423,7 +423,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
                                                     <input type="date" onChange={handleChange1} className="dateDesign"  disabled={skuDataById.status===0?true:false}
-                                                    value={skuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} value={skuDataById.sale_expiry_date}/>
+                                                    value={skuDataById.sale_expiry_date}  min={minDateFormate +"-"+minMonthFormate+"-"+new Date().getFullYear()} value={skuDataById.sale_expiry_date}/>
                                                    
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
                                                         Active

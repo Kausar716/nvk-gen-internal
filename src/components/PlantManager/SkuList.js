@@ -419,8 +419,8 @@ const SkuList = (props)=>{
                                                     <div>
                                                         {/* <DatePicker value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate}
                                                          onChange={handleChange1}/> */}
-                                                    <input type="date" onChange={handleChange1} className="dateDesign" disabled={plantSkuDataById.status==0?true:false}
-                                                     value={plantSkuDataById.sale_expiry_date} min={new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate} />
+                                                    <input type="date" onChange={handleChange1}  className="dateDesign" disabled={plantSkuDataById.status==0?true:false}
+                                                     value={plantSkuDataById.sale_expiry_date} min={minDateFormate +"-"+minMonthFormate+"-"+new Date().getFullYear()}  />
 
                                                     </div>
                                                     <div class="d-flex align-items-center flex-wrap ml-2">

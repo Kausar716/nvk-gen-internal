@@ -91,6 +91,12 @@ const PlantTable=(props)=> {
     setOpen(true)
     setId(id)
 }
+const handleheckBox=(id,archived,common_name)=>{
+    console.log(common_name)
+    let updateObject={}
+    updateObject['archived']=archived===0?1:0
+    props.updatePlantAction(updateObject,id,common_name)
+}
 
     return (
 
@@ -142,7 +148,7 @@ const PlantTable=(props)=> {
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus})=>{
+                                        {displayPlantList.map(({id,status, plantName, location, category,common_name, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus})=>{
                                              let id2 ="discontinue"
                                              let id3 ="Archived"
                                              let id4 ="Production"
@@ -172,7 +178,7 @@ const PlantTable=(props)=> {
 
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
+                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)} onChange={()=>{handleheckBox(plant_id,archived,common_name)}}/>
                                                             <label className="custom-control-label" style={{cursor:"pointer"}} for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>

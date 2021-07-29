@@ -168,10 +168,10 @@ const GeneralSettings=(props)=> {
 //         history.push("/productManager")
 
 // }
-console.log(productDataById.manufacturer_id)
+console.log(productDataById)
 let flag =0
 if(productDataById){       
-    if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id ||productDataById.category_id === "0"|| productDataById.manufacturer_id === "0"){
+    if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id || productDataById.category_id === "0"|| productDataById.manufacturer_id === "0"){
         flag=1
         
     }
@@ -238,7 +238,10 @@ if(productDataById){
 
                                         <ReactTagInput 
                                                     tags={tags} 
-                                                    onChange={(tags) => setTags(tags)}
+                                                    onChange={(tags) => {
+                                                        props.handleInputAction("tagsData",tags)
+                                                        setTags(tags)}}
+                                                    id=""
                                                     />
 
                                 {/* <div className="masterStackDiv">
