@@ -91,6 +91,10 @@ const PlantTable=(props)=> {
     setOpen(true)
     setId(id)
 }
+const handleCheckBoxData =(plantId,index)=>{
+    console.log(plantId,index)
+
+}
 
     return (
 
@@ -142,7 +146,7 @@ const PlantTable=(props)=> {
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus})=>{
+                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus},index)=>{
                                              let id2 ="discontinue"
                                              let id3 ="Archived"
                                              let id4 ="Production"
@@ -158,13 +162,13 @@ const PlantTable=(props)=> {
                                                     </td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox"  className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4.concat(plant_id)} />
+                                                        <input type="checkbox"  className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4.concat(plant_id)} onChange={()=>handleCheckBoxData(plant_id,index)}/>
                                                         <label className="custom-control-label" style={{cursor:"pointer"}} for={id4.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox"  className="custom-control-input" checked={discontinued===1?"checked":""} id={id2.concat(plant_id)} />
+                                                        <input type="checkbox"  className="custom-control-input" checked={discontinued===1?"checked":""} id={id2.concat(plant_id)} onChange={()=>handleCheckBoxData(plant_id,index)}/>
                                                         <label className="custom-control-label" style={{cursor:"pointer"}} for={id2.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
@@ -172,7 +176,7 @@ const PlantTable=(props)=> {
 
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)}/>
+                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3.concat(plant_id)} onChange={()=>handleCheckBoxData(plant_id,index)}/>
                                                             <label className="custom-control-label" style={{cursor:"pointer"}} for={id3.concat(plant_id)}></label>
                                                     </div>
                                                 </td>
