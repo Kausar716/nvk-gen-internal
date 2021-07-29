@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
-import { Collapse, Label} from 'reactstrap';
+import { Collapse, Label,Tooltip} from 'reactstrap';
 import {connect} from "react-redux";
+import "./main.css"
 import ReactTooltip from 'react-tooltip';
 import {handleChangeFilter,saveNoticationData,getNotificationData} from "../../../actions/customerSettingAction";
 import SuccessModal from '../../Modal/SuccessModal';
@@ -39,6 +40,12 @@ const Notification = (props) => {
     const toggle = () => setIsOpen(!isOpen);
     const [notificationError,setNotificationError] = useState(["",""])
     const [checkedData,setCheckedData] = useState(false)
+    const [tooltipOpen, setTooltipOpen] = useState(false);
+
+    const toggleTool = () => setTooltipOpen(!tooltipOpen);
+    const [tooltipOpen1, setTooltipOpen1] = useState(false);
+
+    const toggleTool1 = () => setTooltipOpen1(!tooltipOpen1);
   
     useEffect(() => {
       props.getNotificationData()
@@ -132,14 +139,20 @@ const Notification = (props) => {
           <div className="containerBox">
 
                     <div className="row_1_Notification">
+                    {/* <div>
+      <p>Somewhere in here is a <span style={{textDecoration: "underline", color:"blue"}} href="#" id="TooltipExample">tooltip</span>.</p>
+      <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
+      <p>Set the number of days after the requested date for order
+      in READY state waiting for pickup or shipment.</p>
+      </Tooltip>
+    </div> */}
 
                       <div className="notification_label">
-                            <label>READY to LATE Notice <span><i data-tip data-for={"data"}  style={{borderRadius:"50%",fontSize:"12px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:2,color:"#5287F5"}} class="fa fa-info" aria-hidden="true"></i>
-                              {/* <a  >i</a>                            */}
-                              <ReactTooltip className="" id={"data"} backgroundColor="gray">
-                                  <span id={ready_to_late_notice} disabled>Set the number of days after the requested date for order in READY
-state waiting for pickup or shipment.</span>
-                              </ReactTooltip> </span></label>
+                            <label>READY to LATE Notice <span><i id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5",marginTop:10}} class="fa fa-info" aria-hidden="true"></i>
+       
+                            <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
+                                <p>Set the number of days after the requested date for order in READY state waiting for pickup or shipment.</p>
+                            </Tooltip> </span></label>
                             <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice >0?ready_to_late_notice:""} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{notificationError[0]}</span>}
@@ -148,10 +161,10 @@ state waiting for pickup or shipment.</span>
                       </div>
 
                       <div className="notification_label">
-                            <label>Reserve Expiry Notice <span><i data-tip data-for={"data1"}  style={{borderRadius:"50%",fontSize:"12px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:2,color:"#5287F5"}} class="fa fa-info" aria-hidden="true"></i>
-                            <ReactTooltip className="" id={"data1"} backgroundColor="gray">
-                                  <span id={reserve_expiry_notice}>Set the number of days remaining on the order reservation date</span>
-                              </ReactTooltip>
+                            <label>Reserve Expiry Notice <span><i   style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5"}} class="fa fa-info" id="TooltipExample1"></i>
+                            <Tooltip    className="in" id="tooltip-top1" placement="right" isOpen={tooltipOpen1} target="TooltipExample1" toggle={toggleTool1} >
+                                <p>Set the number of days remaining on the order reservation date</p>
+                            </Tooltip> 
                             </span></label>
                             <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice >0?reserve_expiry_notice:""} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">

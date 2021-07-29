@@ -61,12 +61,14 @@ const CS_ExcahangeDetails = (props) => {
 
   const handleInputData =(e)=>{
     setCheckedData(true)
-    props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+
+    props.handleExchangeData(parseFloat((e.target.value*1.0000)),e.target.id,"customerExchange")
 
   }
   const handleInputData1 =(e)=>{
     setCheckedData(true)
-    props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
+
+    props.handleSupplierExchnageData(parseFloat((e.target.value*1.0000)),e.target.id,"supplierExchange")
 
   }
   const datePickerData =(e)=>{
@@ -194,7 +196,7 @@ useEffect(()=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  value={customerExchange.exchange_rate>"0"?customerExchange.exchange_rate:""} onChange={handleInputData} id="exchange_rate" step=".001"/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate>"0"?customerExchange.exchange_rate:""} onChange={handleInputData} id="exchange_rate" step=".001"/> 
                             </div>
                            
                             
@@ -246,7 +248,7 @@ useEffect(()=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate>"0"?supplierExchange.exchange_rate:""}    onChange={handleInputData1} id="exchange_rate"/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate>"0"?supplierExchange.exchange_rate:""}    onChange={handleInputData1} id="exchange_rate"/> 
                             </div>
                            
                            
