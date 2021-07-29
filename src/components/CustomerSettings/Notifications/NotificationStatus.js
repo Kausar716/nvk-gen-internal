@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import ReactTooltip from 'react-tooltip';
 import {handleChangeFilter,saveNoticationData,getNotificationData} from "../../../actions/customerSettingAction";
 import SuccessModal from '../../Modal/SuccessModal';
+import ActionModal from '../../Modal/ActionModal';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 //import validators from './validators'

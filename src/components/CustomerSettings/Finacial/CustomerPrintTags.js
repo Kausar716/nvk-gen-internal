@@ -2,6 +2,7 @@ import React, { useState ,useEffect} from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse,   Row, Col, Label} from 'reactstrap';
 import {connect} from "react-redux";
+import CustomerActionModal from '../../Modal/CustomerActionModal';
 import {handleChangeFilter,getPrintData,saveNoticationData,savecustomPrintData,handleExchangeData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
@@ -46,10 +47,16 @@ const CustomerPrintRates = (props) => {
   const [successMessage,setSuccessMessage] = useState([])
   const [data,setData] = useState("")
   const toggle1  = ()=>setIsOpen1(!isOpen);
+  const [open,setOpen] = useState(false)
+  const [message,setMessage] = useState("")
+  const [type, setType] = useState("")
   const handleInputData =(e)=>{
     setCheckedData(true)
+    let intValue = e.target.value*1.000
     console.log(e.target.value,e.target.id)
-    props.handleExchangeData(e.target.value,e.target.id,"customerTag")
+    if(e.target.value !=="")
+    props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerTag")
+    else props.handleExchangeData(e.target.value,e.target.id,"customerTag")
     // props.handleExchangeData(e.target.value,"base_price","customerTag")
 
   }
@@ -59,6 +66,34 @@ const CustomerPrintRates = (props) => {
 const resetData = ()=> {
   setCheckedData(false)
   props.getPrintData()
+}
+const cancel = ()=>{
+  setOpen(false)
+  // setId(0)
+  setType("")
+  setMessage("")
+   
+}
+const confirm = ()=>{
+   if(type==="save"){
+    saveExchangeData()
+    
+
+   }
+
+  setOpen(false)
+  // setId(0)
+  setType("")
+  setMessage("")
+}
+const confirmAction = (type)=>{
+if(type=="save"){
+    setType(type)
+    setMessage("Are you sure you want to Save?")
+
+}
+setOpen(true)
+// setId(id)
 }
   const saveExchangeData = ()=>{
     setCheckedData(false)
@@ -76,6 +111,7 @@ const resetData = ()=> {
   const { handleSubmit, pristine, reset, submitting,customerTag } = props.customerData;
   return (
     <>
+         <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       
@@ -102,7 +138,7 @@ const resetData = ()=> {
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price>"0"?props.customerData.customerTag.base_price:""}  onChange={handleInputData}/>
+                            <input type="number" className="textRight"  placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData}/>
                               </Col>
                             
 
@@ -117,7 +153,7 @@ const resetData = ()=> {
                         <Row>
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo>"0"?props.customerData.customerTag.custom_logo:""}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData}/>
                             </Col>
                            
                             <Col sm="0">
@@ -133,7 +169,7 @@ const resetData = ()=> {
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
 
-                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing>"0"?props.customerData.customerTag.custom_pricing:""}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -149,7 +185,7 @@ const resetData = ()=> {
                             <Col sm="4">
 
                            
-                            <input type="number" className="textRight" placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application>"0"?props.customerData.customerTag.custom_application:""}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -158,8 +194,8 @@ const resetData = ()=> {
               </Col>
               <Col xs="12">
               <div align="right" className="action_area_left">
-                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" disabled={checkedData==true?false:true} onClick={saveExchangeData}>Save</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  disabled={checkedData==true?false:true} onClick={resetData}>Reset</button>
+                              <button className="button_style_Tools_Setting_Save" disabled={checkedData==true?false:true} onClick={()=>confirmAction("save")}>Save</button>
                         </div> 
             
               </Col>

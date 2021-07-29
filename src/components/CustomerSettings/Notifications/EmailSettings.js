@@ -3,6 +3,8 @@ import { Field, reduxForm } from 'redux-form';
 import { Collapse,  Row, Col, Label} from 'reactstrap';
 import {connect} from "react-redux";
 import InfoModal from "../../Modal/InfoModal"
+import CustomerActionModal from '../../Modal/CustomerActionModal';
+import SuccessModal from '../../Modal/SuccessModal';
 import {handleChangeFilter,saveNoticationData,getNotificationData,saveEmailData,getEmailData} from "../../../actions/customerSettingAction";
 
 import '../style.css';
@@ -43,9 +45,17 @@ const EmailSetting = props => {
     const [isOpen, setIsOpen] = useState(false);
 	const [isOpen1, setIsOpen1] = useState(false);
 	const [message,setMessage] = useState([]);
+  const [message1,setMessage1] = useState("");
   const [checkedData,setCheckedData] = useState(false)
     const toggle = () => setIsOpen(!isOpen);
 	const toggle1 = () => setIsOpen1(!isOpen1);
+  const [open,setOpen] = useState(false)
+  const toggle2 = () => setIsOpen2(!isOpen2);
+  const [successMessage,setSuccessMessage] = useState([])
+  const [isOpen2, setIsOpen2] = useState(false);
+  // const [open2,setOpen2] = useState(false)
+  // const [message,setMessage] = useState("")
+  const [type, setType] = useState("")
 
 
 	const handleDataChange = (e)=>{
@@ -58,24 +68,73 @@ const EmailSetting = props => {
     props.getNotificationData()
 
   }
-	const handleSaveData = (e)=>{
-		if(parseInt(first_notice)==0 && parseInt(second_notice) ==0 && parseInt(quote_set_to_inactive==0)){
+  const cancel = ()=>{
+    setOpen(false)
+    // setId(0)
+    setType("")
+    setMessage1("")
+     
+  }
+  const confirm = ()=>{
+     if(type==="save"){
+
+      handleSaveData()
+      
+  
+     }
+  
+    setOpen(false)
+    // setId(0)
+    setType("")
+    setMessage1("")
+  }
+  const confirmAction = (type)=>{
+    let count = validation()
+    if(count==0){
+      if(type=="save"){
+        setOpen(true)
+        setType(type)
+        setMessage1("Are you sure you want to Save?")
+    
+    }
+    }
+
+  // setId(id)
+  }
+  const validation = ()=>{
+    let errorCount = 0
+    if(first_notice=="" ||second_notice =="" || quote_set_to_inactive==""){
+      setMessage(["Values can't be Empty"])
+			setIsOpen1(true)
+      return ++errorCount
+
+    }
+		else if(parseInt(first_notice)==0 || parseInt(second_notice) ==0 || parseInt(quote_set_to_inactive==0)){
 
 			setMessage(["Values can't be zero"])
 			setIsOpen1(true)
+      return ++errorCount
 		}else if(parseInt(second_notice)<parseInt(first_notice)){
 
 			setMessage(["Second Notice should be greater than first Notice"])
 			setIsOpen1(true)
+      return ++errorCount
 
 		}else if(parseInt(second_notice)>parseInt(quote_set_to_inactive)){
 			// alert()
 
 			setMessage(["Quote set to inactive should be greater than second Notice"])
 			setIsOpen1(true)
+      return ++errorCount
 		}else{
-      setMessage(["Customer Quote Reminders Saved successfully"])
-			setIsOpen1(true)
+      return errorCount
+    }
+
+  }
+	const handleSaveData = (e)=>{
+// else{
+      setSuccessMessage(["Customer Quote Reminders Saved successfully"])
+      setIsOpen2(true)
 
 			let obj = {}
 			obj.first_notice = first_notice
@@ -84,7 +143,7 @@ const EmailSetting = props => {
 			obj.status =1
 			props.saveEmailData(obj)
 
-		}
+		// }
 
 	}
 	useEffect(()=>{
@@ -95,6 +154,8 @@ const EmailSetting = props => {
   const { handleSubmit, pristine, reset, submitting,first_notice,second_notice,quote_set_to_inactive } = props.customerData;
   return (
     <div>
+       <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message1}/>
+       <SuccessModal status={isOpen2} message={successMessage} modalAction={toggle2}/>
 		<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
         <div onClick={toggle}  className="SubHeader">
         <Label className="subFont">Customer Quote Reminders</Label>
@@ -117,7 +178,7 @@ const EmailSetting = props => {
                         <Row className="spacebelow">
                             <Col>
                               	<div>
-        							<input type="number" placeholder={"0"} step="0"  className="textRightESetting" id="first_notice" value={first_notice>"0"?first_notice:""} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"} step="0"  className="textRightESetting"  id="first_notice" value={first_notice} onChange={handleDataChange}/>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -137,7 +198,7 @@ const EmailSetting = props => {
                             <Row>
 							<Col>
                               	<div>
-        							<input type="number" placeholder={"0"}  step="0"  className="textRightESetting" id="second_notice" value={second_notice>"0"?second_notice:""} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"}  step="0"  className="textRightESetting" id="second_notice" value={second_notice} onChange={handleDataChange}/>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -158,7 +219,7 @@ const EmailSetting = props => {
                             <Row>
 							<Col>
                               	<div>
-        							<input type="number" placeholder={"0"}   step="0" className="textRightESetting" id="quote_set_to_inactive" value={quote_set_to_inactive>"0"?quote_set_to_inactive:""} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"}   step="0" className="textRightESetting" id="quote_set_to_inactive" value={quote_set_to_inactive} onChange={handleDataChange}/>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -177,8 +238,8 @@ const EmailSetting = props => {
                     <Col>
                     
                     <div align="right" className="action_area_left">
-                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
-                              <button className="button_style_Tools_Setting_Save" onClick={handleSaveData} disabled={checkedData==true?false:true}>Save</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Reset</button>
+                              <button className="button_style_Tools_Setting_Save" onClick={()=>confirmAction("save")} disabled={checkedData==true?false:true}>Save</button>
                         </div> 
                     </Col>
                     </Row>

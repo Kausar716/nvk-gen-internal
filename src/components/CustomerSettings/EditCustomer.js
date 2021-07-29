@@ -118,10 +118,11 @@ function AddCustomer(props) {
             props.handleExchangeData(discount_by_line_item,"discount_by_line_item","customerDataById")
 
         }
-        else{
-            props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
+        // else if(e.target.id =="tax_exempt_no" || e.target.id =="tax_exempt_no")
+        // else{
+        //     props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
 
-        }
+        // }
        
     }
     const handleSubmit=()=>{
@@ -618,7 +619,7 @@ function AddCustomer(props) {
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="number" class="form-control" name={"taxExemptNumber"} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true}/>
+                                                <input type="number" class="form-control" name={"taxExemptNumber"}  style={{textAlign:"right"}} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true}/>
                                                 {/* {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
 
                                             </div>
@@ -686,7 +687,7 @@ function AddCustomer(props) {
                                         <div class="row">
                                             <div class="col-md-4 mt-3 mt-md-0">
                                                 <label>Discount</label>
-                                                <input type="number" class="form-control" value={customerDataById.discount} onChange={handleInput} id="discount" step="0.01" disabled={customerDataById.discount_by_line_item==1?false:true}/>
+                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}/>
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0" style={{paddingTop:8}}>
                                           <label>Discount By Line Item</label>
