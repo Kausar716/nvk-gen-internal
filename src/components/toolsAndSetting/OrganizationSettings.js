@@ -432,8 +432,9 @@ export class OrganizationSettings extends React.Component {
          let id = "2"
          const { history } = this.props;
        this.props.showorganization(id)
+       //&& dataOrganizationDetails.main_body && dataOrganizationDetails.secondary_body  && dataOrganizationDetails.main_title && dataOrganizationDetails.secondary_title
      let dataOrganizationDetails= this.props.organizationData.organizationData
-       if (dataOrganizationDetails) {
+       if (dataOrganizationDetails.name && dataOrganizationDetails.phone && dataOrganizationDetails.name && dataOrganizationDetails.sending_email_address  ) {
         window.onbeforeunload = () => true
         this.handleSubmit();
       } else {
@@ -615,7 +616,7 @@ export class OrganizationSettings extends React.Component {
     //  const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
     //  let phno = organizationDataById.phone ||'';organizationDataById.name
     //     let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
-  
+  //&& organizationDataById.main_title || organizationDataById.secondary_title  || organizationDataById.main_body || organizationDataById.secondary_body
     
   
      console.log("phoneNumber", this.state.value)
@@ -624,7 +625,7 @@ export class OrganizationSettings extends React.Component {
     return (
         <div clas="userManagementSection">
             <Prompt
-      when={organizationDataById}
+      when={organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address }
       message=' Are you sure you want save and leave?'
     />
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
