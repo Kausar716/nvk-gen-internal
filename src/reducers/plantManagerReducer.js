@@ -8,6 +8,8 @@ import {
         GET_ALL_PLANT_ACTION,
         GET_SPECIFIED_PLANT_ACTION,
         DUPLICTE_PLANT,
+        UPDATE_CHECK_BOX,
+        CHECK_BOX,
     
         // Plant SKU ACTION
         CREATE_PLANT_SKU_ACTION,
@@ -106,6 +108,20 @@ export default function(state = initialSatate, action){
     console.log(action)
     switch(action.type){
         // plant page redirects
+        case CHECK_BOX:
+            let plantData1 = state.plantData
+            plantData1[action.index][action.type]= action.obj[action.type]
+            return{
+                ...state,
+                plantData:plantData1,
+            }
+        case UPDATE_CHECK_BOX:
+            let plantData = state.plantData
+            plantData[action.index][action.type]= action.obj[action.type]
+            return{
+                ...state,
+                plantData:plantData,
+            }
         case PAGE_PLANT_REDIRECT_ACTION:
             return{            
                 ...state,
