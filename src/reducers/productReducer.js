@@ -23,6 +23,7 @@ import {
     UPDATE_SKU_ACTION_CLEAR,
     UPDATE_PLANT_SKU_ACTION,
     CLEAR_SKU_FIELDS_PRODUCT,
+    CREATE_SKU_ACTION_AND_CLEAR,
 
     //PAGE REDIRECTS ACTION
 
@@ -85,7 +86,7 @@ const initialSatate = {
         status:1,
         supplier_id:1,
         volume_price_per_unit:null,
-        volume_quantity:null
+        volume_quantity:"0"
        
 
 
@@ -142,7 +143,7 @@ export default function(state = initialSatate, action){
                     supplier_id:1,
                     archived:"0",
                     volume_price_per_unit:null,
-                    volume_quantity:null
+                    volume_quantity:"0"
                     //id:null
             
             
@@ -255,7 +256,7 @@ export default function(state = initialSatate, action){
                     archived:"0",
                     supplier_id:1,
                     volume_price_per_unit:null,
-                    volume_quantity:null
+                    volume_quantity:"0"
                     //id:null
                 },
                 needAction:false,
@@ -280,13 +281,13 @@ export default function(state = initialSatate, action){
                     sale_price:null,
                     sale_expiry_date:null,
                     sku_item_name:null,
-                    subcategory:null,
+                    subcategory:"0",
                     discontinued:0,
                     status:1,
                     archived:0,
                     supplier_id:1,
                     volume_price_per_unit:null,
-                    volume_quantity:null
+                    volume_quantity:"0"
                     //id:null
                 },
                 needAction:false,
@@ -304,13 +305,13 @@ export default function(state = initialSatate, action){
                         sale_price:null,
                         sale_expiry_date:null,
                         sku_item_name:null,
-                        subcategory:null,
+                        subcategory:"0",
                         discontinued:0,
                         status:1,
                         archived:0,
                         supplier_id:1,
                         volume_price_per_unit:null,
-                        volume_quantity:null
+                        volume_quantity:"0"
                         //id:null
                     },
                     needAction:false,
@@ -340,6 +341,30 @@ export default function(state = initialSatate, action){
             needAction:false
             // skuData:[...action.payload.data]
         };
+    case CREATE_SKU_ACTION_AND_CLEAR:
+        console.log(action)
+        console.log(state)
+        return{
+            ...state,
+            skuDataById         :   {
+                each_cost:"",
+                each_price:"",
+                sale_price:"",
+                sale_expiry_date: new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear(),
+                sku_item_name:"",
+                subcategory:"0",
+                sub_category_id:"0",
+                discontinued:0,
+                status:1,
+                archived:"0",
+                supplier_id:1,
+                volume_price_per_unit:null,
+                volume_quantity:"0",
+                // id:null
+            },
+            // actionType:"add",
+            needAction:false,
+        }
     case UPDATE_PLANT_SKU_ACTION:{
         return{
             ...state, 
@@ -367,13 +392,13 @@ export default function(state = initialSatate, action){
                 sale_price:"",
                 sale_expiry_date:new Date(),
                 sku_item_name:"",
-                subcategory:null,
+                subcategory:"0",
                 discontinued:0,
                 status:1,
-                archived:0,
+                archived:"0",
                 supplier_id:1,
                 volume_price_per_unit:null,
-                volume_quantity:null
+                volume_quantity:"0"
                 //id:null
         
         
@@ -527,23 +552,26 @@ export default function(state = initialSatate, action){
             }
         }
         case CLEAR_SKU_FIELDS_PRODUCT:{
-            let obj={   
-            each_cost:"",
-            each_price:"",
-            sale_price:"",
-            sale_expiry_date:null,
-            sku_item_name:"",
-            subcategory:null,
-            discontinued:0,
-            status:1,
-            archived:0,
-            supplier_id:1,
-            id:null,
-            volume_price_per_unit:null,
-            volume_quantity:null}
+      
             return{
                 ...state,
-                skuDataById:obj
+                skuDataById         :   {
+                    each_cost:"",
+                    each_price:"",
+                    sale_price:"",
+                    sale_expiry_date:new Date(),
+                    sku_item_name:"",
+                    subcategory:"0",
+                    discontinued:0,
+                    status:1,
+                    archived:"0",
+                    supplier_id:1,
+                    volume_price_per_unit:null,
+                    volume_quantity:"0"
+                    //id:null
+            
+            
+                }
             }
         }
         default:

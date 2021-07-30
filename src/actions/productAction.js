@@ -18,6 +18,7 @@ import {
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
+    CREATE_SKU_ACTION_AND_CLEAR,
 
     //page redirects action
 
@@ -241,7 +242,7 @@ export const duplicateProduct = (id) =>dispatch=>{
 */
 
 
-export const createSkuAction = (id, skuData, actionType="add") =>async dispatch => {
+export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>async dispatch => {
     const data1={
                 type:"product",
                 supplier_id:1,
@@ -265,7 +266,7 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
         delete FinalData.subcategory
         console.log(FinalData,id)
        
-     return   axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
+        axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
            
             console.log("createSKU", res)
             //dispatch(getAllProductAction())
@@ -277,10 +278,21 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
             //dispatch(updateSkuAction(res.data.data.id, skuData))
             dispatch(getAllSkuAction(res.data.data.id))
             dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
-            dispatch(showSpecifiedSkuAction(res.data.data.id, "edit","sku"))
-            dispatch({
-                type:CREATE_SKU_ACTION
-            })
+           
+            if(skuFieldClear){
+                alert("in clear action")
+                dispatch({
+                    type:CREATE_SKU_ACTION_AND_CLEAR
+                })
+            }
+            else{
+                alert("in retain action")
+                dispatch(showSpecifiedSkuAction(res.data.data.id, "edit","sku"))
+                dispatch({
+                    type:CREATE_SKU_ACTION
+                })
+            }
+           
             error.push("SKU Created successfully")
             dispatch({
                 type:ERROR_HANDLE,
@@ -571,6 +583,7 @@ export const handleInputAction = (id, value) =>dispatch=>{
 
 }
 export const handleSkuInputAction =(id,value) =>dispatch=>{
+    console.log(id,value)
       dispatch({
         type:HANDLE_SKU_INPUT_DATA,
         itemId:id,
