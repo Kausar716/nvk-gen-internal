@@ -282,12 +282,13 @@ export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>a
             if(skuFieldClear){
                 alert("in clear action")
                 dispatch({
-                    type:CREATE_SKU_ACTION_AND_CLEAR
+                    type:CREATE_SKU_ACTION_AND_CLEAR,
+                    actionType:actionType
                 })
             }
             else{
                 alert("in retain action")
-                dispatch(showSpecifiedSkuAction(res.data.data.id, "edit","sku"))
+                dispatch(showSpecifiedSkuAction(res.data.data.id, "edit"))
                 dispatch({
                     type:CREATE_SKU_ACTION
                 })
@@ -476,7 +477,7 @@ export const getAllSkuAction = (id) => dispatch => {
 
 export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch => {
   
-console.log(id)
+console.log(actionType)
      axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
         console.log(res)
@@ -484,8 +485,8 @@ console.log(id)
         console.log("showSpecifiedSkuAction",res.data.data[0])
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
-                payload:res.data.data[0]
-                //actionType:actionType
+                payload:res.data.data[0],
+                actionType:actionType
     
             })
         })

@@ -119,13 +119,13 @@ const SkuList=(props)=> {
          if(submitCount === 0 && (!each_costError&& !each_priceError&& !sales_priceError && !volume_priceError)){
             if(needAction){
                 if(actionType ==="add"){
-                    props.createSkuAction(product_idFromGeneral,skuDataById)               
+                    props.createSkuAction(product_idFromGeneral,skuDataById,skuFieldClear)               
                 }
-                //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)   
+                //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)  
+                let skuid = skuDataById.id 
                 if(actionType ==="edit"){ 
-                let skuid = skuDataById.id
-                if(skuEdit){
-                    debugger;
+                
+               
                 if(e.target.id === "retain"){   
                      if(props.productData.productDataById.product_id.length>0){
                          skuid= props.productData.productDataById.product_id
@@ -138,7 +138,7 @@ const SkuList=(props)=> {
                         delete skuDataById.product_id
                     }
                     console.log(skuDataById)
-                    props.createSkuAction(skuid,skuDataById,skuFieldClear)
+                    props.createSkuAction(skuid,skuDataById,skuFieldClear,actionType)
                                     
                     
                 }
@@ -155,19 +155,19 @@ const SkuList=(props)=> {
                        skuDataById.id=skuDataById.product_id
                        delete skuDataById.product_id
                    }
-                    props.createSkuAction(skuid,skuDataById,skuFieldClear)
+                    props.createSkuAction(skuid,skuDataById,skuFieldClear,actionType)
                     
                 }
             }
-                else{
-                    debugger;
+
+                else if(actionType === "sku"){
+                    alert("in sku")
+                    if(e.target.id === "dontRetain"){
                     skuDataById.subcategory = skuDataById.sub_category_id
                     props.updateSkuActionClear(skuid,skuDataById)
+                    }
                     // props.pageReDirectAction("product","add")
                 }
-            }
-                    
-               
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 //setSubmitCount(1)
             }
@@ -338,7 +338,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
     console.log(skuDataById.sub_category_id)
     console.log(skuDataById.volume_quantity)
     let selectedSubCategoryId = skuDataById.sub_category_id
-    console.log(skuDataById)
+    console.log(actionType)
     let flag =0
     if(skuDataById){       
         if(!skuDataById.each_cost||skuDataById.sub_category_id  === "0" || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){

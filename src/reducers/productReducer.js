@@ -362,7 +362,7 @@ export default function(state = initialSatate, action){
                 volume_quantity:"0",
                 // id:null
             },
-            // actionType:"add",
+            actionType:action.actionType,
             needAction:false,
         }
     case UPDATE_PLANT_SKU_ACTION:{
@@ -416,7 +416,7 @@ export default function(state = initialSatate, action){
             // productDataById:action.payload.data,
             //     tagsData:JSON.parse(action.payload.data.common_name),
                 needAction:false,
-                actionType:"edit"
+                actionType:action.actionType
         }
 
             
