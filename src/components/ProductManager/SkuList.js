@@ -161,7 +161,6 @@ const SkuList=(props)=> {
             }
 
                 else if(actionType === "sku"){
-                    alert("in sku")
                     if(e.target.id === "dontRetain"){
                     skuDataById.subcategory = skuDataById.sub_category_id
                     props.updateSkuActionClear(skuid,skuDataById)
@@ -236,7 +235,6 @@ const SkuList=(props)=> {
 
     }
     const handleChange1 = (e) =>{
-        // alert(data)
         console.log(e.target.value)
         let dateInformate = e.target.value
         props.handleSkuInputAction("sale_expiry_date",dateInformate)
