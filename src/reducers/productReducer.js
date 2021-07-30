@@ -376,16 +376,7 @@ export default function(state = initialSatate, action){
     case UPDATE_SKU_ACTION_CLEAR:
         return{
             ...state,
-            actionType:"add",
-            productDataById     :   {
-                name:"",
-                category_id:null,
-                subcategory_id:null,
-                manufacturer_id:null,
-                archived:"0",
-                internal_notes:"",
-                discontinued:0
-            },
+            actionType:"edit",            
             skuDataById         :   {
                 each_cost:"",
                 each_price:"",
@@ -404,9 +395,8 @@ export default function(state = initialSatate, action){
         
             },
             // eslint-disable-next-line no-dupe-keys
-            actionType:"add",
             needAction:false,
-            tagsData:[]
+            // tagsData:[]
         }
     case GET_SPECIFIED_SKU_ACTION:
         return{

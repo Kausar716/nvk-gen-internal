@@ -166,6 +166,9 @@ const SkuList=(props)=> {
                     skuDataById.subcategory = skuDataById.sub_category_id
                     props.updateSkuActionClear(skuid,skuDataById)
                     }
+                    if(e.target.id === "retain"){
+                        props.updateSkuAction(skuid,skuDataById)
+                    }
                     // props.pageReDirectAction("product","add")
                 }
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
@@ -373,7 +376,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="col-md-6 col-lg-3">
                                             <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
-                                            id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={skuEdit} />
+                                            id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={actionType==="sku"?true:false} />
                                         </div>
                                         {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         </div> */}
