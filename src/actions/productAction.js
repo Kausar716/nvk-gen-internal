@@ -280,14 +280,12 @@ export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>a
             dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
            
             if(skuFieldClear){
-                alert("in clear action")
                 dispatch({
                     type:CREATE_SKU_ACTION_AND_CLEAR,
                     actionType:actionType
                 })
             }
             else{
-                alert("in retain action")
                 dispatch(showSpecifiedSkuAction(res.data.data.id, "edit"))
                 dispatch({
                     type:CREATE_SKU_ACTION
