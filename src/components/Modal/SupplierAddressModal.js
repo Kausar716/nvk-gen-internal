@@ -212,7 +212,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         <div class="row mt-3">
             <div class="col-md-3 col-lg-3">
                 <label>City<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="city" value={supplierAddress.city} onChange={handleInput}/>
+                <input type="text" class="form-control" id="city" value={supplierAddress.city} onChange={handleInput} placeholder="City"/>
                 {<span style={{fontSize:"small",color:"red"}} id="city-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
@@ -246,7 +246,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>Zip<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="zip" value={""}  value={supplierAddress.zip}  onChange={handleInput}/>
+                <input type="text" class="form-control" id="zip" value={""}  value={supplierAddress.zip}  onChange={handleInput} placeholder="Zip"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="zip-validtor"></span>}
             </div>
@@ -254,7 +254,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Address<span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="supplier_address" value={""} value={supplierAddress.supplier_address}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="supplier_address" value={""} value={supplierAddress.supplier_address}  onChange={handleInput} placeholder="Address"></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="supplier_address-validtor"></span>}
             </div>
@@ -269,13 +269,13 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Lat</label>
-                <input type="number" class="form-control" id="lat" value={""} value={supplierAddress.lat}  onChange={handleInput}/>
+                <input type="number" class="form-control" id="lat" value={""} value={supplierAddress.lat}  onChange={handleInput} placeholder="Lat"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="lat-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Lang</label>
-                <input type="number" class="form-control" id="long" value={""}  value={supplierAddress.long}  onChange={handleInput}/>
+                <input type="number" class="form-control" id="long" value={""}  value={supplierAddress.long}  onChange={handleInput} placeholder="Lang"/>
                 {<span style={{fontSize:"small",color:"red"}} id="long-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
@@ -318,8 +318,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
 
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}} type="submit" >{type==="add"?"Save":"Update"}</Button>
-          <Button color="secondary" onClick={props.modalAction} style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}}>Cancel</Button>
+        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+          <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>
       </Modal>

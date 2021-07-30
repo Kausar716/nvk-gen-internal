@@ -224,12 +224,13 @@ console.log(validErrorList)
         <div class="row mt-3">
             <div class="col-md-3 col-lg-3">
                 <label>City<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="city" value={customerAddress.city} onChange={handleInput} />
+                <input type="text" class="form-control" id="city" value={customerAddress.city} onChange={handleInput} placeholder="City"/>
                 {<span style={{fontSize:"small",color:"red"}} id="city-validtor"></span>}
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>Country<span class="text-danger">*</span></label>
                 <select className="form-control"  id="country"  value={customerAddress.country}   placeholder="country" onChange={handleInput} >
+                    <option selected>Select Country</option>
                     <option>{customerAddress.country}</option>
                     {allCountry.map((country, i)=>{
                         return <option id={allCountry[i]}>{allCountry[i]}</option>
@@ -243,6 +244,7 @@ console.log(validErrorList)
             <div class="col-md-3 col-lg-3">
                 <label>State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={customerAddress.state}  onChange={handleInput}>
+                <option selected>Select State</option>
                 <option>{customerAddress.state}</option>
                 {allStates && allStates.map((c, i)=>{
                         return <option id={allStates[i]}>{allStates[i]}</option>
@@ -255,19 +257,19 @@ console.log(validErrorList)
             </div>
             <div class="col-md-3 col-lg-3">
                 <label>Zip<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="zip" value={""}  value={customerAddress.zip}  onChange={handleInput}/>
+                <input type="text" class="form-control" id="zip" value={""}  value={customerAddress.zip}  onChange={handleInput} placeholder="Zip"/>
                 {<span style={{fontSize:"small",color:"red"}} id="zip-validtor"></span>}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Address 1<span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="address1" value={""} value={customerAddress.address1}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="address1" value={""} value={customerAddress.address1}  onChange={handleInput} placeholder="Address1"></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="address1-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Address 2<span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="address2" value={""} value={customerAddress.address2}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="address2" value={""} value={customerAddress.address2}  onChange={handleInput} placeholder="Address2"></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="address2-validtor"></span>}
             </div>
         </div>
@@ -275,19 +277,19 @@ console.log(validErrorList)
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Lat<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="lat" value={""} value={customerAddress.lat}  onChange={handleInput}/>
+                <input type="number" class="form-control" id="lat" value={""} value={customerAddress.lat}  onChange={handleInput} placeholder="Lat"/>
                 {<span style={{fontSize:"small",color:"red"}} id="lat-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Lang<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="long" value={""}  value={customerAddress.long}  onChange={handleInput}/>
+                <input type="number" class="form-control" id="long" value={""}  value={customerAddress.long}  onChange={handleInput} placeholder="Lang"/>
                 {<span style={{fontSize:"small",color:"red"}} id="lang-validtor"></span>}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Notes <span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="notes" value={""} value={customerAddress.notes}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="notes" value={""} value={customerAddress.notes}  onChange={handleInput} placeholder="Add Notes..."></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="notes-validtor"></span>}
             </div>
         
@@ -322,8 +324,8 @@ console.log(validErrorList)
 
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}} type="submit" >{type==="add"?"Save":"Update"}</Button>
-          <Button color="secondary" onClick={props.modalAction} style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}}>Cancel</Button>
+          <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+          <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>
       </Modal>

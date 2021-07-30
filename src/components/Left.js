@@ -8,6 +8,8 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
 import {checkLogin} from "../actions/authAction";
 import {pageReDirectAction} from '../actions/productAction'
 import {plantPageReDirectAction} from '../actions/plantManagerAction'
+import {typeOfActionShow,resetCustomerFilds} from '../actions/customerSettingAction'
+import {typeOfsupplierActionShow,resetSupplierFilds} from '../actions/supplierManagementAction'
 
 
 
@@ -32,7 +34,15 @@ const Left = (props)=>{
 //  }
 const handleMainSelection= (id) => {
   let reduxObject = props.updateObject
-  console.log("reduxObject",reduxObject)
+  console.log("reduxObject",reduxObject.mainMenu)
+  if(reduxObject.mainMenu =="CustomerManagement"){
+    props.typeOfActionShow("")
+    props.resetCustomerFilds()
+  }
+  if(reduxObject.mainMenu =="SupplierManagement"){
+    props.typeOfsupplierActionShow("")
+    props.resetSupplierFilds()
+  }
   setSelectedMainBar(id)
   if(!reduxObject.submenu.includes(id)){
   }
@@ -261,4 +271,4 @@ const mapStateToProps = (state)=> (
 }
 )
 
-export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)
+export default connect(mapStateToProps,{resetCustomerFilds,typeOfsupplierActionShow,resetSupplierFilds,typeOfActionShow,getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)

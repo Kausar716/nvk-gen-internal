@@ -581,11 +581,12 @@ export const setPageNumber = (pageNumber) => {
           actionType:data
       }
   }
-  export const handleSearchFilter = (data)=>{
+  export const handleSearchFilter = (data,resetAction)=>{
     //   if()
       return{
           type:FILTER_SUPPLIER_BY_SEARCH,
-          searchData:data
+          searchData:data,
+          resetAction:resetAction
       }
   }
   export const handleAplhabetFilter = (data)=>{
