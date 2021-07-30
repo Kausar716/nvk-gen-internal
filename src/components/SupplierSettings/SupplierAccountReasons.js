@@ -200,7 +200,7 @@ render() {
                    <div>
                        	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
                <div className="bg-white">
- <h4 className="p-15 mb-0">Supplier Account Reasons (INACTIVE Reasons)</h4>
+ <h4 className="p-15 mb-0">Supplier Account Reason</h4>
                 
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
@@ -210,7 +210,7 @@ render() {
                                     </div>
                                     <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p style={{fontWeight:"bold"}}>Reasons</p>
+                                        <p style={{fontWeight:"bold"}}>Reason</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } placeholder="Reason" id="reason" name="supplierReason"

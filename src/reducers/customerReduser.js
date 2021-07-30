@@ -73,6 +73,7 @@ SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
 
 UPDATE_CUSTOMER_TERMS_SETTING,
 SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
+HANDLE_INPUT_CUSTOMER,
 HANDLE_INPUT_EXCHANGE1,
 DELETE_SUPPLIER_CONTACT
 
@@ -167,7 +168,7 @@ const initialSatate = {
 
    customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",
-   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:0.00,discount_by_line_item:1,restock_fee:0,fee_percent:0.00},
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:"",discount_by_line_item:1,restock_fee:"",fee_percent:""},
 
     action:"",
     customerContact:{
@@ -212,6 +213,12 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+        case HANDLE_INPUT_CUSTOMER:
+            return{
+                ...state,
+                [action.dataType]:{...state[action.dataType],[action.id]:action.data}
+
+            }
         case DELETE_SUPPLIER_CONTACT:
             return{
                 ...state,
@@ -405,9 +412,9 @@ case ADD_NEW_CUSTOMER:
               },
               customerAddressList:{active:[],inactive:[]},
 
-            customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-            tax_exempt: 0,fax:"",
-            tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:0.00,discount_by_line_item:1,restock_fee:"Yes",fee_percent:0.00},
+              customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+              tax_exempt: 0,fax:"",
+              tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"",discount_by_line_item:1,restock_fee:"Yes",fee_percent:""},
         }
     case UPDATE_CUSTOMER:
         return {
@@ -734,6 +741,22 @@ case ADD_NEW_CUSTOMER:
                     pageNumber:action.pageNumber
                 }
             case FILTER_DATA_BY_SEARCH:
+                if(action.resetAction ==="reset"){
+                    let datatoShow = []
+                    let searchedData = []
+                    datatoShow = state.activeData
+                    searchedData = datatoShow
+                    return{
+                        ...state,
+                        customerList:searchedData,
+                        searchFilter:action.searchData,
+                        radioFilter:"active",
+                        alphabetSearch:"All"
+
+                    }
+                    
+
+                }
                 let datatoShow = []
                 let searchedData = []
                 if(state.radioFilter === "active") datatoShow = state.activeData

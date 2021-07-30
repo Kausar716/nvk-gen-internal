@@ -13,6 +13,7 @@
  HANDLE_INPUT_EXCHANGE1,
  ADD_NOTIFICATION,
  ADD_FINANCES_DATA,
+ HANDLE_INPUT_CUSTOMER,
  ADD_EMAIL,
  GET_CUSTOMER_NOTIFICATION,
  GET_EMAIL_NOTIFICATION,
@@ -317,6 +318,15 @@ export const showSpecificCustomerDeliveryMethodSettings = (id) => dispatch => {
 export const handleExchangeData =(data,id,dataType)=>dispatch=>{
     dispatch({
         type:HANDLE_INPUT_EXCHANGE1,
+        data:data,
+        id:id,
+        dataType:dataType
+
+    })
+}
+export const handleExchangeDataNew =(data,id,dataType)=>dispatch=>{
+    dispatch({
+        type:HANDLE_INPUT_CUSTOMER,
         data:data,
         id:id,
         dataType:dataType
@@ -857,11 +867,12 @@ export const setPageNumber = (pageNumber) => {
           actionType:data
       }
   }
-  export const handleSearchFilter = (data)=>{
+  export const handleSearchFilter = (data,resetAction)=>{
     //   if()
       return{
           type:FILTER_DATA_BY_SEARCH,
-          searchData:data
+          searchData:data,
+          resetAction:resetAction
       }
   }
   export const handleAplhabetFilter = (data)=>{

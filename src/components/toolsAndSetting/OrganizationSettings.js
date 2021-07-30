@@ -673,7 +673,7 @@ export class OrganizationSettings extends React.Component {
                                     <div class="row form-group">
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
-                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={" "} 
+                                            <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={""} 
                                              id={"phone1"} 
                                             value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization} 
                                              onChange={this.handleChange} />
