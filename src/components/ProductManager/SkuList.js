@@ -127,7 +127,7 @@ const SkuList=(props)=> {
                 
                
                 if(e.target.id === "retain"){   
-                     if(props.productData.productDataById.product_id.length>0){
+                     if(props.productData.productDataById.product_id){
                          skuid= props.productData.productDataById.product_id
                      }                     
                      else{                        
@@ -144,7 +144,7 @@ const SkuList=(props)=> {
                 }
                 if(e.target.id === "dontRetain"){
                     skuFieldClear = true
-                    if(props.productData.productDataById.product_id.length>0){
+                    if(props.productData.productDataById.product_id){
                     
                         skuid= props.productData.productDataById.product_id
                     }                     
