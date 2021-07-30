@@ -297,7 +297,7 @@ export default function(state = initialSatate, action){
             case DELETE_SKU_ACTION:
                 return{
                     ...state,
-                    actionType:"add",
+                    // actionType:"add",
                    
                     skuDataById         :   {
                         each_cost:null,
