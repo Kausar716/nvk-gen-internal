@@ -220,7 +220,7 @@ export class PurchaseOrders extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Purchase Orders</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
-                    <a href="#" class="btn ml-2">
+                    <a href="/PurchaseOrder" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
                             <span class="ml-2"><b>New P.O.</b></span>
@@ -464,7 +464,7 @@ export class PurchaseOrders extends React.Component {
                                             <tbody>
                                                 {filteredList.map(pOrderList=>{
                                                     return <tr key={pOrderList.suppliearName}>
-                                                    <td><span  class='stsBadge stsClosed'>{pOrderList.status}</span></td>
+                                                    <td><span  class={pOrderList.status==='closed'?'stsBadge stsClosed':pOrderList.status==='Draft'?'stsBadge stsDraft':pOrderList.status==='open'?'stsBadge stsOpen':""}>{pOrderList.status}</span></td>
                                                     <td><a href="">{pOrderList.poNumber}</a></td>
                                                     <td>{pOrderList.suppliearName}</td>
                                                     <td>{pOrderList.supplierOrder}</td>

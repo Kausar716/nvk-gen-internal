@@ -98,16 +98,16 @@ export default function PurchaseOrderDetails() {
                                         <div class="col-md-6 col-lg-6">
                                             <h4>John Smith Landscaping</h4>
                                             <div>
-                                                <div><b class="mr-3">Type:</b>Finished Plants, Liners</div>
-                                                <div><b class="mr-3">Tax Exempt:</b>No</div>
-                                                <div><b class="mr-3">Terms:</b>Net 30</div>
+                                                <div style={{color:"#ccc"}}><b class="mr-3" style={{color:"#000"}}>Type:</b>Finished Plants, Liners</div>
+                                                <div style={{color:"#ccc"}}><b class="mr-3" style={{color:"#000"}}>Tax Exempt:</b>No</div>
+                                                <div style={{color:"#ccc"}}><b class="mr-3" style={{color:"#000"}}>Terms:</b>Net 30</div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-6 text-md-right mt-3 mt-md-0">
                                             <h4>Ordered By</h4>
                                             <div>
-                                                <div>B. Vanderkruk</div>
-                                                <div>brent@nvknuseries.com</div>
+                                                <div style={{color:"#ccc"}}>B. Vanderkruk</div>
+                                                <div style={{color:"#ccc"}}>brent@nvknuseries.com</div>
                                             </div>
                                         </div>
                                     </div>
@@ -206,6 +206,17 @@ export default function PurchaseOrderDetails() {
                                         <input type="text" class="form-control" placeholder=""></input>
                                     </div>
                                 </div>
+                                <div class="row mt-3 align-items-center">
+                                    <div class="col-md-12 col-lg-12">
+                                        <h2>Order Notes <span class="f-s-14" style={{color:"#ccc"}}>(Internal Only)</span></h2>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12">
+                                        <hr/>
+                                    </div>
+                                    <div class="col-md-12 col-lg-12">
+                                        <textarea cols="10" rows="8" class="form-control"></textarea>
+                                    </div>
+                                </div>
 
                             </form>
                         </div>
@@ -279,12 +290,10 @@ export default function PurchaseOrderDetails() {
                                         <div class="row mt-4 mb-4">
                                             <div class="col-md-12 col-lg-12 sortingCtrls d-flex flex-wrap align-items-center">
                                             <span class="mr-3">Sort</span>
-                                                <a href="" class="active">Default</a>
-                                                <a href="">Ready Alert</a>
-                                                <a href="">Sales</a>
-                                                <a href="">Sales NR</a>
-                                                <a href="">Production</a>
-                                                <a href="">Production NR</a>
+                                                <a href="" class="active">No End Date</a>
+                                                <a href="">Next 30 Days</a>
+                                                <a href="">Next 90 Days</a>
+                                                <a href="">Next 180 Days</a>
                                             </div>
                                         </div>
                                         
