@@ -221,7 +221,6 @@ export default function(state = initialSatate, action){
         case CREATE_PRODUCT_ACTION:
             console.log(action)
             console.log(state)
-            debugger;
             return{
                 ...state,
                 needAction:false,
