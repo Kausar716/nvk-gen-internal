@@ -143,8 +143,15 @@ const GeneralSettings=(props)=> {
                 if(actionType ==="add")
                 props.createProductAction(productDataById,localTagData)
    
-                if(actionType ==="edit")
-                props.updateProductAction(productDataById,productDataById.product_id,localTagData)
+                if(actionType ==="edit"){
+                    if(props.productDataById)
+                    props.updateProductAction(productDataById,productDataById.product_id,localTagData)
+                    else if(props.productData.ae_product_id){
+                    props.updateProductAction(productDataById,props.productData.ae_product_id,localTagData)
+
+                    }
+                }
+                
                 //setSubmitCount(1)
 
             }
@@ -283,7 +290,7 @@ if(productDataById){
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-3">
                                         <label>Category <span class="text-danger">*</span></label>
-                                        <select class="form-control" style={{cursor:"pointer"}} id="category_id" onChange={handleInput}>
+                                        <select class="form-control" style={{cursor:"pointer"}} id="category_id" onChange={handleInput} value={productDataById.category_id}>
                                         <option value="0" selected>Select...</option>
                                             {categoryData.map(category=>{
                                                 return (<option value={category.id} selected={category.id===productDataById.category_id?"selected":""}>{category.name}</option>)
@@ -294,7 +301,7 @@ if(productDataById){
                                    
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Manufacturer <span class="text-danger">*</span></label>
-                                        <select class="form-control" style={{cursor:"pointer"}} id="manufacturer_id"  onChange={handleInput}>
+                                        <select class="form-control" style={{cursor:"pointer"}} id="manufacturer_id"  onChange={handleInput} value={productDataById.manufacturer_id}>
                                         <option value="0" selected>None</option>
                                             {manufactureData.map(manufacture=>{
                                                 return(<option value={manufacture.id} selected={manufacture.id===productDataById.manufacturer_id?"selected":""}>{manufacture.name}</option>)
