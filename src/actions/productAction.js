@@ -18,6 +18,7 @@ import {
     GET_ALL_SKU_ACTION,
     GET_SPECIFIED_SKU_ACTION,
     UPDATE_SKU_ACTION_CLEAR,
+    CREATE_SKU_ACTION_AND_CLEAR,
 
     //page redirects action
 
@@ -241,7 +242,7 @@ export const duplicateProduct = (id) =>dispatch=>{
 */
 
 
-export const createSkuAction = (id, skuData, actionType="add") =>async dispatch => {
+export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>async dispatch => {
     const data1={
                 type:"product",
                 supplier_id:1,
@@ -265,7 +266,7 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
         delete FinalData.subcategory
         console.log(FinalData,id)
        
-     return   axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
+        axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
            
             console.log("createSKU", res)
             //dispatch(getAllProductAction())
@@ -277,10 +278,22 @@ export const createSkuAction = (id, skuData, actionType="add") =>async dispatch 
             //dispatch(updateSkuAction(res.data.data.id, skuData))
             dispatch(getAllSkuAction(res.data.data.id))
             dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
-            dispatch(showSpecifiedSkuAction(res.data.data.id, "edit","sku"))
-            dispatch({
-                type:CREATE_SKU_ACTION
-            })
+           
+            if(skuFieldClear){
+                alert("in clear action")
+                dispatch({
+                    type:CREATE_SKU_ACTION_AND_CLEAR,
+                    actionType:actionType
+                })
+            }
+            else{
+                alert("in retain action")
+                dispatch(showSpecifiedSkuAction(res.data.data.id, "edit"))
+                dispatch({
+                    type:CREATE_SKU_ACTION
+                })
+            }
+           
             error.push("SKU Created successfully")
             dispatch({
                 type:ERROR_HANDLE,
@@ -464,7 +477,7 @@ export const getAllSkuAction = (id) => dispatch => {
 
 export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch => {
   
-console.log(id)
+console.log(actionType)
      axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
         console.log(res)
@@ -472,8 +485,8 @@ console.log(id)
         console.log("showSpecifiedSkuAction",res.data.data[0])
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
-                payload:res.data.data[0]
-                //actionType:actionType
+                payload:res.data.data[0],
+                actionType:actionType
     
             })
         })
@@ -571,6 +584,7 @@ export const handleInputAction = (id, value) =>dispatch=>{
 
 }
 export const handleSkuInputAction =(id,value) =>dispatch=>{
+    console.log(id,value)
       dispatch({
         type:HANDLE_SKU_INPUT_DATA,
         itemId:id,
