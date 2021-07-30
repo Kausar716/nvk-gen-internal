@@ -9,16 +9,15 @@ import {GET_PATH,UPDATE_PATH} from './types';
 // }
 
 export const getMenuItems = (data) => dispatch => {
-      
-      
 
         dispatch({
                 type:GET_PATH,
                 payload:data   
             })
-        
 
 }
+
+
 export const updateMenuItems = (path) => dispatch => {
 
     dispatch({

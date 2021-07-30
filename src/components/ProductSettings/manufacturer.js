@@ -214,7 +214,7 @@ render()
 
                                                 ):
                                                 (
-                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
+                                                <div className="col-md-6 col-lg-3" onClick={this.handleAddProductManufacturer}>
                                                 <a href="javascript:" className="d-flex align-items-center">
                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Manufacturer
                                                 </a>

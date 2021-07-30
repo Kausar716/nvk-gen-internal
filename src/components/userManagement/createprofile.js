@@ -5,8 +5,10 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,addUser,uploadImage} from "../../actions/userAction";
+import {handleOrganizationSettingsInputAction} from "../../actions/organizationSettingAction"
 import {getRolesList} from "../../actions/userAccessAction";
-import ActionModal from '../Modal/ActionModal'
+import ActionModal from '../Modal/ActionModal';
+import InputMask from 'react-input-mask';
 
 
 const phoneRegex = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
@@ -38,6 +40,15 @@ export class CreateUserProfile extends Component {
                 emailError:0,     
                 positionError:0           
             },
+
+            hadModified:{
+                name:false,
+                last_name:false,
+                phone:false,
+                email:false,     
+                position:false,   
+                },
+
             errorCount:0,
             display:false,
             deleteProfile:false,
@@ -77,44 +88,58 @@ export class CreateUserProfile extends Component {
       }
 
     handleInput = (e) => {
+       // debugger;
         console.log(e.target.value)
         const {target:{name,value}} =e
-        let {errorObj,errorCount} = this.state
+        let {errorObj,errorCount,hadModified} = this.state
         //this.setState({phone: e.target.value})
         this.setState({[name]:value})
 
+        // if(errorObj.firstNameError>0){
+        //     errorObj.firstNameError=0
+        //     errorCount--
+        // }          
+
         if(name === "firstName" ){
+            hadModified.name=true
             if(errorObj.firstNameError>0){
                 errorObj.firstNameError=0
                 errorCount--
             }           
         }
         else if(name === "lastName" ){
+            hadModified.last_name=true
             if(errorObj.lastNameError>0){
                 errorObj.lastNameError=0
                 errorCount--
             }            
         }
-        else if(name === "phone" ){
-            if(errorObj.phoneError>0){
-                errorObj.phoneError=0
-                errorCount--
-            }            
-        }
+        // else if(name === "phone" ){
+        //     hadModified.phone=true
+        //     if(errorObj.phoneError>0){
+        //         errorObj.phoneError=0
+        //         errorCount--
+        //     }            
+        // }
         else if(name === "email" ){
+            hadModified.email=true
             if(errorObj.emailError>0){
                 errorObj.emailError=0
                 errorCount-- 
             }            
         }
-        else if(name === "postiton"){
+        else if(name === "position"){
+            hadModified.position=true
   
             if(errorObj.positionError>0){
                 errorObj.positionError=0
                 errorCount--
             }            
         }
-        this.setState({errorObj,errorCount})
+
+
+        this.setState({errorObj,errorCount,hadModified})
+        this.props.handleOrganizationSettingsInputAction(name,value)
     }
 
 
@@ -131,10 +156,10 @@ export class CreateUserProfile extends Component {
 
     }
     validate = () =>{
-        //debugger;
+        // debugger;
         let {errorObj,errorCount}=this.state
         //let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-          let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
+         // let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z]+$/
         // let phoneReg = new RegExp('^[0-9]+$');/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
@@ -162,10 +187,46 @@ export class CreateUserProfile extends Component {
         }
 
 
-         if(!phoneReg.test(this.state.phone)){
+        // if (this.state.phone.length === 0) {
+        //     debugger;
+        //     if(this.state.phone !== ""){
+        //         let enteredNumber = this.state.phone.trim().match(/\d/g)
+                
+        //         if (enteredNumber.join("").length<10 || enteredNumber.value === "") {
+        //             document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
+        //             errorCount++;
+        //         } else {
+        //             document.getElementById("phone1-validtor").innerText = ""
+        //         }
+        //     }
+        //     else if(this.state.phone === ""){
+        //         document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
+        //         errorCount++;
+        //     }
+
+        // }
+      
+
+        let enteredNumber = this.state.phone.trim().match(/\d/g)
+        if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+            document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
-            errorCount++
+            errorCount++;
         }
+        else {
+            document.getElementById("contactPhone-validtor").innerText = ""
+        }
+
+        // else if(this.state.phone === ""){
+        //             document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
+        //             errorCount++;
+        //         }
+       
+
+        //  if(!phoneReg.test(this.state.phone)){
+        //     errorObj.phoneError=1
+        //     errorCount++
+        // }
         // if(this.state.phone.length>13){
         //     errorObj.phoneError=1
         //     errorCount++
@@ -184,10 +245,25 @@ export class CreateUserProfile extends Component {
             errorObj.emailError=1
             errorCount++
         }
+
+
+
+
+     
+
+
+
+
+
+
         this.setState({errorObj,errorCount})
         return errorCount
     }
     handleSubmit = (e) => {
+
+      
+        
+        // debugger;
        let count= this.validate()
 
        this.setState({ hasError: false });
@@ -200,12 +276,12 @@ export class CreateUserProfile extends Component {
             console.log(this.state)
             let userStateObject = this.state
             let userObject={}  
-           // userObject['name'] = userStateObject.firstName
+            userObject['name'] = userStateObject.firstName
             userObject['last_name'] = userStateObject.lastName
            // userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
             userObject['phone'] = userStateObject.phone
-            userObject['position'] = userStateObject.position
+            userObject['role'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 
 
@@ -241,9 +317,9 @@ export class CreateUserProfile extends Component {
 
 
 
-     const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-     let phno = phone ||'';
-        let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
+    //  const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
+    //  let phno = phone ||'';
+    //     let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
   
            
 
@@ -280,13 +356,13 @@ export class CreateUserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
-                                                    <option>Select</option>
+                                                    <option>select</option>
                                                         {roles?roles.map(userObj=>{
                                                             console.log(userObj)
                                                             return  <option value={userObj.id}>{userObj.name}</option>
                                                         }):null}                                                        
                                                     </select>
-                                                    {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
+                                                    {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>
 
 
@@ -323,7 +399,7 @@ export class CreateUserProfile extends Component {
                                                      pattern="[0-9]*"
                                                      maxLength="10"
                                                      name="phone"/> */}
-
+{/* 
                                                 <input
                                                     class="form-control"  
                                                     type="text"
@@ -340,7 +416,27 @@ export class CreateUserProfile extends Component {
                                                         (event) => this.setState({phone: event.target.value})
                                                        } 
                                                    
-                                                />
+                                                /> */}
+                                                     <InputMask
+                                                    class="form-control"  
+                                                    type="text"
+                                                    name="phone"
+                                                    placeholder="(xxx) xxx-xxxx"
+                                                    value={this.state.phone}
+                                                    id={"phone1"}
+                                                   
+                                                    mask="(999) 999-9999" maskChar={" "} 
+                                                     onChange={this.handleInput}
+                                                      /> 
+                                              
+
+                                                        {/* <InputMask type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
+                                                     mask="(999) 999-9999" maskChar={" "} 
+                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
+                                                     /> */}
+
+                                                    <span style={{fontSize:"small",color:"red"}} id="contactPhone-validtor"></span>
+
 
                                                     {/* {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""} */}
                                                 </div>
@@ -443,4 +539,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getRolesList,addUser,uploadImage})(CreateUserProfile)
+export default connect(mapStateToProps,{getRolesList,addUser,uploadImage, handleOrganizationSettingsInputAction})(CreateUserProfile)
