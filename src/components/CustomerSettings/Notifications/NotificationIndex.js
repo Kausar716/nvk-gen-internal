@@ -181,7 +181,7 @@ setOpen(true)
 
                       <div className="notification_label">
                       <div class="ui menu">
-                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> READY to LATE Notice  </span><i class="fa fa-info" id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"4.1%",textAlign:"center",padding:"3.2px",color:"#5287F5"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
+                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> READY to LATE Notice  </span><i class="fa fa-info" id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"4.2%",textAlign:"center",padding:"3.2px",color:"#5287F5",height:"19.2px"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
                                 <p>Set the number of days after the requested date for order in READY state waiting for pickup or shipment.</p>
                             </Tooltip></a>
   {/* <a href="" class="item"><i class="large camera retro icon"></i><span class="nav-text"> Créations</span></a>
@@ -199,7 +199,7 @@ setOpen(true)
 
                       <div className="notification_label">
                       <div class="ui menu">
-                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> Reserve Expiry Notice  </span><i class="fa fa-info" id="TooltipExample1"  style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"4.1%",textAlign:"center",padding:"3.2px",color:"#5287F5"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen1} target="TooltipExample1" toggle={toggleTool1} >
+                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> Reserve Expiry Notice  </span><i class="fa fa-info" id="TooltipExample1"  style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"4.1%",textAlign:"center",padding:"3.2px",color:"#5287F5",height:"19.2px"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen1} target="TooltipExample1" toggle={toggleTool1} >
                                 <p>Set the number of days remaining on the order reservation date.</p>
                             </Tooltip></a>
                               {/* <a href="" class="item"><i class="large camera retro icon"></i><span class="nav-text"> Créations</span></a>

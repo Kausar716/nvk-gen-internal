@@ -624,7 +624,7 @@ export class OrganizationSettings extends React.Component {
         const { value1} = this.state;
     return (
         <div clas="userManagementSection">
-            <Prompt
+    <Prompt
       when={organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address }
       message=' Are you sure you want save and leave?'
     />

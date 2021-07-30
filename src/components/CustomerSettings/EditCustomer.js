@@ -456,7 +456,7 @@ function AddCustomer(props) {
                                     </div> */}
                                     <div class="col-md-8 col-lg-8 mt-2 mt-md-0">
                                     <label>Type<span class="text-danger">*</span></label>
-                                        <div style={{border:"1px solid lightgray",height:40,borderRadius:3,paddingLeft:10,paddingTop:7}}>
+                                        <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}>
                                         {customerTypeList.active.map(type=>{
                                           
                                                 return (<div class="form-check form-check-inline" style={{paddingRight:10}}>
