@@ -218,7 +218,7 @@ const handleCheckBox =(id,index,type)=>{
                                         </tbody>
                                     </table>
                                     <div className="centerItem">
-                                    <p >{plantData.length===0?"No records found... ":""} <Loader /></p>
+                                    <p >{plantData.length===0?props.loaderMessage:""} <Loader /></p>
                                     </div>
                                    
                                 </div>

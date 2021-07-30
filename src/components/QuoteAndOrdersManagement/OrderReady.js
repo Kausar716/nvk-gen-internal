@@ -68,12 +68,174 @@ export default function OrderReady() {
                         <Tab>Notes</Tab>
                     </TabList>
                     <TabPanel>
-                        <div class="bg-white px-3 py-3 mt-3">
+                        <div class="bg-white px-3 py-3">
                             <form>
-                               
+                                <h2>Current Order</h2>
+                                <hr/>
+                                <div class="px-3 py-3 bg-grey-transparent-2">
+                                    <div class="row ">
+                                        <div class="col-md-12">
+                                            <h4>John Smith Landscaping</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-4 col-lg-4">
+                                            <div>
+                                                <div><b class="mr-3">Type:</b>Finished Plants, Liners</div>
+                                                <div class="mt-1"><b class="mr-3">Tax Exempt:</b>No</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4">
+                                            <div>
+                                                <div><b class="mr-3">Terms:</b>Net 20</div>
+                                                <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 text-md-right mt-3 mt-md-0">
+                                            <div>
+                                                <div><b class="mr-3">Source:</b>Internal</div>
+                                                <div class="mt-1"><b class="mr-3">Price Year:</b>2020</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <div class="row ">
+                                            <div class="col-md-6 col-lg-4">
+                                                <label>Ordered By <span class="text-danger">*</span></label>
+                                                <select class="form-control">
+                                                    <option>John Smith</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                                <label>Bill To <span class="text-danger">*</span></label>
+                                                <select class="form-control">
+                                                    <option>1234 Main St, Waterdown </option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                                <label>PO #</label>
+                                                <input type="text" class="form-control" placeholder=""></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label class="mr-2 mr-md-0">Requested Date</label>
+                                                <DatePicker onChange={onChange} value={value} />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
+                                                <label class="mr-2 mr-md-0">Requested Time</label>
+                                                <select class="form-control">
+                                                    <option>AM</option>
+                                                    <option>PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row ">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Currency</label>
+                                                <select class="form-control">
+                                                    <option>CAD</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Email To</label>
+                                                <select class="form-control">
+                                                    <option>Select </option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <label>Job Description</label>
+                                        <input type="text" class="form-control" placeholder=""></input>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row ">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Units</label>
+                                                <select class="form-control">
+                                                    <option>Metric</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Discount</label>
+                                                <input type="text" class="form-control" placeholder="" value="0.00" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
+                                        <a href="">Reset</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Include Royalty</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Display Discount Column</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Display Substitution Line</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Show Pricing on Output</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
+                                        <label>Customer Notes <small>(Internal Only)</small></label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </TabPanel>
+                    
                     <TabPanel>
                         <div class="bg-white px-3 py-3 mt-3">
                             <form>
@@ -194,11 +356,77 @@ export default function OrderReady() {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div class="bg-white px-3 py-3 mt-3">
-                           
+                        <div class="bg-white px-3 py-3 mt-2">
+                            <form>
+                                <h2>Sales Order History</h2>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-12 table-responsive">
+                                        <table class="table table-striped table-td-valign-middle" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Action</th>
+                                                    <th class="text-center">Source</th>
+                                                    <th class="text-center">Item</th>
+                                                    <th class="text-center">Timestamp</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </TabPanel>
-                    <TabPanel></TabPanel>
+                    <TabPanel>
+                    <div class="bg-white px-3 py-3 mt-2">
+                            <form>
+                                <h2>Internal Notes <span class="f-s-14">(Not shown to customer)</span></h2>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea cols="10" rows="8" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-primary btn-lg ml-3">SAVE</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </TabPanel>
                 </Tabs>
             </div>
         </div>

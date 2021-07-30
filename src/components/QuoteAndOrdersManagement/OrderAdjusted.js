@@ -62,12 +62,459 @@ export default function Adjusted() {
                     </TabList>
                     <TabPanel>
                         <div class="bg-white px-3 py-3">
-                            
+                            <form>
+                                <h2>Current Order</h2>
+                                <hr/>
+                                <div class="px-3 py-3 bg-grey-transparent-2">
+                                    <div class="row ">
+                                        <div class="col-md-12">
+                                            <h4>John Smith Landscaping</h4>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-md-4 col-lg-4">
+                                            <div>
+                                                <div><b class="mr-3">Type:</b>Finished Plants, Liners</div>
+                                                <div class="mt-1"><b class="mr-3">Tax Exempt:</b>No</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4 col-lg-4">
+                                            <div>
+                                                <div><b class="mr-3">Terms:</b>Net 20</div>
+                                                <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 col-lg-4 text-md-right mt-3 mt-md-0">
+                                            <div>
+                                                <div><b class="mr-3">Source:</b>Internal</div>
+                                                <div class="mt-1"><b class="mr-3">Price Year:</b>2020</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <div class="row ">
+                                            <div class="col-md-6 col-lg-4">
+                                                <label>Ordered By <span class="text-danger">*</span></label>
+                                                <select class="form-control">
+                                                    <option>John Smith</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                                <label>Bill To <span class="text-danger">*</span></label>
+                                                <select class="form-control">
+                                                    <option>1234 Main St, Waterdown </option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                                <label>PO #</label>
+                                                <input type="text" class="form-control" placeholder=""></input>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label class="mr-2 mr-md-0">Requested Date</label>
+                                                <DatePicker onChange={onChange} value={value} />
+                                            </div>
+                                            <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
+                                                <label class="mr-2 mr-md-0">Requested Time</label>
+                                                <select class="form-control">
+                                                    <option>AM</option>
+                                                    <option>PM</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row ">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Currency</label>
+                                                <select class="form-control">
+                                                    <option>CAD</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Email To</label>
+                                                <select class="form-control">
+                                                    <option>Select </option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <label>Job Description</label>
+                                        <input type="text" class="form-control" placeholder=""></input>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row ">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Units</label>
+                                                <select class="form-control">
+                                                    <option>Metric</option>
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Discount</label>
+                                                <input type="text" class="form-control" placeholder="" value="0.00" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
+                                        <a href="">Reset</a>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Include Royalty</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Display Discount Column</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Display Substitution Line</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-lg-3">
+                                        <label>Show Pricing on Output</label>
+                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                            <div class="switcher switcher-sm ml-2 pr-2">
+                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                <label for="switcher_checkbox_date"></label>
+                                            </div> On
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
+                                        <label>Customer Notes <small>(Internal Only)</small></label>
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </TabPanel>
                     <TabPanel>
                         <div class="bg-white px-3 py-3 mt-2">
-                            
+                            <form>
+                                <h2>Add to Order</h2>
+                                <hr/>
+                                <div class="row mt-3 align-items-center">
+                                    <div class="col-md-12">
+                                        <div class="row form-group">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Search</label>
+                                                <div class="searchInput">
+                                                    <button type="submit" class="btn btn-search">
+                                                        <img src="assets/img/search.svg" alt=""/>
+                                                    </button>
+                                                    <input type="text" class="form-control" placeholder=""/>
+                                                </div>
+                                                <div class="row mt-3 align-items-center">
+                                                    <div class="col-md-12 d-flex">
+                                                        <div class="custom-control custom-radio">
+                                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="customRadio1">Active Only</label>
+                                                        </div>
+                                                        <div class="custom-control custom-radio ml-3">
+                                                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
+                                                            <label class="custom-control-label" for="customRadio2">Both Active and Inactive</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Search SKU</label>
+                                                <div class="searchInput">
+                                                    <button type="submit" class="btn btn-search">
+                                                        <img src="assets/img/search.svg" alt=""/>
+                                                    </button>
+                                                    <input type="text" class="form-control" placeholder=""/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row mt-3 mb-4 align-items-center">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Location:</label>
+                                                <select class="form-control">
+                                                    <option>All</option>     
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4 col-lg-4 mt-3 mt-md-0">
+                                                <label>Category</label>
+                                                <select class="form-control">
+                                                    <option>All</option>     
+                                                    <option>Option 1</option>
+                                                    <option>Option 2</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2 col-lg-2 pt-md-4">
+                                                <a href="javascript:;">Reset</a>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <div class="col-md-12 table-responsive">
+                                                <table class="table table-striped" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th width="15%" class="">SKU</th>
+                                                            <th width="17%" class="text-center">Size</th>
+                                                            <th width="8%" class="text-center">On Hand</th>
+                                                            <th width="8%" class="text-center">Customer Orders</th>
+                                                            <th width="10%" class="text-center">Current <br/>Available</th>
+                                                            <th width="8%" class="text-center">On Quotes</th>
+                                                            <th width="8%" class="text-center">Open POS</th>
+                                                            <th width="10%" class="text-center">Future <br/>Available</th>
+                                                            <th width="8%" class="text-center">Price</th>
+                                                            <th width="8%" class="text-center">Volume<br/>
+Rate</th>
+                                                            <th width="8%" class="text-center">Dis%</th>
+                                                            <th width="10%" class="text-center">Qty</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="12">
+                                                                <table class="table table-striped" width="100%">
+                                                                    <tr class="tblLinks">
+                                                                        <td colspan="14">
+                                                                            <a href="">Abeliophyllum (White Forsythia)</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td width="15%">
+                                                                            <a href="">393-TF-1259-1G</a>
+                                                                        </td>
+                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="8%">23</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="8%">13</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="8%">0.25</td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
+                                                                        </td>
+                                                                        <td class="text-center" width="10%" >
+                                                                            <div class="d-flex align-items-center">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <a href="" class="ml-2">
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td width="15%">
+                                                                            <a href="">393-TF-1259-1G</a>
+                                                                        </td>
+                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="8%">23</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="8%">13</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="8%">0.25</td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
+                                                                        </td>
+                                                                        <td class="text-center" width="10%" >
+                                                                            <div class="">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
+                                                                                 <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>   
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <a href="" class="ml-2">
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td colspan="12">
+                                                                <table class="table table-striped" width="100%">
+                                                                    <tr class="tblLinks">
+                                                                        <td colspan="12">
+                                                                            <a href="">Abeliophyllum (White Forsythia)</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td width="15%">
+                                                                            <a href="">393-TF-1259-1G</a>
+                                                                        </td>
+                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="8%">23</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="8%">13</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="8%">0.25</td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
+                                                                        </td>
+                                                                        <td class="text-center" width="10%" >
+                                                                            <div class="d-flex align-items-center">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <a href="" class="ml-2">
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td width="15%">
+                                                                            <a href="">393-TF-1259-1G</a>
+                                                                        </td>
+                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="8%">23</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="8%">13</td>
+                                                                        <td class="text-center" width="8%">50</td>
+                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="8%">0.25</td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
+                                                                        </td>
+                                                                        <td class="text-center" width="10%" >
+                                                                            <div class="">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
+                                                                                 <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>   
+                                                                            </div>
+                                                                        </td>
+                                                                        <td class="text-center" width="8%">
+                                                                            <a href="" class="ml-2">
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </TabPanel>
                     <TabPanel>
@@ -512,12 +959,74 @@ export default function Adjusted() {
                     </TabPanel>
                     <TabPanel>
                         <div class="bg-white px-3 py-3 mt-2">
-                            
+                            <form>
+                                <h2>Sales Order History</h2>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-12 table-responsive">
+                                        <table class="table table-striped table-td-valign-middle" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th class="text-center">Action</th>
+                                                    <th class="text-center">Source</th>
+                                                    <th class="text-center">Item</th>
+                                                    <th class="text-center">Timestamp</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </TabPanel>
                     <TabPanel>
                     <div class="bg-white px-3 py-3 mt-2">
-                          
+                            <form>
+                                <h2>Internal Notes <span class="f-s-14">(Not shown to customer)</span></h2>
+                                <hr/>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <textarea cols="10" rows="8" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-primary btn-lg ml-3">SAVE</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </TabPanel>
                 </Tabs>

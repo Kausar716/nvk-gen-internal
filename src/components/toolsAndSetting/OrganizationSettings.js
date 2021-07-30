@@ -6,7 +6,9 @@ import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal';
 import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
+import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
+import { Prompt } from 'react-router'
 export const Component = withRouter(({ history, location }) =>{
 
 })
@@ -81,6 +83,7 @@ export class OrganizationSettings extends React.Component {
             main_body:false,
             secondartBody:false,
             },
+
             errorCount:0,
             logo:"",
             imageUploaded:false,
@@ -104,6 +107,7 @@ export class OrganizationSettings extends React.Component {
         // alert(1)
         // debugger;
         // this.setState({logo:e.target.files[0]})
+      
         console.log(e1.target.files[0])
         let imageData = e1.target.files[0]
         let id="2"
@@ -113,8 +117,10 @@ export class OrganizationSettings extends React.Component {
            
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
-
+           
         setTimeout(function() {
+          
+
             window.location.reload();
             alert("image successfully uploaded")
             
@@ -123,15 +129,30 @@ export class OrganizationSettings extends React.Component {
          
     }
 
+
+
+    // componentDidUpdate = () => {
+    //     let dataOrganizationDetails =  this.props.organizationData.organizationData;
+    //     if (!dataOrganizationDetails) {
+    //       window.onbeforeunload = () => true
+    //       this.handleSubmit();
+    //     } else {
+    //       window.onbeforeunload = undefined
+    //     }
+    //   }
+
     toggle1 =()=>{
         this.setState({isOpen1:false})
     }
 
 
     validation = () =>{
+        let {errorObj,errorCount}=this.state
          let {name,phone,sending_email_address, main_body, main_title, secondary_body,secondary_title} = this.props.organizationData.organizationData
 
-        if(phone ==="" || name==="" || sending_email_address==="" || main_body ==="" || main_title ==="" || secondary_body ==="" || secondary_title ===""){
+        if(phone ==="" || name==="" || sending_email_address==="" || main_body ==="" || main_title ==="" || secondary_body ==="" || secondary_title ===""  ){
+            
+
         return 1
         }
         else{
@@ -148,7 +169,11 @@ export class OrganizationSettings extends React.Component {
      // debugger
        // this.setState({value1: e.target.value})
         const {target:{name,value}} =e
-        let {errorObj,errorCount,hadModified} = this.state        
+        let {errorObj,errorCount,hadModified} = this.state  
+        
+        
+
+
         // this.setState({[name]:value})    
         //this.setState({value1: event.target.value} 
            // this.setState({[name]:value})     
@@ -177,15 +202,6 @@ export class OrganizationSettings extends React.Component {
             }           
         }
 
-      
-
-
-
-
-
-
-
-
                     //console.log(hadModified[name],name)
                     // if(hadModified[name]  === name){
                         //hadModified[name] = true
@@ -194,6 +210,16 @@ export class OrganizationSettings extends React.Component {
         this.setState({errorObj,errorCount,hadModified})
        // let allValue =[...value, this.state.value1]
         this.props.handleOrganizationSettingsInputAction(name,value)
+
+
+        if(name === "sending_email_address" || name === "name" ){
+            hadModified.sending_email_address=true
+            hadModified.name=true
+                 
+        }
+
+
+
         
     }
 
@@ -203,6 +229,21 @@ export class OrganizationSettings extends React.Component {
     //     this.props.handleOrganizationSettingsInputAction("name",e.target.value)   
     // }
 
+    validate2 = ()=>{
+        let errorObj = this.state.errorObj
+        if(this.state.subName.length === 0){
+            errorObj.caliperImperial=1
+            this.setState({errorObj})
+            return false
+        }
+        if(this.state.subName2.length === 0){
+            errorObj.caliperSku=1
+            this.setState({errorObj})
+            return false
+        }
+        return true
+        
+    }
 
 
 
@@ -235,11 +276,19 @@ export class OrganizationSettings extends React.Component {
 
         // }   
 
+      
+
          if(! emailReg.test(organizationData.sending_email_address)){
             errorObj.sendingEmailError=1
             errorCount++
         }
        
+        if(organizationData.name ===""){
+            errorObj.firstNameError=1
+            errorCount++
+
+        }
+    
 
 
         // if(!nameReg.test(organizationData.name)){
@@ -265,6 +314,8 @@ export class OrganizationSettings extends React.Component {
 
 
     handleSubmit = (e) => {
+
+
             //debugger;
 
            
@@ -274,6 +325,11 @@ export class OrganizationSettings extends React.Component {
         if(this.state.phoneNumberInOrganization === undefined){
             window.location.reload();
     }
+
+    
+
+
+
      const phoneError = validateInput22(phoneNUMBER);
     
     this.setState({ phoneError }, () => {
@@ -298,28 +354,10 @@ export class OrganizationSettings extends React.Component {
 
         let errorLength =  this.validation()
         if(errorLength ===1){
-            this.setState({isOpen1:true,message:["Please fill all fileds with valid inputs"]})
+            this.setState({isOpen1:true,message:["Please fill all fields with valid inputs"]})
         }
 
-        // else{
 
-        //     let updateObject={}
-        //     updateObject.id=this.props.organizationData.organizationData.id
-        //     updateObject.phone = removedNumber
-        //     updateObject.name = this.props.organizationData.organizationData.name
-        //     updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
-        //     updateObject.main_title = this.props.organizationData.organizationData.main_title
-        //     updateObject.secondary_title = this.props.organizationData.organizationData.secondary_title
-        //     updateObject.main_body = this.props.organizationData.organizationData.main_body
-        //     updateObject.secondary_body = this.props.organizationData.organizationData.secondary_body
-        //     updateObject.log=this.props.organizationData.organizationData.logo
-        //     let result = this.props.updateorganization(updateObject)
-        //     result.then(data=>{
-        //         this.props.showorganization(2)
-        //     })
-
-            
-        // }
 
 
        
@@ -331,9 +369,9 @@ export class OrganizationSettings extends React.Component {
              updateObject.id=this.props.organizationData.organizationData.id
              console.log("hadModified",this.state.hadModified.name)
             
-             if(this.state.hadModified.name === true){
+            //  if(this.state.hadModified.name === true){
                 updateObject.name = this.props.organizationData.organizationData.name
-             }
+            //  }
 
              if(this.state.hadModified.sending_email_address === true){
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
@@ -364,6 +402,7 @@ export class OrganizationSettings extends React.Component {
                 let id = "2"
                 this.props.showorganization(id)
                 console.log(JSON.stringify(r))
+                // alert("Successfully Added")
             }).catch(c=>{
                 alert(JSON.stringify(c))
             })
@@ -391,18 +430,31 @@ export class OrganizationSettings extends React.Component {
      }
      componentDidMount(){
          let id = "2"
+         const { history } = this.props;
        this.props.showorganization(id)
+       //&& dataOrganizationDetails.main_body && dataOrganizationDetails.secondary_body  && dataOrganizationDetails.main_title && dataOrganizationDetails.secondary_title
+     let dataOrganizationDetails= this.props.organizationData.organizationData
+       if (dataOrganizationDetails.name && dataOrganizationDetails.phone && dataOrganizationDetails.name && dataOrganizationDetails.sending_email_address  ) {
+        window.onbeforeunload = () => true
+        this.handleSubmit();
+      } else {
+        window.onbeforeunload = undefined
+         history.push("/Dashboard")
+      }
      }
 
     //  let history = useHistory();
     render(){
+
+        
 
        console.log("organizationData",this.props.organizationData.organizationData)
         const { actionType } = this.state;
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        var TempUrl="assets/img/noImage.png";
+        let TempUrl = "./images/noPerson.png";
+        // var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
        // var iImage="assets/img/noImage.png";
         
@@ -418,6 +470,8 @@ export class OrganizationSettings extends React.Component {
               }
               else{
                     url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
+
+                     
               }
                
                
@@ -439,6 +493,7 @@ export class OrganizationSettings extends React.Component {
             if(this.state.imageUploaded){
                 url = URL.createObjectURL(organizationDataById.logo)
                 console.log(url)
+
             }
             else{
                 //debugger
@@ -559,9 +614,9 @@ export class OrganizationSettings extends React.Component {
      let phno = organizationDataById.phone;
 
     //  const phoneReg = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/
-    //  let phno = organizationDataById.phone ||'';
+    //  let phno = organizationDataById.phone ||'';organizationDataById.name
     //     let finalPhno= phno.replace(phoneReg,'($1) $2-$3')
-  
+  //&& organizationDataById.main_title || organizationDataById.secondary_title  || organizationDataById.main_body || organizationDataById.secondary_body
     
   
      console.log("phoneNumber", this.state.value)
@@ -569,6 +624,10 @@ export class OrganizationSettings extends React.Component {
         const { value1} = this.state;
     return (
         <div clas="userManagementSection">
+            <Prompt
+      when={organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address }
+      message=' Are you sure you want save and leave?'
+    />
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
@@ -602,10 +661,10 @@ export class OrganizationSettings extends React.Component {
                                             <img 
                                               src={url}
                                               id="imageid"
-                                            //   src={this.state.imagePreviewURL}
-                                           // src={this.state.initilaImages ? {url} : "assets/img/noImage.png"}
-                                           // src={noImageI} src="assets/img/plant-ic-lg-green.svg"
-                                            style={{height:"250px",width:"240px", borderRadius:"7em"}}/>
+                                          
+                                            style={{height:"250px",width:"240px"}}/>
+                                            <p > <Loader /></p> 
+                                             
                                         </div>
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
@@ -617,11 +676,12 @@ export class OrganizationSettings extends React.Component {
                                                 <span class="f-s-20" style={{position:"absolute"}} >Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
+                                            {/* <img src="assets/img/upload-ic-white.svg" alt="" /> */}
                                         </a>
                                         <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                             <span class="d-flex align-items-center justify-content-around"
                                             onClick={()=>{confirmAction("deleteImage"); }}
-                                            // onClick={this.handleRemoveImage}
+                                            // onClick={this.handleRemoveImage}tempImage
                                              >
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
@@ -728,7 +788,11 @@ export class OrganizationSettings extends React.Component {
                     <div class="row mt-3">
                         <div class="col-md-12 col-lg-12 text-md-right mt-3 mt-md-0">
                             <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={()=>{confirmAction("goBack"); }}  >Cancel</button>
-                            <button type="button" class="btn btn-primary btn-lg ml-3"  onClick={()=>{confirmAction("save"); }}
+                            <button type="button" class="btn btn-primary btn-lg ml-3" 
+                            onClick={this.handleSubmit}
+                                //  ()=>{confirmAction("save");}
+                              
+                             
                             // onClick={this.handleSubmit}
                             >Save</button>
                         </div>

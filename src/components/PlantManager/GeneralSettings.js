@@ -193,21 +193,21 @@ import {
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={plantDataById.in_production==="0"?false:true}/>
-                                                <label for="in_production"></label>
+                                                <label for="in_production" style={{cursor:"pointer"}}></label>
                                             </div>
                                             In Production
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="discontinued"  onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
-                                                <label for="discontinued"></label>
+                                                <input type="checkbox" id="discontinued"   onChange={handleInput} value={plantDataById.discontinued} checked={plantDataById.discontinued===0?false:true}/>
+                                                <label for="discontinued" style={{cursor:"pointer"}}></label>
                                             </div>
                                             Discontinued
                                         </div>
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="archived"  onChange={handleInput} value={plantDataById.archived} checked={plantDataById.archived===0?false:true}/>
-                                                <label for="archived"></label>
+                                                <label for="archived" style={{cursor:"pointer"}}></label>
                                             </div>
                                             Archive
                                         </div>
@@ -305,19 +305,18 @@ import {
                                         <label>Royalty</label>
                                         <input type="text" class="form-control" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
                                     </div>
-                                    {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
-                                        <label>Hardiness Zone</label> */}
-                                        <div class="col-md-6 col-lg-3">
-                                            {/* <label>Hardiness Zone<span class="text-danger">*</span></label>
+                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                        <label>Hardiness Zone</label>
+                                      
                                             <select class="form-control" >
                                             <option>None</option>
                                             <option>Areca</option>
                                             <option>Zone</option>
-                                            </select> */}
-                                        </div>
+                                            </select>
+                                   
                                         {/* <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/> */}
                                         
-                                    {/* </div> */}
+                                    </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Introduction Year</label>
                                         <select class="form-control" id="introduction_year" onChange={handleInput} style={{cursor:"pointer"}} value={plantDataById.introduction_year}>

@@ -194,7 +194,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                  this.props.getAllSubAttribute(3)
              })
 
-             alert('Updated Successfully Done');
+            //  alert('Updated Successfully Done');
             }
 
              this.setState({
@@ -321,8 +321,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     </a>
                                                     </div>
 
-                                                    <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false})}}>
-                                                    <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                    <div className="d-flex justify-content-md-end mt-2" >
+                                                    <a className="d-flex align-items-center"  onClick={()=>{this.setState({isEditing:false})}} style={{marginLeft:"2.4em", marginTop:"-8px"}}>Cancel </a>
                                                     
                                                     </div>
                                                 </div>

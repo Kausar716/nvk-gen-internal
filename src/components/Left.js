@@ -32,7 +32,7 @@ const Left = (props)=>{
 //  }
 const handleMainSelection= (id) => {
   let reduxObject = props.updateObject
-  console.log(reduxObject)
+  console.log("reduxObject",reduxObject)
   setSelectedMainBar(id)
   if(!reduxObject.submenu.includes(id)){
   }
@@ -108,7 +108,7 @@ const handleMainSelection= (id) => {
               </Link>
             </li>
             <li class={selectedMainBarData.includes("orderList")?"active":""} onClick={()=>{handleMainSelection("orderList")}} >             
-              <Link to="/comingsoon">
+              <Link to="/OrderList">
               <b class="caret"></b>
                 <img src="assets/img/customer-quotes.svg" alt=""/>
                 <span>Customer Quotes &amp; Orders</span>
@@ -116,7 +116,7 @@ const handleMainSelection= (id) => {
                 <ul class="sub-menu">
                 <li class= {(selectedSubBar === "orderList1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList1")}}><Link to="/comingsoon">Order List</Link></li>
+                  handleSubSelection("orderList1")}}><Link to="/OrderList">Order List</Link></li>
                 <li class= {(selectedSubBar === "orderList2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList2")}}><Link to="/QuoteAndOrdersManagement">New Order</Link></li>
@@ -128,20 +128,20 @@ const handleMainSelection= (id) => {
                   handleSubSelection("orderList4")}}><Link to="/OrderReserve">Reserve</Link></li>
                 <li class= {(selectedSubBar === "orderList5")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList5")}}><Link to="/comingsoon">Invoices & Adjustments</Link></li>
+                  handleSubSelection("orderList5")}}><Link to="/InvoiceList">Invoices & Adjustments</Link></li>
                 <li class= {(selectedSubBar === "orderList6")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList6")}}><Link to="/comingsoon">Requests</Link></li>
+                  handleSubSelection("orderList6")}}><Link to="/OrderAdjusted">Requests</Link></li>
                 <li class= {(selectedSubBar === "orderList7")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList7")}}><Link to="/comingsoon">Quote List</Link></li>
+                  handleSubSelection("orderList7")}}><Link to="/QuoteList">Quote List</Link></li>
                 <li class= {(selectedSubBar === "orderList8")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList8")}}><Link to="/comingsoon">New Quote</Link></li>
+                  handleSubSelection("orderList8")}}><Link to="/Quote">New Quote</Link></li>
               </ul>          
             </li>
             <li class={selectedMainBarData.includes("purchaseOrder")?"active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>
-              <Link to="/comingsoon">
+              <Link to="/PurchaseOrderList">
               <b class="caret"></b>
                 <img src="assets/img/purchase-orders.svg" alt=""/>
                 <span>Purchase Orders</span>
