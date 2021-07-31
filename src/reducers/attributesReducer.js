@@ -12,7 +12,6 @@ import {
     HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE,
     HANDLE_UPDATE_ATTRIBUTE,
     SHOW_SUB_ATTRIBUTE,
-    HANDLE_UPDATE_SUB_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION2,
     HANDLE_ZONE_INPUT_ACTION3,
 
@@ -42,7 +41,9 @@ const initialSatate = {
         packagingName:"",
         packagingSku:"",
         characterSectionName:"",
-        characterFeatureName:""
+        characterFeatureName:"",
+        locationType: "",
+        locationTypeShortCode: ""
     }
 }
 
@@ -153,7 +154,9 @@ switch(action.type){
                 packagingName:"",
                 packagingSku:"",
                 characterSectionName:"",
-                characterFeatureName:""
+                characterFeatureName:"",
+                locationType: "",
+                locationTypeShortCode: ""
             }
         }
      default:
