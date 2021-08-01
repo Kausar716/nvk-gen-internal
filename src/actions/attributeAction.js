@@ -15,6 +15,7 @@ import {
     HANDLE_UPDATE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION2,
     HANDLE_ZONE_INPUT_ACTION3,
+    SHOW_LOCATION_TYPE_SUB_ATTRIBUTE,
     // axios config
     config,
     axios
@@ -65,7 +66,16 @@ export const showSubSubAttribute = (id) => dispatch => {
     })
 }
 
-
+export const getAllLocationTypesSubAttribute = () => dispatch => {
+    axios.get(`/api/show-attribute/${17}`,config).then(res=>{ 
+      
+        console.log(res.data)
+    dispatch({
+            type:SHOW_LOCATION_TYPE_SUB_ATTRIBUTE,
+            payload:res.data
+        })
+    })
+}
 
 
 export const handleAttributeDragDrop = (data) =>dispatch=>{

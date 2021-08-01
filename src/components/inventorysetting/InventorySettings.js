@@ -5,6 +5,7 @@ import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import InventoryLocationTypes from './inventoryLocationType';
+import InventoryLocation from './inventoryLocation';
 
 export default function PlantSettings() {
     return (
@@ -21,6 +22,13 @@ export default function PlantSettings() {
                         <Tab>Inventory Location Types</Tab>
                     </TabList>
                     <TabPanel>
+                        <InventoryLocation />
+                    </TabPanel>
+                    <TabPanel>
+                        <InventoryLocationTypes />
+                    </TabPanel>
+                    
+                    {/* <TabPanel>
                     <div class="bg-white">
                         <h4 class="p-15 mb-0">Inventory Location</h4>
                         <hr class="m-0"/>
@@ -264,10 +272,7 @@ export default function PlantSettings() {
                             </div>
                         </div>
                     </div>
-                    </TabPanel>
-                    <TabPanel>
-                        <InventoryLocationTypes />
-                    </TabPanel>
+                    </TabPanel> */}
                 </Tabs>
             </div>
         </div>

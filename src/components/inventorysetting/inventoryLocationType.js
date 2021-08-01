@@ -168,7 +168,7 @@ class InventoryLocationTypes extends Component {
     }
 
     handleZoneInputAction2 = (e)=>{
-        debugger;
+        // debugger;
         this.setState({
             name:e.target.value
         })
@@ -319,13 +319,13 @@ class InventoryLocationTypes extends Component {
                 <div className="ContentSection p-15">
                     <div className="row">
                         <div className="col-md-6">
-                            <p>Location Type</p>
+                            <label>Location Type</label>
                             <div>
                                 <input type="text"
                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                     name="locationType"
                                 value={this.state.name}
-                                    placeholder="Name" onChange={this.handleZoneInputAction2}/>
+                                    placeholder="Type" onChange={this.handleZoneInputAction2}/>
                                 {this.state.errorObj.locationType!==0?<span style={{fontSize:"small",color:"red"}}>Enter Location Type</span>:""}
                             </div>
 
@@ -333,11 +333,11 @@ class InventoryLocationTypes extends Component {
                             </div>
                         </div>
                         <div className="col-md-6">
-                            <p>Short Code (6 Char)</p>
+                            <label>Short Code (6 Char)</label>
                             <div>
                                 <input type="text" 
                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                    placeholder="Value"
+                                    placeholder="Code"
                                     maxLength="6"
                                     name="locationTypeShortCode" 
                                     value={this.state.subName}  

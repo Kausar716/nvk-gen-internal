@@ -14,7 +14,7 @@ import {
     SHOW_SUB_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION2,
     HANDLE_ZONE_INPUT_ACTION3,
-
+    SHOW_LOCATION_TYPE_SUB_ATTRIBUTE,
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
 
@@ -43,7 +43,19 @@ const initialSatate = {
         characterSectionName:"",
         characterFeatureName:"",
         locationType: "",
-        locationTypeShortCode: ""
+        locationTypeShortCode: "",
+        locationName: '',
+        locationShortCode: "",
+        locationTypevalue: 0,
+        locationAddress: "",
+        locationCity: "",
+        locationState: 0,
+        locationCountry: 0,
+        locationzip: "",
+        locationlatlong: "",
+        allStates: {},
+        allCountries: {},
+        locationTypevaluechild:0
     }
 }
 
@@ -74,6 +86,12 @@ switch(action.type){
              ...state,
             specificSubAttribute:action.payload.data
        }
+    }
+    case SHOW_LOCATION_TYPE_SUB_ATTRIBUTE: {
+        return {
+            ...state,
+            locationTypesSubAttributeList:action.payload.data
+        }
     }
     case HANDLE_DRAG_ATTRIBUTE_CATEGORY:
         return{
@@ -156,7 +174,17 @@ switch(action.type){
                 characterSectionName:"",
                 characterFeatureName:"",
                 locationType: "",
-                locationTypeShortCode: ""
+                locationTypeShortCode: "",
+                locationName: '',
+                locationShortCode: "",
+                locationTypevalue: 0,
+                locationAddress: "",
+                locationCity: "",
+                locationState: 0,
+                locationCountry: 0,
+                locationzip: "",
+                locationlatlong: "",
+                locationTypevaluechild:0
             }
         }
      default:
