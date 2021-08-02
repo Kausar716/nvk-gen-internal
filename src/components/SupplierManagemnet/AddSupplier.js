@@ -347,7 +347,7 @@ function AddSupplier(props) {
     // const getSupplierAddressById = (id)=>{
 
     // }
-console.log(supplierDataById)
+console.log("categoryData", categoryData)
   
     return (
         <div>
