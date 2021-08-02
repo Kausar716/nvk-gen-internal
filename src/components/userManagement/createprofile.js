@@ -231,14 +231,22 @@ export class CreateUserProfile extends Component {
         //     errorObj.phoneError=1
         //     errorCount++
         // }
+
         if(this.state.position.length === 0){
-            //debugger;
+            console.log(this.state.position)
             errorObj.positionError=1
             errorCount++
         }
-        else{
-            errorObj.positionError=0
-        }
+
+
+        // if(this.state.position.length === 0){
+        //     //debugger;
+        //     errorObj.positionError=1
+        //     errorCount++
+        // }
+        // else{
+        //     errorObj.positionError=0
+        // }
 
 
          if(! emailReg.test(this.state.email)){
@@ -399,7 +407,7 @@ export class CreateUserProfile extends Component {
                                                      pattern="[0-9]*"
                                                      maxLength="10"
                                                      name="phone"/> */}
-{/* 
+                                            {/* 
                                                 <input
                                                     class="form-control"  
                                                     type="text"

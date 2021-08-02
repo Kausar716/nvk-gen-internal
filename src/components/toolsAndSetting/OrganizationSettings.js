@@ -55,7 +55,7 @@ export class OrganizationSettings extends React.Component {
             phoneNumberInOrganization:" ",
             phoneError:"",
 
-
+            fileInput : null,
 
 
             mobile:"",
@@ -94,21 +94,9 @@ export class OrganizationSettings extends React.Component {
     }
   
     handlImageUpload = (e1)=>{
-        //alert(123)
-        // const reader = new FileReader();
-        // reader.onload=()=>{
-        //     if(reader.readyState===2){
-        //     this.setState({
-        //         imagePreviewURL:reader.result
-        //     })
-        // }
-        // }
-       // reader.readAsDataURL(e1.target.files[0])
-        // alert(1)
-        // debugger;
-        // this.setState({logo:e.target.files[0]})
-      
-        console.log(e1.target.files[0])
+       // debugger;
+     
+        console.log("e1Firstfile", e1.target.files[0])
         let imageData = e1.target.files[0]
         let id="2"
         let data =  this.props.uploadImage(imageData,id)
@@ -117,11 +105,15 @@ export class OrganizationSettings extends React.Component {
            
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
-           
+        if( e1.target.files[0]){
+            this.fileInput.value = ""
+        }
+       
+        //alert("image successfully uploaded")
         setTimeout(function() {
           
 
-            window.location.reload();
+           // window.location.reload();
             alert("image successfully uploaded")
             
          },1100);
@@ -424,6 +416,8 @@ export class OrganizationSettings extends React.Component {
             this.props.showorganization(id)
         })
 
+
+        alert("Image Removed Successfully")
         
          //this.setState({});
          //window.location.reload();
@@ -670,6 +664,7 @@ export class OrganizationSettings extends React.Component {
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" 
                                               onChange={this.handlImageUpload} 
+                                              ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
                                                 <span class="f-s-20" style={{position:"absolute"}} >Upload</span>
@@ -677,15 +672,15 @@ export class OrganizationSettings extends React.Component {
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                             {/* <img src="assets/img/upload-ic-white.svg" alt="" /> */}
                                         </a>
-                                        <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
+                                        <div className="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                             <span class="d-flex align-items-center justify-content-around"
                                             onClick={()=>{confirmAction("deleteImage"); }}
-                                            // onClick={this.handleRemoveImage}tempImage
+                                             //onClick={this.handleRemoveImage}
                                              >
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
                                             <img src="assets/img/bin-ic-red.svg" alt=""/>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
 

@@ -79,7 +79,7 @@ import React from 'react'
                             <div class="form-group row mb-0">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded" style={{width:"6.5em", marginTop: "-2px"}}/>
                                         </a>
                                         <div class="media-body">
@@ -98,7 +98,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded" style={{width:"6.5em", marginTop: "-2px"}} />
                                         </a>
                                         <div class="media-body">
@@ -117,7 +117,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded" style={{width:"6.5em", marginTop: "-2px"}}/>
                                         </a>
                                         <div class="media-body">
@@ -136,7 +136,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded"  style={{width:"6.5em", marginTop: "-2px"}}/>
                                         </a>
                                         <div class="media-body">
@@ -155,7 +155,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded" style={{width:"6.5em", marginTop: "-2px"}} />
                                         </a>
                                         <div class="media-body">
@@ -174,7 +174,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded" style={{width:"6.5em", marginTop: "-2px"}}/>
                                         </a>
                                         <div class="media-body">
@@ -193,7 +193,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded" style={{width:"6.5em", marginTop: "-2px"}}/>
                                         </a>
                                         <div class="media-body">
@@ -212,7 +212,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded"style={{width:"6.5em", marginTop: "-2px"}} />
                                         </a>
                                         <div class="media-body">
@@ -231,7 +231,7 @@ import React from 'react'
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="staffCard media media-sm">
-                                        <a class="media-left" href="javascript:;">
+                                        <a class="media-left" href="javascript:;" style={{marginRight:"2em"}}>
                                             <img src={TempUrl} alt="" class="media-object rounded"  style={{borderRadius:"50%", width:"6.5em", marginTop: "-2px"}}/>
                                         </a>
                                         <div class="media-body">
