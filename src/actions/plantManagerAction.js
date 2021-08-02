@@ -401,7 +401,6 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             // dispatch(plantPageReDirectAction(actionType = "all"))
             }).catch(error1=>{
                 console.log(error1)
-                debugger;
                 error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,

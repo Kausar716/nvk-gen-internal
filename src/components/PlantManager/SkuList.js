@@ -316,7 +316,7 @@ const SkuList = (props)=>{
         //     return (filterData.sub_attributes.map(subData=>{
         //         return(<option value={subData.id}>{subData.value}</option>)
         //     }))
-        // })      value                    
+        // })   
         
  
       
@@ -437,9 +437,9 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quality</label>
-                                            <select class="form-control" id={"volume_quantity"} style={{cursor:"pointer"}} onChange={handleInput} 
+                                            <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Volume_Quality")[0]["id"]:"Volume_Quality"} style={{cursor:"pointer"}} onChange={handleInput} 
                                             value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}>
-                                            <option value="">None</option>
+                                            <option value="0">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
                                                         return(<option value={subData.id}>{subData.value}</option>)
