@@ -73,7 +73,7 @@ const  ProductManagement = (props) =>{
     const inputLength = inputValue.length;
       
         return inputLength === 0 ? [] : productData.filter(lang =>
-          lang.name.toLowerCase().slice(0, inputLength) === inputValue
+          lang.name.toLowerCase().includes(inputValue)
         );
     };
     const getSuggestionValue = suggestion => suggestion.name;
