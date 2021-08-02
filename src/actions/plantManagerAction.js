@@ -147,24 +147,25 @@ export const createPlantAction = (plantData,tags) => dispatch => {
 }
 
 
-export const updateCheckBox = (id,index,type,obj)=>dispatch=>{
+export const updateCheckBox = (id,index,type1,obj)=>dispatch=>{
     return axios.post(`/api/update-plant/${id}`, obj, config).then(res=>{
 
         dispatch({
             type:UPDATE_CHECK_BOX,
             id:id,
-            type:type,
+            typetoshow:type1,
             index:index,
             obj:obj
 
         })
     })
 }
-export const checkBox =(id,index,type,obj) =>dispatch=>{
+export const checkBox =(id,index,type1,obj) =>dispatch=>{
+    // alert("kausar")
     dispatch({
         type:CHECK_BOX,
         id:id,
-        type:type,
+        typetoshow:type1,
         index:index,
         obj:obj
 
