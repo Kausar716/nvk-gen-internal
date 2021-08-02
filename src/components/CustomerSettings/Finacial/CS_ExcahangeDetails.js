@@ -2,7 +2,7 @@ import React, { useState,useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse, Row, Col, Label} from 'reactstrap';
 import {connect} from "react-redux";
-import ActionModal from '../../Modal/ActionModal';
+import CustomerActionModal from '../../Modal/CustomerActionModal';
 import {handleChangeFilter,getAllCustomerExchange,saveNoticationData,getNotificationData,handleExchangeData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
 import {saveSupplierData,handleSupplierExchnageData,getAllSupplierExchange} from "../../../actions/supplierManagementAction";
 import DatePicker from "react-datepicker";
@@ -65,14 +65,20 @@ const CS_ExcahangeDetails = (props) => {
 
   const handleInputData =(e)=>{
     setCheckedData(true)
-
-    props.handleExchangeData(parseFloat((e.target.value*1.0000)),e.target.id,"customerExchange")
+    if(e.target.value!==""){
+    let intValue = e.target.value*1.000
+    props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+    }else   props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
 
   }
   const handleInputData1 =(e)=>{
     setCheckedData(true)
+    if(e.target.value!==""){
+      let intValue = e.target.value*1.000
+      props.handleSupplierExchnageData(intValue.toFixed(3),e.target.id,"supplierExchange")
 
-    props.handleSupplierExchnageData(parseFloat((e.target.value*1.0000)),e.target.id,"supplierExchange")
+    }else   props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
+ 
 
   }
   const datePickerData =(e)=>{
@@ -178,7 +184,7 @@ const confirmAction = (type)=>{
 
   return (
     <>
-     <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
+     <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       <Label className="subFont">Customer and Supplier Exchange Details</Label>
@@ -227,7 +233,7 @@ const confirmAction = (type)=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate>"0"?customerExchange.exchange_rate:""} onChange={handleInputData} id="exchange_rate" step=".001"/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001"/> 
                             </div>
                            
                             
@@ -279,7 +285,7 @@ const confirmAction = (type)=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate>"0"?supplierExchange.exchange_rate:""}    onChange={handleInputData1} id="exchange_rate"/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate"/> 
                             </div>
                            
                            
@@ -302,7 +308,7 @@ const confirmAction = (type)=>{
               <Col xs="12">
               
           <div align="right" className="action_area_left">
-                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
+                        <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Reset</button>
                         <button className="button_style_Tools_Setting_Save" onClick={()=>confirmAction("save")}  disabled={checkedData==true?false:true}>Save</button>
                   </div>
                   </Col> 

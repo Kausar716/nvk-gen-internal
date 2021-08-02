@@ -8,6 +8,8 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
 import {checkLogin} from "../actions/authAction";
 import {pageReDirectAction} from '../actions/productAction'
 import {plantPageReDirectAction} from '../actions/plantManagerAction'
+import {typeOfActionShow,resetCustomerFilds} from '../actions/customerSettingAction'
+import {typeOfsupplierActionShow,resetSupplierFilds} from '../actions/supplierManagementAction'
 
 
 
@@ -32,7 +34,15 @@ const Left = (props)=>{
 //  }
 const handleMainSelection= (id) => {
   let reduxObject = props.updateObject
-  console.log("reduxObject",reduxObject)
+  console.log("reduxObject",reduxObject.mainMenu)
+  if(reduxObject.mainMenu =="CustomerManagement"){
+    props.typeOfActionShow("")
+    props.resetCustomerFilds()
+  }
+  if(reduxObject.mainMenu =="SupplierManagement"){
+    props.typeOfsupplierActionShow("")
+    props.resetSupplierFilds()
+  }
   setSelectedMainBar(id)
   if(!reduxObject.submenu.includes(id)){
   }
@@ -108,7 +118,7 @@ const handleMainSelection= (id) => {
               </Link>
             </li>
             <li class={selectedMainBarData.includes("orderList")?"active":""} onClick={()=>{handleMainSelection("orderList")}} >             
-              <Link to="/comingsoon">
+              <Link to="/OrderList">
               <b class="caret"></b>
                 <img src="assets/img/customer-quotes.svg" alt=""/>
                 <span>Customer Quotes &amp; Orders</span>
@@ -141,7 +151,7 @@ const handleMainSelection= (id) => {
               </ul>          
             </li>
             <li class={selectedMainBarData.includes("purchaseOrder")?"active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>
-              <Link to="/comingsoon">
+              <Link to="/PurchaseOrderList">
               <b class="caret"></b>
                 <img src="assets/img/purchase-orders.svg" alt=""/>
                 <span>Purchase Orders</span>
@@ -261,4 +271,4 @@ const mapStateToProps = (state)=> (
 }
 )
 
-export default connect(mapStateToProps,{getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)
+export default connect(mapStateToProps,{resetCustomerFilds,typeOfsupplierActionShow,resetSupplierFilds,typeOfActionShow,getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)

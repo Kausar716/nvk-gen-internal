@@ -5,6 +5,7 @@ import {connect} from "react-redux";
 import {handleExchangeData,getIntrestData,saveNoticationData,getNotificationData,saveIntrestData,saveFinanceExchangeData} from "../../../actions/customerSettingAction";
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
+import CustomerActionModal from '../../Modal/CustomerActionModal';
 import SuccessModal from '../../Modal/SuccessModal';
 // import * as BiIcons from "react-icons/bs";
 
@@ -60,10 +61,21 @@ const InrestRates = (props) => {
   const [checkedData,setCheckedData] = useState(false);
   const [isOpen1, setIsOpen1] = useState(false);
   const [successMessage,setSuccessMessage] = useState([])
+  const [open,setOpen] = useState(false)
+  const [message,setMessage] = useState("")
+  const [type, setType] = useState("")
   const toggle1  = ()=>setIsOpen1(!isOpen);
   const handleChangeData = (e) =>{
     setCheckedData(true)
-    props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
+    if(e.target.id!=="taxrate_label" && e.target.id!=="taxrate_number" && e.target.id!==""){
+      let intValue = e.target.value*1.000
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerIntrest")
+
+    }else {
+      props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
+
+    }
+
 
   }
   const resetData = () =>{
@@ -75,7 +87,34 @@ const InrestRates = (props) => {
     props.getIntrestData()
 
   },[showData])
+  const cancel = ()=>{
+    setOpen(false)
+    // setId(0)
+    setType("")
+    setMessage("")
+     
+ }
+ const confirm = ()=>{
+     if(type==="save"){
+      saveExchangeData()
+      
 
+     }
+
+    setOpen(false)
+    // setId(0)
+    setType("")
+    setMessage("")
+}
+const confirmAction = (type)=>{
+  if(type=="save"){
+      setType(type)
+      setMessage("Are you sure you want to Save?")
+
+  }
+  setOpen(true)
+  // setId(id)
+}
   const saveExchangeData = ()=>{
     setCheckedData(true)
     setIsOpen1(true)
@@ -95,6 +134,7 @@ const InrestRates = (props) => {
   
   return (
     <>
+         <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       <Label className="subFont">Tax & Interest Rates</Label> 
@@ -144,8 +184,8 @@ const InrestRates = (props) => {
             </div>
             
             <div align="right" className="action_area_left"  >
-                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Cancel</button>
-                              <button className="button_style_Tools_Setting_Save"   onClick={saveExchangeData} disabled={checkedData==true?false:true}>Save</button>
+                              <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}} disabled={checkedData==true?false:true} onClick={resetData}>Reset</button>
+                              <button className="button_style_Tools_Setting_Save"   onClick={()=>confirmAction("save")} disabled={checkedData==true?false:true}>Save</button>
                   </div> 
 
                 </div>

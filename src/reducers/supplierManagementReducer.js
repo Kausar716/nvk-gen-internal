@@ -162,12 +162,12 @@ const defaultState={
     supplierDataById:{
     supplier_name: "",
     fax: "",
-    primary_contact: 0,
+    primary_contact:"NO PRIMARY CONTACT",
     alternative_id: "",
     website: "",
     supplier_notes: "",
     dispatch_type: 0,
-    discount: 0.00,
+    discount: "",
     currency: "",
     units: "",
     status: 1,
@@ -357,7 +357,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         website: "",
                         supplier_notes: "",
                         dispatch_type: 0,
-                        discount: 0.00,
+                        discount:"",
                         currency: "",
                         units: "",
                         status: 1,
@@ -533,6 +533,22 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         }
                     case FILTER_SUPPLIER_BY_SEARCH:
                         // alert(action.searchData)
+                        if(action.resetAction ==="reset"){
+                            let datatoShow = []
+                            let searchedData = []
+                            datatoShow = state.activeData
+                            searchedData = datatoShow
+                            return{
+                                ...state,
+                                supplierList:searchedData,
+                                searchFilter:action.searchData,
+                                radioFilter:"active",
+                                alphabetSearch:"All"
+        
+                            }
+                            
+        
+                        }
                         let datatoShow = []
                         let searchedData = []
                         if(state.radioFilter === "active") datatoShow = state.activeData

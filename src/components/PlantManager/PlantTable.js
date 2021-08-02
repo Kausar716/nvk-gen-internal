@@ -100,9 +100,9 @@ const handleCheckBox =(id,index,type)=>{
     obj[type] = parseInt(displayPlantList[index][type])===1?0:1
    
     console.log((plantPageNumber))
-    props.updateCheckBox(id,index,type,obj) 
-    // props.checkBox(id,plantPageNumber*((index)),type,obj)
-    .then(data=>{
+    console.log((15*plantPageNumber)+index)
+    // props.checkBox(id,((15*plantPageNumber)+index),type,obj)
+    props.updateCheckBox(id,index,type,obj).then(data=>{
         props.getAllPlantAction()
     })
 

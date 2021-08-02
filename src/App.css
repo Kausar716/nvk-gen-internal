@@ -6,13 +6,26 @@
   height: 40vmin;
   pointer-events: none;
 }
-
+.nav-text {
+  vertical-align: middle;
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.svg-inline--fa { /* target all FA icons */
+  padding-right: 10px;
+}
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;

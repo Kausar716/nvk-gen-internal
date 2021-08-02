@@ -118,6 +118,10 @@ function AddSupplier(props) {
     }
 
     const handleInput= (e)=>{
+        // var charCode = (e.which) ? e.which : e.keyCode
+        // if (charCode > 31 && (charCode != 46 &&(charCode < 48 || charCode > 57))){
+        //     alert("yoo")
+        // }
         // //alert("hi")
         //alert(e.target.id+"   "+e.target.value)
         setCheckedData(true)
@@ -374,22 +378,22 @@ console.log("categoryData", categoryData)
                      <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
                      {addCustomertoggle?"": <div>
                                 <label>Complete Orders</label>
-                                <h1>124</h1>
+                                <h1>0</h1>
                                 <div><a href="">View Orders</a></div>
                             </div>}
                             {addCustomertoggle?"":      <div>
                                 <label>Active Orders</label>
-                                <h1>6</h1>
+                                <h1>0</h1>
                                 <div><a href="">View Orders</a></div>
                             </div>}
                             {addCustomertoggle?"":    <div>
                                 <label>Active Quotes    </label>
-                                <h1>124</h1>
+                                <h1>0</h1>
                                 <div><a href="">View Orders</a></div>
                             </div>}
                             {addCustomertoggle?"":<div class="lastOdrDate">
                                 <label>Last Order</label>
-                                <h4>Dec 5, 2019</h4>
+                                <h4>Not Available</h4>
                             </div>}
                         </div>
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
@@ -429,7 +433,7 @@ console.log("categoryData", categoryData)
                                         <input type="checkbox" name="switcher_checkbox_////alert" id="switcher_checkbox_////alert" value="2"/>
                                         <label for="switcher_checkbox_////alert"></label>
                                     </div>
-                                alert
+                                Alert
                                 </div>
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
@@ -481,12 +485,12 @@ console.log("categoryData", categoryData)
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Supplier Name<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" name="supplier_name" value={supplierDataById.supplier_name} onChange={handleInput} id="supplier_name"/>
+                                        <input type="text" class="form-control" name="supplier_name" value={supplierDataById.supplier_name} onChange={handleInput} id="supplier_name" placeholder={"Supplier Name"}/>
                                         {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                     <label>Fax</label>
-                                    <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"fax"} value={supplierDataById.fax} onChange={handleInput} />
+                                    <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"fax"} value={supplierDataById.fax} onChange={handleInput} placeholder={"(xxx) xxx-xxxx"}/>
                                         {/* <input type="number" class="form-control" name="fax" value={supplierDataById.fax} onChange={handleInput} id="fax"/> */}
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
@@ -499,7 +503,7 @@ console.log("categoryData", categoryData)
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                     <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
-                                        <input type="text" class="form-control" name="alternative_id" value={supplierDataById.alternative_id} onChange={handleInput} id="alternative_id" maxlength={5}/>
+                                        <input type="text" class="form-control" name="alternative_id" value={supplierDataById.alternative_id} onChange={handleInput} id="alternative_id" maxlength={5} placeholder={"Alternative Id"}/>
                                      
                                     </div>
                                 </div>
@@ -507,7 +511,7 @@ console.log("categoryData", categoryData)
                                     <div class="col-md-12 col-lg-12 mt-12 mt-md-0">
                                     <label>Website</label>
                                         <div class="d-flex">
-                                            <input type="url" class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+                                            <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
                                             <a href={supplierDataById.website} target="_blank" class="btn btn-outline-secondary btn-lg ml-2">Visit</a>
                                         </div>
                                     </div>
@@ -515,7 +519,7 @@ console.log("categoryData", categoryData)
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Supplier Notes <small>(Internal Only)</small></label>
-                                        <textarea rows="" cols=""  class="form-control" name="supplier_notes" value={supplierDataById.supplier_notes} onChange={handleInput} id="supplier_notes"/>
+                                        <textarea rows="" cols=""  class="form-control" name="supplier_notes" value={supplierDataById.supplier_notes} onChange={handleInput} id="supplier_notes" placeholder="Add Notes..."/>
                                     </div>
                                 </div>
 
@@ -551,7 +555,7 @@ console.log("categoryData", categoryData)
                                 <div class="row mt-3">
                                     <div class="col-md-3 col-lg-3">
                                         <label>Discount</label>
-                                      <input type="number" class="form-control" onChange={handleInput} placeholder="" id="discount" value={supplierDataById.discount} step="0.00"/>
+                                      <input type="number" class="form-control" onChange={handleInput}  id="discount" value={supplierDataById.discount} step="0.00" placeholder={"0.00"} style={{textAlign:"right"}}/>
                                        
                                     </div>
                                 

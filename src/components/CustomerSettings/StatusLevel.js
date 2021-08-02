@@ -200,7 +200,7 @@ render() {
                    <div>
                        	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
                <div className="bg-white">
- <h4 className="p-15 mb-0">Customer Account Status Levels (ACTIVE Profiles)</h4>
+ <h4 className="p-15 mb-0">Customer Account Status Level</h4>
  <hr className="m-0"/>
                             
                            

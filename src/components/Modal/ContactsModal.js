@@ -217,7 +217,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
-        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contacts</p> </ModalHeader>
+        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contact</p> </ModalHeader>
         <form onSubmit={saveData}>
         <ModalBody >
             <p style={{color:"red"}}>{error}</p>
@@ -225,13 +225,13 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>First Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="first_name" value={customerContact.first_name} onChange={handleInput}/>
+                <input type="text" class="form-control" id="first_name" value={customerContact.first_name} onChange={handleInput} placeholder="First Name"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="first_name-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Last Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="last_name" value={""}  value={customerContact.last_name}  onChange={handleInput}/>
+                <input type="text" class="form-control" id="last_name" value={""}  value={customerContact.last_name}  onChange={handleInput} placeholder="Last Name"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="last_name-validtor"></span>}
             </div>
@@ -239,13 +239,13 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Phone 1<span class="text-danger">*</span></label>
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone1"} value={customerContact.phone1} onChange={handleInput} />
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone1"} value={customerContact.phone1} onChange={handleInput} placeholder="(xxx) xxx xxxx"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone1-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>Phone1 Ext<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="phone1_ext" value={""}  value={customerContact.phone1_ext}  onChange={handleInput}/>
+                <label>Phone1 Ext</label>
+                <input type="text" class="form-control" id="phone1_ext" value={""}  value={customerContact.phone1_ext}  onChange={handleInput} placeholder="Phone1 Ext"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone1_ext-validtor"></span>}
             </div>
@@ -255,13 +255,13 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
             <div class="col-md-6 col-lg-6">
                 <label>Phone 2<span class="text-danger">*</span></label>
                 {/* <input type="number" class="form-control" id="phone2" value={""} value={customerContact.phone2}  onChange={handleInput}/> */}
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone2"} value={customerContact.phone2} onChange={handleInput} />
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone2"} value={customerContact.phone2} onChange={handleInput} placeholder="Phone 2"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Phone 2 Ext<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="phone2_ext" value={""}  value={customerContact.phone2_ext}  onChange={handleInput}/>
+                <input type="text" class="form-control" id="phone2_ext" value={""}  value={customerContact.phone2_ext}  onChange={handleInput} placeholder="Phone 2 Ext"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone2_ext-validtor"></span>}
             </div>
@@ -269,7 +269,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="email" value={""} value={customerContact.email}  onChange={handleInput}/>
+                <input type="email" class="form-control" id="email" value={""} value={customerContact.email}  onChange={handleInput} placeholder="Example@gamil.com"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="email-validtor"></span>}
             </div>
@@ -278,7 +278,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Notes <span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="text" value={""}  value={customerContact.Notes}  onChange={handleInput}></textarea>
+                <textarea  class="form-control" id="text" value={""}  value={customerContact.Notes}  onChange={handleInput} placeholder=" Add Notes..."></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="text-validtor"></span>}
             </div>
@@ -314,8 +314,8 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
 
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}} type="submit" >{type==="add"?"Save":"Update"}</Button>
-          <Button color="secondary" onClick={props.modalAction} style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}}>Cancel</Button>
+        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+          <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>
       </Modal>

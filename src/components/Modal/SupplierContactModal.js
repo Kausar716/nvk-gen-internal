@@ -207,7 +207,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
-        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contacts</p> </ModalHeader>
+        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contact</p> </ModalHeader>
         <form onSubmit={saveData}>
         <ModalBody >
             <p style={{color:"red"}}>{error}</p>
@@ -215,7 +215,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Contact Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="contact_name" value={supplierContact.contact_name} onChange={handleInput}/>
+                <input type="text" class="form-control" id="contact_name" value={supplierContact.contact_name} onChange={handleInput} placeholder="Contact Name"/>
                 {<span style={{fontSize:"small",color:"red"}} id="contact_name-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
@@ -228,7 +228,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="contact_email" value={""} value={supplierContact.contact_email}  onChange={handleInput}/>
+                <input type="email" class="form-control" id="contact_email" value={""} value={supplierContact.contact_email}  onChange={handleInput} placeholder="Example@gamil.com"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 
                 {<span style={{fontSize:"small",color:"red"}} id="contact_email-validtor"></span>}
@@ -239,13 +239,13 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
             <div class="col-md-6 col-lg-6">
                 <label>Phone 1<span class="text-danger">*</span></label>
                 {/* <input type="number" class="form-control" id="phone1" value={""} value={supplierContact.phone1}  onChange={handleInput}/> */}
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone1"} value={supplierContact.phone1} onChange={handleInput} />
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone1"} value={supplierContact.phone1} onChange={handleInput} placeholder="Phone1"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone1-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Phone 2<span class="text-danger">*</span></label>
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone2"} value={supplierContact.phone2} onChange={handleInput} />
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone2"} value={supplierContact.phone2} onChange={handleInput} placeholder="Phone2"/>
                 {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
@@ -282,8 +282,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
 
         </ModalBody>
         <ModalFooter>
-          <Button color="secondary" style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}} type="submit" >{type==="add"?"Save":"Update"}</Button>
-          <Button color="secondary" onClick={props.modalAction} style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}}>Cancel</Button>
+        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+          <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>
       </Modal>

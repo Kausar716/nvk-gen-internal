@@ -269,7 +269,7 @@ render() {
                    <div>
                        	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
                <div className="bg-white">
- <h4 className="p-15 mb-0"> Supplier Delivery Locations</h4>
+ <h4 className="p-15 mb-0"> Supplier Delivery Location</h4>
                 
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
@@ -281,7 +281,7 @@ render() {
                                             <div>
                                                 <input type="text" className="form-control"  id="location"
                                                  value={supplierData.supplierLocation.location}  
-                                                  placeholder="location" onChange={this.handleCategoryInputAction}/>
+                                                  placeholder="Location" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                             </div>
@@ -291,7 +291,7 @@ render() {
                                             <div>
                                             <input type="text" className="form-control"  id="address" 
                                             value={supplierData.supplierLocation.address}  
-                                             placeholder="address" onChange={this.handleCategoryInputAction}/>
+                                             placeholder="Address" onChange={this.handleCategoryInputAction}/>
 
                                             </div>
                                         </div>
@@ -302,7 +302,7 @@ render() {
                                             <div>
                                                 <input type="text" className="form-control" 
                                                  id="city" value={supplierData.supplierLocation.city}  
-                                                  placeholder="city" onChange={this.handleCategoryInputAction}/>
+                                                  placeholder="City" onChange={this.handleCategoryInputAction}/>
                                             </div>
                                            
                                         </div>
@@ -323,7 +323,7 @@ render() {
 
                                             <div className="col-md-3">
                                                         <label for="Category">Country</label>
-                                                            <select className="form-control"  id="country"  value={supplierData.supplierLocation.country}   placeholder="country" onChange={this.handleCategoryInputAction}>
+                                                            <select className="form-control"  id="country"  value={supplierData.supplierLocation.country}   placeholder="Country" onChange={this.handleCategoryInputAction}>
                                                                 <option>{supplierData.supplierLocation.country}</option>
                                                                 {allCountry.map((country, i)=>{
                                                                     return <option id={allCountry[i]}>{allCountry[i]}</option>
@@ -337,7 +337,7 @@ render() {
                                             <div>
                                                 <input type="text" className="form-control" id="zip" 
                                                 value={supplierData.supplierLocation.zip}  
-                                                 placeholder="zip" 
+                                                 placeholder="Zip" 
                                                  onChange={this.handleCategoryInputAction}/>
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
@@ -350,7 +350,7 @@ render() {
                                             <label for="Category">Lat/Long</label>
                                             <div>
                                                 <input type="text" className="form-control"  id="lat" 
-                                                value={supplierData.supplierLocation.lat}   placeholder="lat" 
+                                                value={supplierData.supplierLocation.lat}   placeholder="Lat" 
                                                 onChange={this.handleCategoryInputAction}/>
                                             </div>
 

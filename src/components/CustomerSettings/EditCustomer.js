@@ -118,7 +118,9 @@ function AddCustomer(props) {
             props.handleExchangeData(discount_by_line_item,"discount_by_line_item","customerDataById")
 
         }
+        // else if(e.target.id =="tax_exempt_no" || e.target.id =="tax_exempt_no")
         else{
+            // alert("fee_percent")
             props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
 
         }
@@ -317,22 +319,22 @@ function AddCustomer(props) {
                      <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
                      {addCustomertoggle?"": <div>
                                 <label>Complete Orders</label>
-                                <h1>124</h1>
+                                <h1>0</h1>
                                 <div><a href="">View Orders</a></div>
                             </div>}
                             {addCustomertoggle?"":      <div>
                                 <label>Active Orders</label>
-                                <h1>6</h1>
+                                <h1>0</h1>
                                 <div><a href="">View Orders</a></div>
                             </div>}
                             {addCustomertoggle?"":    <div>
                                 <label>Active Quotes    </label>
-                                <h1>124</h1>
+                                <h1>0</h1>
                                 <div><a href="">View Orders</a></div>
                             </div>}
                             {addCustomertoggle?"":<div class="lastOdrDate">
                                 <label>Last Order</label>
-                                <h4>Dec 5, 2019</h4>
+                                <h4>Not Available</h4>
                             </div>}
                         </div>
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
@@ -441,7 +443,7 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                   <div class="col-md-8 col-lg-4">
                                         <label>Customer Name<span class="text-danger">*</span></label>
-                                        <input type="text" class="form-control" id="name" value={customerDataById.name} onChange={handleInput} />
+                                        <input type="text" class="form-control" id="name" value={customerDataById.name} onChange={handleInput} placeholder="Customer Name"/>
                                         {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                                     </div>
                                     {/* <div class="col-md-2 col-lg-2 mt-2 mt-md-0">
@@ -454,7 +456,7 @@ function AddCustomer(props) {
                                     </div> */}
                                     <div class="col-md-8 col-lg-8 mt-2 mt-md-0">
                                     <label>Type<span class="text-danger">*</span></label>
-                                        <div style={{border:"1px solid lightgray",height:40,borderRadius:3,paddingLeft:10,paddingTop:7}}>
+                                        <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}>
                                         {customerTypeList.active.map(type=>{
                                           
                                                 return (<div class="form-check form-check-inline" style={{paddingRight:10}}>
@@ -530,7 +532,7 @@ function AddCustomer(props) {
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>
-                                        <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"fax"} value={customerDataById.fax} onChange={handleInput} />
+                                        <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"fax"} value={customerDataById.fax} onChange={handleInput} placeholder="(xxx) xxx-xxxx"/>
                                         {/* <input type="number" id="fax" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} /> */}
                                         {errorObj.fax!==0?<span style={{fontSize:"small",color:"red"}}>Entered Number is invalid</span>:""}
                                     </div>
@@ -539,19 +541,19 @@ function AddCustomer(props) {
                                     <div class="col-md-8 col-lg-8">
                                         <label>Website</label>
                                         <div class="d-flex">
-                                            <input type="url" class="form-control" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+                                            <input type="url" class="form-control" placeholder="https://www.Example.com" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
                                             <a  href={customerDataById.website_url} target="_blank" class="btn btn-outline-secondary btn-lg ml-2">Visit</a>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
-                                        <input type="text" class="form-control" name="alternativeId" id="alternative_id" value={customerDataById.alternative_id} onChange={handleInput} maxLength={5}/>
+                                        <input type="text" class="form-control" name="alternativeId" id="alternative_id" value={customerDataById.alternative_id} onChange={handleInput} maxLength={5} placeholder="Alternate ID"/>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Customer Notes <small>(Internal Only)</small></label>
-                                        <textarea rows="" cols=""  class="form-control" name="notes" value={customerDataById.notes} onChange={handleInput} id="notes"/>
+                                        <textarea rows="" cols=""  class="form-control" name="notes" value={customerDataById.notes} onChange={handleInput} id="notes" placeholder="Add Notes..."/>
                                     </div>
                                 </div>
 
@@ -618,7 +620,7 @@ function AddCustomer(props) {
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="number" class="form-control" name={"taxExemptNumber"} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true}/>
+                                                <input type="number" class="form-control" name={"taxExemptNumber"}  style={{textAlign:"right"}} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="0.00"/>
                                                 {/* {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
 
                                             </div>
@@ -684,11 +686,8 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                     <div class="col-md-10 col-lg-10">
                                         <div class="row">
-                                            <div class="col-md-4 mt-3 mt-md-0">
-                                                <label>Discount</label>
-                                                <input type="number" class="form-control" value={customerDataById.discount} onChange={handleInput} id="discount" step="0.01" disabled={customerDataById.discount_by_line_item==1?false:true}/>
-                                            </div>
-                                            <div class="col-md-4 mt-3 mt-md-0" style={{paddingTop:8}}>
+                                           
+                                            <div class="col-md-3 mt-3 mt-md-0" style={{paddingTop:8}}>
                                           <label>Discount By Line Item</label>
                                                
                                                 <div class="d-flex">
@@ -702,6 +701,10 @@ function AddCustomer(props) {
                                             </div>
                                         </div>
                                             </div>
+                                            <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
+                                                <label>Discount</label>
+                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"}/>
+                                            </div>
                                        
                                       
                                         </div>
@@ -710,12 +713,8 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                 <div class="col-md-10 col-lg-10">
                                         <div class="row">
-                                <div class="col-md-4 mt-3 mt-md-0">
-                                {/* <div class="col-md-4 mt-3 mt-md-0"> */}
-                                                <label>Fee%</label>
-                                                <input type="number" class="form-control" value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true}/>
-                                            </div>
-                                            <div class="col-md-4 mt-3 mt-md-0"  style={{paddingTop:8}}>
+                             
+                                            <div class="col-md-3 mt-3 mt-md-0"  style={{paddingTop:8}}>
                                                 <label>Restock Fees</label>
                                                 <div class="d-flex">
                                                     <div class="custom-control custom-radio">
@@ -727,6 +726,11 @@ function AddCustomer(props) {
                                                         <label class="custom-control-label" for="restockNo1">Yes</label>
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
+                                {/* <div class="col-md-4 mt-3 mt-md-0"> */}
+                                                <label>Fee%</label>
+                                                <input type="number" class="form-control" value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00"/>
                                             </div>
                                             </div>
                                             </div>

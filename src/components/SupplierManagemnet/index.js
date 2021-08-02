@@ -61,11 +61,12 @@ export class SupplierManagemnet extends React.Component {
         // //alert(e.target.value)
         if(e.target.value === undefined){
             this.setState({searchValue:""})
-            this.props.handleSearchFilter("")
+            this.props.handleSearchFilter("","reset")
+            this.setState({selectedAlpha:"All",customerListStatus:"active"})
 
         }else{
             this.setState({searchValue:e.target.value})
-            this.props.handleSearchFilter(e.target.value)
+            this.props.handleSearchFilter(e.target.value,"none")
         }
         
         // //alert(e.target.value)

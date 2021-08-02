@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Collapse,Label } from 'reactstrap';
+import ActionModal from '../../Modal/ActionModal';
 // import * as BiIcons from "react-icons/bs";
 import * as FaIcon from 'react-icons/fi';
 import './style.css';
