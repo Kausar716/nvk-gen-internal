@@ -109,22 +109,19 @@ export default function(state = initialSatate, action){
     switch(action.type){
         // plant page redirects
         case CHECK_BOX:
-            // alert("jj")
             let plantData1 = state.plantData
-            console.log(plantData1[action.index])
-            if(action.obj[action.typetoshow] ===1 && action.typetoshow==="in_production")
-            plantData1[action.index]["status"] = 1
-            else  plantData1[action.index]["status"] = 0
+   
 
-            if(action.typetoshow!=="in_production" && action.obj[action.typetoshow]===1)
-            plantData1[action.index]["status"] = 0
-            else  plantData1[action.index]["status"] = 1
+            // if(action.typetoshow!=="in_production" && action.obj[action.typetoshow]===1)
+            plantData1[action.index] = {...plantData1[action.index],...action.obj}
+            // else  plantData1[action.index]["status"] = 1
 
-            plantData1[action.index][action.typetoshow]= action.obj[action.typetoshow]
-            console.log(plantData1[action.index])
+           
+            // console.log(plantData1[action.index])
+            console.log(plantData1)
             return{
                 ...state,
-                plantData:plantData1,
+                plantData:plantData1
             }
         case UPDATE_CHECK_BOX:
             let plantData = state.plantData

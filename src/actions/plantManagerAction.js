@@ -148,6 +148,7 @@ export const createPlantAction = (plantData,tags) => dispatch => {
 
 
 export const updateCheckBox = (id,index,type1,obj)=>dispatch=>{
+
     return axios.post(`/api/update-plant/${id}`, obj, config).then(res=>{
 
         dispatch({
