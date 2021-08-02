@@ -17,6 +17,7 @@
     "immutable": "^4.0.0-rc.12",
     "jquery": "^3.6.0",
     "react": "^17.0.2",
+    "react-autosuggest": "^10.1.0",
     "react-beautiful-dnd": "^13.1.0",
     "react-confirm-alert": "^2.7.0",
     "react-date-picker": "^8.2.0",

@@ -50,13 +50,13 @@ import {
         setErrorObj(errorobj)
        setErrorCount(errorcount)
         if(e.target.id ==="in_production") {
-            if (parseInt(e.target.value) ==="1") {
-                props.handlePlantInputAction(e.target.id,"0")
+            if (parseInt(e.target.value) ===1) {
+                props.handlePlantInputAction(e.target.id,0)
                 props.handlePlantInputAction("archived",0)
                 props.handlePlantInputAction("discontinued",1)
             }
-            else if (parseInt(e.target.value) ==="0") {
-                props.handlePlantInputAction(e.target.id,"1")
+            else if (parseInt(e.target.value) ===0) {
+                props.handlePlantInputAction(e.target.id,1)
                 props.handlePlantInputAction("archived",0)
                 props.handlePlantInputAction("discontinued",0)
             }
@@ -192,7 +192,7 @@ import {
                                 {actionType!=="add"?<div class="col-md-12 d-md-flex flex-wrap align-items-center">
                                         <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                             <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={plantDataById.in_production==="0"?false:true}/>
+                                                <input type="checkbox" id="in_production"  onChange={handleInput} value={plantDataById.in_production} checked={parseInt(plantDataById.in_production)===0?false:true}/>
                                                 <label for="in_production" style={{cursor:"pointer"}}></label>
                                             </div>
                                             In Production

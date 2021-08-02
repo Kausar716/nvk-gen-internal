@@ -4,6 +4,7 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
+import Autosuggest from 'react-autosuggest';
 
 import {connect} from "react-redux";
 
@@ -19,7 +20,9 @@ export class CustomerSettings extends React.Component {
             alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
             selectedAlpha:"All",
             searchValue:"",
-            radioFilter:"active"
+            radioFilter:"active",
+            value:"",
+            suggestions:[]
         }
     }
     componentDidMount(){
@@ -27,6 +30,49 @@ export class CustomerSettings extends React.Component {
         this.props.getAllCustomer(this.state.radioFilter)
         this.props.getAllCustomerType()
     }
+        //const {categoryData,subCategoryData} = props.categoryData
+        // const [value,setValue] = useState("")
+        // const [suggestions,setSuggestions] = useState([])
+    
+         getSuggestions = value => {
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length;
+          
+            return inputLength === 0 ? [] : this.props.customerData.customerList.filter(lang =>
+              lang.name.toLowerCase().slice(0, inputLength) === inputValue
+            );
+        };
+         getSuggestionValue = suggestion =>suggestion.name;
+    
+          // Use your imagination to render suggestions.
+         renderSuggestion = suggestion => (
+            <span>
+              {suggestion.name}
+            </span>
+        );
+         onChange = (event, { newValue }) => {
+            // setValue(newValue)
+            this.setState({value:newValue});
+            this.setState({searchValue:newValue})
+            this.props.handleSearchFilter(newValue,"none")
+            // props.serachProduct({product: newValue, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
+            // setInputValue(newValue);
+            // setLoaderMessage("No Records Found...")
+            // props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
+            // setInputValue(newValue);
+        };
+    
+         onSuggestionsFetchRequested = ({ value }) => {
+             this.setState({suggestions: this.getSuggestions(value)});
+            // setSuggestions(getSuggestions(value));
+        };
+      
+        // Autosuggest will call this function every time you need to clear suggestions.
+          onSuggestionsClearRequested = () => {
+        //   setSuggestions([]);
+        this.setState({suggestions:[]})
+        };
+    
 
     handleAddCustomerClick = (e) => {
         // alert(e.target.id)
@@ -70,6 +116,7 @@ export class CustomerSettings extends React.Component {
         }else{
             this.setState({searchValue:e.target.value})
             this.props.handleSearchFilter(e.target.value,"none")
+            this.setState({value:""})
         }
         
         // alert(e.target.value)
@@ -120,6 +167,15 @@ export class CustomerSettings extends React.Component {
         //     customerData = tempArray
         
         // }
+        const inputProps = {
+            placeholder: 'Customer Name',
+        //    [this.state.value],
+        value:this.state.value,
+            // className:"searchInput",
+            className:" form-control  btn btn-search ",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"13%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            onChange: this.onChange
+        };
         console.log(displayCustomerList)
     return (
         <>
@@ -142,18 +198,35 @@ export class CustomerSettings extends React.Component {
 				<div class="row">
 					<div class="col-xl-12 col-md-12">
 						<div class="bg-white p-15">
-                            <div class="form-group row align-items-end q">
-                                <div class="col-md-4 col-lg-4">
+                        <div className="form-group row">
+                                        <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="plantSearch">Search Customer</label>
-                                    <div class="searchInput">
+                                    <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.8%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                    getSuggestionValue={this.getSuggestionValue}
+                                                    renderSuggestion={this.renderSuggestion}
+                                                    inputProps={inputProps}
+                                                  
+                                                />
+                                                </div>
+                                    {/* <div class="searchInput">
                                         <button type="submit" class="btn btn-search">
                                             <img src="assets/img/search.svg" alt=""/>
                                         </button>
                                         <input type="text" class="form-control" placeholder="Search" onChange={this.handleSearch} value={this.state.searchValue}/>
-                                    </div>
+                                    </div> */}
                                 </div>
-                                <div class="col-md-4 col-lg-4 mt-2 mt-md-0 pb-2">
-                                    <a onClick={this.handleSearch}  style={{cursor:"pointer",color:"#5287F5"}} id="reset">Reset</a>
+                                <div className="col-md-2 col-lg-2">
+                                            {/* <a href="javascript:;" onClick={resetData} className="d-block topSpace" style={{marginTop:"2.5em"}}>Reset</a> */}
+                                        {/* </div> */}
+                                {/* <div class="col-md-4 col-lg-4" > */}
+                                    <a onClick={this.handleSearch}  className="d-block topSpace" style={{marginTop:"2.3em",cursor:"pointer",color:"#5287F5"}} id="reset">Reset</a>
                                 </div>
                             </div>
                             <div class="form-group row">
@@ -243,7 +316,7 @@ export class CustomerSettings extends React.Component {
                                                             })}
                                                             
                                                         </td>
-                                                        <td>{customerData.telephone}</td>
+                                                        <td>{customerData.fax}</td>
                                                         <td>{customerData.contact_id}</td>
                                                         <td>N/A</td>
                                                         <td>$0.00</td>

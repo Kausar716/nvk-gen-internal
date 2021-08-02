@@ -5,6 +5,9 @@
 import React,  {  useEffect,useState } from 'react' ;
 import {connect} from "react-redux";
 import { Tab, Tabs, TabList } from 'react-tabs';
+// import React from 'react';
+import Autosuggest from 'react-autosuggest';
+
 //import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table, Row,Col} from 'reactstrap'
 //import {getAllImageAssets} from "../Utility/Utility";
 //import '../ProductManagement/index.css'
@@ -52,6 +55,43 @@ const  PlantManger=(props)=> {
     const [loader,setLoader] = useState(false)
     const [loaderMessage,setLoaderMessage]=useState("Loading Data...")
     const [errorObj,setErrorObj] = useState({ genusError:0,lastNameError:0,phoneError:0,emailError:0,positionError:0})
+    //search suggestion implementation
+    const [value,setValue] = useState("")
+    const [suggestions,setSuggestions] = useState([])
+
+    const getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+      
+        return inputLength === 0 ? [] : plantData.filter(lang =>
+          lang.genus.toLowerCase().slice(0, inputLength) === inputValue
+        );
+    };
+    const getSuggestionValue = suggestion => suggestion.genus;
+
+      // Use your imagination to render suggestions.
+    const renderSuggestion = suggestion => (
+        <span>
+          {suggestion.genus}
+        </span>
+    );
+    const onChange = (event, { newValue }) => {
+        setValue(newValue)
+        setLoaderMessage("No Records Found...")
+        props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
+        setInputValue(newValue);
+    };
+
+    const onSuggestionsFetchRequested = ({ value }) => {
+        setSuggestions(getSuggestions(value));
+    };
+  
+    // Autosuggest will call this function every time you need to clear suggestions.
+    const  onSuggestionsClearRequested = () => {
+      setSuggestions([]);
+    };
+//search suggeestion implemention code
+
 const productFormAction = ()=>{
         this.props.getProductPage("general")
         this.setState({plantPageToOpen:"general"})
@@ -89,6 +129,7 @@ const productFormAction = ()=>{
         setType("")
         setMessage("")
     }
+
     const confirmAction = (id,type)=>{
         if(type=="delete"){
             setType(type)
@@ -141,16 +182,37 @@ const productFormAction = ()=>{
             setRadio("all")
             setCategoryId(0);
             setInputValue("");
+            setValue("")
         }
     
 
-
+        // const onChange = (event, { newValue }) => {
+        //     this.setState({
+        //       value: newValue
+        //     });
+        //   };
+        
+          // Autosuggest will call this function every time you need to update suggestions.
+          // You already implemented this logic above, so just use it.
+       
     const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id} = props.plantData
     const {plantCategoryData} =  props.categoryData
     console.log(plantData)
+    const inputProps = {
+        placeholder: 'Plant Name',
+        value,
+        // className:"searchInput",
+        className:" form-control  btn btn-search",
+        style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-6.8%",paddingTop:3.5,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+        onChange: onChange
+    };
+ 
 
     return (
         <div>
+          
+ 
+
             <ModalData/>
              
              <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -191,20 +253,31 @@ const productFormAction = ()=>{
                             <div className="col-xl-12 col-md-12">
                                 <div className="bg-white p-15">
                                     <div className="form-group row">
-                                        <div className="col-md-5 col-lg-5">
+                                        <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                             <label for="plantSearch">Plant Search</label>
-                                            <div className="searchInput">
-                                                <button type="submit" className="btn btn-search">
-                                                    <img src="assets/img/search.svg" alt=""/>
-                                                </button>
+                                            {/* <div className="searchInput">
+                                            
                                                 {/* <input type="text" className="form-control" placeholder="Search"/> */}
-                                                <input className="form-control" 
+                                                {/* <input className="form-control" 
                                                         type="text" 
                                                         autocomplete={"off"}
                                                         placeholder="Search" 
                                                         value={inputValue}
                                                         onChange={getValue} id="search"/>
-                                            </div>
+                                            {/* </div> */} 
+                                            <div className="searchInput" style={{height: "40px"}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"-13.4%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                                    getSuggestionValue={getSuggestionValue}
+                                                    renderSuggestion={renderSuggestion}
+                                                    inputProps={inputProps}
+                                                />
+                                                </div>
                                         </div>
                                         <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                             <label for="Category">Category</label>
