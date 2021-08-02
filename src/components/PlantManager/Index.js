@@ -64,7 +64,7 @@ const  PlantManger=(props)=> {
     const inputLength = inputValue.length;
       
         return inputLength === 0 ? [] : plantData.filter(lang =>
-          lang.genus.toLowerCase().slice(0, inputLength) === inputValue
+          lang.genus.toLowerCase().includes(inputValue)
         );
     };
     const getSuggestionValue = suggestion => suggestion.genus;

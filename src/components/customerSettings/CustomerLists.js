@@ -39,7 +39,7 @@ export class CustomerSettings extends React.Component {
         const inputLength = inputValue.length;
           
             return inputLength === 0 ? [] : this.props.customerData.customerList.filter(lang =>
-              lang.name.toLowerCase().slice(0, inputLength) === inputValue
+              lang.name.toLowerCase().includes(inputValue)
             );
         };
          getSuggestionValue = suggestion =>suggestion.name;
@@ -112,11 +112,12 @@ export class CustomerSettings extends React.Component {
             this.setState({searchValue:""})
             this.props.handleSearchFilter("","reset")
             this.setState({selectedAlpha:"All",customerListStatus:"active"})
+            this.setState({value:""})
 
         }else{
             this.setState({searchValue:e.target.value})
             this.props.handleSearchFilter(e.target.value,"none")
-            this.setState({value:""})
+          
         }
         
         // alert(e.target.value)
@@ -182,8 +183,8 @@ export class CustomerSettings extends React.Component {
         {action ===""? <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
-                    <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Customer Lists <small class="text-blue">Active - {this.props.customerData.activeData.length}</small></div>
+                    <img src="assets/img/Customer Management_green.svg" class="mr-2"/>
+                    <div class="d-flex flex-column">Customer Lists <small class="text-blue"  style={{fontWeight:"bold"}}>Active - {this.props.customerData.activeData.length}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0" onClick={this.handleAddCustomerClick} id="add">
                     <a  class="btn" >
