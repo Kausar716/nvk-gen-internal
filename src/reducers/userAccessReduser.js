@@ -17,6 +17,7 @@ const initialSatate = {
     currentPermission:[],
     currentPermissionNames:[],
     permissionListBackup:[],
+    finalPermissionLists:[],
     userData:{},
     permissionList:[],
     quotes:[],
@@ -70,7 +71,8 @@ const initialSatate = {
             return{
                 ...state,
                 permissionList:action,
-                permissionListBackup:action.payload  
+                permissionListBackup:action.payload,
+                finalPermissionLists:action.payload
                
             }
         }

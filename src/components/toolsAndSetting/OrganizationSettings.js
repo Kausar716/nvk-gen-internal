@@ -55,7 +55,7 @@ export class OrganizationSettings extends React.Component {
             phoneNumberInOrganization:" ",
             phoneError:"",
 
-
+            fileInput : null,
 
 
             mobile:"",
@@ -94,21 +94,9 @@ export class OrganizationSettings extends React.Component {
     }
   
     handlImageUpload = (e1)=>{
-        //alert(123)
-        // const reader = new FileReader();
-        // reader.onload=()=>{
-        //     if(reader.readyState===2){
-        //     this.setState({
-        //         imagePreviewURL:reader.result
-        //     })
-        // }
-        // }
-       // reader.readAsDataURL(e1.target.files[0])
-        // alert(1)
-        // debugger;
-        // this.setState({logo:e.target.files[0]})
-      
-        console.log(e1.target.files[0])
+       // debugger;
+     
+        console.log("e1Firstfile", e1.target.files[0])
         let imageData = e1.target.files[0]
         let id="2"
         let data =  this.props.uploadImage(imageData,id)
@@ -117,11 +105,15 @@ export class OrganizationSettings extends React.Component {
            
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
-           
+        if( e1.target.files[0]){
+            this.fileInput.value = ""
+        }
+       
+        //alert("image successfully uploaded")
         setTimeout(function() {
           
 
-            window.location.reload();
+           // window.location.reload();
             alert("image successfully uploaded")
             
          },1100);
@@ -424,6 +416,8 @@ export class OrganizationSettings extends React.Component {
             this.props.showorganization(id)
         })
 
+
+        alert("Image Removed Successfully")
         
          //this.setState({});
          //window.location.reload();
@@ -453,7 +447,7 @@ export class OrganizationSettings extends React.Component {
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        let TempUrl = "./images/noPerson.png";
+        let TempUrl = "./images/logo_noimage.png";
         // var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
        // var iImage="assets/img/noImage.png";
@@ -646,7 +640,6 @@ export class OrganizationSettings extends React.Component {
                         <div class="ContentSection p-15">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
-                               
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of lading, etc.</p>
                                     </div>
@@ -662,7 +655,7 @@ export class OrganizationSettings extends React.Component {
                                               src={url}
                                               id="imageid"
                                           
-                                            style={{height:"250px",width:"240px"}}/>
+                                            style={{height:"250px",width:"240px", borderRadius:"50%"}}/>
                                             <p > <Loader /></p> 
                                              
                                         </div>
@@ -671,6 +664,7 @@ export class OrganizationSettings extends React.Component {
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" 
                                               onChange={this.handlImageUpload} 
+                                              ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
                                                 <span class="f-s-20" style={{position:"absolute"}} >Upload</span>
@@ -678,17 +672,46 @@ export class OrganizationSettings extends React.Component {
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                             {/* <img src="assets/img/upload-ic-white.svg" alt="" /> */}
                                         </a>
-                                        <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
+                                        <div className="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                             <span class="d-flex align-items-center justify-content-around"
                                             onClick={()=>{confirmAction("deleteImage"); }}
-                                            // onClick={this.handleRemoveImage}tempImage
+                                             //onClick={this.handleRemoveImage}
                                              >
                                                 <span class="f-s-20 text-danger">Remove</span>
                                             </span>
                                             <img src="assets/img/bin-ic-red.svg" alt=""/>
-                                        </a>
+                                        </div>
                                     </div>
                                 </div>
+
+
+
+{/* 
+                                <div class="row mt-3 mt-lg-0">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Main Title (Body)</label>
+                                            <input type="text" placeholder="Name" class="form-control" name="main_title" value={organizationDataById.main_title} onChange={this.handleInput}  />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Secondary Title (Body)</label>
+                                            <input type="text" placeholder="Address 01" class="form-control" name="secondary_title" value={organizationDataById.secondary_title} onChange={this.handleInput}  />
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Main Body</label>
+                                            <textarea class="form-control" rows="5"  name="main_body" value={organizationDataById.main_body} onChange={this.handleInput}>Address 01</textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Secondary Body</label>
+                                            <textarea class="form-control" rows="5" name="secondary_body" value={organizationDataById.secondary_body} onChange={this.handleInput}>Address 02</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
+
                                 <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                     <div class="row form-group">
                                         <div class="col-md-12">

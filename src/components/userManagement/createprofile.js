@@ -231,14 +231,22 @@ export class CreateUserProfile extends Component {
         //     errorObj.phoneError=1
         //     errorCount++
         // }
+
         if(this.state.position.length === 0){
-            //debugger;
+            console.log(this.state.position)
             errorObj.positionError=1
             errorCount++
         }
-        else{
-            errorObj.positionError=0
-        }
+
+
+        // if(this.state.position.length === 0){
+        //     //debugger;
+        //     errorObj.positionError=1
+        //     errorCount++
+        // }
+        // else{
+        //     errorObj.positionError=0
+        // }
 
 
          if(! emailReg.test(this.state.email)){
@@ -344,12 +352,12 @@ export class CreateUserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>First Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="First Name" class="form-control" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
-                                                    {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
+                                                    {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid First Name</span>:""}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Last Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="Last Name" class="form-control" name="lastName" value={this.state.lastName} onChange={this.handleInput} />
-                                                    {this.state.errorObj.lastNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
+                                                    {this.state.errorObj.lastNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Last Name</span>:""}
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -399,7 +407,7 @@ export class CreateUserProfile extends Component {
                                                      pattern="[0-9]*"
                                                      maxLength="10"
                                                      name="phone"/> */}
-{/* 
+                                            {/* 
                                                 <input
                                                     class="form-control"  
                                                     type="text"
