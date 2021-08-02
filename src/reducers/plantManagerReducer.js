@@ -334,6 +334,45 @@ export default function(state = initialSatate, action){
                 ...state,
                 needAction:false,
                 actionType:"add",
+                plantDataById     :   {
+                    genus: "",
+                    alternate_genus: "",
+                    series: "",
+                    species: "",
+                    cultivar1: "",
+                    cultivar2: "",
+                    introduction_year: "",
+                    hardiness_zone: "",
+                    royality: "",
+                    patent: "",
+                    category_id: "",
+                    in_production: 1,
+                    archived: 0,
+                    discontinued: 0,
+                    notes: ""
+                },
+                plantSkuDataById:{
+                    sku_code: "",
+                    product_id: null,
+                    plant_id: "",
+                    each_cost: null,
+                    each_price: null,
+                    sale_price: null,
+                    sale_expiry_date: null,
+                    volume_quantity: null,
+                    volume_price_per_unit: null,
+                    sku_item_name: null,
+                    subcategory: null,
+                    archived: "0",
+                    discontinued: 0,
+                    location: null,
+                    status: 1,
+                    attributes_subattributes:[],
+                  },
+                  tagsData: [],
+                  status:false,
+                  ae_plant_id:"",
+                plantSkuDataList:[]
 
             }
         case DUPLICTE_PLANT:
@@ -432,7 +471,7 @@ export default function(state = initialSatate, action){
                     //const skuData = state.
                     ...state, 
                     needAction:false,
-                    skuData:[...action.payload.data]
+                    // skuData:[...action.payload.data]
                 };
             case CLEAR_SKU_FIELDS_PLANT:
                 return{
