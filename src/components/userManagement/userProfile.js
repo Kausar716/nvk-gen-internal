@@ -392,7 +392,7 @@ export class UserProfile extends Component {
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
-        let noImageURL="assets/img/noImage.png";
+        let noImageURL="./images/logo_noimage.png";
 
 
 
@@ -539,11 +539,11 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                                 <div class="logCircle mb-3" key={new Date().getTime()}>
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"240px"}}/>
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"240px", borderRadius:"50%"}}/>
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
 
-                                                <p><small>Image should print quality PNG or JPG</small></p>
+                                                <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />

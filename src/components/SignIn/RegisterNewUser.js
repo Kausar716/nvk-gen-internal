@@ -80,7 +80,7 @@ const RegisterNewUser = (props) => {
                 <div class="navbar-header">
 
                 <div className="imgSizeHeader">
-                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{width:"15em", height:"4.5em"}} />
+                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{ height:"4.5em"}} />
                     </div>
 
                 {/* <div className="imgSizeHeader">

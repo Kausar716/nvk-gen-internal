@@ -453,7 +453,7 @@ export class OrganizationSettings extends React.Component {
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        let TempUrl = "./images/noPerson.png";
+        let TempUrl = "./images/logo_noimage.png";
         // var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
        // var iImage="assets/img/noImage.png";
@@ -646,7 +646,6 @@ export class OrganizationSettings extends React.Component {
                         <div class="ContentSection p-15">
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
-                               
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <p class="m-0">The following details will appear on all printed items including invoices, orders, bills of lading, etc.</p>
                                     </div>
@@ -662,7 +661,7 @@ export class OrganizationSettings extends React.Component {
                                               src={url}
                                               id="imageid"
                                           
-                                            style={{height:"250px",width:"240px"}}/>
+                                            style={{height:"250px",width:"240px", borderRadius:"50%"}}/>
                                             <p > <Loader /></p> 
                                              
                                         </div>
@@ -689,6 +688,35 @@ export class OrganizationSettings extends React.Component {
                                         </a>
                                     </div>
                                 </div>
+
+
+
+{/* 
+                                <div class="row mt-3 mt-lg-0">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Main Title (Body)</label>
+                                            <input type="text" placeholder="Name" class="form-control" name="main_title" value={organizationDataById.main_title} onChange={this.handleInput}  />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Secondary Title (Body)</label>
+                                            <input type="text" placeholder="Address 01" class="form-control" name="secondary_title" value={organizationDataById.secondary_title} onChange={this.handleInput}  />
+                                        </div>
+                                    </div>
+                                    <div class="row form-group">
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Main Body</label>
+                                            <textarea class="form-control" rows="5"  name="main_body" value={organizationDataById.main_body} onChange={this.handleInput}>Address 01</textarea>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label style={{fontWeight:"bold"}}>Secondary Body</label>
+                                            <textarea class="form-control" rows="5" name="secondary_body" value={organizationDataById.secondary_body} onChange={this.handleInput}>Address 02</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> */}
+
                                 <div class="col-md-8 col-lg-9 mt-3 mt-md-0">
                                     <div class="row form-group">
                                         <div class="col-md-12">
