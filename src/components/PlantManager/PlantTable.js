@@ -97,14 +97,18 @@ const PlantTable=(props)=> {
 }
 const handleCheckBox =(id,index,type)=>{
     let obj = {}
+    
     obj[type] = parseInt(displayPlantList[index][type])===1?0:1
-   
-    console.log((plantPageNumber))
-    console.log((15*plantPageNumber)+index)
-    // props.checkBox(id,((15*plantPageNumber)+index),type,obj)
-    props.updateCheckBox(id,index,type,obj).then(data=>{
-        props.getAllPlantAction()
-    })
+    if(type ==="in_production" &&  obj[type]===0)
+    obj["status"] = 0
+    else obj["status"] =1
+    if(type !=="in_production" &&  obj[type]===1)
+    obj["status"] = 0
+    else obj["status"] =1
+
+    props.checkBox(id,((15*plantPageNumber)+index),type,obj)
+    // console.log(plantData[((15*plantPageNumber)+index)])
+    props.updateCheckBox(id,index,type,obj)
 
 }
 
@@ -165,7 +169,7 @@ const handleCheckBox =(id,index,type)=>{
                                              console.log(status)
                                              return(     
                                             <tr>
-                                                <td style={{color:status==="1" ? "black" :"red"}}>{status === "1" ?"Active":"Inactive"}</td>
+                                                <td style={{color:parseInt(status)===1 ? "black" :"red"}}>{parseInt(status) === 1 ?"Active":"Inactive"}</td>
                                                 <td className="text-nowrap text-center">{plant_id}</td>
                                                 <td>{genus}</td>
                                                 <td>
@@ -174,13 +178,13 @@ const handleCheckBox =(id,index,type)=>{
                                                     </td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox"  className="custom-control-input" checked={in_production==="1"?"checked":""} id={id4+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id4)}/>
+                                                        <input type="checkbox"  className="custom-control-input" checked={parseInt(in_production)===1?"checked":""} id={id4+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id4)}/>
                                                         <label className="custom-control-label" style={{cursor:"pointer"}} for={id4+"_"+plant_id}></label>
                                                     </div>
                                                 </td>
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                        <input type="checkbox"  className="custom-control-input" checked={discontinued===1?"checked":""} id={id2+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id2)}/>
+                                                        <input type="checkbox"  className="custom-control-input" checked={parseInt(discontinued)===1?"checked":""} id={id2+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id2)}/>
                                                         <label className="custom-control-label" style={{cursor:"pointer"}} for={id2+"_"+plant_id}></label>
                                                     </div>
                                                 </td>
@@ -188,7 +192,7 @@ const handleCheckBox =(id,index,type)=>{
 
                                                 <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
-                                                            <input type="checkbox"  className="custom-control-input" checked={archived===1?"checked":""} id={id3+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id3)}/>
+                                                            <input type="checkbox"  className="custom-control-input" checked={parseInt(archived)===1?"checked":""} id={id3+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id3)}/>
                                                             <label className="custom-control-label" style={{cursor:"pointer"}} for={id3+"_"+plant_id}></label>
                                                     </div>
                                                 </td>
