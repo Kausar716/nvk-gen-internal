@@ -262,7 +262,8 @@ export default function(state = initialSatate, action){
                     //id:null
                 },
                 needAction:false,
-                tagsData:[]
+                tagsData:[],
+                productDataBySKUlist:[]
             }
         case DUPLICTE_PRODUCT:
             return{

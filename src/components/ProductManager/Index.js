@@ -359,22 +359,22 @@ const  ProductManagement = (props) =>{
                                                     </h2>
                                                 </div>
                                                 
-                                                <div class="col-md-6 d-flex justify-content-md-end">
+                                               {actionType !== "add" ?<div class="col-md-6 d-flex justify-content-md-end">
                                                 <span onClick={()=>props.pageReDirectAction("product","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
                                                     <i class='bx bx-arrow-back' ></i>
                                                     {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
                                                     </span>
-                                                    <a href="" class="mx-2">
-                                                        <img src="assets/img/copy-ic.svg" alt=""/>
+                                                    <a href="#" class="mx-2">
+                                                        <img src="assets/img/copy-ic.svg" alt=""  onClick={()=>{confirmAction(productDataById.product_id,"duplicate"); }}/>
                                                     </a>
-                                                    <a href="" class="mx-2">
-                                                        <img src="assets/img/trash-ic.svg" alt=""/>
+                                                    <a href="#" class="mx-2">
+                                                        <img src="assets/img/trash-ic.svg" alt="" onClick={()=>confirmAction(productDataById.product_id,"delete")}/>
                                                     </a>
-                                                    <a href="" class="mx-2">
+                                                    <a href="#" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
                                                     </a>
-                                                </div>
+                                                </div>:""}
                                             </div>
                                         </div>
 

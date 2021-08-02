@@ -173,7 +173,7 @@ const SkuList = (props)=>{
     }
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
-        props.plantPageReDirectAction("all","plant")
+        // props.plantPageReDirectAction("all","plant")
 
     }
     }
