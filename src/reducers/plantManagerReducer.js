@@ -257,8 +257,19 @@ export default function(state = initialSatate, action){
                 }
             }
             if(!isNaN(action.itemId)){
-                let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
+                console.log(action.itemValue)
+             
+                if(action.itemId === 4 || action.itemId === "4" ){
+                    console.log(attributeValue)
+                    attributeValue.filter(att=>{
+                        if(att.attribute_id === 4)
+                        console.log(att)
+                    })
+                  
+                }
+                let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
+                // let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let attributeUpdated = false
                 // let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
                 // filteredAttribute.push(attibuteData)
@@ -420,8 +431,8 @@ export default function(state = initialSatate, action){
                 return{
                     //const skuData = state.
                     ...state, 
-                    needAction:false
-                    // skuData:[...action.payload.data]
+                    needAction:false,
+                    skuData:[...action.payload.data]
                 };
             case CLEAR_SKU_FIELDS_PLANT:
                 return{
@@ -437,7 +448,7 @@ export default function(state = initialSatate, action){
                         volume_price_per_unit: "",
                         sku_item_name: "",
                         subcategory: "",
-                        archived: 0,
+                        archived: "0",
                         discontinued: 0,
                         location: "",
                         status: 0,

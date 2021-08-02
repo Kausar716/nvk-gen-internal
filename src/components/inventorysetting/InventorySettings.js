@@ -1,6 +1,11 @@
+/* eslint-disable jsx-a11y/alt-text */
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import InventoryLocationTypes from './inventoryLocationType';
+import InventoryLocation from './inventoryLocation';
 
 export default function PlantSettings() {
     return (
@@ -17,6 +22,13 @@ export default function PlantSettings() {
                         <Tab>Inventory Location Types</Tab>
                     </TabList>
                     <TabPanel>
+                        <InventoryLocation />
+                    </TabPanel>
+                    <TabPanel>
+                        <InventoryLocationTypes />
+                    </TabPanel>
+                    
+                    {/* <TabPanel>
                     <div class="bg-white">
                         <h4 class="p-15 mb-0">Inventory Location</h4>
                         <hr class="m-0"/>
@@ -260,131 +272,7 @@ export default function PlantSettings() {
                             </div>
                         </div>
                     </div>
-                    </TabPanel>
-                    <TabPanel>
-                    <div class="bg-white">
-                        <h4 class="p-15 mb-0">Location Type</h4>
-                        <hr class="m-0"/>
-                        <div class="ContentSection p-15">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <p>Location Type</p>
-                                    <div>
-                                        <input type="text" class="form-control" placeholder=""/>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>Short Code (6 Char)</p>
-                                    <div>
-                                        <input type="text" class="form-control" placeholder=""/>
-                                    </div>
-                                    <div class="d-flex justify-content-md-end mt-2">
-                                        <a href="javascript:;" class="d-flex align-items-center">
-                                            <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Location Type
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col">
-                                    <div class="card midCard">
-                                        <div class="card-header">
-                                            Inactive
-                                        </div>
-                                        <div class="card-body cardBg">
-                                            <ul class="list-unstyled">
-                                                <li>
-                                                    <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                        <span>Staging (ST)</span>
-                                                        <i class="fa fa-th"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                        <span>Treeblock (TB)</span>
-                                                        <i class="fa fa-th"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-1">
-                                    <div class="midControls d-flex flex-md-column justify-content-around my-2">
-                                        <div>
-                                            <a href="javascript:;">
-                                                <i class="fas fa-angle-double-right"></i>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;">
-                                                <i class="fas fa-arrows-alt"></i>
-                                            </a>
-                                        </div>
-                                        <div>
-                                            <a href="javascript:;" class="icDelete">
-                                                <i class="fas fa-trash"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col">
-                                    <div class="card midCard">
-                                        <div class="card-header">
-                                            Active
-                                        </div>
-                                        <div class="card-body cardBg">
-                                            <ul class="list-unstyled">
-                                                <li class="hasChild">
-                                                    <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                        <span>Area (AREA)</span>
-                                                        <i class="fa fa-th"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                        <span>Front Range (FR)</span>
-                                                        <i class="fa fa-th"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                        <span>Row (RW)</span>
-                                                        <i class="fa fa-th"></i>
-                                                    </a>
-                                                </li>
-                                                <li>
-                                                    <a href="javascript:;" class="d-flex justify-content-between align-items-center">
-                                                        <span>Overflow(OVFW)</span>
-                                                        <i class="fa fa-th"></i>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
-                    <TabPanel>
-                        
-                    </TabPanel>
+                    </TabPanel> */}
                 </Tabs>
             </div>
         </div>

@@ -113,47 +113,63 @@ const SkuList=(props)=> {
 
 
     const submitAction = (e) =>{
+        console.log(actionType)
+        let skuFieldClear = false
         e.preventDefault();
          if(submitCount === 0 && (!each_costError&& !each_priceError&& !sales_priceError && !volume_priceError)){
             if(needAction){
                 if(actionType ==="add"){
-                    console.log(product_idFromGeneral)
-                    console.log(skuDataById)
-                    props.createSkuAction(product_idFromGeneral,skuDataById)
-                
-                //    props.pageReDirectAction("product","add")
-               
+                    props.createSkuAction(product_idFromGeneral,skuDataById,skuFieldClear)               
                 }
-                //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)
-   
-                if(actionType ==="edit"){  
-                let skuid = skuDataById.id
-                if(skuDataById.id === undefined){
-                     skuid= props.productData.productDataById.product_id
-                     if(props.productData.productDataById.product_id)
-                     skuid= props.productData.productDataById.product_id
-                     else
-                     skuid = props.productData.ae_product_id
-                    let x= props.createSkuAction(skuid,skuDataById)
-                    x.then(res=>{
-                        props.clearSkuFields()
-                    })                   
+                //props.createSkuAction(skuDataById.id,skuDataById,skuValidation)  
+                let skuid = skuDataById.id 
+                if(actionType ==="edit"){ 
+                
+               
+                if(e.target.id === "retain"){   
+                     if(props.productData.productDataById.product_id){
+                         skuid= props.productData.productDataById.product_id
+                     }                     
+                     else{                        
+                        skuid = props.productData.ae_product_id
+                     }
+                    if(skuDataById.product_id){
+                        skuDataById.id=skuDataById.product_id
+                        delete skuDataById.product_id
+                    }
+                    console.log(skuDataById)
+                    props.createSkuAction(skuid,skuDataById,skuFieldClear,actionType)
+                                    
                     
                 }
-                else{
-                   
+                if(e.target.id === "dontRetain"){
+                    skuFieldClear = true
+                    if(props.productData.productDataById.product_id){
+                    
+                        skuid= props.productData.productDataById.product_id
+                    }                     
+                    else{                        
+                       skuid = props.productData.ae_product_id
+                    }
+                   if(skuDataById.product_id){
+                       skuDataById.id=skuDataById.product_id
+                       delete skuDataById.product_id
+                   }
+                    props.createSkuAction(skuid,skuDataById,skuFieldClear,actionType)
+                    
+                }
+            }
+
+                else if(actionType === "sku"){
+                    if(e.target.id === "dontRetain"){
                     skuDataById.subcategory = skuDataById.sub_category_id
-                    console.log(skuDataById)
-                  
                     props.updateSkuActionClear(skuid,skuDataById)
+                    }
+                    if(e.target.id === "retain"){
+                        props.updateSkuAction(skuid,skuDataById)
+                    }
                     // props.pageReDirectAction("product","add")
                 }
-                console.log(skuDataById) 
-                console.log(props.productData)  
-                console.log(skuid) 
-            }
-                    
-               
                 // props.updateSkuAction(skuDataById.id,skuDataById,skuValidation)
                 //setSubmitCount(1)
             }
@@ -219,7 +235,6 @@ const SkuList=(props)=> {
 
     }
     const handleChange1 = (e) =>{
-        // alert(data)
         console.log(e.target.value)
         let dateInformate = e.target.value
         props.handleSkuInputAction("sale_expiry_date",dateInformate)
@@ -259,7 +274,6 @@ const SkuList=(props)=> {
 
    }
    const handleBlur =(evt)=>{
-
     var charCode = (evt.which) ? evt.which : evt.keyCode;
     console.log(evt.target.id)
     let id = evt.target.id
@@ -321,8 +335,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
     const productIDList = productData.map(pro=>pro.product_id)
     console.log("productIDList", displaySkuList2)
     console.log("productDataByIdskuDataById", productDataById, skuDataById)
+    console.log(skuDataById.volume_price_per_unit)
+    console.log(skuDataById.sub_category_id)
+    console.log(skuDataById.volume_quantity)
     let selectedSubCategoryId = skuDataById.sub_category_id
-    console.log(skuDataById)
+    console.log(actionType)
     let flag =0
     if(skuDataById){       
         if(!skuDataById.each_cost||skuDataById.sub_category_id  === "0" || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
@@ -357,7 +374,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="col-md-6 col-lg-3">
                                             <label>SKU Item Name <span class="text-danger">*</span></label>
                                             <input type="text" class="form-control text-right" placeholder="" value="$1.25"
-                                            id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={skuEdit} />
+                                            id="sku_item_name" value={skuDataById.sku_item_name} onChange={handleInput} disabled={actionType==="sku"?true:false} />
                                         </div>
                                         {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         </div> */}
@@ -365,12 +382,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <label>Sub-Category <span class="text-danger">*</span></label>
                                             <select class="form-control" style={{cursor:"pointer"}} id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
                                             <option value="0">None</option>
-                            {subCategoryData.map(subcategory=>{
-                                if(parseInt(supCategoryIdForFilter) === subcategory.category_id)
-                                return (<option value={subcategory.id} selected={subcategory.id===skuDataById.subcategory?"selected":""}>{subcategory.name}</option>)
+                                                {subCategoryData.map(subcategory=>{
+                                                    if(parseInt(supCategoryIdForFilter) === subcategory.category_id)
+                                                    return (<option value={subcategory.id} selected={subcategory.id===skuDataById.subcategory?"selected":""}>{subcategory.name}</option>)
 
-                            })}
-                          {/* subcategory_id */}
+                                                })}
                                             </select>
                                         </div>
 
@@ -441,10 +457,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quantity <span class="text-danger">*</span></label>
-                                            <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} >
+                                            <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} value={skuDataById.volume_quantity} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}
-                                            <option>None</option>
+                                            <option value="0">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{                                                       
                                                         return(<option value={subData.id}>{subData.value}</option>)
