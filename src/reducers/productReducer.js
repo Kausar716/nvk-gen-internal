@@ -75,9 +75,9 @@ const initialSatate = {
         status:1
     },
     skuDataById         :   {
-        each_cost:null,
-        each_price:null,
-        sale_price:null,
+        each_cost:"0.00",
+        each_price:"0.00",
+        sale_price:"0.00",
         sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
         sku_item_name:"",
         subcategory:null,
@@ -85,7 +85,7 @@ const initialSatate = {
         archived:"0",
         status:1,
         supplier_id:1,
-        volume_price_per_unit:null,
+        volume_price_per_unit:"0.00",
         volume_quantity:"0"
        
 
@@ -132,9 +132,9 @@ export default function(state = initialSatate, action){
                     status:1,
                 },
                 skuDataById         :   {
-                    each_cost:null,
-                    each_price:null,
-                    sale_price:null,
+                    each_cost:"0.00",
+                    each_price:"0.00",
+                    sale_price:"0.00",
                     sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                     sku_item_name:"",
                     subcategory:0,
@@ -142,7 +142,7 @@ export default function(state = initialSatate, action){
                     status:1,
                     supplier_id:1,
                     archived:"0",
-                    volume_price_per_unit:null,
+                    volume_price_per_unit:"0.00",
                     volume_quantity:"0"
                     //id:null
             
@@ -247,9 +247,9 @@ export default function(state = initialSatate, action){
                     discontinued:0
                 },
                 skuDataById         :   {
-                    each_cost:null,
-                    each_price:null,
-                    sale_price:null,
+                    each_cost:"0.00",
+                    each_price:"0.00",
+                    sale_price:"0.00",
                     sale_expiry_date:null,
                     sku_item_name:null,
                     subcategory:null,
@@ -257,7 +257,7 @@ export default function(state = initialSatate, action){
                     status:1,
                     archived:"0",
                     supplier_id:1,
-                    volume_price_per_unit:null,
+                    volume_price_per_unit:"0.00",
                     volume_quantity:"0"
                     //id:null
                 },
@@ -278,9 +278,9 @@ export default function(state = initialSatate, action){
                     discontinued:0
                 },
                 skuDataById         :   {
-                    each_cost:null,
-                    each_price:null,
-                    sale_price:null,
+                    each_cost:"0.00",
+                    each_price:"0.00",
+                    sale_price:"0.00",
                     sale_expiry_date:null,
                     sku_item_name:null,
                     subcategory:"0",
@@ -288,7 +288,7 @@ export default function(state = initialSatate, action){
                     status:1,
                     archived:0,
                     supplier_id:1,
-                    volume_price_per_unit:null,
+                    volume_price_per_unit:"0.00",
                     volume_quantity:"0"
                     //id:null
                 },
@@ -302,9 +302,9 @@ export default function(state = initialSatate, action){
                     // actionType:"add",
                    
                     skuDataById         :   {
-                        each_cost:null,
-                        each_price:null,
-                        sale_price:null,
+                        each_cost:"0.00",
+                        each_price:"0.00",
+                        sale_price:"0.00",
                         sale_expiry_date:null,
                         sku_item_name:null,
                         subcategory:"0",
@@ -312,7 +312,7 @@ export default function(state = initialSatate, action){
                         status:1,
                         archived:0,
                         supplier_id:1,
-                        volume_price_per_unit:null,
+                        volume_price_per_unit:"0.00",
                         volume_quantity:"0"
                         //id:null
                     },
@@ -349,9 +349,9 @@ export default function(state = initialSatate, action){
         return{
             ...state,
             skuDataById         :   {
-                each_cost:"",
-                each_price:"",
-                sale_price:"",
+                each_cost:"0.00",
+                each_price:"0.00",
+                sale_price:"0.00",
                 sale_expiry_date: new Date().getDate()+"-"+(new Date().getMonth()+1)+"-"+new Date().getFullYear(),
                 sku_item_name:"",
                 subcategory:"0",
@@ -360,7 +360,7 @@ export default function(state = initialSatate, action){
                 status:1,
                 archived:"0",
                 supplier_id:1,
-                volume_price_per_unit:null,
+                volume_price_per_unit:"0.00",
                 volume_quantity:"0",
                 // id:null
             },
@@ -548,9 +548,9 @@ export default function(state = initialSatate, action){
             return{
                 ...state,
                 skuDataById         :   {
-                    each_cost:"",
-                    each_price:"",
-                    sale_price:"",
+                    each_cost:"0.00",
+                    each_price:"0.00",
+                    sale_price:"0.00",
                     sale_expiry_date:new Date(),
                     sku_item_name:"",
                     subcategory:"0",
@@ -558,7 +558,7 @@ export default function(state = initialSatate, action){
                     status:1,
                     archived:"0",
                     supplier_id:1,
-                    volume_price_per_unit:null,
+                    volume_price_per_unit:"0.00",
                     volume_quantity:"0"
                     //id:null
             

@@ -104,7 +104,6 @@ let obj={}
 
     return  axios.post("/api/plant-inventory-search",obj,config).then(res=>{ 
         console.log(res)
-        debugger;
         dispatch({
                 type:GET_ALL_PLANT_INVENTORY_ACTION,
                 payload:res.data.data
