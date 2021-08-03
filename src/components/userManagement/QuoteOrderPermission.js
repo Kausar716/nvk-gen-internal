@@ -26,6 +26,14 @@ function QuoteOrderPermission(props) {
     const [inventoryManagementPermission, setInventoryManagementPermission] =useState([]);
     const [supplierManagementPermission, setSupplierManagementPermission] =useState([]);
 
+
+    const [allInventoryPermissions, setAllInventoryPermissions] =useState([]);
+    const [supervisorRolePermission, setSupervisorRolePermission] =useState([]);
+    const [plantmanagerPermission, setPlantmanagerPermission] =useState([]);
+    const [productManagerPermission, setProductManagerPermission] =useState([]);
+    const [inventoryMangementPermissionT, setInventoryMangementPermissionT] =useState([]);
+
+
     const [allPermisssions, setAllPermisssions] =useState([]);
   
     let permissionList = props.finalPermissionLists
@@ -44,6 +52,11 @@ function QuoteOrderPermission(props) {
         setSupplierManagementPermission(permissionList)
         setInventoryManagementPermission(permissionList)
 
+        setAllInventoryPermissions(permissionList)
+        setSupervisorRolePermission(permissionList)
+        setPlantmanagerPermission(permissionList)
+        setProductManagerPermission(permissionList)
+        setInventoryMangementPermissionT(permissionList)
        
         props.getPermissionList();
 
@@ -68,6 +81,19 @@ function QuoteOrderPermission(props) {
         || x.id===139 || x.id===140 || x.id===141 ||  x.id===142 || x.id===143 || x.id===144 || x.id===145
         || x.id===146 || x.id===147 || x.id===148 || x.id===149)
 
+
+    let finalAllInventoryPermissions = allInventoryPermissions.filter(x=> x.id===150 || x.id===151 || x.id===152
+         || x.id===153  || x.id===154 || x.id===155 || x.id===156 || x.id===157 || x.id===158 || x.id===159 || x.id===160
+         || x.id===161 || x.id===162 || x.id===163 )
+
+    let finalsupervisorRolePermission = supervisorRolePermission.filter(x=>x.id===150)
+    let finalPlantmanagerPermission = plantmanagerPermission.filter(x=>  x.id===151 || x.id===152 || x.id===153  )
+    let finalProductManagerPermission = productManagerPermission.filter(x=>  x.id===154 || x.id===155 || x.id===156  )
+    let finalInventoryMangementPermissionT = inventoryMangementPermissionT.filter(x=> x.id===157 || x.id===158 
+        || x.id===159 || x.id===160 || x.id===161 || x.id===162 || x.id===163 )
+
+    
+
     let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===133 || x.id===134 || x.id===135 || x.id===136 )
 
     let finalUserManagemnetPermission = userManagementPermission.filter(x=>  x.id===137 || x.id===138 || x.id===139 || x.id===140 || x.id===141)
@@ -82,10 +108,16 @@ function QuoteOrderPermission(props) {
     
 
     
-     let finalAllCheckBox = allPermisssions.filter(x=> x.id===99 || x.id===100 || x.id===101 
+     let finalAllCheckBox = allPermisssions.filter(x=>  x.id===99 || x.id===100 || x.id===101 
         || x.id===102 || x.id===103 || x.id===104 || x.id===105 || x.id===106
-        || x.id===107 || x.id===108 || x.id===109 || x.id===115 || x.id===118 || x.id===119
-        || x.id===137 || x.id===138 || x.id===139 || x.id===140 || x.id===141)
+        || x.id===107 || x.id===108 || x.id===109  || x.id===110 || x.id===111 
+        || x.id===112 || x.id===120 || x.id===121 || x.id===128 || x.id===129 || x.id===130 || x.id===131 
+        || x.id===132 || x.id===133 || x.id===134 || x.id===135 || x.id===136 || x.id===137 || x.id===138 
+        || x.id===139 || x.id===140 || x.id===141 ||  x.id===142 || x.id===143 || x.id===144 || x.id===145
+        || x.id===146 || x.id===147 || x.id===148 || x.id===149 || x.id===122 || x.id===123 || x.id===124 
+        || x.id===125 || x.id===126 || x.id===127 || x.id===150 || x.id===151 || x.id===152
+        || x.id===153  || x.id===154 || x.id===155 || x.id===156 || x.id===157 || x.id===158 || x.id===159 || x.id===160
+        || x.id===161 || x.id===162 || x.id===163 )
     
     console.log("quotesAndOrdersPemissionList1", finalAllCheckBox, finalCMSettingsPermissions)
 
@@ -104,6 +136,43 @@ function QuoteOrderPermission(props) {
             setPurchasePermissionListHere(tempUserPO)
          }
 
+
+         //SelectAllINV
+         else  if(name === "SelectAllINV"){
+            let tempUserINV = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:checked}});
+            setInventoryMangementPermissionT(tempUserINV)
+            setProductManagerPermission(tempUserINV)
+            setPlantmanagerPermission(tempUserINV)
+            setSupervisorRolePermission(tempUserINV)
+            setAllInventoryPermissions(tempUserINV)
+
+         }
+
+
+         else  if(name === "SupervisorRoleInSupervisorRolePermissions"){
+            let tempUserSVR = finalsupervisorRolePermission.map(user=>{return {...user, isChecked:checked}});
+            setSupervisorRolePermission(tempUserSVR)
+         }
+
+
+
+         else  if(name === "PlantManagerInPlantManagerPermissions"){
+            let tempUserPM = finalPlantmanagerPermission.map(user=>{return {...user, isChecked:checked}});
+            setPlantmanagerPermission(tempUserPM)
+         }
+
+
+         else  if(name === "ProductManagerPermissions"){
+            let tempUserProM = finalProductManagerPermission.map(user=>{return {...user, isChecked:checked}});
+            setProductManagerPermission(tempUserProM)
+         }
+
+         else  if(name === "InventoryManagementInInventoryManagementPermissions"){
+            let tempUserINVMangement = finalInventoryMangementPermissionT.map(user=>{return {...user, isChecked:checked}});
+            setInventoryMangementPermissionT(tempUserINVMangement)
+         }
+
+
          //SelectAllTS
          else  if(name === "SelectAllTS"){
             let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:checked}});
@@ -114,8 +183,11 @@ function QuoteOrderPermission(props) {
             setSupplierManagementPermission(tempUserALL)
             setInventoryManagementPermission(tempUserALL)
             setAdditionalPermissions(tempUserALL)
+           
             
          }
+
+
 
          else  if(name === "toolsSettingsIntoolsSettingsPermissions"){
             let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
@@ -143,12 +215,29 @@ function QuoteOrderPermission(props) {
          }
 
 
-        else if(name==="SelectAllEverything"){
-            let finalAllPermission = [...quotePermissionListHere, ...purchasePermissionListHere]
-             let tempALL =  finalAllPermission.map(user=>{return {...user, isChecked:checked}});
-            setAllPermisssions( tempALL)
-            setPurchasePermissionListHere(tempALL)
+        else if(name==="SelectAllPermissionOn"){
+           
+             let tempALL =  finalAllCheckBox.map(user=>{return {...user, isChecked:checked}});
+             setInventoryMangementPermissionT(tempALL)
+             setProductManagerPermission(tempALL)
+             setPlantmanagerPermission(tempALL)
+             setSupervisorRolePermission(tempALL)
+             setAllInventoryPermissions(tempALL)
+
+             setToolsAnsSettingsPermission(tempALL)
+            setUserManagementPermission(tempALL)
+            setCustomerManagementPermission(tempALL)
+            setUserManagementPermission(tempALL)
+            setSupplierManagementPermission(tempALL)
+            setInventoryManagementPermission(tempALL)
+            setAdditionalPermissions(tempALL)
+
+
             setquotePermissionListHere(tempALL)
+            setPurchasePermissionListHere(tempALL)
+            setAllPermisssions(tempALL)
+
+
             }
 
         
@@ -192,6 +281,36 @@ function QuoteOrderPermission(props) {
             user.name === name ? { ...user, isChecked: checked} : user);
             setSupplierManagementPermission(tempUserSMP);
 
+            let tempUserINVM= finalAllInventoryPermissions.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setAllInventoryPermissions(tempUserINVM);
+
+            let tempUserSUPV= finalsupervisorRolePermission.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setSupervisorRolePermission(tempUserSUPV);
+
+
+            let tempUserPM= finalPlantmanagerPermission.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setPlantmanagerPermission(tempUserPM);
+
+
+            let tempUserProM= finalProductManagerPermission.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setProductManagerPermission(tempUserProM);
+
+
+            let tempUserINVMangement= finalInventoryMangementPermissionT.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setInventoryMangementPermissionT(tempUserINVMangement);
+
+
+            let tempUserAllCheck= finalAllCheckBox.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setAllPermisssions(tempUserAllCheck);
+
+
+
             // let finalAllPermission = [quotePermissionListHere, purchasePermissionListHere]
             //  let tempALL = finalAllPermission.map((user) =>
             //  user.name === name ? { user, isChecked: checked} : user);
@@ -204,10 +323,18 @@ function QuoteOrderPermission(props) {
 
     return (
         <>
+           <div style={{padding:"0.5em"}}>
+                <span style={{float:"right", marginTop:"-1em",fontWeight:"bold"}}>Turn On All / Turn On Off</span>
+                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"4px", marginTop:"-15px"}}>
+                                        <input type="checkbox"  name="SelectAllPermissionOn" id="SelectAllPermissionOn"   onChange={handleChange} 
+                                        checked={finalAllCheckBox.filter((user) => user?.isChecked !== true).length < 1} />
+                                        <label  for="SelectAllPermissionOn"></label>
+                                    </div>
+            </div>
         <div  class="bg-white mt-2">
                 <div class="ContentSection p-15">
-                        <h4>Quote &amp; Order PermissionsTESTING</h4>
-                            <div className="row1">
+                        <h4>Quote &amp; Order Permissions</h4>
+                            <div className="row1" style={{paddingBottom:"2em"}}>
                                 { finalQOPermissions.map((userP)=>(
                                                 <div  class="custom-control custom-checkbox">
                                                             {/* <div class="custom-control custom-checkbox" > */}
@@ -225,58 +352,34 @@ function QuoteOrderPermission(props) {
                  
                  
                 </div>
-                <div class="custom-control custom-checkbox" style={{padding:"1em", marginLeft:"80%"}}>
+                {/* <div class="custom-control custom-checkbox" style={{padding:"1em", marginLeft:"80%"}}>
                     <input type="checkbox" class="custom-control-input"  
                     onChange={handleChange} 
                     checked={finalQOPermissions.filter((user) => user?.isChecked !== true).length < 1}
                     name="SelectAllQuote" id="SelectAllQuote" />
                     <label class="custom-control-label pl-2" for="SelectAllQuote" >Select All / Select None </label>
-                </div>
+                </div> */}
+
+                            <div>
+                                <span style={{float:"right", marginRight:"1em", marginTop:"-2em",fontWeight:"bold"}}>Select All / Select None</span>
+                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"12.3em", marginTop:"-2em"}}>
+                                        <input type="checkbox"  name="SelectAllQuote" id="SelectAllQuote"   onChange={handleChange} 
+                                       checked={finalQOPermissions.filter((user) => user?.isChecked !== true).length < 1} />
+                                        <label  for="SelectAllQuote"></label>
+                                    </div>
+                                </div>
 
         </div>
 
 
 
 
-
-        {/* Purchase &amp; Order Permissions */}
-                <div  class="bg-white mt-2">
-                                <div class="ContentSection p-15">
-                                        <h4>Purchase &amp; Order Permissions</h4>
-                                            <div className="row1">
-                                                { finalPOpermissions.map((userP)=>(
-                                                                <div  class="custom-control custom-checkbox">
-                                                                            {/* <div class="custom-control custom-checkbox" > */}
-                                                                    <input type="checkbox" class="custom-control-input" 
-                                                                    name={userP.name} 
-                                                                    id={userP.id}
-                                                                    onChange={handleChange}
-                                                                    checked={userP?.isChecked || false}
-                                                                    />
-                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
-                                                                </div>
-                                                ))}
-                                            </div>
-                                
-                                
-                                </div>
-                                <div class="custom-control custom-checkbox" style={{padding:"1em", marginLeft:"80%"}}>
-                                    <input type="checkbox" class="custom-control-input"  
-                                    onChange={handleChange} 
-                                    checked={finalPOpermissions.filter((user) => user?.isChecked !== true).length < 1}
-                                    name="SelectAllPO" id="SelectAllPO" />
-                                    <label class="custom-control-label pl-2" for="SelectAllPO" >Select All / Select None </label>
-                                </div>
-
-                </div>
-
-
-
 {/* Additional Permissions */}
 
-                <div  class="bg-white mt-2">
+<div  class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                         <h4>Additional Permissions</h4>
+                                        <div className="row1" style={{paddingBottom:"2em"}}>
                                             <div className="row2">
                                                 { finalTSettingspermissions.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
@@ -290,12 +393,9 @@ function QuoteOrderPermission(props) {
                                                                     <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
                                                                 </div>
                                                 ))}
-
-
-                                                
                                             </div>
 
-                                            <div className="row2">
+                                            <div className="row6">
                                                 { finalCMSettingsPermissions.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
                                                                           
@@ -328,7 +428,7 @@ function QuoteOrderPermission(props) {
                                             </div>
 
                                             
-                                            <div className="row2">
+                                            <div className="row7">
                                                 { finalInventoryManagemnetPermission.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
                                                                           
@@ -360,24 +460,166 @@ function QuoteOrderPermission(props) {
 
 
 
-
+                                    </div>
                                 
                                 </div>
 
+                                <div>
+                                <span style={{float:"right", marginRight:"1em", marginTop:"-2em",fontWeight:"bold"}}>Select All / Select None</span>
+                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"12.3em", marginTop:"-2em"}}>
+                                        <input type="checkbox"  name="SelectAllTS" id="SelectAllTS"   onChange={handleChange} 
+                                        checked={additionalPermissionAll.filter((user) => user?.isChecked !== true).length < 1} />
+                                        <label  for="SelectAllTS"></label>
+                                    </div>
+                                </div>
+                                
+
+                </div>
 
 
-                                <div class="custom-control custom-checkbox" style={{padding:"1em", marginLeft:"80%"}}>
+
+
+
+        {/* Purchase &amp; Order Permissions */}
+                <div  class="bg-white mt-2">
+                                <div class="ContentSection p-15">
+                                        <h4>Purchase &amp; Order Permissions</h4>
+                                            <div className="row1" style={{paddingBottom:"3em"}}>
+                                                { finalPOpermissions.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                            {/* <div class="custom-control custom-checkbox" > */}
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+                                            </div>
+                                
+                                
+                                </div>
+                                {/* <div class="custom-control custom-checkbox" style={{padding:"1em", marginLeft:"80%"}}>
                                     <input type="checkbox" class="custom-control-input"  
                                     onChange={handleChange} 
-                                    checked={additionalPermissionAll.filter((user) => user?.isChecked !== true).length < 1}
-                                    name="SelectAllTS" id="SelectAllTS" />
-                                    <label class="custom-control-label pl-2" for="SelectAllTS" >Select All / Select None Ad</label>
+                                    checked={finalPOpermissions.filter((user) => user?.isChecked !== true).length < 1}
+                                    name="SelectAllPO" id="SelectAllPO" />
+                                    <label class="custom-control-label pl-2" for="SelectAllPO" >Select All / Select None </label>
+                                </div> */}
+                                 <div>
+                                <span style={{float:"right", marginRight:"1em", marginTop:"-2em",fontWeight:"bold"}}>Select All / Select None</span>
+                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"12.3em", marginTop:"-2em"}}>
+                                        <input type="checkbox"  name="SelectAllPO" id="SelectAllPO"   onChange={handleChange} 
+                                       checked={finalPOpermissions.filter((user) => user?.isChecked !== true).length < 1} />
+                                        <label  for="SelectAllPO"></label>
+                                    </div>
                                 </div>
 
                 </div>
-            
+
+
+
+
+
+    {/* Inventory Management Permissions */}
+    <div  class="bg-white mt-2">
+                                <div class="ContentSection p-15">
+                                        <h4>Inventory Management Permissions</h4>
+                                        <div className="row1" style={{paddingBottom:"2em"}}>
+                                            {/* <div 
+                                            className="row2"
+                                            >
+                                                
+                                            </div> */}
+
+                                            <div className="row3">
+                                            { finalsupervisorRolePermission.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                            {/* <div class="custom-control custom-checkbox" > */}
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+
+                                                { finalPlantmanagerPermission.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                          
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+                                            </div>
+                                
+                                                  
+
+                                                    <div className="row4">
+                                                { finalProductManagerPermission.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                          
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+                                            </div>
+
+                                            
+                                            <div className="row5">
+                                                { finalInventoryMangementPermissionT.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                          
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+                                            </div>
+
+                                    </div>
+                                
+                                </div>
+
+                          
+                                <div>
+                                <span style={{float:"right", marginRight:"1em", marginTop:"-2em",fontWeight:"bold"}}>Select All / Select None</span>
+                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"12.3em", marginTop:"-2em"}}>
+                                        <input type="checkbox"  name="SelectAllINV" id="SelectAllINV"   onChange={handleChange} 
+                                        checked={finalAllInventoryPermissions.filter((user) => user?.isChecked !== true).length < 1} />
+                                        <label  for="SelectAllINV"></label>
+                                    </div>
+                                </div>
+                                
+
+                </div>
+
+               
+                
+
+                <div>
+                                
+            </div>
       
-       
+         
        </>
     )
 }
