@@ -111,7 +111,7 @@ const SignInPage = (props) => {
                 <div class="navbar-header">
                     {/* <a href="#" class="navbar-brand" style={{float:"left"}}> */}
                     <div className="imgSizeHeader">
-                    <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{width:"15em", height:"4.5em"}} />
+                    <img src="./images/GENESYS_logov3.png" alt="" class="navbar-brand" style={{height:"4.5em"}} />
                     </div>
                        
                   
@@ -225,7 +225,7 @@ const SignInPage = (props) => {
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.5.0 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.5.1 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
                             {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                            
                         </div>

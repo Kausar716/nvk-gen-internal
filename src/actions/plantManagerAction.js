@@ -391,7 +391,8 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             // dispatch(pageReDirectAction("sku",actionType))
             dispatch(getAllPlantSkuAction(id))
             dispatch({
-                type:CREATE_PLANT_SKU_ACTION
+                type:CREATE_PLANT_SKU_ACTION,
+                payload:res
             })
             error.push("SKU created successfully")
             dispatch({
@@ -401,6 +402,7 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             })
             // dispatch(plantPageReDirectAction(actionType = "all"))
             }).catch(error1=>{
+                console.log(error1)
                 error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,

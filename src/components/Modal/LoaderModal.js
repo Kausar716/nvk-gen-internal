@@ -5,9 +5,9 @@ const LoaderComp = ()=>{
         <Loader
         type="TailSpin"
         color="rgb(155, 236, 34)"
-        height={30}
-        width={30}
-        timeout={400} 
+        height={50}
+        width={50}
+        timeout={500} 
         />
           
     );

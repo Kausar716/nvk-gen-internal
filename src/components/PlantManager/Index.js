@@ -354,11 +354,11 @@ const productFormAction = ()=>{
                                                     <i class='bx bx-arrow-back' ></i>
                                                     {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
                                                     </span>
-                                                    <a href="" class="mx-2">
-                                                        <img src="assets/img/copy-ic.svg" alt=""/>
+                                                    <a href="#" class="mx-2">
+                                                        <img src="assets/img/copy-ic.svg" alt="" onClick={()=>{confirmAction(ae_plant_id,"duplicate"); }} />
                                                     </a>
-                                                    <a href="" class="mx-2">
-                                                        <img src="assets/img/trash-ic.svg" alt=""/>
+                                                    <a href="#" class="mx-2">
+                                                        <img src="assets/img/trash-ic.svg" alt=""  onClick={()=>confirmAction(ae_plant_id,"delete")} />
                                                     </a>
                                                     <a href="" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>

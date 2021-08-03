@@ -143,12 +143,12 @@ export class UserProfile extends Component {
                 errorCount--
             }            
         }
-        else if(name === "phone" ){
-            if(errorObj.phoneError>0){
-                errorObj.phoneError=0
-                errorCount--
-            }            
-        }
+        // else if(name === "phone" ){
+        //     if(errorObj.phoneError>0){
+        //         errorObj.phoneError=0
+        //         errorCount--
+        //     }            
+        // }
         else if(name === "email" ){
             if(errorObj.emailError>0){
                 errorObj.emailError=0
@@ -189,12 +189,20 @@ export class UserProfile extends Component {
         else{
             errorObj.lastNameError=0
         }
-        if(!phoneReg.test(this.state.phone)){
+        // if(!phoneReg.test(this.state.phone)){
+        //     errorObj.phoneError=1
+        //     errorCount++
+        // }
+
+        let enteredNumber = this.state.phone.trim().match(/\d/g)
+        if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+            document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
-            errorCount++
+            errorCount++;
         }
-
-
+        else {
+            document.getElementById("contactPhone-validtor").innerText = ""
+        }
 
        
         // if(this.state.phone.length>14){
@@ -225,11 +233,12 @@ export class UserProfile extends Component {
                 let userStateObject = this.state
                 let userObject={}
                 userObject.id= this.props.selectedUser.id
+                userObject['phone'] = userStateObject.phone
                 console.log(this.props.selectedUser)
                 if(this.props.selectedUser.name !== userStateObject.firstName)userObject['name'] = userStateObject.firstName
                 if(this.props.selectedUser.last_name !== userStateObject.lastName)userObject['last_name'] = userStateObject.lastName
                 if(this.props.selectedUser.email !== userStateObject.email)userObject['email'] = userStateObject.email
-                if(this.props.selectedUser.phone !== userStateObject.phone)userObject['phone'] = userStateObject.phone
+                // if(this.props.selectedUser.phone !== userStateObject.phone)userObject['phone'] = userStateObject.phone
                 if(this.props.selectedUser.position !== userStateObject.position)userObject['position'] = userStateObject.position
 
                console.log(userObject)
@@ -392,7 +401,7 @@ export class UserProfile extends Component {
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
-        let noImageURL="assets/img/noImage.png";
+        let noImageURL="./images/logo_noimage.png";
 
 
 
@@ -539,11 +548,11 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                                 <div class="logCircle mb-3" key={new Date().getTime()}>
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"240px"}}/>
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"auto", borderRadius:"50%"}}/>
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
 
-                                                <p><small>Image should print quality PNG or JPG</small></p>
+                                                <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
@@ -582,27 +591,42 @@ export class UserProfile extends Component {
                                             <div class="row form-group">
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger">*</span></label>
+                                                   
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}  >
+                                                    <option>select</option>
                                                     {roles?roles.map(userObj=>{
                                                             //console.log(userObj)
                                                             return  <option value={userObj.id}>{userObj.name}</option>
                                                         }):null}   
                                                     </select>
-                                                    {this.state.errorObj.positionError!==0?<span style={{fontSize:"small",color:"red"}}>Select Position</span>:""}
+                                                    {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
-                                                    <InputMask type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
+                                                    {/* <InputMask type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
                                                      mask="(999) 999-9999" maskChar={" "} 
                                                      value={this.state.phone} onChange={this.handleInput} name="phone"
-                                                     />
+                                                     /> */}
 
+                                                    <InputMask
+                                                    class="form-control"  
+                                                    type="text"
+                                                    name="phone"
+                                                    placeholder="(xxx) xxx-xxxx"
+                                                    value={this.state.phone}
+                                                    id={"phone1"}
+                                                    mask="(999) 999-9999"
+                                                     maskChar={" "} 
+                                                     onChange={this.handleInput}
+                                                      /> 
+                                              
+                                              <span style={{fontSize:"small",color:"red"}} id="contactPhone-validtor"></span>
 
                                                     {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
                                                      value={this.state.phone} onChange={this.handleInput} name="phone"
                                                      /> */}
                                                     
-                                                    {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""}
+                                                    {/* {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""} */}
                                                 </div>
                                             </div>
                                             <div class="row form-group">

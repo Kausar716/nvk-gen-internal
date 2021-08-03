@@ -24,6 +24,7 @@ const initialSatate = {
  plantCategoryListBackup:[],
  plantInventoryData:[],
  backupPlantInventoryData:[],
+ backupProductInventoryData:[],
  PlantNameToBeSearched:"",
  productCategoryList:[],
  productCategoryListBackup:[],
@@ -181,25 +182,52 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
             case GET_ALL_PLANT_INVENTORY_ACTION:
                 let returnPlantAllList=[]
                 if(action.payload.length>0){
-                    returnPlantAllList = groupArray(action.payload)
+                    // returnPlantAllList = groupArray(action.payload)
                 }
                 return{
                     ...state,
-                    plantInventoryData:returnPlantAllList,
+                    plantInventoryData:action.payload,
                     backupPlantInventoryData:action.payload
     
                 }
             case PLANT_INVENTORY_FILTER:
-                let returnPlantList = groupArray(action.payload)
+                console.log(state.backupPlantInventoryData)
+                let backupPlantList = state.backupPlantInventoryData
+               let plantResult =  backupPlantList.filter(plantFiltereData=>
+                    (action.payload.category !== ""?(parseInt(action.payload.category) === plantFiltereData["category_id "] ):true)&&
+                    (action.payload.location?(action.payload.location === plantFiltereData.location_id ):true)&&
+                    (action.payload.supplier_id?(action.payload.supplier_id === plantFiltereData.supplier_id ):true)&&
+                    (action.payload.plant_search_param !== ""?(plantFiltereData["genus"].toLocaleLowerCase().includes(action.payload.plant_search_param.toLocaleLowerCase())):true)&&
+                    (action.payload.sku_search_param?(plantFiltereData.sku_code).toLocaleLowerCase().includes(action.payload.sku_search_param.toLocaleLowerCase() ):true)&&
+                    (action.payload.plantActive?(plantFiltereData["plant_status"] === "1" ):true)&&
+                    (action.payload.skuActive?(plantFiltereData.archived === 1 ):true)
+                )
+                // let returnPlantList = groupArray(plantResult)
                 return{
                     ...state,
-                    plantInventoryData:returnPlantList
+                    plantInventoryData:plantResult
                 }
             case PRODUCT_INVENTORY_FILTER:
-                let returnProductList = groupArray(action.payload)
+                // let returnProductList = groupArray(action.payload)
+                console.log(action.payload)
+                // console.log(state.backupPlantInventoryData)
+                let backupProductList = state.backupProductInventoryData
+                console.log(backupProductList)
+               let productResult =  backupProductList.filter(productFiltereData=>
+                    ((action.payload.category !== "" && action.payload.category !== 0)?(action.payload.category === productFiltereData["category_id "] ):true)&&
+                    ((action.payload.location !== "" && action.payload.location !== 0)  ?(action.payload.location === productFiltereData.location_id ):true)&&
+                    ((action.payload.manufacturer_id !== "" && action.payload.manufacturer_id !== 0) ?(action.payload.manufacturer_id === productFiltereData.manufacturer_id ):true)&&
+                    (action.payload.product_search !== ""?(productFiltereData["name"].toLocaleLowerCase().includes(action.payload.product_search.toLocaleLowerCase())):true)&&
+                    (action.payload.sku_search_param?(productFiltereData.sku_code).toLocaleLowerCase().includes(action.payload.sku_search_param.toLocaleLowerCase() ):true)&&
+                    (action.payload.prodctActive?(productFiltereData["product_status"] === "1" ):true)&&
+                    (action.payload.skuActive?(productFiltereData.archived === 1 ):true)
+                )
+                console.log(productResult)
+    
                 return{
                     ...state,
-                    productInventoryData:returnProductList
+                    productInventoryData:productResult,
+                    
                 }
             case GET_ALL_PRODUCT_INVENTORY_ACTION:
                 return{

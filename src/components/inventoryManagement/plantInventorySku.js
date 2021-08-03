@@ -135,9 +135,27 @@ export class PlantInventorySku extends Component {
             if(this.props.supplierList && this.props.supplierList.data)
             supplierList = this.props.supplierList.data.active
         }
-        console.log(this.props.temp)
+        // console.log(this.props.temp)
         let PlantListForTable = []
         PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
+        // console.log(PlantListForTable)
+        let mainPlantObject={}
+        if(PlantListForTable){
+            PlantListForTable.map(plantObj=>{
+                let id = plantObj["plant_id"]
+                if(id){
+                    if(!mainPlantObject[`${id}`]){
+                        mainPlantObject[`${id}`]=[]
+                    }                    
+                    mainPlantObject[`${id}`].push(plantObj)
+                }
+               
+            })
+        }
+        // console.log(mainPlantObject)
+        let plantListToDispley = Object.values(mainPlantObject)
+        // console.log(plantListToDispley)
+        let currentYear = new Date().getFullYear()
     
     return (
         <>
@@ -225,9 +243,9 @@ export class PlantInventorySku extends Component {
                         <th rowspan="2" class="text-center" width="10%">Volume<br/>QTY</th>
                         <th rowspan="2" class="text-nowrap text-center" width="10%">Current<br/>Available</th>
                         <th rowspan="2" class="text-nowrap text-center" width="10%">Future<br/>Available</th>
-                        <th colspan="3" class="text-center prevYear" width="15%">2019</th>
-                        <th colspan="3" class="text-center currentYear" width="15%">Current Year 2020</th>
-                        <th colspan="2" class="text-center nextYear" width="14%">Next Year 2021</th>
+                        <th colspan="3" class="text-center prevYear" width="15%">{`${currentYear-1}`}</th>
+                        <th colspan="3" class="text-center currentYear" width="15%">Current Year {`${currentYear}`}</th>
+                        <th colspan="2" class="text-center nextYear" width="14%">Next Year {`${currentYear+1}`}</th>
                         <th rowspan="2" class="text-nowrap text-center" width="11%">In<br/>Production</th>
                     </tr>
                     <tr>
@@ -242,7 +260,7 @@ export class PlantInventorySku extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                {PlantListForTable.map(plant=>{
+                {plantListToDispley.map(plant=>{
                                     
                     return <>
                     <tr class="tblLinks">
@@ -261,6 +279,7 @@ export class PlantInventorySku extends Component {
                             </td>
                         </tr>
                         {plant.map(skuObj=>{
+                            // console.log(skuObj)
                             return  <tr>
                             <td colspan="13" class="p-0">
                                 <table class="table table-striped" width="100%">
@@ -269,27 +288,27 @@ export class PlantInventorySku extends Component {
                                             <a href="">{skuObj.sku_code}</a>
                                         </td>
                                         <td width="10%">{skuObj.volume_quantity}</td>
-                                        <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                        <td width="10%" class="text-nowrap"><strong>125</strong></td>
-                                        <td width="6%">25.478</td>
-                                        <td width="5%">5.75</td>
-                                        <td width="5%">5.00</td>
-                                        <td width="6%">18.569 
+                                        <td width="10%" class="text-nowrap"><strong>{skuObj.current_available}</strong></td>
+                                        <td width="10%" class="text-nowrap"><strong>{skuObj.future_availability}</strong></td>
+                                        <td width="6%">{skuObj[`${currentYear-1}`].sale_price}</td>
+                                        <td width="5%">{skuObj[`${currentYear-1}`].each_price}</td>
+                                        <td width="5%">{skuObj[`${currentYear-1}`].volume_price_per_unit}</td>
+                                        <td width="6%">{skuObj[`${currentYear}`].sale_price}
                                             <small class="text-green d-block">-23.0%</small></td>
                                         <td width="6%" class="text-nowrap">
-                                            <span class="border">5.95</span>
+                                            <span class="border">{skuObj[`${currentYear}`].each_price}</span>
                                             <small class="text-green d-block">+1.74%</small>
                                         </td>
                                         <td width="5%"> 
-                                            <span class="border">5.95</span>
+                                            <span class="border">{skuObj[`${currentYear}`].volume_price_per_unit}</span>
                                             <small class="text-green d-block">+1.74%</small>
                                         </td>
                                         <td width="6%"> 
-                                            <span class="border">5.95</span>
+                                            <span class="border">{skuObj[`${currentYear+1}`]?skuObj[`${currentYear+1}`].each_price:""}</span>
                                             <small class="text-green d-block">-</small>
                                         </td>
                                         <td width="6%"> 
-                                            <span class="border">5.95</span>
+                                            <span class="border">{skuObj[`${currentYear+1}`]?skuObj[`${currentYear+1}`].volume_price_per_unit:""}</span>
                                             <small class="text-green d-block">-</small>
                                         </td>
                                         <td width="10%"></td>

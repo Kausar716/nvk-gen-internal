@@ -593,12 +593,20 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite descLbl">
@@ -657,12 +665,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -714,12 +729,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -771,12 +793,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -852,12 +881,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite descLbl">
@@ -916,12 +952,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -973,12 +1016,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -1030,12 +1080,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
