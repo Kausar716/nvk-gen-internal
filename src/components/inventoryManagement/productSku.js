@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getProductCategoryList,getProductList,getManufacturerList,getProductFilterResult} from "../../actions/inventoryManagementAction";
+import {getLocationList,getProductCategoryList,getProductListSku,getManufacturerList,getProductFilterResult} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 import ActionModal from '../Modal/ActionModal'
 
@@ -27,7 +27,7 @@ export class ProductInventorySku extends Component {
         this.props.getLocationList()   
         this.props.getProductCategoryList()
         this.props.getManufacturerList()
-        this.props.getProductList()
+        this.props.getProductListSku()
     }
 
     handleFilterChange = (e)=>{
@@ -340,4 +340,4 @@ const mapStateToProps = (state)=> (
     }
 )
 
-export default connect(mapStateToProps,{getProductCategoryList,getLocationList,getAllSupplierAction,getProductList,getManufacturerList,getProductFilterResult})(ProductInventorySku)
+export default connect(mapStateToProps,{getProductCategoryList,getLocationList,getAllSupplierAction,getProductListSku,getManufacturerList,getProductFilterResult})(ProductInventorySku)
