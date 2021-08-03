@@ -73,7 +73,8 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
         case RESET_PRODUCT_MANAGER_INVENTORY_ACTION:
             return{
                 ...state,
-                productFilterIds:{}
+                productFilterIds:{},
+                productData:state.productBackup
             }
         case FILTER_PLANT_MANAGER_INVENTORY_ACTION:
             let filterIds = state.plantFilterIds
