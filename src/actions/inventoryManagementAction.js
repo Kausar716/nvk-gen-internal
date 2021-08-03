@@ -73,30 +73,33 @@ export const getProductCategoryList = () => dispatch => {
 
 export const getFilterResult = (data) => dispatch => {
     console.log(data)
-    let obj={}
-    obj["supplier_id"]=data.selectedSupplierId !== ""?parseInt(data.selectedSupplierId):"" 
-    obj["category"]=data.selecredCategoryID
-    obj["plant_search"]="genus"
-    obj["plant_search_param"]=data.plantSearchName
-    obj["sku_search"]="sku_code"
-    obj["sku_search_param"]=data.skuSearchName
-    obj["location"]=""
-    obj["batch_code"]=""   
-    return  axios.post("/api/plant-search",obj,config).then(res=>{ 
-        console.log(res)
-    console.log(data)
-    let resultArray = []
-    if(!data.allPlantRadio)
-    resultArray= res.data.data.filter(obj=>obj.status=== "1")
-    else
-    resultArray = res.data.data
-    console.log(resultArray.length)
+    let filterObj={}
+    filterObj["supplier_id"]=data.selectedSupplierId !== ""?parseInt(data.selectedSupplierId):"" 
+    filterObj["category"]=data.selecredCategoryID
+    filterObj["plant_search"]="genus"
+    filterObj["plant_search_param"]=data.plantSearchName
+    filterObj["sku_search"]="sku_code"
+    filterObj["sku_search_param"]=data.skuSearchName
+    filterObj["location"]=""
+    filterObj["batch_code"]=""   
+    filterObj["plantActive"] = false
+    filterObj["skuActive"] = false
+    // return  axios.post("/api/plant-inventory-search",filterObj,config).then(res=>{ 
+    //     console.log(res)
+    // console.log(data)
+    // let resultArray = []
+    // if(!data.allPlantRadio)
+    // resultArray= res.data.data.filter(obj=>obj.status=== "1")
+    // else
+    // resultArray = res.data.data
+    // console.log(resultArray.length)
         dispatch({
                 type:PLANT_INVENTORY_FILTER,
-                payload:resultArray
+                // payload:resultArray
+                payload:filterObj
     
             })
-        })
+        // })
 }
 //for plant sku
 export const getPlantList = () => dispatch => {
@@ -141,7 +144,7 @@ export const getInventoryPlantManagerList = () => dispatch => {
 export const getProductList = () => dispatch => {
     let obj={}
     
-        return  axios.post("/api/product-search",obj,config).then(res=>{ 
+        return  axios.post("/api/product-inventory-search",obj,config).then(res=>{ 
             console.log(res)
            
             dispatch({
@@ -158,28 +161,31 @@ export const getProductList = () => dispatch => {
     export const getProductFilterResult = (data) => dispatch => {
         console.log(data)
      
-        let obj={}
-        obj["supplier_id"]=1
-        obj["category"]=data.selecredCategoryID!== ""?parseInt(data.selecredCategoryID):""
-        obj["product_search"]=data.productSearchName
-        obj["product_search_param"]=""
-        obj["sku_search"]="sku_code"
-        obj["sku_search_param"]=data.productSkuSearchName
-        obj["location"]=""
-        obj["batch_code"]=""
+        let filterObj={}
+        filterObj["supplier_id"]=1
+        filterObj["category"]=data.selecredCategoryID!== ""?parseInt(data.selecredCategoryID):""
+        filterObj["manufacturer_id"]=data.selectedManufacturerId!== ""?parseInt(data.selectedManufacturerId):""
+        filterObj["product_search"]=data.productSearchName
+        filterObj["product_search_param"]=""
+        filterObj["sku_search"]="sku_code"
+        filterObj["sku_search_param"]=data.productSkuSearchName
+        filterObj["location"]=""
+        filterObj["batch_code"]=""
+        filterObj["prodctActive"] = data.productRadio
+        filterObj["skuActive"] = data.productSkuRadio
        
         
-    
+        
     
        
-        return  axios.post("/api/product-search",obj,config).then(res=>{ 
-            console.log(res)
+        // return  axios.post("/api/product-search",filterObj,config).then(res=>{ 
+        //     console.log(res)
      
             dispatch({
                     type:PRODUCT_INVENTORY_FILTER,
-                    payload:res.data.data
+                    payload:filterObj
         
                 })
-            })
+            // })
     
     }
