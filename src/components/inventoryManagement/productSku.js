@@ -18,8 +18,8 @@ export class ProductInventorySku extends Component {
                 selectedManufacturerId:"",
                 productSearchName:"",
                 productSkuSearchName:"",
-                productRadio:"All",
-                productSkuRadio:"All"
+                productRadio:false,
+                productSkuRadio:false
           
         }
     }
@@ -94,6 +94,26 @@ export class ProductInventorySku extends Component {
             })
         }       
     }
+    handleRadio = (e) => {
+        let {name,value} = e.target
+        let {selectedLocationId,selecredCategoryID,selectedManufacturerId,productSearchName,productSkuSearchName,productRadio,productSkuRadio} = this.state
+        if(e.target.name.includes("productRadio" )){
+            this.setState({productRadio:!productRadio})
+        }
+        if(e.target.name.includes("productSkuRadio" )){
+            this.setState({productSkuRadio:!productSkuRadio})
+        }
+       
+        this.props.getProductFilterResult({
+            selectedLocationId,
+            selecredCategoryID,
+            selectedManufacturerId,
+            productSearchName:value,
+            productSkuSearchName,
+            productRadio,
+            productSkuRadio
+        })
+    }
   
     render() {
         let productCategoryList =[]
@@ -115,6 +135,25 @@ export class ProductInventorySku extends Component {
         // console.log(this.props.productInventoryData)
         let ProductListForTable = []
         ProductListForTable = this.props.productInventoryData?this.props.productInventoryData:[]
+
+        console.log(ProductListForTable)
+        let mainProductObject={}
+        if(ProductListForTable){
+            ProductListForTable.map(productObj=>{
+                let id = productObj["product_id"]
+                if(id){
+                    if(!mainProductObject[`${id}`]){
+                        mainProductObject[`${id}`]=[]
+                    }                    
+                    mainProductObject[`${id}`].push(productObj)
+                }
+               
+            })
+        }
+        console.log(mainProductObject)
+        let productListToDispley = Object.values(mainProductObject)
+        console.log(productListToDispley)
+        let currentYear = new Date().getFullYear()
     return (
         <>
         <div class="row mt-3">
@@ -130,7 +169,7 @@ export class ProductInventorySku extends Component {
             <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                 <label>Category</label>
                 <select class="form-control" name="category" value={this.state.selecredCategoryID}  onChange={this.handleFilterChange}>
-                <option>All</option>
+                <option value={0}>All</option>
                 {productCategoryList.map(category=>{
                 return  <option value={category.id}>{category.name}</option>
                 })}
@@ -138,10 +177,10 @@ export class ProductInventorySku extends Component {
             </div>
             <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                 <label>Manufacture</label>
-                <select class="form-control" name="manufacturer" value={this.state.selectedManufacturerId} >
-                    <option>All</option>
+                <select class="form-control" name="manufacturer" value={this.state.selectedManufacturerId} onChange={this.handleFilterChange} >
+                    <option value={0}>All</option>
                     {manufacturerList.map(category=>{
-                        console.log(category)
+                        // console.log(category)
                 return  <option value={category.id}>{category.name}</option>
                 })}
                 </select>
@@ -159,12 +198,12 @@ export class ProductInventorySku extends Component {
                 <div class="form-group row mt-2">
                     <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/>
-                            <label class="form-check-label" for="activePlants">Active Products</label>
+                            <input class="form-check-input" type="radio" name="productRadio1" onChange={this.handleRadio} checked={this.state.productRadio}  handleRadioid="activePlants" value=""/>
+                            <label class="form-check-label" for="productRadio1">Active Products</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/>
-                            <label class="form-check-label" for="allPlants">All Products</label>
+                            <input class="form-check-input" type="radio" name="productRadio2" id="allPlants" value="" checked={!this.state.productRadio} onChange={this.handleRadio}/>
+                            <label class="form-check-label" for="productRadio2">All Products</label>
                         </div>
                     </div>
                 </div>
@@ -175,17 +214,17 @@ export class ProductInventorySku extends Component {
                     <button type="submit" class="btn btn-search">
                         <img src="assets/img/search.svg" alt=""/>
                     </button>
-                    <input type="text" class="form-control" placeholder="Search" onChange={this.handleFilterChange}/>
+                    <input type="text" class="form-control" placeholder="Search" name="skuSearch" onChange={this.handleFilterChange}/>
                 </div>
                 <div class="form-group row mt-2">
                     <div class="col-md-12">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_default_inline" id="activeSkus" value=""/>
-                            <label class="form-check-label" for="activeSkus">Active SKUs</label>
+                            <input class="form-check-input" type="radio" name="productSkuRadio1" id="activeSkus" value=""  checked={this.state.productSkuRadio} onChange={this.handleRadio}/>
+                            <label class="form-check-label" for="productSkuRadio1">Active SKUs</label>
                         </div>
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="radio" name="radio_default_inline" id="allSkus" value=""/>
-                            <label class="form-check-label" for="allSkus">All SKUs</label>
+                            <input class="form-check-input" type="radio" name="productSkuRadio2" id="allSkus" value=""checked={!this.state.productSkuRadio} onChange={this.handleRadio}/>
+                            <label class="form-check-label" for="productSkuRadio2">All SKUs</label>
                         </div>
                     </div>
                 </div>
@@ -219,7 +258,7 @@ export class ProductInventorySku extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                        {ProductListForTable.map(product=>{
+                        {productListToDispley.map(product=>{
                             return<>
                             <tr class="tblLinks">
                                 <td colspan="12">
