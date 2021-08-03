@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants} from "../../actions/inventoryManagementAction";
+import {getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
@@ -31,118 +31,7 @@ export class PlantInventory extends Component {
         this.props.getAllPlants()
         
     }
-     handleCategoryChange = () => {
-
-    }
-    handlePlantSearch = (e) =>{
-        this.props.handleInput(e.target.name,e.target.value)
-    }
-    handleFilterChange = (e)=>{
-        let {name,value} = e.target
-        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,plantRadio,skuRadio,purchaseOrder,batchId} = this.state
-        if(name==="location"){
-            this.setState({selectedLocationId:value})
-            this.props.getFilterResult({
-                selectedLocationId:value,
-                selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio,
-                purchaseOrder,
-                batchId
-               
-            })
-        }
-        if(name === "category"){
-            this.setState({selecredCategoryID:value})
-            this.props.getFilterResult({
-                selectedLocationId,
-                selecredCategoryID:parseInt(value),
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio,
-                purchaseOrder,
-                batchId                
-            })
-        }
-        if(name === "supplier"){
-            this.setState({selectedSupplierId:value})
-            this.props.getFilterResult({
-                selectedLocationId,
-                selecredCategoryID,
-                selectedSupplierId:value,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio,
-                purchaseOrder,
-                batchId                 
-            })
-        }
-        if(name=== "plantSearch"){
-            this.setState({plantSearchName:value})
-            this.props.getFilterResult({
-                selectedLocationId,
-                selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName:value,
-                skuSearchName,
-                plantRadio,
-                skuRadio,
-                purchaseOrder,
-                batchId                 
-            })
-        }
-        if(name === "skuSearch"){
-            this.setState({skuSearchName:value})
-            this.props.getFilterResult({
-                selectedLocationId,
-                selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName:value,
-                plantRadio,
-                skuRadio,
-                purchaseOrder,
-                batchId 
-                
-            })
-        }    
-        if(name === "purchaseOrder"){
-            this.setState({skuSearchName:value})
-            this.props.getFilterResult({
-                selectedLocationId,
-                selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio,
-                purchaseOrder:value,
-                batchId 
-                
-            })
-        }
-        if(name === "batchId"){
-            this.setState({skuSearchName:value})
-            this.props.getFilterResult({
-                selectedLocationId,
-                selecredCategoryID,
-                selectedSupplierId,
-                plantSearchName,
-                skuSearchName,
-                plantRadio,
-                skuRadio,
-                purchaseOrder,
-                batchId:value 
-                
-            })
-        }   
-    }
+ 
     handleRadio = (e) => {
         let allPlantRadio = false
         let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,skuRadio} = this.state
@@ -160,6 +49,11 @@ export class PlantInventory extends Component {
             allPlantRadio,
             skuRadio
         })
+    }
+    handleFilterChange = (e)=>{
+        console.log(e.target.id,e.target.value)
+        this.props.filterPlantManagerData(e.target.id,e.target.value)
+
     }
          
   
@@ -184,12 +78,13 @@ export class PlantInventory extends Component {
         PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
 
         // console.log()
-        const {plantData} = this.props.plantData
+        const {plantData,plantFilterIds} = this.props.plantData
         let plantIdsAll = plantData.map(plantData=>plantData.plant_id)
         let plantId = plantIdsAll.filter(function( plant, index, array ) {
+            console.log(array.indexOf(plant) +""+index)
             return array.indexOf(plant) === index;
-     });
-     console.log(plantId)
+        });
+        console.log(plantId)
 
     
     
@@ -201,7 +96,7 @@ export class PlantInventory extends Component {
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-4">
                                         <label>Location</label>
-                                        <select class="form-control" onChange={this.handleCategoryChange}>
+                                        <select class="form-control" onChange={this.handleFilterChange}  id="location_id">
                                                 <option>All</option>
                                                 {locationList.map(category=>{
                                                 return  <option value={category.id}>{category.address}</option>
@@ -210,7 +105,7 @@ export class PlantInventory extends Component {
                                     </div>
                                     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                         <label>Category</label>
-                                        <select class="form-control" onChange={this.handleCategoryChange}>
+                                        <select class="form-control" onChange={this.handleFilterChange} id="category_id">
                                                 <option>All</option>
                                                 {plantCategoryList.map(category=>{
                                                 return  <option value={category.id}>{category.name}</option>
@@ -219,7 +114,7 @@ export class PlantInventory extends Component {
                                     </div>
                                     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                                         <label>Supplier</label>
-                                        <select class="form-control" onChange={this.handleCategoryChange}>
+                                        <select class="form-control" onChange={this.handleFilterChange} id="supplier_id">
                                         <option>All</option>
                                         {supplierList.map(category=>{
                                         return  <option value={category.id}>{category.supplier_name}</option>
@@ -234,7 +129,7 @@ export class PlantInventory extends Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" name="plantSearch" value={this.state.plantSearchName} onChange={this.handleFilterChange} class="form-control" placeholder="Search"/>
+                                            <input type="text" name="plantSearch" value={plantFilterIds.genus} onChange={this.handleFilterChange} class="form-control" placeholder="Search" id="genus"/>
                                         </div>
                                         <div class="form-group row mt-2">
                                             <div class="col-md-12">
@@ -255,7 +150,7 @@ export class PlantInventory extends Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" name="skuSearch" value={this.state.skuSearchName} onChange={this.handleFilterChange} class="form-control" placeholder="Search"/>
+                                            <input type="text" name="skuSearch" value={this.state.skuSearchName} onChange={this.handleFilterChange} class="form-control" placeholder="Search" id="sku_code" value={plantFilterIds.sku_code}/>
                                         </div>
                                         <div class="form-group row mt-2">
                                             <div class="col-md-12">
@@ -303,7 +198,7 @@ export class PlantInventory extends Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" name="batchId" value={this.state.batchId} onChange={this.handleFilterChange} class="form-control" placeholder="Search"/>
+                                            <input type="text" name="batchId" value={this.state.batchId} onChange={this.handleFilterChange} class="form-control" placeholder="Search" id="batch_code" value={plantFilterIds.batch_code}/>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-lg-3 pt-md-4 mt-3">
@@ -348,7 +243,7 @@ export class PlantInventory extends Component {
                                         <div class="table-responsive">
                                             <table class="table table-striped invtTbl" width="100%">
                                                 <thead>
-                                                    <tr>
+                                                    <tr >
                                                         <th rowspan="2" class="text-center">
                                                             <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="customCheck1" />
@@ -356,7 +251,7 @@ export class PlantInventory extends Component {
                                                             </div>
                                                         </th>
                                                         <th rowspan="2" class="text-nowrap">SKU</th>
-                                                        <th rowspan="2">Supllier</th>
+                                                        <th rowspan="2"><p style={{marginLeft:"-70px",marginTop:"17px"}}>Supllier</p></th>
                                                         <th rowspan="2" class="text-nowrap">Batch ID</th>
                                                         <th rowspan="2" class="text-nowrap">Batch Date</th>
                                                         <th rowspan="2">Purchase Order</th>
@@ -385,7 +280,7 @@ export class PlantInventory extends Component {
                                                                 if(count===0){
                                                                     count++
                                                                     return(
-                                                                        <tbody><tr style={{backgroundColor:"#EFEFEF"}}>
+                                                                        <><tr style={{backgroundColor:"#EFEFEF"}}>
                                                         <td colspan="5">
                                                             <a href="">{plant.genus}</a>
                                                         </td>
@@ -404,19 +299,19 @@ export class PlantInventory extends Component {
                                                             </div>
                                                         </td>
                                                         <td class="text-nowrap">
-                                                        {plant.batch_code}
+                                                        <span style={{display:"inline-block",width: "150px",whiteSpace: "nowrap",overflow:"hidden",textOverflow: "ellipsis"}}>{plant.sku_code}</span>
                                                         </td>
-                                                        <td>{plant.supplier_id}</td>
+                                                        <td><p style={{marginLeft:"-50px",marginTop:"17px"}}>{plant.supplier_id}</p></td>
                                                         <td class="text-nowrap">{plant.batch_code}</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
+                                                        <td class="text-nowrap">{plant.batch_date}</td>
                                                         <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
+                                                        <td><a href="">{plant.location_id}</a></td>
+                                                        <td>{plant.sales_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.sales_not_ready_state}</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}> 50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
+                                                        <td>{plant.production_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.production_not_ready_state}</strong></td>
+                                                        <td class="text-nowrap">{plant.production_ready_date}</td>
                                                         <td class="invTblAction">
                                                             <a href="">
                                                                 <img src="assets/img/tbl-task-ic.svg" alt=""/>
@@ -426,14 +321,14 @@ export class PlantInventory extends Component {
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                    </tbody>
+                                                    </>
 
                                                     )
 
                                                         }else{
                                                             count++
                                                         return(
-                                                        <tbody>
+                                                        <>
                                                     <tr>
                                                         <td class="text-center">
                                                             <div class="custom-control custom-checkbox">
@@ -442,19 +337,19 @@ export class PlantInventory extends Component {
                                                             </div>
                                                         </td>
                                                         <td class="text-nowrap">
-                                                        {plant.batch_code}
+                                                        <span   style={{display:"inline-block",width: "150px",whiteSpace: "nowrap",overflow:"hidden",textOverflow: "ellipsis"}}>{plant.sku_code}</span>
                                                         </td>
-                                                        <td>{plant.supplier_id}</td>
+                                                        <td><p style={{marginLeft:"-50px",marginTop:"17px"}}>{plant.supplier_id}</p></td>
                                                         <td class="text-nowrap">{plant.batch_code}</td>
-                                                        <td class="text-nowrap">25-05-2019</td>
+                                                        <td class="text-nowrap">{plant.batch_date}</td>
                                                         <td>-</td>
-                                                        <td><a href="">HENDERS &gt; AR-a-A&gt;RW2&gt;BL1</a></td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>50</strong></td>
+                                                        <td><a href="">{plant.location_id}</a></td>
+                                                        <td>{plant.sales_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.sales_not_ready_state}</strong></td>
                                                         <td class="text-nowrap">25-02-2020</td>
-                                                        <td>-</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}> 50</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
+                                                        <td>{plant.production_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.production_not_ready_state}</strong></td>
+                                                        <td class="text-nowrap">{plant.production_ready_date}</td>
                                                         <td class="invTblAction">
                                                             <a href="">
                                                                 <img src="assets/img/tbl-task-ic.svg" alt=""/>
@@ -464,7 +359,7 @@ export class PlantInventory extends Component {
                                                             </a>
                                                         </td>
                                                     </tr>
-                                                    </tbody>
+                                                    </>
                                                                     )
                                                                 }
                                                                
@@ -501,4 +396,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
+export default connect(mapStateToProps,{filterPlantManagerData,getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
