@@ -11,12 +11,32 @@ import {
     GET_ALL_PLANTMANAGER_INVENTORY_ACTION,
     GET_ALL_PRODUCTMANAGER_INVENTORY_ACTION,
     GET_PLANT_DATA,
+    FILTER_PLANT_MANAGER_INVENTORY_ACTION,
+    FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
+    RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
     config,
     axios
     // DELETE_USER 
    } from './types';
-   
-
+   export const resetFileds = ()=>dispatch => {
+       dispatch({
+           type:RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
+       })
+   }
+   export const filterPlantManagerData = (id,value)=>dispatch => {
+       dispatch({
+           type:FILTER_PLANT_MANAGER_INVENTORY_ACTION,
+           id:id,
+           value:value
+       })
+   }
+   export const filterProductManagerData = (id,value)=>dispatch => {
+    dispatch({
+        type:FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
+        id:id,
+        value:value
+    })
+}
     export const getAllPlants = () => dispatch => {
        return axios.post("/api/plant-search",null,config).then(res=>{ 
            console.log(res)
@@ -103,9 +123,9 @@ export const getFilterResult = (data) => dispatch => {
 }
 //for plant sku
 export const getPlantList = () => dispatch => {
-let obj={}
+// let obj={}
 
-    return  axios.post("/api/plant-inventory-search",obj,config).then(res=>{ 
+    return  axios.post("/api/plant-inventory-search",null,config).then(res=>{ 
         console.log(res)
         dispatch({
                 type:GET_ALL_PLANT_INVENTORY_ACTION,
@@ -144,15 +164,25 @@ export const getInventoryPlantManagerList = () => dispatch => {
 export const getProductList = () => dispatch => {
     let obj={}
     
-        return  axios.post("/api/product-inventory-search",obj,config).then(res=>{ 
-            console.log(res)
+        // return  axios.post("/api/product-search",obj,config).then(res=>{ 
+        //     console.log(res)
            
-            dispatch({
-                    type:GET_ALL_PRODUCT_INVENTORY_ACTION,
-                    payload:res.data.data
+        //     dispatch({
+        //             type:GET_ALL_PRODUCT_INVENTORY_ACTION,
+        //             payload:res.data
         
+        //         })
+        //     })
+            return axios.post("/api/product-search",null,config).then(res=>{ 
+                console.log(res)
+                
+             
+                dispatch({
+                        type:GET_ALL_PRODUCT_INVENTORY_ACTION,
+                        payload:res.data
+            
+                    })
                 })
-            })
     
     }
 
