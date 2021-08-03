@@ -655,7 +655,7 @@ export class OrganizationSettings extends React.Component {
                                               src={url}
                                               id="imageid"
                                           
-                                            style={{height:"250px",width:"240px", borderRadius:"50%"}}/>
+                                            style={{height:"250px",width:"auto", borderRadius:"50%"}}/>
                                             <p > <Loader /></p> 
                                              
                                         </div>

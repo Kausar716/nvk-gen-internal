@@ -199,7 +199,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                          class="img-fluid" style={{ width:"7em", height:"7em", borderRadius:"50%"}}
+                                                          class="img-fluid" style={{ width:"auto", height:"7em", borderRadius:"50%"}}
                                                           />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                         {/* </div> */}
@@ -264,72 +264,49 @@ export const Component = withRouter(({ history, location }) =>{
                             </div>
                         </div>
                      {this.state.displayselectedUSer?   <div class="mt-4">
-                            <div class="row">
+                            {/* <div class="row">
                                 <div class="col-md-12 d-flex justify-content-md-end">
                                 <span style={{float:"right"}}>Turn All Permissions On</span>
-                                        {/* <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"0px"}}>
-                                                                    <input class="custom-control-input" id="turnOn"  onClick={this.handleCheckBox} name="turnOn" value="2"
-                                                                    // type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2"
-                                                                    />
-                                                                    <label for="switcher_checkbox_date"></label>
-                                                </div> */}
-
                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{marginRight:"5em"}}>
                                                             <input type="checkbox" name="turnOn" id="turnOn"
-                                                           // value="2"
-                                                            //  value={!this.state.displayselectedUSer}
-                                                           
                                                             onChange={this.handleCheckBox} 
-                                                            // value={skuDataById.status}
                                                               />
                                                             <label for="turnOn"></label>
                                                 </div>
 
-                                    {/* <div class="custom-control custom-checkbox" >
-                                        <input type="checkbox" class="custom-control-input" id="turnOn"  onChange={this.handleCheckBox} name="turnOn"/>
-                                        <label class="custom-control-label pl-2" for="turnOn"> Turn All Permissions On</label>
-                                    </div>
-                                    <div class="custom-control custom-checkbox ml-2">
-                                        <input type="checkbox" class="custom-control-input" id="turnOff"  onClick={this.handleCheckBox} name="turnOff"/>
-                                        <label class="custom-control-label pl-2" for="turnOff"> Turn All Permissions Off</label>
-                                    </div> */}
 
 
                                     <span style={{float:"right", marginRight:"0em", marginLeft:"-5em"}}>Turn All Permissions Off</span>
                                     <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" name="turnOff" id="turnOff"
-                                                           // value="2"
-                                                            //  value={!this.state.displayselectedUSer}
-                                                           
                                                             onChange={this.handleCheckBox} 
-                                                            // value={skuDataById.status}
                                                               />
                                                             <label for="turnOff"></label>
-                                    </div>
-                                </div>
-                            </div>
-
-
-
-
-
-
-
-
-                            {/* <div class="bg-white mt-2">
-                                <div class="ContentSection p-15">
-                                    <h4>Quote &amp; Order PermissionsTESTING</h4>
-                                    <div class="row mt-3">
-                                        <div class="col-md-4 col-lg-4">
-                                            <QuoteOrderPermission />
-                                        </div>
                                     </div>
                                 </div>
                             </div> */}
 
 
 
-                            <div class="bg-white mt-2">
+
+
+
+
+
+                            {/* <div  class="bg-white mt-2">
+                                <div class="ContentSection p-15">
+                                    <h4>Quote &amp; Order PermissionsTESTING</h4>
+                                    <div > */}
+                                        <div >
+                                            <QuoteOrderPermission />
+                                        </div>
+                                    {/* </div>
+                                </div>
+                            </div> */}
+
+
+
+                            {/* <div class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                     <h4>Quote &amp; Order Permissions</h4>
                                     <div class="row mt-3">
@@ -477,7 +454,7 @@ export const Component = withRouter(({ history, location }) =>{
                                 </div>
 
                             </div>
-
+ */}
 
 
 
@@ -646,7 +623,7 @@ export const Component = withRouter(({ history, location }) =>{
                             </div> */}
                             {/* <label class="text-muted mt-2">Note: Actions required related main order status access to function</label> */}
                            
-                            <div class="bg-white mt-3">
+                            {/* <div class="bg-white mt-3">
                                 <div class="ContentSection p-15">
                                     <h4>Additional Permissions</h4>
                                     <div class="row mt-3">
@@ -756,7 +733,7 @@ export const Component = withRouter(({ history, location }) =>{
 
                                         </div>
 
-                                                             {/* /* new cmodules */ }
+                                                       
                                                        
 
                                                              <div class="col-md-4 col-lg-4" style={{marginTop:"1em"}}>
@@ -790,9 +767,7 @@ export const Component = withRouter(({ history, location }) =>{
 
 
                                         </div>
-  {/* /* new cmodules */ }
-
-                                                            {/* /* new cmodules */ }
+  
                                                        
 
                                                             <div class="col-md-4 col-lg-4" style={{marginTop:"1em"}}>
@@ -826,7 +801,7 @@ export const Component = withRouter(({ history, location }) =>{
 
 
                                         </div>
-  {/* /* new cmodules */ }
+  
 
 
 
@@ -845,7 +820,7 @@ export const Component = withRouter(({ history, location }) =>{
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
 
 
@@ -861,7 +836,7 @@ export const Component = withRouter(({ history, location }) =>{
 
 
 
-                            <div class="bg-white mt-2">
+                            {/* <div class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                     <h4>Purchase &amp; Order Permissions</h4>
                                     <div class="row mt-3">
@@ -934,9 +909,9 @@ export const Component = withRouter(({ history, location }) =>{
                                     </div>
                                 </div>
 
-                            </div>
+                            </div> */}
 
-
+{/* 
                             <div class="bg-white mt-3">
                                 <div class="ContentSection p-15">
                                     <h4>Inventory Management Permissions</h4>
@@ -1093,7 +1068,7 @@ export const Component = withRouter(({ history, location }) =>{
                                 </div>
                             </div>
 
-
+ */}
 
 
 

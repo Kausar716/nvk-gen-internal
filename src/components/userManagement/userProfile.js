@@ -548,7 +548,7 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                                 <div class="logCircle mb-3" key={new Date().getTime()}>
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"240px", borderRadius:"50%"}}/>
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"auto", borderRadius:"50%"}}/>
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
 
