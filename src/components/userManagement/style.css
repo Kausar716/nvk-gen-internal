@@ -1,0 +1,31 @@
+.row1 {
+  /* display: flex;
+  padding: 0;
+  margin: 0;
+ 
+  flex-flow: row wrap;
+  align-items: flex-start; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(350px, auto));
+}
+
+.row1 div {
+  margin: 0.3em;
+  /* margin-right: 2em; */
+  /* flex-wrap: wrap;
+  flex-grow: 10; */
+  /* flex-flow: column wrap; */
+  /* justify-content: flex-start; */
+  /* margin: 0.5em;
+  margin-left: 3em;
+  margin-top: 0em; */
+  /* flex-grow: 1 1 1; */
+  /* flex: 6; */
+}
+
+/* .row1 div:nth-of-type(2) {
+  margin-right: 2em;
+  flex-grow: 9;
+  margin: 1em;
+  margin-top: 0em;
+} */

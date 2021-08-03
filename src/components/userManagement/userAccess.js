@@ -199,7 +199,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                          class="img-fluid" style={{ width:"7em", height:"7em", borderRadius:"50%"}}
+                                                          class="img-fluid" style={{ width:"auto", height:"7em", borderRadius:"50%"}}
                                                           />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                         {/* </div> */}
@@ -316,20 +316,20 @@ export const Component = withRouter(({ history, location }) =>{
 
 
 
-                            {/* <div class="bg-white mt-2">
+                            {/* <div  class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                     <h4>Quote &amp; Order PermissionsTESTING</h4>
-                                    <div class="row mt-3">
-                                        <div class="col-md-4 col-lg-4">
+                                    <div > */}
+                                        <div >
                                             <QuoteOrderPermission />
                                         </div>
-                                    </div>
+                                    {/* </div>
                                 </div>
                             </div> */}
 
 
 
-                            <div class="bg-white mt-2">
+                            {/* <div class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                     <h4>Quote &amp; Order Permissions</h4>
                                     <div class="row mt-3">
@@ -477,7 +477,7 @@ export const Component = withRouter(({ history, location }) =>{
                                 </div>
 
                             </div>
-
+ */}
 
 
 
