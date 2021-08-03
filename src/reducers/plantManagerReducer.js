@@ -109,22 +109,19 @@ export default function(state = initialSatate, action){
     switch(action.type){
         // plant page redirects
         case CHECK_BOX:
-            // alert("jj")
             let plantData1 = state.plantData
-            console.log(plantData1[action.index])
-            if(action.obj[action.typetoshow] ===1 && action.typetoshow==="in_production")
-            plantData1[action.index]["status"] = 1
-            else  plantData1[action.index]["status"] = 0
+   
 
-            if(action.typetoshow!=="in_production" && action.obj[action.typetoshow]===1)
-            plantData1[action.index]["status"] = 0
-            else  plantData1[action.index]["status"] = 1
+            // if(action.typetoshow!=="in_production" && action.obj[action.typetoshow]===1)
+            plantData1[action.index] = {...plantData1[action.index],...action.obj}
+            // else  plantData1[action.index]["status"] = 1
 
-            plantData1[action.index][action.typetoshow]= action.obj[action.typetoshow]
-            console.log(plantData1[action.index])
+           
+            // console.log(plantData1[action.index])
+            console.log(plantData1)
             return{
                 ...state,
-                plantData:plantData1,
+                plantData:plantData1
             }
         case UPDATE_CHECK_BOX:
             let plantData = state.plantData
@@ -334,6 +331,45 @@ export default function(state = initialSatate, action){
                 ...state,
                 needAction:false,
                 actionType:"add",
+                plantDataById     :   {
+                    genus: "",
+                    alternate_genus: "",
+                    series: "",
+                    species: "",
+                    cultivar1: "",
+                    cultivar2: "",
+                    introduction_year: "",
+                    hardiness_zone: "",
+                    royality: "",
+                    patent: "",
+                    category_id: "",
+                    in_production: 1,
+                    archived: 0,
+                    discontinued: 0,
+                    notes: ""
+                },
+                plantSkuDataById:{
+                    sku_code: "",
+                    product_id: null,
+                    plant_id: "",
+                    each_cost: null,
+                    each_price: null,
+                    sale_price: null,
+                    sale_expiry_date: null,
+                    volume_quantity: null,
+                    volume_price_per_unit: null,
+                    sku_item_name: null,
+                    subcategory: null,
+                    archived: "0",
+                    discontinued: 0,
+                    location: null,
+                    status: 1,
+                    attributes_subattributes:[],
+                  },
+                  tagsData: [],
+                  status:false,
+                  ae_plant_id:"",
+                plantSkuDataList:[]
 
             }
         case DUPLICTE_PLANT:
@@ -432,7 +468,7 @@ export default function(state = initialSatate, action){
                     //const skuData = state.
                     ...state, 
                     needAction:false,
-                    skuData:[...action.payload.data]
+                    // skuData:[...action.payload.data]
                 };
             case CLEAR_SKU_FIELDS_PLANT:
                 return{

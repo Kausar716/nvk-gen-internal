@@ -98,13 +98,57 @@ const PlantTable=(props)=> {
 const handleCheckBox =(id,index,type)=>{
     let obj = {}
     
-    obj[type] = parseInt(displayPlantList[index][type])===1?0:1
-    if(type ==="in_production" &&  obj[type]===0)
-    obj["status"] = 0
-    else obj["status"] =1
-    if(type !=="in_production" &&  obj[type]===1)
-    obj["status"] = 0
-    else obj["status"] =1
+    // obj[type] = parseInt(displayPlantList[index][type])===1?0:1
+    // if(type ==="in_production" &&  obj[type]===0)
+    // obj["status"] = 0
+    // else obj["status"] =1
+    // if(type !=="in_production" &&  obj[type]===1)
+    // obj["status"] = 0
+    // else obj["status"] =1
+    if(type ==="in_production") {
+        if (parseInt(displayPlantList[index][type])===1) {
+            obj.in_production = 0
+            obj.archived = 0
+            obj.discontinued = 1
+            obj.status =0
+        }
+        else if (parseInt(displayPlantList[index][type])===0) {
+
+            obj.in_production = 1
+            obj.archived = 0
+            obj.discontinued = 0
+            obj.status =1
+        }
+    }
+    else if(type ==="archived") {
+        if (parseInt(displayPlantList[index][type]) ===1) {
+            obj.in_production = 1
+            obj.archived = 0
+            obj.discontinued = 0
+            obj.status =1
+        }
+        else if (parseInt(displayPlantList[index][type]) ===0) {
+            obj.in_production = 0
+            obj.archived = 1
+            obj.discontinued = 0
+            obj.status =0
+        }
+    }
+    else if(type ==="discontinued") {
+        if (parseInt(displayPlantList[index][type]) ===1) {
+            obj.in_production = 1
+            obj.archived = 0
+            obj.discontinued = 0
+            obj.status =1
+        }
+        else if (parseInt(displayPlantList[index][type]) ===0) {
+            obj.in_production = 0
+            obj.archived = 0
+            obj.discontinued = 1
+            obj.status =0
+         
+        }
+    }
 
     props.checkBox(id,((15*plantPageNumber)+index),type,obj)
     // console.log(plantData[((15*plantPageNumber)+index)])

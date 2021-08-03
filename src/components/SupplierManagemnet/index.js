@@ -4,6 +4,7 @@ import {deleteSupplier,getAllSuppliers,resetSupplierFilds,getsupplierById,setPag
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
+import Autosuggest from 'react-autosuggest';
 
 import {connect} from "react-redux";
 
@@ -19,13 +20,54 @@ export class SupplierManagemnet extends React.Component {
             alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
             selectedAlpha:"All",
             searchValue:"",
-            radioFilter:"active"
+            radioFilter:"active",
+            value:"",
+            suggestions:[]
         }
     }
     componentDidMount(){
         // //alert("hif")
         this.props.getAllSuppliers(this.state.radioFilter)
     }
+       
+    getSuggestions = value => {
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length;
+          
+            return inputLength === 0 ? [] : this.props.supplierData.supplierList.filter(lang =>
+              lang.supplier_name.toLowerCase().includes(inputValue)
+            );
+        };
+         getSuggestionValue = suggestion =>suggestion.supplier_name;
+    
+          // Use your imagination to render suggestions.
+         renderSuggestion = suggestion => (
+            <span>
+              {suggestion.supplier_name}
+            </span>
+        );
+         onChange = (event, { newValue }) => {
+            // setValue(newValue)
+            this.setState({value:newValue});
+            this.setState({searchValue:newValue})
+            this.props.handleSearchFilter(newValue,"none")
+            // props.serachProduct({product: newValue, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
+            // setInputValue(newValue);
+            // setLoaderMessage("No Records Found...")
+            // props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
+            // setInputValue(newValue);
+        };
+    
+         onSuggestionsFetchRequested = ({ value }) => {
+             this.setState({suggestions: this.getSuggestions(value)});
+            // setSuggestions(getSuggestions(value));
+        };
+      
+        // Autosuggest will call this function every time you need to clear suggestions.
+          onSuggestionsClearRequested = () => {
+        //   setSuggestions([]);
+        this.setState({suggestions:[]})
+        };
 
     handleAddSupplierClick = (e) => {
         // //alert(e.target.id)
@@ -63,15 +105,20 @@ export class SupplierManagemnet extends React.Component {
             this.setState({searchValue:""})
             this.props.handleSearchFilter("","reset")
             this.setState({selectedAlpha:"All",customerListStatus:"active"})
+            this.setState({value:""})
 
         }else{
             this.setState({searchValue:e.target.value})
             this.props.handleSearchFilter(e.target.value,"none")
+           
         }
         
         // //alert(e.target.value)
 
     }
+
+    
+    
     render(){
         let customerData = [] 
         let tempArray = []
@@ -83,6 +130,15 @@ export class SupplierManagemnet extends React.Component {
         let displayCustomerList = []
         let pageCount =0
         let pageNumber = 0
+        const inputProps = {
+            placeholder: 'Supplier Name',
+        //    [this.state.value],
+        value:this.state.value,
+            // className:"searchInput",
+            className:" form-control  btn btn-search ",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"13%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            onChange: this.onChange
+        };
         // if(this.props.customerData) {
             // tempArray = this.props.customerData
             // if(this.state.customerListStatus === "active" && this.props.customerData.customerList.active !== undefined) {
@@ -122,7 +178,7 @@ export class SupplierManagemnet extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/staff-directory-green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Supplier Lists <small class="text-blue">Active - {this.props.supplierData?this.props.supplierData.activeData.length:0}</small></div>
+                    <div class="d-flex flex-column">Supplier Lists <small class="text-blue" style={{fontWeight:"bold"}}>Active - {this.props.supplierData?this.props.supplierData.activeData.length:0}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
@@ -137,18 +193,35 @@ export class SupplierManagemnet extends React.Component {
 				<div class="row">
 					<div class="col-xl-12 col-md-12">
 						<div class="bg-white p-15">
-                            <div class="form-group row align-items-end q">
-                                <div class="col-md-4 col-lg-4">
+                        <div className="form-group row">
+                                        <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="plantSearch">Search Supplier</label>
-                                    <div class="searchInput">
+                                    <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.8%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                    getSuggestionValue={this.getSuggestionValue}
+                                                    renderSuggestion={this.renderSuggestion}
+                                                    inputProps={inputProps}
+                                                  
+                                                />
+                                                </div>
+                                    {/* <div class="searchInput">
                                         <button type="submit" class="btn btn-search">
                                             <img src="assets/img/search.svg" alt=""/>
                                         </button>
                                         <input type="text" class="form-control" placeholder="Search" onChange={this.handleSearch} value={this.state.searchValue}/>
-                                    </div>
+                                    </div> */}
                                 </div>
-                                <div class="col-md-4 col-lg-4 mt-2 mt-md-0 pb-2">
-                                    <a onClick={this.handleSearch} style={{cursor:"pointer",color:"#5287F5"}}>Reset</a>
+                                <div className="col-md-2 col-lg-2">
+                                            {/* <a href="javascript:;" onClick={resetData} className="d-block topSpace" style={{marginTop:"2.5em"}}>Reset</a> */}
+                                        {/* </div> */}
+                                {/* <div class="col-md-4 col-lg-4" > */}
+                                    <a onClick={this.handleSearch}  className="d-block topSpace" style={{marginTop:"2.3em",cursor:"pointer",color:"#5287F5"}} id="reset">Reset</a>
                                 </div>
                             </div>
                             <div class="form-group row">
