@@ -18,6 +18,11 @@ function QuoteOrderPermission(props) {
 
     const [quotePermissionListHere, setquotePermissionListHere] =useState([]);
     const [purchasePermissionListHere, setPurchasePermissionListHere] =useState([]);
+    const [toolsAnsSettingsPermission, setToolsAnsSettingsPermission] =useState([]);
+
+    const [additionalPermissions, setAdditionalPermissions] =useState([]);
+    const [customerManagementPermission, setCustomerManagementPermission] =useState([]);
+
     const [allPermisssions, setAllPermisssions] =useState([]);
   
     let permissionList = props.finalPermissionLists
@@ -28,6 +33,11 @@ function QuoteOrderPermission(props) {
         setquotePermissionListHere(permissionList);
         setPurchasePermissionListHere(permissionList);
         setAllPermisssions(permissionList)
+
+        setToolsAnsSettingsPermission(permissionList)
+        setAdditionalPermissions(permissionList)
+        setCustomerManagementPermission(permissionList)
+
        
         props.getPermissionList();
 
@@ -45,7 +55,12 @@ function QuoteOrderPermission(props) {
     //     setquotePermissionListHere(permissionList)|| 100||101||102||103||104||105||106||107||108||109
     // }121
 
+    let finalTSettingspermissions = toolsAnsSettingsPermission.filter(x=> x.id===128 || x.id===129 || x.id===130 || x.id===131 || x.id===132 )
 
+    let additionalPermissionAll = additionalPermissions.filter(x=> x.id===128 || x.id===129 || x.id===130 || x.id===131 || x.id===132 
+        || x.id===133 || x.id===134 || x.id===135 || x.id===136  )
+
+    let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===133 || x.id===134 || x.id===135 || x.id===136 )
 
     let finalPOpermissions = purchasePermissionListHere.filter(x=> x.id===122 || x.id===123 || x.id===124 || x.id===125 || x.id===126 || x.id===127 )
     
@@ -55,11 +70,11 @@ function QuoteOrderPermission(props) {
         || x.id===102 || x.id===103 || x.id===104 || x.id===105 || x.id===106
         || x.id===107 || x.id===108 || x.id===109 || x.id===115 || x.id===118 || x.id===119)
     
-    console.log("quotesAndOrdersPemissionList1", finalAllCheckBox, allPermisssions)
+    console.log("quotesAndOrdersPemissionList1", finalAllCheckBox, finalCMSettingsPermissions)
 
 
     const handleChange=(e)=>{
-
+//debugger;
          const {name, checked, id } = e.target;
 
          if(name === "SelectAllQuote"){
@@ -70,6 +85,33 @@ function QuoteOrderPermission(props) {
          else  if(name === "SelectAllPO"){
             let tempUserPO = finalPOpermissions.map(user=>{return {...user, isChecked:checked}});
             setPurchasePermissionListHere(tempUserPO)
+         }
+
+         //SelectAllTS
+         else  if(name === "SelectAllTS"){
+            let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:checked}});
+            setToolsAnsSettingsPermission(tempUserALL)
+            setCustomerManagementPermission(tempUserALL)
+            setAdditionalPermissions(tempUserALL)
+         }
+
+         else  if(name === "toolsSettingsIntoolsSettingsPermissions"){
+             //finalTSettingspermissions
+           //  let finalValue = additionalPermissionAll.filter(x=> x.id===128 || x.id===129 || x.id===130 || x.id===131 || x.id===132 )
+            let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
+            // let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user,isChecked:null}});
+            // let finalvalue = [...tempUserTS, ...tempUserTS]
+            
+           // setAdditionalPermissions(finalvalue)
+           setToolsAnsSettingsPermission(tempUserTS)
+             //setCustomerManagementPermission(tempUserTS)
+         }
+
+         else  if(name === "customerManagementInCustomerManagementPermissions"){
+            let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
+            setCustomerManagementPermission(tempUserCMS)
+            //setAdditionalPermissions(tempUserCMS)
+            //setToolsAnsSettingsPermission(tempUserCMS)
          }
 
 
@@ -92,7 +134,20 @@ function QuoteOrderPermission(props) {
             let tempUserPO = finalPOpermissions.map((user) =>
             user.name === name ? { ...user, isChecked: checked} : user);
             setPurchasePermissionListHere(tempUserPO);
+
+
+            let tempUserTS = finalTSettingspermissions.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setToolsAnsSettingsPermission(tempUserTS);
+            
+
+            let tempUserALL = additionalPermissionAll.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setAdditionalPermissions(tempUserALL);
         
+            let tempUserCMS = finalCMSettingsPermissions.map((user) =>
+            user.name === name ? { ...user, isChecked: checked} : user);
+            setCustomerManagementPermission(tempUserCMS);
 
             // let finalAllPermission = [quotePermissionListHere, purchasePermissionListHere]
             //  let tempALL = finalAllPermission.map((user) =>
@@ -103,44 +158,9 @@ function QuoteOrderPermission(props) {
     };
 
 
-    const handleChangePO=(e)=>{
 
-        const {name, checked, id } = e.target;
 
-         if(name === "SelectAllPO"){
-            let tempUserPO = finalPOpermissions.map(user=>{return {...user, isChecked:checked}});
-            setPurchasePermissionListHere(tempUserPO)
-         }
 
-        else if(name==="SelectAllEverything"){
-            let tempALL =  finalPOpermissions.map(user=>{return {...user, isChecked:checked}});
-            setPurchasePermissionListHere(tempALL)
-            }
-
-        
-        else{
-       let tempUserPO = finalPOpermissions.map((user) =>
-           user.name === name ? { ...user, isChecked: checked} : user);
-           setPurchasePermissionListHere(tempUserPO);
-
-   }
-   };
-
-   const handleChangeEverything=(e)=>{
-    const {name, checked, id } = e.target;
-       
-                if(name==="SelectAllEverything"){
-                let tempALL =  finalAllCheckBox.map(user=>{return {...user, isChecked:checked}});
-                // let tempALL2 =  finalPOpermissions.map(user=>{return {...user, isChecked:checked}});
-                // let tempall3 =[...tempALL,tempALL2 ]
-                    setAllPermisssions(tempALL)
-                }
-                else{
-                    let tempALL = finalAllCheckBox.map((user) =>
-                    user.name === name ? { ...user, isChecked: checked} : user);
-                     setAllPermisssions(tempALL);
-                }
-   }
 
    let finalAllPermission = [...quotePermissionListHere, ...purchasePermissionListHere]
     return (
@@ -236,6 +256,61 @@ function QuoteOrderPermission(props) {
                                 </div>
 
                 </div>
+
+
+
+{/* Additional Permissions */}
+
+                <div  class="bg-white mt-2">
+                                <div class="ContentSection p-15">
+                                        <h4>Additional Permissions</h4>
+                                            <div className="row2">
+                                                { finalTSettingspermissions.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                            {/* <div class="custom-control custom-checkbox" > */}
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+
+
+                                                
+                                            </div>
+
+                                            <div className="row2">
+                                                { finalCMSettingsPermissions.map((userP)=>(
+                                                                <div  class="custom-control custom-checkbox">
+                                                                          
+                                                                    <input type="checkbox" class="custom-control-input" 
+                                                                    name={userP.name} 
+                                                                    id={userP.id}
+                                                                    onChange={handleChange}
+                                                                    checked={userP?.isChecked || false}
+                                                                    />
+                                                                    <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
+                                                                </div>
+                                                ))}
+                                            </div>
+                                
+                                
+                                </div>
+
+
+
+                                <div class="custom-control custom-checkbox" style={{padding:"1em", marginLeft:"80%"}}>
+                                    <input type="checkbox" class="custom-control-input"  
+                                    onChange={handleChange} 
+                                    checked={finalTSettingspermissions.filter((user) => user?.isChecked !== true).length < 1}
+                                    name="SelectAllTS" id="SelectAllTS" />
+                                    <label class="custom-control-label pl-2" for="SelectAllTS" >Select All / Select None </label>
+                                </div>
+
+                </div>
             
       
        
@@ -247,7 +322,7 @@ function QuoteOrderPermission(props) {
 
 
 const mapStateToProps = (state)=> (
-    // console.log(state.customerReducer.payload)
+    // console.log(state.customerReducer.payload)finalTSettingspermissions
     {
         roles:state.userAccessReduser.roles,
         users:state.userReduser.users.payload,
