@@ -5,7 +5,7 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import PlantInventorySku from './plantInventorySku'
-import ProductInventorySku from './plantInventorySku'
+import ProductInventorySku from './productSku'
 import PlantInventory from './plantInventory'
 import ProductInventory from './productInventory'
 import {connect} from "react-redux";

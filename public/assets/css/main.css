@@ -53962,3 +53962,51 @@ ul.list-unstyled.searchAlpha li a:hover {
         margin: 0 auto;
     }
 }
+
+.dropdown:hover>.dropdown-menu {
+    display: block;
+  }
+  
+  .dropdown>.dropdown-toggle:active {
+      pointer-events: none;
+  }
+  .splitBg {
+      background-color: #D3EAFF;
+  }
+  .splitBg:hover {
+      background-color: #c5e0f8;
+  }
+  .substituteBg {
+      background-color: #FFEBC2;
+  }
+  .substituteBg:hover {
+      background-color: #f5ddaf;
+  }
+  .deleteBg {
+      background-color: #FFDCDC;
+  }
+  .deleteBg:hover {
+      background-color: #f8cdcd;
+  }
+  .actionDropdown .dropdown-menu {
+      padding: 2px;
+      min-width: 120px;
+  }
+  .actionDropdown .dropdown-toggle {
+    background-color: #ECECEC;
+    padding: 4px;
+    border-radius: 4px;
+    height: 27px;
+    display: block;
+  }
+  .actionDropdown .dropdown-menu a {
+      padding: 4px;
+  }
+  .actionDropdown .dropdown-menu a span {
+      width: 24px;
+      text-align: center;
+      display: inline-block;
+  }
+  .actionDropdown .dropdown-menu a:not(:last-child){
+    margin-bottom: 2px;
+}
