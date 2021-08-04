@@ -685,8 +685,9 @@ export class OrganizationSettings extends React.Component {
                                             <img 
                                               src={url}
                                               id="imageid"
-                                          
-                                            style={{height:"250px",width:"255px", borderRadius:"50%"}}/>
+                                              className="imageCircle"
+                                            // style={{height:"250px",width:"255px", borderRadius:"50%"}}
+                                            />
                                             <div className="loaderCenter">
                                             <p > <Loader /></p> 
                                             </div>
@@ -847,10 +848,6 @@ export class OrganizationSettings extends React.Component {
                             <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={()=>{confirmAction("goBack"); }}  >Cancel</button>
                             <button type="button" class="btn btn-primary btn-lg ml-3" 
                             onClick={this.handleSubmit}
-                                //  ()=>{confirmAction("save");}
-                              
-                             
-                            // onClick={this.handleSubmit}
                             >Save</button>
                         </div>
                     </div>

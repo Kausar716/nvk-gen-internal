@@ -9,6 +9,7 @@ import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
+import './style.css';
 
 
 // const normalizeInput = (value, previousValue) => {
@@ -46,6 +47,7 @@ export class UserProfile extends Component {
             email:"",
             position:"",
             actionType:"",
+            fileInput : null,
             locationAccess:false,
             checked:{},
             displayDeletedRecords:false,
@@ -298,15 +300,21 @@ export class UserProfile extends Component {
          })
         
        })
+
+    
+   
         // this.setState({log:e.target.files[0]})
         // if(e.target.files.length !== 0){
         //     this.setState({logo: URL.createObjectURL(e.target.files[0])})
         //   }
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
-        setTimeout(function() {
-            window.location.reload();
-         }, 2000);
+        if( e.target.files[0]){
+            this.fileInput.value = ""
+        }
+        // setTimeout(function() {
+        //     window.location.reload();
+        //  }, 2000);
 
     }
 
@@ -548,14 +556,15 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                                 <div class="logCircle mb-3" key={new Date().getTime()}>
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt=""  style={{height:"250px",width:"auto", borderRadius:"50%"}}/>
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt="" className="imageCircle" />
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
 
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
-                                                    <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg" />
+                                                    <input  type="file"  id={new Date().getTime()}  ref={fileInput => (this.fileInput = fileInput)}
+                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg" />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg" alt="" style={{borderRadius:"7em"}}/>
@@ -565,9 +574,9 @@ export class UserProfile extends Component {
                                                       onClick={()=>{confirmAction("deleteImage"); }}
                                                     // onClick={this.handleRemoveImage}
                                                     >
-                                                        <span class="f-s-20 text-danger">Remove</span>
+                                                        <span class="f-s-20 text-danger" style={{marginTop:"-3px"}}>Remove</span>
                                                     </span>
-                                                    <img src="assets/img/bin-ic-red.svg" alt=""/>
+                                                    <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
                                                 </a>
                                                 <div class="text-left mt-2">
                                                     <span><small>Last signed in 23/05/2021</small></span>

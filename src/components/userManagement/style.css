@@ -172,3 +172,12 @@
   margin-left: 2em;
   margin-top: -20px;
 }
+
+.imageCircle {
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
+  width: 200px;
+  height: 200px;
+}
