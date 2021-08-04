@@ -555,7 +555,7 @@ export class UserProfile extends Component {
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                     <span class="d-flex align-items-center justify-content-around">
-                                                    <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}}  />
+                                                    <input  type="file"  id={new Date().getTime()} onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg" />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg" alt="" style={{borderRadius:"7em"}}/>

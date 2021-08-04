@@ -8,7 +8,8 @@ import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
 import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
-import { Prompt } from 'react-router'
+import { Prompt } from 'react-router';
+import './style.css';
 export const Component = withRouter(({ history, location }) =>{
 
 })
@@ -81,7 +82,7 @@ export class OrganizationSettings extends React.Component {
             main_title:false,
             secondary_title:false,
             main_body:false,
-            secondartBody:false,
+            secondary_body:false,
             },
 
             errorCount:0,
@@ -114,9 +115,10 @@ export class OrganizationSettings extends React.Component {
           
 
            // window.location.reload();
-            alert("image successfully uploaded")
+           
             
          },1100);
+         alert("image successfully uploaded")
         
          
     }
@@ -193,6 +195,27 @@ export class OrganizationSettings extends React.Component {
                 errorCount--
             }           
         }
+
+        else if(name === "phone"){
+            hadModified.phone=true
+        }
+
+        else if(name === "main_body"){
+            hadModified.main_body=true
+        }
+
+        else if(name === "main_title"){
+            hadModified.main_title=true
+        }
+
+        else if(name === "secondary_body"){
+            hadModified.secondary_body=true
+        }
+
+        else if(name === "secondary_title"){
+            hadModified.secondary_title=true
+        }
+
 
                     //console.log(hadModified[name],name)
                     // if(hadModified[name]  === name){
@@ -428,7 +451,9 @@ export class OrganizationSettings extends React.Component {
        this.props.showorganization(id)
        //&& dataOrganizationDetails.main_body && dataOrganizationDetails.secondary_body  && dataOrganizationDetails.main_title && dataOrganizationDetails.secondary_title
      let dataOrganizationDetails= this.props.organizationData.organizationData
-       if (dataOrganizationDetails.name && dataOrganizationDetails.phone && dataOrganizationDetails.name && dataOrganizationDetails.sending_email_address  ) {
+
+
+       if ( dataOrganizationDetails.name && dataOrganizationDetails.phone && dataOrganizationDetails.name && dataOrganizationDetails.sending_email_address  ) {
         window.onbeforeunload = () => true
         this.handleSubmit();
       } else {
@@ -618,9 +643,15 @@ export class OrganizationSettings extends React.Component {
         const { value1} = this.state;
     return (
         <div clas="userManagementSection">
+
+
+
+           
+         
+         
     <Prompt
       when={organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address }
-      message=' Are you sure you want save and leave?'
+       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save changes and leave?' : ' Are you sure you want to leave ?'}
     />
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
@@ -655,14 +686,17 @@ export class OrganizationSettings extends React.Component {
                                               src={url}
                                               id="imageid"
                                           
-                                            style={{height:"250px",width:"auto", borderRadius:"50%"}}/>
+                                            style={{height:"250px",width:"255px", borderRadius:"50%"}}/>
+                                            <div className="loaderCenter">
                                             <p > <Loader /></p> 
+                                            </div>
+                                          
                                              
                                         </div>
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
-                                            <input  type="file"  id="imageid" name="logo" 
+                                            <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg"
                                               onChange={this.handlImageUpload} 
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
@@ -677,9 +711,9 @@ export class OrganizationSettings extends React.Component {
                                             onClick={()=>{confirmAction("deleteImage"); }}
                                              //onClick={this.handleRemoveImage}
                                              >
-                                                <span class="f-s-20 text-danger">Remove</span>
+                                                <span class="f-s-20 text-danger" style={{marginTop:"-3px"}}>Remove</span>
                                             </span>
-                                            <img src="assets/img/bin-ic-red.svg" alt=""/>
+                                            <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
                                         </div>
                                     </div>
                                 </div>

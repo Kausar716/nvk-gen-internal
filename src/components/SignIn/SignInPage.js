@@ -179,8 +179,9 @@ const SignInPage = (props) => {
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12">       
                                         <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={successFullLogin}>
+                                        {/* pristine || */}
                                             Sign In <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                     </div>
