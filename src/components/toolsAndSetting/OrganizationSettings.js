@@ -582,7 +582,7 @@ export class OrganizationSettings extends React.Component {
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"You have unsaved changes, Are you sure you want to go back ?"})
+            this.setState({actionMessage:"Are you sure you want to go back ?"})
 
         }
         else if(actionType==="save"){

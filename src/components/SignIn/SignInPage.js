@@ -96,7 +96,7 @@ const SignInPage = (props) => {
   const successFullLogin=()=>{
             history.push("/Dashboard")
    
-}
+    }
 
 
 
@@ -180,7 +180,7 @@ const SignInPage = (props) => {
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-12">       
-                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={successFullLogin}>
+                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={ pristine || submitting} enabled={pristine}  onClick={successFullLogin}>
                                         {/* pristine || */}
                                             Sign In <img src="./assets/img/signin-ic.svg" />
                                         </button>

@@ -409,7 +409,8 @@ export class UserProfile extends Component {
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
-        let noImageURL="./images/logo_noimage.png";
+        //let noImageURL="./images/logo_noimage.png";
+        let noImageURL = "./images/noPerson.png";
 
 
 
