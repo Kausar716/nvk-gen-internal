@@ -63,7 +63,13 @@ export class PlantInventory extends Component {
     getSuggestions = (value,type) => {
         const inputValue = value.toLowerCase().trim()
         const inputLength = inputValue.length;
-        return inputLength === 0 ? [] :  this.props.plantData.plantBackup.filter(lang =>lang.genus.toLowerCase().includes(inputValue))      
+        let result = this.props.plantData.plantBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.genus === o.genus)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] :  result.filter(lang =>lang.genus.toLowerCase().includes(inputValue))      
     };
     getSuggestionValue = suggestion =>suggestion.genus
 
@@ -80,7 +86,13 @@ export class PlantInventory extends Component {
     getSuggestionssku = (value,type) => {
         const inputValue = value.toLowerCase().trim()
         const inputLength = inputValue.length;
-        return inputLength === 0 ? [] :  this.props.plantData.plantBackup.filter(lang =>lang.sku_code.toLowerCase().includes(inputValue))      
+        let result = this.props.plantData.plantBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.sku_code === o.sku_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] : result.filter(lang =>lang.sku_code.toLowerCase().includes(inputValue))      
     };
     getSuggestionValuesku = suggestion =>suggestion.sku_code
 
@@ -98,7 +110,13 @@ export class PlantInventory extends Component {
     getSuggestionsbatchcode = (value,type) => {
         const inputValue = value.toLowerCase().trim()
         const inputLength = inputValue.length;
-        return inputLength === 0 ? [] :  this.props.plantData.plantBackup.filter(lang =>lang.batch_code.toLowerCase().includes(inputValue))      
+        let result = this.props.plantData.plantBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.batch_code === o.batch_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] : result.filter(lang =>lang.batch_code.toLowerCase().includes(inputValue))      
     };
     getSuggestionValuebatchcode = suggestion =>suggestion.batch_code
 

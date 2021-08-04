@@ -54,18 +54,18 @@ export class ProductInventory extends Component {
         getSuggestions = value => {
         const inputValue = value.toLowerCase().trim()
         const inputLength = inputValue.length;
-          
-            return inputLength === 0 ? [] :  this.props.productData.productBackup.filter((lang,index, array )=>{
-                console.log(lang.name.toLowerCase()+""+inputValue)
-                if(array.indexOf(lang) === index && lang.name.toLowerCase().includes(inputValue))
-                return lang.name.toLowerCase().includes(inputValue)
-                // let productId = productIdsAll.filter(function( product, index, array ) {
-                //     return array.indexOf(product) === index;
-                // });
-
+        let result = this.props.productData.productBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.name === o.name)) {
+              unique.push(o);
             }
-             
-            );
+            return unique;
+        },[]);
+
+        return inputLength === 0 ? [] : result.filter(lang =>
+            lang.name.trim().toLowerCase().includes(inputValue)
+          );
+          
+ 
         };
          getSuggestionValue = suggestion =>suggestion.name;
     
@@ -100,8 +100,14 @@ export class ProductInventory extends Component {
         getSuggestions1 = value => {
         const inputValue = value.trim().toLowerCase()
         const inputLength = inputValue.length;
+        let result = this.props.productData.productBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.sku_code === o.sku_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
           
-            return inputLength === 0 ? [] :  this.props.productData.productBackup.filter(lang =>
+            return inputLength === 0 ? [] :  result.filter(lang =>
               lang.sku_code.toLowerCase().includes(inputValue)
             );
         };
@@ -129,8 +135,14 @@ export class ProductInventory extends Component {
         getSuggestions2= value => {
             const inputValue = value.trim().toLowerCase()
             const inputLength = inputValue.length;
+            let result = this.props.productData.productBackup.reduce((unique, o) => {
+                if(!unique.some(obj => obj.batch_code === o.batch_code)) {
+                  unique.push(o);
+                }
+                return unique;
+            },[]);
               
-                return inputLength === 0 ? [] :  this.props.productData.productBackup.filter(lang =>
+                return inputLength === 0 ? [] :  result.filter(lang =>
                   lang.batch_code.trim().toLowerCase().includes(inputValue)
                 );
             };
