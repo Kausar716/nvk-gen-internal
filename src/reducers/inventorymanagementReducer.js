@@ -14,6 +14,9 @@ import {
     GET_PLANT_DATA,
     FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
     RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
+SET_PLANT_PAGE_NUMBER_INVENTORY,
+SET_PRODUCT_PAGE_NUMBER_INVENTORY
+
    } from '../actions/types';
 
 
@@ -25,6 +28,8 @@ const initialSatate = {
  plantInventoryData:[],
  backupPlantInventoryData:[],
  backupProductInventoryData:[],
+ plantPageNumber:0,
+ productPageNumber:0,
  PlantNameToBeSearched:"",
  productCategoryList:[],
  productCategoryListBackup:[],
@@ -75,30 +80,52 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
             return{
                 ...state,
                 productFilterIds:{},
-                productData:state.productBackup
+                plantFilterIds:{},
+                productData:state.productBackup,
+                plantData:state.plantBackup
             }
+        case SET_PLANT_PAGE_NUMBER_INVENTORY:
+            return{
+                ...state,
+                plantPageNumber:action.pageNumber
+            }
+            case SET_PRODUCT_PAGE_NUMBER_INVENTORY:
+                return{
+                    ...state,
+                    productPageNumber:action.pageNumber
+                }
         case FILTER_PLANT_MANAGER_INVENTORY_ACTION:
             let filterIds = state.plantFilterIds
-            // if(action.id ==="status" ||action.id==="archived" || )
-            // filterIds[action.id] = parseInt(action.value) ==0?1:0
-             filterIds[action.id] = action.value
-            let filterData = state.plantBackup.filter(plant=>{
+            if(action.id ==="archivedAll" ||action.id ==="archived" ||action.id ==="archivedActive")filterIds["archived"] =action.value
+            else if(action.id ==="status" ||action.id ==="statusAll" ) filterIds["status"] =action.value
+            else filterIds[action.id] = action.value
+
+            let filterData = state.plantBackup.filter(product=>{
                 let notFoundCount = 0 
                 Object.keys(filterIds).map(id=>{
-                    if(filterIds[id] !=="All" && filterIds[id] !=="" ){
-                        // let value = undefined
-                        let value = filterIds[id]
-                        if((id==="status" || id ==="archived" || id ==="status_1") && plant["archived"] == value){
+                    if(filterIds[id] !=="All" && filterIds[id] !==""){
+                        if((id==="archivedAll" || id ==="archived" || id ==="archivedActive")){
+                            // let value = parseInt(filterIds1[id])
+                            if(parseInt(product["archived"]) ===parseInt(filterIds[id])){
+
+                            }     
+                        }
+                        if((id==="status" || id ==="statusAll")){
+                            // let value = parseInt(filterIds1[id])
+                            if(parseInt(product["status"]) ===parseInt(filterIds[id])){
+
+                            }
                             
                         }
-                        if((id ==="sku_code" || id ==="genus"||id ==="batch_code")  && plant[id].includes(filterIds[id])){
+                        // alert("s")
+                        if((id ==="sku_code" || id ==="genus"||id ==="batch_code")  && product[id].toLowerCase().includes(filterIds[id].toLowerCase())){
 
                         }
-                        else if(parseInt(plant[id]) === parseInt(filterIds[id])){
+                        else if(parseInt(product[id]) === parseInt(filterIds[id])){
                         }else notFoundCount++
                     }
                 })
-                if(notFoundCount ===0)return plant
+                if(notFoundCount ===0)return product
 
             })
          console.log(filterData)
@@ -111,33 +138,42 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
             case FILTER_PRODUCT_MANAGER_INVENTORY_ACTION:
                 // alert()
                 let filterIds1 = state.productFilterIds
-                if(action.id ==="status" ||action.id ==="archived" ||action.id ==="status_1"){
+                if(action.id ==="archivedAll" ||action.id ==="archived" ||action.id ==="archivedActive"){
+
                     // filterIds1["archived"] =0
                     filterIds1["archived"] =action.value
+                }else if(action.id ==="status" ||action.id ==="statusAll" ){
+                    filterIds1["status"] =action.value
+    
                 }
-              
                 
                 else filterIds1[action.id] = action.value
                 let filterData1 = state.productBackup.filter(product=>{
-                    let notFoundCount = 0 
+                    let notFoundCount1 = 0 
                     Object.keys(filterIds1).map(id=>{
                         if(filterIds1[id] !=="All" && filterIds1[id] !==""){
-                            if((id==="status" || id ==="archived" || id ==="status_1")){
+                            if((id==="archivedAll" || id ==="archived" || id ==="archivedActive")){
                                 // let value = parseInt(filterIds1[id])
                                 if(parseInt(product["archived"]) ===parseInt(filterIds1[id])){
+    
+                                }     
+                            }
+                            if((id==="status" || id ==="statusAll")){
+                                // let value = parseInt(filterIds1[id])
+                                if(parseInt(product["status"]) ===parseInt(filterIds1[id])){
     
                                 }
                                 
                             }
                             // alert("s")
-                            if((id ==="sku_code" || id ==="name"||id ==="batch_code")  && product[id].includes(filterIds1[id])){
+                            if((id ==="sku_code" || id ==="name"||id ==="batch_code")  && product[id].toLowerCase().includes(filterIds1[id].toLowerCase())){
     
                             }
                             else if(parseInt(product[id]) === parseInt(filterIds1[id])){
-                            }else notFoundCount++
+                            }else notFoundCount1++
                         }
                     })
-                    if(notFoundCount ===0)return product
+                    if(notFoundCount1 ===0)return product
     
                 })
              console.log(filterData1)

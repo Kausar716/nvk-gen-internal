@@ -14,19 +14,22 @@
   /* background-color:gray; */
   /* position: absolute; */
   position: relative;
-  z-index: 4;
+  z-index: 10;
   /* margin-top: 30px; */
 
 } 
-.react-autosuggest__input{
+.suggestionsContainer{
+  background-color:yellow;
+
 
 }
 .react-autosuggest__suggestions-container{
-  background-color:lightgray;
+  background-color:gray;
   margin-top:7%;
   height: auto;
   overflow: scroll;
   overflow-x: hidden;
+
   /* text-decoration: none; */
   /* width:600px; */
   /* width: auto; */
@@ -36,9 +39,10 @@
   background-color:lightgray;
   margin-top:7%;
   list-style-type:none;
-  /* height:20px; */
+  height:300px;
   padding:0px;
   margin:0px;
+  /* z-index: -1; */
   
   /* text-decoration: none; */
   /* width:600px; */
@@ -52,6 +56,7 @@
   /* height:20px; */
   padding:10px;
   margin:0px;
+
   
   /* text-decoration: none; */
   /* width:600px; */

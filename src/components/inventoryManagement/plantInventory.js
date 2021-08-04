@@ -4,11 +4,12 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
+import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
-
+import Autosuggest from 'react-autosuggest';
+import TablePagination from '../Pagination';
 export class PlantInventory extends Component {  
     constructor(){
         super()
@@ -21,7 +22,15 @@ export class PlantInventory extends Component {
             plantRadio:"All",
             skuRadio:"All",
             purchaseOrder:"",
-            batchId:""
+            pageSize:15,
+            batchId:"",
+            plantNameValue:"",
+            plantSkuValue:"",
+            plantbatchValue:"",
+            radioFilter:"All",
+            radioFilterPlant:"All",
+            show:0,
+            suggestions:[]
         }
     }
     componentDidMount(){
@@ -31,29 +40,96 @@ export class PlantInventory extends Component {
         this.props.getAllPlants()
         
     }
- 
-    handleRadio = (e) => {
-        let allPlantRadio = false
-        let {selectedLocationId,selecredCategoryID,selectedSupplierId,plantSearchName,skuSearchName,skuRadio} = this.state
-
-        if(e.target.name === "all" ){
-            allPlantRadio = true
-        }
-        this.setState({allPlantRadio:allPlantRadio})
-        this.props.getFilterResult({
-            selectedLocationId,
-            selecredCategoryID,
-            selectedSupplierId,
-            plantSearchName,
-            skuSearchName,
-            allPlantRadio,
-            skuRadio
-        })
+    //common suggestion function
+    onSuggestionsFetchRequested = ({ value }) =>{
+        // alert(value.length)
+       
+        this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>0?1:0});
     }
+
+    onSuggestionsClearRequested = () => this.setState({suggestions:[],show:0})
+
+    onSuggestionsFetchRequestedbatch = ({ value }) =>this.setState({suggestions: this.getSuggestions(value)});
+
+    onSuggestionsClearRequestedbatch = () => this.setState({suggestions:[]})
+
+    onSuggestionsFetchRequestedsku = ({ value }) =>this.setState({suggestions: this.getSuggestions(value)});
+
+    onSuggestionsClearRequestedsku = () => this.setState({suggestions:[]})
+
+
+
+    /*************Dynamic Search For Plant**********/
+    getSuggestions = (value,type) => {
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        return inputLength === 0 ? [] :  this.props.plantData.plantBackup.filter(lang =>lang.genus.toLowerCase().includes(inputValue))      
+    };
+    getSuggestionValue = suggestion =>suggestion.genus
+
+    renderSuggestion = suggestion => (<span>{suggestion.genus}</span>);
+
+    onChange = (e, { newValue }) => {
+        this.setState({plantNameValue:newValue});
+        this.props.filterPlantManagerData("genus",newValue)    
+    };      
+    /***************Dynamic Search End************/
+    
+
+    /*************Dynamic Search For Plant SKU**********/
+    getSuggestionssku = (value,type) => {
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        return inputLength === 0 ? [] :  this.props.plantData.plantBackup.filter(lang =>lang.sku_code.toLowerCase().includes(inputValue))      
+    };
+    getSuggestionValuesku = suggestion =>suggestion.sku_code
+
+    renderSuggestionsku = suggestion => (<span>{suggestion.sku_code}</span>);
+
+    onChangesku = (e, { newValue }) => {
+        this.setState({plantSkuValue:newValue});
+        this.props.filterPlantManagerData("sku_code",newValue)    
+    };
+
+        
+    /***************Dynamic Search End************/
+
+    /*************Dynamic Search For Plant SKU**********/
+    getSuggestionsbatchcode = (value,type) => {
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        return inputLength === 0 ? [] :  this.props.plantData.plantBackup.filter(lang =>lang.batch_code.toLowerCase().includes(inputValue))      
+    };
+    getSuggestionValuebatchcode = suggestion =>suggestion.batch_code
+
+    renderSuggestionbatchcode = suggestion => (<span>{suggestion.batch_code}</span>);
+
+    onChangebatchcode = (e, { newValue }) => {
+        this.setState({plantbatchValue:newValue});
+        this.props.filterPlantManagerData("batch_code",newValue)    
+    };    
+    /***************Dynamic Search End************/
+
     handleFilterChange = (e)=>{
+        if(e.target.id=="archivedAll"|| e.target.id =="archived" || e.target.id=="archivedActive"){
+            this.setState({radioFilter:[e.target.value]})
+
+        }
+        if(e.target.id=="status"|| e.target.id =="statusAll"){
+            this.setState({radioFilterPlant:[e.target.value]})
+
+        }
         console.log(e.target.id,e.target.value)
         this.props.filterPlantManagerData(e.target.id,e.target.value)
 
+    }
+    resetFiledsData = ()=>{
+        
+        this.setState({plantNameValue:"",plantSkuValue:"",plantbatchValue:"",radioFilter:"All",radioFilterPlant:"All"})
+        this.props.resetFileds()
+    }
+    paginationChange =(event, page)=>{
+        this.props.setPlantPageNumber(page-1)
     }
          
   
@@ -78,16 +154,49 @@ export class PlantInventory extends Component {
         PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
 
         // console.log()
-        const {plantData,plantFilterIds} = this.props.plantData
+        const {plantData,plantFilterIds,plantPageNumber} = this.props.plantData
         let plantIdsAll = plantData.map(plantData=>plantData.plant_id)
         let plantId = plantIdsAll.filter(function( plant, index, array ) {
             console.log(array.indexOf(plant) +""+index)
             return array.indexOf(plant) === index;
         });
+        const totalLength = plantId.length
+        const plantPerPage = this.state.pageSize;
+        const pagesVisited = plantPageNumber*this.state.pageSize;
+        const displayPlantList = plantId.slice(pagesVisited,pagesVisited+plantPerPage)
+        const pageCount = Math.ceil(plantId.length/plantPerPage)
+        console.log("plantData.length",plantId.length)
+        console.log("pageCountpageCount", pageCount)
         console.log(plantId)
 
     
-    
+        const inputPropsPlant = {
+            placeholder: 'Plant Name',
+            value:this.state.plantNameValue,
+            className:" form-control  btn btn-search ",
+            id:"genus",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-7%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: this.onChange,
+            dataId: 'my-data-id',
+        };
+        const inputPropsPlantsku = {
+            placeholder: 'Plant SKU',
+            value:this.state.plantSkuValue,
+            className:" form-control  btn btn-search ",
+            id:"sku_code",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-7%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: this.onChangesku,
+            dataId: 'my-data-id',
+        };
+        const inputPropsBatchbatch = {
+            placeholder: 'Batch Code',
+            value:this.state.plantbatchValue,
+            className:" form-control  btn btn-search ",
+            id:"batch_code",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-12.2%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: this.onChangebatchcode,
+            dataId: 'my-data-id',
+        };
     return (
          <div class="bg-white px-3 py-3 mt-3">
                             <form>
@@ -99,7 +208,7 @@ export class PlantInventory extends Component {
                                         <select class="form-control" onChange={this.handleFilterChange}  id="location_id">
                                                 <option>All</option>
                                                 {locationList.map(category=>{
-                                                return  <option value={category.id}>{category.address}</option>
+                                                return  <option value={category.id} selected={parseInt(plantFilterIds.location_id)==parseInt(category.id)?"selected":""}>{category.address}</option>
                                                 })}
                                         </select>
                                     </div>
@@ -108,7 +217,7 @@ export class PlantInventory extends Component {
                                         <select class="form-control" onChange={this.handleFilterChange} id="category_id">
                                                 <option>All</option>
                                                 {plantCategoryList.map(category=>{
-                                                return  <option value={category.id}>{category.name}</option>
+                                                return  <option value={category.id} selected={parseInt(plantFilterIds.category_id)==parseInt(category.id)?"selected":""}>{category.name}</option>
                                                 })}
                                         </select>
                                     </div>
@@ -117,7 +226,7 @@ export class PlantInventory extends Component {
                                         <select class="form-control" onChange={this.handleFilterChange} id="supplier_id">
                                         <option>All</option>
                                         {supplierList.map(category=>{
-                                        return  <option value={category.id}>{category.supplier_name}</option>
+                                        return  <option value={category.id} selected={parseInt(plantFilterIds.supplier_id)==parseInt(category.id)?"selected":""}>{category.supplier_name}</option>
                                         })}
                                         </select>
                                     </div>
@@ -125,49 +234,75 @@ export class PlantInventory extends Component {
                                 <div class="row mt-3 align-items-center">
                                     <div class="col-md-6 col-lg-6">
                                         <label>Plant Search</label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" name="plantSearch" value={plantFilterIds.genus} onChange={this.handleFilterChange} class="form-control" placeholder="Search" id="genus"/>
-                                        </div>
-                                        <div class="form-group row mt-2">
+                                        <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
+                                                    getSuggestionValue={this.getSuggestionValue}
+                                                    renderSuggestion={this.renderSuggestion}
+                                                    inputProps={inputPropsPlant}
+                                                  
+                                                />
+                                                </div>
+                                                <div class="form-group row mt-2">
                                             <div class="col-md-12">
-                                                <div class="form-check form-check-inline">
+                                                {/* <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value="" onChange={this.handleFilterChange}/>
                                                     <label class="form-check-label" for="activePlants">Active Plants</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value="" onChange={this.handleFilterChange}/>
                                                     <label class="form-check-label" for="allPlants">All Plants</label>
+                                                </div> */}
+
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio" style={{cursor:"pointer"}} name="radio_default_inline1" id="status" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilterPlant) ==1?"checked":""}/>
+                                                    <label class="form-check-label" for="activeSkus1">Active Plants</label>
+                                                </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input" type="radio"   style={{cursor:"pointer"}} name="radio_default_inline1" id="statusAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilterPlant =="All"?"checked":""}/>
+                                                    <label class="form-check-label" for="archievedSkus1">All Plants</label>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-lg-6">
                                         <label>Search SKU</label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" name="skuSearch" value={this.state.skuSearchName} onChange={this.handleFilterChange} class="form-control" placeholder="Search" id="sku_code" value={plantFilterIds.sku_code}/>
-                                        </div>
-                                        <div class="form-group row mt-2">
+                                        <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedsku}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequestedsku}
+                                                    getSuggestionValue={this.getSuggestionValuesku}
+                                                    renderSuggestion={this.renderSuggestionsku}
+                                                    inputProps={inputPropsPlantsku}
+                                                  
+                                                />
+                                                </div>
+                                                
+                                                <div class="form-group row mt-2">
                                             <div class="col-md-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline" id="activeSkus" value="" onChange={this.handleFilterChange}/>
+                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archivedActive" value={0} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==0?"checked":""}/>
                                                     <label class="form-check-label" for="activeSkus">Active SKUs</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline" id="archievedSkus" value="" onChange={this.handleFilterChange}/>
+                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archived" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==1?"checked":""}/>
                                                     <label class="form-check-label" for="archievedSkus">Archived SKUs</label>
                                                 </div>
-                                                <div class="form-check form-check-inline">
+                                                {/* <div class="form-check form-check-inline">
                                                     <input class="form-check-input" type="radio" name="radio_default_inline" id="emptySkus" value="" onChange={this.handleFilterChange}/>
                                                     <label class="form-check-label" for="emptySkus">Empty SKUs</label>
-                                                </div>
+                                                </div> */}
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline" id="allSkus" value="" onChange={this.handleFilterChange}/>
+                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archivedAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilter =="All"?"checked":""}/>
                                                     <label class="form-check-label" for="allSkus">All SKUs</label>
                                                 </div>
                                             </div>
@@ -175,13 +310,21 @@ export class PlantInventory extends Component {
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Purchase Order #</label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" name="purchaseOrder" value={this.state.purchaseOrder} class="form-control" placeholder="Search" onChange={this.handleFilterChange}/>
+                                    <div class="col-md-6 col-lg-3" style={{visibility: this.state.show==1?'hidden':""}}>
+                                        <label><p style={{marginBottom:"10px"}}>Purchase Order #</p></label>
+                                        <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"-6%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedbatch}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequestedbatch}
+                                                    getSuggestionValue={this.getSuggestionValuebatchcode}
+                                                    renderSuggestion={this.renderSuggestionbatchcode}
+                                                    inputProps={inputPropsBatchbatch}
+                                                  
+                                                />
                                         </div>
                                         <div class="form-group row mt-2">
                                             <div class="col-md-12">
@@ -192,17 +335,26 @@ export class PlantInventory extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Batch ID</label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" name="batchId" value={this.state.batchId} onChange={this.handleFilterChange} class="form-control" placeholder="Search" id="batch_code" value={plantFilterIds.batch_code}/>
+                                    <div class="col-md-6 col-lg-3" style={{visibility: this.state.show==1?'hidden':""}}>
+                                        <label ><p style={{marginBottom:"10px"}}>Batch ID</p></label>
+                                        <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"-6%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequestedbatch}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequestedbatch}
+                                                    getSuggestionValue={this.getSuggestionValuebatchcode}
+                                                    renderSuggestion={this.renderSuggestionbatchcode}
+                                                    inputProps={inputPropsBatchbatch}
+                                                  
+                                                />
                                         </div>
+                                   
                                     </div>
                                     <div class="col-md-6 col-lg-3 pt-md-4 mt-3">
-                                      <a href="">Reset</a>
+                                      <a onClick={this.resetFiledsData}  style={{cursor:"pointer",color:"#5287F5"}}>Reset</a>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -238,6 +390,33 @@ export class PlantInventory extends Component {
                                         <a href="">Production NR</a>
                                     </div>
                                 </div>
+                            <div className="row_1">
+
+                                    <div style={{marginTop:8}}>
+                                    <label className="greenText">{"Showing " + (plantPageNumber>0 ? (this.state.pageSize*((plantPageNumber)))+1 : ((plantPageNumber)+1))+  "  to  " +  (plantPageNumber>0 ? (((this.state.pageSize*((plantPageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((plantPageNumber)))+this.state.pageSize)) : ((((plantPageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((plantPageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                    </div>
+                                                <div  style={{marginTop:8}}>
+                                                <label className="greenText">Show</label>
+                                                <select
+                                                        value={this.state.pageSize}
+                                                        onChange={e => {
+                                                            this.setState({pageSize:Number(e.target.value)})
+                                                            {/* setPageSize(Number(e.target.value)) */}
+                                                        }}
+                                                        style={{cursor:"pointer"}}
+                                                        >
+                                                        {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                                            <option key={pageSize} value={pageSize}>
+                                                            {pageSize} 
+                                                            </option>
+                                                        ))}
+                                                    </select>
+                                                </div>
+                                    <div >
+                                    <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={plantPageNumber+1}/>
+                                    </div>
+
+                                    </div>
                                 <div class="row mt-4">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="table-responsive">
@@ -271,7 +450,7 @@ export class PlantInventory extends Component {
                                                     {/* className="text-nowrap text-center" */}
                                                 </thead>
                                                 {/* <tbody> */}
-                                                    {plantId.map(plantId=>{
+                                                    {displayPlantList.map(plantId=>{
                                                         console.log(JSON.parse(plantId))
                                                        let count =0
                                                             return plantData.map((plant,index)=>{
@@ -396,4 +575,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{filterPlantManagerData,getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
+export default connect(mapStateToProps,{setPlantPageNumber,resetFileds,filterPlantManagerData,getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
