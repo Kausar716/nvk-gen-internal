@@ -137,6 +137,9 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
                     this.props.getAllSupplierCategoryMethods()
                 })
             }
+            this.setState({
+                name:"",
+            })
             // this.props.saveCustomerType()
         
         }

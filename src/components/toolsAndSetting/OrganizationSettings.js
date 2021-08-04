@@ -69,7 +69,7 @@ export class OrganizationSettings extends React.Component {
             main_title:"",
             secondary_title:"",
             main_body:"",
-            secondartBody:"",
+            secondary_body:"",
             errorObj:{               
                 sendingEmailError:0,
                 phoneError:0,
@@ -462,10 +462,26 @@ export class OrganizationSettings extends React.Component {
       }
      }
 
+
+
+     //const {name,sending_email_address,phone,main_title,secondary_title,main_body,secondary_body} = this.state;
+
     //  let history = useHistory();
     render(){
 
-        
+        const {name,sending_email_address,phone,main_title,secondary_title,main_body,secondary_body} = this.state;
+        const enabled =
+            name.length > 0 ||
+            sending_email_address.length > 0 ||
+            // phone.length > 0 ||
+            main_title.length > 0 ||
+            secondary_title.length > 0 ||
+            main_body.length > 0 ||
+            secondary_body.length > 0 ; 
+
+
+
+
 
        console.log("organizationData",this.props.organizationData.organizationData)
         const { actionType } = this.state;
@@ -847,6 +863,7 @@ export class OrganizationSettings extends React.Component {
                         <div class="col-md-12 col-lg-12 text-md-right mt-3 mt-md-0">
                             <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={()=>{confirmAction("goBack"); }}  >Cancel</button>
                             <button type="button" class="btn btn-primary btn-lg ml-3" 
+                            //  disabled={!enabled}
                             onClick={this.handleSubmit}
                             >Save</button>
                         </div>

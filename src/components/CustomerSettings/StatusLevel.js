@@ -141,6 +141,12 @@ import { is } from 'immutable';
                     this.props.getAllStatusMethods()
                 })
             }
+
+            this.setState({
+                name:"",
+               
+            })
+
             // this.props.saveCustomerType()
         
         }
