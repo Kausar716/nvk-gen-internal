@@ -394,7 +394,7 @@ function QuoteOrderPermission(props) {
                                                     onChange={handleChange} 
                                                     checked={finalTSettingspermissions.filter((user) => user?.isChecked !== true).length < 4}
                                                     name="toolsSettingsIntoolsSettingsPermissions" id="toolsSettingsIntoolsSettingsPermissions" />
-                                                    <label class="custom-control-label pl-2" for="toolsSettingsIntoolsSettingsPermissions" >Tools and SettingA  </label>
+                                                    <label class="custom-control-label pl-2" for="toolsSettingsIntoolsSettingsPermissions" >Tools and Setting </label>
                                                 </div>
                                                 { finalTSettingspermissions.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
@@ -416,7 +416,7 @@ function QuoteOrderPermission(props) {
                                                     onChange={handleChange} 
                                                     checked={finalCMSettingsPermissions.filter((user) => user?.isChecked !== true).length < 3}
                                                     name="customerManagementInCustomerManagementPermissions" id="customerManagementInCustomerManagementPermissions" />
-                                                    <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions" >Customer ManagementA  </label>
+                                                    <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions" >Customer Management  </label>
                                                 </div>
                                                 { finalCMSettingsPermissions.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
