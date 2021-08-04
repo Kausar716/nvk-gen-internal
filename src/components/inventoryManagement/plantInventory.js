@@ -44,7 +44,7 @@ export class PlantInventory extends Component {
     onSuggestionsFetchRequested = ({ value }) =>{
         // alert(value.length)
        
-        this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>0?1:0});
+        this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
     }
 
     onSuggestionsClearRequested = () => this.setState({suggestions:[],show:0})
@@ -278,11 +278,11 @@ export class PlantInventory extends Component {
                                                 </div> */}
 
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" style={{cursor:"pointer"}} name="radio_default_inline1" id="status" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilterPlant) ==1?"checked":""}/>
+                                                    <input class="form-check-input" type="radio" style={{cursor:"pointer"}} name="radio_default_inline1" id="status" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilterPlant) ==1?true:false}/>
                                                     <label class="form-check-label" for="activeSkus1">Active Plants</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio"   style={{cursor:"pointer"}} name="radio_default_inline1" id="statusAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilterPlant =="All"?"checked":""}/>
+                                                    <input class="form-check-input" type="radio"   style={{cursor:"pointer"}} name="radio_default_inline1" id="statusAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilterPlant =="All"?true:false}/>
                                                     <label class="form-check-label" for="archievedSkus1">All Plants</label>
                                                 </div>
                                             </div>
@@ -308,11 +308,11 @@ export class PlantInventory extends Component {
                                                 <div class="form-group row mt-2">
                                             <div class="col-md-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archivedActive" value={0} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==0?"checked":""}/>
+                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archivedActive" value={0} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==0?true:false}/>
                                                     <label class="form-check-label" for="activeSkus">Active SKUs</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archived" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==1?"checked":""}/>
+                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archived" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==1?true:false}/>
                                                     <label class="form-check-label" for="archievedSkus">Archived SKUs</label>
                                                 </div>
                                                 {/* <div class="form-check form-check-inline">
@@ -320,7 +320,7 @@ export class PlantInventory extends Component {
                                                     <label class="form-check-label" for="emptySkus">Empty SKUs</label>
                                                 </div> */}
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archivedAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilter =="All"?"checked":""}/>
+                                                    <input class="form-check-input" type="radio"  style={{cursor:"pointer"}} name="radio_default_inline" id="archivedAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilter =="All"?true:false}/>
                                                     <label class="form-check-label" for="allSkus">All SKUs</label>
                                                 </div>
                                             </div>

@@ -142,7 +142,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
 
                     // filterIds1["archived"] =0
                     filterIds1["archived"] =action.value
-                }else if(action.id ==="status" ||action.id ==="statusAll" ){
+                }else if(action.id ==="status" ||action.id ==="statusActive" ){
                     filterIds1["status"] =action.value
     
                 }
@@ -158,7 +158,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
     
                                 }     
                             }
-                            if((id==="status" || id ==="statusAll")){
+                            if((id==="status" || id ==="statusActive")){
                                 // let value = parseInt(filterIds1[id])
                                 if(parseInt(product["status"]) ===parseInt(filterIds1[id])){
     

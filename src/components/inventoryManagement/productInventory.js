@@ -88,7 +88,7 @@ export class ProductInventory extends Component {
            
         };
          onSuggestionsFetchRequested = ({ value }) => {
-             this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>0?1:0});
+             this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
         };
       
         // Autosuggest will call this function every time you need to clear suggestions.
@@ -167,7 +167,7 @@ export class ProductInventory extends Component {
                 this.setState({suggestions:[]})
             }; 
             resetFiledsData = ()=>{
-                this.setState({   value:"",value1:"",value2:""})
+                this.setState({   value:"",value1:"",value2:"",radioFilter:"All",radioFilterProduct:"All"})
                 this.props.resetFileds()
             }
          
@@ -315,12 +315,12 @@ export class ProductInventory extends Component {
             
                                             <div class="col-md-12">
                                         <div class="form-check form-check-inline">
-                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline" id="statusActive" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilterProduct) ==0?true:false}/>
-                                                    <label class="form-check-label" for="activeSkus">Active Products</label>
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline1" id="statusActive" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilterProduct) ==1?true:false}/>
+                                                    <label class="form-check-label" for="activeSkus1">Active Products</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline" id="status" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilterProduct =="All"?true:false}/>
-                                                    <label class="form-check-label" for="archievedSkus">All Products</label>
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline1" id="status" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilterProduct =="All"?true:false}/>
+                                                    <label class="form-check-label" for="archievedSkus1">All Products</label>
                                                 </div>
                                                 </div>
                                         </div>
