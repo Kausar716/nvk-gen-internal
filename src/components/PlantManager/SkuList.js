@@ -524,7 +524,7 @@ const SkuList = (props)=>{
                            
                             return(
                                             <tr>
-                                                <td>{skuData.archived ==="0"?"Active":"Inactive"}</td>
+                                                <td>{skuData.archived ==="0"?"Active":"Archived"}</td>
                                                 <td>{skuData.sku_code}</td>
                                                 <td class="text-right">{skuData.each_cost}</td>
                                                 <td class="text-right">{skuData.each_price}</td>
