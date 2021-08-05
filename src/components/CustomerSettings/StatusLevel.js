@@ -127,16 +127,17 @@ import { is } from 'immutable';
         }
         
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerStatus.status_level.trim() ===""){
+            if(this.state.name.trim() ===""){
                 
-                this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+                this.setState({isOpen1:true,message:["Please Add Status Level"]})
 
 
             }else{
                 let obj = {}
-                obj.status_level = this.props.customerData.customerStatus.status_level
+                obj.status_level = this.state.name.trim()
                 obj.status = 1
                 let result = this.props.saveStatusMethod(obj)
+                this.setState({name:""})
                 result.then(data=>{
                     this.props.getAllStatusMethods()
                 })
@@ -290,13 +291,19 @@ render() {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.png" alt="Settings"/>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
                                             </div>
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
+                                                <i className="fa fa-trash trashShake" style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
                                         </div>
                                     </div>

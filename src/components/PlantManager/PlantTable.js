@@ -108,42 +108,29 @@ const handleCheckBox =(id,index,type)=>{
     if(type ==="in_production") {
         if (parseInt(displayPlantList[index][type])===1) {
             obj.in_production = 0
-            obj.archived = 0
-            obj.discontinued = 1
             obj.status =0
         }
         else if (parseInt(displayPlantList[index][type])===0) {
-
             obj.in_production = 1
-            obj.archived = 0
-            obj.discontinued = 0
             obj.status =1
         }
     }
     else if(type ==="archived") {
         if (parseInt(displayPlantList[index][type]) ===1) {
-            obj.in_production = 1
             obj.archived = 0
-            obj.discontinued = 0
             obj.status =1
         }
         else if (parseInt(displayPlantList[index][type]) ===0) {
-            obj.in_production = 0
             obj.archived = 1
-            obj.discontinued = 0
             obj.status =0
         }
     }
     else if(type ==="discontinued") {
         if (parseInt(displayPlantList[index][type]) ===1) {
-            obj.in_production = 1
-            obj.archived = 0
             obj.discontinued = 0
             obj.status =1
         }
         else if (parseInt(displayPlantList[index][type]) ===0) {
-            obj.in_production = 0
-            obj.archived = 0
             obj.discontinued = 1
             obj.status =0
          

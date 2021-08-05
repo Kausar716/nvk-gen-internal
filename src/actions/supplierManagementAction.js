@@ -129,7 +129,17 @@ RESET_SUPPLIER_DATA,
 } from './types';
 
 //supplier contact information
-
+// export const deleteSupplier= (id) => dispatch => {
+//     // console.log(customerData)
+//     return axios.post(`/api/delete-customer/${id}`,null,config).then(res=>{ 
+//         console.log(res)
+//         dispatch({
+//                 type:DELETE_SUPPLIER,
+//                 payload:res.data   
+//             })
+//         }) 
+     
+// }
 export const resetSupplierData=()=>dispatch=>{
     dispatch({
         type:RESET_SUPPLIER_DATA,

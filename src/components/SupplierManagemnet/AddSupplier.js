@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {deleteSupplier,deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
 import {connect} from "react-redux";
 import 'react-tabs/style/react-tabs.css';
@@ -147,6 +147,10 @@ function AddSupplier(props) {
             props.handleSupplierExchnageData(product_categories,"product_categories","supplierDataById")
             
         } 
+        else if(e.target.id ==="status"){
+            let prospect = parseInt(supplierDataById.status)==1?0:1
+            props.handleSupplierExchnageData(prospect,e.target.id,"supplierDataById")
+        }
         else props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierDataById")
         // if(e.target.name === "customer_name"){
         //     setCustomer_name(e.target.value)
@@ -349,10 +353,17 @@ function AddSupplier(props) {
         })
     }
     // const getSupplierAddressById = (id)=>{
-
+        const deleteCustomerData =(id)=>{
+            // alert(id)
+           props.deleteSupplier(id).then(data=>{
+            props.typeOfsupplierActionShow("")
+            props.getAllSuppliers()
+           })
+    
+        }
     // }
 console.log("categoryData", categoryData)
-  
+const {action } = props.supplierData
     return (
         <div>
              	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
@@ -398,6 +409,7 @@ console.log("categoryData", categoryData)
                         </div>
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end">
+                        
                             {addCustomertoggle?"":  <a href="#" class="btn active">
                                     <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/pdf-ic.svg" alt=""/>
@@ -442,6 +454,31 @@ console.log("categoryData", categoryData)
                                     </div>
                                     Prospect
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-md-right">
+                            <div class="d-flex flex-wrap align-items-center justify-content-md-end">
+                            {action=="edit"?<div class="mt-5 mt-md-0">
+                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(supplierDataById.id)}><i class="fa fa-trash" style={{fontSize:30}}></i>  </a>
+                                </div>:""}
+                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                                    <p style={{marginLeft:"14%",marginTop:"16px"}}>Active</p>
+                                    <div class="switcher ml-2 pr-2">
+                                                <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(supplierDataById.status) ===1?true:false}/>
+                                                <label for="status"></label>
+                                            </div>
+                                   
+                                </div>
+                                {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                    <span class="mr-2 f-s-18"><strong>Level</strong></span>
+                                    <select class="form-control" onChange={handleInput} id="level">
+                                        <option value={0}>Normal</option>
+                                            {customerStatusList.active.map(type=>{
+                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(customerDataById.level)?"selected":""}>{type.status_level}</option>)
+                                            })}
+                                        </select>
+                                </div> */}
+
                             </div>
                         </div>
                         {/* <div class="col-md-6 text-md-right">
@@ -808,4 +845,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
+export default connect(mapStateToProps,{deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
