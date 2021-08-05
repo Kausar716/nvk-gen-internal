@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {deleteSupplier,deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
+// import {getAllSupplierCategoryMethods}
 import {connect} from "react-redux";
 import 'react-tabs/style/react-tabs.css';
 import InfoModal from "../../components/Modal/InfoModal"
@@ -46,6 +47,7 @@ function AddSupplier(props) {
         props.getAllCategoriesAction()
         props.getAllSuppliersContact(supplierDataById.id)
         props.getAllAddress(supplierDataById.id)
+        props.getAllSupplierCategoryMethods()
  
 
     },[website_url])
@@ -364,6 +366,9 @@ function AddSupplier(props) {
     // }
 console.log("categoryData", categoryData)
 const {action } = props.supplierData
+// const {supplierData} = this.props
+
+console.log(props.supplierData.supplierCategoryList)
     return (
         <div>
              	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
@@ -390,17 +395,17 @@ const {action } = props.supplierData
                      {addCustomertoggle?"": <div>
                                 <label>Complete Orders</label>
                                 <h1>0</h1>
-                                <div><a href="">View Orders</a></div>
+                                <div><a href="">View P.O.s</a></div>
                             </div>}
                             {addCustomertoggle?"":      <div>
                                 <label>Active Orders</label>
                                 <h1>0</h1>
-                                <div><a href="">View Orders</a></div>
+                                <div><a href="">View P.O.s</a></div>
                             </div>}
                             {addCustomertoggle?"":    <div>
                                 <label>Active Quotes    </label>
                                 <h1>0</h1>
-                                <div><a href="">View Orders</a></div>
+                                <div><a href="">View P.O.s</a></div>
                             </div>}
                             {addCustomertoggle?"":<div class="lastOdrDate">
                                 <label>Last Order</label>
@@ -568,7 +573,7 @@ const {action } = props.supplierData
                     <TabPanel >
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
                             <form>
-                                <h2>Order Settings</h2>
+                                <h2>Settings</h2>
                                 <hr/>
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
@@ -625,14 +630,14 @@ const {action } = props.supplierData
                                         <div class="row">
                                          
                                             <div class="col-md-12 mt-12" style={{width:"20%"}}>
-                                                <label>Product Categories</label>
+                                                <label>Categories</label>
                                                 <div></div>
-                                                {categoryData.map(data=>{
+                                                {props.supplierData.supplierCategoryList.active.map(data=>{
                                                     return(
                                                         <div class="col-md-6 col-lg-6" style={{display:"inline-block",width:"15%"}}>
                                                     <div className="custom-control custom-checkbox mb-1" >
                                                         <input type="checkbox" className="custom-control-input" id={data.id} onChange={handleInput} value="product" checked={supplierDataById.product_categories.filter(id=>parseInt(id) ===parseInt(data.id)).length}/>
-                                                        <label className="custom-control-label" for={data.id}>{data.name}</label>
+                                                        <label className="custom-control-label" for={data.id}>{data.category}</label>
                                                     </div>
                                                 </div>
                                                     )
@@ -840,9 +845,10 @@ const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
         supplierData:state.supplierData,
-        categoryData:state.categoryData
+        categoryData:state.categoryData,
+        // supplierData:state.supplierData,
     }
 
 )
 
-export default connect(mapStateToProps,{deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
+export default connect(mapStateToProps,{getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
