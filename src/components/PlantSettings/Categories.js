@@ -131,6 +131,10 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
             })
             alert('Added Successfully Done');
         }
+        this.setState({
+            name:""
+        })
+
         }
 
 
