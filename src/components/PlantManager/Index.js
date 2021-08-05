@@ -348,7 +348,7 @@ const productFormAction = ()=>{
                                                     <h2>Plant ID {ae_plant_id} </h2>
                                                 </div>
                                                 
-                                                <div class="col-md-6 d-flex justify-content-md-end">
+                                              { actionType !== "add"?<div class="col-md-6 d-flex justify-content-md-end">
                                                 <span onClick={()=>props.plantPageReDirectAction("all","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
                                                     <i class='bx bx-arrow-back' ></i>
@@ -363,7 +363,7 @@ const productFormAction = ()=>{
                                                     <a href="" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
                                                     </a>
-                                                </div>
+                                                </div>:""}
                                             </div>
                                         </div>
                                         {/* <Tabs>
