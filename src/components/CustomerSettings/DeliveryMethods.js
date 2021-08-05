@@ -134,9 +134,7 @@ import { is } from 'immutable';
             }
 
             this.setState({
-              
                 name:"",
-               
             })
             // this.props.saveCustomerType()
         
