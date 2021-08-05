@@ -14,10 +14,30 @@ import {
     FILTER_PLANT_MANAGER_INVENTORY_ACTION,
     FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
     RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
+    SET_PLANT_PAGE_NUMBER_INVENTORY,
+    SET_PRODUCT_PAGE_NUMBER_INVENTORY,
+
     config,
     axios
     // DELETE_USER 
    } from './types';
+
+   export const setPlantPageNumber = (pageNumber) => {
+    return{
+        type:SET_PLANT_PAGE_NUMBER_INVENTORY,
+        pageNumber:pageNumber,
+    }
+
+  
+  }
+  export const setProductPageNumber = (pageNumber) => {
+    return{
+        type:SET_PRODUCT_PAGE_NUMBER_INVENTORY,
+        pageNumber:pageNumber,
+    }
+
+  
+  }
    export const resetFileds = ()=>dispatch => {
        dispatch({
            type:RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
@@ -135,6 +155,7 @@ export const getPlantList = () => dispatch => {
         })
 
 }
+
 export const getInventoryPlantManagerList = () => dispatch => {
     let obj={}
     
