@@ -80,12 +80,12 @@ const initialSatate = {
     sku_code: "",
     product_id: null,
     plant_id: "",
-    each_cost: null,
-    each_price: null,
-    sale_price: null,
+    each_cost: "0.00",
+    each_price: "0.00",
+    sale_price: "0.00",
     sale_expiry_date: null,
     volume_quantity: null,
-    volume_price_per_unit: null,
+    volume_price_per_unit: "0.00",
     sku_item_name: null,
     subcategory: null,
     archived: "0",
@@ -155,12 +155,12 @@ export default function(state = initialSatate, action){
                 plantSkuDataById         :   {
                 sku_code: "",
                 plant_id: "",
-                each_cost: null,
-                each_price: null,
-                sale_price: null,
+                each_cost: "0.00",
+                each_price: "0.00",
+                sale_price: "0.00",
                 sale_expiry_date: null,
                 volume_quantity: null,
-                volume_price_per_unit: null,
+                volume_price_per_unit: "0.00",
                 sku_item_name: null,
                 subcategory: null,
                 archived: "0",
@@ -244,6 +244,7 @@ export default function(state = initialSatate, action){
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
+            debugger;
             if(action.itemValue === "None"){
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
@@ -253,7 +254,17 @@ export default function(state = initialSatate, action){
                     needAction:true
                 }
             }
+          
             if(!isNaN(action.itemId)){
+                if(action.itemId === 6 || action.itemId === "6" ){
+                    let plantSkuDataById = state.plantSkuDataById
+                    plantSkuDataById.volume_quantity = action.itemValue
+                    return{
+                        ...state,
+                        plantSkuDataById:plantSkuDataById,
+                        needAction:true
+                    }
+                }
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
                 console.log(action.itemValue)
              
@@ -265,6 +276,7 @@ export default function(state = initialSatate, action){
                     })
                   
                 }
+                
                 let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
                 // let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let attributeUpdated = false
@@ -352,12 +364,12 @@ export default function(state = initialSatate, action){
                     sku_code: "",
                     product_id: null,
                     plant_id: "",
-                    each_cost: null,
-                    each_price: null,
-                    sale_price: null,
+                    each_cost: "0.00",
+                    each_price: "0.00",
+                    sale_price: "0.00",
                     sale_expiry_date: null,
                     volume_quantity: null,
-                    volume_price_per_unit: null,
+                    volume_price_per_unit: "0.00",
                     sku_item_name: null,
                     subcategory: null,
                     archived: "0",
@@ -476,12 +488,12 @@ export default function(state = initialSatate, action){
                     plantSkuDataById         :   {
                         sku_code: "",
                         plant_id: "",
-                        each_cost: "",
-                        each_price: "",
-                        sale_price: "",
+                        each_cost: "0.00",
+                        each_price: "0.00",
+                        sale_price: "0.00",
                         sale_expiry_date: "",
                         volume_quantity: "",
-                        volume_price_per_unit: "",
+                        volume_price_per_unit: "0.00",
                         sku_item_name: "",
                         subcategory: "",
                         archived: "0",
