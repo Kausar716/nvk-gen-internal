@@ -269,7 +269,6 @@ export class CreateUserProfile extends Component {
     }
     handleSubmit = (e) => {
 
-            
         
         //  debugger;
 
@@ -295,6 +294,7 @@ export class CreateUserProfile extends Component {
     // else {
        console.log(count)
         if(count === 0){
+
             console.log(this.state)
             let userStateObject = this.state
             let userObject={}  
@@ -302,7 +302,7 @@ export class CreateUserProfile extends Component {
             userObject['last_name'] = userStateObject.lastName
            // userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
-            userObject['phone'] = userStateObject.phone
+            userObject['phone'] = parseInt(userStateObject.phone)
             userObject['role'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 
@@ -324,6 +324,11 @@ export class CreateUserProfile extends Component {
 
     // }
     }
+
+
+
+
+    
     handleConfirm=()=>{
         this.setState({open:false})
         let userStateObject = this.state.createdUser
@@ -360,7 +365,10 @@ export class CreateUserProfile extends Component {
                     <Tabs>
                       
                         <TabPanel>
+
+    
                         <div class="pb-4">
+
                             <div class="bg-white">
                       
                                     <div class="row mt-3">

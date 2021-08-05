@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react';
 import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert';
 import {connect} from "react-redux";
 // import './style.css';
 import {getAllProductManufacturers,handleProductManufacturerInputAction,handleAddProductManufacturer,
@@ -19,6 +20,11 @@ class Manufacturer extends Component {
                 activeId: 0,
                 isEditing:false,
                 name:'',
+
+                selectedID:'',
+                btnLabelAdd:'Add New Location Type',
+                btnLabelUpdate: 'Update Location Type',
+                btnLabelCancel:'Cancel'
             }
         
     }
@@ -68,43 +74,140 @@ class Manufacturer extends Component {
             alertmsg = 3;
         }
         if (alertmsg === 1){
-            alert('Successfully Moved from Inactive to Active');
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
         }
         if (alertmsg === 2){
-            alert('Successfully Moved from Active to Inactive');
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
         }
         if (alertmsg === 3){
-            alert('Sort Successfully Done');
+            confirmAlert({
+                title: 'Action',
+                message: 'Sort Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
         }
     }
     onDelete =(ev)=>{
         let id= ev.dataTransfer.getData("id");
+        confirmAlert({
+            title: 'Delete Location Type',
+            message: 'Are you sure want to delete the Location Type?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {this.onDeleteConfirm(id)}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
+    }
+
+    onDeleteConfirm=(id)=>{
         let result= this.props.handleProductManufacturerDelete(id)
         result.then(res=>{
-            this.props.getAllProductManufacturers()
+            this.props.getAllProductManufacturers(17)
+            confirmAlert({
+                title: 'Delete Successfully',
+                message: 'Location Type ',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+              });
         })
     }
+
+
+    
     handleProductManufacturerInputAction = (e)=>{
         this.setState({
             name:e.target.value
         })
         this.props.handleProductManufacturerInputAction(e.target.value)
     }
-    handleAddProductManufacturer = (e)=>{
-        if(this.props.name){
-        let result = this.props.handleAddProductManufacturer(this.props.name)
-        result.then(res=>{
-            this.props.getAllProductManufacturers()
-        })
-        alert('Added Successfully Done');
-    }
 
-    this.setState({
+
+
+    handleAddProductManufacturer = (e)=>{
+    //     if(this.props.name){
+    //     let result = this.props.handleAddProductManufacturer(this.props.name)
+    //     result.then(res=>{
+    //         this.props.getAllProductManufacturers()
+    //     })
+    //     alert('Added Successfully Done');
+    // }
+
+    // this.setState({
        
-        name:"",
+    //     name:"",
         
-    })
+    // })
+
+
+    if(this.validate()){
+        let res=   this.props.handleAddProductManufacturer(this.props.name)
+            res.then(res=>{
+                this.props.getAllProductManufacturers()
+            })
+            
+            if (this.state.isEditing) {
+                confirmAlert({
+                    title: 'Updated Successfully',
+                    message: 'Location Type',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
+            this.setState({
+                isEditing:false,
+                name:"",
+                subName:""
+            })
+    }
         
+}
+
+
+validate = ()=>{
+    let errorObj = this.state.errorObj
+    if(this.state.name.length === 0){
+        errorObj.locationType=1
+        this.setState({errorObj})
+        return false
+    }
+    if(this.state.subName.length < 6){
+        errorObj.locationTypeShortCode=1
+        this.setState({errorObj})
+        return false
+    }
+    return true
+    
 }
 
 
@@ -117,15 +220,50 @@ handleAddCategoryUpdate=()=>{
   updateObject.name=this.state.name
  // updateObject.id=this.props.showSpeciSubA.id
      
-      let res1=   this.props.updateProductSettingManufacture(updateID, updateObject)
-      res1.then(res=>{
-          this.props.getAllProductManufacturers()
-      })
+    //   let res1=   this.props.updateProductSettingManufacture(updateID, updateObject)
+    //   res1.then(res=>{
+    //       this.props.getAllProductManufacturers()
+    //   })
 
-      this.setState({
-          isEditing:false,
-          name:""
-      })
+    //   this.setState({
+    //       isEditing:false,
+    //       name:""
+    //   })
+
+
+      if(this.validate()){
+        let res=   this.props.updateProductSettingManufacture(updateID, updateObject)
+            res.then(res=>{
+                this.props.getAllProductManufacturers()
+            })
+            
+            if (this.state.isEditing) {
+                confirmAlert({
+                    title: 'Updated Successfully',
+                    message: 'Location Type',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
+            this.setState({
+                isEditing:false,
+                name:"",
+                subName:""
+            })
+    }
+
+
+
+
+
+
+
+
+
+
 }
 
 
@@ -183,7 +321,9 @@ render()
                                         name="manufacture"
                                         value={this.state.name}
                                           placeholder="Name" onChange={this.handleProductManufacturerInputAction}/>
+                                           {this.state.errorObj.locationType!==0?<span style={{fontSize:"small",color:"red"}}>Enter Location Type</span>:""}
                                     </div>
+
 
                                     {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddProductManufacturer}>
                                         <a href="javascript:" className="d-flex align-items-center">

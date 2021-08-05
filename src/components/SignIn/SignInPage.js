@@ -91,7 +91,7 @@ const SignInPage = (props) => {
 
   //const { handleSubmit, pristine, reset, submitting } = props;
   //const [renderPage , setRenderPage] = useState()
-  const { error, handleSubmit, pristine, reset, submitting } = props
+  const { error, handleSubmit, pristine, reset,invalid, submitting } = props
 
 
   console.log("error", error);

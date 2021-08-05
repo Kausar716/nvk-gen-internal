@@ -529,6 +529,69 @@ export class UserProfile extends Component {
                             <Tab>User Access</Tab>
                         </TabList> */}
                         <TabPanel>
+                            
+                        <div>
+
+                            <div class="row"> 
+                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"-12px"}} >User Profile-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
+                                                            <div style={{marginTop:"1.3em", marginLeft:"23em", float:"right"}}>
+                                                                <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
+                                                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>
+                                                                    <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" 
+                                                                    checked={true}
+                                                                    //value={userProfiles.map(a=>a.status)} checked={userProfiles.map(a=>a.status? true : false) } onChange={this.handleActiveUser}
+                                                                    />
+                                                                    <label for="switcher_checkbox_date"></label>
+                                                                </div>
+                                                            </div>
+                                </div>
+                                        {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
+                                                
+                                        <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%", position:"absolute"}}>
+                                                    {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
+                                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
+
+                                                            <a class="btn ml-2"onClick={ this.handleSubmit}>
+                                                                    <span class="d-flex align-items-center text-left">
+                                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                                        <span class="ml-2"><b>Save  </b></span>
+                                                                    </span>
+                                                                </a>
+
+                                                                <a  class="btn ml-2 mt-3 mt-md-0" 
+                                                                onClick={()=>{confirmAction("save"); }}
+                                                                //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
+                                                                >
+                                                                    <span class="d-flex align-items-center text-left">
+                                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                                    </span>
+                                                                </a>
+
+                                                                <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                                                    <img src="assets/img/close-ic.svg" alt="" onClick={this.props.cancle}/>
+                                                                </a>
+                                                </div>
+                                            </div>
+
+                                </div>
+
+                                
+                            <hr class="m-0"/>  
+                            <br/>
+
+                            <div class="row">
+                                <div class="col-md-12 col-lg-12">
+                                    <div class="bg-grey-transparent-2 text-center px-2 py-2">
+                                        <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <a href="">User Access</a>.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        
+                        </div>
+
                         <div class="pb-4">
                             <div class="bg-white">
                                 {/* <div class="row mb-3 mb-md-0">
@@ -744,17 +807,12 @@ export class UserProfile extends Component {
                                 </div> */}
 
 
-
-
+{/* 
                             <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%"}}>
-                                    {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
+                                   
                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 
-                                            <a class="btn ml-2"
-                                           
-                                            onClick={ this.handleSubmit}
-                                        
-                                            >
+                                            <a class="btn ml-2"onClick={ this.handleSubmit}>
                                                     <span class="d-flex align-items-center text-left">
                                                         <img src="assets/img/save-ic.svg" alt=""/>
                                                         <span class="ml-2"><b>Save  </b></span>
@@ -775,7 +833,7 @@ export class UserProfile extends Component {
                                                     <img src="assets/img/close-ic.svg" alt="" onClick={this.props.cancle}/>
                                                 </a>
                                 </div>
-                             </div>
+                             </div> */}
 
 
                             </div>

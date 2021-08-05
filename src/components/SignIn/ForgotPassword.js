@@ -6,6 +6,7 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from "react-router-dom";
 import './index.css'
+import Testing from './Testing';
 import {Button,FormGroup,Label,Row} from 'reactstrap'
 // import submit from './submit'
 //   const required = value => value ? undefined : 'Required'
@@ -82,19 +83,12 @@ const ForgotPassword = (props) => {
                 <div className="imgSizeHeader">
                     <img src="./images/GENESYS_logov2.png" alt="" class="navbar-brand" style={{ height:"4.5em"}} />
                     </div>
-                    {/* <a href="#" class="navbar-brand" style={{float:"left"}}>
-                    <img src="./images/GENESYS_logov2.png" alt="" class="img-fluid" />
-                    </a> */}
-                    {/* <button type="button" class="navbar-toggle" data-click="sidebar-toggled">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button> */}
+               
                 </div>
             </div>
             <div class="container">
             <div style={{display:"flex", justifyContent:"center", alignItems:"center", marginTop:"3em"}}>
-                        {/* <img src="./images/GENESYS_logov2.png" style={{width:"35%"}} alt="" class="img-fluid" /> */}
+                      
                         </div>
                 <div class="row justify-content-center mt-md-8">
                     <div class="col-md-6" style={{marginTop:"2em"}}>
@@ -111,7 +105,7 @@ const ForgotPassword = (props) => {
                                 <div class="form-group row">
                                     <div class="col-md-12">
                                         <label for="plantSearch">Email <span class="text-danger">*</span></label>
-                                        {/* <input type="text" class="form-control" placeholder="Email" /> */}
+                                      
                                         <Field name="email" type="email" component={renderField} label="Email" />
                                     </div>
                                 </div>
@@ -133,8 +127,7 @@ const ForgotPassword = (props) => {
                     <div class="col-md-6">
                         <div class="row">
                             <div class="col-md-12 text-center"  style={{marginBottom:"14em"}}>
-                            {/* <p class="textGrey">Trouble accessing your account or registering?<br/>
-                                Contact <a href="#">support@nvkgenesys.com</a> </p> */}
+                           
                             </div>
                         </div>
                     </div>
@@ -144,28 +137,21 @@ const ForgotPassword = (props) => {
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 text-center">
-                            {/* <ul class="list-unstyled list-inline mb-0">
-                                <li class="list-inline-item">
-                                    NVKGENESYS.COM
-                                </li>
-                                <li class="list-inline-item"> | 
-                                    <a href=""> &nbsp;TERMS OF USE</a>
-                                </li>
-                                <li class="list-inline-item"> | 
-                                    <a href=""> &nbsp; PRIVACY</a>
-                                </li>
-                            </ul> */}
+                    
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
                         <p>Terms of Use | Privacy Policy <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
-                            {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
+                           
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
+
+        {/* <Testing /> */}
 
 
     </>
