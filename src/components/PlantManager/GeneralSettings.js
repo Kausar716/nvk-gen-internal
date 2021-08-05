@@ -141,7 +141,9 @@ import {
               
   
                if(actionType ==="edit"){
-               props.updatePlantAction(plantDataById,plantDataById.plant_id,tags)}
+                   let plantID = plantDataById.plant_id
+                   if(!plantDataById.plant_id)plantID = props.plantData.ae_plant_id
+                   props.updatePlantAction(plantDataById,plantID,tags)}
 
                setSubmitCount(1)
            }
