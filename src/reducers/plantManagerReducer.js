@@ -84,7 +84,7 @@ const initialSatate = {
     each_price: "0.00",
     sale_price: "0.00",
     sale_expiry_date: null,
-    volume_quantity: null,
+    volume_quantity: "0",
     volume_price_per_unit: "0.00",
     sku_item_name: null,
     subcategory: null,
@@ -159,7 +159,7 @@ export default function(state = initialSatate, action){
                 each_price: "0.00",
                 sale_price: "0.00",
                 sale_expiry_date: null,
-                volume_quantity: null,
+                volume_quantity: "0",
                 volume_price_per_unit: "0.00",
                 sku_item_name: null,
                 subcategory: null,
@@ -244,7 +244,6 @@ export default function(state = initialSatate, action){
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
-            debugger;
             if(action.itemValue === "None"){
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
@@ -368,7 +367,7 @@ export default function(state = initialSatate, action){
                     each_price: "0.00",
                     sale_price: "0.00",
                     sale_expiry_date: null,
-                    volume_quantity: null,
+                    volume_quantity: "0",
                     volume_price_per_unit: "0.00",
                     sku_item_name: null,
                     subcategory: null,
@@ -492,7 +491,7 @@ export default function(state = initialSatate, action){
                         each_price: "0.00",
                         sale_price: "0.00",
                         sale_expiry_date: "",
-                        volume_quantity: "",
+                        volume_quantity: "0",
                         volume_price_per_unit: "0.00",
                         sku_item_name: "",
                         subcategory: "",
