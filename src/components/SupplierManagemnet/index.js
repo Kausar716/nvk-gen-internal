@@ -257,10 +257,10 @@ export class SupplierManagemnet extends React.Component {
                             <div>
                                 <div style={{float:"left",marginBottom:15}}>
                                 {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber))) : (totalLength>0?(pageNumber+1):0))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber))) : (totalLength>0?(pageNumber+1):0))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength+"  Supplier List  " }</label>
                                 {/* </div> */}
                                 </div>
-                                <div style={{float:"left",marginBottom:15}}>
+                                <div style={{float:"left",marginBottom:15,marginLeft:"2%"}}>
                                 <label className="greenText">Show</label>
                                 <select
                                         value={this.state.pageSize}
