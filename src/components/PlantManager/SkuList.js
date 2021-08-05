@@ -230,11 +230,13 @@ const SkuList = (props)=>{
             return attributeObj.subattribute_id
         }
         })[0]
-        let selectedVolumeQuality =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
-        if(attributeObj.attribute_id === 6){
-        return attributeObj.subattribute_id
-        }
-        })[0]
+        // let selectedVolumeQuality =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
+        // if(attributeObj.attribute_id === 6){
+        //     // if(plantSkuDataById.Volume_Quality )
+        // return attributeObj.subattribute_id
+        // }
+        // })[0]
+        // console.log(selectedVolumeQuality)
         let flag=0
         if(plantSkuDataById){       
             if(!plantSkuDataById.each_cost || !plantSkuDataById.each_price || !plantSkuDataById.sale_price){
@@ -317,7 +319,7 @@ const SkuList = (props)=>{
         //         return(<option value={subData.id}>{subData.value}</option>)
         //     }))
         // })   
-        
+        console.log(plantSkuDataById)
  
       
         return(
@@ -436,9 +438,9 @@ const SkuList = (props)=>{
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Volume Quality</label>
+                                            <label>Volume Quantity</label>
                                             <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Volume_Quality")[0]["id"]:"Volume_Quality"} style={{cursor:"pointer"}} onChange={handleInput} 
-                                            value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}>
+                                            value={plantSkuDataById.Volume_Quality}>
                                             <option value="0">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -451,7 +453,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            <input type="text" onBlur={handleBlur} disabled={plantSkuDataById.volume_quantity === "0"} class="form-control text-right" placeholder="0.00" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
                                             {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
