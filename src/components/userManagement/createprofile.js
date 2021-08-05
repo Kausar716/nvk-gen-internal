@@ -269,9 +269,12 @@ export class CreateUserProfile extends Component {
     }
     handleSubmit = (e) => {
 
-      
+            
         
-        // debugger;
+        //  debugger;
+
+         console.log("email already there", this.state.email)
+
        let count= this.validate()
 
        this.setState({ hasError: false });
@@ -279,6 +282,17 @@ export class CreateUserProfile extends Component {
          this.setState({ hasError: true });
        }
 
+
+       let activeRecords = this.props.userListBackup.payload.active;
+            // let existingEmail   = activeRecords.map(em=>e.email === this.state.email ? alert("email already exist") : "" )
+            // if( activeRecords.map(em=>em.email === this.state.email)){
+               
+            //     // alert("email already exist")
+            //     return;
+            // }
+
+
+    // else {
        console.log(count)
         if(count === 0){
             console.log(this.state)
@@ -307,6 +321,8 @@ export class CreateUserProfile extends Component {
             })
             console.log(res)
         }
+
+    // }
     }
     handleConfirm=()=>{
         this.setState({open:false})
@@ -335,6 +351,8 @@ export class CreateUserProfile extends Component {
      console.log(this.props.roles)
      let roles=[]
      if(this.props.roles)roles = this.props.roles
+
+     console.log("userListBackup", this.props.userListBackup.payload.active)
     return (
         <>
          <ActionModal cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
@@ -541,6 +559,7 @@ const mapStateToProps = (state)=> (
     // console.log(state)
     {
         users:state.userReduser.users,
+        userListBackup:state.userReduser.userBackup,
         roles:state.userAccessReduser.roles,
         user:state.userReduser.user
 }

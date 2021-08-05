@@ -588,6 +588,7 @@ export const handlePlantInputAction = (id, value) =>dispatch=>{
 
 }
 export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
+    console.log(id,value)
 
     dispatch({ 
         type:HANDLE_PLANT_SKU_INPUT_DATA,

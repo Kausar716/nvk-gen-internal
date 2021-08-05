@@ -232,6 +232,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             })
             alert('Added Successfully Done');
         }
+
+        this.setState({
+           
+            name:"",
+            subName:"",
+            subName2:""
+        })
         
         }
         validate = ()=>{

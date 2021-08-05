@@ -66,6 +66,12 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                 this.props.getAllSubAttribute(10)
             })
         }
+
+        this.setState({
+           
+            name:"",
+           
+        })
         
         }
         render() {

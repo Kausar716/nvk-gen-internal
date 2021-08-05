@@ -98,6 +98,12 @@ class Manufacturer extends Component {
         })
         alert('Added Successfully Done');
     }
+
+    this.setState({
+       
+        name:"",
+        
+    })
         
 }
 

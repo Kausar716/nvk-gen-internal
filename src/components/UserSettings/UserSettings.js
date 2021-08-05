@@ -7,7 +7,7 @@ import * as MdIcons from "react-icons/md";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 
-    class Categories extends Component {
+    class UserPosition extends Component {
         constructor(props){
             super()
                 this.state={
@@ -116,6 +116,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 this.props.getAllSubAttribute(16)
             })
             alert('Added Successfully Done');
+
+            this.setState({
+                name:""
+            })
         }
 
 
@@ -131,14 +135,15 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             console.log("positionName",this.props.positionName)
            // updateObject.id=this.props.showSpeciSubA.id
                
-         let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+         let res=this.props.handleSubAttributeUpdate(updateID, updateObject)
                 res.then(res=>{
                     this.props.getAllSubAttribute(16)
                 })
 
                 this.setState({
+                    name:"",
                     isEditing:false,
-                    name:""
+                    
                 })
 
         }
@@ -326,7 +331,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handlePositionInputAction,
         handleAddPosition ,
         showSubSubAttribute     
-    })(Categories)
+    })(UserPosition)
 
 
 

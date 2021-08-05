@@ -200,7 +200,7 @@ const handleCheckBox =(id,index,type)=>{
                                              console.log(status)
                                              return(     
                                             <tr>
-                                                <td style={{color:parseInt(status)===1 ? "black" :"red"}}>{parseInt(status) === 1 ?"Active":"Inactive"}</td>
+                                                <td style={{color:parseInt(archived)===0 ? "black" :"red"}}>{parseInt(archived) === 0 ?"Active":"Archived"}</td>
                                                 <td className="text-nowrap text-center">{plant_id}</td>
                                                 <td>{genus}</td>
                                                 <td>

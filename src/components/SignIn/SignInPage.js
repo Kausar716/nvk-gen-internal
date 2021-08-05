@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { useState } from 'react';
+import React, { useState , useEffect} from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link, useHistory } from "react-router-dom";
 import './index.css'
@@ -68,19 +68,21 @@ const validate = values => {
   
 
 
-  const renderField = ({ input, label, type, meta: { touched, error, warning } }) => (
+  const renderField = ({ input, label, type, meta: { touched, error, warning } }) => {
+    console.log("input123",input) 
+   return(
     <div>
       {/* <label>{label}</label> */}
       <div>
-        <input {...input} class="form-control" placeholder={label}  type={type}/>
+        <input {...input} class="form-control" placeholder={label}  autoComplete=" " type={type}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
         </Row>
         
       </div>
     </div>
-  )
-
+  
+   )}
 
 
 
@@ -96,10 +98,13 @@ const SignInPage = (props) => {
   const successFullLogin=()=>{
             history.push("/Dashboard")
    
-}
+    }
 
 
+    useEffect (()=>{
 
+
+    },[]);
 
 
 
@@ -179,8 +184,9 @@ const SignInPage = (props) => {
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-md-12">
-                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={pristine || submitting}  onClick={successFullLogin}>
+                                    <div class="col-md-12">       
+                                        <button type="submit" style={{backgroundColor:"#5287f2"}} className="btn btn-block btnSignIn" disabled={ pristine || submitting}  onClick={successFullLogin}>
+                                        {/* pristine || */}
                                             Sign In <img src="./assets/img/signin-ic.svg" />
                                         </button>
                                     </div>

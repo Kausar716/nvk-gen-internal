@@ -82,6 +82,17 @@ export const Component = withRouter(({ history, location }) =>{
     handleRoleSelect = (e) => {
         
     }
+
+
+    saveAndGo =()=>{
+        const { history } = this.props;
+
+
+            this.handleUpdate();
+            // history.push("/usermanagement")
+            this.goBackFunction();
+
+     }
    
 
     handleUserSelect = (e) =>{
@@ -199,7 +210,8 @@ export const Component = withRouter(({ history, location }) =>{
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                          class="img-fluid" style={{ width:"auto", height:"7em", borderRadius:"50%"}}
+                                                         className="imageCircleSmall"
+                                                        //   style={{ width:"auto", height:"7em", borderRadius:"50%"}}  class="img-fluid" 
                                                           />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                         {/* </div> */}
@@ -1091,20 +1103,59 @@ export const Component = withRouter(({ history, location }) =>{
 
 
 
-                        <div class="row mt-3">
+                        <div class="row mt-3" style={{position:"absolute", paddingTop:"2em"}}>
                             {this.state.displayselectedUSer? 
                                 <div class="col-md-12">
                                     <a href="#">Update Current Role</a>
                                     <a href="#" class="ml-4">Create Role From Current Values</a>
                                 </div>:null}
                         </div>
-                        <div class="row mt-2">
+                        {/* <div class="row mt-2">
                             {this.state.displayselectedUSer? 
                                 <div class="col-md-12 text-md-right">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.goBackFunction} >Cancel</button>
                                     <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleUpdate}>Update</button>
                                 </div>:null}
-                        </div>
+                        </div> */}
+
+                                <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%", paddingTop:"36px"}}>
+                                {this.state.displayselectedUSer? 
+                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
+
+                                            <a class="btn ml-2"
+                                           onClick={this.handleUpdate}
+                                            //onClick={this.handleSubmit}
+                                        
+                                            >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+
+                                                <a  class="btn ml-2 mt-3 mt-md-0" 
+                                                onClick={this.saveAndGo}
+                                                //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
+                                                >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                    </span>
+                                                </a>
+
+                                                <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                                    <img src="assets/img/close-ic.svg" alt=""  onClick={this.goBackFunction}/>
+                                                </a>
+                                    </div>:null}
+                             </div>
+
+
+
+
+
+
+
+
                     </div>
                     </TabPanel>
                 </Tabs>

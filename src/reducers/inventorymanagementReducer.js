@@ -3,7 +3,7 @@ import {
     GET_PLANT_CATEGORY_LIST, 
     GET_PRODUCT_CATEGORY_LIST,
     GET_MANUFACTURER_CATEGORY_LIST,
-    GETSUPPLIER_LIST,
+    // GETSUPPLIER_LIST,
     GET_ALL_PLANT_INVENTORY_ACTION,
     PRODUCT_INVENTORY_FILTER,
     GET_ALL_PRODUCT_INVENTORY_ACTION,
@@ -14,7 +14,8 @@ import {
     GET_PLANT_DATA,
     FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
     RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
-SET_PLANT_PAGE_NUMBER_INVENTORY,
+    GET_ALL_PRODUCT_INVENTORY_ACTION_SKU,
+    SET_PLANT_PAGE_NUMBER_INVENTORY,
 SET_PRODUCT_PAGE_NUMBER_INVENTORY
 
    } from '../actions/types';
@@ -46,32 +47,32 @@ const initialSatate = {
 
 }
 
-const groupArray =(objectToBeReduced)=>{
-    let plantSearchResult={}
-    if(objectToBeReduced.length>0)
-    plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
-        const key = obj["id"];
-        if (!acc[key]) {
-           acc[key] = [];
-        }
-        // Add object to list for given key's value
-        acc[key].push(obj);
-        return acc;
-    })
-    let plantList=[]
-    for(let key in plantSearchResult ){
-        console.log(plantSearchResult[key])
-        if(plantSearchResult[key]){
-        if(plantSearchResult[key][0]){
-            if(typeof(plantSearchResult[key][0]) === "object")
-            plantList.push(plantSearchResult[key])
-        }
+// const groupArray =(objectToBeReduced)=>{
+//     let plantSearchResult={}
+//     if(objectToBeReduced.length>0)
+//     plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
+//         const key = obj["id"];
+//         if (!acc[key]) {
+//            acc[key] = [];
+//         }
+//         // Add object to list for given key's value
+//         acc[key].push(obj);
+//         return acc;
+//     })
+//     let plantList=[]
+//     for(let key in plantSearchResult ){
+//         console.log(plantSearchResult[key])
+//         if(plantSearchResult[key]){
+//         if(plantSearchResult[key][0]){
+//             if(typeof(plantSearchResult[key][0]) === "object")
+//             plantList.push(plantSearchResult[key])
+//         }
         
-        }
-    }
-    return plantList
+//         }
+//     }
+//     return plantList
 
-}
+// }
 
 const inventoryManagementReducer = (state = initialSatate, action)=> {
     switch(action.type){    
@@ -100,7 +101,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
             else if(action.id ==="status" ||action.id ==="statusAll" ) filterIds["status"] =action.value
             else filterIds[action.id] = action.value
 
-            let filterData = state.plantBackup.filter(product=>{
+            let filterData = state.plantBackup.filter(product =>{
                 let notFoundCount = 0 
                 Object.keys(filterIds).map(id=>{
                     if(filterIds[id] !=="All" && filterIds[id] !==""){
@@ -216,7 +217,7 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                     manufacturerListDataBackup:action.payload   
             }
             case GET_ALL_PLANT_INVENTORY_ACTION:
-                let returnPlantAllList=[]
+                // let returnPlantAllList=[]
                 if(action.payload.length>0){
                     // returnPlantAllList = groupArray(action.payload)
                 }
@@ -270,6 +271,12 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                     ...state,
                     productData:action.payload.data,
                     productBackup:action.payload.data
+                }
+            case GET_ALL_PRODUCT_INVENTORY_ACTION_SKU:
+                return{
+                    ...state,
+                    productInventoryData:action.payload.data,
+                    backupProductInventoryData:action.payload.data
                 }
             case GET_ALL_PLANTMANAGER_INVENTORY_ACTION:
                 return{
