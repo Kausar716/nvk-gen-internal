@@ -84,7 +84,7 @@ const initialSatate = {
     each_price: "0.00",
     sale_price: "0.00",
     sale_expiry_date: null,
-    volume_quantity: null,
+    volume_quantity: "0",
     volume_price_per_unit: "0.00",
     sku_item_name: null,
     subcategory: null,
@@ -159,7 +159,7 @@ export default function(state = initialSatate, action){
                 each_price: "0.00",
                 sale_price: "0.00",
                 sale_expiry_date: null,
-                volume_quantity: null,
+                volume_quantity: "0",
                 volume_price_per_unit: "0.00",
                 sku_item_name: null,
                 subcategory: null,
@@ -244,7 +244,6 @@ export default function(state = initialSatate, action){
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
-            debugger;
             if(action.itemValue === "None"){
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
@@ -269,14 +268,24 @@ export default function(state = initialSatate, action){
                 console.log(action.itemValue)
              
                 if(action.itemId === 4 || action.itemId === "4" ){
-                    console.log(attributeValue)
-                    attributeValue.filter(att=>{
-                        if(att.attribute_id === 4)
+                    let idTobeDeleted=-1
+                    attributeValue.map((att,index)=>{
+                        if(att.attribute_id === 5) idTobeDeleted = index
                         console.log(att)
                     })
+                    if(idTobeDeleted>=0)
+                    attributeValue.splice(idTobeDeleted,1)
+                }
+                if(action.itemId === 5 || action.itemId === "5" ){
+                    let idTobeDeleted=-1
+                    attributeValue.map((att,index)=>{
+                        if(att.attribute_id === 4)
+                         idTobeDeleted = index
+                    })
+                    if(idTobeDeleted>=0)
+                    attributeValue.splice(idTobeDeleted,1)
                   
                 }
-                
                 let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
                 // let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let attributeUpdated = false
@@ -368,7 +377,7 @@ export default function(state = initialSatate, action){
                     each_price: "0.00",
                     sale_price: "0.00",
                     sale_expiry_date: null,
-                    volume_quantity: null,
+                    volume_quantity: "0",
                     volume_price_per_unit: "0.00",
                     sku_item_name: null,
                     subcategory: null,
@@ -492,7 +501,7 @@ export default function(state = initialSatate, action){
                         each_price: "0.00",
                         sale_price: "0.00",
                         sale_expiry_date: "",
-                        volume_quantity: "",
+                        volume_quantity: "0",
                         volume_price_per_unit: "0.00",
                         sku_item_name: "",
                         subcategory: "",
