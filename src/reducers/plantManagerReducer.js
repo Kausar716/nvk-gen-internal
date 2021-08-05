@@ -268,14 +268,24 @@ export default function(state = initialSatate, action){
                 console.log(action.itemValue)
              
                 if(action.itemId === 4 || action.itemId === "4" ){
-                    console.log(attributeValue)
-                    attributeValue.filter(att=>{
-                        if(att.attribute_id === 4)
+                    let idTobeDeleted=-1
+                    attributeValue.map((att,index)=>{
+                        if(att.attribute_id === 5) idTobeDeleted = index
                         console.log(att)
                     })
+                    if(idTobeDeleted>=0)
+                    attributeValue.splice(idTobeDeleted,1)
+                }
+                if(action.itemId === 5 || action.itemId === "5" ){
+                    let idTobeDeleted=-1
+                    attributeValue.map((att,index)=>{
+                        if(att.attribute_id === 4)
+                         idTobeDeleted = index
+                    })
+                    if(idTobeDeleted>=0)
+                    attributeValue.splice(idTobeDeleted,1)
                   
                 }
-                
                 let attibuteData = {attribute_id:parseInt(action.itemId),subattribute_id:parseInt(action.itemValue)}
                 // let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let attributeUpdated = false
