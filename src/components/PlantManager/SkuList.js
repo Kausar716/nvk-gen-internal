@@ -335,7 +335,7 @@ const SkuList = (props)=>{
                                                 Archive
                                                 <div class="switcher ml-2">
                                                     <input type="checkbox" name="archived" 
-                                                     id="archived" onChange={handleInput} value={plantSkuDataById.archived} checked={plantSkuDataById.archived==="0"?false:true}/>
+                                                     id="archived" onChange={handleInput} value={plantSkuDataById.archived} checked={plantSkuDataById.archived==="0"|| plantSkuDataById.archived===0?false:true}/>
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
