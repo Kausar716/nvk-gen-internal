@@ -145,6 +145,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             })
             alert('Added Successfully Done');
         }        
+        this.setState({
+          
+            name:"",
+            subName:""
+        })
         }
         validate = ()=>{
             let errorObj = this.state.errorObj

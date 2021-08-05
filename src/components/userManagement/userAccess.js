@@ -199,7 +199,8 @@ export const Component = withRouter(({ history, location }) =>{
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                          class="img-fluid" style={{ width:"auto", height:"7em", borderRadius:"50%"}}
+                                                         className="imageCircleSmall"
+                                                        //   style={{ width:"auto", height:"7em", borderRadius:"50%"}}  class="img-fluid" 
                                                           />
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                         {/* </div> */}

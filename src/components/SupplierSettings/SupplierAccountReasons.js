@@ -134,6 +134,9 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
                     this.props.getAllSupplierReasonMethods()
                 })
             }
+            this.setState({
+                name:"",
+            })
             // this.props.saveCustomerType()handleReasonInputAction
         
         }

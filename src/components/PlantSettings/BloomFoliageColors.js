@@ -115,10 +115,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             alert('Added Successfully Done');
         }
 
-
-        // this.setState({
-        //     name:""
-        // })
+        this.setState({
+            name:""
+        })
         
         }
 
