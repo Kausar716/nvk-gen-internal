@@ -430,6 +430,16 @@ export class OrganizationSettings extends React.Component {
 
 
 
+     saveAndGo =()=>{
+        const { history } = this.props;
+
+
+            this.handleSubmit();
+            history.push("/Dashboard")
+
+
+     }
+
 
      handleRemoveImage = (e) =>{
         let id="2"
@@ -543,8 +553,10 @@ export class OrganizationSettings extends React.Component {
         const confirm = ()=>{
             const { history } = this.props;
             if(actionType==="goBack"){
-                history.push("/Dashboard")
 
+                
+                history.push("/Dashboard")
+                this.handleSubmit();
                 // setTimeout(function() {
                 //     history.push("/")
                 //  }, 4000);
@@ -598,7 +610,7 @@ export class OrganizationSettings extends React.Component {
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"Are you sure you want to go back ?"})
+            this.setState({actionMessage:"Saved Successfully! Do you want to go home page ?"})
 
         }
         else if(actionType==="save"){
@@ -859,7 +871,7 @@ export class OrganizationSettings extends React.Component {
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-3">
+                    {/* <div class="row mt-3">
                         <div class="col-md-12 col-lg-12 text-md-right mt-3 mt-md-0">
                             <button type="button" class="btn btn-outline-secondary btn-lg"  onClick={()=>{confirmAction("goBack"); }}  >Cancel</button>
                             <button type="button" class="btn btn-primary btn-lg ml-3" 
@@ -867,7 +879,41 @@ export class OrganizationSettings extends React.Component {
                             onClick={this.handleSubmit}
                             >Save</button>
                         </div>
-                    </div>
+                    </div> */}
+
+
+                    <div class="row mt-3" style={{float:"right"}}>
+                        {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
+                            <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
+
+                                    <a class="btn ml-2"
+                                    onClick={this.handleSubmit}
+                                    //  onClick={()=>checkedData==true?saveCustomerData1("save"):""}
+                                    >
+                                            <span class="d-flex align-items-center text-left">
+                                                <img src="assets/img/save-ic.svg" alt=""/>
+                                                <span class="ml-2"><b>Save  </b></span>
+                                            </span>
+                                        </a>
+                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                         onClick={this.saveAndGo}
+                                        //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
+                                        >
+                                            <span class="d-flex align-items-center text-left">
+                                                <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                <span class="ml-2"><b>Save &amp; Done</b></span>
+                                            </span>
+                                        </a>
+                                        {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                            <img src="assets/img/close-ic.svg" alt="" onClick={""}/>
+                                        </a> */}
+                        </div>
+                        </div>
+                        {/* </div> */}
+
+
+
+
                 </div>
             </div>
         </div>

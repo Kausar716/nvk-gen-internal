@@ -247,7 +247,7 @@ export class UserProfile extends Component {
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
                   alert("updated")
-                  this.props.cancle() 
+                  //this.props.cancle() 
                     console.log(this.props.users)
                     if(this.props.users.payload.status === "Success"){
                         this.setState({open:true,message:this.props.users.payload.message})
@@ -429,6 +429,7 @@ export class UserProfile extends Component {
 
             else if(actionType==="save"){
                 this.handleSubmit();
+                this.props.cancle();
             }
 
             else if(actionType==="upload"){
@@ -733,14 +734,50 @@ export class UserProfile extends Component {
                                 </div>
                             </div>
                                 }
-                                <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
+                                {/* <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
                                     <button type="button" class="btn btn-primary btn-lg ml-3"
                                      onClick={()=>{confirmAction("save"); }}
                                     //  onClick={this.handleSubmit}
-                                     
+                                    
                                      >Update</button>
+                                </div> */}
+
+
+
+
+                            <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%"}}>
+                                    {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
+                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
+
+                                            <a class="btn ml-2"
+                                           
+                                            onClick={ this.handleSubmit}
+                                        
+                                            >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+
+                                                <a  class="btn ml-2 mt-3 mt-md-0" 
+                                                onClick={()=>{confirmAction("save"); }}
+                                                //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
+                                                >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                    </span>
+                                                </a>
+
+                                                <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                                    <img src="assets/img/close-ic.svg" alt="" onClick={this.props.cancle}/>
+                                                </a>
                                 </div>
+                             </div>
+
+
                             </div>
 
                             {/* <div style={{float:"left", marginLeft:"2em"}}>
