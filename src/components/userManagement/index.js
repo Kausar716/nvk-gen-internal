@@ -219,7 +219,7 @@ console.log("eeeABCD", e)
                                         <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
-                                            <option >select</option>
+                                            <option >Select...</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
                                                 return  <option value={userObj.id}>{userObj.name} {userObj.last_name}</option>
                                             }):null}

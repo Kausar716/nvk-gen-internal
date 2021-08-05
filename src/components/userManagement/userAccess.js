@@ -271,7 +271,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                     <div>
                                                         <h5>Select User Profile</h5>
                                                         <select class="form-control" name="userList" onChange={this.handleUserSelect}>
-                                                        <option>Select</option>
+                                                        <option>Select...</option>
                                                         {userProfiles.length>0?userProfiles.map(userObj=>{
                                                             return  <option value={userObj.id}>{userObj.name}</option>
                                                         }):null}
