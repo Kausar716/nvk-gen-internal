@@ -4,11 +4,12 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getLocationList,getProductCategoryList,getProductList,getFilterResult,getManufacturerList,filterProductManagerData,resetFileds} from "../../actions/inventoryManagementAction";
+import {setProductPageNumber,getLocationList,getProductCategoryList,getProductList,getFilterResult,getManufacturerList,filterProductManagerData,resetFileds} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
 import Autosuggest from 'react-autosuggest';
+import TablePagination from '../Pagination';
 
 export class ProductInventory extends Component {
     constructor(){
@@ -22,9 +23,12 @@ export class ProductInventory extends Component {
             plantRadio:"All",
             skuRadio:"All",
             radioFilter:"All",
+            radioFilterProduct:"All",
             value:"",
+            pageSize:15,
             value1:"",
             value2:"",
+            show:0,
             suggestions:[]
         }
     }
@@ -37,21 +41,31 @@ export class ProductInventory extends Component {
     }
 
     handleFilterChange = (e)=>{
-        if(e.target.id=="status"|| e.target.id =="archived" || e.target.id=="status_1"){
+        if(e.target.id=="archivedAll"|| e.target.id =="archived" || e.target.id=="archivedActive"){
             this.setState({radioFilter:[e.target.value]})
 
         }
+        if(e.target.id=="status"|| e.target.id =="statusActive")
+        this.setState({radioFilterProduct:[e.target.value]})
         // this.setState({})
         this.props.filterProductManagerData(e.target.id,e.target.value)
       
     }
         getSuggestions = value => {
-        const inputValue = value.trim().toLowerCase();
+        const inputValue = value.toLowerCase().trim()
         const inputLength = inputValue.length;
+        let result = this.props.productData.productBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.name === o.name)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+
+        return inputLength === 0 ? [] : result.filter(lang =>
+            lang.name.trim().toLowerCase().includes(inputValue)
+          );
           
-            return inputLength === 0 ? [] :  this.props.productData.productData.filter(lang =>
-              lang.name.toLowerCase().includes(inputValue)
-            );
+ 
         };
          getSuggestionValue = suggestion =>suggestion.name;
     
@@ -74,20 +88,26 @@ export class ProductInventory extends Component {
            
         };
          onSuggestionsFetchRequested = ({ value }) => {
-             this.setState({suggestions: this.getSuggestions(value)});
+             this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
         };
       
         // Autosuggest will call this function every time you need to clear suggestions.
           onSuggestionsClearRequested = () => {
-            this.setState({suggestions:[]})
+            this.setState({suggestions:[],show:0})
         }; 
         
         ///
         getSuggestions1 = value => {
-        const inputValue = value
+        const inputValue = value.trim().toLowerCase()
         const inputLength = inputValue.length;
+        let result = this.props.productData.productBackup.reduce((unique, o) => {
+            if(!unique.some(obj => obj.sku_code === o.sku_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
           
-            return inputLength === 0 ? [] :  this.props.productData.productData.filter(lang =>
+            return inputLength === 0 ? [] :  result.filter(lang =>
               lang.sku_code.toLowerCase().includes(inputValue)
             );
         };
@@ -113,11 +133,17 @@ export class ProductInventory extends Component {
         }; 
 
         getSuggestions2= value => {
-            const inputValue = value
+            const inputValue = value.trim().toLowerCase()
             const inputLength = inputValue.length;
+            let result = this.props.productData.productBackup.reduce((unique, o) => {
+                if(!unique.some(obj => obj.batch_code === o.batch_code)) {
+                  unique.push(o);
+                }
+                return unique;
+            },[]);
               
-                return inputLength === 0 ? [] :  this.props.productData.productData.filter(lang =>
-                  lang.batch_code.includes(inputValue)
+                return inputLength === 0 ? [] :  result.filter(lang =>
+                  lang.batch_code.trim().toLowerCase().includes(inputValue)
                 );
             };
              getSuggestionValue2 = suggestion =>suggestion.batch_code;
@@ -140,8 +166,14 @@ export class ProductInventory extends Component {
               onSuggestionsClearRequested2 = () => {
                 this.setState({suggestions:[]})
             }; 
+            resetFiledsData = ()=>{
+                this.setState({   value:"",value1:"",value2:"",radioFilter:"All",radioFilterProduct:"All"})
+                this.props.resetFileds()
+            }
          
-  
+        paginationChange =(event, page)=>{
+                this.props.setProductPageNumber(page-1)
+            }
     render() {
         let productCategoryList =[]
         let locationList = []
@@ -163,11 +195,20 @@ export class ProductInventory extends Component {
         let PlantListForTable = []
         PlantListForTable = this.props.plantInventoryData?this.props.plantInventoryData:[]
 
-        const {productData,productFilterIds} = this.props.productData
+        const {productData,productFilterIds,productPageNumber} = this.props.productData
         let productIdsAll = productData.map(productData=>productData.product_id)
         let productId = productIdsAll.filter(function( product, index, array ) {
             return array.indexOf(product) === index;
         });
+
+        const totalLength = productId.length
+        const plantPerPage = this.state.pageSize;
+        const pagesVisited = productPageNumber*this.state.pageSize;
+        const displayPlantList = productId.slice(pagesVisited,pagesVisited+plantPerPage)
+        const pageCount = Math.ceil(productId.length/plantPerPage)
+        console.log("plantData.length",productId.length)
+        console.log("pageCountpageCount", pageCount)
+        // console.log(productId)
         console.log(productId)
         const inputProps = {
             placeholder: 'Product Name',
@@ -192,11 +233,11 @@ export class ProductInventory extends Component {
         const inputProps2 = {
             placeholder: 'Batch Code',
         //    [this.state.value],
-        value:this.state.value1,
+        value:this.state.value2,
             // className:"searchInput",
             className:" form-control  btn btn-search ",
             id:"batch_code",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-12.2%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
             onChange: this.onChange3
         };
         // const inputProps1 = {
@@ -251,7 +292,7 @@ export class ProductInventory extends Component {
                                     <div class="col-md-6 col-lg-6">
                                         <label>Product Search</label>
                                         <div className="searchInput" style={{height: "40px",paddingTop:5}}>
-                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.5%",marginLeft:"2%"}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.3%",marginLeft:"2%"}}>
                                                     <img src="assets/img/search.svg" alt=""/>
                                                 </button>
                                             <Autosuggest
@@ -271,22 +312,23 @@ export class ProductInventory extends Component {
                                             <input type="text" class="form-control" placeholder="Search" id="name" value={productFilterIds.name} onChange={this.handleFilterChange}/>
                                         </div> */}
                                         <div class="form-group row mt-2">
+            
                                             <div class="col-md-12">
-                                                {/* <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline"  />
-                                                    <label class="form-check-label" for="activePlants">Active Products</label>
-                                                </div> */}
-                                                <div class="form-check form-check-inline">
-                                                    {/* <input class="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value="" onChange={this.handleFilterChange}/>
-                                                    <label class="form-check-label" for="allPlants">All Products</label> */}
+                                        <div class="form-check form-check-inline">
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline1" id="statusActive" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilterProduct) ==1?true:false}/>
+                                                    <label class="form-check-label" for="activeSkus1">Active Products</label>
                                                 </div>
-                                            </div>
+                                                <div class="form-check form-check-inline">
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline1" id="status" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilterProduct =="All"?true:false}/>
+                                                    <label class="form-check-label" for="archievedSkus1">All Products</label>
+                                                </div>
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-lg-6">
                                         <label>Search SKU</label>
                                         <div className="searchInput" style={{height: "40px",paddingTop:5}}>
-                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.5%",marginLeft:"2%"}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.3%",marginLeft:"2%"}}>
                                                     <img src="assets/img/search.svg" alt=""/>
                                                 </button>
                                             <Autosuggest
@@ -308,11 +350,11 @@ export class ProductInventory extends Component {
                                         <div class="form-group row mt-2">
                                             <div class="col-md-12">
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline" id="status" value={0} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==0?"checked":""}/>
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline" id="archivedActive" value={0} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==0?true:false}/>
                                                     <label class="form-check-label" for="activeSkus">Active SKUs</label>
                                                 </div>
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline" id="archived" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==1?"checked":""}/>
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline" id="archived" value={1} onChange={this.handleFilterChange} checked={parseInt(this.state.radioFilter) ==1?true:false}/>
                                                     <label class="form-check-label" for="archievedSkus">Archived SKUs</label>
                                                 </div>
                                                 {/* <div class="form-check form-check-inline">
@@ -320,7 +362,7 @@ export class ProductInventory extends Component {
                                                     <label class="form-check-label" for="emptySkus">Empty SKUs</label>
                                                 </div> */}
                                                 <div class="form-check form-check-inline">
-                                                    <input class="form-check-input" type="radio" name="radio_default_inline" id="status_1" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilter =="All"?"checked":""}/>
+                                                    <input class="form-check-input"  style={{cursor:"pointer"}} type="radio" name="radio_default_inline" id="archivedAll" value={"All"} onChange={this.handleFilterChange} checked={this.state.radioFilter =="All"?true:false}/>
                                                     <label class="form-check-label" for="allSkus">All SKUs</label>
                                                 </div>
                                             </div>
@@ -328,13 +370,22 @@ export class ProductInventory extends Component {
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Purchase Order #</label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" class="form-control" placeholder="Search" onChange={this.handleFilterChange} value={productFilterIds.purchase} id="purchase"/>
+                                    <div class="col-md-6 col-lg-3" style={{visibility:this.state.show==1?"hidden":""}}>
+                                        {/* <label>Purchase Order #</label> */}
+                                        <label><p style={{marginBottom:"10px"}}>Purchase Order #</p></label>
+                                        <div className="searchInput" style={{height: "40px",paddingTop:5}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"-6%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                            <Autosuggest
+                                                    suggestions={this.state.suggestions}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested2}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested2}
+                                                    getSuggestionValue={this.getSuggestionValue2}
+                                                    renderSuggestion={this.renderSuggestion2}
+                                                    inputProps={inputProps2}
+                                                  
+                                                />
                                         </div>
                                         <div class="form-group row mt-2">
                                             <div class="col-md-12">
@@ -345,22 +396,22 @@ export class ProductInventory extends Component {
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Batch ID</label>
+                                    <div class="col-md-6 col-lg-3"  style={{visibility:this.state.show==1?"hidden":""}}>
+                                        <label><p style={{marginBottom:"10px"}}>Batch ID</p></label>
                                         <div className="searchInput" style={{height: "40px",paddingTop:5}}>
-                                            <button type="submit" className="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
+                                            <button type="submit" className="btn btn-search" style={{marginTop:"-6%",marginLeft:"2%"}}>
                                                     <img src="assets/img/search.svg" alt=""/>
                                                 </button>
                                             <Autosuggest
                                                     suggestions={this.state.suggestions}
-                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
-                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-                                                    getSuggestionValue={this.getSuggestionValue}
-                                                    renderSuggestion={this.renderSuggestion}
+                                                    onSuggestionsFetchRequested={this.onSuggestionsFetchRequested2}
+                                                    onSuggestionsClearRequested={this.onSuggestionsClearRequested2}
+                                                    getSuggestionValue={this.getSuggestionValue2}
+                                                    renderSuggestion={this.renderSuggestion2}
                                                     inputProps={inputProps2}
                                                   
                                                 />
-                                                </div>
+                                        </div>
                                         {/* <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -369,7 +420,7 @@ export class ProductInventory extends Component {
                                         </div> */}
                                     </div>
                                     <div class="col-md-6 col-lg-3 pt-md-4 mt-3">
-                                      <a  onClick={this.props.resetFileds}  style={{cursor:"pointer",color:"#5287F5"}}>Reset</a>
+                                      <a  onClick={this.resetFiledsData}  style={{cursor:"pointer",color:"#5287F5"}}>Reset</a>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -405,6 +456,33 @@ export class ProductInventory extends Component {
                                         <a href="">Production NR</a>
                                     </div>
                                 </div>
+                                <div className="row_1">
+
+<div style={{marginTop:8}}>
+<label className="greenText">{"Showing " + (productPageNumber>0 ? (this.state.pageSize*((productPageNumber)))+1 : ((productPageNumber)+1))+  "  to  " +  (productPageNumber>0 ? (((this.state.pageSize*((productPageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((productPageNumber)))+this.state.pageSize)) : ((((productPageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((productPageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+</div>
+            <div  style={{marginTop:8}}>
+            <label className="greenText">Show</label>
+            <select
+                    value={this.state.pageSize}
+                    onChange={e => {
+                        this.setState({pageSize:Number(e.target.value)})
+                        {/* setPageSize(Number(e.target.value)) */}
+                    }}
+                    style={{cursor:"pointer"}}
+                    >
+                    {[15, 25, 50, 100, 250,500].map(pageSize => (
+                        <option key={pageSize} value={pageSize}>
+                        {pageSize} 
+                        </option>
+                    ))}
+                </select>
+            </div>
+<div >
+<TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={productPageNumber+1}/>
+</div>
+
+</div>
                                 <div class="row mt-4">
                                     <div class="col-md-12 col-lg-12">
                                         <div class="table-responsive">
@@ -436,7 +514,7 @@ export class ProductInventory extends Component {
                                                         <th class="productionBg f-s-10">Not Ready</th>
                                                     </tr>
                                                 </thead>
-                                                {productId.map(productId=>{
+                                                {displayPlantList.map(productId=>{
                                                         {/* console.log(JSON.parse(productId)) */}
                                                        let count =0
                                                             return productData.map((plant,index)=>{
@@ -560,4 +638,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{resetFileds,filterProductManagerData,getProductCategoryList,getLocationList,getAllSupplierAction,getProductList,getFilterResult,getManufacturerList})(ProductInventory)
+export default connect(mapStateToProps,{setProductPageNumber,resetFileds,filterProductManagerData,getProductCategoryList,getLocationList,getAllSupplierAction,getProductList,getFilterResult,getManufacturerList})(ProductInventory)
