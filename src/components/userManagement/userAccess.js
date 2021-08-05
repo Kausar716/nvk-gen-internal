@@ -178,12 +178,51 @@ export const Component = withRouter(({ history, location }) =>{
                 <Tabs>
                    
                     <TabPanel>
+                        <div>
+
+
+
+
+
+
+
                     <div class="pb-4">
                         <div class="bg-white">
                             <div class="row mb-3 mb-md-0">
                                 <div class="col-md-6 col-lg-6">
                                     <div class="f-s-24 px-3 py-3 f-w-500">User Access &nbsp;-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove Permissions</span></div>
                                 </div>
+
+                                <div class="col-md-6 col-lg-6" style={{marginTop:"1em"}}>
+                                {this.state.displayselectedUSer? 
+                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
+
+                                            <a class="btn ml-2"
+                                           onClick={this.handleUpdate}
+                                            //onClick={this.handleSubmit}
+                                        
+                                            >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+
+                                                <a  class="btn ml-2 mt-3 mt-md-0" 
+                                                onClick={this.saveAndGo}
+                                                //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
+                                                >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                    </span>
+                                                </a>
+
+                                                <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                                    <img src="assets/img/close-ic.svg" alt=""  onClick={this.goBackFunction}/>
+                                                </a>
+                                    </div>:null}
+                             </div>
                             </div>
                             <hr class="m-0"/>
                             <div class="ContentSection p-15">
@@ -1155,6 +1194,8 @@ export const Component = withRouter(({ history, location }) =>{
 
 
 
+
+                    </div>
 
                     </div>
                     </TabPanel>

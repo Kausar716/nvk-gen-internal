@@ -161,12 +161,21 @@ console.log("eeeABCD", e)
                         <Tab style={{bottom:"0px"}}>User Access</Tab>
                         <Tab style={{bottom:"0px"}}>User Positions</Tab>
                     </TabList>
+
                     <TabPanel>
+
                     <div class="bg-white">
-                         <div class="f-s-24 px-3 py-3 f-w-500" >User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
-                         
-                                                    {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
-                                                            {this.state.visbleTrue!==false  ? 
+                    {this.state.visbleTrue!==true  ? 
+                         <div class="f-s-24 px-3 py-3 f-w-500" >User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span>  
+                                                       
+                         </div>
+                         :
+                         <div >
+                         </div>
+
+                        }
+
+                                                    {/* {this.state.visbleTrue!==false  ? 
                                                             <div>
                                                                 <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
                                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>
@@ -175,22 +184,19 @@ console.log("eeeABCD", e)
                                                                     <label for="switcher_checkbox_date"></label>
                                                                 </div>
                                                             </div>
-                                                            
-                                                            :
-                                                            <div >
 
-                                                            </div>
+                                                    :
+                                                    <div >
+                                                    </div>
 
-                                                        
-                                                        }
-                                                                                        
+                                                    } */}
 
-                                                    {/* </div> */}
                          
-                         
-                         </div>
                         <hr class="m-0"/>
+            
                         <div class="ContentSection p-15">
+
+                        {this.state.visbleTrue!==true  ? 
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
@@ -199,6 +205,13 @@ console.log("eeeABCD", e)
                                     </div>
                                 </div>
                             </div>
+                                    :
+                                    <div >
+                                    </div>
+
+                                    }
+
+
                             <div class="row mt-3">
                                 <div class="col-md-12 col-lg-12">
                                    {(!displayUpdateProfile && !displayCreate)?<h4>Select user profile to edit or choose Create New User</h4>:null}
@@ -226,9 +239,10 @@ console.log("eeeABCD", e)
                                         </div>
                                     </div>:null}
                                     {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  />:null}
-                                    {displayCreate?<CreateUserProfile cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
+                                    {displayCreate?<CreateUserProfile  handleSubmitData={this.handleSubmit}  cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>
+
                         </div>
                     </div>
                     </TabPanel>
