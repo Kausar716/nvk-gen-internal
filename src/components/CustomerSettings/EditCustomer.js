@@ -36,6 +36,7 @@ function AddCustomer(props) {
     const[actionType,setactionType] = useState("add")
     const[actionTypeAddress,setactionTypeAddress] = useState("add")
 	const toggle1 = () => setIsOpen1(!isOpen1);
+    const [enableUrl,setEnableUrl] = useState(false)
 
     const [isOpen2, setIsOpen2] = useState(false);
 	const [message2,setMessage2] = useState([]);
@@ -67,10 +68,9 @@ function AddCustomer(props) {
     },[reStock])
 
     const validate = () =>{
+    
     }
-
     const handleInput= (e)=>{
-        // alert("hi")
         console.log(e.target.value,e.target.id)
         setCheckedData(true)
         let indexValue = null
@@ -90,7 +90,8 @@ function AddCustomer(props) {
         }else if(e.target.id ==="prospect"){
             let prospect = parseInt(customerDataById.prospect)==1?0:1
             props.handleExchangeData(prospect,e.target.id,"customerDataById")
-        }else if(e.target.id ==="status"){
+        }
+        else if(e.target.id ==="status"){
             let prospect = parseInt(customerDataById.status)==1?0:1
             props.handleExchangeData(prospect,e.target.id,"customerDataById")
         }
@@ -116,6 +117,16 @@ function AddCustomer(props) {
         }else if(e.target.id =="discount_by_line_item" || e.target.id =="discount_by_line_item1"){
             let discount_by_line_item = customerDataById.discount_by_line_item ==0?1:0
             props.handleExchangeData(discount_by_line_item,"discount_by_line_item","customerDataById")
+        }else if(e.target.id=="website_url"){
+            var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
+            var res = patt.test(e.target.value);
+            // console.log(res)
+            if(res === false){
+                setEnableUrl(false)
+
+            }else{
+                setEnableUrl(true)
+            }
 
         }
         // else if(e.target.id =="tax_exempt_no" || e.target.id =="tax_exempt_no")
@@ -323,6 +334,15 @@ function AddCustomer(props) {
        })
 
     }
+    const openNewLink = ()=>{
+        // console.log(customerDataById)
+        // window.open(customerDataById.website_url,'_blank')
+        // document.location = 'http://facebook.com/'
+        // window.open(customerDataById.website_url, '_blank');
+        let url = document.getElementById("website_url").value
+        window.open(url, '_blank');
+        // window.location.href = url
+    }
 
     console.log(customerDataById)
     return (
@@ -368,24 +388,34 @@ function AddCustomer(props) {
                         </div>
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end">
-                            {addCustomertoggle?"":  <a href="#" class="btn active">
+                            {/* {addCustomertoggle?"":  <a href="#" class="btn active">
                                     <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/pdf-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Contact PDF</b></span>
                                     </span>
-                                </a>}
-                                <a href="#" class="btn ml-2" onClick={()=>checkedData==true?saveCustomerData1("save"):""} >
+                                </a>} */}
+                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
                                     <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
-                                        <img src="assets/img/save-ic.svg" alt=""/>
-                                        <span class="ml-2" ><b>Save  </b></span>
+                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
+                                        <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
                                     </span>
-                                </a>
-                                <a  class="btn ml-2 mt-3 mt-md-0" onClick={()=>checkedData==true?saveCustomerData1("done"):""} >
+                                </button>
+                                {/* "btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3" */}
+                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
+                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
+                                        <i className="fa fa-save" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save</span>
+                                    </span>
+                                </button>
+                                <button   onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
                                     <span class="d-flex align-items-center text-left">
-                                        <img src="assets/img/saveDone-ic.svg" alt="" />
-                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                        {/* <img src="assets/img/saveDone-ic.svg" alt="" /> */}
+                                        <i className="fa fa-save" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
                                     </span>
-                                </a>
+                                </button>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                     <img src="assets/img/close-ic.svg" alt="" onClick={handleClose}/>
                                 </a>
@@ -424,10 +454,10 @@ function AddCustomer(props) {
                         <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
                              {action=="edit"?<div class="mt-5 mt-md-0">
-                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(customerDataById.id)}>Delete Customer  </a>
+                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(customerDataById.id)}><i class="fa fa-trash" style={{fontSize:30}}></i>  </a>
                                 </div>:""}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
-                                                    <p style={{marginLeft:"10%",marginTop:"16px"}}>Active</p>
+                                                    <p style={{marginLeft:"14%",marginTop:"16px"}}>Active</p>
                                     <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(customerDataById.status) ===1?"checked":""}/>
                                                 <label for="status"></label>
@@ -568,7 +598,10 @@ function AddCustomer(props) {
                                         <label>Website</label>
                                         <div class="d-flex">
                                             <input type="url" class="form-control" placeholder="https://www.Example.com" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
-                                            <a  href={customerDataById.website_url} target="_blank" class="btn btn-outline-secondary btn-lg ml-2">Visit</a>
+                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={enableUrl==false?true:false} onClick={enableUrl==false?"":openNewLink}>
+                                            {/* <a  href={enableUrl==false?"#":customerDataById.website_url} target={enableUrl==false?"_self":"_blank"} >Visit</a> */}
+                                            Visit
+                                            </button>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">

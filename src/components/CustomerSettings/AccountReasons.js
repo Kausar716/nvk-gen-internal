@@ -126,14 +126,15 @@ import { is } from 'immutable';
             //this.props.handleExchangeData(e.target.value,e.target.id,"customerReason")
         }
         handleAddCategoryData = (e)=>{
-            if(this.props.customerData.customerReason.reason.trim() ===""){
+            if(this.state.name.trim() ===""){
                 
-                this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+                this.setState({isOpen1:true,message:["please add Account Reason"]})
 
 
             }else{
                 let obj = {}
-                obj.reason = this.state.name
+                obj.reason = this.state.name.trim()
+                this.setState({name:""})
                 obj.status = 1
                 let result = this.props.saveReasonMethod(obj)
                 result.then(data=>{

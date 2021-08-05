@@ -52,37 +52,37 @@ import {
         if(e.target.id ==="in_production") {
             if (parseInt(e.target.value) ===1) {
                 props.handlePlantInputAction(e.target.id,0)
-                props.handlePlantInputAction("archived",0)
-                props.handlePlantInputAction("discontinued",1)
+                // props.handlePlantInputAction("archived",0)
+                // props.handlePlantInputAction("discontinued",1)
             }
             else if (parseInt(e.target.value) ===0) {
                 props.handlePlantInputAction(e.target.id,1)
-                props.handlePlantInputAction("archived",0)
-                props.handlePlantInputAction("discontinued",0)
+                // props.handlePlantInputAction("archived",0)
+                // props.handlePlantInputAction("discontinued",0)
             }
         }
         else if(e.target.id ==="archived") {
             if (parseInt(e.target.value) ===1) {
                 props.handlePlantInputAction(e.target.id,0)
-                props.handlePlantInputAction("in_production","1")
-                props.handlePlantInputAction("discontinued",0)
+                // props.handlePlantInputAction("in_production","1")
+                // props.handlePlantInputAction("discontinued",0)
             }
             else if (parseInt(e.target.value) ===0) {
                 props.handlePlantInputAction(e.target.id,1)
-                props.handlePlantInputAction("in_production","0")
-                props.handlePlantInputAction("discontinued",0)
+                // props.handlePlantInputAction("in_production","0")
+                // props.handlePlantInputAction("discontinued",0)
             }
         }
         else if(e.target.id ==="discontinued") {
             if (parseInt(e.target.value) ===1) {
                 props.handlePlantInputAction(e.target.id,0)
-                props.handlePlantInputAction("in_production","1")
-                props.handlePlantInputAction("archived",0)
+                // props.handlePlantInputAction("in_production","1")
+                // props.handlePlantInputAction("archived",0)
             }
             else if (parseInt(e.target.value) ===0) {
                 props.handlePlantInputAction(e.target.id,1)
-                props.handlePlantInputAction("in_production","0")
-                props.handlePlantInputAction("archived",0)
+                // props.handlePlantInputAction("in_production","0")
+                // props.handlePlantInputAction("archived",0)
             }
         }
         else props.handlePlantInputAction(e.target.id,e.target.value)

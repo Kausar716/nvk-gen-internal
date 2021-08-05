@@ -50,7 +50,7 @@
   /* border:1px solid red; */
 }
 .react-autosuggest__suggestions-container--open{
-  height:300px;
+  height:auto;
 
 }
 .react-autosuggest__suggestions-container li{
@@ -121,5 +121,31 @@ input[type=number] {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+.trashShake:hover {
+  font-size: 200px;
+  animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  
+}
+
+@keyframes shake {
+  10%, 90% {
+    transform: translate3d(-1px, 0, 0);
+  }
+  
+  20%, 80% {
+    transform: translate3d(2px, 0, 0);
+  }
+
+  30%, 50%, 70% {
+    transform: translate3d(-4px, 0, 0);
+  }
+
+  40%, 60% {
+    transform: translate3d(4px, 0, 0);
   }
 }
