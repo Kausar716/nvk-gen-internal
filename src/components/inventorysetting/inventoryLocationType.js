@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+
 import 
     {
         getAllSubAttribute, 
@@ -212,7 +213,6 @@ class InventoryLocationTypes extends Component {
             })
         }        
     }
-    
     validate = ()=>{
         let errorObj = this.state.errorObj
         if(this.state.name.length === 0){
@@ -275,7 +275,6 @@ class InventoryLocationTypes extends Component {
                 res.then(res=>{
                     this.props.getAllSubAttribute(17)
                 })
-
                 if (this.state.isEditing) {
                     confirmAlert({
                         title: 'Updated Successfully',
