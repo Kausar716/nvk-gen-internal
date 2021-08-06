@@ -389,7 +389,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div> */}
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sub-Category <span class="text-danger">*</span></label>
-                                            <select class="form-control" style={{cursor:"pointer"}} id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id}>
+                                            <select class="form-control" style={{cursor:"pointer"}} id="sub_category_id" onChange={handleInput} value={skuDataById.sub_category_id?skuDataById.sub_category_id:skuDataById.subcategory}>
                                             <option value="0">None</option>
                                                 {subCategoryData.map(subcategory=>{
                                                     if(parseInt(supCategoryIdForFilter) === subcategory.category_id)
