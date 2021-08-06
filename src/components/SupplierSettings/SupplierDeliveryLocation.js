@@ -30,6 +30,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
        countZipRegix:null,
        isEditing:false,
        selectedID:'',
+       deleteon:false,
     }
 
 
@@ -112,8 +113,10 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
             console.log(id)
+            this.setState({deleteon:true})
            let result= this.props.handleCustomerTypeDelete(id,"delete-delivery-supplier")
            result.then(res=>{
+               this.setState({deleteon:false})
             this.props.getAllSupplierLocationMethods()
            })
 
@@ -373,7 +376,7 @@ render() {
 
 
                                                         <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false});  this.props.resetSupplierData()}}>
-                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px",cursor:"pointer"}}>Cancel </a>
                                                            
                                                         </div>
                                                     </div>
@@ -417,9 +420,19 @@ render() {
                                             <ul class="list-unstyled">
                                                    {this.props.supplierData.supplierLocationList.inactive.map(t=>{
                                                     return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.location}</span>
-                                                                </a>
+                                                                      <a className="d-flex justify-content-between align-items-left">
+                                                                      <p  id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <div style={{display:"block",float:"left"}}>
+                                                                      <p style={{padding:2,margin:5}}>{t.location}</p>
+                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:2,margin:5}}>{t.address}</p>
+                                                                        <p style={{color:"gray",padding:2,margin:5}}>{t.city} {t.state}  {t.country}</p>
+                                                                      </div>
+                                                                      </p>
+                                                                   
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                           
+                                                                /></span><p style={{marginTop:"70px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                 </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -432,13 +445,19 @@ render() {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.png" alt="Settings"/>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
                                             </div>
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
+                                                <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
                                         </div>
                                     </div>
@@ -451,11 +470,18 @@ render() {
                                             <ul class="list-unstyled">
                                                    {this.props.supplierData.supplierLocationList.active.map(t=>{
                                                     return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.location}</span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t)}
-                                                                /></span>
+                                                                 <a className="d-flex justify-content-between align-items-left">
+                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <div style={{display:"block",float:"left"}}>
+                                                                      <p style={{padding:2,margin:5}}>{t.location}</p>
+                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:2,margin:5}}>{t.address}</p>
+                                                                      <p style={{color:"gray",padding:2,margin:5}}>{t.city} {t.state}  {t.country}</p>
+                                                                      </div>
+                                                                      </p>
+                                                                   
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                /></span><p style={{marginTop:"70px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}

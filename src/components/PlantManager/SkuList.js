@@ -160,7 +160,6 @@ const SkuList = (props)=>{
      console.log(id)
       window.scrollTo(100, -100)
       setSelectedRow(skudata.id)
-      alert(skudata.id)
       props.showSinglePlantSkuAction(skudata.id,"edit","sku")
    
    }
@@ -443,7 +442,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3">
                                             <label>Volume Quantity</label>
                                             <select class="form-control" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Volume_Quality")[0]["id"]:"Volume_Quality"} style={{cursor:"pointer"}} onChange={handleInput} 
-                                            value={plantSkuDataById.Volume_Quality}>
+                                            value={plantSkuDataById.volume_quantity}>
                                             <option value="0">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Volume_Quality").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
@@ -469,6 +468,9 @@ const SkuList = (props)=>{
                                            {actionType !=="sku"? <button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <button type="button" style={{cursor:"pointer"}} class="btn btn-primary btn-lg ml-3" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU & Clear":"Update "}</button>
+                                        <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                            <img src="assets/img/close-ic.svg" alt="" onClick={()=>{props.clearSkuFieldsPLant()}} />
+                                        </a>
                                             
 
                                         </div>
@@ -528,7 +530,7 @@ const SkuList = (props)=>{
                         displayPlantSkuList.map(skuData=>{
                            
                             return(
-                                            <tr style={{background:(selectedRow === skuData.id)? "gray":""}}>
+                                            <tr style={{background:(selectedRow === skuData.id)? "#e1e3e4":""}}>
                                                 <td>{skuData.archived ==="0"?"Active":"Archived"}</td>
                                                 <td>{skuData.sku_code}</td>
                                                 <td class="text-right">{skuData.each_cost}</td>

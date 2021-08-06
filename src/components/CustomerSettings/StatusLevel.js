@@ -28,6 +28,7 @@ import { is } from 'immutable';
        isEditing:false,
        name:'',
        selectedID:'',
+       deleteon:false
     }
 
 
@@ -50,14 +51,20 @@ import { is } from 'immutable';
         }
 
         onDrop=(ev,cat)=>{
+           
             let id= JSON.parse(ev.dataTransfer.getData("id"))
             let datatoParse = this.props.customerData.customerStatusList
-            console.log(cat)
+            console.log(cat=="active")
+            // alert(id)
+            // let id= JSON.parse(ev.dataTransfer.getData("id"))
+            // let datatoParse = this.props.customerData.customerReturnReasonList
+            // console.log(cat)
 
             let tasks = []
             console.log( datatoParse.active)
            
             datatoParse.active.filter(task=>{
+                // alert(task.id === id)
                  if(task.id === id){
                     tasks.push(task)
                  }
@@ -73,29 +80,29 @@ import { is } from 'immutable';
              
 
          
-         console.log(tasks)
+         console.log(tasks[0].status)
             // console.log(tasks)
         //    let result= this.props.handleDragDrop(tasks[0])
         //    result.then(res=>{
         //     this.props.getAllPlantCategories()
         //    })
+        
            let doProcess = false;
            if(tasks.length>0){
 
-            if (cat === 'active' && tasks[0].status === 0) {
+            if (cat == 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
             }
-            if (cat === 'inactive' && tasks[0].status === 1) {
+            if (cat == 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
             }
-            if (doProcess === true) {
                
                 let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-account-status")
                 result.then(res=>{
                     this.props.getAllStatusMethods()
                 })   
-            }
+            // }
            }
        
 
@@ -111,9 +118,11 @@ import { is } from 'immutable';
             // alert("dd")
             let id= ev.dataTransfer.getData("id");
             console.log(id)
+            this.setState({deleteon:true})
            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-account-status")
            result.then(res=>{
             this.props.getAllStatusMethods()
+             this.setState({deleteon:false})
            })
 
 
@@ -301,7 +310,7 @@ render() {
                                                 
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <i className="fa fa-trash trashShake" style={{fontSize:35,color:"red"}} ></i>
+                                                <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>

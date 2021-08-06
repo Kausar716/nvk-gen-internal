@@ -307,18 +307,19 @@ import {
                                         <label>Royalty</label>
                                         <input type="text" class="form-control" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
                                     </div>
-                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                    {/* future requirement */}
+                                    {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Hardiness Zone</label>
                                       
                                             <select class="form-control" >
                                             <option>None</option>
                                             <option>Areca</option>
                                             <option>Zone</option>
-                                            </select>
+                                            </select> */}
                                    
                                         {/* <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/> */}
                                         
-                                    </div>
+                                    {/* </div> */}
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Introduction Year</label>
                                         <select class="form-control" id="introduction_year" onChange={handleInput} style={{cursor:"pointer"}} value={plantDataById.introduction_year}>

@@ -579,17 +579,17 @@ Rate</th>
                                                 <table class="table table-striped purchaseOdrTbl" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th width="" class="">No</th>
-                                                            <th width="" class="">Status</th>
-                                                            <th width="" class="">Plant Name/Original SKU</th>
-                                                            <th width="" class="text-center">Size</th>
-                                                            <th width="" class="text-center">Added</th>
-                                                            <th width="" class="text-center">Tags/Labels</th>
-                                                            <th width="" class="text-center">Disc %</th>
-                                                            <th width="" class="text-center">QTY</th>
-                                                            <th width="" class="text-center">Each Price</th>
-                                                            <th width="" class="text-center">Total</th>
-                                                            <th width="" class="text-center">Actions</th>
+                                                            <th width="3%" class="">No</th>
+                                                            <th width="6%" class="">Status</th>
+                                                            <th width="27%" class="">Plant Name/Original SKU</th>
+                                                            <th width="8%" class="text-center">Size</th>
+                                                            <th width="8%" class="text-center">Added</th>
+                                                            <th width="8%" class="text-center">Tags/Labels</th>
+                                                            <th width="8%" class="text-center">Disc %</th>
+                                                            <th width="8%" class="text-center">QTY</th>
+                                                            <th width="8%" class="text-center">Each Price</th>
+                                                            <th width="8%" class="text-center">Total</th>
+                                                            <th width="8%" class="text-center">Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -619,58 +619,58 @@ Rate</th>
                                                                     <tr class="tblBgWhite">
                                                                         <table class="table table-striped table-no-border mb-0" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td class="pt-2">1</td>
-                                                                                <td class="pt-2">
+                                                                                <td width="3%" class="pt-2">1</td>
+                                                                                <td width="6%" class="pt-2">
                                                                                     <span class="stsTag stsTagOpen">Open</span>
                                                                                 </td>
-                                                                                <td  colspan="11">
+                                                                                <td width="91%" colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>
+                                                                                <td width="3%">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="27%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                                                        <label class="custom-control-label" for="customCheck2"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="2.5"/>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="-10"/>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="-10"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%"  class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
+                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
                                                                                     <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                             <i class="fas fa-ellipsis-v"></i>
                                                                                         </a>
                                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
@@ -686,65 +686,65 @@ Rate</th>
                                                                     <tr class="tblBgGrey">
                                                                         <table class="table table-striped table-no-border" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td class="pt-2">2</td>
-                                                                                <td class="pt-2">
+                                                                                <td width="3%" class="pt-2">2</td>
+                                                                                <td width="6%" class="pt-2">
                                                                                     <span class="stsTag stsTagPicking">Picking</span>
                                                                                     <div>
                                                                                         <a href="">(View)</a>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td  colspan="11">
+                                                                                <td width="91%"  colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>
+                                                                                <td width="3%">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="27%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="2.5"/>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="plainText">1</div>
                                                                                     <div class="">
                                                                                         <span class="mr-2"><i class="fas fa-lock"></i></span>
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
+                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
                                                                                     <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                             <i class="fas fa-ellipsis-v"></i>
                                                                                         </a>
                                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
@@ -755,10 +755,10 @@ Rate</th>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr class="trBgWhite descLbl">
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td colspan="12">
+                                                                            <tr class="trBgWhite ">
+                                                                                <td width="3%"></td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="91%" class="" colspan="12">
                                                                                     <img src="assets/img/enter-arrow-red.svg" alt=""/>
                                                                                     <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
                                                                                 </td>
@@ -768,65 +768,65 @@ Rate</th>
                                                                     <tr class="tblBgWhite">
                                                                         <table class="table table-striped table-no-border" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td class="pt-2">2</td>
-                                                                                <td class="pt-2">
+                                                                                <td width="3%" class="pt-2">3</td>
+                                                                                <td width="6%" class="pt-2">
                                                                                     <span class="stsTag stsTagPicking">Picking</span>
                                                                                     <div>
                                                                                         <a href="">(View)</a>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td  colspan="11">
+                                                                                <td width="91%"  colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>
+                                                                                <td width="3%">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="27%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="2.5"/>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="plainText">1</div>
                                                                                     <div class="">
                                                                                         <span class="mr-2"><i class="fas fa-lock"></i></span>
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <span class="text-success controlLabel text-right">90</span>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <span class="text-success controlLabel text-right ">90</span>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
+                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
                                                                                     <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                             <i class="fas fa-ellipsis-v"></i>
                                                                                         </a>
                                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
@@ -837,22 +837,23 @@ Rate</th>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr class="trBgWhite descLbl">
-                                                                                <td></td>
-                                                                                <td></td>
-                                                                                <td colspan="12">
+                                                                            <tr class="trBgWhite ">
+                                                                                <td width="3%"></td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="91%" class="" colspan="12">
                                                                                     <img src="assets/img/enter-arrow-red.svg" alt=""/>
                                                                                     <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
                                                                     </tr>
+                                                                    
                                                                 </table>
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="12" class="p-0">
-                                                                <table class="table table-striped mb-0" width="100%">
+                                                            <table class="table table-striped mb-0" width="100%">
                                                                     <tr class="movePanel">
                                                                         <td colspan="12">
                                                                             <div class="row">
@@ -860,7 +861,7 @@ Rate</th>
                                                                                     <a href="" class="mr-3">
                                                                                         <i class="fas fa-expand-arrows-alt text-dark"></i>
                                                                                     </a>
-                                                                                    <strong>West Wing Rear Entrance</strong>
+                                                                                    <strong>West Wing Front Gardens</strong>
                                                                                 </div>
                                                                                 <div class="col-md-6 text-right">
                                                                                     <a href="#" class="mr-5">Select Segment</a>
@@ -876,58 +877,58 @@ Rate</th>
                                                                     <tr class="tblBgWhite">
                                                                         <table class="table table-striped table-no-border mb-0" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td class="pt-2">3</td>
-                                                                                <td class="pt-2">
+                                                                                <td width="3%" class="pt-2">1</td>
+                                                                                <td width="6%" class="pt-2">
                                                                                     <span class="stsTag stsTagOpen">Open</span>
                                                                                 </td>
-                                                                                <td  colspan="11">
+                                                                                <td width="91%" colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>
+                                                                                <td width="3%">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="27%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                                                        <label class="custom-control-label" for="customCheck2"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="2.5"/>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="-10"/>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="-10"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%"  class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
+                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
                                                                                     <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                             <i class="fas fa-ellipsis-v"></i>
                                                                                         </a>
                                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
@@ -943,64 +944,65 @@ Rate</th>
                                                                     <tr class="tblBgGrey">
                                                                         <table class="table table-striped table-no-border" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td class="pt-2">5</td>
-                                                                                <td class="pt-2">
-                                                                                    <span class="stsTag stsTagInvoiced">Invoiced 01</span>
+                                                                                <td width="3%" class="pt-2">2</td>
+                                                                                <td width="6%" class="pt-2">
+                                                                                    <span class="stsTag stsTagPicking">Picking</span>
                                                                                     <div>
                                                                                         <a href="">(View)</a>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td  colspan="11">
+                                                                                <td width="91%"  colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>
+                                                                                <td width="3%">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="27%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <div class="plainText  text-grey">2.5</div>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td class="text-center text-grey">
+                                                                                <td width="8%" class="text-center">
                                                                                     <div class="plainText">1</div>
                                                                                     <div class="">
-                                                                                        <span class="text-green">542</span>
+                                                                                        <span class="mr-2"><i class="fas fa-lock"></i></span>
+                                                                                        <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <div class="plainText">8.25</div>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
-                                                                                        <span class=" text-grey">21</span>
+                                                                                        <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
+                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
                                                                                     <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                                                             <i class="fas fa-ellipsis-v"></i>
                                                                                         </a>
                                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
@@ -1011,8 +1013,99 @@ Rate</th>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
+                                                                            <tr class="trBgWhite ">
+                                                                                <td width="3%"></td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="91%" class="" colspan="12">
+                                                                                    <img src="assets/img/enter-arrow-red.svg" alt=""/>
+                                                                                    <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
+                                                                                </td>
+                                                                            </tr>
                                                                         </table>
                                                                     </tr>
+                                                                    <tr class="tblBgWhite">
+                                                                        <table class="table table-striped table-no-border" width="100%">
+                                                                            <tr class="topTitleRow">
+                                                                                <td width="3%" class="pt-2">3</td>
+                                                                                <td width="6%" class="pt-2">
+                                                                                    <span class="stsTag stsTagPicking">Picking</span>
+                                                                                    <div>
+                                                                                        <a href="">(View)</a>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td width="91%"  colspan="11">
+                                                                                    <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td width="3%">
+                                                                                    <div class="custom-control custom-checkbox">
+                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="27%">
+                                                                                    <select class="form-control plantNameSel">
+                                                                                        <option>43-TF-30-1G</option>
+                                                                                        <option>Option 1</option>
+                                                                                        <option>Option 2</option>
+                                                                                    </select>
+                                                                                </td>
+                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <div class="custom-control custom-checkbox">
+                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
+                                                                                </td>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <div class="plainText">1</div>
+                                                                                    <div class="">
+                                                                                        <span class="mr-2"><i class="fas fa-lock"></i></span>
+                                                                                        <span class="text-green">21</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
+                                                                                    <div class="">
+                                                                                        <span class="text-green">21</span>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <span class="text-success controlLabel text-right ">90</span>
+                                                                                </td>
+                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
+                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                        </a>
+                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr class="trBgWhite ">
+                                                                                <td width="3%"></td>
+                                                                                <td width="6%"></td>
+                                                                                <td width="91%" class="" colspan="12">
+                                                                                    <img src="assets/img/enter-arrow-red.svg" alt=""/>
+                                                                                    <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </tr>
+                                                                    
                                                                 </table>
                                                             </td>
                                                         </tr>
