@@ -72,8 +72,8 @@ export default function(state = initialSatate, action){
         case GET_ALL_PLANT_CATEGORIES:
             return{
                 ...state,
-                // plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive],
-                plantCategoryData:[...action.payload.data.active],
+                 plantCategoryData:[...action.payload.data.active,...action.payload.data.inactive],
+                //plantCategoryData:[...action.payload.data.active],
 
                 name:""
 

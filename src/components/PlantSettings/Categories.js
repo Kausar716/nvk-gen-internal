@@ -4,6 +4,8 @@
 import React, { Component } from 'react'
 import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
+import 'react-confirm-alert/src/react-confirm-alert.css';
+import { confirmAlert } from 'react-confirm-alert'; 
 // import './style.css';
 //import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,handleAddCategory,
@@ -15,13 +17,19 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
             super()
                 this.state={
                     errorObj:{
-                        formSku:0
+                        formSku:0,
+                        Category:0
                     },
                     sortId: 0,
                     activeId: 0,
                     isEditing:false,
                     name:'',
-                    selectedID:''
+                    subName:'',
+                    subName2:'',
+                    selectedID:'',
+                    btnLabelAdd:'Add New Category Type',
+                    btnLabelUpdate: 'Update Category Type',
+                    btnLabelCancel:'Cancel'
                 }
             
         }
@@ -97,44 +105,157 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
                 }) 
                 alertmsg = 3;
             }
+            // if (alertmsg === 1){
+            //     alert('Successfully Moved from Inactive to Active');
+            // }
+            // if (alertmsg === 2){
+            //     alert('Successfully Moved from Active to Inactive');
+            // }
+            // if (alertmsg === 3){
+            //     alert('Sort Successfully Done');
+            // }
+
             if (alertmsg === 1){
-                alert('Successfully Moved from Inactive to Active');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 2){
-                alert('Successfully Moved from Active to Inactive');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 3){
-                alert('Sort Successfully Done');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Sort Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
+
 
         }
 
+
+        // onDelete =(ev)=>{
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //    let result= this.props.handleCategoryDelete(id)
+        //    result.then(res=>{
+        //     this.props.getAllPlantCategories()
+        //    })
+        // }
 
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-           let result= this.props.handleCategoryDelete(id)
-           result.then(res=>{
-            this.props.getAllPlantCategories()
-           })
-
-
+            confirmAlert({
+                title: 'Delete Category Type',
+                message: 'Are you sure want to delete the Category Type?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCategoryDelete(id)
+            result.then(res=>{
+                this.props.getAllPlantCategories()
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Category Type ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
+
+
+
+
         handleCategoryInputAction = (e)=>{
+
+
             this.props.handleCategoryInputAction(e.target.value)
         }
+
+
+
+
+
         handleAddCategory = (e)=>{
-            if(this.props.name){
+        //     if(this.props.name){
+        //     let result = this.props.handleAddCategory(this.props.name)
+        //     result.then(res=>{
+        //         this.props.getAllPlantCategories()
+        //     })
+        //     alert('Added Successfully Done');
+        // }
+        // this.setState({
+        //     name:""
+        // })
+        if(this.validate()){
             let result = this.props.handleAddCategory(this.props.name)
             result.then(res=>{
                 this.props.getAllPlantCategories()
             })
-            alert('Added Successfully Done');
-        }
-        this.setState({
-            name:""
-        })
+            confirmAlert({
+                title: 'Added Successfully',
+                message: 'Category Type',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+            this.setState({
+                name: "",
+                subName:"",
+                isEditing:false,
+                selectedID:'',
+            })
+        }  
 
+        }
+
+
+        validate = ()=>{
+            let errorObj = this.state.errorObj
+            if(this.state.name.length === 0){
+                errorObj.Category=1
+                this.setState({errorObj})
+                return false
+            }
+
+            return true
+            
         }
 
 
@@ -143,8 +264,22 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
             this.setState({
                 name:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+        if(e.target.name === "Category"){
+            errorObj.Category=0
+            this.setState({errorObj})}
+
             this.props.handleCategoryInputAction(e.target.value)
 
+        }
+
+
+        handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.Category=0
+            //errorObj.locationTypeShortCode=0
+            this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
         }
 
 
@@ -157,15 +292,38 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
           updateObject.name=this.state.name
          // updateObject.id=this.props.showSpeciSubA.id
              
-              let res1=   this.props.updatePlantSettingCategory(updateID, updateObject)
-              res1.then(res=>{
-                  this.props.getAllPlantCategories()
-              })
+            //   let res1=   this.props.updatePlantSettingCategory(updateID, updateObject)
+            //   res1.then(res=>{
+            //       this.props.getAllPlantCategories()
+            //   })
   
-              this.setState({
-                  isEditing:false,
-                  name:""
-              })
+            //   this.setState({
+            //       isEditing:false,
+            //       name:""
+            //   })
+
+              if(this.validate()){
+                let res=   this.props.updatePlantSettingCategory(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllPlantCategories()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Category Type',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
       }
 
 
@@ -194,6 +352,7 @@ render() {
         inactive:[],
         active:[],
     }
+
     if(this.props.plantCategoryList){
         // tasks=this.props.plantCategoryList
          this.props.plantCategoryList.forEach((t)=>{
@@ -206,7 +365,7 @@ render() {
             }
          })
     }
-    console.log(this.props.temp)
+    console.log("plantCategoryList",this.props.plantCategoryList)
 
     console.log("showSpecificPlantCategory", this.props.showSpecificPlantCategory)
     // this.props.plantCategoryList.forEach((t)=>{
@@ -248,10 +407,11 @@ render() {
                                                 name="Category" 
                                                 value={this.state.name}
                                                  placeholder="Category" onChange={this.handlePositionInputAction}/>
+                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category Type</span>:""}
                                             </div>
 
 
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
                                                 <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                     <div >
                                                     <a href="javascript:" className="d-flex align-items-center">
@@ -265,7 +425,6 @@ render() {
                                                     </a>
                                                     </div>
                                                 </div>  
-
                                             ):
                                             (
                                                 <div className="col-md-6 col-lg-3" onClick={this.handleAddCategory}>
@@ -273,7 +432,23 @@ render() {
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                                 </a>
                                                 </div>  
-                                                )}                                            
+                                                )}  */}
+
+
+                                        <div className="d-flex justify-content-md-end mt-2"  >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div>
+
+
                                            </div> 
 
 

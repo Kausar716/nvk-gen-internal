@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import { confirmAlert } from 'react-confirm-alert'; 
 import * as MdIcons from "react-icons/md";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
@@ -20,10 +21,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     sortId: 0,
                     activeId: 0,
                     isEditing:false,
-                        name:'',
-                        subName:'',
-                        subName2:'',
-                        selectedID:''
+                    name:'',
+                    subName:'',
+                    subName2:'',
+                    selectedID:'',
+                    btnLabelAdd:'Add New Caliper',
+                    btnLabelUpdate: 'Update Caliper',
+                    btnLabelCancel:'Cancel'
                 }
             
         }
@@ -79,31 +83,100 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 alertmsg = 3;
             }
             if (alertmsg === 1){
-                alert('Successfully Moved from Inactive to Active');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 2){
-                alert('Successfully Moved from Active to Inactive');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 3){
-                alert('Sort Successfully Done');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Sort Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
         }
+
+
+        // onDelete =(ev)=>{
+        //    let id= ev.dataTransfer.getData("id");
+        //    console.log(id)
+        //    let result= this.props.handleAttributeDelete(id)
+        //    result.then(res=>{
+        //     this.props.getAllSubAttribute(5)
+        //    })
+        // }
+
+
         onDelete =(ev)=>{
-           let id= ev.dataTransfer.getData("id");
-           console.log(id)
-           let result= this.props.handleAttributeDelete(id)
-           result.then(res=>{
-            this.props.getAllSubAttribute(5)
-           })
+            let id= ev.dataTransfer.getData("id");
+            confirmAlert({
+                title: 'Delete Location Type',
+                message: 'Are you sure want to delete the Location Type?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+        
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleAttributeDelete(id)
+            result.then(res=>{
+                this.props.getAllSubAttribute(5)
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Location Type ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
         handleZoneInputAction = (e)=>{
             console.log("whichNAME", e.target.name,e.target.value)
             this.setState({
                 name:e.target.value
             })
 
+            let errorObj=this.state.errorObj
+            if(e.target.name === "caliperName"){
+            errorObj.caliperName=0
+            this.setState({errorObj})}
+
             this.props.handleZoneInputAction(e.target.name,e.target.value)
         }
+
 
         handleZoneInputAction2 = (e)=>{
             //debugger;
@@ -181,22 +254,47 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 children_name:'SKU value'
                 }
         ]
-        if(this.validate()){
-      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllSubAttribute(5)
-             })
+    //     if(this.validate()){
+    //   let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllSubAttribute(5)
+    //          })
             
 
-            }
+    //         }
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
-                 subName:"",
-                 subName2:""
-             })
+    //          this.setState({
+    //              isEditing:false,
+    //              name:"",
+    //              subName:"",
+    //              subName2:""
+    //          })
             //  alert('Updated Successfully Done');
+
+
+            if(this.validate()){
+                let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllSubAttribute(5)
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Form ',
+                            buttons: [
+                            {
+                                label: 'Ok'
+                            }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:"",
+                        subName2:""
+                    })
+            }
      }
 
 
@@ -213,25 +311,59 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             ]
             zoneObj.status=1
             console.log(zoneObj)
-            if(this.validate()){
+        //     if(this.validate()){
+        //     let result = this.props.handleAddZone(zoneObj)
+        //     result.then(res=>{
+        //         this.props.getAllSubAttribute(5)
+        //     })
+        //     alert('Added Successfully Done');
+        // }
+
+        // this.setState({
+        //     name:"",
+        //     subName:"",
+        //     subName2:""
+        // })
+        
+
+        if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(5)
             })
-            alert('Added Successfully Done');
-        }
+            confirmAlert({
+                title: 'Added Successfully',
+                message: 'Caliper ',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+            this.setState({
+                name: "",
+                subName:"",
+                subName2:"",
+                isEditing:false,
+                selectedID:'',
+            })
+        } 
 
-        this.setState({
-            name:"",
-            subName:"",
-            subName2:""
-        })
-        
+
+
+
+
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
             if(this.state.subName.length === 0){
                 errorObj.caliperImperial=1
+                this.setState({errorObj})
+                return false
+            }
+
+            if(this.state.name.length === 0){
+                errorObj.caliperName=1
                 this.setState({errorObj})
                 return false
             }
@@ -243,6 +375,18 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             return true
             
         }
+
+
+        handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.caliperName=0
+            errorObj.caliperSku=0
+            errorObj.caliperImperial=0
+            this.setState({name: "", subName:"",subName2:"", isEditing:false, selectedID:'', errorObj})
+        }
+
+
+
         render() {
             console.log("ABCDEFG",this.props.showSpeciSubA)
         console.log(this.props.temp)
@@ -277,6 +421,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                  placeholder="Name"  name="caliperName" 
                                                value={this.state.name}
                                                  onChange={this.handleZoneInputAction}/>
+                                                 {this.state.errorObj.caliperName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Caliper Name</span>:""}
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 {/* <a href="javascript;" className="d-flex align-items-center">
@@ -313,7 +458,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 </a>
                                             </div> */}
 
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
                                                     <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} onClick={this.handleAddCategoryUpdate}>
                                                     <div >
                                                     <a href="javascript:" className="d-flex align-items-center">
@@ -336,7 +481,20 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Caliper
                                                     </a>
                                                     </div>  
-                                            )}   
+                                            )}    */}
+
+                            <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                <div >
+                                    <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                    </a>
+                                </div>
+                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                    <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                        <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                    </a>
+                                </div>
+                            </div>
 
 
                                         </div>
