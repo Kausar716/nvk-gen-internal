@@ -218,8 +218,14 @@ export class QuoteList extends React.Component {
         
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Quotes</h1>
+				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quotes</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
+                    <a href="#" class="btn">
+                        <span class="d-flex align-items-center text-left">
+                        <img src="assets/img/Quoteblue_small-Icon.svg" alt=""/>
+                            <span class="ml-2"><b>New Quote</b></span>
+                        </span>
+                    </a>
                     <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
@@ -242,13 +248,13 @@ export class QuoteList extends React.Component {
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Select Order</h2>
+                        <h2>Search Quotes & Orders</h2>
                         <hr/>
                         <div class="row mt-3 align-items-center">
                             <div class="col-md-12">
                                 <div class="row form-group">
-                                    <div class="col-md-5 col-lg-5">
-                                        <label>Status Levels</label>
+                                    <div class="col-md-12 col-lg-12">
+                                        <label><b>Orders</b></label>
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="open" 
@@ -258,20 +264,64 @@ export class QuoteList extends React.Component {
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                <label class="custom-control-label" for="customCheck2">Draft</label>
+                                                <label class="custom-control-label" for="customCheck2">Pick</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck3" />
-                                                <label class="custom-control-label" for="customCheck3">Closed</label>
+                                                <label class="custom-control-label" for="customCheck3">Ready</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck4" />
-                                                <label class="custom-control-label" for="customCheck4">Cancelled</label>
+                                                <label class="custom-control-label" for="customCheck4">Ship</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck5" />
+                                                <label class="custom-control-label" for="customCheck5">Invoiced</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck6" />
+                                                <label class="custom-control-label" for="customCheck6">Closed</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck7" />
+                                                <label class="custom-control-label" for="customCheck7">Cancelled</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck8" />
+                                                <label class="custom-control-label" for="customCheck8">Late</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-5 col-lg-5">
+                                        <div class="d-flex flex-wrap mt-2">
+                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select All</label></a></div>
+                                            <div><label>&nbsp;&nbsp;&nbsp;</label></div>
+                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select None</label></a></div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-5 col-lg-5">
+                                        <label><b>Quotes</b></label>
+                                        <div class="d-flex flex-wrap mt-2">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="active" 
+                                                name="active"
+                                                onChange={this.handleClickCheckBox} />
+                                                <label class="custom-control-label" for="active" >Active</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-3">
+                                                <input type="checkbox" class="custom-control-input" id="inactive" />
+                                                <label class="custom-control-label" for="inactive">InActive</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-7 col-lg-7">
-                                        <label>Date Range</label>
+                                        <label><b>Date Range</b></label>
                                         <div class="d-flex flex-wrap align-items-center">
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
@@ -291,7 +341,7 @@ export class QuoteList extends React.Component {
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-4 col-lg-4">
-                                        <label>Supplier</label>
+                                        <label><b>Customer</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -300,7 +350,7 @@ export class QuoteList extends React.Component {
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
-                                        <label>Job Description</label>
+                                        <label><b>Job Description</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -309,7 +359,7 @@ export class QuoteList extends React.Component {
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
-                                        <label>Order#</label>
+                                        <label><b>Order#</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -320,7 +370,7 @@ export class QuoteList extends React.Component {
                                 </div>
                                 <div class="row form-group mb-2">
                                     <div class="col-md-4 col-lg-4">
-                                        <label>Search Plants or Products</label>
+                                        <label><b>Search Plants or Products</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -329,7 +379,7 @@ export class QuoteList extends React.Component {
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
-                                        <label>SKU</label>
+                                        <label><b>SKU</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -337,63 +387,15 @@ export class QuoteList extends React.Component {
                                             <input type="text" class="form-control" onChange={this.onSearchInputChange2} placeholder="Search Plants or Products"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 ">
-                                        <label>Supplier Order#</label>
+                                    <div class="col-md-4 col-lg-4 pt-md-1 mt-3 ">
+                                        <label>&nbsp;</label>
                                         <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange3} placeholder="Search SKU"/>
+                                        <a href="javascript:;" style={{cursor:"pointer"}}>Reset</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-md-12 col-lg-12 text-right">
-                                        <a href="javascript:;">Reset</a>
-                                    </div>
-                                </div>
 
-                                {/* <div class="form-group row mt-3">
-                                    <div class="col-md-12 col-lg-12">
-                                        <ul class="list-unstyled searchAlpha d-flex flex-wrap mb-0">
-                                            <li><a href="#" class="active">All</a></li>
-                                            <li><a href="#">A</a></li>
-                                            <li><a href="#">B</a></li>
-                                            <li><a href="#">C</a></li>
-                                            <li><a href="#">D</a></li>
-                                            <li><a href="#">E</a></li>
-                                            <li><a href="#">F</a></li>
-                                            <li><a href="#">G</a></li>
-                                            <li><a href="#">H</a></li>
-                                            <li><a href="#">I</a></li>
-                                            <li><a href="#">J</a></li>
-                                            <li><a href="#">K</a></li>
-                                            <li><a href="#">L</a></li>
-                                            <li><a href="#">M</a></li>
-                                            <li><a href="#">N</a></li>
-                                            <li><a href="#">O</a></li>
-                                            <li><a href="#">P</a></li>
-                                            <li><a href="#">Q</a></li>
-                                            <li><a href="#">R</a></li>
-                                            <li><a href="#">S</a></li>
-                                            <li><a href="#">T</a></li>
-                                            <li><a href="#">U</a></li>
-                                            <li><a href="#">V</a></li>
-                                            <li><a href="#">W</a></li>
-                                            <li><a href="#">X</a></li>
-                                            <li><a href="#">Y</a></li>
-                                            <li><a href="#">Z</a></li>
-                                        </ul>
-                                    </div>
-                                </div> */}
-
-
-                        {/* <input type="search" onChange={this.onSearchInputChange} /> */}
-
-
-
-                       
-
+                                
 
                     
                             <div class="form-group row mt-4">
@@ -407,15 +409,13 @@ export class QuoteList extends React.Component {
                                 </div>
                             </div>
                             <div className="row_1">
-                                <div style={{float:"left",marginBottom:15}}>
-                                {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
-                                {/* </div> */}
-                                </div>
-
-
-                                    <div >
-                                    <label className="greenText">Show</label>
+                                        <div style={{float:"left",marginBottom:15}}>
+                                            {/* <div> */}
+                                                <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                            {/* </div> */}
+                                        </div>
+                                        <div style={{float:"left",marginBottom:15}}>
+                                            <label className="greenText">Show</label>
                                                 <select 
                                                     value={this.state.pageSize}
                                                     onChange={e => {
@@ -429,16 +429,13 @@ export class QuoteList extends React.Component {
                                                         {pageSize}
                                                         </option>
                                                     ))}
-                                                </select>
+                                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="checkbox" class="custom-control-input customer-checkbox" id="dispquote" />
+                                                <label class="custom-control-label" for="dispquote">Display FLAGGED Quotes only</label>
                                         </div>
-
-                
-
-
-
-                                <div style={{float:"right",marginBottom:15}}>
-                                    <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
-                                </div>
+                                        <div style={{float:"right",marginBottom:15}}>
+                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+                                        </div>
                                
                             </div>
                             <div style={{clear:"both"}}></div>
@@ -464,7 +461,7 @@ export class QuoteList extends React.Component {
                                             <tbody>
                                                 {filteredList.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.suppliearName}>
-                                                    <td><span  class='stsBadge stsClosed'>{pQuoteList.status}</span></td>
+                                                    <td><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
                                                     <td><a href="">{pQuoteList.orderNumber}</a></td>
                                                     <td>{pQuoteList.suppliearName}</td>
                                                     <td>{pQuoteList.supplierOrder}</td>
@@ -481,60 +478,7 @@ export class QuoteList extends React.Component {
                                                         </span>
                                                     </td>
                                                 </tr>
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsClosed'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>Windham Gardens</td>
-                                                    <td>1024275</td>
-                                                    <td>Brendan Weirs</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Delivery</td>
-                                                    <td>8,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsDraft'>Draft</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsOpen'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
+                                                
 
 
                                             })}
