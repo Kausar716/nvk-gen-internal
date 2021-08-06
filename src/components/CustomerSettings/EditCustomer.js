@@ -357,7 +357,7 @@ function AddCustomer(props) {
                 <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
                 <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-            <h1 class="page-header mb-0"><img src="assets/img/customer-ic-lg.svg" alt=""/> Add/Edit Customer</h1>
+            <h1 class="page-header mb-0"><img src="assets/img/customer-ic-lg.svg" alt=""/> Add/Edit Customer  <span>{customerDataById.id?"#"+customerDataById.id:""}</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn ml-2 mt-3 mt-md-0">
                         <span class="d-flex align-items-center text-left">
