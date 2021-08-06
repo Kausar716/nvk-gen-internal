@@ -474,8 +474,9 @@ render() {
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
+                                                       let backgroundToggle =  (this.state.backgroundChange === t.id)
+                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} >
+                                                                 <a className="d-flex justify-content-between align-items-center" style={{backgroundColor:backgroundToggle?"#e1e3e4":"",borderStyle:backgroundToggle?"dashed":""}}>
                                                                 <span id="Wheathers">{t.name}</span>
                                                                 </a>
                                                             </li>
@@ -515,8 +516,8 @@ render() {
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
+                                                                 <a className="d-flex justify-content-between align-items-center" >
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "} >{t.name}</span>
 
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}

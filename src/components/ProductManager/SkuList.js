@@ -344,6 +344,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
     console.log(skuDataById.volume_quantity)
     let selectedSubCategoryId = skuDataById.sub_category_id
     console.log(actionType)
+    const handleCancle = ()=> {
+        setSelectedRow(-1);
+        setSkuEdit(false); 
+        props.clearSkuFields()
+    }
     let flag =0
     if(skuDataById){       
         if(!skuDataById.each_cost||skuDataById.sub_category_id  === "0" || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
@@ -396,7 +401,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
-                                            <select class="form-control" style={{cursor:"pointer"}}>
+                                            <select class="form-control" style={{cursor:"pointer"}}  >
                                                 <option>Select</option>
                                                 <option>Option 1</option>
                                                 <option>Option 2</option>
@@ -503,7 +508,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
                                             {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                            <img src="assets/img/close-ic.svg" alt="" onClick={()=>{props.clearSkuFields()}} />
+                                            <img src="assets/img/close-ic.svg" alt="" onClick={handleCancle} />
                                         </a>
                                         </div>
                                     </div>
