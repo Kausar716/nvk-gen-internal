@@ -40,6 +40,7 @@ function AddSupplier(props) {
 	const [message2,setMessage2] = useState([]);
     const [message,setMessage] = useState([]);
 	const toggle2 = () => setIsOpen2(!isOpen2);
+    const [enableUrl,setEnableUrl] = useState(false)
     const {supplierDataById,supplierContactList,supplierAddressList} = props.supplierData
     const {categoryData} = props.categoryData
     const [isOpen2, setIsOpen2] = useState(false);
@@ -156,6 +157,21 @@ function AddSupplier(props) {
         else if(e.target.id ==="status"){
             let prospect = parseInt(supplierDataById.status)==1?0:1
             props.handleSupplierExchnageData(prospect,e.target.id,"supplierDataById")
+        }else if(e.target.id ==="website"){
+            let validate = e.target.value
+            let val = e.target.value.includes("https://") ||e.target.value.trim()==""?e.target.value:"https://"+e.target.value
+            var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
+            var res = patt.test(val);
+            // console.log(res)
+            if(res === false){
+                setEnableUrl(false)
+                props.handleSupplierExchnageData(val,e.target.id,"supplierDataById")
+
+            }else{
+                setEnableUrl(true)
+                props.handleSupplierExchnageData(val,e.target.id,"supplierDataById")
+            }
+
         }
         else props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierDataById")
         // if(e.target.name === "customer_name"){
@@ -422,7 +438,7 @@ console.log(props.supplierData.supplierReasonList)
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end">
                         
-                            {addCustomertoggle?"":  <a href="#" class="btn active">
+                            {/* {addCustomertoggle?"":  <a href="#" class="btn active">
                                     <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/pdf-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Contact PDF</b></span>
@@ -439,7 +455,29 @@ console.log(props.supplierData.supplierReasonList)
                                         <img src="assets/img/saveDone-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Save &amp; Done</b></span>
                                     </span>
-                                </a>
+                                </a> */}
+                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
+                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
+                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
+                                        <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
+                                    </span>
+                                </button>
+                                {/* "btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3" */}
+                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
+                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
+                                        <i className="fa fa-save" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save</span>
+                                    </span>
+                                </button>
+                                <button   onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <span class="d-flex align-items-center text-left">
+                                        {/* <img src="assets/img/saveDone-ic.svg" alt="" /> */}
+                                        <i className="fa fa-save" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
+                                    </span>
+                                </button>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                     <img src="assets/img/close-ic.svg" alt="" onClick={closeAddSupplier}/>
                                 </a>
@@ -591,11 +629,22 @@ console.log(props.supplierData.supplierReasonList)
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8 mt-8 mt-md-0">
+                                    <div class="col-md-8 col-lg-8 mt- mt-md-0">
                                     <label>Website</label>
-                                        <div class="d-flex">
-                                            <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
-                                            <a href={supplierDataById.website} target="_blank" class="btn btn-outline-secondary btn-lg ml-2">Visit</a>
+                                    <div class="d-flex">
+                                    <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+                                        {enableUrl== true?
+                                      
+                                          
+                                            <a href={supplierDataById.website} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline"}}>Visit</a>
+                                       
+                                        :
+                                       
+                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true}>
+                                         
+                                            Visit
+                                            </button>
+                                       }
                                         </div>
                                     </div>
                                 </div>
@@ -740,12 +789,12 @@ console.log(props.supplierData.supplierReasonList)
                                                 </div> */}
                                                 <div style={{display:"flex"}}>
                                         
-                                        <div class="col-md-2 col-lg-2">
+                                        {/* <div class="col-md-2 col-lg-2">
                                             <div className="custom-control custom-checkbox mb-1" >
                                                 <input type="checkbox" className="custom-control-input" id={"all_communication"} onChange={handleInput} />
                                                 <label className="custom-control-label" for={"all_communication"}>Growing Supplies</label>
                                             </div>
-                                        </div>
+                                        </div> */}
                                         </div>
                                                
                                             </div>

@@ -53,6 +53,8 @@ export class OrganizationSettings extends React.Component {
             actionType:"",
             submitCount:0,
 
+            imgLoader:false,
+
             phoneNumberInOrganization:" ",
             phoneError:"",
 
@@ -96,7 +98,9 @@ export class OrganizationSettings extends React.Component {
   
     handlImageUpload = (e1)=>{
        // debugger;
-     
+       this.setState({
+        imgLoader: true
+    })
         console.log("e1Firstfile", e1.target.files[0])
         let imageData = e1.target.files[0]
         let id="2"
@@ -106,19 +110,37 @@ export class OrganizationSettings extends React.Component {
            
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
+
+     
+      
+
         if( e1.target.files[0]){
             this.fileInput.value = ""
         }
-       
+
+      
+        // if(this.state.imgLoader===true){
+        //     return(
+        //     <div>
+        //             <Loader />
+        //     </div>
+               
+        //     )}
         //alert("image successfully uploaded")
-        setTimeout(function() {
+        // setTimeout(function() {
           
 
-           // window.location.reload();
+            
+        //         let abc =this.state.imgLoader
+
+            
+    
            
             
-         },1100);
-         alert("image successfully uploaded")
+        //  },1100);
+        // alert("image successfully uploaded")
+
+
         
          
     }
@@ -216,7 +238,9 @@ export class OrganizationSettings extends React.Component {
             hadModified.secondary_title=true
         }
 
-
+        this.setState({
+            imgLoader: false
+        })
                     //console.log(hadModified[name],name)
                     // if(hadModified[name]  === name){
                         //hadModified[name] = true
@@ -320,7 +344,9 @@ export class OrganizationSettings extends React.Component {
         //debugger;
         console.log("enteredVALUES", this.state.phoneNumberInOrganization)
         this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
-       
+        this.setState({
+            imgLoader: false
+        })
       }
 
 
@@ -434,7 +460,7 @@ export class OrganizationSettings extends React.Component {
         const { history } = this.props;
 
 
-            this.handleSubmit();
+            this.handleSubmit()
             history.push("/Dashboard")
 
 
@@ -451,6 +477,10 @@ export class OrganizationSettings extends React.Component {
 
 
         alert("Image Removed Successfully")
+
+        this.setState({
+            imgLoader: true
+        })
         
          //this.setState({});
          //window.location.reload();
@@ -471,6 +501,13 @@ export class OrganizationSettings extends React.Component {
          history.push("/Dashboard")
       }
      }
+
+
+      goDashboard =()=>{
+            
+        const { history } = this.props;
+        history.push("/Dashboard")
+    }
 
 
 
@@ -553,10 +590,7 @@ export class OrganizationSettings extends React.Component {
 
 
 
-        const goDashboard =()=>{
-            const { history } = this.props;
-            history.push("/Dashboard")
-        }
+   
 
 
 
@@ -663,7 +697,6 @@ export class OrganizationSettings extends React.Component {
             actionType:"",
             actionMessage:""
         })
-       
          
      }
 
@@ -719,6 +752,8 @@ export class OrganizationSettings extends React.Component {
                                                 <span class="ml-2"><b>Save  </b></span>
                                             </span>
                                         </a>
+
+
                                         <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.saveAndGo}
                                        
@@ -729,7 +764,10 @@ export class OrganizationSettings extends React.Component {
                                             </span>
                                         </a>
                                         <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                            <img src="assets/img/close-ic.svg" alt="" onClick={()=>{confirmAction("goBack"); }}/>
+                                            <img src="assets/img/close-ic.svg" alt="" 
+                                            onClick={this.goDashboard}
+                                            //onClick={()=>{confirmAction("goBack"); }}
+                                            />
                                         </a>
                         </div>
                         </div>
@@ -755,7 +793,15 @@ export class OrganizationSettings extends React.Component {
                                             // style={{height:"250px",width:"255px", borderRadius:"50%"}}
                                             />
                                             <div className="loaderCenter">
-                                            <p > <Loader /></p> 
+                                                {this.state.imgLoader===true ? 
+                                                    <p >
+                                                         {/* {this.state.imgLoader===false ? <Loader /> : ""}  */}
+                                                         <Loader /> 
+                                                         </p> 
+                                                    :
+                                                    <p > </p> 
+                                            }
+                                           
                                             </div>
                                           
                                              
@@ -768,7 +814,7 @@ export class OrganizationSettings extends React.Component {
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
-                                                <span class="f-s-20" style={{position:"absolute"}} >Upload</span>
+                                                <span class="f-s-20" style={{position:"absolute",fontWeight:"bold"}} >Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt="" />
                                             {/* <img src="assets/img/upload-ic-white.svg" alt="" /> */}
@@ -778,7 +824,7 @@ export class OrganizationSettings extends React.Component {
                                             onClick={()=>{confirmAction("deleteImage"); }}
                                              //onClick={this.handleRemoveImage}
                                              >
-                                                <span class="f-s-20 text-danger" style={{marginTop:"-3px"}}>Remove</span>
+                                                <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold"}}>Remove</span>
                                             </span>
                                             <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
                                         </div>
@@ -883,15 +929,15 @@ export class OrganizationSettings extends React.Component {
 
                                 </div>
                             </div>
-                            <div class="row mt-3 mt-lg-0">
+                            <div class="row mt-3 mt-lg-0" style={{paddingTop:"1.1em"}}>
                                 <div class="col-md-12 col-lg-12">
                                     <div class="row form-group">
                                         <div class="col-md-6">
-                                            <label style={{fontWeight:"bold"}}>Main Title (Body)</label>
+                                            <label style={{fontWeight:"bold"}}>Main Title (Bold)</label>
                                             <input type="text" placeholder="Name" class="form-control" name="main_title" value={organizationDataById.main_title} onChange={this.handleInput}  />
                                         </div>
                                         <div class="col-md-6">
-                                            <label style={{fontWeight:"bold"}}>Secondary Title (Body)</label>
+                                            <label style={{fontWeight:"bold"}}>Secondary Title (Bold)</label>
                                             <input type="text" placeholder="Address 01" class="form-control" name="secondary_title" value={organizationDataById.secondary_title} onChange={this.handleInput}  />
                                         </div>
                                     </div>

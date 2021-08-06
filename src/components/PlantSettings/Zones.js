@@ -7,7 +7,13 @@ import {connect} from "react-redux";
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone} from '../../actions/attributeAction'
 
     class Zones extends Component {
-     
+        constructor(props){
+            super()
+                this.state={
+                    deleteon:false
+                }
+            
+        }
          onDragOver = (ev)=>{
             ev.preventDefault();
         }
@@ -46,7 +52,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
            let id= ev.dataTransfer.getData("id");
            console.log(id)
            let result= this.props.handleAttributeDelete(id)
+           this.setState({deleteon:true})
            result.then(res=>{
+            this.setState({deleteon:false})
             this.props.getAllSubAttribute(10)
            })
         }
@@ -143,13 +151,19 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
                                             </div>
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
+                                                <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
                                         </div>
                                     </div>
