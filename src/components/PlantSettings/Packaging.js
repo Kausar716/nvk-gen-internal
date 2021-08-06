@@ -350,7 +350,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
     
          }
 
-
+         handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.packagingName=0
+            errorObj.packagingSku=0
+            //errorObj.locationTypeShortCode=0
+            this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+        }
+   
 
 
         render() {
