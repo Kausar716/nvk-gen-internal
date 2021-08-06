@@ -74,7 +74,13 @@ const validate = values => {
     <div>
       {/* <label>{label}</label> */}
       <div>
-        <input {...input} class="form-control" placeholder={label}  autoComplete=" " type={type}/>
+        <input {...input} class="form-control" placeholder={label} 
+       readOnly={false}
+        autoComplete="off"
+        autoCorrect="off"
+        spellCheck="off"
+         //onFocus={onFocus}
+          type={type} onchange={changingValue}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
         </Row>
@@ -84,6 +90,19 @@ const validate = values => {
   
    )}
 
+
+   const onFocus = event => {
+
+    if(event.target.autocomplete)
+    {
+      event.target.autocomplete = "whatever";
+    }
+ 
+ };
+
+const changingValue=()=>{
+    alert("abcd")
+}
 
 
 const SignInPage = (props) => {
@@ -152,7 +171,7 @@ const SignInPage = (props) => {
                                     <div class="col-md-12">
                                         <label for="plantSearch">Email <span class="text-danger">*</span></label>
                                         {/* <input type="text" class="form-control" placeholder="Email" /> */}
-                                        <Field name="email" type="email" component={renderField} label="Email" />
+                                        <Field name="email" type="email" component={renderField} label="Email"  autoComplete="off"/>
                                     </div>
                                 </div>
                                 <div class="form-group row">

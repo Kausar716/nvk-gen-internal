@@ -7,6 +7,7 @@ import { Field, reduxForm } from 'redux-form';
 import { Link } from "react-router-dom";
 import './index.css'
 import {Button,FormGroup,Label,Row} from 'reactstrap'
+import Testing from './Testing'
 // import submit from './submit'
 //   const required = value => value ? undefined : 'Required'
 //   const maxLength = max => value =>
@@ -149,7 +150,7 @@ const ForgotPassword = (props) => {
             </div>
         </div>
 
-
+    {/* <Testing/> */}
 
     </>
   );
