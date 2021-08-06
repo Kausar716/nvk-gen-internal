@@ -601,12 +601,27 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Website</label>
-                                        <div class="d-flex">
+                                        {/* <div class="d-flex">
                                             <input type="url" class="form-control" placeholder="https://www.Example.com" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
                                             <button class="btn btn-outline-secondary btn-lg ml-2" disabled={enableUrl==false?true:false} onClick={enableUrl==false?"":openNewLink}>
                                             {/* <a  href={enableUrl==false?"#":customerDataById.website_url} target={enableUrl==false?"_self":"_blank"} >Visit</a> */}
+                                            {/* Visit
+                                            </button>
+                                        </div> */} 
+                                        <div class="d-flex">
+                                    <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+                                        {enableUrl== true?
+                                      
+                                          
+                                            <a href={customerDataById.website_url} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline"}}>Visit</a>
+                                       
+                                        :
+                                       
+                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true}>
+                                         
                                             Visit
                                             </button>
+                                       }
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
@@ -794,7 +809,7 @@ function AddCustomer(props) {
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
                                                 <label>Fee%</label>
-                                                <input type="number" class="form-control" value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00"/>
+                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00"/>
                                             </div>
                                             </div>
                                             </div>

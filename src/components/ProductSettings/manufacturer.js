@@ -25,7 +25,8 @@ class Manufacturer extends Component {
                 selectedID:'',
                 btnLabelAdd:'Add New manufacture Type',
                 btnLabelUpdate: 'Update manufacture Type',
-                btnLabelCancel:'Cancel'
+                btnLabelCancel:'Cancel',
+                deleteon:false
             }
         
     }
@@ -127,7 +128,9 @@ class Manufacturer extends Component {
 
     onDeleteConfirm=(id)=>{
         let result= this.props.handleProductManufacturerDelete(id)
+        this.setState({deleteon:true})
         result.then(res=>{
+            this.setState({deleteon:false})
             this.props.getAllProductManufacturers()
             confirmAlert({
                 title: 'Delete Successfully',
@@ -408,18 +411,24 @@ render()
                                 </div>
                             </div>
                             <div className="col-lg-1">
-                                <div className="midControls d-flex flex-column justify-content-around">
-                                    <div>
-                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.png" alt="Settings"/>
+                                        <div className="midControls d-flex flex-column justify-content-around">
+                                            <div>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
+                                            </div>
+                                            <div>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
+                                            </div>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
-                                    </div>
-                                    <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col">
                                 <div class="card midCard">
                                     <div class="card-header">
