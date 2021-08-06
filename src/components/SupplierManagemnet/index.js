@@ -304,7 +304,7 @@ export class SupplierManagemnet extends React.Component {
                                                         <td>{customerData.id}</td>
                                                         <td>{customerData.supplier_name}</td>
                                                         <td>{"--"}</td>
-                                                        <td>{customerData.primary_contact}</td>
+                                                        <td>{customerData.fax}</td>
                                                         <td>{customerData.contact_id}</td>
                                                         <td>N/A</td>
                                                         <td>$0.00</td>

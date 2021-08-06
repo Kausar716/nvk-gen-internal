@@ -111,13 +111,22 @@ function AddSupplier(props) {
             errorCountForValidation++
 
         }
-        var res = supplierDataById.website.match( /^(http[s]?:\/\/){0,1}(w{3,3}\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/);
-        if(res == null)
-           {
-            message.push("Add Valid url and should contain https")
-            errorCountForValidation++
+        // var res = supplierDataById.website.match( /^(http[s]?:\/\/){0,1}(w{3,3}\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/);
+        // if(res == null)
+        //    {
+        //     message.push("Add Valid url and should contain https")
+        //     errorCountForValidation++
                
-           }
+        //    }
+        // if(supplierDataById.alternative_id
+        var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
+        var res = patt.test(supplierDataById.website);
+        // console.log(res)
+        if(res === false){
+            message.push("Website formate sould be https://www.example.com formate")
+            errorCountForValidation++
+        
+        }
         setMessage(message)
         // setErrorCount(errorCountForValidation)
         // setErrorObject(errorObjforValidation)
