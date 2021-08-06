@@ -53001,7 +53001,7 @@ table.dataTable.dtr-inline.collapsed>tbody>tr[role="row"]>td.dtr-control:before,
     background-color: #fff;
 }
 .dashcardHvr:hover {
-    background-color:  #7EBB03;
+    background-color: #629C44;
 }
 .dashcardHvr:hover img, .dashcardHvr:hover h3, .dashcardHvr:hover h4, .dashcardHvr:hover p {
     filter: brightness(0) invert(1);
@@ -53503,6 +53503,22 @@ ul.list-unstyled.searchAlpha li a:hover {
 .stsOpen {
     background-color: #B2D4FF;
     color: #2D71FF;
+}
+.stsReady {
+    background-color: #ffb347;
+    color: #ff8c00;
+}
+.stsReserve {
+    background-color: #9370db;
+    color: #8a2be2;
+}
+.stsPicking {
+    background-color: #afeeee;
+    color: #00ffff;
+}
+.stsQuote {
+    background-color: #a9a9a9;
+    color: #808080;
 }
 .editPurchaseHead h2 {
     background-color: #D4D4D4;
