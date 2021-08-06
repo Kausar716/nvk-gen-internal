@@ -498,7 +498,8 @@ export class OrganizationSettings extends React.Component {
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        let TempUrl = "./images/user-circle-solid.svg"
+        let TempUrl = "./images/logo_noimage.png"
+       // "./images/user-circle-solid.svg"
         //"./images/logo_noimage.png";
         // var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
