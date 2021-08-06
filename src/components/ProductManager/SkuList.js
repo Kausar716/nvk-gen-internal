@@ -166,9 +166,11 @@ const SkuList=(props)=> {
                     if(e.target.id === "dontRetain"){
                     skuDataById.subcategory = skuDataById.sub_category_id
                     props.updateSkuActionClear(skuid,skuDataById)
+                    setSelectedRow(-1)
                     }
                     if(e.target.id === "retain"){
                         props.updateSkuAction(skuid,skuDataById)
+                        setSelectedRow(-1)
                     }
                     // props.pageReDirectAction("product","add")
                 }
