@@ -4,6 +4,8 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert'; 
+import 'react-confirm-alert/src/react-confirm-alert.css';
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 
@@ -12,14 +14,22 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             super()
                 this.state={
                     errorObj:{
-                        formSku:0
+                        formSku:0,
+                        position:0,
+
                     },
                     sortId: 0,
                     activeId: 0,
                     positionName:'',
                  
-                   isEditing:false,
-                   name:''
+                    isEditing:false,
+                    name:'',
+                    subName:'',
+                    subName2:'',
+                    selectedID:'',
+                    btnLabelAdd:'Add New Position ',
+                    btnLabelUpdate: 'Update Position ',
+                    btnLabelCancel:'Cancel'
                 }
             
         }
@@ -71,25 +81,83 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 alertmsg = 3;
             }
             if (alertmsg === 1){
-                alert('Successfully Moved from Inactive to Active');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 2){
-                alert('Successfully Moved from Active to Inactive');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 3){
-                alert('Sort Successfully Done');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Sort Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
         }
 
+        // onDelete =(ev)=>{
+        //    let id= ev.dataTransfer.getData("id");
+        //    console.log(id)
+        //    let result= this.props.handleAttributeDelete(id)
+        //    result.then(res=>{
+        //     this.props.getAllSubAttribute(16)
+        //    })
+        // }
+
+
         onDelete =(ev)=>{
-           let id= ev.dataTransfer.getData("id");
-           console.log(id)
-           let result= this.props.handleAttributeDelete(id)
-           result.then(res=>{
-            this.props.getAllSubAttribute(16)
-           })
+            let id= ev.dataTransfer.getData("id");
+            confirmAlert({
+                title: 'Delete Position ',
+                message: 'Are you sure want to delete the Position?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
 
+        
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleAttributeDelete(id)
+            result.then(res=>{
+                this.props.getAllSubAttribute(16)
+                confirmAlert({
+                    title: 'Delete Position',
+                    message: 'Position  ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
 
         
         handlePositionInputAction = (e)=>{
@@ -97,6 +165,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 name:e.target.value
             })
            // debugger;
+           let errorObj=this.state.errorObj
+           if(e.target.name === "position"){
+            errorObj.position=0
+            this.setState({errorObj})}
             this.props.handlePositionInputAction("position",e.target.value)
 
             console.log("12344", e.target.name,e.target.value)
@@ -110,18 +182,59 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             positionObj.attribute_id=16
             positionObj.value = this.props.positionName
             positionObj.status=1
-            console.log("positionObj",positionObj, this.props.positionName)
-            let result = this.props.handleAddPosition(positionObj)
-            result.then(res=>{
-                this.props.getAllSubAttribute(16)
-            })
-            alert('Added Successfully Done');
 
-            this.setState({
-                name:""
-            })
+            // console.log("positionObj",positionObj, this.props.positionName)
+            // let result = this.props.handleAddPosition(positionObj)
+            // result.then(res=>{
+            //     this.props.getAllSubAttribute(16)
+            // })
+            // alert('Added Successfully Done');
+
+            // this.setState({
+            //     name:""
+            // })
+
+
+            if(this.validate()){
+                let result = this.props.handleAddPosition(positionObj)
+                result.then(res=>{
+                    this.props.getAllSubAttribute(16)
+                })
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Package ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    subName2:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
+
+
+
+
         }
 
+
+        validate = ()=>{
+            let errorObj = this.state.errorObj
+            if(this.state.name.length === 0){
+                errorObj.position=1
+                this.setState({errorObj})
+                return false
+            }
+           
+            return true
+            
+        }
 
 
         handleAddCategoryUpdate=(e)=>{
@@ -135,16 +248,42 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             console.log("positionName",this.props.positionName)
            // updateObject.id=this.props.showSpeciSubA.id
                
-         let res=this.props.handleSubAttributeUpdate(updateID, updateObject)
-                res.then(res=>{
-                    this.props.getAllSubAttribute(16)
-                })
+        //  let res=this.props.handleSubAttributeUpdate(updateID, updateObject)
+        //         res.then(res=>{
+        //             this.props.getAllSubAttribute(16)
+        //         })
 
-                this.setState({
-                    name:"",
-                    isEditing:false,
+        //         this.setState({
+        //             name:"",
+        //             isEditing:false,
                     
-                })
+        //         })
+
+
+                if(this.validate()){
+                    let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                        res.then(res=>{
+                            this.props.getAllSubAttribute(16)
+                        })
+                        if (this.state.isEditing) {
+                            confirmAlert({
+                                title: 'Updated Successfully',
+                                message: 'User Position ',
+                                buttons: [
+                                {
+                                    label: 'Ok'
+                                }
+                                ]
+                            });
+                        }
+                        this.setState({
+                            isEditing:false,
+                            name:"",
+                            subName:"",
+                            subName2:""
+                        })
+                }
+            
 
         }
 
@@ -161,6 +300,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             console.log("ttttttt", t,  this.props.handlePositionInputAction())
           }
 
+
+          handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.position=0
+            //errorObj.locationTypeShortCode=0
+            this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+        }
    
 
 
@@ -203,17 +349,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } name="position" 
                                                 value={this.state.name}
                                                  placeholder="" onChange={this.handlePositionInputAction}/>
+                                                  {this.state.errorObj.position!==0?<span style={{fontSize:"small",color:"red"}}>Enter position</span>:""}
                                             </div>
 
 
-                                            {this.state.isEditing ? (
-
-                                                    // <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
-                                                    // <a href="javascript:" className="d-flex align-items-center">
-                                                    //     <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Position
-                                                    // </a>
-                                                    // </div>
-
+                                            {/* {this.state.isEditing ? (
                                                     
                                                 <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                 <div>
@@ -237,7 +377,24 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Position
                                                 </a>
                                                 </div>  
-                                                )}                                            
+                                                )}   */}
+
+                                    <div className="d-flex justify-content-md-end mt-2" >
+                                        <div >
+                                            <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                            </a>
+                                        </div>
+                                        <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                            <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                            </a>
+                                        </div>
+                                    </div>
+
+
+
+
                                            </div> 
 
                                            

@@ -390,7 +390,7 @@ export class CreateUserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger" >*</span></label>
                                                     <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}>
-                                                    <option>select</option>
+                                                    <option>Select...</option>
                                                         {roles?roles.map(userObj=>{
                                                             console.log(userObj)
                                                             return  <option value={userObj.id}>{userObj.name}</option>
