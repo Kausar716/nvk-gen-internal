@@ -45,7 +45,7 @@ export default function(state = initialSatate, action){
             return{
                 ...state,
                 // categoryData:[...action.payload.data.active,...action.payload.data.inactive]
-                categoryData:[...action.payload.data.active]
+                categoryData:[...action.payload.data]
 
             }
 
