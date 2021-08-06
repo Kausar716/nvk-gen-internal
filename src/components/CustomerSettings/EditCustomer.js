@@ -115,17 +115,21 @@ function AddCustomer(props) {
             props.handleExchangeData(restock_fee,"restock_fee","customerDataById")
 
         }else if(e.target.id =="discount_by_line_item" || e.target.id =="discount_by_line_item1"){
-            let discount_by_line_item = customerDataById.discount_by_line_item ==0?1:0
+            let discount_by_line_item = customerDataById.discount_by_line_item ==0 ?1:0
             props.handleExchangeData(discount_by_line_item,"discount_by_line_item","customerDataById")
         }else if(e.target.id=="website_url"){
+            let validate = e.target.value
+            let val = e.target.value.includes("https://") ||e.target.value.trim()==""?e.target.value:"https://"+e.target.value
             var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
-            var res = patt.test(e.target.value);
+            var res = patt.test(val);
             // console.log(res)
             if(res === false){
                 setEnableUrl(false)
+                props.handleExchangeData(val,e.target.id,"customerDataById")
 
             }else{
                 setEnableUrl(true)
+                props.handleExchangeData(val,e.target.id,"customerDataById")
             }
 
         }
@@ -150,7 +154,7 @@ function AddCustomer(props) {
     }
     const validation  = ()=>{
         // alert(customerDataById.reason)
-
+// alert("sdf")
         let errosList = []
         if(customerDataById.name==="")
         errosList.push("Please Add Name")
@@ -162,6 +166,7 @@ function AddCustomer(props) {
 
         }
         if(customerDataById.website_url){
+            // alert("fds")
             var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
             var res = patt.test(customerDataById.website_url);
             // console.log(res)
