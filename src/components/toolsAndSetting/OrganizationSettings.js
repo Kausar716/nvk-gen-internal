@@ -498,7 +498,8 @@ export class OrganizationSettings extends React.Component {
         console.log(this.state)
         console.log(this.props.organizationData)
         console.log(this.props)
-        let TempUrl = "./images/logo_noimage.png";
+        let TempUrl = "./images/user-circle-solid.svg"
+        //"./images/logo_noimage.png";
         // var TempUrl="assets/img/noImage.png";
         let url= "https://zvky.flamingotech.ml/";
        // var iImage="assets/img/noImage.png";
@@ -564,7 +565,7 @@ export class OrganizationSettings extends React.Component {
 
                 
                 history.push("/Dashboard")
-                this.handleSubmit();
+                //this.handleSubmit();
                 // setTimeout(function() {
                 //     history.push("/")
                 //  }, 4000);
@@ -618,7 +619,7 @@ export class OrganizationSettings extends React.Component {
 
         if(actionType==="goBack"){
             this.setState({actionType})
-            this.setState({actionMessage:"Saved Successfully! Do you want to go home page ?"})
+            this.setState({actionMessage:" Do you want to go home page ?"})
 
         }
         else if(actionType==="save"){
@@ -918,7 +919,7 @@ export class OrganizationSettings extends React.Component {
                     </div> */}
 
 
-                    <div class="row mt-3" style={{float:"right"}}>
+                    {/* <div class="row mt-3" style={{float:"right"}}>
                         
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 
@@ -942,11 +943,10 @@ export class OrganizationSettings extends React.Component {
                                         </a>
                                         <a href="#" class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt="" 
-                                            // onClick={this.goDashboard()}
                                             />
                                         </a>
                         </div>
-                        </div>
+                        </div> */}
                         {/* </div> */}
 
 
