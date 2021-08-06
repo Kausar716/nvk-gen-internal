@@ -278,7 +278,7 @@ export class ProductInventory extends Component {
                                         </select>
                                     </div>
                                     <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
-                                        <label>Manufacture</label>
+                                        <label>Manufacturer</label>
                                         <select class="form-control" name="manufacturer"  id="manufacturer_id" onChange={this.handleFilterChange}>
                                             <option>All</option>
                                             {manufacturerList.map(category=>{

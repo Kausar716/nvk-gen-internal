@@ -210,7 +210,7 @@ const handleMainSelection= (id) => {
             <li  class={selectedMainBarData.includes("organizationSettings")?"active":""} onClick={()=>{handleMainSelection("ToolsAndSettings")}} >
               <Link to="/organizationSettings">
               <b class="caret"></b>
-                <img src="assets/img/settings.svg" alt=""/>
+                <img src="assets/img/Tools & Settings-small-grey.svg" alt=""/>
                 <span>Tools &amp; Settings</span>
               </Link>
               <ul class="sub-menu">
