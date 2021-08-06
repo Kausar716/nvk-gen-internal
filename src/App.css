@@ -50,7 +50,7 @@
   /* border:1px solid red; */
 }
 .react-autosuggest__suggestions-container--open{
-  height:auto;
+  height:300px;
 
 }
 .react-autosuggest__suggestions-container li{
