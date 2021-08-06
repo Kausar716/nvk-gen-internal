@@ -408,7 +408,7 @@ console.log(props.supplierData.supplierReasonList)
                 {/* <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
                 <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/> */}
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-            <h1 class="page-header mb-0"><img src="assets/img/Supplier Management-big-green.svg" class="mr-2"/>Add/Edit Supllier  <span>{supplierDataById.id?"#"+supplierDataById.id:""}</span></h1>
+            <h1 class="page-header mb-0"><img src="assets/img/Supplier Management-big-green.svg" class="mr-2"/>Add/Edit Supplier  <span>{supplierDataById.id?"#"+supplierDataById.id:""}</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn ml-2 mt-3 mt-md-0">
                         <span class="d-flex align-items-center text-left">
