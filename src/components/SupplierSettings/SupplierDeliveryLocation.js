@@ -373,7 +373,7 @@ render() {
 
 
                                                         <div className="d-flex justify-content-md-end mt-2"  onClick={()=>{this.setState({isEditing:false});  this.props.resetSupplierData()}}>
-                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>Cancel </a>
+                                                        <a className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px",cursor:"pointer"}}>Cancel </a>
                                                            
                                                         </div>
                                                     </div>
@@ -417,9 +417,19 @@ render() {
                                             <ul class="list-unstyled">
                                                    {this.props.supplierData.supplierLocationList.inactive.map(t=>{
                                                     return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.location}</span>
-                                                                </a>
+                                                                      <a className="d-flex justify-content-between align-items-left">
+                                                                      <p  id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <div style={{display:"block",float:"left"}}>
+                                                                      <p style={{padding:2,margin:5}}>{t.location}</p>
+                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:2,margin:5}}>{t.address}</p>
+                                                                        <p style={{color:"gray",padding:2,margin:5}}>{t.city} {t.state}  {t.country}</p>
+                                                                      </div>
+                                                                      </p>
+                                                                   
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                           
+                                                                /></span><p style={{marginTop:"70px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                 </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -451,11 +461,18 @@ render() {
                                             <ul class="list-unstyled">
                                                    {this.props.supplierData.supplierLocationList.active.map(t=>{
                                                     return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.location}</span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t)}
-                                                                /></span>
+                                                                 <a className="d-flex justify-content-between align-items-left">
+                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <div style={{display:"block",float:"left"}}>
+                                                                      <p style={{padding:2,margin:5}}>{t.location}</p>
+                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:2,margin:5}}>{t.address}</p>
+                                                                      <p style={{color:"gray",padding:2,margin:5}}>{t.city} {t.state}  {t.country}</p>
+                                                                      </div>
+                                                                      </p>
+                                                                   
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                /></span><p style={{marginTop:"70px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}
