@@ -554,17 +554,19 @@ export default function(state = initialSatate, action){
                     sale_price:"0.00",
                     sale_expiry_date:new Date(),
                     sku_item_name:"",
-                    subcategory:"0",
+                    sub_category_id:"0",
                     discontinued:0,
                     status:1,
                     archived:"0",
                     supplier_id:1,
                     volume_price_per_unit:"0.00",
-                    volume_quantity:"0"
+                    volume_quantity:"0",
+                   
                     //id:null
             
             
-                }
+                },
+                actionType:"edit"
             }
         }
         default:

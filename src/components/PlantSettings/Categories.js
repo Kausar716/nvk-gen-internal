@@ -29,7 +29,8 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
                     selectedID:'',
                     btnLabelAdd:'Add New Category Type',
                     btnLabelUpdate: 'Update Category Type',
-                    btnLabelCancel:'Cancel'
+                    btnLabelCancel:'Cancel',
+                    backgroundChange:-1
                 }
             
         }
@@ -52,7 +53,7 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
             
             let activeId=this.state.activeId
             activeId=id;
-            this.setState({activeId})
+            this.setState({activeId,backgroundChange:activeId})
         }
         componentDidMount(){
             this.props.getAllPlantCategories()
@@ -61,7 +62,7 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
         onMouseLeave =((ev, id)=>{
             let sortId=this.state.sortId
             sortId=id;
-            this.setState({sortId})
+            this.setState({sortId,backgroundChange:-1})
         })
 
 
@@ -471,8 +472,9 @@ render() {
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
+                                                       let backgroundToggle =  (this.state.backgroundChange === t.id)
+                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} >
+                                                                 <a className="d-flex justify-content-between align-items-center" style={{backgroundColor:backgroundToggle?"#e1e3e4":"",borderStyle:backgroundToggle?"dashed":""}}>
                                                                 <span id="Wheathers">{t.name}</span>
                                                                 </a>
                                                             </li>
@@ -505,9 +507,10 @@ render() {
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
+                                                       let backgroundToggle =  (this.state.backgroundChange === t.id)
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
+                                                                 <a className="d-flex justify-content-between align-items-center" style={{backgroundColor:backgroundToggle?"#e1e3e4":"",borderStyle:backgroundToggle?"dashed":""}}>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "} style={{color:backgroundToggle?"#e1e3e4":""}}>{t.name}</span>
 
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}

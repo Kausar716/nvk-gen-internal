@@ -504,14 +504,15 @@ export default function(state = initialSatate, action){
                         volume_quantity: "0",
                         volume_price_per_unit: "0.00",
                         sku_item_name: "",
-                        subcategory: "",
+                        subcategory: "0",
                         archived: "0",
                         discontinued: 0,
                         location: "",
                         status: 0,
                         attributes_subattributes:[]           
                     
-                        }
+                        },
+                        actionType:"edit"
 
                 }
             case GET_SINGLE_PLANT_SKU:
