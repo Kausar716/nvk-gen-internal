@@ -74,7 +74,7 @@ const validate = values => {
     <div>
       {/* <label>{label}</label> */}
       <div>
-        <input {...input} class="form-control" placeholder={label}  autoComplete=" " type={type}/>
+        <input {...input} class="form-control" placeholder={label}  type={type} onchange={changingValue}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
         </Row>
@@ -84,6 +84,10 @@ const validate = values => {
   
    )}
 
+
+const changingValue=()=>{
+    alert("abcd")
+}
 
 
 const SignInPage = (props) => {

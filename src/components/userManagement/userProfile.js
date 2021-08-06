@@ -9,6 +9,7 @@ import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
+import * as BsIcons from "react-icons/io";
 import './style.css';
 
 
@@ -24,7 +25,7 @@ import './style.css';
 //     }
 //   };
   
-//   const validateInput22 = value => {
+//   const validateInput22 = value => { BsPersonFill
 //     let error1 = ""
     
 //     if (!value) error1 = "Required!"
@@ -410,7 +411,8 @@ export class UserProfile extends Component {
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
         //let noImageURL="./images/logo_noimage.png";
-        let noImageURL = "./images/noPerson.png";
+        let noImageURL ="./images/user-circle-solid.svg";
+        // "./images/noPerson.png";
 
 
 
