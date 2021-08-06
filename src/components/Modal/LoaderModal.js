@@ -7,7 +7,7 @@ const LoaderComp = ()=>{
         color="rgb(155, 236, 34)"
         height={50}
         width={50}
-        timeout={500} 
+        timeout={300} 
         />
           
     );

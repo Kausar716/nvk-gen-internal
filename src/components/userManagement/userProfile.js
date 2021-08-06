@@ -13,26 +13,6 @@ import * as BsIcons from "react-icons/io";
 import './style.css';
 
 
-// const normalizeInput = (value, previousValue) => {
-//     if (!value) return value;
-//     const currentValue = value.replace(/[^\d]/g, '');
-//     const cvLength = currentValue.length;
-    
-//     if (!previousValue || value.length > previousValue.length) {
-//       if (cvLength < 4) return currentValue;
-//       if (cvLength < 7) return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3)}`;
-//       return `(${currentValue.slice(0, 3)}) ${currentValue.slice(3, 6)}-${currentValue.slice(6, 10)}`;
-//     }
-//   };
-  
-//   const validateInput22 = value => { BsPersonFill
-//     let error1 = ""
-    
-//     if (!value) error1 = "Required!"
-//     else if (value.length !== 14 && value.length > 10) error1 = "Invalid phone format. ex: (555) 555-5555";
-    
-//     return error1;
-//   };
 
   
 
@@ -264,12 +244,6 @@ export class UserProfile extends Component {
  
      }
 
-    //  handleChange=({ target: { value } })=> {  
-    //     //debugger;
-    //     console.log("enteredVALUES", this.state.phoneNumberInOrganization)
-    //     this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
-       
-    //   }
 
 
 
@@ -278,9 +252,6 @@ export class UserProfile extends Component {
         console.log(e.target.files[0])
         let imageData = e.target.files[0]
 
-        // if(e.target.files[0] !==e.target.files[0]){
-        //     imageData=e.target.files[0] 
-        // }
         
        let data =  this.props.uploadImage(imageData,JSON.stringify(this.props.selectedUser.id))
        data.then(res=>{
@@ -302,12 +273,7 @@ export class UserProfile extends Component {
         
        })
 
-    
-   
-        // this.setState({log:e.target.files[0]})
-        // if(e.target.files.length !== 0){
-        //     this.setState({logo: URL.createObjectURL(e.target.files[0])})
-        //   }
+ 
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
         if( e.target.files[0]){
@@ -410,8 +376,8 @@ export class UserProfile extends Component {
         if(this.props.roles)roles = this.props.roles
         console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
-        //let noImageURL="./images/logo_noimage.png";
-        let noImageURL ="./images/user-circle-solid.svg";
+        let noImageURL="./images/noPerson.png";
+       // let noImageURL ="./images/user-circle-solid.svg";
         // "./images/noPerson.png";
 
 
@@ -518,18 +484,9 @@ export class UserProfile extends Component {
     return (
         <>
          <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
-        {/* <div clas="userManagementSection"> */}
-               {/* <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
-                    <h1 class="page-header mb-0 d-flex align-items-center">
-                        <img src="assets/img/settings-primary.svg" class="mr-2"/>User Management
-                    </h1>
-                </div> */}
-                {/* <div class="px-md-3 mt-3"> */}
+   
                     <Tabs>
-                        {/* <TabList class="d-inline-block bg-white pl-0">
-                            <Tab>User Profile</Tab>
-                            <Tab>User Access</Tab>
-                        </TabList> */}
+              
                         <TabPanel>
                             
                         <div>
@@ -809,33 +766,6 @@ export class UserProfile extends Component {
                                 </div> */}
 
 
-{/* 
-                            <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%"}}>
-                                   
-                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
-
-                                            <a class="btn ml-2"onClick={ this.handleSubmit}>
-                                                    <span class="d-flex align-items-center text-left">
-                                                        <img src="assets/img/save-ic.svg" alt=""/>
-                                                        <span class="ml-2"><b>Save  </b></span>
-                                                    </span>
-                                                </a>
-
-                                                <a  class="btn ml-2 mt-3 mt-md-0" 
-                                                onClick={()=>{confirmAction("save"); }}
-                                                //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
-                                                >
-                                                    <span class="d-flex align-items-center text-left">
-                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
-                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
-                                                    </span>
-                                                </a>
-
-                                                <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                                    <img src="assets/img/close-ic.svg" alt="" onClick={this.props.cancle}/>
-                                                </a>
-                                </div>
-                             </div> */}
 
 
                             </div>
