@@ -29,7 +29,8 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
                     selectedID:'',
                     btnLabelAdd:'Add New Category Type',
                     btnLabelUpdate: 'Update Category Type',
-                    btnLabelCancel:'Cancel'
+                    btnLabelCancel:'Cancel',
+                    deleteon:false
                 }
             
         }
@@ -181,7 +182,9 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
 
         onDeleteConfirm=(id)=>{
             let result= this.props.handleCategoryDelete(id)
+            this.setState({deleteon:true})
             result.then(res=>{
+                this.setState({deleteon:false})
                 this.props.getAllPlantCategories()
                 confirmAlert({
                     title: 'Delete Successfully',
@@ -471,8 +474,9 @@ render() {
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
                                             <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
+                                                       let backgroundToggle =  (this.state.backgroundChange === t.id)
+                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} >
+                                                                 <a className="d-flex justify-content-between align-items-center" style={{backgroundColor:backgroundToggle?"#e1e3e4":"",borderStyle:backgroundToggle?"dashed":""}}>
                                                                 <span id="Wheathers">{t.name}</span>
                                                                 </a>
                                                             </li>
@@ -487,13 +491,19 @@ render() {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.png" alt="Settings"/>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
                                             </div>
                                             <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
+                                                <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
                                         </div>
                                     </div>
@@ -506,8 +516,8 @@ render() {
                                             <ul class="list-unstyled">
                                                    {tasks.active.map(t=>{
                                                     return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
+                                                                 <a className="d-flex justify-content-between align-items-center" >
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "} >{t.name}</span>
 
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}

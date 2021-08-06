@@ -207,7 +207,7 @@ const handleMainSelection= (id) => {
                 <span>Supplier Management</span>
               </Link>
             </li>
-            <li  class={selectedMainBarData.includes("ToolsAndSettings")?"active":""} onClick={()=>{handleMainSelection("ToolsAndSettings")}} >
+            <li  class={selectedMainBarData.includes("organizationSettings")?"active":""} onClick={()=>{handleMainSelection("ToolsAndSettings")}} >
               <Link to="/organizationSettings">
               <b class="caret"></b>
                 <img src="assets/img/settings.svg" alt=""/>
