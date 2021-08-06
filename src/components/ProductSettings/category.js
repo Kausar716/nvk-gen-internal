@@ -13,6 +13,7 @@ import 'react-tabs/style/react-tabs.css';
 const Category=(props)=> {
     const [category,setCategory] = useState("")
     const [subCategory,setSubCategory] = useState("")
+    const [deleteon,setDeleteon] = useState(false)
 
     const handleCategory = (e) => {
         setCategory(e.target.value)
@@ -96,22 +97,19 @@ const Category=(props)=> {
                                     <div className="col-lg-1">
                                         <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-angle-double-right"></i> */}
-                                                    <img style={{width:"5em",marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.svg" alt="Settings"/>
-                                                </a>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
                                             </div>
                                             <div>
-                                                <a href="javascript;">
-                                                    {/* <i className="fas fa-arrows-alt"></i> */}
-                                                    <img style={{width:"5em", marginLeft:"-10px"}} src="./assets/img/Genral_Icons/DragDragto_place.svg" alt="Settings"/>
-                                                </a>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
                                             </div>
-                                            <div>
-                                                <a href="javascript;" className="icDelete">
-                                                <img style={{width:"5em", marginLeft:"-10px"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.svg" alt="Settings"/>
-                                                    {/* <i className="fas fa-trash"></i> */}
-                                                </a>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <i className ={`fa fa-trash ${deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
                                         </div>
                                     </div>

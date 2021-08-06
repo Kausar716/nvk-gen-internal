@@ -19,6 +19,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                         isEditing:false,
                         name:'',
                         selectedID:'',
+                        deleteon:false,
                         
                     }
                 
@@ -59,9 +60,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
         }
         onDelete =(ev)=>{
            let id= ev.dataTransfer.getData("id");
+           this.setState({deleteon:true})
            console.log(id)
            let result= this.props.handleAttributeDelete(id)
            result.then(res=>{
+            this.setState({deleteon:false})
             this.props.getAllSubAttribute(1)
            })
         }
