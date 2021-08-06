@@ -101,9 +101,9 @@ export default function OrderReady() {
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-7 col-xl-7">
-                                        <div class="row ">
-                                            <div class="col-md-6 col-lg-4">
+                                <div class="col-md-12 col-lg-5 col-xl-5">
+                                    <div class="row ">
+                                            <div class="col-md-6 col-lg-6">
                                                 <label>Ordered By <span class="text-danger">*</span></label>
                                                 <select class="form-control">
                                                     <option>John Smith</option>
@@ -111,7 +111,7 @@ export default function OrderReady() {
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                            <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                                 <label>Bill To <span class="text-danger">*</span></label>
                                                 <select class="form-control">
                                                     <option>1234 Main St, Waterdown </option>
@@ -119,19 +119,20 @@ export default function OrderReady() {
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-4">
                                                 <label>PO #</label>
                                                 <input type="text" class="form-control" placeholder=""></input>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-5 col-xl-5">
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-6">
+                                            <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
                                                 <DatePicker onChange={onChange} value={value} />
                                             </div>
-                                            <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
+                                            <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Time</label>
                                                 <select class="form-control">
                                                     <option>AM</option>
