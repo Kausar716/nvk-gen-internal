@@ -73,6 +73,7 @@ const onSubmit = (values) =>{
   console.log(values);
 }
 
+
 const SkuList=(props)=> {
    
     const [submitCount, setSubmitCount] = useState(0)
@@ -88,6 +89,7 @@ const SkuList=(props)=> {
     const [each_priceError,setEach_priceError] = useState(false)
     const [sales_priceError,setSales_priceError] = useState(false)
     const [volume_priceError,setVolume_priceError] = useState(false)
+    const [selectedRow,setSelectedRow] = useState(-1)
    
    
     const {skuData,skuPageNumber,skuDataById,needAction,skuValidation,productDataById, productData,actionType,productDataBySKUlist } = props.productData;
@@ -261,6 +263,8 @@ const SkuList=(props)=> {
    const getSpecifiedProduct = async(id,data,value) =>{
 
      window.scrollTo(100, -100)
+     
+     setSelectedRow(id)
     
      
      
@@ -498,7 +502,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
                                             {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
-                                            
+                                            <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                            <img src="assets/img/close-ic.svg" alt="" onClick={()=>{props.clearSkuFields()}} />
+                                        </a>
                                         </div>
                                     </div>
                                 </form>
@@ -579,7 +585,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             
                         return(
 
-                                        <tr key={sku.id}>
+                                        <tr key={sku.id} style={{background:(selectedRow === sku.id)? "#e1e3e4":""}}>
                                             <td>{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_cost}</td>
