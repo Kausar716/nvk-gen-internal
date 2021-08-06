@@ -17,9 +17,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                             formSku:0
                         },
                         isEditing:false,
-                        name:'',
-                        selectedID:'',
-                        deleteon:false,
+                    name:'',
+                    subName:'',
+                    subName2:'',
+                    selectedID:'',
+                    btnLabelAdd:'Add New Characterstics',
+                    btnLabelUpdate: 'Update Characterstics',
+                    btnLabelCancel:'Cancel',
+
+                    btnLabelAdd2:'Add New Feature',
+                    btnLabelUpdate2: 'Update Feature',
                         
                     }
                 
@@ -192,7 +199,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                             </a>
                                         </div> */}
 
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
                                                     <div className="d-flex justify-content-md-end mt-2">
                                                         <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryUpdate}>
                                                             <a href="javascript:" className="d-flex align-items-center">
@@ -214,7 +221,20 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                                         <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
                                                         </a>
                                                         </div>  
-                                            )}        
+                                            )}     */}
+
+                                        <div className="d-flex justify-content-md-end mt-2" >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div>    
 
 
 
@@ -226,11 +246,23 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                                         <div>
                                             <input type="text" className="form-control" placeholder="Feature"/>
                                         </div>
-                                        <div className="d-flex justify-content-md-end mt-2">
+                                        <div className="d-flex justify-content-md-end mt-2" >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate2 : this.handleAddCategory2}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate2 : this.state.btnLabelAdd2 }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div> 
+                                        {/* <div className="d-flex justify-content-md-end mt-2">
                                             <a href="#" className="d-flex align-items-center">
                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Feature
                                             </a>
-                                        </div>
+                                        </div> */}
                                     </div>
                                 </div>
                                 <div className="row mt-5">
