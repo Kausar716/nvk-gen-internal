@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import { confirmAlert } from 'react-confirm-alert'; 
 import * as MdIcons from "react-icons/md";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,
@@ -21,7 +22,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     isEditing:false,
                     name:'',
                     subName:'',
+                    subName2:'',
                     selectedID:'',
+                    btnLabelAdd:'Add New Package ',
+                    btnLabelUpdate: 'Update Package',
+                    btnLabelCancel:'Cancel'
                 }
             
         }
@@ -78,23 +83,85 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }) 
             }
             if (alertmsg === 1){
-                alert('Successfully Moved from Inactive to Active');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 2){
-                alert('Successfully Moved from Active to Inactive');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 3){
-                alert('Sort Successfully Done');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Sort Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
         }
+
+
+        // onDelete =(ev)=>{
+        //    let id= ev.dataTransfer.getData("id");
+        //    console.log(id)
+        //    let result= this.props.handleAttributeDelete(id)
+        //    result.then(res=>{
+        //     this.props.getAllSubAttribute(4)
+        //    })
+        // }
+
+
         onDelete =(ev)=>{
-           let id= ev.dataTransfer.getData("id");
-           console.log(id)
-           let result= this.props.handleAttributeDelete(id)
-           result.then(res=>{
-            this.props.getAllSubAttribute(4)
-           })
+            let id= ev.dataTransfer.getData("id");
+            confirmAlert({
+                title: 'Delete Package Type',
+                message: 'Are you sure want to delete the Package?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+        
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleAttributeDelete(id)
+            result.then(res=>{
+                this.props.getAllSubAttribute(4)
+                confirmAlert({
+                    title: 'Delete Package',
+                    message: 'package Type ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
     
         handleAddCategory = (e)=>{       
             let zoneObj={}
@@ -107,24 +174,60 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             ]
             zoneObj.status=1
             console.log(zoneObj)
-            if(this.validate() ){
+            // if(this.validate() ){
+            //     let result = this.props.handleAddZone(zoneObj)
+            //     result.then(res=>{
+            //         this.props.getAllSubAttribute(4)
+            //     })
+            // }
+            // alert('Added Successfully Done');
+
+            // this.setState({
+               
+            //     name:"",
+            //     subName:""
+            // })
+
+
+            if(this.validate()){
                 let result = this.props.handleAddZone(zoneObj)
                 result.then(res=>{
                     this.props.getAllSubAttribute(4)
                 })
-            }
-            alert('Added Successfully Done');
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Package ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    subName2:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
 
-            this.setState({
-               
-                name:"",
-                subName:""
-            })
         }
+
+
+
+
+
+
         validate = ()=>{
             let errorObj = this.state.errorObj
             if(this.state.subName.length === 0){
                 errorObj.packagingSku=1
+                this.setState({errorObj})
+                return false
+            }
+            if(this.state.name.length === 0){
+                errorObj.packagingName=1
                 this.setState({errorObj})
                 return false
             }
@@ -152,6 +255,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 name:e.target.value,
                 //subName:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "packagingName"){
+            errorObj.packagingName=0
+            this.setState({errorObj})}
 
 
 
@@ -198,20 +306,44 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     children_id_name:'SKU value'
             }
             ]
-            if(this.validate() ){
-          let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
-                 res.then(res=>{
-                     this.props.getAllSubAttribute(4)
-                 })
+        //     if(this.validate() ){
+        //   let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+        //          res.then(res=>{
+        //              this.props.getAllSubAttribute(4)
+        //          })
 
-                 alert('Updated Successfully Done');
-                }
+        //          alert('Updated Successfully Done');
+        //         }
     
-                 this.setState({
-                     isEditing:false,
-                     name:"",
-                     subName:""
-                 })
+        //          this.setState({
+        //              isEditing:false,
+        //              name:"",
+        //              subName:""
+        //          })
+
+        if(this.validate()){
+            let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                res.then(res=>{
+                    this.props.getAllSubAttribute(4)
+                })
+                if (this.state.isEditing) {
+                    confirmAlert({
+                        title: 'Updated Successfully',
+                        message: 'Packaging ',
+                        buttons: [
+                        {
+                            label: 'Ok'
+                        }
+                        ]
+                    });
+                }
+                this.setState({
+                    isEditing:false,
+                    name:"",
+                    subName:"",
+                    subName2:""
+                })
+        }
     
          }
 
@@ -255,6 +387,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                               value={this.state.name}
                                             //  value={this.props.packagingName}  
                                               placeholder="Name" onChange={this.handleZoneInputAction2}/>
+                                               {this.state.errorObj.packagingName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Packaging Name</span>:""}
                                         </div>
                                         <div className="d-flex justify-content-md-end mt-2">
                                             {/* <a href="javascript;" className="d-flex align-items-center">
@@ -284,7 +417,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         </div> */}
 
 
-                                        {this.state.isEditing ? (
+                                        {/* {this.state.isEditing ? (
 
                                             <div className="d-flex justify-content-md-end mt-2" >
                                                 <div  onClick={this.handleAddCategoryUpdate}>
@@ -308,7 +441,22 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i>  Add New Packaging
                                                 </a>
                                                 </div>  
-                                         )}   
+                                         )}    */}
+
+
+                            <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                <div >
+                                    <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                    </a>
+                                </div>
+                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                    <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                        <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                    </a>
+                                </div>
+                            </div>
+
 
 
 

@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert'; 
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
     handleZoneInputAction,handleAddZone, showSubSubAttribute, handleSubAttributeUpdate, handleZoneInputAction2} from '../../actions/attributeAction'
@@ -13,7 +14,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 super()
                     this.state={
                         errorObj:{
-                            formSku:0
+                            formSku:0,
+                            formName:0
                         },
                         sortId: 0,
                         activeId: 0,
@@ -21,7 +23,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         name:'',
                         subName:'',
                         subName2:'',
-                        selectedID:''
+                        selectedID:'',
+                        btnLabelAdd:'Add New Form ',
+                        btnLabelUpdate: 'Update Form ',
+                        btnLabelCancel:'Cancel'
                     }
                 
             }
@@ -76,24 +81,88 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }) 
                 alertmsg = 3;
             }
+
+
             if (alertmsg === 1){
-                alert('Successfully Moved from Inactive to Active');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 2){
-                alert('Successfully Moved from Active to Inactive');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 3){
-                alert('Sort Successfully Done');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Sort Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
         }
+
+
+        // onDelete =(ev)=>{
+        //    let id= ev.dataTransfer.getData("id");
+        //    console.log(id)
+        //    let result= this.props.handleAttributeDelete(id)
+        //    result.then(res=>{
+        //     this.props.getAllSubAttribute(1)
+        //    })
+        // }
+
         onDelete =(ev)=>{
-           let id= ev.dataTransfer.getData("id");
-           console.log(id)
-           let result= this.props.handleAttributeDelete(id)
-           result.then(res=>{
-            this.props.getAllSubAttribute(1)
-           })
+            let id= ev.dataTransfer.getData("id");
+            confirmAlert({
+                title: 'Delete Location Type',
+                message: 'Are you sure want to delete the Location Type?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleAttributeDelete(id)
+            result.then(res=>{
+                this.props.getAllSubAttribute(1)
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Location Type ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
         handleZoneInputAction = (e)=>{
            // debugger;
             console.log("inputAction", e.target.name,e.target.value)
@@ -113,6 +182,13 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         handleZoneInputAction2 = (e)=>{
             //debugger;
             console.log("inputAction", e.target.name,e.target.value)
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "formName"){
+            errorObj.formName=0
+            this.setState({errorObj})}
+
+
             this.setState({
                 name:e.target.value,
                 
@@ -137,19 +213,33 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             }
             ]
             zoneObj.status=1
-            console.log(zoneObj)
-            if(this.validate()){
+
+
+        if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
                 this.props.getAllSubAttribute(1)
             })
-            alert('Added Successfully Done');
-        }        
-        this.setState({
-          
-            name:"",
-            subName:""
-        })
+            confirmAlert({
+                title: 'Added Successfully',
+                message: 'Form ',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+            this.setState({
+                name: "",
+                subName:"",
+                isEditing:false,
+                selectedID:'',
+            })
+        } 
+
+
+
+
         }
         validate = ()=>{
             let errorObj = this.state.errorObj
@@ -158,6 +248,14 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 this.setState({errorObj})
                 return false
             }
+
+            if(this.state.name.length === 0){
+                errorObj.formName=1
+                this.setState({errorObj})
+                return false
+            }
+
+
             return true
             
         }
@@ -202,23 +300,54 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
         }
         ]
             
-        if(this.validate()){
-      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllSubAttribute(1)
-             })
-             alert('Added Successfully Done');
-            }
+    //     if(this.validate()){
+    //   let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllSubAttribute(1)
+    //          })
+    //          alert('Added Successfully Done');
+    //         }
           
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
-                 subName:""
-             })
+    //          this.setState({
+    //              isEditing:false,
+    //              name:"",
+    //              subName:""
+    //          })
 
+
+
+                if(this.validate()){
+                    let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                        res.then(res=>{
+                            this.props.getAllSubAttribute(1)
+                        })
+                        if (this.state.isEditing) {
+                            confirmAlert({
+                                title: 'Updated Successfully',
+                                message: 'Form ',
+                                buttons: [
+                                {
+                                    label: 'Ok'
+                                }
+                                ]
+                            });
+                        }
+                        this.setState({
+                            isEditing:false,
+                            name:"",
+                            subName:""
+                        })
+                }
      }
 
+
+     handleClear=()=>{
+        let errorObj = this.state.errorObj
+        errorObj.formName=0
+        errorObj.formSku=0
+        this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+    }
 
 
 
@@ -263,6 +392,8 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                               //value={this.props.formName}   
                                             value={this.state.name}
                                              placeholder="Name" onChange={this.handleZoneInputAction2}/>
+
+                                            {this.state.errorObj.formName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Name</span>:""}
                                             
                                         </div>
 
@@ -293,7 +424,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                         </div> */}
 
 
-                                        {this.state.isEditing ? (
+                                        {/* {this.state.isEditing ? (
                                                 <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} onClick={this.handleAddCategoryUpdate}>
                                                     <div >
                                                         <a href="javascript:" className="d-flex align-items-center">
@@ -316,8 +447,20 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Form
                                                     </a>
                                                     </div>  
-                                         )}   
+                                         )}    */}
 
+                            <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                <div >
+                                    <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                    </a>
+                                </div>
+                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                    <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                        <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                    </a>
+                                </div>
+                            </div>
 
 
 

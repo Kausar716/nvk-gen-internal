@@ -3,6 +3,7 @@
 
 import React, { Component } from 'react'
 import {connect} from "react-redux";
+import { confirmAlert } from 'react-confirm-alert'; 
 import * as MdIcons from "react-icons/md";
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
@@ -24,6 +25,9 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     subName:'',
                     subName2:'',
                     selectedID:'',
+                    btnLabelAdd:'Add New Height ',
+                    btnLabelUpdate: 'Update Height',
+                    btnLabelCancel:'Cancel'
                 }
             
         }
@@ -31,6 +35,16 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
          onDragOver = (ev)=>{
             ev.preventDefault();
         }
+
+        handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.heightName=0
+            errorObj.heightSku=0
+            errorObj.heightImperial=0
+            this.setState({name: "", subName:"",subName2:"", isEditing:false, selectedID:'', errorObj})
+        }
+
+
         onDragStart=(ev, id)=>{
             console.log("dragstart:", id);
             ev.dataTransfer.setData("id",id)
@@ -80,27 +94,87 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }) 
             }
             if (alertmsg === 1){
-                alert('Successfully Moved from Inactive to Active');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 2){
-                alert('Successfully Moved from Active to Inactive');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
             if (alertmsg === 3){
-                alert('Sort Successfully Done');
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Sort Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
         }
-        onDelete =(ev)=>{
-           let id= ev.dataTransfer.getData("id");
-           console.log(id)
-           let result= this.props.handleAttributeDelete(id)
-           result.then(res=>{
-            this.props.getAllSubAttribute(3)
-           })
+
+
+
+
+     onDelete =(ev)=>{
+            let id= ev.dataTransfer.getData("id");
+            confirmAlert({
+                title: 'Delete Location Type',
+                message: 'Are you sure want to delete the Location Type?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+        
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleAttributeDelete(id)
+            result.then(res=>{
+                this.props.getAllSubAttribute(3)
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Location Type ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
         handleZoneInputAction = (e)=>{
             this.setState({
                 name:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "heightName"){
+            errorObj.heightName=0
+            this.setState({errorObj})}
             
             this.props.handleZoneInputAction(e.target.name,e.target.value)
         }
@@ -116,7 +190,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             })
             let errorObj=this.state.errorObj
             if(e.target.name === "heightImperial"){
-                errorObj.caliperImperial=0
+                errorObj.heightImperial=0
                 this.setState({errorObj})}
 
             this.props.handleZoneInputAction2("heightImperial",e.target.value)
@@ -130,7 +204,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             })
             let errorObj=this.state.errorObj
             if(e.target.name === "heightSku"){
-            errorObj.caliperSku=0
+            errorObj.heightSku=0
             this.setState({errorObj})}
             //debugger;
             console.log("inputAction", e.target.name,e.target.value)
@@ -187,22 +261,48 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 }
         ]
 
-        if(this.validate() ){
+    //     if(this.validate() ){
             
-      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllSubAttribute(3)
-             })
+    //   let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllSubAttribute(3)
+    //          })
 
-            //  alert('Updated Successfully Done');
+    //         //  alert('Updated Successfully Done');
+    //         }
+
+    //          this.setState({
+    //              isEditing:false,
+    //              name:"",
+    //              subName:"",
+    //              subName2:""
+    //          })
+
+
+
+            if(this.validate()){
+                let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllSubAttribute(3)
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Form ',
+                            buttons: [
+                            {
+                                label: 'Ok'
+                            }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:"",
+                        subName2:""
+                    })
             }
-
-             this.setState({
-                 isEditing:false,
-                 name:"",
-                 subName:"",
-                 subName2:""
-             })
 
      }
 
@@ -225,24 +325,61 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             ]
             zoneObj.status=1
             console.log(zoneObj)
-            if(this.validate() ){
+        //     if(this.validate() ){
+        //     let result = this.props.handleAddZone(zoneObj)
+        //     result.then(res=>{
+        //         this.props.getAllSubAttribute(3)
+        //     })
+        //     alert('Added Successfully Done');
+        // }
+
+        // this.setState({
+           
+        //     name:"",
+        //     subName:"",
+        //     subName2:""
+        // })
+
+
+        if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
-                this.props.getAllSubAttribute(3)
+                this.props.getAllSubAttribute(5)
             })
-            alert('Added Successfully Done');
-        }
-
-        this.setState({
-           
-            name:"",
-            subName:"",
-            subName2:""
-        })
+            confirmAlert({
+                title: 'Added Successfully',
+                message: 'Height ',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+            this.setState({
+                name: "",
+                subName:"",
+                subName2:"",
+                isEditing:false,
+                selectedID:'',
+            })
+        } 
         
         }
+
+
+
+
+
+
         validate = ()=>{
             let errorObj = this.state.errorObj
+
+            if(this.state.name.length === 0){
+                errorObj.heightName=1
+                this.setState({errorObj})
+                return false
+            }
+
             if(this.state.subName.length === 0){
                 errorObj.heightImperial=1
                 this.setState({errorObj})
@@ -256,6 +393,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             return true
             
         }
+
+
         render() {
         console.log(this.props.temp)
         var tasks={
@@ -287,6 +426,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 <input type="text" 
                                                  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                  placeholder="Height"  name="heightName" value={this.state.name}    onChange={this.handleZoneInputAction}/>
+                                                  {this.state.errorObj.heightName!==0?<span style={{fontSize:"small",color:"red"}}>Enter height </span>:""}
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 {/* <a href="javascript;" className="d-flex align-items-center">
@@ -319,7 +459,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
 
 
 
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
 
                                                 <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleAddCategoryUpdate}>
                                                     <div >
@@ -342,7 +482,21 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Height
                                                 </a>
                                                 </div>  
-                                            )}   
+                                            )}    */}
+
+
+                            <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                <div >
+                                    <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                    </a>
+                                </div>
+                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                    <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                        <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                    </a>
+                                </div>
+                            </div>
 
 
 
