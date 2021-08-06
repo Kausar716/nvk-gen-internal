@@ -98,9 +98,7 @@ export class OrganizationSettings extends React.Component {
   
     handlImageUpload = (e1)=>{
        // debugger;
-       this.setState({
-        imgLoader: true
-    })
+   
         console.log("e1Firstfile", e1.target.files[0])
         let imageData = e1.target.files[0]
         let id="2"
@@ -118,14 +116,6 @@ export class OrganizationSettings extends React.Component {
             this.fileInput.value = ""
         }
 
-      
-        // if(this.state.imgLoader===true){
-        //     return(
-        //     <div>
-        //             <Loader />
-        //     </div>
-               
-        //     )}
         //alert("image successfully uploaded")
         // setTimeout(function() {
           
@@ -140,7 +130,9 @@ export class OrganizationSettings extends React.Component {
         //  },1100);
         // alert("image successfully uploaded")
 
-
+        this.setState({
+            imgLoader: true
+        })
         
          
     }

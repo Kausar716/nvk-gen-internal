@@ -11,6 +11,37 @@ import 'react-tabs/style/react-tabs.css';
 
 
 const Category=(props)=> {
+
+
+    // isEditing:false,
+    // name:'',
+    // subName:'',
+    // subName2:'',
+    // selectedID:'',
+    // btnLabelAdd:'Add New Characterstics',
+    // btnLabelUpdate: 'Update Characterstics',
+    // btnLabelCancel:'Cancel',
+
+    // btnLabelAdd2:'Add New Feature',
+    // btnLabelUpdate2: 'Update Feature',
+
+    const [isEditing,setsEditing] = useState(false)
+    const [name,setName] = useState("")
+    const [subName,setSubName] = useState("")
+    const [selectedID,setselectedID] = useState("")
+    const [btnLabelAdd,setbtnLabelAdd] = useState("Add New Category")
+    const [btnLabelUpdate,setbtnLabelUpdate] = useState("Update Category")
+
+    const [btnLabelAdd2,setbtnLabelAdd2] = useState("Add New Sub Category")
+    const [btnLabelUpdate2,setbtnLabelUpdate2] = useState("Update Sub Category")
+
+
+    const [btnLabelCancel,setbtnLabelCancel] = useState("Cancel")
+    
+
+
+
+
     const [category,setCategory] = useState("")
     const [subCategory,setSubCategory] = useState("")
 
@@ -45,22 +76,53 @@ const Category=(props)=> {
                                         <div>
                                             <input type="text" class="form-control" placeholder="Name"  onChange={handleCategory}/>
                                         </div>
-                                        <div class="d-flex justify-content-md-end mt-2" onClick={handleAddCategory}>
+                                        {/* <div class="d-flex justify-content-md-end mt-2" onClick={handleAddCategory}>
                                             <a href="javascript;" class="d-flex align-items-center">
                                                 <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Category
                                             </a>
-                                        </div>
+                                        </div> */}
+
+
+
+                                        <div className="d-flex justify-content-md-end mt-2" >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" > 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {isEditing ? btnLabelUpdate : btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  >
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div> 
+
+
                                     </div>
                                     <div class="col-md-6">
                                         <p>Sub-category Name</p>
                                         <div>
                                             <input type="text" class="form-control" placeholder="Name" onChange={handleSubCategory}/>
                                         </div>
-                                        <div class="d-flex justify-content-md-end mt-2" onClick={handleAddSubCategory} >
+                                        {/* <div class="d-flex justify-content-md-end mt-2" onClick={handleAddSubCategory} >
                                             <a href="javascript;" class="d-flex align-items-center">
                                                 <i class="fa fa-plus-circle fa-2x mr-2"></i> Add New Sub-category
                                             </a>
-                                        </div>
+                                        </div> */}
+
+                                    <div className="d-flex justify-content-md-end mt-2" >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" > 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {isEditing ? btnLabelUpdate2 : btnLabelAdd2 }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  >
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div> 
+
                                     </div>
                                 </div>
                                 <div class="row mt-5">
