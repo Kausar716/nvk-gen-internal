@@ -167,7 +167,7 @@ const initialSatate = {
    customerReturnReasonList:{active:[],inactive:[]},
 
    customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-   tax_exempt: 0,fax:"",
+   tax_exempt: 0,fax:"",website_url:"",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:"",discount_by_line_item:1,restock_fee:0,fee_percent:""},
 
     action:"",
@@ -413,7 +413,7 @@ case ADD_NEW_CUSTOMER:
               customerAddressList:{active:[],inactive:[]},
 
               customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-              tax_exempt: 0,fax:"",
+              tax_exempt: 0,fax:"",website_url:"",
               tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"",discount_by_line_item:1,restock_fee:0,fee_percent:""},
         }
     case UPDATE_CUSTOMER:

@@ -6,7 +6,6 @@ import React from 'react';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from "react-router-dom";
 import './index.css'
-import Testing from './Testing';
 import {Button,FormGroup,Label,Row} from 'reactstrap'
 // import submit from './submit'
 //   const required = value => value ? undefined : 'Required'
@@ -150,8 +149,6 @@ const ForgotPassword = (props) => {
             </div>
         </div>
 
-
-        {/* <Testing /> */}
 
 
     </>

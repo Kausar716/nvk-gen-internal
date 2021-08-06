@@ -45,7 +45,8 @@ const SkuList = (props)=>{
     const [each_costError,setEach_costError] =useState(false)
     const [each_priceError,setEach_priceError] = useState(false)
     const [sales_priceError,setSales_priceError] = useState(false)
-    const [volume_priceError, setVolume_priceError] = useState(false)
+    const [volume_priceError, setVolume_priceError] = useState(false)   
+    const [selectedRow,setSelectedRow] = useState(-1)
     const handleChange=(date)=> {
         setStartDate(date)
       }
@@ -158,6 +159,8 @@ const SkuList = (props)=>{
    const getSpecifiedplant = (skudata,data,value) =>{
      console.log(id)
       window.scrollTo(100, -100)
+      setSelectedRow(skudata.id)
+      alert(skudata.id)
       props.showSinglePlantSkuAction(skudata.id,"edit","sku")
    
    }
@@ -525,7 +528,7 @@ const SkuList = (props)=>{
                         displayPlantSkuList.map(skuData=>{
                            
                             return(
-                                            <tr>
+                                            <tr style={{background:(selectedRow === skuData.id)? "gray":""}}>
                                                 <td>{skuData.archived ==="0"?"Active":"Archived"}</td>
                                                 <td>{skuData.sku_code}</td>
                                                 <td class="text-right">{skuData.each_cost}</td>
@@ -540,7 +543,7 @@ const SkuList = (props)=>{
 
                                                 <td class="text-right">{skuData.volume_price_per_unit===null?"0.00":skuData.volume_price_per_unit}</td>
                                                 <td class="text-right">{skuData.volume_quantity_name}</td>
-                                                <td class="text-center">
+                                                <td class="text-center" >
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
                                                             <img src="assets/img/edit.svg" alt="" style={{cursor:"pointer"}} onClick={()=>getSpecifiedplant(skuData,"edit","sku")}/>

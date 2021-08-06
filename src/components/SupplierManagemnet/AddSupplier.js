@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {deleteSupplier,deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
+// import {getAllSupplierCategoryMethods}
+
+import {getAllTermsMethods} from "../../actions/customerSettingAction";
 import {connect} from "react-redux";
 import 'react-tabs/style/react-tabs.css';
 import InfoModal from "../../components/Modal/InfoModal"
@@ -46,6 +49,9 @@ function AddSupplier(props) {
         props.getAllCategoriesAction()
         props.getAllSuppliersContact(supplierDataById.id)
         props.getAllAddress(supplierDataById.id)
+        props.getAllSupplierCategoryMethods()
+        props.getAllSupplierReasonMethods()
+        props.getAllTermsMethods()
  
 
     },[website_url])
@@ -364,6 +370,10 @@ function AddSupplier(props) {
     // }
 console.log("categoryData", categoryData)
 const {action } = props.supplierData
+// const {supplierData} = this.props
+
+console.log(props.supplierData.supplierCategoryList)
+console.log(props.supplierData.supplierReasonList)
     return (
         <div>
              	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
@@ -387,23 +397,25 @@ const {action } = props.supplierData
                 <div class="bg-white px-3 py-3 my-3 cardShadow">
                     <div class="row align-items-center">
                      <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
+                     {/* <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec"> */}
                      {addCustomertoggle?"": <div>
-                                <label>Complete Orders</label>
+                                <label>Complete P.O's</label>
                                 <h1>0</h1>
-                                <div><a href="">View Orders</a></div>
+                                <div><a href="">View Archive</a></div>
                             </div>}
-                            {addCustomertoggle?"":      <div>
-                                <label>Active Orders</label>
+                            {addCustomertoggle?"":<div style={{marginLeft:"-10%"}}>
+                                <label>Active P.O's</label>
                                 <h1>0</h1>
-                                <div><a href="">View Orders</a></div>
+                                <div><a href="">View P.O's</a></div>
                             </div>}
-                            {addCustomertoggle?"":    <div>
-                                <label>Active Quotes    </label>
+                            {addCustomertoggle?"":<div>
+                                {/* <label>Active P.O's</label>
                                 <h1>0</h1>
-                                <div><a href="">View Orders</a></div>
+                                <div><a href="">View P.O's</a></div> */}
                             </div>}
+                         
                             {addCustomertoggle?"":<div class="lastOdrDate">
-                                <label>Last Order</label>
+                                <label>Last P.O</label>
                                 <h4>Not Available</h4>
                             </div>}
                         </div>
@@ -439,7 +451,43 @@ const {action } = props.supplierData
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <h2>Supplier Details</h2>
-                            <div class="d-flex align-items-center">
+                            <div class="col-md-6 text-md-left">
+                            <div class="d-flex flex-wrap align-items-center justify-content-md-start">
+                         
+                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                {action=="edit"?<div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(supplierDataById.id)}><i class="fa fa-trash" style={{fontSize:30}}></i>  </a>
+                                </div>:""}
+                                                    {/* <p style={{marginLeft:"2%",marginTop:"16px"}}>Active</p>
+                                    <div class="switcher ml-2 pr-2">
+                                                <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(supplierDataById.status) ===1?true:false}/>
+                                                <label for="status"></label>
+                                            </div> */}
+                                            <span class="mr-2 f-s-18"><strong>Reason</strong></span>
+                                    <select class="form-control" onChange={handleInput} id="reason">
+                                        <option value={0}>Normal</option>
+                                            {props.supplierData.supplierReasonList.active.map(type=>{
+                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.reason)?"selected":""}>{type.reason}</option>)
+                                            })}
+                                        </select>
+                                   
+                                </div>
+                                {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                   
+                                </div> */}
+                                {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                    <span class="mr-2 f-s-18"><strong>Level</strong></span>
+                                    <select class="form-control" onChange={handleInput} id="level">
+                                        <option value={0}>Normal</option>
+                                            {customerStatusList.active.map(type=>{
+                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(customerDataById.level)?"selected":""}>{type.status_level}</option>)
+                                            })}
+                                        </select>
+                                </div> */}
+
+                            </div>
+                        </div>
+                            {/* <div class="d-flex align-items-center">
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <div class="switcher ml-2 pr-2">
                                         <input type="checkbox" name="switcher_checkbox_////alert" id="switcher_checkbox_////alert" value="2"/>
@@ -454,13 +502,11 @@ const {action } = props.supplierData
                                     </div>
                                     Prospect
                                 </div>
-                            </div>
+                            </div> */}
                         </div>
                         <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
-                            {action=="edit"?<div class="mt-5 mt-md-0">
-                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(supplierDataById.id)}><i class="fa fa-trash" style={{fontSize:30}}></i>  </a>
-                                </div>:""}
+
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                                     <p style={{marginLeft:"14%",marginTop:"16px"}}>Active</p>
                                     <div class="switcher ml-2 pr-2">
@@ -508,7 +554,7 @@ const {action } = props.supplierData
                 <Tabs>
                     <TabList>
                         <Tab>Supplier Information</Tab>
-                        <Tab>Order Settings</Tab>
+                        <Tab>Settings</Tab>
                         <Tab>Contacts</Tab>
                         {/* <Tab>Tags &amp; Labels</Tab> */}
                         <Tab>Addresses</Tab>
@@ -545,7 +591,7 @@ const {action } = props.supplierData
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-12 mt-12 mt-md-0">
+                                    <div class="col-md-8 col-lg-8 mt-8 mt-md-0">
                                     <label>Website</label>
                                         <div class="d-flex">
                                             <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
@@ -568,15 +614,15 @@ const {action } = props.supplierData
                     <TabPanel >
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
                             <form>
-                                <h2>Order Settings</h2>
+                                <h2>Settings</h2>
                                 <hr/>
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
-                                        <label>Dispatch Type</label>
+                                        <label>Shipping Type</label>
                                         <div class="d-flex">
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="delivery" value={0} name="delivery" class="custom-control-input" checked = {parseInt(supplierDataById.dispatch_type)==0?true:false} onClick={handleInput}/>
-                                                <label class="custom-control-label" for="delivery">Incoming Delivery</label>
+                                                <label class="custom-control-label" for="delivery">Delivery</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
                                                 <input type="radio" id="pickup"  value={1} name="pickup" class="custom-control-input" checked = {parseInt(supplierDataById.dispatch_type)==1?true:false} onClick={handleInput} />
@@ -589,14 +635,39 @@ const {action } = props.supplierData
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row mt-3">
+                                {/* <div class="row mt-3">
                                     <div class="col-md-3 col-lg-3">
                                         <label>Discount</label>
                                       <input type="number" class="form-control" onChange={handleInput}  id="discount" value={supplierDataById.discount} step="0.00" placeholder={"0.00"} style={{textAlign:"right"}}/>
                                        
                                     </div>
                                 
+                                </div> */}
+                                <div class="row mt-3">
+                        
+                        <div class="col-md-9 col-lg-10 mt-3 mt-md-0">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label>Payment Terms</label>
+                                    <select class="form-control" onChange={handleInput} id="term">
+                                        <option value={0}>None</option>
+                                            {props.customerData.customerTermList.active.map(type=>{
+                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.reason)?"selected":""}>{type.term}</option>)
+                                            })}
+                                        </select>
+                                    {/* <select class="form-control" onChange={handleInput} id="units">
+                                        <option selected={supplierDataById.units ==="Metric"?"selected":""} value="Metric">Metric</option>
+                                        <option selected={supplierDataById.units ==="Imperial"?"selected":""} value="Imperial">Imperial</option>
+
+                                    </select> */}
                                 </div>
+                                <div class="col-md-4 mt-3 mt-md-0">
+                                    <label>Discount</label>
+                                    <input type="number" class="form-control" onChange={handleInput}  id="discount" value={supplierDataById.discount} step="0.00" placeholder={"0.00"} style={{textAlign:"right"}}/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                                 <div class="row mt-3">
                         
                                     <div class="col-md-9 col-lg-10 mt-3 mt-md-0">
@@ -625,14 +696,14 @@ const {action } = props.supplierData
                                         <div class="row">
                                          
                                             <div class="col-md-12 mt-12" style={{width:"20%"}}>
-                                                <label>Product Categories</label>
+                                                <label>Categories</label>
                                                 <div></div>
-                                                {categoryData.map(data=>{
+                                                {props.supplierData.supplierCategoryList.active.map(data=>{
                                                     return(
                                                         <div class="col-md-6 col-lg-6" style={{display:"inline-block",width:"15%"}}>
                                                     <div className="custom-control custom-checkbox mb-1" >
                                                         <input type="checkbox" className="custom-control-input" id={data.id} onChange={handleInput} value="product" checked={supplierDataById.product_categories.filter(id=>parseInt(id) ===parseInt(data.id)).length}/>
-                                                        <label className="custom-control-label" for={data.id}>{data.name}</label>
+                                                        <label className="custom-control-label" for={data.id}>{data.category}</label>
                                                     </div>
                                                 </div>
                                                     )
@@ -840,9 +911,11 @@ const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
         supplierData:state.supplierData,
-        categoryData:state.categoryData
+        categoryData:state.categoryData,
+        customerData:state.customerReducer,
+        // supplierData:state.supplierData,
     }
 
 )
 
-export default connect(mapStateToProps,{deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
+export default connect(mapStateToProps,{getAllTermsMethods,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
