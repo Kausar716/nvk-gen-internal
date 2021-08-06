@@ -190,7 +190,7 @@ export const Component = withRouter(({ history, location }) =>{
                         <div class="bg-white">
                             <div class="row mb-3 mb-md-0">
                                 <div class="col-md-6 col-lg-6">
-                                    <div class="f-s-24 px-3 py-3 f-w-500">User Access &nbsp;-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove Permissions</span></div>
+                                    <div class="f-s-24 px-3 py-3 f-w-500">User Access&nbsp;-<span class="f-s-18 p-15 mb-0" style={{marginLeft:"-11px"}}>Add, Edit or Remove Permissions</span></div>
                                 </div>
 
                                 <div class="col-md-6 col-lg-6" style={{marginTop:"1em"}}>
@@ -258,7 +258,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                     </div>
                                                     {this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
-                                                        <p class="mb-0">{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.name:"":""}</p>
+                                                        <p class="mb-0" style={{fontWeight:"bold"}}>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.name:"":""}</p>
                                                         <div>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.email:"":""}</div>
                                                         <a href="#" class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg" /></a>
                                                     </div>:null}
@@ -1157,7 +1157,7 @@ export const Component = withRouter(({ history, location }) =>{
                                 </div>:null}
                         </div> */}
 
-                                <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%", paddingTop:"36px"}}>
+                                {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%", paddingTop:"36px"}}>
                                 {this.state.displayselectedUSer? 
                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 
@@ -1186,7 +1186,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                     <img src="assets/img/close-ic.svg" alt=""  onClick={this.goBackFunction}/>
                                                 </a>
                                     </div>:null}
-                             </div>
+                             </div> */}
 
 
 
