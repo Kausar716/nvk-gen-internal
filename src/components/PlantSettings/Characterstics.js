@@ -1,173 +1,356 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { Component } from 'react';
-import * as MdIcons from "react-icons/md";
+import React, { Component } from 'react'
 import {connect} from "react-redux";
+import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
-// import './style.css';
-import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZoneInputAction,handleAddZone,   showSubSubAttribute,
-    handleSubAttributeUpdate  } from '../../actions/attributeAction'
+import 
+    {
+        getAllSubAttribute, 
+        handleAttributeDragDrop,
+        handleAttributeDragSort,
+        handleAttributeDelete,
+        handleZoneInputAction,
+        handleAddZone, 
+        showSubSubAttribute, 
+        handleSubAttributeUpdate, 
+        handleZoneInputAction2
+    } 
+from '../../actions/attributeAction'
 
-    class Characterstics extends Component {
-            constructor(props){
-                super()
-                    this.state={
-                        errorObj:{
-                            formSku:0
-                        },
-                        isEditing:false,
-                    name:'',
-                    subName:'',
-                    subName2:'',
-                    selectedID:'',
-                    btnLabelAdd:'Add New Characterstics',
-                    btnLabelUpdate: 'Update Characterstics',
-                    btnLabelCancel:'Cancel',
-
-                    btnLabelAdd2:'Add New Feature',
-                    btnLabelUpdate2: 'Update Feature',
-                        
-                    }
+class Characterstics extends Component {
+    constructor(props){
+        super()
+        this.state={
+            errorObj:{
+                sectionName:0,
+                featureName:0
+            },
+            sortId: 0,
+            activeId: 0,
+            isEditing:false,
+            name:'',
+            subName:'',
+            subName2:'',
+            selectedID:'',
+            selectedFeatureID:'',
+            btnLabelAdd:'Add New Section Name',
+            btnLabelUpdate: 'Update Section Name',
+            btnLabelCancel:'Cancel',
+            deleteon:false,
+            isEditingFeature:false,
+            btnLabelAddFeature:'Add New Feature Name',
+            btnLabelUpdateFeature: 'Update Feature Name'
+        }
                 
-            }
-         onDragOver = (ev)=>{
-            ev.preventDefault();
+    }
+    onDragOver = (ev)=>{
+        ev.preventDefault();
+    }
+    onDragStart=(ev, id)=>{
+        console.log("dragstart:", id);
+        ev.dataTransfer.setData("id",id)
+        let activeId=this.state.activeId
+        activeId=id;
+        this.setState({activeId})
+    }
+    componentDidMount(){
+        this.props.getAllSubAttribute(12)
+    }
+    onMouseLeave =((ev, id)=>{
+        let sortId=this.state.sortId
+        sortId=id;
+        this.setState({sortId})
+    })
+    onDrop=(ev,cat)=>{
+        let id= ev.dataTransfer.getData("id");
+        let tasks = this.props.zoneCategoryList.filter((task)=>{                
+                return JSON.stringify(task.id) === id;
+        });
+        let doProcess = false;
+        let alertmsg = 0;
+        if (cat === 'active' && tasks[0].status === 0) {
+            doProcess = true;
+            alertmsg = 1;
         }
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
+        if (cat === 'inactive' && tasks[0].status === 1) {
+            doProcess = true;
+            alertmsg = 2;
         }
-        componentDidMount(){
-            this.props.getAllSubAttribute(1)
+        if (doProcess === true) {
+            let result= this.props.handleAttributeDragDrop(tasks[0])
+            result.then(res=>{
+                this.props.getAllSubAttribute(12)
+            })   
         }
-        onDrop=(ev,cat)=>{
-            let id= ev.dataTransfer.getData("id");
-            let tasks = this.props.zoneCategoryList.filter((task)=>{                
-                   return JSON.stringify(task.id) === id;
+        if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+            let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
+            result.then(res=>{
+                this.props.getAllSubAttribute(12)
+            }) 
+            alertmsg = 3;
+        }
+        if (alertmsg === 1){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
             });
-        //     console.log(tasks)
-        //     let result= this.props.handleAttributeDragDrop(tasks[0])
-        //     result.then(res=>{
-        //     this.props.getAllSubAttribute(1)
-        //    })
-            let doProcess = false;
-            if (cat === 'active' && tasks[0].status === 0) {
-                doProcess = true;
-            }
-            if (cat === 'inactive' && tasks[0].status === 1) {
-                doProcess = true;
-            }
-            if (doProcess === true) {
-                let result= this.props.handleAttributeDragDrop(tasks[0])
-                result.then(res=>{
-                    this.props.getAllSubAttribute(2)
-                })   
-            }
         }
-        onDelete =(ev)=>{
-           let id= ev.dataTransfer.getData("id");
-           this.setState({deleteon:true})
-           console.log(id)
-           let result= this.props.handleAttributeDelete(id)
-           result.then(res=>{
-            this.setState({deleteon:false})
-            this.props.getAllSubAttribute(1)
-           })
+        if (alertmsg === 2){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
         }
-        handleZoneInputAction = (e)=>{
-            this.setState({
-                name:e.target.value
-            })
-            let errorObj=this.state.errorObj
-            if(e.target.name === "characterSectionName"){
-            errorObj.formSku=0
-            this.setState({errorObj})}
-            this.props.handleZoneInputAction(e.target.name,e.target.value)
+        if (alertmsg === 3){
+            confirmAlert({
+                title: 'Action',
+                message: 'Sort Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
         }
-        handleAddCategory = (e)=>{
-       
-            let zoneObj={}
-            zoneObj.attribute_id=1
-            zoneObj.value = this.props.characterSectionName           
-            zoneObj["childrens"] =[
-                {'children_name':'SKU value',
-                'children_value':this.props.characterSectionName
-            }
+    }
+    onDelete =(ev)=>{
+        let id= ev.dataTransfer.getData("id");
+        confirmAlert({
+            title: 'Delete Section Name',
+            message: 'Are you sure want to delete the Section Name?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {this.onDeleteConfirm(id)}
+              },
+              {
+                label: 'No'
+              }
             ]
-            zoneObj.status=1
-            console.log(zoneObj)
-            // if(this.validate()){
+          });
+    }
+    onDeleteConfirm=(id)=>{
+        let result= this.props.handleAttributeDelete(id)
+        this.setState({deleteon:true})
+        result.then(res=>{
+            this.props.getAllSubAttribute(12)
+            this.setState({deleteon:false})
+            confirmAlert({
+                title: 'Delete Successfully',
+                message: 'Section Name ',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+              });
+        })
+    }
+    handleZoneInputAction = (e)=>{
+        // debugger;
+        this.setState({
+            subName:e.target.value
+        })
+        
+        let errorObj=this.state.errorObj
+        if(e.target.name === "featureName"){
+        errorObj.featureName=0
+        this.setState({errorObj})}
+
+        this.props.handleZoneInputAction("featureName",e.target.value)
+    }
+
+    handleZoneInputAction2 = (e)=>{
+        // debugger;
+        this.setState({
+            name:e.target.value
+        })
+        let errorObj=this.state.errorObj
+        if(e.target.name === "sectionName"){
+            errorObj.sectionName=0
+            this.setState({errorObj})}
+
+
+        this.props.handleZoneInputAction2("sectionName",e.target.value)
+    }
+
+    handleAddCategory = (e)=>{
+    
+        let zoneObj={}
+        zoneObj.attribute_id=12   
+        zoneObj.value = this.state.name
+        zoneObj.status=1
+        if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
-                this.props.getAllSubAttribute(1)
+                this.props.getAllSubAttribute(12)
             })
-        // }        
+            confirmAlert({
+                title: 'Added Successfully',
+                message: 'Section Name',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+            this.setState({
+                name: "",
+                subName:"",
+                isEditing:false,
+                selectedID:'',
+            })
+        }        
+    }
+    validate = ()=>{
+        let errorObj = this.state.errorObj
+        if(this.state.name.length === 0){
+            errorObj.sectionName=1
+            this.setState({errorObj})
+            return false
         }
+        return true
+        
+    }
 
+    handleAddCategoryFeature = (e)=>{
+        if (this.state.selectedID === "" || this.state.selectedID === undefined) {
+            confirmAlert({
+                title: 'Select Section Name',
+                message: 'To Add Feature Name',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        } else {
+            let zoneObj={}
+            zoneObj.attribute_id=12 
+            zoneObj.subattribute_id = parseInt(this.props.showSpeciSubA.id) 
+            zoneObj["childrens"] =[{
+                'children_name':'Feature Name',
+                'children_value':this.state.subName
+            }]
+            zoneObj.status=1
+            if(this.validateFeature()){
+                let result = this.props.handleAddZone(zoneObj)
+                result.then(res=>{
+                    this.props.getAllSubAttribute(12)
+                })
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Feature Name',
+                    buttons: [
+                    {
+                        label: 'Ok'
+                    }
+                    ]
+                });
+                this.setState({
+                    subName:"",
+                    isEditingFeature:false,
+                })
+            } 
+        }       
+    }
+    validateFeature = ()=>{
+        let errorObj = this.state.errorObj
+        if(this.state.subName.length === 0){
+            errorObj.featureName=1
+            this.setState({errorObj})
+            return false
+        }
+        return true
+        
+    }
+    handleEditClick2 =(t)=> { 
+        this.setState({
+            name: t.value,
+            isEditing:true,
+            selectedID:t.id,
+        })
 
+        this.props.handleZoneInputAction2("sectionName",this.state.name)
+        this.props.showSubSubAttribute(t.id)
+    }
+    handleEditClick3 =(t, tchild)=> {
+        this.handleEditClick2(t);
+        this.setState({
+            subName:tchild.value,
+            isEditingFeature:true,
+            selectedFeatureID:tchild.id,
+        })
 
-        handleEditClick2 =(t)=> {
-            // debugger;  
-         this.setState({
-             name: t.value,
-             isEditing:true,
-             selectedID:t.id,
-         })
-         this.props.handleZoneInputAction("characterSectionName",...this.state.name)
-        //  this.props.handlePositionInputAction("position",...this.state.name)
-         this.props.showSubSubAttribute(t.id)
-        //  console.log("ttttttt", t,  this.props.handlePositionInputAction())
-       }
+        this.props.handleZoneInputAction2("featureName",this.state.subName)
+    }
 
+    handleClear=()=>{
+        let errorObj = this.state.errorObj
+        errorObj.sectionName=0
+        errorObj.featureName=0
+        this.setState({name: "", subName:"", isEditing:false, selectedID:'', isEditingFeature:false, selectedFeatureID:'', errorObj})
+    }
+    handleClearFeature=()=>{
+        let errorObj = this.state.errorObj
+        errorObj.featureName=0
+        this.setState({subName:"", isEditingFeature:false, selectedFeatureID:'', errorObj})
+    }
 
-       handleAddCategoryUpdate=(e)=>{
+    handleAddCategoryUpdate=(e)=>{
         // debugger;
-         // this.props.handleSubAttributeUpdate(e.target.id)
          let valueName = this.state.name
          let updateID = parseInt(this.props.showSpeciSubA.id)
          let updateObject={}
          updateObject.value=valueName
-
-        // console.log("bloomName",this.props.bloomColor)
-        // updateObject.id=this.props.showSpeciSubA.id
+         updateObject.status=1
             
-      let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllSubAttribute(1)
-             })
-
-             this.setState({
-                 isEditing:false,
-                 name:""
-             })
-
-     }
-
-
-
-
-
-
-        validate = ()=>{
-            let errorObj = this.state.errorObj
-            if(this.props.formSku.length === 0){
-                errorObj.formSku=1
-                this.setState({errorObj})
-                return false
-            }
-            return true
-            
+        if(this.validate()){
+            let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
+                res.then(res=>{
+                    this.props.getAllSubAttribute(12)
+                })
+                if (this.state.isEditing) {
+                    confirmAlert({
+                        title: 'Updated Successfully',
+                        message: 'Section Name',
+                        buttons: [
+                          {
+                            label: 'Ok'
+                          }
+                        ]
+                    });
+                }
+                this.setState({
+                    isEditing:false,
+                    name:"",
+                    subName:""
+                })
         }
-        render() {
-        console.log(this.props.zoneCategoryList)
+    }
+
+    render() {
         var tasks={
             inactive:[],
             active:[],
         }
         if(this.props.zoneCategoryList){
             this.props.zoneCategoryList.forEach((t)=>{
-                console.log(t)
+                console.log("kkm", t)
                 if(t.status === 1){
                     tasks.active.push(t)
                 }
@@ -176,183 +359,165 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDelete,handleZ
                 }
             })
         }
-    return (
+        
+        return (
         <>
             <div className="bg-white">
-                            <h4 className="p-15 mb-0">Characteristics</h4>
-                            <hr className="m-0"/>
-                            <div className="ContentSection p-15">
-                                <div className="row">
-                                    <div className="col-md-6">
-                                        <p>Section Name</p>
-                                        <div>
-                                            <input type="text"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" } placeholder="Section" 
-                                            name="characterSectionName" 
-                                            value={this.state.name}
-                                              onChange={this.handleZoneInputAction}/>
-                                        </div>
+                <h4 className="p-15 mb-0">Characteristics</h4>
+                <hr className="m-0"/>
+                <div className="ContentSection p-15">
+                    <div className="row">
+                        <div className="col-md-6">
+                            <label>Section Name</label>
+                            <div>
+                                <input type="text"
+                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                    name="sectionName"
+                                value={this.state.name}
+                                    placeholder="Section Name" onChange={this.handleZoneInputAction2}/>
+                                {this.state.errorObj.sectionName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Section Name</span>:""}
+                            </div>
 
-
-                                        {/* <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
-                                            <a href="javascript:" className="d-flex align-items-center">
-                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                            </a>
-                                        </div> */}
-
-                                            {/* {this.state.isEditing ? (
-                                                    <div className="d-flex justify-content-md-end mt-2">
-                                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryUpdate}>
-                                                            <a href="javascript:" className="d-flex align-items-center">
-                                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Update Section
-                                                            </a>
-                                                        </div>
-
-                                                            <div className="d-flex justify-content-md-end mt-2" style={{marginLeft:"2.5em",  marginTop:"-6px"}} onClick={()=>{this.setState({isEditing:false})}}>
-                                                                <a href="javascript:" className="d-flex align-items-center">
-                                                                    Cancel 
-                                                                </a>
-                                                            </div>
-                                                    </div>
-
-                                                        ):
-                                                        (
-                                                        <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategory}>
-                                                        <a href="javascript:" className="d-flex align-items-center">
-                                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Section
-                                                        </a>
-                                                        </div>  
-                                            )}     */}
-
-                                        <div className="d-flex justify-content-md-end mt-2" >
-                                            <div >
-                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
-                                                </a>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
-                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
-                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
-                                                </a>
-                                            </div>
-                                        </div>    
-
-
-
-
-
+                            <div className="d-flex justify-content-md-end mt-2">
+                                <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                    <div >
+                                        <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategory}> 
+                                            <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                        </a>
                                     </div>
-                                    <div className="col-md-6">
-                                        <p>Feature Name</p>
-                                        <div>
-                                            <input type="text" className="form-control" placeholder="Feature"/>
-                                        </div>
-                                        <div className="d-flex justify-content-md-end mt-2" >
-                                            <div >
-                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate2 : this.handleAddCategory2}> 
-                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate2 : this.state.btnLabelAdd2 }
-                                                </a>
-                                            </div>
-                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
-                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
-                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
-                                                </a>
-                                            </div>
-                                        </div> 
-                                        {/* <div className="d-flex justify-content-md-end mt-2">
-                                            <a href="#" className="d-flex align-items-center">
-                                                <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Feature
-                                            </a>
-                                        </div> */}
-                                    </div>
-                                </div>
-                                <div className="row mt-5">
-                                    <div className="col">
-                                        <div className="card midCard">
-                                            <div className="card-header">
-                                                Inactive
-                                            </div>
-                                            <div className="card-body cardBg"y
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
-                                                   {tasks.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.value}</span>
-                                                                </a>
-                                                            </li>                                                            
-                                                    })}
-                                            </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-1">
-                                        <div className="midControls d-flex flex-column justify-content-around">
-                                            <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.png" alt="Settings"/>
-                                            </div>
-                                            <div>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
-                                            </div>
-                                            {/* <div id="delete" className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <a href="javascript;" className="icDelete">
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
-                                                </a>
-                                            </div> */}
-                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div className="col">
-                                        <div className="card midCard">
-                                            <div className="card-header">
-                                                Active
-                                            </div>
-                                            <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
-                                                   {tasks.active.map(t=>{
-                                                    return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
-                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t)}
-                                                                /></span>
-                                                                </a>
-                                                            </li>                                                            
-                                                    })}
-                                            </ul>
-                                            </div>
-                                        </div>
+                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                        <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                            <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <div className="col-md-6">
+                        <label>Feature Name</label>
+                            <div>
+                                <input type="text"
+                                className={this.state.isEditingFeature===false ? "form-control" : "formControl2 abcd" }
+                                    name="featureName"
+                                value={this.state.subName}
+                                    placeholder="Feature Name" onChange={this.handleZoneInputAction}/>
+                                {this.state.errorObj.featureName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Feture Name</span>:""}
+                            </div>
+
+                            <div className="d-flex justify-content-md-end mt-2">
+                                <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                    <div >
+                                        <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditingFeature ? this.handleAddCategoryUpdateFeature : this.handleAddCategoryFeature}> 
+                                            <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditingFeature ? this.state.btnLabelUpdateFeature : this.state.btnLabelAddFeature }
+                                        </a>
+                                    </div>
+                                    <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClearFeature}>
+                                        <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                            <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-5 mb-4">
+                        <div class="col">
+                            <div class="card midCard">
+                                <div class="card-header">
+                                    Inactive
+                                </div>
+                                <div class="card-body cardBg"
+                                    onDragOver={(e)=>this.onDragOver(e)}
+                                    onDrop={(e)=>{this.onDrop(e,"inactive")}}>
+                                    <ul class="list-unstyled">
+                                        {tasks.inactive.map(t=>{
+                                        return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                        <a className="d-flex justify-content-between align-items-center">
+                                                    <span id="Wheathers">{t.value}</span>
+                                                    </a>
+                                                </li>
+                                        })}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="col-lg-1" >
+                                        <div className="midControls d-flex flex-column justify-content-around">
+                                            <div>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
+                                            </div>
+                                            <div>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
+                                            </div>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
+                                            </div>
+                                        </div>
+                                    </div>
+                        <div class="col">
+                            <div class="card midCard">
+                                <div class="card-header">
+                                    Active
+                                </div>
+                                <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
+                                    <ul class="list-unstyled">
+                                            {tasks.active.map(t=>{
+                                            return <li class="hasChild" id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                        <a className="d-flex justify-content-between align-items-center">
+                                                            <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
+                                                            <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}/>
+                                                                <i class="fa fa-th"></i>
+                                                            </span>
+                                                        </a>
+                                                        <ul class="list-unstyled childUl">
+                                                            {t.sub_attributeschild.map(t1=>{
+                                                                return <li>
+                                                                            <a class="d-flex justify-content-between align-items-center">
+                                                                                <span className={this.state.isEditingFeature===false  ? "" :this.state.selectedFeatureID === t1.id ? "reasonBackground" : " "}>{t1.value}</span>
+                                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                                    onClick={() =>this.handleEditClick3(t, t1)}/>
+                                                                                    <i class="fa fa-th-large" style={{fontSize: 12}}></i>
+                                                                                </span>
+                                                                            </a>
+                                                                        </li>
+                                                            })}
+                                                        </ul>
+                                                    </li>
+                                            })}
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </>
+        )
+    }
+}
 
-)
-}
-}
+const mapStateToProps = (state)=> ({
+        zoneCategoryList:state.attributeData.subAttribute,
+        temp:state,
+        sectionName:state.attributeData.subAttributeName.sectionName,
+        showSpeciSubA: state.attributeData.specificSubAttribute,
+    })
 
-const mapStateToProps = (state)=> (
-    // console.log(state)
-     {
-    
-zoneCategoryList:state.attributeData.subAttribute,
-temp:state,
-// name:state.categoryData.name 
-characterSectionName:state.attributeData.subAttributeName.characterSectionName,
-showSpeciSubA: state.attributeData.specificSubAttribute,
-}
-)
 export default connect(mapStateToProps,{
     getAllSubAttribute,
     handleAttributeDragDrop,
+    handleAttributeDragSort,
     handleAttributeDelete,
     handleZoneInputAction,
     handleAddZone,
     showSubSubAttribute,
-    handleSubAttributeUpdate     
+    handleSubAttributeUpdate, 
+    handleZoneInputAction2,    
 })(Characterstics)

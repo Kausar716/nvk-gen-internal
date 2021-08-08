@@ -610,7 +610,13 @@ class InventoryLocation extends Component {
                                                             <div>
                                                                 <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label>
                                                                     <h5><span>{t.value}</span></h5>
-                                                                <label><span>{t.sub_attributeschild[5].value}</span><br/><span>{t.sub_attributeschild[4].value}</span>, <span>{t.sub_attributeschild[3].value}</span>, <span>{t.sub_attributeschild[2].value}</span></label>
+                                                                <label>
+                                                                    <span>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")}<br/>
+                                                                        <span>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</span>, 
+                                                                        <span>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</span>, 
+                                                                        <span>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</span>
+                                                                    </span>
+                                                                </label>
                                                             </div>
                                                             <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
                                                         
@@ -637,7 +643,7 @@ class InventoryLocation extends Component {
                                                 
                                             </div>
                                             <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                                <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
@@ -650,14 +656,20 @@ class InventoryLocation extends Component {
                                     </div>
                                     <div class="card-body p-0" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                         <ul class="list-unstyled formAddressList mb-0">
-                                                {tasks.active !=undefined ?tasks.active.map(t=>{
+                                                {tasks.active !==undefined ?tasks.active.map(t=>{
                                                 return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                             <a className="d-flex justify-content-between align-items-center">
                                                                 <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
                                                                 <div>
                                                                     <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label>
                                                                         <h5><span>{t.value}</span></h5>
-                                                                    <label><span>{t.sub_attributeschild[5].value}</span><br/><span>{t.sub_attributeschild[4].value}</span>, <span>{t.sub_attributeschild[3].value}</span>, <span>{t.sub_attributeschild[2].value}</span></label>
+                                                                    <label>
+                                                                        <span>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")}<br/>
+                                                                            <span>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</span>, 
+                                                                            <span>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</span>, 
+                                                                            <span>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</span>
+                                                                        </span>    
+                                                                    </label>
                                                                 </div>
                                                                 <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
                                                             
