@@ -17,11 +17,14 @@ import { is } from 'immutable';
      isOpen1:false,
        message:[],
        isEditing:false,
-       name:'',
-       subName:'',
-       subName2:'',
-       selectedID:'',
-       deleteon:false
+            name:'',
+            subName:'',
+            subName2:'',
+            selectedID:'',
+            btnLabelAdd:'Add New Type',
+            btnLabelUpdate: 'Update Type',
+            btnLabelCancel:'Cancel',
+             deleteon:false
     }
 
 
@@ -88,7 +91,9 @@ import { is } from 'immutable';
                 let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-type")
                 result.then(res=>{
                     this.props.getAllCustomerType()
-                })   
+                }) 
+                
+                //alertmsg = 3;
             }
            }
        

@@ -75,11 +75,9 @@ const validate = values => {
       {/* <label>{label}</label> */}
       <div>
         <input {...input} class="form-control" placeholder={label} 
-       readOnly={false}
-        autoComplete="off"
-        autoCorrect="off"
-        spellCheck="off"
-         //onFocus={onFocus}
+        
+    
+        
           type={type} onchange={changingValue}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
-import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage} from "../../actions/organizationSettingAction";
+import {showorganization,updateorganization,handleOrganizationSettingsInputAction,uploadImage,removeImage, resetUserDataInOrg} from "../../actions/organizationSettingAction";
 import {connect} from "react-redux";
 import ActionModal from '../Modal/ActionModal';
 import InfoModal from "../Modal/InfoModal";
@@ -9,6 +9,7 @@ import { Link ,withRouter} from "react-router-dom";
 import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
 import { Prompt } from 'react-router';
+import Immutable from 'immutable';
 import './style.css';
 export const Component = withRouter(({ history, location }) =>{
 
@@ -53,8 +54,9 @@ export class OrganizationSettings extends React.Component {
             actionType:"",
             submitCount:0,
 
+            backupArrayOrg:[],
             imgLoader:false,
-
+            reload: false,
             phoneNumberInOrganization:" ",
             phoneError:"",
 
@@ -65,7 +67,7 @@ export class OrganizationSettings extends React.Component {
             isError:false,
             name:"",
             sending_email_address:"",
-            // phone:"",
+            //phone:"",
             value1: '',
             error:"",
             main_title:"",
@@ -248,7 +250,6 @@ export class OrganizationSettings extends React.Component {
             hadModified.name=true
                  
         }
-
 
 
         
@@ -478,6 +479,11 @@ export class OrganizationSettings extends React.Component {
          //window.location.reload();
      }
      componentDidMount(){
+
+        this.setState({
+            backupArrayOrg: this.props.backupOrgDataFinal
+        })
+        this.props.resetUserDataInOrg();
          let id = "2"
          const { history } = this.props;
        this.props.showorganization(id)
@@ -496,9 +502,47 @@ export class OrganizationSettings extends React.Component {
 
 
       goDashboard =()=>{
-            
-        const { history } = this.props;
-        history.push("/Dashboard")
+
+      
+        //this.forceUpdate();
+        console.log("fixedArray", this.state.backupArrayOrg.name)
+    
+      let updateObject={}
+            updateObject.id="2"
+
+            updateObject.name = this.props.backupOrgDataFinal.name
+
+            updateObject.sending_email_address = this.props.backupOrgDataFinal.sending_email_address
+
+            updateObject.phone = parseInt(this.props.backupOrgDataFinal.phone)
+       
+            updateObject.main_title = this.props.backupOrgDataFinal.main_title
+   
+            updateObject.secondary_title = this.props.backupOrgDataFinal.secondary_title
+       
+            updateObject.main_body = this.props.backupOrgDataFinal.main_body
+       
+            updateObject.secondary_body = this.props.backupOrgDataFinal.secondary_body
+            updateObject.log=this.props.backupOrgDataFinal.logo
+
+
+            let res=  this.props.updateorganization(updateObject)
+            //this.render();
+            res.then(r=>{
+                let id = "2"
+                this.props.showorganization(id)
+                console.log(JSON.stringify(r))
+               // this.forceUpdate();
+                // alert("Successfully Added")
+            }).catch(c=>{
+                alert(JSON.stringify(c))
+            })
+            this.setState({
+                phoneNumberInOrganization:parseInt(this.props.backupOrgDataFinal.phone)
+            })
+           
+            //window.location.reload();
+       
     }
 
 
@@ -507,6 +551,8 @@ export class OrganizationSettings extends React.Component {
 
     //  let history = useHistory();
     render(){
+        
+        console.log("backupOrgDataFinal", this.props.backupOrgDataFinal);
 
         const {name,sending_email_address,phone,main_title,secondary_title,main_body,secondary_body} = this.state;
         const enabled =
@@ -522,7 +568,7 @@ export class OrganizationSettings extends React.Component {
 
 
 
-       console.log("organizationData",this.props.organizationData.organizationData)
+       console.log("organizationData",this.props.organizationData.organizationData, this.props.organizationData.organizationData.name)
         const { actionType } = this.state;
         console.log(this.state)
         console.log(this.props.organizationData)
@@ -714,7 +760,7 @@ export class OrganizationSettings extends React.Component {
          
     <Prompt
       when={organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address }
-       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save changes and leave?' : ' Are you sure you want to leave ?'}
+       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to leave?' : ' Are you sure you want to leave ?'}
     />
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
@@ -755,7 +801,7 @@ export class OrganizationSettings extends React.Component {
                                                 <span class="ml-2"><b>Save &amp; Done</b></span>
                                             </span>
                                         </a>
-                                        <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                        <a  class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt="" 
                                             onClick={this.goDashboard}
                                             //onClick={()=>{confirmAction("goBack"); }}
@@ -869,7 +915,8 @@ export class OrganizationSettings extends React.Component {
                                             <label style={{fontWeight:"bold"}}>Sending Email Address</label>
                                             {/* <input refs="email" type="text" size="30" placeholder="Email"  value={organizationDataById.sending_email_address} onChange={this.handleInput}/> */}
 
-                                            <input type="text" placeholder="Dispatch Email Address" class="form-control" name="sending_email_address" value={organizationDataById.sending_email_address} onChange={this.handleInput} />
+                                            <input type="text" placeholder="Dispatch Email Address" class="form-control"
+                                             name="sending_email_address" value={organizationDataById.sending_email_address} onChange={this.handleInput} />
                                             {/* <div className="text-danger">{this.state.errors.email}</div> */}
                                             {this.state.errorObj.sendingEmailError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Email</span>:""}
                                         </div>
@@ -1003,11 +1050,12 @@ export class OrganizationSettings extends React.Component {
 
     const mapStateToProps = (state)=> (
         {
-            organizationData:state.organizationReduser
+            organizationData:state.organizationReduser,
+            backupOrgDataFinal : state.organizationReduser.backupOrgData
         }
     
     )
     
     export default withRouter(connect(mapStateToProps,{showorganization,updateorganization,removeImage
-        ,handleOrganizationSettingsInputAction,
+        ,handleOrganizationSettingsInputAction,resetUserDataInOrg,
         uploadImage}) (OrganizationSettings));
