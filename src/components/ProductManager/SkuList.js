@@ -360,10 +360,12 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
+    console.log(actionType)
     let locationList = []
     // console.log(props.temp.attributeData.subAttribute)
     if(props.supplierLocation)
      locationList= props.supplierLocation.active
+
        
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
@@ -506,7 +508,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
-                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{actionType === "edit" ?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
+                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{actionType === "edit" || actionType === "add"?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <button 
                                             // type="button" class="btn btn-primary btn-lg"
                                             className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
@@ -515,7 +517,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
-                                             > {actionType === "edit"?"Add SKU & Clear":"Update "}
+                                             > {actionType === "edit" || actionType === "add"?"Add SKU & Clear":"Update "}
                                                  {/* Add SKU &amp; Clear */}
                                                  </button>
                                             {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
