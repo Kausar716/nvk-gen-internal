@@ -46,7 +46,6 @@ export const createSubAttributeAction = (name,status) => dispatch => {
 }
 export const getAllSubAttribute = (id) => dispatch => {
     axios.get(`/api/show-attribute/${id}`,config).then(res=>{ 
-        //debugger
         console.log(res.data)
     dispatch({
             type:GET_ALL_SUB_ATTRIBUtTES,
