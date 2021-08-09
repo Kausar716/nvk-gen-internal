@@ -15123,13 +15123,22 @@ pre code {
     border: 0
 }
 
-.table-striped tbody tr:nth-of-type(odd) {
-    background-color: #f2f4f5
+/* .table-striped tbody tr:nth-of-type(odd) {
+    background-color: #f2f4f5;
+} */
+.table tr.odd {
+    background-color: #f2f4f5;
+}
+.table tr.even {
+    background-color: #fff;
 }
 
 .table-hover tbody tr:hover {
     color: #333;
     background-color: #f2f4f5
+}
+.tableOuterBdr{ 
+    border: 1px solid #D9D9D9;
 }
 
 .table-primary,
@@ -18100,8 +18109,8 @@ input[type=submit].btn-block {
 
 .custom-control-input:checked~.custom-control-label::before {
     color: #fff;
-    border-color: #348fe2;
-    background-color: #348fe2
+    border-color: #7EBB03;
+    background-color: #7EBB03
 }
 
 .custom-control-input:focus~.custom-control-label::before {
@@ -29387,7 +29396,10 @@ a:hover { text-decoration: none;}
 @media (max-width:767.98px) {
     .content {
         margin-left: 0;
-        padding: 20px 20px
+        padding: 20px 10px
+    }
+    .contentHeader {
+        padding: 12px 10px;
     }
 }
 
@@ -46741,7 +46753,9 @@ body ul.wysihtml5-toolbar .glyphicon.glyphicon-picture:before {
 .f-w-800 {
     font-weight: 800 !important
 }
-
+.lh22 {
+    line-height: 22px;
+}
 .clearfix:after,
 .clearfix:before {
     content: '';
@@ -53605,7 +53619,9 @@ ul.list-unstyled.searchAlpha li a:hover {
 .descLbl {
     margin-top: -28px;
     position: absolute;
-    left: 30px;
+    left:10px;
+    right: 10px;
+    width: calc(100% - 20px);
     color: #707070;
 }
 .tblBgWhite, .tblBgWhite td {
@@ -53859,8 +53875,12 @@ ul.list-unstyled.searchAlpha li a:hover {
 .movePanel > td {
     padding: 16px;
 }
-
-
+.wid240 {
+    width: 240px;
+}
+.textGrey {
+    color: #707070;
+}
 
 
 
@@ -53978,6 +53998,8 @@ ul.list-unstyled.searchAlpha li a:hover {
         margin: 0 auto;
     }
 }
+
+
 
 .dropdown:hover>.dropdown-menu {
     display: block;

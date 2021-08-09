@@ -13,6 +13,7 @@ import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,Paginatio
 import {connect} from "react-redux";
 import {} from "../../actions/productAction";
 import {getAllAttributesAction} from "../../actions/attributeAction";
+import {getAllSupplierLocationMethods} from '../../actions/supplierManagementAction'
 //import ReactPaginate from 'react-paginate'
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
@@ -44,7 +45,6 @@ handleSkuInputAction
     
 } from '../../actions/productAction'
 import { config } from "../../actions/types";
-  
 const required = value => value ? undefined : 'Required'
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined
@@ -102,6 +102,7 @@ const SkuList=(props)=> {
         props.getAllSkuAction()
         props.getAllSpecifiedSkuProductList()
         props.getAllAttributesAction()
+        props.getAllSupplierLocationMethods()
     },[])
 
 
@@ -359,6 +360,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
+    let locationList = []
+    // console.log(props.temp.attributeData.subAttribute)
+    if(props.supplierLocation)
+     locationList= props.supplierLocation.active
        
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
@@ -403,10 +408,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
-                                            <select class="form-control" style={{cursor:"pointer"}}  >
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            <select class="form-control" style={{cursor:"pointer"}} id="location_id" onChange={handleInput} value={skuDataById.location_id} >
+                                            <option value="0">None</option>
+                                                {locationList.map(location=>{
+                                                    return (<option value={location.id} selected={location.id===skuDataById.location_id?"selected":""}>{location.location}</option>)
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -645,7 +651,8 @@ const mapStateToProps = (state)=> ({
     productData:state.productData,
     temp:state,
     categoryData:state.categoryData,
-    attributeData:state.attributeData
+    attributeData:state.attributeData,
+    supplierLocation:state.supplierData.supplierLocationList
 })
 function validate(values) {
     const errors = {};
@@ -686,7 +693,8 @@ export default reduxForm({
     //handle sku input
     handleSkuInputAction,
     pageReDirectAction,
-    clearSkuFields
+    clearSkuFields,
+    getAllSupplierLocationMethods
 
 })(SkuList));
 

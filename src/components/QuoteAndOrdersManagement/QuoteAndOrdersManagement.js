@@ -45,13 +45,20 @@ export default function QuoteAndOrdersManagement() {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-md-end  align-items-center">
+                        <div class="col-md-6 d-flex flex-wrap justify-content-md-end  align-items-center">
                             <span class="mr-2 text-grey-darker f-s-14">Last Saved on 24/05/2020  12:23</span>
                             <a href="" class="ml-2"><img src="assets/img/copy-ic.svg" alt=""/></a>
                             <a href="" class="ml-2"><img src="assets/img/plant-btn-blue.svg" alt=""/></a>
                             <a href="" class="ml-2"><img src="assets/img/dig-btn-blue.svg" alt=""/></a>
                             <a href="" class="ml-2"><img src="assets/img/order-list-btn-blue.svg" alt=""/></a>
                             <a href="" class="ml-2"><img src="assets/img/times-btn-red.svg" alt=""/></a>
+                            <a href="" class="ml-2"><img src="assets/img/toggle-btn.svg" alt=""/></a>
+                            <div class="d-flex align-items-center flex-wrap ml-3">Active
+                                <div class="switcher switcher-sm ml-2 pr-2">
+                                    <input type="checkbox" name="switcher_checkboxActive" id="switcher_checkboxActive" checked="checked" value="2" />
+                                    <label for="switcher_checkboxActive"></label>
+                                </div> 
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,7 +106,7 @@ export default function QuoteAndOrdersManagement() {
                                 </div>
 
                                 <div class="row mt-3">
-                                <div class="col-md-12 col-lg-5 col-xl-5">
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
                                     <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Ordered By <span class="text-danger">*</span></label>
@@ -188,40 +195,48 @@ export default function QuoteAndOrdersManagement() {
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Include Royalty</label>
-                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
-                                            <div class="switcher switcher-sm ml-2 pr-2">
-                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                <label for="switcher_checkbox_date"></label>
-                                            </div> On
+                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Include Royalty</label>
+                                                <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                                    <div class="switcher switcher-sm ml-2 pr-2">
+                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                        <label for="switcher_checkbox_date"></label>
+                                                    </div> On
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-6">
+                                                <label>Display Discount Column</label>
+                                                <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                                    <div class="switcher switcher-sm ml-2 pr-2">
+                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                        <label for="switcher_checkbox_date"></label>
+                                                    </div> On
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Display Discount Column</label>
-                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
-                                            <div class="switcher switcher-sm ml-2 pr-2">
-                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                <label for="switcher_checkbox_date"></label>
-                                            </div> On
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Display Substitution Line</label>
-                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
-                                            <div class="switcher switcher-sm ml-2 pr-2">
-                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                <label for="switcher_checkbox_date"></label>
-                                            </div> On
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-3">
-                                        <label>Show Pricing on Output</label>
-                                        <div class="d-flex align-items-center flex-wrap mt-2">Off
-                                            <div class="switcher switcher-sm ml-2 pr-2">
-                                                <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                <label for="switcher_checkbox_date"></label>
-                                            </div> On
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-3">
+                                                <label>Display Substitution Line</label>
+                                                <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                                    <div class="switcher switcher-sm ml-2 pr-2">
+                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                        <label for="switcher_checkbox_date"></label>
+                                                    </div> On
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 col-lg-3">
+                                                <label>Show Pricing on Output</label>
+                                                <div class="d-flex align-items-center flex-wrap mt-2">Off
+                                                    <div class="switcher switcher-sm ml-2 pr-2">
+                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                        <label for="switcher_checkbox_date"></label>
+                                                    </div> On
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -297,7 +312,7 @@ export default function QuoteAndOrdersManagement() {
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12 table-responsive">
-                                                <table class="table table-striped mb-0" width="100%">
+                                                <table class="table table-striped mb-0" border="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th width="15%" class="">SKU</th>
@@ -319,7 +334,7 @@ Rate</th>
                                                     <tbody>
                                                         <tr>
                                                             <td colspan="13" class="p-0">
-                                                                <table class="table table-striped mb-0" width="100%">
+                                                                <table class="table table-striped mb-0" border="0" width="100%">
                                                                     <tr class="tblLinks">
                                                                         <td colspan="13">
                                                                             <a href="">Abeliophyllum (White Forsythia)</a>
@@ -416,7 +431,7 @@ Rate</th>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="13" class="p-0">
-                                                                <table class="table table-striped mb-0" width="100%">
+                                                                <table class="table table-striped mb-0" border="0" width="100%">
                                                                     <tr class="tblLinks">
                                                                         <td colspan="13">
                                                                             <a href="">Abeliophyllum (White Forsythia)</a>
@@ -598,7 +613,7 @@ Rate</th>
                                                     <tbody>
                                                         <tr>
                                                             <td colspan="12" class="p-0">
-                                                                <table class="table table-striped mb-0" width="100%">
+                                                                <table class="table table-striped mb-0" border="0" width="100%">
                                                                     <tr class="movePanel">
                                                                         <td colspan="12">
                                                                             <div class="row">
@@ -620,7 +635,7 @@ Rate</th>
                                                                     </tr>
                                                                     {/* Main Content Row starts here */}
                                                                     <tr class="tblBgWhite">
-                                                                        <table class="table table-striped table-no-border mb-0" width="100%">
+                                                                        <table class="table table-striped table-no-border mb-0" border="0" width="100%">
                                                                             <tr class="topTitleRow">
                                                                                 <td width="3%" class="pt-2">1</td>
                                                                                 <td width="6%" class="pt-2">
@@ -649,8 +664,8 @@ Rate</th>
                                                                                 <td width="8%" class="text-center">19/05/2020</td>
                                                                                 <td width="8%" class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                                                        <label class="custom-control-label" for="customCheck2"></label>
+                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                                                                        <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td width="8%" class="text-center">
@@ -668,18 +683,20 @@ Rate</th>
                                                                                 <td width="8%" class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
+                                                                                <td width="" class="text-center actionTd">
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                         </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -717,7 +734,7 @@ Rate</th>
                                                                                 </td>
                                                                                 <td width="8%" class="text-center">150CM 15 gal</td>
                                                                                 <td width="8%" class="text-center">19/05/2020</td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
@@ -740,22 +757,15 @@ Rate</th>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td width="8%" class="text-center">
-                                                                                    <span class="text-success controlLabel text-right">90</span>
+                                                                                    <span class="text-success controlLabel text-right ">90</span>
                                                                                 </td>
-                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                <td width="8%" class="text-center actionTd">
                                                                                     <a href="#" class="">
                                                                                         <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                     </a>
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite ">
@@ -799,7 +809,7 @@ Rate</th>
                                                                                 </td>
                                                                                 <td width="8%" class="text-center">150CM 15 gal</td>
                                                                                 <td width="8%" class="text-center">19/05/2020</td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
@@ -824,20 +834,13 @@ Rate</th>
                                                                                 <td width="8%" class="text-center">
                                                                                     <span class="text-success controlLabel text-right ">90</span>
                                                                                 </td>
-                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                <td width="8%" class="text-center actionTd">
                                                                                     <a href="#" class="">
                                                                                         <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                     </a>
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite ">
@@ -856,7 +859,7 @@ Rate</th>
                                                         </tr>
                                                         <tr>
                                                             <td colspan="12" class="p-0">
-                                                            <table class="table table-striped mb-0" width="100%">
+                                                                <table class="table table-striped mb-0" width="100%">
                                                                     <tr class="movePanel">
                                                                         <td colspan="12">
                                                                             <div class="row">
@@ -864,7 +867,7 @@ Rate</th>
                                                                                     <a href="" class="mr-3">
                                                                                         <i class="fas fa-expand-arrows-alt text-dark"></i>
                                                                                     </a>
-                                                                                    <strong>West Wing Front Gardens</strong>
+                                                                                    <strong>West Wing Rear Entrance</strong>
                                                                                 </div>
                                                                                 <div class="col-md-6 text-right">
                                                                                     <a href="#" class="mr-5">Select Segment</a>
@@ -878,232 +881,122 @@ Rate</th>
                                                                     </tr>
                                                                     {/* Main Content Row starts here */}
                                                                     <tr class="tblBgWhite">
-                                                                        <table class="table table-striped table-no-border mb-0" width="100%">
+                                                                        <table class="table table-striped mb-0" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">1</td>
-                                                                                <td width="6%" class="pt-2">
+                                                                                <td class="pt-2">4</td>
+                                                                                <td class="pt-2">
                                                                                     <span class="stsTag stsTagOpen">Open</span>
                                                                                 </td>
-                                                                                <td width="91%" colspan="11">
+                                                                                <td  colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td width="3%">
+                                                                                <td>
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td width="6%"></td>
-                                                                                <td width="27%">
+                                                                                <td></td>
+                                                                                <td>
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">150CM 15 gal</td>
+                                                                                <td class="text-center">19/05/2020</td>
+                                                                                <td class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                                                        <label class="custom-control-label" for="customCheck2"></label>
+                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                                                                        <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
+                                                                                <td class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="-10"/>
+                                                                                <td class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="-10"/>
                                                                                 </td>
-                                                                                <td width="8%"  class="text-center">
+                                                                                <td class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                <td class="text-center actionTd">
                                                                                     <a href="#" class="">
                                                                                         <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                     </a>
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
                                                                     </tr>
+                                                                    
                                                                     <tr class="tblBgGrey">
-                                                                        <table class="table table-striped table-no-border" width="100%">
+                                                                        <table class="table table-striped table-no-border mb-0" width="100%">
                                                                             <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">2</td>
-                                                                                <td width="6%" class="pt-2">
-                                                                                    <span class="stsTag stsTagPicking">Picking</span>
-                                                                                    <div>
-                                                                                        <a href="">(View)</a>
-                                                                                    </div>
+                                                                                <td class="pt-2">5</td>
+                                                                                <td class="pt-2">
+                                                                                    <span class="stsTag stsTagOpen">Open</span>
                                                                                 </td>
-                                                                                <td width="91%"  colspan="11">
+                                                                                <td  colspan="11">
                                                                                     <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td width="3%">
+                                                                                <td>
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td width="6%"></td>
-                                                                                <td width="27%">
+                                                                                <td></td>
+                                                                                <td>
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">150CM 15 gal</td>
+                                                                                <td class="text-center">19/05/2020</td>
+                                                                                <td class="text-center">
                                                                                     <div class="custom-control custom-checkbox">
                                                                                         <input type="checkbox" class="custom-control-input" id="customCheck1" />
                                                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
+                                                                                <td class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="2.5"/>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <div class="plainText">1</div>
-                                                                                    <div class="">
-                                                                                        <span class="mr-2"><i class="fas fa-lock"></i></span>
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
+                                                                                <td class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right" placeholder="" value="-10"/>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td width="8%" class="text-center">
+                                                                                <td class="text-center">
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
-                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
+                                                                                <td class="text-center actionTd">
                                                                                     <a href="#" class="">
                                                                                         <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                     </a>
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="trBgWhite ">
-                                                                                <td width="3%"></td>
-                                                                                <td width="6%"></td>
-                                                                                <td width="91%" class="" colspan="12">
-                                                                                    <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                                    <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </tr>
-                                                                    <tr class="tblBgWhite">
-                                                                        <table class="table table-striped table-no-border" width="100%">
-                                                                            <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">3</td>
-                                                                                <td width="6%" class="pt-2">
-                                                                                    <span class="stsTag stsTagPicking">Picking</span>
-                                                                                    <div>
-                                                                                        <a href="">(View)</a>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="91%"  colspan="11">
-                                                                                    <input type="text" class="form-control" placeholder="" value="Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle"/>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td width="3%">
-                                                                                    <div class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                                                                        <label class="custom-control-label" for="customCheck1"></label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="6%"></td>
-                                                                                <td width="27%">
-                                                                                    <select class="form-control plantNameSel">
-                                                                                        <option>43-TF-30-1G</option>
-                                                                                        <option>Option 1</option>
-                                                                                        <option>Option 2</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td width="8%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <div class="custom-control custom-checkbox">
-                                                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" />
-                                                                                        <label class="custom-control-label" for="customCheck1"></label>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="2.5"/>
-                                                                                </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <div class="plainText">1</div>
-                                                                                    <div class="">
-                                                                                        <span class="mr-2"><i class="fas fa-lock"></i></span>
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="8%" class="text-center">
-                                                                                    <span class="text-success controlLabel text-right ">90</span>
-                                                                                </td>
-                                                                                <td width="" class="text-center actionTd d-flex justify-content-center">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
                                                                                     </a>
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="trBgWhite ">
-                                                                                <td width="3%"></td>
-                                                                                <td width="6%"></td>
-                                                                                <td width="91%" class="" colspan="12">
-                                                                                    <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                                    <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>

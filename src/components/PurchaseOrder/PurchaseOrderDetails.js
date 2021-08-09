@@ -5,33 +5,6 @@ import DatePicker from 'react-date-picker';
 
 export default function PurchaseOrderDetails() {
     const [value, onChange] = useState(new Date());
-
-    const [purchaseOrderTable, setPurchaseOrderTable] = useState([
-        {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
-        supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
-         dispatch:"Pickup", amount:"6,085.00" },
-
-         {status:"closed", poNumber:"WILLSMITH-012301-1", suppliearName:"WILL Smith landscaping", 
-         supplierOrder:"2024275", createdBy:"Will Smith", orderDate:"20/06/2021", expectedDate:"20/08/2021",
-          dispatch:"Pickup", amount:"6,085.00" },
-
-          {status:"open", poNumber:"Scena-012301-1", suppliearName:"John Scena landscaping", 
-          supplierOrder:"1024275", createdBy:"John Scena", orderDate:"20/05/12021", expectedDate:"20/05/12021",
-           dispatch:"Delivery", amount:"6,085.00" },
-
-           {status:"Draft", poNumber:"Jason-012301-1", suppliearName:"Jason Smith landscaping", 
-           supplierOrder:"24275", createdBy:"Jason Smith", orderDate:"20/05/2021", expectedDate:"20/09/2021",
-            dispatch:"Pickup", amount:"6,085.00" },
-
-            {status:"closed", poNumber:"Dweny-012301-1", suppliearName:"Dweny Smith landscaping", 
-            supplierOrder:"1024275", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
-             dispatch:"Pickup", amount:"6,085.00" },
-
-             {status:"closed", poNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
-             supplierOrder:"1024275", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
-              dispatch:"Delivery", amount:"6,085.00" }
-    ])
-
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -61,14 +34,14 @@ export default function PurchaseOrderDetails() {
                     <div class="row align-items-center editPurchaseHead">
                         <div class="col-md-6 d-flex align-items-center">
                             <h2 class="mb-0">Draft</h2>
-                            <div class="d-flex ml-3 mb-0 bdrLeft">
-                                <div class="">
+                            <div class="d-flex align-items-center ml-3 mb-0 bdrLeft">
+                                <div class="d-flex align-items-center">
                                     <img src="assets/img/date-ic-sm-green.svg" alt=""/>
                                     <span class="ml-2">March 25, 2020</span>
                                 </div>
-                                <div class="ml-3">
+                                <div class="ml-3 d-flex align-items-center">
                                     <img src="assets/img/price-ic-sm-green.svg" alt=""/>
-                                    <span class="ml-2">CA <b>$615.29</b></span>
+                                    <span class="ml-2">CA <b class="f-s-22 lh22">$615.29</b></span>
                                 </div>
                             </div>
                         </div>
@@ -98,16 +71,25 @@ export default function PurchaseOrderDetails() {
                                         <div class="col-md-6 col-lg-6">
                                             <h4>John Smith Landscaping</h4>
                                             <div>
-                                                <div style={{color:"#ccc"}}><b class="mr-3" style={{color:"#000"}}>Type:</b>Finished Plants, Liners</div>
-                                                <div style={{color:"#ccc"}}><b class="mr-3" style={{color:"#000"}}>Tax Exempt:</b>No</div>
-                                                <div style={{color:"#ccc"}}><b class="mr-3" style={{color:"#000"}}>Terms:</b>Net 30</div>
+                                                <div>
+                                                    <b class="mr-3">Type:</b>
+                                                    <span class="textGrey">Finished Plants, Liners</span>
+                                                </div>
+                                                <div>
+                                                    <b class="mr-3">Tax Exempt:</b>
+                                                    <span class="textGrey">No</span>
+                                                </div>
+                                                <div>
+                                                    <b class="mr-3">Terms:</b>
+                                                    <span class="textGrey">Net 30</span>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-6 text-md-right mt-3 mt-md-0">
                                             <h4>Ordered By</h4>
                                             <div>
-                                                <div style={{color:"#ccc"}}>B. Vanderkruk</div>
-                                                <div style={{color:"#ccc"}}>brent@nvknuseries.com</div>
+                                                <div>B. Vanderkruk</div>
+                                                <div>brent@nvknuseries.com</div>
                                             </div>
                                         </div>
                                     </div>
@@ -206,18 +188,12 @@ export default function PurchaseOrderDetails() {
                                         <input type="text" class="form-control" placeholder=""></input>
                                     </div>
                                 </div>
-                                <div class="row mt-3 align-items-center">
-                                    <div class="col-md-12 col-lg-12">
-                                        <h2>Order Notes <span class="f-s-14" style={{color:"#ccc"}}>(Internal Only)</span></h2>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12">
-                                        <hr/>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12">
-                                        <textarea cols="10" rows="8" class="form-control"></textarea>
+                                <div class="row mt-3">
+                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
+                                        <label>Customer Notes <small>(Internal Only)</small></label>
+                                        <textarea cols="4" rows="3" class="form-control"></textarea>
                                     </div>
                                 </div>
-
                             </form>
                         </div>
                     </TabPanel>
@@ -289,7 +265,7 @@ export default function PurchaseOrderDetails() {
                                         </div>
                                         <div class="row mt-4 mb-4">
                                             <div class="col-md-12 col-lg-12 sortingCtrls d-flex flex-wrap align-items-center">
-                                            <span class="mr-3">Sort</span>
+                                            <span class="mr-3">Show Future Values:</span>
                                                 <a href="" class="active">No End Date</a>
                                                 <a href="">Next 30 Days</a>
                                                 <a href="">Next 90 Days</a>
@@ -299,45 +275,45 @@ export default function PurchaseOrderDetails() {
                                         
                                         <div class="form-group row">
                                             <div class="col-md-12 table-responsive">
-                                                <table class="table table-striped table-td-valign-middle" width="100%">
+                                                <table class="table table-striped table-td-valign-middle mb-0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th width="15%" class="">SKU</th>
-                                                            <th width="17%" class="text-center">Size</th>
+                                                            <th width="16%" class="text-center">Size</th>
                                                             <th width="8%" class="text-center">On Hand</th>
                                                             <th width="8%" class="text-center">Customer Orders</th>
-                                                            <th width="10%" class="text-center">Current Available</th>
+                                                            <th width="7%" class="text-center">Current Available</th>
                                                             <th width="8%" class="text-center">On Quotes</th>
-                                                            <th width="8%" class="text-center">Open POS</th>
-                                                            <th width="10%" class="text-center">Future Available</th>
+                                                            <th width="8%" class="text-center">Open P.O.s</th>
+                                                            <th width="7%" class="text-center">Future Available</th>
                                                             <th width="8%" class="text-center">Royalty</th>
                                                             <th width="8%" class="text-center">NVK Price</th>
-                                                            <th width="10%" class="text-center">Qty</th>
+                                                            <th width="7%" class="text-center">Qty</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="11">
-                                                                <table class="table table-striped" width="100%">
+                                                            <td colspan="11" class="p-0">
+                                                                <table class="table table-striped tableOuterBdr" width="100%">
                                                                     <tr class="tblLinks">
-                                                                        <td colspan="12">
+                                                                        <td colspan="11">
                                                                             <a href="">Abeliophyllum (White Forsythia)</a>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr class="odd">
                                                                         <td width="15%">
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="16%">150CM 15 gal</td>
                                                                         <td class="text-center" width="8%">50</td>
                                                                         <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="7%"><b class="f-s-20">27</b></td>
                                                                         <td class="text-center" width="8%">13</td>
                                                                         <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="7%"><b class="f-s-20">125</b></td>
                                                                         <td class="text-center" width="8%">0.25</td>
                                                                         <td class="text-center" width="8%">2.75</td>
-                                                                        <td class="text-center" width="10%" colspan="2">
+                                                                        <td class="text-center" width="7%">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
                                                                                 <a href="" class="ml-2">
@@ -346,20 +322,20 @@ export default function PurchaseOrderDetails() {
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
+                                                                    <tr class="even">
+                                                                        <td>
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">2.75</td>
-                                                                        <td class="text-center" width="10%" colspan="2">
+                                                                        <td class="text-center">150CM 15 gal</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center">23</td>
+                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center">13</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center">0.25</td>
+                                                                        <td class="text-center">2.75</td>
+                                                                        <td class="text-center">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
                                                                                 <a href="" class="ml-2">
@@ -368,20 +344,20 @@ export default function PurchaseOrderDetails() {
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
+                                                                    <tr class="odd">
+                                                                        <td>
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">2.75</td>
-                                                                        <td class="text-center" width="10%" colspan="2">
+                                                                        <td class="text-center">150CM 15 gal</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center">23</td>
+                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center">13</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center">0.25</td>
+                                                                        <td class="text-center">2.75</td>
+                                                                        <td class="text-center">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
                                                                                 <a href="" class="ml-2">
@@ -393,28 +369,28 @@ export default function PurchaseOrderDetails() {
                                                                 </table>
                                                             </td>
                                                         </tr>
-                                                        <tr>
-                                                        <td colspan="11">
-                                                                <table class="table table-striped" width="100%">
+                                                        <tr class="border-0">
+                                                            <td colspan="11" class="p-0">
+                                                                <table class="table table-striped tableOuterBdr mb-0" width="100%">
                                                                     <tr class="tblLinks">
-                                                                        <td colspan="12">
+                                                                        <td colspan="11">
                                                                             <a href="">Abeliophyllum (White Forsythia)</a>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
+                                                                    <tr class="odd">
                                                                         <td width="15%">
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="16%">150CM 15 gal</td>
                                                                         <td class="text-center" width="8%">50</td>
                                                                         <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="7%"><b class="f-s-20">27</b></td>
                                                                         <td class="text-center" width="8%">13</td>
                                                                         <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="7%"><b class="f-s-20">125</b></td>
                                                                         <td class="text-center" width="8%">0.25</td>
                                                                         <td class="text-center" width="8%">2.75</td>
-                                                                        <td class="text-center" width="10%" colspan="2">
+                                                                        <td class="text-center" width="7%">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
                                                                                 <a href="" class="ml-2">
@@ -423,20 +399,20 @@ export default function PurchaseOrderDetails() {
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
+                                                                    <tr class="even">
+                                                                        <td>
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">2.75</td>
-                                                                        <td class="text-center" width="10%" colspan="2">
+                                                                        <td class="text-center">150CM 15 gal</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center">23</td>
+                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center">13</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center">0.25</td>
+                                                                        <td class="text-center">2.75</td>
+                                                                        <td class="text-center">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
                                                                                 <a href="" class="ml-2">
@@ -445,20 +421,20 @@ export default function PurchaseOrderDetails() {
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
+                                                                    <tr class="odd">
+                                                                        <td>
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">2.75</td>
-                                                                        <td class="text-center" width="10%" colspan="2">
+                                                                        <td class="text-center">150CM 15 gal</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center">23</td>
+                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center">13</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center">0.25</td>
+                                                                        <td class="text-center">2.75</td>
+                                                                        <td class="text-center">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
                                                                                 <a href="" class="ml-2">
@@ -470,17 +446,23 @@ export default function PurchaseOrderDetails() {
                                                                 </table>
                                                             </td>
                                                         </tr>
+
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-primary btn-lg ml-3">Add All</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </TabPanel>
                     <TabPanel>
-                    <div class="bg-white px-3 py-3 mt-2">
+                        <div class="bg-white px-3 py-3 mt-2">
                             <form>
                                 <div class="row">
                                     <div class="col-md-8">
@@ -490,13 +472,13 @@ export default function PurchaseOrderDetails() {
                                         <a href="#" class="btn btnGrey">
                                             <span class="d-flex align-items-center text-left">
                                                 <img src="assets/img/addSegment-ic-btn.svg" alt=""/>
-                                                <span class="ml-2"><b>Email</b></span>
+                                                <span class="ml-2">Add Segment</span>
                                             </span>
                                         </a>
                                         <a href="#" class="btn btnGrey ml-2">
                                             <span class="d-flex align-items-center text-left">
                                                 <img src="assets/img/order-ic-btn.svg" alt=""/>
-                                                <span class="ml-2"><b>Order</b></span>
+                                                <span class="ml-2">Order</span>
                                             </span>
                                         </a>
                                     </div>
@@ -507,21 +489,21 @@ export default function PurchaseOrderDetails() {
                                         
                                         <div class="form-group row">
                                             <div class="col-md-12 table-responsive">
-                                                <table class="table table-striped purchaseOdrTbl" width="100%">
+                                                <table class="table table-striped purchaseOdrTbl" border="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th width="" class="">No</th>
-                                                            <th width="" class="">Plant Name/Original SKU</th>
-                                                            <th width="" class="text-center">Size</th>
-                                                            <th width="" class="text-center">Added</th>
-                                                            <th width="" class="text-center">Disc %</th>
-                                                            <th width="" class="text-center">Allocate</th>
-                                                            <th width="" class="text-center">QTY</th>
-                                                            <th width="" class="text-center">Royalty</th>
-                                                            <th width="" class="text-center">NVk Price</th>
-                                                            <th width="" class="text-center">Each Price</th>
-                                                            <th width="" class="text-center">Total</th>
-                                                            <th width="" class="text-center">Actions</th>
+                                                            <th width="4%" class="">No</th>
+                                                            <th width="20%" class="">Plant Name/Original SKU</th>
+                                                            <th width="10%" class="text-center">Size</th>
+                                                            <th width="10%" class="text-center">Added</th>
+                                                            <th width="6%" class="text-center">Disc %</th>
+                                                            <th width="8%" class="text-center">Allocate</th>
+                                                            <th width="6%" class="text-center">QTY</th>
+                                                            <th width="6%" class="text-center">Royalty</th>
+                                                            <th width="7%" class="text-center">NVk Price</th>
+                                                            <th width="7%" class="text-center">Each Price</th>
+                                                            <th width="8%" class="text-center">Total</th>
+                                                            <th width="8%" class="text-center">Actions</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -553,65 +535,66 @@ export default function PurchaseOrderDetails() {
                                                                                 <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="4%"></td>
+                                                                                <td width="20%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="10%" class="text-center">19/05/2020</td>
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <select class="form-control w-80">
                                                                                         <option>Sales</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
                                                                                 </td>
-                                                                                <td class="text-center">0.75</td>
-                                                                                <td class="text-center">9.55</td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
+                                                                                <td width="6%" class="text-center">0.75</td>
+                                                                                <td width="7%" class="text-center">9.55</td>
+                                                                                <td width="7%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <span class="text-success controlLabel text-right">90</span>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <span class="text-green controlLabel text-right">90.00</span>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
-                                                                                    
-                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                <td width="8%" class="text-center actionTd">
+                                                                                    <div class="d-flex justify-content-center">
                                                                                         <a href="#" class="">
                                                                                             <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                         </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
-                                                                            <tr class="trBgWhite descLbl">
-                                                                                <td></td>
-                                                                                <td colspan="12">
+                                                                            <tr class="trBgWhite ">
+                                                                                <td width="4%"></td>
+                                                                                <td colspan="12"> 
                                                                                     <img src="assets/img/enter-arrow-red.svg" alt=""/>
                                                                                     <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
                                                                                 </td>
@@ -625,57 +608,59 @@ export default function PurchaseOrderDetails() {
                                                                                 <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="4%"></td>
+                                                                                <td width="20%">
                                                                                     <select class="form-control plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="10%" class="text-center">19/05/2020</td>
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <select class="form-control w-80">
                                                                                         <option>Sales</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
                                                                                 </td>
-                                                                                <td class="text-center">0.75</td>
-                                                                                <td class="text-center">9.55</td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
+                                                                                <td width="6%" class="text-center">0.75</td>
+                                                                                <td width="7%" class="text-center">9.55</td>
+                                                                                <td width="7%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <span class="text-success controlLabel text-right">90</span>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <span class="text-green controlLabel text-right">90.00</span>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                <td width="8%" class="text-center actionTd">
+                                                                                    <div class="d-flex justify-content-center">
                                                                                         <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                            <img src="assets/img/copy-ic-green.svg" alt=""/>
                                                                                         </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -689,57 +674,59 @@ export default function PurchaseOrderDetails() {
                                                                                 <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="4%"></td>
+                                                                                <td width="20%">
                                                                                     <select class="form-contro plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="10%" class="text-center">19/05/2020</td>
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <select class="form-control w-80">
                                                                                         <option>Sales</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
                                                                                 </td>
-                                                                                <td class="text-center">0.75</td>
-                                                                                <td class="text-center">9.55</td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
+                                                                                <td width="6%" class="text-center">0.75</td>
+                                                                                <td width="7%" class="text-center">9.55</td>
+                                                                                <td width="7%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <span class="text-success controlLabel text-right">90</span>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <span class="text-green controlLabel text-right">90.00</span>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                <td width="8%" class="text-center actionTd">
+                                                                                    <div class="d-flex justify-content-center">
                                                                                         <a href="#" class="">
                                                                                             <img src="assets/img/copy-ic-blue.svg" alt=""/>
                                                                                         </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -753,57 +740,59 @@ export default function PurchaseOrderDetails() {
                                                                                 <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td></td>
-                                                                                <td>
+                                                                                <td width="4%"></td>
+                                                                                <td width="20%">
                                                                                     <select class="form-control  plantNameSel">
                                                                                         <option>43-TF-30-1G</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">150CM 15 gal</td>
-                                                                                <td class="text-center">19/05/2020</td>
-                                                                                <td class="text-center">
+                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
+                                                                                <td width="10%" class="text-center">19/05/2020</td>
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="8%" class="text-center">
                                                                                     <select class="form-control w-80">
                                                                                         <option>Sales</option>
                                                                                         <option>Option 1</option>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td class="text-center">
+                                                                                <td width="6%" class="text-center">
                                                                                     <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
                                                                                 </td>
-                                                                                <td class="text-center">0.75</td>
-                                                                                <td class="text-center">9.55</td>
-                                                                                <td class="text-center">
-                                                                                    <input type="text" class="form-control w-60 text-right mx-auto" placeholder="" value="8.25"/>
+                                                                                <td width="6%" class="text-center">0.75</td>
+                                                                                <td width="7%" class="text-center">9.55</td>
+                                                                                <td width="7%" class="text-center">
+                                                                                    <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center">
-                                                                                    <span class="text-success controlLabel text-right">90</span>
+                                                                                <td width="8%" class="text-center">
+                                                                                    <span class="text-green controlLabel text-right">90.00</span>
                                                                                     <div class="">
                                                                                         <span class="mr-2">Disc</span>
                                                                                         <span>8.25</span>
                                                                                     </div>
                                                                                 </td>
-                                                                                <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
+                                                                                <td width="8%" class="text-center actionTd">
+                                                                                    <div class="d-flex justify-content-center">
                                                                                         <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                            <img src="assets/img/copy-ic-green.svg" alt=""/>
                                                                                         </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
                                                                                         </div>
                                                                                     </div>
                                                                                 </td>
@@ -813,7 +802,7 @@ export default function PurchaseOrderDetails() {
                                                                 </table>
                                                             </td>
                                                         </tr>
-                                                        <tr>
+                                                        {/* <tr>
                                                             <td colspan="12" class="p-0">
                                                                 <table class="table table-striped mb-0" width="100%">
                                                                     <tr class="movePanel">
@@ -833,7 +822,6 @@ export default function PurchaseOrderDetails() {
                                                                             </div>
                                                                         </td>
                                                                     </tr>
-                                                                    {/* Main Content Row starts here */}
                                                                     <tr class="tblBgWhite">
                                                                         <table class="table table-striped table-no-border" width="100%">
                                                                             <tr class="topTitleRow">
@@ -881,19 +869,12 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite descLbl">
@@ -952,19 +933,12 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
+                                                                                    </a>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -1016,19 +990,12 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                    </a>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -1080,26 +1047,19 @@ export default function PurchaseOrderDetails() {
                                                                                     </div>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <a href="#" class="px-2 py-2 ml-2" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                                        </a>
-                                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                    <a href="#" class="">
+                                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
+                                                                                    </a>
+                                                                                    <a href="#" class="px-2 py-2 ml-2">
+                                                                                        <i class="fas fa-ellipsis-v"></i>
+                                                                                    </a>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
                                                                     </tr>
                                                                 </table>
                                                             </td>
-                                                        </tr>
+                                                        </tr> */}
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1133,16 +1093,16 @@ export default function PurchaseOrderDetails() {
                                                         </div>
                                                     </div>
                                                     <div class="row mb-2">
-                                                        <div class="col-md-8 ">
-                                                            <label class="mb-0 d-flex align-items-center">Adjustments  <input type="text" class="form-control mx-2" placeholder="Add Notes"/> <span>$</span></label>
+                                                        <div class="col-md-8 d-flex justify-content-end">
+                                                            <label class="mb-0 d-flex align-items-center">Adjustments  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes"/> <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
                                                             <input type="text" class="form-control mx-2 text-right" placeholder="" value="0.00"/>
                                                         </div>
                                                     </div>
                                                     <div class="row mb-2">
-                                                        <div class="col-md-8 ">
-                                                            <label class="mb-0 d-flex align-items-center">Shipping  <input type="text" class="form-control mx-2" placeholder="Add Notes"/> <span>$</span></label>
+                                                        <div class="col-md-8 d-flex justify-content-end">
+                                                            <label class="mb-0 d-flex align-items-center">Shipping  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes"/> <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
                                                             <input type="text" class="form-control mx-2 text-right" placeholder="" value="0.00"/>

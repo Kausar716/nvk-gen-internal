@@ -493,20 +493,31 @@ export class UserProfile extends Component {
 
                             <div class="row"> 
                                 <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"-12px"}} >User Profile-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
-                                                            <div style={{marginTop:"1.3em", marginLeft:"23em", float:"right"}}>
+                                {/* <div style={{marginTop:"1.3em", float:"right"}}>
                                                                 <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
                                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>
                                                                     <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" 
                                                                     checked={true}
-                                                                    //value={userProfiles.map(a=>a.status)} checked={userProfiles.map(a=>a.status? true : false) } onChange={this.handleActiveUser}
+                                                                   
                                                                     />
                                                                     <label for="switcher_checkbox_date"></label>
                                                                 </div>
-                                                            </div>
+                                                            </div>             */}
                                 </div>
                                         {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
                                                 
-                                        <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right" style={{marginLeft:"51%", position:"absolute"}}>
+                                        <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
+                                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginTop:"1.3em", float:"right"}}>
+                                                                <span style={{float:"right",  marginTop:"-12px"}}>Active</span>
+                                                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-11px"}}>
+                                                                    <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" 
+                                                                    checked={true}
+                                                                   
+                                                                    />
+                                                                    <label for="switcher_checkbox_date"></label>
+                                                                </div>
+                                                            </div>  
+                                                      
                                                     {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
                                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 

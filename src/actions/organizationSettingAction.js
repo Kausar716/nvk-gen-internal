@@ -9,7 +9,8 @@ import {
     HANDLE_ORGANIZATION_INPUT_DATA,
     UPLOAD_ORGANIZATION_IMAGE,
     REMOVE_ORGANIZATION_IMAGE ,
-    DATA_CHANGES_ALERT
+    DATA_CHANGES_ALERT,
+    RESET_DATA_IN_ORG
    } from './types';
 
 
@@ -21,6 +22,13 @@ import {
     })
    }
 
+   export const resetUserDataInOrg=()=>dispatch=>{
+    dispatch({
+        type:RESET_DATA_IN_ORG,
+        
+    })
+   }
+   
    
    
 //    export const getUsersList = (dispatch) => {

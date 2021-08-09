@@ -132,6 +132,7 @@ const GeneralSettings=(props)=> {
 
 
      const submitAction = (e) =>{
+         let {productDataById}  = props.productData
         e.preventDefault();
        // e.target.reset();
        //debugger;
@@ -142,16 +143,18 @@ const GeneralSettings=(props)=> {
             if(needAction){
                 if(actionType ==="add")
                 props.createProductAction(productDataById,localTagData)
-   
+                // console.log(props.productDataById)
+                // console.log(productDataById.product_id)
+                // console.log(props.productData.ae_product_id)
+                // console.log(actionType)
                 if(actionType ==="edit"){
-                    if(props.productDataById)
-                    props.updateProductAction(productDataById,productDataById.product_id,localTagData)
+                    if(productDataById){
+                        props.updateProductAction(productDataById,productDataById.product_id,localTagData)
+                    }                   
                     else if(props.productData.ae_product_id){
                     props.updateProductAction(productDataById,props.productData.ae_product_id,localTagData)
-
                     }
                 }
-                
                 //setSubmitCount(1)
 
             }

@@ -7,7 +7,8 @@ import {
     HANDLE_ORGANIZATION_INPUT_DATA,
     UPLOAD_ORGANIZATION_IMAGE,
     REMOVE_USER_IMAGE,
-    DATA_CHANGES_ALERT
+    DATA_CHANGES_ALERT,
+    RESET_DATA_IN_ORG
    } from '../actions/types';
 
 const initialSatate = {
@@ -20,13 +21,37 @@ const initialSatate = {
     secondartBody:"",
     id:"2",
     logo:""
-}
+},
+
+backupOrgData:[]
+
 }
  const organizationReduser = (state = initialSatate, action)=> {
      console.log(action)
      console.log(state)
   
     switch(action.type){
+
+
+
+        case RESET_DATA_IN_ORG:{
+            return{
+                ...state,
+                organizationData:{
+                    // name:"",
+                    // sendingEmail:"",
+                    // phone:"",
+                    // mainTitle:"",
+                    // secondaryTitle:"",
+                    // mainBody:"",
+                    // secondartBody:"",
+                    // id:"2",
+                    // logo:""
+                }
+                
+            }
+
+        }
 
         case DATA_CHANGES_ALERT:{
             return{
@@ -44,9 +69,10 @@ const initialSatate = {
                 organizationData:action.payload              
             }
         case SHOW_ORGANIZATION:
-            
+            //debugger;
             return{
-                organizationData:action.payload
+                organizationData:action.payload,
+                backupOrgData:action.payload
             }
         case UPDATE_ORGANIZATION:{
             return {

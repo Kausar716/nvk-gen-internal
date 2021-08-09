@@ -75,11 +75,9 @@ const validate = values => {
       {/* <label>{label}</label> */}
       <div>
         <input {...input} class="form-control" placeholder={label} 
-       readOnly={false}
-        autoComplete="off"
-        autoCorrect="off"
-        spellCheck="off"
-         //onFocus={onFocus}
+        
+    
+        
           type={type} onchange={changingValue}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
@@ -250,7 +248,7 @@ const SignInPage = (props) => {
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.5.3 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.6.1 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
                             {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                            
                         </div>

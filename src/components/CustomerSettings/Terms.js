@@ -3,7 +3,8 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 // import './style.css';
-import InfoModal from "../Modal/InfoModal"
+import InfoModal from "../Modal/InfoModal";
+import { confirmAlert } from 'react-confirm-alert';
 
 import {getAllTermsMethods,saveTermsMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,
     saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods,      updateCustomerTermslSettings,
@@ -18,7 +19,19 @@ import { is } from 'immutable';
        isEditing:false,
        name:'',
        selectedID:'',
-       deleteon:false
+       deleteon:false,
+
+       subName:'',
+       subName2:'',
+      
+       btnLabelAdd:'Add New Terms',
+       btnLabelUpdate: 'Update Terms',
+       btnLabelCancel:'Cancel',
+
+        errorObj:{
+            customer_terms :0,
+           short_code:0
+       },
     }
 
 
@@ -71,14 +84,17 @@ import { is } from 'immutable';
         //     this.props.getAllPlantCategories()
         //    })
            let doProcess = false;
+           let alertmsg = 0;
            if(tasks.length>0){
 
             if (cat === 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
             if (doProcess === true) {
                
@@ -86,9 +102,44 @@ import { is } from 'immutable';
                 result.then(res=>{
                     this.props.getAllTermsMethods()
                 })   
+                alertmsg = 3;
             }
            }
        
+
+           if (alertmsg === 1){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 2){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 3){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
 
             // this.setState({
             //     ...this.state,
@@ -98,44 +149,110 @@ import { is } from 'immutable';
         }
 
 
+        // onDelete =(ev)=>{
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //     this.setState({deleteon:true})
+        //    let result= this.props.handleCustomerTypeDelete(id,"delete-customer-term")
+        //    result.then(res=>{
+        //     this.props.getAllTermsMethods()
+        //     this.setState({deleteon:false})
+        //    })
+
+
+        // }
+
+
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-            this.setState({deleteon:true})
-           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-term")
-           result.then(res=>{
-            this.props.getAllTermsMethods()
-            this.setState({deleteon:false})
-           })
-
-
+            confirmAlert({
+                title: 'Delete Customer Terms',
+                message: 'Are you sure want to delete the Customer Terms ?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-term")
+            this.setState({deleteon:true})
+            result.then(res=>{
+                this.props.getAllTermsMethods()
+                this.setState({deleteon:false})
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Account Reason',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
+
         handleCategoryInputAction = (e)=>{
             this.setState({
                 name:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "customerTerm"){
+            errorObj.customer_terms=0
+            this.setState({errorObj})}
             this.props.handleExchangeData("customerTerm", e.target.value)
            // this.props.handleExchangeData(e.target.value,e.target.id,"customerTerm")
         }
         handleAddCategoryData = (e)=>{
-            if(this.state.name.trim() ===""){
-                
-                this.setState({isOpen1:true,message:["please add both type and shortcode"]})
-
-
-            }else{
+            // if(this.state.name.trim() ===""){
+            //     this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+            // }else{
                 let obj = {}
                 obj.term = this.state.name
                 obj.status = 1
+            //     let result = this.props.saveTermsMethod(obj)
+            //     result.then(data=>{
+            //         this.props.getAllTermsMethods()
+            //     })
+            // // }
+            // this.setState({
+            //     name:"",
+            // })
+            // this.props.saveCustomerType()
+
+            if(this.validate()){
                 let result = this.props.saveTermsMethod(obj)
-                result.then(data=>{
+                result.then(res=>{
                     this.props.getAllTermsMethods()
                 })
-            }
-            this.setState({
-                name:"",
-            })
-            // this.props.saveCustomerType()
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Customer Terms',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
+
+
         
         }
 
@@ -155,6 +272,25 @@ import { is } from 'immutable';
        }
 
 
+
+       validate = ()=>{
+        let errorObj = this.state.errorObj
+        if(this.state.name.length === 0){
+            errorObj.customer_terms=1
+            this.setState({errorObj})
+            return false
+        }
+       
+        return true
+        
+    }
+
+    handleClear=()=>{
+        let errorObj = this.state.errorObj
+        errorObj.customer_terms=0
+        this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+    }
+
        handleAddCategoryUpdate=(e)=>{
         //debugger;
         console.log("showSpeciSubA", this.props.showSpecificCustomerTerms)
@@ -166,16 +302,40 @@ import { is } from 'immutable';
          updateObject.term=valueName
        
             
-      let res=   this.props.updateCustomerTermslSettings(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllTermsMethods()
-             })
+    //   let res=   this.props.updateCustomerTermslSettings(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllTermsMethods()
+    //          })
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
+    //          this.setState({
+    //              isEditing:false,
+    //              name:"",
                 
-             })
+    //          })
+
+
+             if(this.validate()){
+                let res=   this.props.updateCustomerTermslSettings(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllTermsMethods()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Account Reason ',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
 
      }
 
@@ -247,14 +407,14 @@ render() {
                                               placeholder="Term" id="term"
                                                value={this.state.name} 
                                                 onChange={this.handleCategoryInputAction}/>
-                                              
+                                               {this.state.errorObj.customer_terms!==0?<span style={{fontSize:"small",color:"red"}}>Enter Customer Terms</span>:""}
                                             </div>
                                             {/* <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryData}>
                                                 <a  className="d-flex align-items-center">
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i>Add New Term
                                                 </a>
                                             </div> */}
-                                             {this.state.isEditing ? (
+                                             {/* {this.state.isEditing ? (
                                                     <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                         <div  >
                                                             <a href="javascript:" className="d-flex align-items-center">
@@ -276,7 +436,21 @@ render() {
                                                         <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Term
                                                         </a>
                                                         </div>  
-                                                  )} 
+                                                  )}  */}
+
+
+                                        <div className="d-flex justify-content-md-end mt-2"  >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategoryData}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div>
 
                                         </div>
                                     </div>

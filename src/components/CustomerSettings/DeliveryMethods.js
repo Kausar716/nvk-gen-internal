@@ -6,6 +6,7 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert';
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
@@ -19,9 +20,26 @@ import { is } from 'immutable';
      isOpen1:false,
        message:[],
        isEditing:false,
-       name:'',
+     
        selectedID:'',
-       deleteon:false
+       deleteon:false,
+
+
+       name:'',
+       subName:'',
+       subName2:'',
+      
+       btnLabelAdd:'Add New Delivery Method',
+       btnLabelUpdate: 'Update Delivery Method',
+       btnLabelCancel:'Cancel',
+
+        errorObj:{
+            delivery_method :0,
+           short_code:0
+       },
+
+
+
     }
 
 
@@ -73,24 +91,70 @@ import { is } from 'immutable';
         //    result.then(res=>{
         //     this.props.getAllPlantCategories()
         //    })
+        let alertmsg = 0;
            let doProcess = false;
            if(tasks.length>0){
 
             if (cat === 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
+
+
+
             if (doProcess === true) {
                
                 let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-delivery-method")
                 result.then(res=>{
                     this.props.getAllDeliveryMethods()
                 })   
+
+                alertmsg = 3;
             }
            }
+
+
+
+
+
+           if (alertmsg === 1){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 2){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 3){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
        
 
             // this.setState({
@@ -101,46 +165,133 @@ import { is } from 'immutable';
         }
 
 
+        // onDelete =(ev)=>{
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //     this.setState({deleteon:true})
+        //    let result= this.props.handleCustomerTypeDelete(id,"delete-customer-delivery-method")
+        //    result.then(res=>{
+        //     this.props.getAllDeliveryMethods()
+        //     this.setState({deleteon:false})
+        //    })
+
+
+        // }
+
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-            this.setState({deleteon:true})
-           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-delivery-method")
-           result.then(res=>{
-            this.props.getAllDeliveryMethods()
-            this.setState({deleteon:false})
-           })
-
-
+            confirmAlert({
+                title: 'Delete Delivery Method',
+                message: 'Are you sure want to delete the Delivery Method?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
+            this.setState({deleteon:true})
+            result.then(res=>{
+                this.props.getAllCustomerType()
+                this.setState({deleteon:false})
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Delivery Method  ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
+
+
+
+
         handleCategoryInputAction = (e)=>{
             this.setState({
                 name:e.target.value
-            })
+            }) 
+            //delivery_Method
+            let errorObj=this.state.errorObj
+            if(e.target.name === "customerDelivery"){
+            errorObj.delivery_method=0
+            this.setState({errorObj})}
 
             this.props.handleExchangeData("customerDelivery", e.target.value)
         }
 
         handleAddCategoryData = (e)=>{
-            if(this.state.name.trim() ===""){
-                
-                this.setState({isOpen1:true,message:["please add both type and shortcode"]})
-
-
-            }else{
+            // if(this.state.name.trim() ===""){
+            //     this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+            // }else{
                 let obj = {}
                 obj.delivery_method = this.state.name
+                // let result = this.props.saveDeliveryMethod(obj)
+                // result.then(data=>{
+                //     this.props.getAllDeliveryMethods()
+                // })
+            // }
+
+            // this.setState({
+            //     name:"",
+            // })
+
+            if(this.validate()){
                 let result = this.props.saveDeliveryMethod(obj)
-                result.then(data=>{
+                result.then(res=>{
                     this.props.getAllDeliveryMethods()
                 })
-            }
-
-            this.setState({
-                name:"",
-            })
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Delivery Method Type',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
             // this.props.saveCustomerType()
         
+        }
+
+
+
+        validate = ()=>{
+            let errorObj = this.state.errorObj
+            if(this.state.name.length === 0){
+                errorObj.delivery_method=1
+                this.setState({errorObj})
+                return false
+            }
+           
+            return true
+            
+        }
+
+
+        handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.delivery_method=0
+            this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
         }
 
 
@@ -169,17 +320,31 @@ import { is } from 'immutable';
          let updateObject={}
          updateObject.delivery_method=valueName
        
-            
-      let res=   this.props.updateCustomerDeliveryMethodSettings(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllDeliveryMethods()
-             })
+ 
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
-                
-             })
+
+             if(this.validate()){
+                let res=   this.props.updateCustomerDeliveryMethodSettings(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllDeliveryMethods()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Delivery Method ',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
 
      }
 
@@ -219,6 +384,8 @@ render() {
                                             value={this.state.name}
                                             //  value={customerData.customerDelivery.delivery_method} 
                                               onChange={this.handleCategoryInputAction}/>
+
+                                            {this.state.errorObj.delivery_method!==0?<span style={{fontSize:"small",color:"red"}}>Enter delivery method</span>:""}
                                               
                                             </div>
 
@@ -238,7 +405,7 @@ render() {
 
 
 
-                                                {this.state.isEditing ? (
+                                                {/* {this.state.isEditing ? (
                                                     <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                         <div  >
                                                             <a href="javascript:" className="d-flex align-items-center">
@@ -260,8 +427,21 @@ render() {
                                                         <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Delivery Method
                                                         </a>
                                                         </div>  
-                                                  )}        
+                                                  )}         */}
 
+
+                                        <div className="d-flex justify-content-md-end mt-2"  >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategoryData}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div>
 
 
 
