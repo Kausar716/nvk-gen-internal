@@ -314,20 +314,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             ]
             zoneObj.status=1
             console.log(zoneObj)
-        //     if(this.validate()){
-        //     let result = this.props.handleAddZone(zoneObj)
-        //     result.then(res=>{
-        //         this.props.getAllSubAttribute(5)
-        //     })
-        //     alert('Added Successfully Done');
-        // }
-
-        // this.setState({
-        //     name:"",
-        //     subName:"",
-        //     subName2:""
-        // })
-        
+     
 
         if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
