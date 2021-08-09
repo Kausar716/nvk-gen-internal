@@ -349,21 +349,12 @@ export class OrganizationSettings extends React.Component {
 
     handleSubmit = (e) => {
 
-
-            //debugger;
-
-           
-        // e.preventDefault();
-       // if(this.state.phoneNumberInOrganization)
         let phoneNUMBER = this.state.phoneNumberInOrganization === " " ? this.props.organizationData.organizationData.phone : this.state.phoneNumberInOrganization;
         if(this.state.phoneNumberInOrganization === undefined){
             window.location.reload();
     }
 
     
-
-
-
      const phoneError = validateInput22(phoneNUMBER);
     
     this.setState({ phoneError }, () => {
@@ -373,7 +364,6 @@ export class OrganizationSettings extends React.Component {
         //  }, 300)
        }
     })   
-
 
     let finalNumber= phoneNUMBER;
      finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
@@ -390,9 +380,6 @@ export class OrganizationSettings extends React.Component {
         if(errorLength ===1){
             this.setState({isOpen1:true,message:["Please fill all fields with valid inputs"]})
         }
-
-
-
 
        
       else  if(count === 0 && phoneError===""){
@@ -411,7 +398,6 @@ export class OrganizationSettings extends React.Component {
                 updateObject.sending_email_address = this.props.organizationData.organizationData.sending_email_address
              }
 
-             
             //  if(this.state.hadModified.main_title === true){
                 updateObject.main_title = this.props.organizationData.organizationData.main_title
             //  } if(this.state.hadModified.secondary_title === true){
@@ -426,11 +412,7 @@ export class OrganizationSettings extends React.Component {
              if(this.state.imageUploaded)
              updateObject.log=this.props.organizationData.organizationData.logo
                 console.log(updateObject)
-
-
-            
-               
-             
+   
             let res=  this.props.updateorganization(updateObject)
             res.then(r=>{
                 let id = "2"
@@ -441,9 +423,6 @@ export class OrganizationSettings extends React.Component {
                 alert(JSON.stringify(c))
             })
          }
-
-
-
     
      }
 
@@ -451,12 +430,8 @@ export class OrganizationSettings extends React.Component {
 
      saveAndGo =()=>{
         const { history } = this.props;
-
-
-            this.handleSubmit()
+            this.handleSubmit();
             history.push("/Dashboard")
-
-
      }
 
 
@@ -474,10 +449,10 @@ export class OrganizationSettings extends React.Component {
         this.setState({
             imgLoader: true
         })
-        
-         //this.setState({});
-         //window.location.reload();
+
      }
+
+     
      componentDidMount(){
 
         this.setState({
@@ -523,7 +498,7 @@ export class OrganizationSettings extends React.Component {
             updateObject.main_body = this.props.backupOrgDataFinal.main_body
        
             updateObject.secondary_body = this.props.backupOrgDataFinal.secondary_body
-            updateObject.log=this.props.backupOrgDataFinal.logo
+            updateObject.logo=this.props.backupOrgDataFinal.logo
 
 
             let res=  this.props.updateorganization(updateObject)
