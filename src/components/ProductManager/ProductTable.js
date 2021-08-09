@@ -202,7 +202,7 @@ const ProductTable  = (props) => {
 
                                              return(
                                             <tr  key={product.product_id}>
-                                                <td>{product.archived===0?"Active":"Archived"}</td>
+                                                <td style={{color: (product.archived===0)?"":"red"}}>{product.archived===0?"Active":"Archived"}</td>
                                                 <td>{product.product_id}</td>
                                                 <td>{product.name}</td>
                                                 <td>--</td> 
