@@ -397,7 +397,7 @@ export default function(state = initialSatate, action){
                 status:1,
                 archived:"0",
                 supplier_id:1,
-                volume_price_per_unit:null,
+                volume_price_per_unit:"0.00",
                 volume_quantity:"0",
                 location_id:"0"
                 //id:null

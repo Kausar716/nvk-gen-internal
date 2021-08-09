@@ -509,14 +509,14 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
-                                             > {!skuEdit?"Add SKU & Clear":"Update "}
+                                             > {actionType === "edit"?"Add SKU & Clear":"Update "}
                                                  {/* Add SKU &amp; Clear */}
                                                  </button>
 
 
                                             {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
-                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
+                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{actionType === "edit" ?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt=""  />
                                         </a> */}
