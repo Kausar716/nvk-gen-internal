@@ -381,6 +381,8 @@ const SkuList = (props)=>{
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.plantPageReDirectAction("all","plant")}>Return To Plant Manager</button>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -502,14 +504,17 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
                                             
-                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Return to Plant Manager</button>
+                                        {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Return to Plant Manager</button> */}
                                            {actionType !=="sku"? <button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <button type="button" style={{cursor:"pointer"}} class="btn btn-primary btn-lg ml-3" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU & Clear":"Update "}</button>
-                                        <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                        {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt="" onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}} />
-                                        </a>
-                                            
+                                        </a> */}
+                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
+                                       onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}}
+                                        
+                                        >Cancel</button>
 
                                         </div>
                                     </div>

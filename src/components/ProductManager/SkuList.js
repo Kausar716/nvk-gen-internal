@@ -372,7 +372,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU {skuDataById.sku_code}</h3>
+                                            <h3>GENERATED SKU </h3><p>{skuDataById.sku_code}</p>
                                         </div>
                                         
                                         <div class="col-md-6 d-flex justify-content-end">
