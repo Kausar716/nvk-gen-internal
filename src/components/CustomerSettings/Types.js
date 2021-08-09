@@ -23,14 +23,14 @@ import { is } from 'immutable';
             subName:'',
             subName2:'',
             selectedID:'',
-            btnLabelAdd:'Add New Type',
-            btnLabelUpdate: 'Update Type',
+            btnLabelAdd:'Add New Category Type',
+            btnLabelUpdate: 'Update Category Type',
             btnLabelCancel:'Cancel',
              deleteon:false,
 
 
              errorObj:{
-                customerTypes:0,
+                customer_type:0,
                 short_code:0
             },
 
@@ -158,7 +158,7 @@ import { is } from 'immutable';
         if (alertmsg === 3){
             confirmAlert({
                 title: 'Action',
-                message: 'Sort Successfully Done',
+                message: ' Successfully Done',
                 buttons: [
                   {
                     label: 'Ok'
@@ -232,10 +232,10 @@ import { is } from 'immutable';
                 name:e.target.value
             })
             let errorObj=this.state.errorObj
-            if(e.target.name === "customerTypes"){
-            errorObj.customerTypes=0
+            if(e.target.name === "customer_type"){
+            errorObj.customer_type=0
             this.setState({errorObj})}
-            this.props.handleExchangeData("customerTypes", e.target.value)
+            this.props.handleExchangeData("customer_type", e.target.value)
         }
 
         handleCategoryInputAction2 = (e)=>{
@@ -301,7 +301,7 @@ import { is } from 'immutable';
     validate = ()=>{
         let errorObj = this.state.errorObj
         if(this.state.name.length === 0){
-            errorObj.customerTypes=1
+            errorObj.customer_type=1
             this.setState({errorObj})
             return false
         }
@@ -326,7 +326,7 @@ import { is } from 'immutable';
                 isEditing:true
             })
 
-            this.props.handleExchangeData("customerTypes",...this.state.name)
+            this.props.handleExchangeData("customer_type",...this.state.name)
             this.props.handleExchangeData("short_code",...this.state.subName)
             this.props.showSpecificCustomerSettingType(t.id)
   
@@ -335,7 +335,7 @@ import { is } from 'immutable';
 
        handleClear=()=>{
         let errorObj = this.state.errorObj
-        errorObj.customerTypes=0
+        errorObj.customer_type=0
         errorObj.short_code=0
         this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
     }
@@ -444,11 +444,11 @@ render() {
                                             <div>
                                                 <input type="text"
                                                   className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                                  placeholder="" name="customerTypes" 
+                                                  placeholder="" name="customer_type" 
                                                // value={customerData.customerTypes.customer_type}  
                                                value={this.state.name} 
                                                 onChange={this.handleCategoryInputAction}/>
-                                                 {this.state.errorObj.customerTypes!==0?<span style={{fontSize:"small",color:"red"}}>Enter Categories Types</span>:""}
+                                                 {this.state.errorObj.customer_type!==0?<span style={{fontSize:"small",color:"red"}}>Enter Categories Types</span>:""}
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 

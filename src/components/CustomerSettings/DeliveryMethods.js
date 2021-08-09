@@ -34,7 +34,7 @@ import { is } from 'immutable';
        btnLabelCancel:'Cancel',
 
         errorObj:{
-            delivery_Method :0,
+            delivery_method :0,
            short_code:0
        },
 
@@ -147,7 +147,7 @@ import { is } from 'immutable';
         if (alertmsg === 3){
             confirmAlert({
                 title: 'Action',
-                message: 'Sort Successfully Done',
+                message: 'Successfully Done',
                 buttons: [
                   {
                     label: 'Ok'
@@ -194,6 +194,8 @@ import { is } from 'immutable';
                 ]
               });
         }
+
+
         onDeleteConfirm=(id)=>{
             let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
             this.setState({deleteon:true})
@@ -224,7 +226,7 @@ import { is } from 'immutable';
             //delivery_Method
             let errorObj=this.state.errorObj
             if(e.target.name === "customerDelivery"){
-            errorObj.delivery_Method=0
+            errorObj.delivery_method=0
             this.setState({errorObj})}
 
             this.props.handleExchangeData("customerDelivery", e.target.value)
@@ -318,18 +320,7 @@ import { is } from 'immutable';
          let updateObject={}
          updateObject.delivery_method=valueName
        
-            
-    //   let res=   this.props.updateCustomerDeliveryMethodSettings(updateID, updateObject)
-    //          res.then(res=>{
-    //              this.props.getAllDeliveryMethods()
-    //          })
-
-    //          this.setState({
-    //              isEditing:false,
-    //              name:"",
-                
-    //          })
-
+ 
 
 
              if(this.validate()){
