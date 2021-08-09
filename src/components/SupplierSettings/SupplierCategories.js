@@ -128,7 +128,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         handleAddCategoryData = (e)=>{
             if(this.props.supplierData.supplierCategory.category.trim() ===""){
                 
-                this.setState({isOpen1:true,message:["please add Reason"]})
+                this.setState({isOpen1:true,message:["Please add Category"]})
 
 
             }else{

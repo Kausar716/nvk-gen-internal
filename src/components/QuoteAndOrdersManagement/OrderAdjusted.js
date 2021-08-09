@@ -94,9 +94,9 @@ export default function Adjusted() {
                                 </div>
 
                                 <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-7 col-xl-7">
-                                        <div class="row ">
-                                            <div class="col-md-6 col-lg-4">
+                                <div class="col-md-12 col-lg-5 col-xl-5">
+                                    <div class="row ">
+                                            <div class="col-md-6 col-lg-6">
                                                 <label>Ordered By <span class="text-danger">*</span></label>
                                                 <select class="form-control">
                                                     <option>John Smith</option>
@@ -104,7 +104,7 @@ export default function Adjusted() {
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                            <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                                 <label>Bill To <span class="text-danger">*</span></label>
                                                 <select class="form-control">
                                                     <option>1234 Main St, Waterdown </option>
@@ -112,19 +112,20 @@ export default function Adjusted() {
                                                     <option>Option 2</option>
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
+                                           
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                        <div class="row">
+                                            <div class="col-md-6 col-lg-4">
                                                 <label>PO #</label>
                                                 <input type="text" class="form-control" placeholder=""></input>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-5 col-xl-5">
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-6">
+                                            <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
                                                 <DatePicker onChange={onChange} value={value} />
                                             </div>
-                                            <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
+                                            <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Time</label>
                                                 <select class="form-control">
                                                     <option>AM</option>
@@ -229,7 +230,7 @@ export default function Adjusted() {
                         </div>
                     </TabPanel>
                     <TabPanel>
-                        <div class="bg-white px-3 py-3 mt-2">
+                    <div class="bg-white px-3 py-3 mt-2">
                             <form>
                                 <h2>Add to Order</h2>
                                 <hr/>
@@ -291,30 +292,31 @@ export default function Adjusted() {
                                         </div>
                                         <div class="form-group row">
                                             <div class="col-md-12 table-responsive">
-                                                <table class="table table-striped" width="100%">
+                                                <table class="table table-striped mb-0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th width="15%" class="">SKU</th>
-                                                            <th width="17%" class="text-center">Size</th>
-                                                            <th width="8%" class="text-center">On Hand</th>
-                                                            <th width="8%" class="text-center">Customer Orders</th>
-                                                            <th width="10%" class="text-center">Current <br/>Available</th>
-                                                            <th width="8%" class="text-center">On Quotes</th>
-                                                            <th width="8%" class="text-center">Open POS</th>
-                                                            <th width="10%" class="text-center">Future <br/>Available</th>
-                                                            <th width="8%" class="text-center">Price</th>
-                                                            <th width="8%" class="text-center">Volume<br/>
+                                                            <th width="15%" class="text-center">Size</th>
+                                                            <th width="6%" class="text-center">On Hand</th>
+                                                            <th width="6%" class="text-center">Customer Orders</th>
+                                                            <th width="8%" class="text-center">Current <br/>Available</th>
+                                                            <th width="6%" class="text-center">On Quotes</th>
+                                                            <th width="6%" class="text-center">Open POS</th>
+                                                            <th width="8%" class="text-center">Future <br/>Available</th>
+                                                            <th width="6%" class="text-center">Price</th>
+                                                            <th width="6%" class="text-center">Volume<br/>
 Rate</th>
-                                                            <th width="8%" class="text-center">Dis%</th>
-                                                            <th width="10%" class="text-center">Qty</th>
+                                                            <th width="6%" class="text-center">Dis%</th>
+                                                            <th width="6%" class="text-center">Qty</th>
+                                                            <th width="4%" class="text-center"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                         <tr>
-                                                            <td colspan="12">
-                                                                <table class="table table-striped" width="100%">
+                                                            <td colspan="13" class="p-0">
+                                                                <table class="table table-striped mb-0" width="100%">
                                                                     <tr class="tblLinks">
-                                                                        <td colspan="14">
+                                                                        <td colspan="13">
                                                                             <a href="">Abeliophyllum (White Forsythia)</a>
                                                                         </td>
                                                                     </tr>
@@ -322,21 +324,20 @@ Rate</th>
                                                                         <td width="15%">
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="15%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="6%">50</td>
+                                                                        <td class="text-center" width="6%">23</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="6%">13</td>
+                                                                        <td class="text-center" width="6%">50</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="6%">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
                                                                             <div>
                                                                                 <span class="text-green">3.18</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="6%">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
                                                                             <div>
                                                                                 <span class="text-green">3.07</span>
@@ -345,10 +346,10 @@ Rate</th>
                                                                                 <span class="text-red">25 Min</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="6%">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
                                                                         </td>
-                                                                        <td class="text-center" width="10%" >
+                                                                        <td class="text-center" width="6%" >
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
                                                                             </div>
@@ -356,7 +357,7 @@ Rate</th>
                                                                                 <span class="text-red">Short 4</span>
                                                                             </div>
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="4%">
                                                                             <a href="" class="ml-2">
                                                                                 <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                             </a>
@@ -366,21 +367,20 @@ Rate</th>
                                                                         <td width="15%">
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">150CM 15 gal</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center">23</td>
+                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center">13</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
                                                                             <div>
                                                                                 <span class="text-green">3.18</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
                                                                             <div>
                                                                                 <span class="text-green">3.07</span>
@@ -389,10 +389,10 @@ Rate</th>
                                                                                 <span class="text-red">25 Min</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
                                                                         </td>
-                                                                        <td class="text-center" width="10%" >
+                                                                        <td class="text-center">
                                                                             <div class="">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
                                                                                  <div>
@@ -400,7 +400,7 @@ Rate</th>
                                                                             </div>   
                                                                             </div>
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">
                                                                             <a href="" class="ml-2">
                                                                                 <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                             </a>
@@ -410,10 +410,10 @@ Rate</th>
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td colspan="12">
-                                                                <table class="table table-striped" width="100%">
+                                                            <td colspan="13" class="p-0">
+                                                                <table class="table table-striped mb-0" width="100%">
                                                                     <tr class="tblLinks">
-                                                                        <td colspan="12">
+                                                                        <td colspan="13">
                                                                             <a href="">Abeliophyllum (White Forsythia)</a>
                                                                         </td>
                                                                     </tr>
@@ -421,21 +421,20 @@ Rate</th>
                                                                         <td width="15%">
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="15%">150CM 15 gal</td>
+                                                                        <td class="text-center" width="6%">50</td>
+                                                                        <td class="text-center" width="6%">23</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center" width="6%">13</td>
+                                                                        <td class="text-center" width="6%">50</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center" width="6%">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
                                                                             <div>
                                                                                 <span class="text-green">3.18</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="6%">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
                                                                             <div>
                                                                                 <span class="text-green">3.07</span>
@@ -444,10 +443,10 @@ Rate</th>
                                                                                 <span class="text-red">25 Min</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="6%">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
                                                                         </td>
-                                                                        <td class="text-center" width="10%" >
+                                                                        <td class="text-center" width="6%" >
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
                                                                             </div>
@@ -455,31 +454,30 @@ Rate</th>
                                                                                 <span class="text-red">Short 4</span>
                                                                             </div>
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center" width="4%">
                                                                             <a href="" class="ml-2">
                                                                                 <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                             </a>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
-                                                                        <td width="15%">
+                                                                        <td>
                                                                             <a href="">393-TF-1259-1G</a>
                                                                         </td>
-                                                                        <td class="text-center" width="17%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="8%">23</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="8%">13</td>
-                                                                        <td class="text-center" width="8%">50</td>
-                                                                        <td class="text-center" width="10%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="8%">0.25</td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">150CM 15 gal</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center">23</td>
+                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
+                                                                        <td class="text-center">13</td>
+                                                                        <td class="text-center">50</td>
+                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
+                                                                        <td class="text-center">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
                                                                             <div>
                                                                                 <span class="text-green">3.18</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
                                                                             <div>
                                                                                 <span class="text-green">3.07</span>
@@ -488,10 +486,10 @@ Rate</th>
                                                                                 <span class="text-red">25 Min</span>
                                                                             </div>   
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">
                                                                             <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
                                                                         </td>
-                                                                        <td class="text-center" width="10%" >
+                                                                        <td class="text-center" >
                                                                             <div class="">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
                                                                                  <div>
@@ -499,7 +497,7 @@ Rate</th>
                                                                             </div>   
                                                                             </div>
                                                                         </td>
-                                                                        <td class="text-center" width="8%">
+                                                                        <td class="text-center">
                                                                             <a href="" class="ml-2">
                                                                                 <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                             </a>
@@ -514,8 +512,14 @@ Rate</th>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <button type="button" class="btn btn-primary btn-lg ml-3">Add All</button>
+                                    </div>
+                                </div>
                             </form>
                         </div>
+                    
                     </TabPanel>
                     <TabPanel>
                         <div class="bg-white px-3 py-3 mt-2">

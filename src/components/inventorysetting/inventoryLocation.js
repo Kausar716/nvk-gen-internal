@@ -47,7 +47,8 @@ class InventoryLocation extends Component {
             btnLabelAdd:'Add New Location Type',
             btnLabelUpdate: 'Update Location Type',
             btnLabelCancel:'Cancel',
-            locationTypevaluechild:0
+            locationTypevaluechild:0,
+            deleteon:false
         }
                 
     }
@@ -150,8 +151,10 @@ class InventoryLocation extends Component {
     }
     onDeleteConfirm=(id)=>{
         let result= this.props.handleAttributeDelete(id)
+        this.setState({deleteon:true})
         result.then(res=>{
             this.props.getAllSubAttribute(18)
+            this.setState({deleteon:false})
             confirmAlert({
                 title: 'Delete Successfully',
                 message: 'Location Type ',
@@ -607,7 +610,13 @@ class InventoryLocation extends Component {
                                                             <div>
                                                                 <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label>
                                                                     <h5><span>{t.value}</span></h5>
-                                                                <label><span>{t.sub_attributeschild[5].value}</span><br/><span>{t.sub_attributeschild[4].value}</span>, <span>{t.sub_attributeschild[3].value}</span>, <span>{t.sub_attributeschild[2].value}</span></label>
+                                                                <label>
+                                                                    <span>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")}<br/>
+                                                                        <span>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</span>, 
+                                                                        <span>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</span>, 
+                                                                        <span>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</span>
+                                                                    </span>
+                                                                </label>
                                                             </div>
                                                             <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
                                                         
@@ -621,19 +630,25 @@ class InventoryLocation extends Component {
                                     </div>
                                 </div>
                             </div>
-                                <div className="col-lg-1">
-                                <div className="midControls d-flex flex-column justify-content-around" style={{width:"5.5em"}}>
-                                    <div>
-                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragtoplace-move.png" alt="Settings"/>
+                            <div className="col-lg-2" >
+                                        <div className="midControls d-flex flex-column justify-content-around">
+                                            <div>
+                                            <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
+                                               
+                                            </div>
+                                            <div>
+                                            <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
+                                                
+                                            </div>
+                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                                <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
+                                                <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
+                                                {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div>
-                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/DragDragto_place.png" alt="Settings"/>
-                                    </div>
-                                    <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
-                                        <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings"/>
-                                    </div>
-                                </div>
-                            </div>
                                 <div class="col">
                                 <div class="card midCard">
                                     <div class="card-header">
@@ -641,14 +656,20 @@ class InventoryLocation extends Component {
                                     </div>
                                     <div class="card-body p-0" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                         <ul class="list-unstyled formAddressList mb-0">
-                                                {tasks.active.map(t=>{
+                                                {tasks.active !==undefined ?tasks.active.map(t=>{
                                                 return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                             <a className="d-flex justify-content-between align-items-center">
                                                                 <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
                                                                 <div>
                                                                     <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label>
                                                                         <h5><span>{t.value}</span></h5>
-                                                                    <label><span>{t.sub_attributeschild[5].value}</span><br/><span>{t.sub_attributeschild[4].value}</span>, <span>{t.sub_attributeschild[3].value}</span>, <span>{t.sub_attributeschild[2].value}</span></label>
+                                                                    <label>
+                                                                        <span>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")}<br/>
+                                                                            <span>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</span>, 
+                                                                            <span>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</span>, 
+                                                                            <span>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</span>
+                                                                        </span>    
+                                                                    </label>
                                                                 </div>
                                                                 <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
                                                             
@@ -657,7 +678,7 @@ class InventoryLocation extends Component {
                                                                 /></span>
                                                             </a>
                                                         </li>
-                                                })}
+                                                }):""}
                                         </ul>
                                     </div>
                                 </div>

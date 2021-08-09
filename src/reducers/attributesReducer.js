@@ -15,6 +15,7 @@ import {
     HANDLE_ZONE_INPUT_ACTION2,
     HANDLE_ZONE_INPUT_ACTION3,
     SHOW_LOCATION_TYPE_SUB_ATTRIBUTE,
+    GET_ALL_CATEGORIES,
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
 
@@ -55,7 +56,8 @@ const initialSatate = {
         locationlatlong: "",
         allStates: {},
         allCountries: {},
-        locationTypevaluechild:0
+        locationTypevaluechild:0,
+        sectionName: ""
     }
 }
 
@@ -77,8 +79,12 @@ switch(action.type){
             subAttribute:action.payload.data[0].subattributes
        }
     }
-
-
+    case GET_ALL_CATEGORIES:{
+         return{
+              ...state,
+              subAttribute:action.payload.data
+        }
+     }
     case SHOW_SUB_ATTRIBUTE:{
        // debugger;
         //console.log(action.payload.data[0].subattributes)
@@ -184,7 +190,8 @@ switch(action.type){
                 locationCountry: 0,
                 locationzip: "",
                 locationlatlong: "",
-                locationTypevaluechild:0
+                locationTypevaluechild:0,
+                sectionName: ""
             }
         }
      default:

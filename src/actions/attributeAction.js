@@ -16,6 +16,7 @@ import {
     HANDLE_ZONE_INPUT_ACTION2,
     HANDLE_ZONE_INPUT_ACTION3,
     SHOW_LOCATION_TYPE_SUB_ATTRIBUTE,
+    GET_ALL_CATEGORIES,
     // axios config
     config,
     axios
@@ -53,7 +54,16 @@ export const getAllSubAttribute = (id) => dispatch => {
         })
     })
 }
-
+export const getAllCategories = () => dispatch => {
+    axios.get(`/api/product-categories`,config).then(res=>{ 
+        //debugger
+        console.log(res.data)
+    dispatch({
+            type:GET_ALL_CATEGORIES,
+            payload:res.data
+        })
+    })
+}
 
 export const showSubSubAttribute = (id) => dispatch => {
     axios.get(`/api/show-subattribute/${id}`,config).then(res=>{ 
@@ -95,6 +105,23 @@ export const handleAttributeDragDrop = (data) =>dispatch=>{
         })
     })
 }
+export const handleCategoryDragDrop = (data) =>dispatch=>{
+    console.log(data)
+    let attributeObject={}
+    if(data.status === "1"){
+        attributeObject.status="0"
+    }
+    else {
+        attributeObject.status="1"
+    }
+    return axios.post(`/api/product-update-category/${data.id}`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DRAG_ATTRIBUTE_CATEGORY,
+            payload:res.data
+        })
+    })
+}
 export const handleAttributeDragSort = (fromId, toId) =>dispatch=>{
     let attributeObject={}
     attributeObject.from=fromId;
@@ -120,7 +147,18 @@ export const handleAttributeDelete = (id) =>dispatch=>{
         })
     })
 }
+export const handCategoryDelete = (id) =>dispatch=>{
+    console.log(id)
+    let attributeObject={}
 
+    return axios.post(`/api/product-delete-category/${id}`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_DELETE_ATTRIBUTE,
+            payload:res.data
+        })
+    })
+}
 
 export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
    // debugger;
@@ -136,7 +174,24 @@ export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
         })
     })
 }
-
+export const handleUpdateCategory = (id, data) =>dispatch=>{
+     return axios.post(`/api/product-update-category/${id}`,data,config).then(res=>{ 
+         console.log(res)
+     dispatch({
+             type:HANDLE_UPDATE_ATTRIBUTE,
+             payload:res.data
+         })
+     })
+ }
+ export const handleUpdateSubCategory = (id, data) =>dispatch=>{
+     return axios.post(`/api/update-subcategory/${id}`,data,config).then(res=>{ 
+         console.log(res)
+     dispatch({
+             type:HANDLE_UPDATE_ATTRIBUTE,
+             payload:res.data
+         })
+     })
+ }
 
 
 
@@ -174,6 +229,22 @@ export const handleZoneInputAction3 = (name,value) =>dispatch=>{
 
 export const handleAddZone = (data) =>dispatch=>{
     return axios.post(`/api/add-subattribute`,data,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE
+        })
+    })
+}
+export const handleAddCategory = (data) =>dispatch=>{
+    return axios.post(`/api/product-add-category`,data,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE
+        })
+    })
+}
+export const handleAddSubCategory = (data) =>dispatch=>{
+    return axios.post(`/api/add-subcategory`,data,config).then(res=>{ 
         console.log(res)
     dispatch({
             type:HANDLE_CLEAR_SUB_ATTRIBUTE_VALUE

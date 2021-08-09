@@ -738,9 +738,12 @@ export class OrganizationSettings extends React.Component {
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
-                    <h1 class="page-header mb-0 d-flex align-items-center">
-                        <img src="assets/img/tools-ic-lg.svg" class="mr-2"/>Organization Settings
-                    </h1>
+                    {/* <h1 class="page-header mb-0 d-flex align-items-center">
+                        <img src="assets/img/tools-ic-lg.svg" class="mr-2"/>
+                    </h1> */}
+                    <h1 class="page-header mb-0 d-flex flex-wrap align-items-center">
+                    <img src="assets/img/Tools & Settings-big-green.svg" alt="" class="mr-2" />Organization Settings
+                </h1>
                 </div>
                 <div class="px-md-3 mt-3">
                 <div class="pb-4">
