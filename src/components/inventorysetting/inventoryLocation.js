@@ -593,45 +593,59 @@ class InventoryLocation extends Component {
                     </div>
                     <div class="row mt-5 mb-4">
                         <div class="col-md-8">
-                            <div class="row">
-                                <div class="col">
-                                <div class="card midCard">
+                        <div class="row mt-5 mb-4">
+                                    <div class="col">
+                                        <div class="card midCard">
                                     <div class="card-header">
                                         Inactive
                                     </div>
-                                    <div class="card-body p-0"
-                                        onDragOver={(e)=>this.onDragOver(e)}
-                                        onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                        <ul class="list-unstyled formAddressList mb-0">
-                                            {tasks.inactive.map(t=>{
-                                            return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                        <a className="d-flex justify-content-between align-items-center">
-                                                            <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
-                                                            <div>
-                                                                <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label>
-                                                                    <h5><span>{t.value}</span></h5>
-                                                                <label>
-                                                                    <span>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")}<br/>
-                                                                        <span>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</span>, 
-                                                                        <span>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</span>, 
-                                                                        <span>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</span>
-                                                                    </span>
-                                                                </label>
-                                                            </div>
-                                                            <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
-                                                        
-                                                            <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t)}
-                                                            /></span>
-                                                        </a>
-                                                    </li>
-                                            })}
+                                    <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
+                                            <ul class="list-unstyled">
+                                                {tasks.active !==undefined ?tasks.inactive.map(t=>{
+                                                return <>
+                                                <p style={{float:"left",paddingRight:4,paddingLeft:0}}><img class="arrowIc" src="assets/img/arrow-right-ic.svg" style={{width:21,height:21}}/></p>
+                                                <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                               <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}> 
+
+                                                            {/* <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}> */}
+                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <div style={{display:"block",float:"left"}}>
+                                                                      <p style={{padding:0,margin:0,color:"black"}}>{t.value}</p>
+                                                                      {/* <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.value}</p> */}
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")} {(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")} {(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}  {(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</p>
+                                                                      </div>
+                                                                      </p>
+                                                                   
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><p style={{marginTop:"2px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p><MdIcons.MdEdit  
+                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                /></span></p>
+                                                                {/* <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
+                                                                <div className="inventory_loc"> */}
+                                                                    {/* <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label> */}
+                                                                        {/* <h5><span>{t.value}</span></h5> */}
+                                                                    {/* <label> */}
+                                                                        {/* <p>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")} */}
+                                                                            {/* <p>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</p> 
+                                                                            <p>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</p>
+                                                                            <p>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</p> */}
+                                                                        {/* </p>     */}
+                                                                    {/* </label> */}
+                                                                {/* </div> */}
+                                                                {/* <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
+                                                            
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",paddingLeft:40,marginLeft:30}}><MdIcons.MdEdit  
+                                                                    onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                            {/* </a> */} 
+                                                            </a>
+                                                        </li></>
+                                                }):""}
                                         </ul>
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-2" >
-                                        <div className="midControls d-flex flex-column justify-content-around">
+                            <div className="col-lg-1" style={{width:200,border:"1px solid lightgray"}}>
+                                        <div style={{textAlign: "center"}}>
                                             <div>
                                             <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
@@ -654,30 +668,48 @@ class InventoryLocation extends Component {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body p-0" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                        <ul class="list-unstyled formAddressList mb-0">
+                                    <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
+                                            <ul class="list-unstyled">
+                                           
                                                 {tasks.active !==undefined ?tasks.active.map(t=>{
-                                                return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                            <a className="d-flex justify-content-between align-items-center">
-                                                                <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
-                                                                <div>
-                                                                    <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label>
-                                                                        <h5><span>{t.value}</span></h5>
-                                                                    <label>
-                                                                        <span>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")}<br/>
-                                                                            <span>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</span>, 
-                                                                            <span>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</span>, 
-                                                                            <span>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</span>
-                                                                        </span>    
-                                                                    </label>
-                                                                </div>
-                                                                <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
+                                                return <>
+                                                <p style={{float:"left",paddingRight:4,paddingLeft:0}}><img class="arrowIc" src="assets/img/arrow-right-ic.svg" style={{width:21,height:21}}/></p>
+                                                <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                            <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}>
+
+                                                            {/* <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}> */}
+                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <div style={{display:"block",float:"left"}}>
+                                                                      <p style={{padding:0,margin:0,color:"black"}}>{t.value}</p>
+                                                                      {/* <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.value}</p> */}
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")} {(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")} {(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}  {(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</p>
+                                                                      </div>
+                                                                      </p>
+                                                                   
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><p style={{marginTop:"2px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p><MdIcons.MdEdit  
+                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                /></span></p>
+                                                                 {/* </a> */}
+                                                                {/* <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
+                                                                <div className="inventory_loc"> */}
+                                                                    {/* <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label> */}
+                                                                        {/* <h5><span>{t.value}</span></h5> */}
+                                                                    {/* <label> */}
+                                                                        {/* <p>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")} */}
+                                                                            {/* <p>{(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")}</p> 
+                                                                            <p>{(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}</p>
+                                                                            <p>{(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</p> */}
+                                                                        {/* </p>     */}
+                                                                    {/* </label> */}
+                                                                {/* </div> */}
+                                                                {/* <img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/>
                                                             
-                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",paddingLeft:40,marginLeft:30}}><MdIcons.MdEdit  
                                                                     onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
+                                                            {/* </a> */} 
                                                             </a>
-                                                        </li>
+                                                        </li></>
                                                 }):""}
                                         </ul>
                                     </div>

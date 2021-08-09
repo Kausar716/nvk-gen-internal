@@ -414,24 +414,24 @@ render() {
                                             </div>
 
 
-                                            <div class="card-body cardBg"
+                                            <div class="card-body cardBg" 
                                             onDragOver={(e)=>this.onDragOver(e)}
                                             onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
+                                            <ul class="list-unstyled" >
                                                    {this.props.supplierData.supplierLocationList.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                      <a className="d-flex justify-content-between align-items-left">
+                                                    return <li id={t.id}  name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                                      <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}} >  
                                                                       <p  id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:2,margin:5}}>{t.location}</p>
-                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:2,margin:5}}>{t.address}</p>
-                                                                        <p style={{color:"gray",padding:2,margin:5}}>{t.city} {t.state}  {t.country}</p>
+                                                                      <p style={{padding:0,margin:0}}>{t.location}</p>
+                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
+                                                                        <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
                                                                       </p>
                                                                    
-                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><MdIcons.MdEdit  
                                                                            
-                                                                /></span><p style={{marginTop:"70px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"22px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -470,18 +470,18 @@ render() {
                                             <ul class="list-unstyled">
                                                    {this.props.supplierData.supplierLocationList.active.map(t=>{
                                                     return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-left">
+                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}>
                                                                       <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:2,margin:5}}>{t.location}</p>
-                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:2,margin:5}}>{t.address}</p>
-                                                                      <p style={{color:"gray",padding:2,margin:5}}>{t.city} {t.state}  {t.country}</p>
+                                                                      <p style={{padding:0,margin:0}}>{t.location}</p>
+                                                                      <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
                                                                       </p>
                                                                    
-                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><MdIcons.MdEdit  
                                                                             onClick={() =>this.handleEditClick2(t)}
-                                                                /></span><p style={{marginTop:"70px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"22px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}
