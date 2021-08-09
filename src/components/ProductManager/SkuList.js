@@ -350,7 +350,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
     const handleCancle = ()=> {
         setSelectedRow(-1);
         setSkuEdit(false); 
-        props.clearSkuFields()
+        console.log(props.productData.actionType)
+        props.clearSkuFields(props.productData.actionType)
     }
     let flag =0
     if(skuDataById){       
@@ -432,7 +433,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 // min="0"
                                                 onBlur={handleBlur}
                                               />
-                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
+                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
@@ -442,7 +443,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              value={skuDataById.each_price} 
                                              onBlur={handleBlur}
                                             min="0"/>
-                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
@@ -452,7 +453,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              onBlur={handleBlur}
                                               value={skuDataById.sale_price}
                                                min="0"/>
-                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price</span>:""}
+                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>

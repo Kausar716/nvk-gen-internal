@@ -173,7 +173,7 @@ const SkuList = (props)=>{
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
     // props.plantPageReDirectAction("all","plant")
   
-    props.clearSkuFieldsPLant()
+    props.clearSkuFieldsPLant(actionType)
     }
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
@@ -444,17 +444,17 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
                                             <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
-                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
+                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
                                             <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
-                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
                                             <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
-                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sale Price</span>:""}
+                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sale Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -512,7 +512,7 @@ const SkuList = (props)=>{
                                             <img src="assets/img/close-ic.svg" alt="" onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}} />
                                         </a> */}
                                         <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
-                                       onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}}
+                                       onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant(actionType)}}
                                         
                                         >Cancel</button>
 

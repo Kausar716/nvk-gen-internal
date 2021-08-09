@@ -633,10 +633,12 @@ export const handlePlantCategory = (category,subCategory) =>dispatch=>{
 
 }
 
-export const clearSkuFieldsPLant = ()=>dispatch=>{
+export const clearSkuFieldsPLant = (actionType)=>dispatch=>{
+    if(actionType === "sku")
+    actionType="edit"
     dispatch({
         type:CLEAR_SKU_FIELDS_PLANT,
-        // actionType:actionType
+        actionType:actionType
     })
     
 }
