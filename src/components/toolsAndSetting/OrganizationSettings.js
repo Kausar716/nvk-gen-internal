@@ -111,27 +111,9 @@ export class OrganizationSettings extends React.Component {
            // console.log(this.props.organizationData.organizationData.payload.logo)
         })
 
-     
-      
-
         if( e1.target.files[0]){
             this.fileInput.value = ""
         }
-
-        //alert("image successfully uploaded")
-        // setTimeout(function() {
-          
-
-            
-        //         let abc =this.state.imgLoader
-
-            
-    
-           
-            
-        //  },1100);
-        // alert("image successfully uploaded")
-
         this.setState({
             imgLoader: true
         })
@@ -452,24 +434,22 @@ export class OrganizationSettings extends React.Component {
 
 
      componentDidMount(){
-
         this.setState({
             backupArrayOrg: this.props.backupOrgDataFinal
         })
         this.props.resetUserDataInOrg();
          let id = "2"
-         const { history } = this.props;
+         //const { history } = this.props;
        this.props.showorganization(id)
        //&& dataOrganizationDetails.main_body && dataOrganizationDetails.secondary_body  && dataOrganizationDetails.main_title && dataOrganizationDetails.secondary_title
      let dataOrganizationDetails= this.props.organizationData.organizationData
 
-
-       if ( dataOrganizationDetails.name && dataOrganizationDetails.phone && dataOrganizationDetails.name && dataOrganizationDetails.sending_email_address  ) {
+       if ( dataOrganizationDetails.name && dataOrganizationDetails.phone && dataOrganizationDetails.sending_email_address && dataOrganizationDetails.secondary_body  && dataOrganizationDetails.main_title && dataOrganizationDetails.secondary_title) {
         window.onbeforeunload = () => true
         this.handleSubmit();
       } else {
         window.onbeforeunload = undefined
-         history.push("/Dashboard")
+        //  history.push("/Dashboard")
       }
      }
 
@@ -538,9 +518,6 @@ export class OrganizationSettings extends React.Component {
             secondary_body.length > 0 ; 
 
 
-
-
-
        console.log("organizationData",this.props.organizationData.organizationData, this.props.organizationData.organizationData.name)
         const { actionType } = this.state;
         console.log(this.state)
@@ -565,11 +542,7 @@ export class OrganizationSettings extends React.Component {
               }
               else{
                     url="https://zvky.flamingotech.ml/"+organizationDataById.payload.logo 
-
-                     
               }
-               
-               
             }
             else{
 
@@ -733,7 +706,7 @@ export class OrganizationSettings extends React.Component {
          
     <Prompt
       when={organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address }
-       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to leave?' : ' Are you sure you want to leave ?'}
+       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
     />
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
@@ -748,12 +721,12 @@ export class OrganizationSettings extends React.Component {
                 <div class="px-md-3 mt-3">
                 <div class="pb-4">
                     <div class="bg-white">
-                        <div class="row mb-3 mb-md-0">
-                            <div class="col-md-9 col-lg-9">
+                        <div class="row mb-6 mb-md-0">
+                            <div class="col-md-8 col-lg-8" style={{marginRight:"4em"}}>
                                 <h2 class="p-15 mb-0">Document Details</h2>
                                
                             </div>
-                            <div class="row mt-3" >
+                            <div class="row mt-4" >
                         {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" >
 
@@ -774,14 +747,25 @@ export class OrganizationSettings extends React.Component {
                                         >
                                             <span class="d-flex align-items-center text-left">
                                                 <img src="assets/img/saveDone-ic.svg" alt=""/>
-                                                <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                <span class="ml-2"><b>Save &amp; Exit</b></span>
                                             </span>
                                         </a>
-                                        <a  class=" ml-2 mt-3 mt-md-0">
+                                        
+                                        {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
                                             onClick={this.goDashboard}
                                             //onClick={()=>{confirmAction("goBack"); }}
                                             />
+                                        </a> */}
+
+                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                         onClick={this.goDashboard}
+                                       
+                                        >
+                                            <span class="d-flex align-items-center text-left">
+                                                {/* <img src="assets/img/saveDone-ic.svg" alt=""/> */}
+                                                <span class="ml-2"><b>Cancel</b></span>
+                                            </span>
                                         </a>
                         </div>
                         </div>
