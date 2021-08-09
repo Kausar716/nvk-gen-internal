@@ -333,7 +333,7 @@ if(productDataById){
 
                                         <button className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
                                            style={{cursor:"pointer"}} disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} onClick={submitAction}>
-                                            {actionType==="add"?"Add Product":"Update Product"}
+                                            {actionType==="add"?"Add ":"Update Product"}
                                         </button>
                                     </div>
                                 </div>
