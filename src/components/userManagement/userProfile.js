@@ -204,6 +204,8 @@ export class UserProfile extends Component {
         this.setState({errorObj,errorCount})
         return errorCount
     }
+
+
     handleSubmit = (e) => {
    
         let count= this.validate()
@@ -491,8 +493,8 @@ export class UserProfile extends Component {
                             
                         <div>
 
-                            <div class="row"> 
-                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"-12px"}} >User Profile-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
+                            <div class="row" style={{display:"flex", justifyContent:"space-between"}}> 
+                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"3px"}} >User Profile-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
                                 {/* <div style={{marginTop:"1.3em", float:"right"}}>
                                                                 <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
                                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>
@@ -504,12 +506,11 @@ export class UserProfile extends Component {
                                                                 </div>
                                                             </div>             */}
                                 </div>
-                                        {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
-                                                
-                                        <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
-                                                    <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginTop:"1.3em", float:"right"}}>
-                                                                <span style={{float:"right",  marginTop:"-12px"}}>Active</span>
-                                                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-11px"}}>
+
+                                <div  class="f-s-24 px-3 py-3 f-w-500" style={{flexGrow:"1"}}>
+                                <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginTop:"1.3em", float:"right"}}>
+                                                                <span style={{float:"right",  marginTop:"5px"}}>Active</span>
+                                                                <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"12px"}}>
                                                                     <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" 
                                                                     checked={true}
                                                                    
@@ -517,7 +518,13 @@ export class UserProfile extends Component {
                                                                     <label for="switcher_checkbox_date"></label>
                                                                 </div>
                                                             </div>  
-                                                      
+                                </div>
+                                        {/* <div class="d-flex align-items-center flex-wrap ml-2"> */}
+                                                
+                                        <div 
+                                        class="f-s-24 px-3 py-3 f-w-500"
+                                        //class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"
+                                        >             
                                                     {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
                                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 

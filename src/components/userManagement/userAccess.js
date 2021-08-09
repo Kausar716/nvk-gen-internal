@@ -143,16 +143,16 @@ export const Component = withRouter(({ history, location }) =>{
 
         console.log("currentPermissionNamess",this.props.temp)
         let userData = {}
-        if(this.props.user)
-        {
-            console.log(this.props.user)
-            if(this.props.user.user){
-            userData=this.props.user.user.data
-            if(this.props.user.user.data.roles)
-            exestingRoles = this.props.user.user.data.roles
-            console.log(userData)
-            }
-        }
+        // if(this.props.user)
+        // {
+        //     console.log(this.props.user)
+        //     if(this.props.user.user){
+        //     userData=this.props.user.user.data
+        //     if(this.props.user.user.data.roles)
+        //     exestingRoles = this.props.user.user.data.roles
+        //     console.log(userData)
+        //     }
+        // }
         if(this.props.permissionList){
             exestingPermission = this.props.permissionList.payload
         }
@@ -179,12 +179,6 @@ export const Component = withRouter(({ history, location }) =>{
                    
                     <TabPanel>
                         <div>
-
-
-
-
-
-
 
                     <div class="pb-4">
                         <div class="bg-white">
