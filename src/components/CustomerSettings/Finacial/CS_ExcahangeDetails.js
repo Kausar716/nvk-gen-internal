@@ -66,8 +66,8 @@ const CS_ExcahangeDetails = (props) => {
   const handleInputData =(e)=>{
     setCheckedData(true)
     if(e.target.value!==""){
-    let intValue = e.target.value*1.000
-    props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+    // let intValue = e.target.value*1.000
+    props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
     }else   props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
 
   }
@@ -181,7 +181,13 @@ const confirmAction = (type)=>{
   setOpen(true)
   // setId(id)
 }
-
+const dataTochange = (e)=>{
+  setCheckedData(true)
+  if(e.target.value!==""){
+  let intValue = e.target.value*1.000
+  props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+  }else   props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+}
   return (
     <>
      <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -233,7 +239,7 @@ const confirmAction = (type)=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001"/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onMouseLeave={dataTochange}/> 
                             </div>
                            
                             

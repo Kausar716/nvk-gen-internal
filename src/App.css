@@ -23,6 +23,49 @@
 
 
 }
+
+.multiselect {
+  /* width: 200px; */
+}
+
+.selectBox {
+  /* position: relative; */
+}
+
+.selectBox select {
+  width: 100%;
+  /* font-weight: bold; */
+}
+
+.overSelect {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+}
+
+#checkboxes {
+  display: none;
+  border: 1px #dadada solid;
+  position: absolute;
+  width: 97%;
+  background-color: white;
+  z-index: 10;
+  /* padding: 10px; */
+}
+
+#checkboxes label {
+  display: block;
+  /* position: absolute; */
+}
+select label:focus {
+  width: auto;
+  position: relative;
+}
+#checkboxes label:hover {
+  background-color: #1e90ff;
+}
 .react-autosuggest__suggestions-container{
   background-color:gray;
   margin-top:7%;
@@ -122,6 +165,29 @@ input[type=number] {
   to {
     transform: rotate(360deg);
   }
+}
+input[type="radio"] {
+  /* remove standard background appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  /* create custom radiobutton appearance */
+  display: inline-block;
+  width: 15px;
+  height: 14.7px;
+  font-weight: normal;
+  /* padding: 3px; */
+  /* background-color only for content */
+  background-clip: content-box;
+  border: 1px solid gray;
+  /* background-color: #e7e6e7; */
+  border-radius: 50%;
+}
+
+/* appearance for checked radiobutton */
+input[type="radio"]:checked {
+  background-color: #629C44;
+  border: 0px solid #629C44;
 }
 /* .trashShake:hover {
   font-size: 200px;

@@ -9,6 +9,7 @@ import {
         GET_SPECIFIED_PLANT_ACTION,
         DUPLICTE_PLANT,
         UPDATE_CHECK_BOX,
+        UPDATE_CHECK_BOX_SKU,
         CHECK_BOX,
     
         // Plant SKU ACTION
@@ -32,6 +33,7 @@ import {
         // pagination
         SET_PLANT_PAGE_NUMBER,
         SET_PLANT_SKU_PAGE_NUMBER,
+        CHECK_BOX_SKU,
         
 
 
@@ -123,6 +125,13 @@ export default function(state = initialSatate, action){
                 ...state,
                 plantData:plantData1
             }
+            case CHECK_BOX_SKU:
+                let plantSku = state.plantSkuDataList
+                plantSku[action.index]["status"]= action.obj["status"]
+                return{
+                    ...state,
+                    plantSkuDataList:plantSku,
+                }
         case UPDATE_CHECK_BOX:
             let plantData = state.plantData
             plantData[action.index][action.typetoshow]= action.obj[action.typetoshow]
@@ -130,6 +139,13 @@ export default function(state = initialSatate, action){
                 ...state,
                 plantData:plantData,
             }
+            case UPDATE_CHECK_BOX_SKU:
+                let plantSkuData = state.plantSkuDataList
+                plantSkuData[action.index]["status"]= action.obj["status"]
+                return{
+                    ...state,
+                    plantSkuDataList:plantSkuData,
+                }
         case PAGE_PLANT_REDIRECT_ACTION:
             return{            
                 ...state,
