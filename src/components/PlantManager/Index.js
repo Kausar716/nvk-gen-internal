@@ -360,9 +360,9 @@ const productFormAction = ()=>{
                                                     <a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt=""  onClick={()=>confirmAction(ae_plant_id,"delete")} />
                                                     </a>
-                                                    <a href="" class="mx-2">
+                                                    {/* <a href="" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
-                                                    </a>
+                                                    </a> */}
                                                 </div>:""}
                                             </div>
                                         </div>
