@@ -12,7 +12,7 @@ import DatePicker from 'react-date-picker';
 import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table} from 'reactstrap'
 import {connect} from "react-redux";
 import {} from "../../actions/productAction";
-import {getAllAttributesAction} from "../../actions/attributeAction";
+import {getAllAttributesAction,getAllSubAttribute} from "../../actions/attributeAction";
 //import ReactPaginate from 'react-paginate'
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
@@ -44,7 +44,6 @@ handleSkuInputAction
     
 } from '../../actions/productAction'
 import { config } from "../../actions/types";
-  
 const required = value => value ? undefined : 'Required'
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined
@@ -102,6 +101,7 @@ const SkuList=(props)=> {
         props.getAllSkuAction()
         props.getAllSpecifiedSkuProductList()
         props.getAllAttributesAction()
+        props.getAllSubAttribute(18)
     },[])
 
 
@@ -359,6 +359,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
+    console.log(props.temp.attributeData.subAttribute)
+    let locationList = props.temp.attributeData.subAttribute
        
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
@@ -404,9 +406,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
                                             <select class="form-control" style={{cursor:"pointer"}}  >
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            locationList
+                                            <option value="0">None</option>
+                                                {locationList.map(location=>{
+                                                    return (<option value={location.id} selected={location.id===skuDataById.location?"selected":""}>{location.value}</option>)
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -686,7 +690,8 @@ export default reduxForm({
     //handle sku input
     handleSkuInputAction,
     pageReDirectAction,
-    clearSkuFields
+    clearSkuFields,
+    getAllSubAttribute
 
 })(SkuList));
 
