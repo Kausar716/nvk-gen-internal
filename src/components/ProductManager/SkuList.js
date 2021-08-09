@@ -618,8 +618,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 </div> */}
                                                 <i className={sku.status===1?'bx bx-check':'bx bx-x'}></i>
                                             </td>
-                                            <td>{sku.volume_price_per_unit}</td>
-                                            <td>{sku.volume_quantity}</td>
+                                            <td style={{color:sku.volume_price_per_unit==="0.00"?"lightgray":""}} >{sku.volume_price_per_unit}</td>
+                                            <td style={{color:sku.volume_price_per_unit==="0.00"?"lightgray":""}} >{sku.volume_quantity}</td>
                                             <td class="text-center">
                                                 <span>
                                                    
