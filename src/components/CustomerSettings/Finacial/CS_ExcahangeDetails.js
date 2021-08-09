@@ -74,12 +74,9 @@ const CS_ExcahangeDetails = (props) => {
   const handleInputData1 =(e)=>{
     setCheckedData(true)
     if(e.target.value!==""){
-      let intValue = e.target.value*1.000
-      props.handleSupplierExchnageData(intValue.toFixed(3),e.target.id,"supplierExchange")
-
-    }else   props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierExchange")
+     props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")
  
-
+    }
   }
   const datePickerData =(e)=>{
     setCheckedData(true)
@@ -183,10 +180,42 @@ const confirmAction = (type)=>{
 }
 const dataTochange = (e)=>{
   setCheckedData(true)
-  if(e.target.value!==""){
-  let intValue = e.target.value*1.000
-  props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
-  }else   props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+  if(e.target.value!=="" && e.target.id =="exchange_rate"){
+    if(Number.isInteger(parseFloat(e.target.value))){
+      let intValue = e.target.value*1.000
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+    }else{
+      let splitValue = e.target.value.split(".")
+     if(splitValue[1].length<3){
+      let intValue = e.target.value*1.000
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+
+     }else{
+      props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+     }
+    }
+    return
+  }
+}
+const dataTochange1 =(e)=>{
+  setCheckedData(true)
+  if(e.target.value!=="" && e.target.id =="exchange_rate1"){
+    if(Number.isInteger(parseFloat(e.target.value))){
+      let intValue = e.target.value*1.000
+      props.handleSupplierExchnageData(intValue.toFixed(3),"exchange_rate","supplierExchange")
+    }else{
+      let splitValue = e.target.value.split(".")
+     if(splitValue[1].length<3){
+      let intValue = e.target.value*1.000
+      props.handleSupplierExchnageData(intValue.toFixed(3),"exchange_rate","supplierExchange")
+
+     }else{
+      props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")
+     }
+    }
+    return
+  }
+
 }
   return (
     <>
@@ -291,7 +320,7 @@ const dataTochange = (e)=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate"/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onMouseLeave={dataTochange1}/> 
                             </div>
                            
                            

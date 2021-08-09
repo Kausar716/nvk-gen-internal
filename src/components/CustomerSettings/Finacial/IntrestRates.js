@@ -68,8 +68,8 @@ const InrestRates = (props) => {
   const handleChangeData = (e) =>{
     setCheckedData(true)
     if(e.target.id!=="taxrate_label" && e.target.id!=="taxrate_number" && e.target.id!==""){
-      let intValue = e.target.value*1.000
-      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerIntrest")
+      // let intValue = e.target.value*1.000
+      props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
 
     }else {
       props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
@@ -129,7 +129,32 @@ const confirmAction = (type)=>{
     props.saveIntrestData(obj)
   
   }
+  const dataTochange =(e)=>{
+    setCheckedData(true)
+    // let intValue = e.target.value
+    if(e.target.value!=="" && e.target.id !== "taxrate_label" && e.target.id !=="taxrate_number"){
+      if(Number.isInteger(parseFloat(e.target.value))) {
+        let intValue = e.target.value*1.000
+        // alert(e.target.value)
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerIntrest")
+      }
+    
+      else{
+        // alert()
+        let splitValue = e.target.value.split(".")
+       if(splitValue[1].length<3){
+        let intValue = e.target.value*1.0000
+        props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerIntrest")
+       }else{
+        props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
 
+       }
+
+       
+      }
+    }
+      return
+    }
   const { handleSubmit, pristine, reset, submitting,customerIntrest} = props.customerData;
   
   return (
@@ -155,19 +180,19 @@ const confirmAction = (type)=>{
 
                     <div className="intrestRate_label">
                           <label>Monthly</label>
-                          <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData} onMouseLeave={dataTochange}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label"  style={{marginLeft:"-19em"}}>
                           <label>Yearly</label>
-                          <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData} onMouseLeave={dataTochange}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                           <label>Tax Rate</label>
-                          <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}onMouseLeave={dataTochange}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
