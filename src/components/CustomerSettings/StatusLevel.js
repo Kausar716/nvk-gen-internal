@@ -11,6 +11,7 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert';
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
@@ -26,9 +27,21 @@ import { is } from 'immutable';
      isOpen1:false,
        message:[],
        isEditing:false,
-       name:'',
+      
        selectedID:'',
-       deleteon:false
+       deleteon:false,
+       name:'',
+       subName:'',
+       subName2:'',
+      
+       btnLabelAdd:'Add New Status Level',
+       btnLabelUpdate: 'Update Status Level',
+       btnLabelCancel:'Cancel',
+       errorObj:{
+        customerStatus :0,
+       short_code:0
+   },
+
     }
 
 
@@ -86,25 +99,62 @@ import { is } from 'immutable';
         //    result.then(res=>{
         //     this.props.getAllPlantCategories()
         //    })
-        
+        let alertmsg = 0;
            let doProcess = false;
            if(tasks.length>0){
 
             if (cat == 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat == 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
                
                 let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-account-status")
                 result.then(res=>{
                     this.props.getAllStatusMethods()
                 })   
+                alertmsg = 3;
             // }
            }
        
+
+           if (alertmsg === 1){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 2){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 3){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
 
             // this.setState({
             //     ...this.state,
@@ -114,53 +164,139 @@ import { is } from 'immutable';
         }
 
 
+        // onDelete =(ev)=>{
+        //     // alert("dd")
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //     this.setState({deleteon:true})
+        //    let result= this.props.handleCustomerTypeDelete(id,"delete-customer-account-status")
+        //    result.then(res=>{
+        //     this.props.getAllStatusMethods()
+        //      this.setState({deleteon:false})
+        //    })
+        // }
+
+
         onDelete =(ev)=>{
-            // alert("dd")
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-            this.setState({deleteon:true})
-           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-account-status")
-           result.then(res=>{
-            this.props.getAllStatusMethods()
-             this.setState({deleteon:false})
-           })
-
-
+            confirmAlert({
+                title: 'Delete Status level',
+                message: 'Are you sure want to delete the status level?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-account-status")
+            this.setState({deleteon:true})
+            result.then(res=>{
+                this.props.getAllStatusMethods()
+                this.setState({deleteon:false})
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'status level ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
+
         handleCategoryInputAction = (e)=>{
             this.setState({
                 name:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "customerStatus"){
+            errorObj.customerStatus=0
+            this.setState({errorObj})}
+
+
             this.props.handleExchangeData("customerStatus", e.target.value)
            // this.props.handleExchangeData(e.target.value,e.target.id,"customerStatus")
         }
         
         handleAddCategoryData = (e)=>{
-            if(this.state.name.trim() ===""){
+            // if(this.state.name.trim() ===""){
                 
-                this.setState({isOpen1:true,message:["Please Add Status Level"]})
+                //this.setState({isOpen1:true,message:["Please Add Status Level"]})
 
 
-            }else{
+            // }else{
                 let obj = {}
                 obj.status_level = this.state.name.trim()
                 obj.status = 1
+                // let result = this.props.saveStatusMethod(obj)
+                // this.setState({name:""})
+                // result.then(data=>{
+                //     this.props.getAllStatusMethods()
+                // })
+            // }
+
+            // this.setState({
+            //     name:"",
+               
+            // })
+
+
+            if(this.validate()){
                 let result = this.props.saveStatusMethod(obj)
-                this.setState({name:""})
-                result.then(data=>{
+                result.then(res=>{
                     this.props.getAllStatusMethods()
                 })
-            }
-
-            this.setState({
-                name:"",
-               
-            })
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Status Level',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
 
             // this.props.saveCustomerType()
         
         }
 
+
+        validate = ()=>{
+            let errorObj = this.state.errorObj
+            if(this.state.name.length === 0){
+                errorObj.customerStatus=1
+                this.setState({errorObj})
+                return false
+            }
+           
+            return true
+            
+        }
+
+        handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.customerStatus=0
+            this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+        }
 
         handleEditClick2 =(t)=> {
             console.log("abcdefg", t  )
@@ -188,16 +324,41 @@ import { is } from 'immutable';
          updateObject.status_level=valueName
        
             
-      let res=   this.props.updateCustomerStatusLevelSettings(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllStatusMethods()
-             })
+    //   let res=   this.props.updateCustomerStatusLevelSettings(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllStatusMethods()
+    //          })
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
+    //          this.setState({
+    //              isEditing:false,
+    //              name:"",
                 
-             })
+    //          })
+
+
+             if(this.validate()){
+                let res=this.props.updateCustomerStatusLevelSettings(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllStatusMethods()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Status Level ',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
 
      }
 
@@ -237,6 +398,7 @@ render() {
                                              value={this.state.name}  
                                               placeholder="Status Level" 
                                               onChange={this.handleCategoryInputAction}/>
+                                              {this.state.errorObj.customerStatus!==0?<span style={{fontSize:"small",color:"red"}}>Enter Status level</span>:""}
                                               
                                             </div>
 
@@ -248,7 +410,7 @@ render() {
 
 
 
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
                                                     <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                         <div  >
                                                             <a href="javascript:" className="d-flex align-items-center">
@@ -270,7 +432,21 @@ render() {
                                                         <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Level
                                                         </a>
                                                         </div>  
-                                                  )}    
+                                                  )}     */}
+
+
+                                        <div className="d-flex justify-content-md-end mt-2"  >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategoryData}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div>
 
 
                                         </div>

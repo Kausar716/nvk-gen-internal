@@ -11,16 +11,6 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import {handleCustomerTypeDelete,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,
     getAllCustomerType,handleDragDropCustomer,updateCustomerTypeSettings, showSpecificCustomerSettingType,handleExchangeData2} from "../../actions/customerSettingAction";
-
-    import 
-    {
-       
-        handleAttributeDragDrop,
-        handleAttributeDragSort,
-       
-    } 
-from '../../actions/attributeAction'
-
 import { is } from 'immutable';
 
 
@@ -30,15 +20,21 @@ import { is } from 'immutable';
        message:[],
        isEditing:false,
             name:'',
-            sortId: 0,
-            activeId: 0,
             subName:'',
             subName2:'',
             selectedID:'',
-            btnLabelAdd:'Add New Type',
-            btnLabelUpdate: 'Update Type',
+            btnLabelAdd:'Add New Category Type',
+            btnLabelUpdate: 'Update Category Type',
             btnLabelCancel:'Cancel',
-             deleteon:false
+             deleteon:false,
+
+
+             errorObj:{
+                customer_type:0,
+                short_code:0
+            },
+
+           
     }
 
 
@@ -49,20 +45,11 @@ import { is } from 'immutable';
         onDragStart=(ev, id)=>{
             console.log("dragstart:", id);
             ev.dataTransfer.setData("id",id)
-            let activeId=this.state.activeId
-            activeId=id;
-            this.setState({activeId})
         }
         componentDidMount(){
             this.props.getAllCustomerType()
 
         }
-
-        onMouseLeave =((ev, id)=>{
-            let sortId=this.state.sortId
-            sortId=id;
-            this.setState({sortId})
-        })
 
 
         toggle1 =()=>{
@@ -72,8 +59,8 @@ import { is } from 'immutable';
         onDrop=(ev,cat)=>{
             let id= JSON.parse(ev.dataTransfer.getData("id"))
 
-             let datatoParse = this.props.customerData.customerTypeList
-            // console.log(cat)
+            let datatoParse = this.props.customerData.customerTypeList
+            console.log(cat)
 
             let tasks = []
             console.log( datatoParse.active)
@@ -89,11 +76,6 @@ import { is } from 'immutable';
                 }
             })
 
-
-        //     let tasks = this.props.plantCategoryList.filter((task)=>{                
-        //         return JSON.stringify(task.id) === id;
-        // });
-
         
             //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
              
@@ -107,7 +89,7 @@ import { is } from 'immutable';
         //    })
         let alertmsg = 0;
            let doProcess = false;
-        //    if(tasks.length>0){
+           if(tasks.length>0){
 
             if (cat === 'active' && tasks[0].status === 0) {
                
@@ -120,34 +102,34 @@ import { is } from 'immutable';
             }
 
 
-            if (doProcess === true) {
-                let result= this.props.handleDragDropCustomer(tasks[0])
-                result.then(res=>{
-                    this.props.getAllCustomerType()
-                })   
-            }
-
-            if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
-                let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
-                result.then(res=>{
-                    this.props.getAllCustomerType()
-                }) 
-                alertmsg = 3;
+            // if (doProcess === true) {
+            //     let result= this.props.handleAttributeDragDrop(tasks[0])
+            //     result.then(res=>{
+            //         this.props.getAllSubAttribute(17)
+            //     })   
             // }
 
-
-
-
-            // if (doProcess === true) {
-               
-            //     let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-type")
+            // if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+            //     let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
             //     result.then(res=>{
-            //         this.props.getAllCustomerType()
-                   
+            //         this.props.getAllSubAttribute(17)
             //     }) 
             //     alertmsg = 3;
-               
             // }
+
+
+
+
+            if (doProcess === true) {
+               
+                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-type")
+                result.then(res=>{
+                    this.props.getAllCustomerType()
+                   
+                }) 
+                alertmsg = 3;
+               
+            }
            }
        
 
@@ -162,8 +144,6 @@ import { is } from 'immutable';
                 ]
             });
         }
-
-
         if (alertmsg === 2){
             confirmAlert({
                 title: 'Action',
@@ -178,7 +158,7 @@ import { is } from 'immutable';
         if (alertmsg === 3){
             confirmAlert({
                 title: 'Action',
-                message: 'Sort Successfully Done',
+                message: ' Successfully Done',
                 buttons: [
                   {
                     label: 'Ok'
@@ -194,41 +174,90 @@ import { is } from 'immutable';
         }
 
 
+        // onDelete =(ev)=>{
+        //     // alert(ev)
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //     this.setState({deleteon:true})
+        //    let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
+        //    result.then(res=>{
+        //     this.props.getAllCustomerType()
+        //     this.setState({deleteon:false})
+        //    })
+
+
+        // }
+
+
         onDelete =(ev)=>{
-            // alert(ev)
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-            this.setState({deleteon:true})
-           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
-           result.then(res=>{
-            this.props.getAllCustomerType()
-            this.setState({deleteon:false})
-           })
-
-
+            confirmAlert({
+                title: 'Delete Categories Type',
+                message: 'Are you sure want to delete the Categories Type?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
+            this.setState({deleteon:true})
+            result.then(res=>{
+                this.props.getAllCustomerType()
+                this.setState({deleteon:false})
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Categories Type ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
+
+
+
         handleCategoryInputAction = (e)=>{
             this.setState({
                 name:e.target.value
             })
-            this.props.handleExchangeData("customerTypes", e.target.value)
+            let errorObj=this.state.errorObj
+            if(e.target.name === "customer_type"){
+            errorObj.customer_type=0
+            this.setState({errorObj})}
+            this.props.handleExchangeData("customer_type", e.target.value)
         }
 
         handleCategoryInputAction2 = (e)=>{
             this.setState({
                 subName:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "short_code"){
+                errorObj.short_code=0
+                this.setState({errorObj})}
             this.props.handleExchangeData2("short_code",e.target.value)
         }
 
 
         handleAddCategoryData = (e)=>{
-            if( this.state.name.trim() ==="" ||  this.state.subName.trim() ===""){
+            // if( this.state.name.trim() ==="" ||  this.state.subName.trim() ===""){
                 
-                this.setState({isOpen1:true,message:["please add both type and shortcode"]})
+            //     this.setState({isOpen1:true,message:["please add both type and shortcode"]})
 
 
-            }else{
+            // }else{
                 let obj = {}
                 obj.customer_type = this.state.name
                 //this.props.customerData.customerTypes.customer_type
@@ -239,10 +268,52 @@ import { is } from 'immutable';
                 result.then(data=>{
                     this.props.getAllCustomerType()
                 })
-            }
+            // }
+
+
+            if(this.validate()){
+                let result = this.props.saveCustomerType(obj)
+                result.then(res=>{
+                    this.props.getAllCustomerType()
+                })
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Categories Type',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
             // this.props.saveCustomerType()
         
         }
+
+
+          
+    validate = ()=>{
+        let errorObj = this.state.errorObj
+        if(this.state.name.length === 0){
+            errorObj.customer_type=1
+            this.setState({errorObj})
+            return false
+        }
+        if(this.state.subName.length < 8){
+            errorObj.short_code=1
+            this.setState({errorObj})
+            return false
+        }
+        return true
+        
+    }
+
 
 
         handleEditClick2 =(t)=> {
@@ -255,11 +326,19 @@ import { is } from 'immutable';
                 isEditing:true
             })
 
-            this.props.handleExchangeData("customerTypes",...this.state.name)
+            this.props.handleExchangeData("customer_type",...this.state.name)
             this.props.handleExchangeData("short_code",...this.state.subName)
             this.props.showSpecificCustomerSettingType(t.id)
   
        }
+
+
+       handleClear=()=>{
+        let errorObj = this.state.errorObj
+        errorObj.customer_type=0
+        errorObj.short_code=0
+        this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+    }
 
        handleAddCategoryUpdate=(e)=>{
         //debugger;
@@ -276,16 +355,41 @@ import { is } from 'immutable';
 
       
             
-      let res=   this.props.updateCustomerTypeSettings(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllCustomerType()
-             })
+    //   let res=   this.props.updateCustomerTypeSettings(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllCustomerType()
+    //          })
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
-                 subName:""
-             })
+    //          this.setState({
+    //              isEditing:false,
+    //              name:"",
+    //              subName:""
+    //          })
+
+
+
+             if(this.validate()){
+                let res=   this.props.updateCustomerTypeSettings(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllCustomerType()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Categorires Type',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
 
      }
 
@@ -340,10 +444,11 @@ render() {
                                             <div>
                                                 <input type="text"
                                                   className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                                  placeholder="" name="customerTypes" 
+                                                  placeholder="" name="customer_type" 
                                                // value={customerData.customerTypes.customer_type}  
                                                value={this.state.name} 
                                                 onChange={this.handleCategoryInputAction}/>
+                                                 {this.state.errorObj.customer_type!==0?<span style={{fontSize:"small",color:"red"}}>Enter Categories Types</span>:""}
                                             </div>
                                             <div className="d-flex justify-content-md-end mt-2">
                                                 
@@ -358,6 +463,8 @@ render() {
                                                  value={this.state.subName} 
                                                 //  value={customerData.customerTypes.short_code} 
                                                    onChange={this.handleCategoryInputAction2} maxLength={8}/>
+
+                                                {this.state.errorObj.short_code!==0?<span style={{fontSize:"small",color:"red"}}>Enter Short Code</span>:""}
                                             
                                             </div>
 
@@ -370,7 +477,7 @@ render() {
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
                                                 </a>
                                             </div> */}
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
                                                 <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} onClick={this.handleAddCategoryUpdate}>
                                                     <div >
                                                         <a href="javascript:" className="d-flex align-items-center">
@@ -393,7 +500,22 @@ render() {
                                                     <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Type
                                                     </a>
                                                     </div>  
-                                         )}   
+                                         )}    */}
+
+
+
+                            <div className="d-flex justify-content-md-end mt-2" style={{paddingTop:"10px"}} >
+                                <div >
+                                    <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategoryData}> 
+                                        <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                    </a>
+                                </div>
+                                <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                    <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                        <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                    </a>
+                                </div>
+                            </div>
 
 
 
@@ -456,7 +578,7 @@ render() {
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {this.props.customerData.customerTypeList.active.map(t=>{
-                                                    return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)}  onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                    return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.customer_type}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
@@ -501,7 +623,5 @@ render() {
         updateCustomerTypeSettings, 
         showSpecificCustomerSettingType,
         handleExchangeData2,
-handleDragDropCustomer,
-handleAttributeDragDrop,
-handleAttributeDragSort,    })(Types)
+handleDragDropCustomer    })(Types)
 

@@ -2,6 +2,7 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import { confirmAlert } from 'react-confirm-alert';
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
@@ -22,7 +23,20 @@ import { is } from 'immutable';
       
        selectedOption:false,
        selectedID:'',
-       deleteon:false
+       deleteon:false,
+
+      
+       subName:'',
+       subName2:'',
+      
+       btnLabelAdd:'Add New Return Reason',
+       btnLabelUpdate: 'Update Return Reason',
+       btnLabelCancel:'Cancel',
+
+        errorObj:{
+            return_reason :0,
+           short_code:0
+       },
        //return_to_inventoryNumber:0,
     }
 
@@ -63,12 +77,7 @@ import { is } from 'immutable';
                    tasks.push(task)
                 }
             })
-
-        
             //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
-             
-
-         
          console.log(tasks)
             // console.log(tasks)
         //    let result= this.props.handleDragDrop(tasks[0])
@@ -76,14 +85,17 @@ import { is } from 'immutable';
         //     this.props.getAllPlantCategories()
         //    })
            let doProcess = false;
+           let alertmsg = 0;
            if(tasks.length>0){
 
             if (cat === 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
             if (doProcess === true) {
                
@@ -91,8 +103,45 @@ import { is } from 'immutable';
                 result.then(res=>{
                     this.props.getAllReturnReasonMethods()
                 })   
+                alertmsg = 3;
             }
            }
+
+
+
+           if (alertmsg === 1){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 2){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 3){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
        
 
             // this.setState({
@@ -103,22 +152,65 @@ import { is } from 'immutable';
         }
 
 
+        // onDelete =(ev)=>{
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //     this.setState({deleteon:true})
+        //    let result= this.props.handleCustomerTypeDelete(id,"delete-customer-reason")
+        //    result.then(res=>{
+        //     this.props.getAllReturnReasonMethods()
+        //     this.setState({deleteon:false})
+        //    })
+        // }
+
+
+
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-            this.setState({deleteon:true})
-           let result= this.props.handleCustomerTypeDelete(id,"delete-customer-reason")
-           result.then(res=>{
-            this.props.getAllReturnReasonMethods()
-            this.setState({deleteon:false})
-           })
-
-
+            confirmAlert({
+                title: 'Delete Return Reason',
+                message: 'Are you sure want to delete the Return Reason ?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+
+
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCustomerTypeDelete(id,"delete-customer-reason")
+            this.setState({deleteon:true})
+            result.then(res=>{
+                this.props.getAllReturnReasonMethods()
+                this.setState({deleteon:false})
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Return Reason',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
         handleCategoryInputAction = (e)=>{
             this.setState({
                 name:e.target.value
             })
+
+            let errorObj=this.state.errorObj
+            if(e.target.name === "customerReturnReason"){
+            errorObj.return_reason=0
+            this.setState({errorObj})}
             this.props.handleExchangeData("customerReturnReason", e.target.value)
 
             //this.props.handleExchangeData(e.target.value,e.target.id,"customerReturnReason")
@@ -143,12 +235,12 @@ import { is } from 'immutable';
 
 
         handleAddCategoryData = (e)=>{
-            if(this.state.name.trim() ==="" || this.props.customerData.customerReturnReason.return_to_inventory ==="2"){
+            // if(this.state.name.trim() ==="" || this.props.customerData.customerReturnReason.return_to_inventory ==="2"){
                 
-                this.setState({isOpen1:true,message:["Please add Reason "]})
+            //     this.setState({isOpen1:true,message:["Please add Reason "]})
 
 
-            }else{
+            // }else{
                 let obj = {}
                 obj.reason = this.state.name
                 obj.return_to_inventory = this.state.selectedOption
@@ -158,13 +250,56 @@ import { is } from 'immutable';
                 result.then(data=>{
                     this.props.getAllReturnReasonMethods()
                 })
-            }
+            // }
 
-            this.setState({
-                name:"",
-            })
+            // this.setState({
+            //     name:"",
+            // })
+
+
+            if(this.validate()){
+                let result = this.props.saveReturnReasonMethod(obj)
+                result.then(res=>{
+                    this.props.getAllReturnReasonMethods()
+                })
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Return Reason',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            } 
             // this.props.saveCustomerType()
         
+        }
+
+
+        validate = ()=>{
+            let errorObj = this.state.errorObj
+            if(this.state.name.length === 0){
+                errorObj.return_reason=1
+                this.setState({errorObj})
+                return false
+            }
+           
+            return true
+            
+        }
+
+
+        handleClear=()=>{
+            let errorObj = this.state.errorObj
+            errorObj.return_reason=0
+            this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
         }
 
         handleEditClick2 =(t)=> {
@@ -196,16 +331,40 @@ import { is } from 'immutable';
          updateObject.return_to_inventory=this.state.selectedOption
        
             
-      let res=   this.props.updateCustomerReturnReasonSettings(updateID, updateObject)
-             res.then(res=>{
-                 this.props.getAllReturnReasonMethods()
-             })
+    //   let res=   this.props.updateCustomerReturnReasonSettings(updateID, updateObject)
+    //          res.then(res=>{
+    //              this.props.getAllReturnReasonMethods()
+    //          })
 
-             this.setState({
-                 isEditing:false,
-                 name:"",
+            //  this.setState({
+            //      isEditing:false,
+            //      name:"",
                 
-             })
+            //  })
+
+
+            if(this.validate()){
+                let res=   this.props.updateCustomerReturnReasonSettings(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllReturnReasonMethods()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Reurn Reason ',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
 
      }
 
@@ -250,6 +409,7 @@ render() {
                                             value={this.state.name} 
                                             // value={customerData.customerReturnReason.reason}
                                                 onChange={this.handleCategoryInputAction}/>
+                                                 {this.state.errorObj.return_reason!==0?<span style={{fontSize:"small",color:"red"}}>Enter delivery method</span>:""}
                                         </div>
                                         {/* <div className="d-flex justify-content-md-end mt-2">
                                             <a href="javascript;" className="d-flex align-items-center">
@@ -266,6 +426,7 @@ render() {
                                                          checked = {parseInt(this.state.selectedOption)===1?true:false}
                                                          //checked={this.props.customerData.customerReturnReason.return_to_inventory ==1?true:false}
                                                          />
+                                                         
                                                         <span class="checkmark"></span>
                                                         </label>
                                                         <label class="containerC">No
@@ -289,7 +450,7 @@ render() {
                                   
 
 
-                                                {this.state.isEditing ? (
+                                                {/* {this.state.isEditing ? (
                                                     <div className="d-flex justify-content-md-end mt-2" onClick={this.handleAddCategoryUpdate}>
                                                         <div style={{marginTop:"2.5em"}}>
                                                             <a href="javascript:" className="d-flex align-items-center">
@@ -311,7 +472,22 @@ render() {
                                                                 <i className="fa fa-plus-circle fa-2x mr-2"></i> Add New Reason
                                                             </a>
                                                         </div>
-                                                  )} 
+                                                  )}  */}
+
+
+
+                                        <div className="d-flex justify-content-md-end mt-2"  >
+                                            <div style={{marginTop:"43px"}}>
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategoryData}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"22px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                        </div>
 
                                    
 
