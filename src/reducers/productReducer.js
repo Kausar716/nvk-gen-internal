@@ -72,7 +72,8 @@ const initialSatate = {
         archived:0,
         internal_notes:"",
         discontinued:0,
-        status:1
+        status:1,
+        common_name:""
     },
     skuDataById         :   {
         each_cost:"0.00",
@@ -99,7 +100,6 @@ const initialSatate = {
     productPageNumber   :   0,
     skuPageNumber       :   0,
     pageNumber          :   0,
-    tagsData            :   [],
     needAction          :   false,
     backupData          :[],
     ae_product_id:"",
@@ -131,6 +131,7 @@ export default function(state = initialSatate, action){
                     internal_notes:"",
                     discontinued:0,
                     status:1,
+                    common_name:""
                 },
                 skuDataById         :   {
                     each_cost:"0.00",
@@ -153,7 +154,6 @@ export default function(state = initialSatate, action){
                 productDataBySKUlist:[],
                 message:[],
                 needAction:false,
-                tagsData:[],
                 skuValidation:{
                     each_cost:{
                         errorMessage:"",
@@ -210,13 +210,12 @@ export default function(state = initialSatate, action){
             }
             
         case GET_SPECIFIED_PRODUCT_ACTION:
-           // debugger;
+           
             //console.log("GET_SPECIFIED_PRODUCT_ACTION",action.payload.data)
             console.log(action)
             return{
                 ...state,
                 productDataById:action.payload.data,
-                tagsData:JSON.parse(action.payload.data.common_name),
                 needAction:false,
                 actionType:action.actionType
             }
@@ -246,7 +245,8 @@ export default function(state = initialSatate, action){
                     manufacturer_id:null,
                     archived:0,
                     internal_notes:"",
-                    discontinued:0
+                    discontinued:0,
+                    common_name:""
                 },
                 skuDataById         :   {
                     each_cost:"0.00",
@@ -265,7 +265,6 @@ export default function(state = initialSatate, action){
                     //id:null
                 },
                 needAction:false,
-                tagsData:[],
                 productDataBySKUlist:[]
             }
         case DUPLICTE_PRODUCT:
@@ -279,7 +278,8 @@ export default function(state = initialSatate, action){
                     manufacturer_id:null,
                     archived:0,
                     internal_notes:"",
-                    discontinued:0
+                    discontinued:0,
+                    common_name:""
                 },
                 skuDataById         :   {
                     each_cost:"0.00",
@@ -297,8 +297,7 @@ export default function(state = initialSatate, action){
                     location_id:"0"
                     //id:null
                 },
-                needAction:false,
-                tagsData:[]
+                needAction:false
             }
 
             case DELETE_SKU_ACTION:
@@ -323,7 +322,6 @@ export default function(state = initialSatate, action){
                         //id:null
                     },
                     needAction:false,
-                    tagsData:[]
                 }
     //sku action
     case GET_ALL_SKU_ACTION:
@@ -405,8 +403,7 @@ export default function(state = initialSatate, action){
         
             },
             // eslint-disable-next-line no-dupe-keys
-            needAction:false,
-            // tagsData:[]
+            needAction:false
         }
     case GET_SPECIFIED_SKU_ACTION:
         return{
@@ -433,6 +430,7 @@ export default function(state = initialSatate, action){
             }
         //input handle action
         case HANDLE_INPUT_DATA:
+            console.log(action.itemValue)
             return{
                 ...state,
                 productDataById:{...state.productDataById, [action.itemId]:action.itemValue},
