@@ -173,7 +173,7 @@ const SkuList = (props)=>{
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
     // props.plantPageReDirectAction("all","plant")
   
-    props.clearSkuFieldsPLant()
+    props.clearSkuFieldsPLant(actionType)
     }
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
@@ -512,7 +512,7 @@ const SkuList = (props)=>{
                                             <img src="assets/img/close-ic.svg" alt="" onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}} />
                                         </a> */}
                                         <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
-                                       onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}}
+                                       onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant(actionType)}}
                                         
                                         >Cancel</button>
 

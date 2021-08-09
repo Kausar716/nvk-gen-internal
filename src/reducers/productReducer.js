@@ -574,7 +574,7 @@ export default function(state = initialSatate, action){
             
             
                 },
-                actionType:"edit"
+                actionType:action.actionType
             }
         }
         default:

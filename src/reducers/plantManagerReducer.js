@@ -528,7 +528,7 @@ export default function(state = initialSatate, action){
                         attributes_subattributes:[]           
                     
                         },
-                        actionType:"edit"
+                        actionType:action.actionType
 
                 }
             case GET_SINGLE_PLANT_SKU:

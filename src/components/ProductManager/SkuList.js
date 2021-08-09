@@ -350,7 +350,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
     const handleCancle = ()=> {
         setSelectedRow(-1);
         setSkuEdit(false); 
-        props.clearSkuFields()
+        console.log(props.productData.actionType)
+        props.clearSkuFields(props.productData.actionType)
     }
     let flag =0
     if(skuDataById){       
