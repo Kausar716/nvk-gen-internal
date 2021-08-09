@@ -5,10 +5,22 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 // import './style.css';
-import InfoModal from "../Modal/InfoModal"
+import InfoModal from "../Modal/InfoModal";
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import {handleCustomerTypeDelete,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,
     getAllCustomerType,handleDragDropCustomer,updateCustomerTypeSettings, showSpecificCustomerSettingType,handleExchangeData2} from "../../actions/customerSettingAction";
+
+    import 
+    {
+       
+        handleAttributeDragDrop,
+        handleAttributeDragSort,
+       
+    } 
+from '../../actions/attributeAction'
+
 import { is } from 'immutable';
 
 
@@ -17,11 +29,16 @@ import { is } from 'immutable';
      isOpen1:false,
        message:[],
        isEditing:false,
-       name:'',
-       subName:'',
-       subName2:'',
-       selectedID:'',
-       deleteon:false
+            name:'',
+            sortId: 0,
+            activeId: 0,
+            subName:'',
+            subName2:'',
+            selectedID:'',
+            btnLabelAdd:'Add New Type',
+            btnLabelUpdate: 'Update Type',
+            btnLabelCancel:'Cancel',
+             deleteon:false
     }
 
 
@@ -32,11 +49,20 @@ import { is } from 'immutable';
         onDragStart=(ev, id)=>{
             console.log("dragstart:", id);
             ev.dataTransfer.setData("id",id)
+            let activeId=this.state.activeId
+            activeId=id;
+            this.setState({activeId})
         }
         componentDidMount(){
             this.props.getAllCustomerType()
 
         }
+
+        onMouseLeave =((ev, id)=>{
+            let sortId=this.state.sortId
+            sortId=id;
+            this.setState({sortId})
+        })
 
 
         toggle1 =()=>{
@@ -45,8 +71,9 @@ import { is } from 'immutable';
 
         onDrop=(ev,cat)=>{
             let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.customerData.customerTypeList
-            console.log(cat)
+
+             let datatoParse = this.props.customerData.customerTypeList
+            // console.log(cat)
 
             let tasks = []
             console.log( datatoParse.active)
@@ -62,6 +89,11 @@ import { is } from 'immutable';
                 }
             })
 
+
+        //     let tasks = this.props.plantCategoryList.filter((task)=>{                
+        //         return JSON.stringify(task.id) === id;
+        // });
+
         
             //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
              
@@ -73,26 +105,87 @@ import { is } from 'immutable';
         //    result.then(res=>{
         //     this.props.getAllPlantCategories()
         //    })
+        let alertmsg = 0;
            let doProcess = false;
-           if(tasks.length>0){
+        //    if(tasks.length>0){
 
             if (cat === 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
+
+
             if (doProcess === true) {
-               
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-type")
+                let result= this.props.handleDragDropCustomer(tasks[0])
                 result.then(res=>{
                     this.props.getAllCustomerType()
                 })   
             }
+
+            if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+                let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
+                result.then(res=>{
+                    this.props.getAllCustomerType()
+                }) 
+                alertmsg = 3;
+            // }
+
+
+
+
+            // if (doProcess === true) {
+               
+            //     let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-type")
+            //     result.then(res=>{
+            //         this.props.getAllCustomerType()
+                   
+            //     }) 
+            //     alertmsg = 3;
+               
+            // }
            }
        
 
+           if (alertmsg === 1){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Inactive to Active',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+
+
+        if (alertmsg === 2){
+            confirmAlert({
+                title: 'Action',
+                message: 'Successfully Moved from Active to InActive',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
+        if (alertmsg === 3){
+            confirmAlert({
+                title: 'Action',
+                message: 'Sort Successfully Done',
+                buttons: [
+                  {
+                    label: 'Ok'
+                  }
+                ]
+            });
+        }
             // this.setState({
             //     ...this.state,
             //     tasks
@@ -363,7 +456,7 @@ render() {
                                             <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
                                             <ul class="list-unstyled">
                                                    {this.props.customerData.customerTypeList.active.map(t=>{
-                                                    return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                    return <li id={t.id} name={t.customer_type} onDragStart={(e)=>this.onDragStart(e, t.id)}  onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.customer_type}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
@@ -408,5 +501,7 @@ render() {
         updateCustomerTypeSettings, 
         showSpecificCustomerSettingType,
         handleExchangeData2,
-handleDragDropCustomer    })(Types)
+handleDragDropCustomer,
+handleAttributeDragDrop,
+handleAttributeDragSort,    })(Types)
 
