@@ -133,7 +133,7 @@ export class CustomerSettings extends React.Component {
         let displayCustomerList = []
         let pageCount =0
         let pageNumber = 0
-        let {action} = this.props.customerData
+        let {action,radioFilter} = this.props.customerData
         // if(this.props.customerData) {
             // tempArray = this.props.customerData
             // if(this.state.customerListStatus === "active" && this.props.customerData.customerList.active !== undefined) {
@@ -246,28 +246,15 @@ export class CustomerSettings extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        
-                            <div class="form-group row mt-4">
-                                <div class="col-md-12 col-lg-12">
-                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        <li><a style={{cursor:"pointer"}}  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
-                                        {
-                                            this.state.alphabets.map(alphabet=>{
-                                                return(<li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha ==alphabet?"active":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
-
-                                            })
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
+                            <div style={{clear: 'both'}}></div>
                             <div>
                                 <div style={{float:"left",marginBottom:15}}>
                                 {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength +"  "+radioFilter }</label>
                                 {/* </div> */}
                                 </div>
-                                <div style={{float:"left",marginBottom:15}}>
-                                <label className="greenText">Show</label>
+                                <div style={{float:"left",marginBottom:"-10px",marginLeft:30}}>
+                                <label className="greenText">Rows per page</label>
                                 <select
                                         value={this.state.pageSize}
                                         onChange={e => {
@@ -287,13 +274,28 @@ export class CustomerSettings extends React.Component {
                                
                             </div>
                             <div style={{clear:"both"}}></div>
+                            <div class="form-group row mt-4">
+                                <div class="col-md-12 col-lg-12">
+                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
+                                        <li><a style={{cursor:"pointer"}}  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
+                                        {
+                                            this.state.alphabets.map(alphabet=>{
+                                                return(<li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha ==alphabet?"active":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                   
+                          
                             <div class="form-group row">
                                 <div class="col-md-12 table-responsive">
                                     <table id="plantDetails" class="table table-striped w-100">
                                         <thead>
                                             <tr>
                                                 <th class="text-nowrap">Status</th>
-                                                <th class="text-nowrap">ID</th>
+                                                <th class="text-nowrap">Customer ID</th>
                                                 <th class="text-nowrap">Customer Name</th>
                                                 <th class="text-nowrap">Type</th>
                                                 <th class="text-nowrap">Telephone</th>

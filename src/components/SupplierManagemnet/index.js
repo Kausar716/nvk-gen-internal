@@ -123,7 +123,7 @@ export class SupplierManagemnet extends React.Component {
         let customerData = [] 
         let tempArray = []
         console.log(this.props.customerData)
-        const {action } = this.props.supplierData
+        const {action,radioFilter } = this.props.supplierData
         let totalLength = 0
         let plantPerPage =0;
         let pagesVisited = 0;
@@ -240,28 +240,15 @@ export class SupplierManagemnet extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                        
-                            <div class="form-group row mt-4">
-                                <div class="col-md-12 col-lg-12">
-                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        <li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
-                                        {
-                                            this.state.alphabets.map(alphabet=>{
-                                                return(<li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha ==alphabet?"active":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
-
-                                            })
-                                        }
-                                    </ul>
-                                </div>
-                            </div>
                             <div>
+                                <div style={{clear:"both"}}></div>
                                 <div style={{float:"left",marginBottom:15}}>
                                 {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber))) : (totalLength>0?(pageNumber+1):0))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength+"  Supplier List  " }</label>
+                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber))) : (totalLength>0?(pageNumber+1):0))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of    "  +   totalLength  +"   " +  radioFilter }</label>
                                 {/* </div> */}
                                 </div>
                                 <div style={{float:"left",marginBottom:15,marginLeft:"2%"}}>
-                                <label className="greenText">Show</label>
+                                <label className="greenText">Rows per page</label>
                                 <select
                                         value={this.state.pageSize}
                                         onChange={e => {
@@ -280,6 +267,21 @@ export class SupplierManagemnet extends React.Component {
                                 </div>
                                
                             </div>
+                            <div style={{clear:"both"}}></div>      
+                            <div class="form-group row mt-4">
+                                <div class="col-md-12 col-lg-12">
+                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
+                                        <li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
+                                        {
+                                            this.state.alphabets.map(alphabet=>{
+                                                return(<li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha ==alphabet?"active":""} onClick={this.handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                  
                             <div style={{clear:"both"}}></div>
                             <div class="form-group row">
                                 <div class="col-md-12 table-responsive">
@@ -287,7 +289,7 @@ export class SupplierManagemnet extends React.Component {
                                         <thead>
                                             <tr>
                                                 <th class="text-nowrap">Status</th>
-                                                <th class="text-nowrap">ID</th>
+                                                <th class="text-nowrap">Supplier ID</th>
                                                 <th class="text-nowrap">Supplier Name</th>
                                                 <th class="text-nowrap">Type</th>
                                                 <th class="text-nowrap">Telephone</th>

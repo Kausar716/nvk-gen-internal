@@ -322,6 +322,13 @@ const SkuList = (props)=>{
         //     }))
         // })   
         console.log(plantSkuDataById)
+        const activeStateChange = (e)=>{
+            // alert("hh")
+            let value = parseInt(plantSkuDataById.status) == 1?0:1
+            plantSkuDataById.status = value
+            props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+
+        }
  
       
         return(
@@ -538,7 +545,7 @@ const SkuList = (props)=>{
                                                 <td class="text-right">{skuData.sale_price}</td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1 text-center">
-                                                        <input type="checkbox" class="custom-control-input"checked={skuData.status==0?false:true}/>
+                                                        <input type="checkbox" class="custom-control-input"checked={parseInt(skuData.status)==0?false:true} onClick={activeStateChange} id="customCheck1"/>
                                                         <label class="custom-control-label" for="customCheck1"></label>
                                                     </div>
                                                 </td>
