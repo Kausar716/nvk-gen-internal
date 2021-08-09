@@ -445,14 +445,12 @@ export class OrganizationSettings extends React.Component {
 
 
         alert("Image Removed Successfully")
-
         this.setState({
             imgLoader: true
         })
-
      }
 
-     
+
      componentDidMount(){
 
         this.setState({
