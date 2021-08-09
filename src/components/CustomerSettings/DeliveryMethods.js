@@ -38,8 +38,6 @@ import { is } from 'immutable';
            short_code:0
        },
 
-
-
     }
 
 
@@ -62,6 +60,7 @@ import { is } from 'immutable';
         }
 
         onDrop=(ev,cat)=>{
+
             let id= JSON.parse(ev.dataTransfer.getData("id"))
             let datatoParse = this.props.customerData.customerDeliveryList
             console.log(cat)
@@ -74,6 +73,7 @@ import { is } from 'immutable';
                     tasks.push(task)
                  }
              })
+
              datatoParse.inactive.filter(task=>{
                 if(task.id === id){
                    tasks.push(task)
@@ -93,13 +93,18 @@ import { is } from 'immutable';
         //    })
         let alertmsg = 0;
            let doProcess = false;
+           if (cat === 'active' && tasks[0].status === 0) {
+            doProcess = true;
+            alertmsg = 1;
+        }
            if(tasks.length>0){
 
-            if (cat === 'active' && tasks[0].status === 0) {
+            // if (cat === 'active' && tasks[0].status === 0) {
                
-                doProcess = true;
-                alertmsg = 1;
-            }
+            //     doProcess = true;
+            //     alertmsg = 1;
+            // }
+
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
                 alertmsg = 2;
@@ -116,45 +121,49 @@ import { is } from 'immutable';
 
                 alertmsg = 3;
             }
+
+
+
+            if (alertmsg === 1){
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
+            if (alertmsg === 2){
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
+            if (alertmsg === 3){
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
            }
 
 
 
 
 
-           if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
+        
        
 
             // this.setState({
