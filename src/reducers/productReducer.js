@@ -86,7 +86,8 @@ const initialSatate = {
         status:1,
         supplier_id:1,
         volume_price_per_unit:"0.00",
-        volume_quantity:"0"
+        volume_quantity:"0",
+        location_id:"0"
        
 
 
@@ -143,7 +144,8 @@ export default function(state = initialSatate, action){
                     supplier_id:1,
                     archived:"0",
                     volume_price_per_unit:"0.00",
-                    volume_quantity:"0"
+                    volume_quantity:"0",
+                    location_id:"0"
                     //id:null
             
             
@@ -258,7 +260,8 @@ export default function(state = initialSatate, action){
                     archived:"0",
                     supplier_id:1,
                     volume_price_per_unit:"0.00",
-                    volume_quantity:"0"
+                    volume_quantity:"0",
+                    location_id:"0"
                     //id:null
                 },
                 needAction:false,
@@ -290,7 +293,8 @@ export default function(state = initialSatate, action){
                     archived:0,
                     supplier_id:1,
                     volume_price_per_unit:"0.00",
-                    volume_quantity:"0"
+                    volume_quantity:"0",
+                    location_id:"0"
                     //id:null
                 },
                 needAction:false,
@@ -314,7 +318,8 @@ export default function(state = initialSatate, action){
                         archived:0,
                         supplier_id:1,
                         volume_price_per_unit:"0.00",
-                        volume_quantity:"0"
+                        volume_quantity:"0",
+                        location_id:"0"
                         //id:null
                     },
                     needAction:false,
@@ -363,6 +368,7 @@ export default function(state = initialSatate, action){
                 supplier_id:1,
                 volume_price_per_unit:"0.00",
                 volume_quantity:"0",
+                location_id:"0"
                 // id:null
             },
             actionType:action.actionType,
@@ -392,7 +398,8 @@ export default function(state = initialSatate, action){
                 archived:"0",
                 supplier_id:1,
                 volume_price_per_unit:null,
-                volume_quantity:"0"
+                volume_quantity:"0",
+                location_id:"0"
                 //id:null
         
         
@@ -561,6 +568,7 @@ export default function(state = initialSatate, action){
                     supplier_id:1,
                     volume_price_per_unit:"0.00",
                     volume_quantity:"0",
+                    location_id:"0"
                    
                     //id:null
             

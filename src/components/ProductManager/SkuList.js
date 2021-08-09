@@ -13,6 +13,7 @@ import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,Paginatio
 import {connect} from "react-redux";
 import {} from "../../actions/productAction";
 import {getAllAttributesAction} from "../../actions/attributeAction";
+import {getAllSupplierLocationMethods} from '../../actions/supplierManagementAction'
 //import ReactPaginate from 'react-paginate'
 // import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
@@ -44,7 +45,6 @@ handleSkuInputAction
     
 } from '../../actions/productAction'
 import { config } from "../../actions/types";
-  
 const required = value => value ? undefined : 'Required'
 const maxLength = max => value =>
   value && value.length > max ? `Must be ${max} characters or less` : undefined
@@ -102,6 +102,7 @@ const SkuList=(props)=> {
         props.getAllSkuAction()
         props.getAllSpecifiedSkuProductList()
         props.getAllAttributesAction()
+        props.getAllSupplierLocationMethods()
     },[])
 
 
@@ -359,6 +360,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
+    let locationList = []
+    // console.log(props.temp.attributeData.subAttribute)
+    if(props.supplierLocation)
+     locationList= props.supplierLocation.active
        
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
@@ -369,7 +374,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <div class="col-md-6">
                                             <h3>GENERATED SKU {skuDataById.sku_code}</h3>
                                         </div>
+                                        
                                         <div class="col-md-6 d-flex justify-content-end">
+                                        
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
                                                 <div class="switcher ml-2">
@@ -379,6 +386,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -403,10 +412,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Location <span class="text-danger">*</span></label>
-                                            <select class="form-control" style={{cursor:"pointer"}}  >
-                                                <option>Select</option>
-                                                <option>Option 1</option>
-                                                <option>Option 2</option>
+                                            <select class="form-control" style={{cursor:"pointer"}} id="location_id" onChange={handleInput} value={skuDataById.location_id} >
+                                            <option value="0">None</option>
+                                                {locationList.map(location=>{
+                                                    return (<option value={location.id} selected={location.id===skuDataById.location_id?"selected":""}>{location.location}</option>)
+                                                })}
                                             </select>
                                         </div>
                                     </div>
@@ -491,8 +501,6 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
-                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                             <button 
                                             // type="button" class="btn btn-primary btn-lg"
                                             className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
@@ -509,9 +517,14 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
                                             {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
-                                            <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                            <img src="assets/img/close-ic.svg" alt="" onClick={handleCancle} />
-                                        </a>
+                                            {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                            <img src="assets/img/close-ic.svg" alt=""  />
+                                        </a> */}
+                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
+                                       onClick={handleCancle}
+                                        
+                                        >Cancel</button>
+                                        
                                         </div>
                                     </div>
                                 </form>
@@ -645,7 +658,8 @@ const mapStateToProps = (state)=> ({
     productData:state.productData,
     temp:state,
     categoryData:state.categoryData,
-    attributeData:state.attributeData
+    attributeData:state.attributeData,
+    supplierLocation:state.supplierData.supplierLocationList
 })
 function validate(values) {
     const errors = {};
@@ -686,7 +700,8 @@ export default reduxForm({
     //handle sku input
     handleSkuInputAction,
     pageReDirectAction,
-    clearSkuFields
+    clearSkuFields,
+    getAllSupplierLocationMethods
 
 })(SkuList));
 
