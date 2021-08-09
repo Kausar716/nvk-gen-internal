@@ -240,16 +240,16 @@ export class SupplierManagemnet extends React.Component {
                                     </div>
                                 </div>
                             </div>
-                            <div>
+                            <div style={{paddingTop:30}}>
                                 <div style={{clear:"both"}}></div>
-                                <div style={{float:"left",marginBottom:15}}>
+                                <div style={{float:"left"}}>
                                 {/* <div> */}
                                     <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber))) : (totalLength>0?(pageNumber+1):0))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of    "  +   totalLength  +"   " +  radioFilter }</label>
                                 {/* </div> */}
                                 </div>
-                                <div style={{float:"left",marginBottom:15,marginLeft:"2%"}}>
-                                <label className="greenText">Rows per page</label>
-                                <select
+                                <div style={{float:"left",marginBottom:20,marginLeft:"2%"}}>
+                                <label className="greenText" style={{color:"black",fontWeight:"normal",paddingTop:"-10px"}}>Rows per page</label>
+                                <select style={{marginTop:"-10px"}}
                                         value={this.state.pageSize}
                                         onChange={e => {
                                             this.setState({pageSize:e.target.value})
@@ -262,14 +262,14 @@ export class SupplierManagemnet extends React.Component {
                                         ))}
                                     </select>
                                 </div>
-                                <div style={{float:"right",marginBottom:15}}>
+                                <div style={{float:"right"}}>
                                     <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
                                 </div>
                                
                             </div>
                             <div style={{clear:"both"}}></div>      
                             <div class="form-group row mt-4">
-                                <div class="col-md-12 col-lg-12">
+                                <div class="col-md-12 col-lg-12"  style={{marginTop:"-2%",marginBottom:"-23px"}}>
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
                                         <li><a  style={{cursor:"pointer"}} class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
                                         {

@@ -81,6 +81,9 @@ function AddCustomer(props) {
             })
             if(indexValue !== null) type.splice(indexValue,1)
             else type.push(e.target.value)
+            var checkboxes = document.getElementById("checkboxes");
+            checkboxes.style.display = "none";
+            expanded = false;
 
             props.handleExchangeData(type,e.target.id,"customerDataById")
         }else if(e.target.id ==="alert"){
@@ -348,16 +351,36 @@ function AddCustomer(props) {
         window.open(url, '_blank');
         // window.location.href = url
     }
+    var expanded = false;
+
+const showCheckboxes=()=>{
+  var checkboxes = document.getElementById("checkboxes");
+  if (!expanded) {
+    checkboxes.style.display = "block";
+    expanded = true;
+  } else {
+    checkboxes.style.display = "none";
+    expanded = false;
+  }
+}
+const showCheckboxesClose = ()=>{
+    var checkboxes = document.getElementById("checkboxes");
+
+      checkboxes.style.display = "none";
+      expanded = false;
+    // }
+
+}
 
     console.log(customerDataById)
     return (
-        <div>
+        <div style={{position: 'relative'}} >
             	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
                 <SuccessModal status={isOpen2} message={message2} modalAction={toggle2}/>
                 <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
                 <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/>
-            <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-            <h1 class="page-header mb-0"><img src="assets/img/customer-ic-lg.svg" alt=""/>{action=="add"?"Add Customer":"Edit Customer"} <span>{customerDataById.id?"#"+customerDataById.id:""}</span></h1>
+            <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center"  >
+            <h1 class="page-header mb-0"><img src="assets/img/customer-ic-lg.svg" alt=""/>{action =="add"?"Add Customer":"Edit Customer"}  <span>{customerDataById.id?"#"+customerDataById.id:""}</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn ml-2 mt-3 mt-md-0">
                         <span class="d-flex align-items-center text-left">
@@ -430,7 +453,7 @@ function AddCustomer(props) {
                 </div>
                 <div class="bg-white px-3 py-3 my-3 cardShadow">
                     <div class="row align-items-center">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <h2>Customer Details</h2>
                             <div class="d-flex align-items-center">
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0" >
@@ -456,11 +479,11 @@ function AddCustomer(props) {
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 text-md-right">
+                        <div class="col-md-8 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
-                             {action=="edit"?<div class="mt-5 mt-md-0">
-                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(customerDataById.id)}><i class="fa fa-trash" style={{fontSize:30}}></i>  </a>
-                                </div>:""}
+                             {action=="edit"?
+                                    <p   style={{paddingRight:"7%",color:"red",fontSize:"18px",paddingTop:"1.4%",cursor:"pointer"}} onClick={()=>deleteCustomerData(customerDataById.id)}> Delete Customer</p>
+                           :""}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                                     <p style={{marginLeft:"14%",marginTop:"16px"}}>Active</p>
                                     <div class="switcher ml-2 pr-2">
@@ -506,7 +529,7 @@ function AddCustomer(props) {
                 
                     
                                 <div class="row mt-3">
-                                  <div class="col-md-8 col-lg-4">
+                                  <div class="col-md-6 col-lg-6">
                                         <label>Customer Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" value={customerDataById.name} onChange={handleInput} placeholder="Customer Name"/>
                                         {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
@@ -515,26 +538,49 @@ function AddCustomer(props) {
                                         <label>Type<span class="text-danger">*</span></label>
                                         <select class="form-control" onChange={handleInput} id="type">
                                             {customerTypeList.active.map(type=>{
-                                                return(<option value={type.id}>{type.customer_type}</option>)
+                                                return(<option value={type.id}></option>)
                                             })}
                                         </select>
                                     </div> */}
-                                    <div class="col-md-8 col-lg-8 mt-2 mt-md-0">
+                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes}>
                                     <label>Type<span class="text-danger">*</span></label>
-                                        <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}>
-                                        {customerTypeList.active.map(type=>{
+                                        {/* <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}> */}
+                                            {/* <select> */}
+                                            {/* <div class=" col-md-8 col-lg-8 mt-2 mt-md-0"> */}
+                                            <div class="selectBox" >
+                                            <select class="form-control">
+                                                <option>Select Type</option>
+                                            </select>
+                                            <div class="overSelect"></div>
+                                            </div>
+                                            <div id="checkboxes" style={{position: 'absolute'}}>
+
+                                            {customerTypeList.active.map(type=>{
+                                                return(
+                                                    <label for="one">
+                                                <p style={{paddingLeft:20}}>
+                                                <input type="checkbox" id="type" style={{paddingLeft:0,cursor:"pointer"}} value={type.id} onChange={handleInput} checked={customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0}/> {type.customer_type}
+                                                </p>
+                                            </label>)
+                                                    
+                                            })}
+                                            </div>
+
+
+                                        {/* {customerTypeList.active.map(type=>{
                                           
-                                                return (<div class="form-check form-check-inline" style={{paddingRight:10}}>
+                                                return (<option><div class="form-check form-check-inline" style={{paddingRight:10}}>
                                             <input style={{cursor:"pointer"}} class="form-check-input" type="checkbox" name="active" id="type"  value={type.id} checked={customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0} onChange={handleInput}/>
                                             <label class="form-check-label" for="activePlants">{type.customer_type}  </label>
-                                        </div>)
+                                        </div></option>)
                                                 
                                          
                                     
-                                        })}
+                                        })} */}
+                                        {/* </select> */}
 
 
-                                        </div>
+                                        {/* </div> */}
 
                                     
                                     </div>
@@ -542,54 +588,9 @@ function AddCustomer(props) {
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Primary Contact</label>
-                                       <div style={{height:"auto",borderRadius:3,marginTop:1}}>{
-                                       
-                                        customerContactList.active.map(contactData=>{
-                                            
-                                            if(parseInt(contactData.primary_contact) ==1){
-                                                return(
-                                                    <div>
-                                                    <div >
-                                                    {/* <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p> */}
-                                            <label class="text-muted f-w-400">{contactData.email}</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1}</label>
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2}</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
-                                                </div>
-                                            </div>
-                                            {/* <div>
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={contactData.primary_contact==1?true:false} disabled={true}/>
-                                                    <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
-                                                </div>
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={contactData.all_communication==1?true:false} disabled={true}/>
-                                                    <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
-                                                </div>
-                                            </div> */}
-                                            {/* <div class="row mt-3">
-                                                <div class="col-md-6">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
-                                                    </a>
-                                                    <a  class=" ml-2" onClick={()=>editContact(contactData.id)}>
-                                                        <img src="assets/img/edit.svg" alt="" />
-                                                    </a>
-                                                </div>
-                                            
-                                            </div> */}
-                                                        </div>
-                                                        </div>
-                                                )
-                                                
-                                            }
-                                        })
-                                           
-                                           }</div>
+                                        <input type="text" class="form-control" id="name" value={customerDataById.fax!==null?customerDataById.name+" "+customerDataById.fax:""} onChange={handleInput}  disabled placeholder="Primary Contact"/>
+ 
+                                           {/* </div> */}
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                         <label>Fax</label>
@@ -613,11 +614,11 @@ function AddCustomer(props) {
                                         {enableUrl== true?
                                       
                                           
-                                            <a href={customerDataById.website_url} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline"}}>Visit</a>
+                                            <a href={customerDataById.website_url} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline",border:"2px solid #629C44",color:"#629C44"}}>Visit</a>
                                        
                                         :
                                        
-                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true}>
+                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true} style={{display:"inline",border:"3px solid #629C44"}}>
                                          
                                             Visit
                                             </button>

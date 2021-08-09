@@ -97,7 +97,6 @@ const PlantTable=(props)=> {
 }
 const handleCheckBox =(id,index,type)=>{
     let obj = {}
-    
     // obj[type] = parseInt(displayPlantList[index][type])===1?0:1
     // if(type ==="in_production" &&  obj[type]===0)
     // obj["status"] = 0

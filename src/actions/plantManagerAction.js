@@ -8,6 +8,7 @@ import {
     GET_SPECIFIED_PLANT_ACTION,
     DUPLICTE_PLANT,
     CHECK_BOX,
+    UPDATE_CHECK_BOX_SKU,
 
     // Plant SKU ACTION
     CREATE_PLANT_SKU_ACTION,
@@ -36,6 +37,7 @@ import {
     //SUB_PAGE_REDIRECT_ACTION,
 
     ERROR_HANDLE,
+    CHECK_BOX_SKU,
 
     //filter category
     // FILTER_CATEGORY_DATA
@@ -146,7 +148,20 @@ export const createPlantAction = (plantData,tags) => dispatch => {
     }
 }
 
+export const updateCheckBoxsku = (id,index,type1,obj)=>dispatch=>{
+    obj.type = "plant"
+    return axios.post(`/api/update-sku/${id}`, obj, config).then(res=>{
 
+        dispatch({
+            type:UPDATE_CHECK_BOX_SKU,
+            id:id,
+            typetoshow:type1,
+            index:index,
+            obj:obj
+
+        })
+    })
+}
 export const updateCheckBox = (id,index,type1,obj)=>dispatch=>{
 
     return axios.post(`/api/update-plant/${id}`, obj, config).then(res=>{
@@ -165,6 +180,18 @@ export const checkBox =(id,index,type1,obj) =>dispatch=>{
     // alert("kausar")
     dispatch({
         type:CHECK_BOX,
+        id:id,
+        typetoshow:type1,
+        index:index,
+        obj:obj
+
+    })
+    
+}
+export const checkBoxSku =(id,index,type1,obj) =>dispatch=>{
+    // alert("kausar")
+    dispatch({
+        type:CHECK_BOX_SKU,
         id:id,
         typetoshow:type1,
         index:index,
@@ -506,7 +533,7 @@ export const showSinglePlantSkuAction = (id,data, actionType="edit") => dispatch
   
 console.log(id)
 
-     axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{ 
+     return axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{ 
          console.log(res)
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
 

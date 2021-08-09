@@ -498,13 +498,11 @@ console.log(props.supplierData.supplierReasonList)
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <h2>Supplier Details</h2>
-                            <div class="col-md-6 text-md-left">
+                            <div class="col-md-8 text-md-left">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-start">
                          
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
-                                {action=="edit"?<div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
-                                    <a  class="text-danger f-s-18 f-w-600" onClick={()=>deleteCustomerData(supplierDataById.id)}><i class="fa fa-trash" style={{fontSize:30}}></i>  </a>
-                                </div>:""}
+                           
                                                     {/* <p style={{marginLeft:"2%",marginTop:"16px"}}>Active</p>
                                     <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(supplierDataById.status) ===1?true:false}/>
@@ -553,13 +551,16 @@ console.log(props.supplierData.supplierReasonList)
                         </div>
                         <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
-
+                            {action=="edit"?
+                                    <p   style={{paddingRight:"10%",color:"red",fontSize:"18px",paddingTop:"2%",cursor:"pointer"}} onClick={()=>deleteCustomerData(supplierDataById.id)}> Delete Customer</p>
+                           :""}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                                     <p style={{marginLeft:"14%",marginTop:"16px"}}>Active</p>
                                     <div class="switcher ml-2 pr-2">
                                                 <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(supplierDataById.status) ===1?true:false}/>
                                                 <label for="status"></label>
                                             </div>
+
                                    
                                 </div>
                                 {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
@@ -628,8 +629,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Primary Contact</label>
-                                        <p>No Primary Contact Yet</p>
-                                        {/* <input type="text" class="form-control" name = "primaryContact" value={primaryContact} onChange={handleInput} /> */}
+                                     <input type="text" class="form-control" name = "primaryContact" value={supplierDataById.fax !== null?supplierDataById.supplier_name+" "+supplierDataById.fax:""}  disabled placeholder="Primary Contact"/> 
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                     <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
@@ -645,11 +645,11 @@ console.log(props.supplierData.supplierReasonList)
                                         {enableUrl== true?
                                       
                                           
-                                            <a href={supplierDataById.website} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline"}}>Visit</a>
+                                            <a href={supplierDataById.website} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline",border:"2px solid #629C44",color:"#629C44"}}>Visit</a>
                                        
                                         :
                                        
-                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true}>
+                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true} style={{border:"2px solid #629C44"}}>
                                          
                                             Visit
                                             </button>

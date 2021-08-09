@@ -230,7 +230,7 @@ export class CustomerSettings extends React.Component {
                                     <a onClick={this.handleSearch}  className="d-block topSpace" style={{marginTop:"2.3em",cursor:"pointer",color:"#5287F5"}} id="reset">Reset</a>
                                 </div>
                             </div>
-                            <div class="form-group row">
+                            <div class="form-group row" >
                                 <div class="col-md-12">
                                     <div class="form-check form-check-inline">
                                         <input style={{cursor:"pointer"}} class="form-check-input" type="radio" name="active" id="active" value="" checked={this.state.customerListStatus === "active"?true:false} onClick={this.handleRadioClick}/>
@@ -247,15 +247,16 @@ export class CustomerSettings extends React.Component {
                                 </div>
                             </div>
                             <div style={{clear: 'both'}}></div>
-                            <div>
-                                <div style={{float:"left",marginBottom:15}}>
+                            <div style={{paddingTop:25}}>
+                                <div style={{float:"left"}}>
                                 {/* <div> */}
                                     <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength +"  "+radioFilter }</label>
                                 {/* </div> */}
                                 </div>
-                                <div style={{float:"left",marginBottom:"-10px",marginLeft:30}}>
-                                <label className="greenText">Rows per page</label>
-                                <select
+                                <div style={{float:"left",marginBottom:"-15px",marginLeft:30}}>
+                                <label className="greenText" style={{color:"black",fontWeight:"normal",paddingTop:"-10px"}}>Rows per page</label>
+                                <div className="select_box" style={{display:"inline"}}>
+                                <select 
                                         value={this.state.pageSize}
                                         onChange={e => {
                                             this.setState({pageSize:e.target.value})
@@ -267,6 +268,9 @@ export class CustomerSettings extends React.Component {
                                             </option>)
                                         ))}
                                     </select>
+
+                                </div>
+                           
                                 </div>
                                 <div style={{float:"right",marginBottom:15}}>
                                     <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
@@ -275,7 +279,7 @@ export class CustomerSettings extends React.Component {
                             </div>
                             <div style={{clear:"both"}}></div>
                             <div class="form-group row mt-4">
-                                <div class="col-md-12 col-lg-12">
+                                <div class="col-md-12 col-lg-12"  style={{marginTop:"-2%",marginBottom:"-23px"}}>
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
                                         <li><a style={{cursor:"pointer"}}  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All">All</a></li>
                                         {

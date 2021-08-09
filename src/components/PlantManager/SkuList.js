@@ -25,7 +25,9 @@ deleteSkuAction,
 getSpecifiedPlantAction,
 showSinglePlantSkuAction,
 plantPageReDirectAction,
-clearSkuFieldsPLant
+clearSkuFieldsPLant,
+updateCheckBoxsku,
+checkBoxSku
    
 } from "../../actions/plantManagerAction";
 import {
@@ -322,15 +324,44 @@ const SkuList = (props)=>{
         //     }))
         // })   
         console.log(plantSkuDataById)
-        const activeStateChange = (e)=>{
-            // alert("hh")
-            let value = parseInt(plantSkuDataById.status) == 1?0:1
-            plantSkuDataById.status = value
-            props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+        const handleCheckBox = (id,index,type)=>{
+            console.log(id,index,type)
+            // alert(index)
+            // alert(index)
+           
+            let obj = {}
+    
+            // obj[type] = parseInt(displayPlantList[index][type])===1?0:1
+            // if(type ==="in_production" &&  obj[type]===0)
+            // obj["status"] = 0
+            // else obj["status"] =1
+            // if(type !=="in_production" &&  obj[type]===1)
+            // obj["status"] = 0
+            // else obj["status"] =1
+            if(type ==="status") {
+                if (parseInt(displayPlantSkuList[index][type])===1) {
+                    obj.status =0
+                }
+                else if (parseInt(displayPlantSkuList[index][type])===0) {
+                    obj.status =1
+                }
+            }
+            // alert((15*plantSkuPageNumber)+index)
+        
+            // props.checkBox(id,((15*plantSkuPageNumber)+index),type,obj)
+            // console.log(plantData[((15*plantPageNumber)+index)])
+            props.checkBoxSku(id,((15*plantSkuPageNumber)+index),type,obj)
+            props.updateCheckBoxsku(id,index,"status",obj)
+        
+
+            // let value = parseInt(plantSkuDataById.status) == 1?0:1
+            // plantSkuDataById.status = value
+            // props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
 
         }
- 
-      
+       
+//  
+        let count =0;
         return(
         <div>
             <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
@@ -534,7 +565,8 @@ const SkuList = (props)=>{
                                         <tbody>
 
                                         {
-                        displayPlantSkuList.map(skuData=>{
+                        displayPlantSkuList.map((skuData,i)=>{
+                           console.log(i)
                            
                             return(
                                             <tr style={{background:(selectedRow === skuData.id)? "#e1e3e4":""}}>
@@ -545,8 +577,8 @@ const SkuList = (props)=>{
                                                 <td class="text-right">{skuData.sale_price}</td>
                                                 <td class="text-center">
                                                     <div class="custom-control custom-checkbox mb-1 text-center">
-                                                        <input type="checkbox" class="custom-control-input"checked={parseInt(skuData.status)==0?false:true} onClick={activeStateChange} id="customCheck1"/>
-                                                        <label class="custom-control-label" for="customCheck1"></label>
+                                                        <input type="checkbox" class="custom-control-input" id={skuData.id+"_"+i} checked={parseInt(skuData.status)==0?false:true} onChange={()=>handleCheckBox(skuData.id,i,"status")}  />
+                                                        <label class="custom-control-label" for={skuData.id+"_"+i}></label>
                                                     </div>
                                                 </td>
 
@@ -570,8 +602,10 @@ const SkuList = (props)=>{
                                                         {/* </a> */}
                                                     </span>
                                                 </td>
-                                            </tr>                                       
+                                            </tr> 
+                                                                                  
                                         )
+                                       
                                         })
                                     }
                                         </tbody>
@@ -601,5 +635,7 @@ export default connect(mapStateToProps,{
     getSpecifiedPlantAction,
     showSinglePlantSkuAction,
     plantPageReDirectAction,
-    clearSkuFieldsPLant
+    clearSkuFieldsPLant,
+    updateCheckBoxsku,
+    checkBoxSku
 })(SkuList)
