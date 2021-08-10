@@ -99,7 +99,7 @@ function QuoteOrderPermission(props) {
         || x.id===159 || x.id===160 || x.id===161 || x.id===162 || x.id===163 )
 
         //x.id===133 || 
-    let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===133 || x.id===134 || x.id===135 || x.id===136 )
+    let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===134 || x.id===135 || x.id===136 )
     //let finalCMSettingsPermissions2 = customerManagementPermission.filter(x=>  x.id===133)
 
         // x.id===137 ||
