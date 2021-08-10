@@ -118,6 +118,10 @@ export const createProductAction = (product) => dispatch => {
  
 }
 export const updateProductAction = (data,id) => dispatch => {
+    console.log(data)
+    let uploadObject = data
+    if(typeof(data.common_name) === "string")
+    uploadObject.common_name = JSON.parse(data.common_name)
     //debugger;
     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
       //debugger;
