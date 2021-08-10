@@ -599,10 +599,12 @@ export const handleSkuInputAction =(id,value) =>dispatch=>{
     })
 
 }
-export const clearSkuFields = ()=>dispatch=>{
+export const clearSkuFields = (actionType)=>dispatch=>{
+    if(actionType === "sku")
+    actionType="edit"
     dispatch({
         type:CLEAR_SKU_FIELDS_PRODUCT,
-        // actionType:actionType
+        actionType:actionType
     })
     
 }
