@@ -178,7 +178,7 @@ const SkuList = (props)=>{
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
         // props.plantPageReDirectAction("all","plant")
-
+        props.clearSkuFieldsPLant(actionType)
     }
     }
     else if(e.target.id === "retain"){
