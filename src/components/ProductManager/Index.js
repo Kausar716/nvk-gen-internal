@@ -248,6 +248,7 @@ const  ProductManagement = (props) =>{
             style: {borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-6.8%",paddingTop:3.5,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: onChange
         };
+        console.log(inputProps)
   
     return (
         <div>
