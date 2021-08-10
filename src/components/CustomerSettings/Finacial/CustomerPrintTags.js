@@ -166,7 +166,7 @@ setOpen(true)
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight"  placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onMouseLeave={dataTochange}/>
+                            <input type="number" className="textRight"  placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}/>
                               </Col>
                             
 
@@ -181,7 +181,7 @@ setOpen(true)
                         <Row>
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onMouseLeave={dataTochange}/>
+                            <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}/>
                             </Col>
                            
                             <Col sm="0">
@@ -197,7 +197,7 @@ setOpen(true)
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
 
-                            <input type="number" className="textRight" placeholder={"0.000"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData} onMouseLeave={dataTochange}/>
+                            <input type="number" className="textRight" placeholder={"0.000"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData} onBlur={dataTochange}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -213,7 +213,7 @@ setOpen(true)
                             <Col sm="4">
 
                            
-                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onMouseLeave={dataTochange}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>

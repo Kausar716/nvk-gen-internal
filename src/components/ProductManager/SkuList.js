@@ -38,6 +38,8 @@ getAllSkuAction ,
 showSpecifiedSkuAction ,
 setSkuPageNumber,
 pageReDirectAction,
+checkBoxSku1,
+updateCheckBoxsku1,
 
 
 //input handle
@@ -280,31 +282,89 @@ const SkuList=(props)=> {
    getSpecifiedProduct(id, "edit","sku")
 
    }
-   const handleBlur =(evt)=>{
-    var charCode = (evt.which) ? evt.which : evt.keyCode;
-    console.log(evt.target.id)
-    let id = evt.target.id
-    let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
-   if(characterCheck === null){
-       if(id === "each_cost"){
-        setEach_costError(true)
-       }
-       if(id === "each_price"){
-        setEach_priceError(true)
-       }
-       if(id=== "sale_price"){
-        setSales_priceError(true)
-       }
-       if(id=== "volume_price_per_unit"){
-        setVolume_priceError(true)
-       }
+   const handleBlur =(e)=>{
+//     var charCode = (e.which) ? e.which : e.keyCode;
+//     console.log(e.target.id)
+//     let id = e.target.id
+//     if(e.target.value!==""){
+//         if(Number.isInteger(parseFloat(e.target.value))) {
+//           let intValue = e.target.value*1.000
+
+//         props.handleSkuInputAction(e.target.id,intValue.toFixed(3))
+//         }
+      
+//         else{
+//           // alert()
+//           let splitValue = e.target.value.split(".")
+//          if(splitValue[1].length<3){
+//           let intValue = e.target.value*1.0000
+//           props.handleSkuInputAction(e.target.id,intValue.toFixed(3))
+//          }else{
+//           props.handleSkuInputAction(e.target.id,e.target.value)
+  
+//          }
+  
+         
+//         }
+//       }
+//         return
+// //     let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+// //    if(characterCheck === null){
+// //        if(id === "each_cost"){
+// //         setEach_costError(true)
+// //        }
+// //        if(id === "each_price"){
+// //         setEach_priceError(true)
+// //        }
+// //        if(id=== "sale_price"){
+// //         setSales_priceError(true)
+// //        }
+// //        if(id=== "volume_price_per_unit"){
+// //         setVolume_priceError(true)
+// //        }
    
     
-   }
+// //    }
 
 
    
    }
+
+   const handleCheckBox = (id,index,type)=>{
+    console.log(id,index,type)
+    // alert(index)
+    // alert(index)
+   
+    let obj = {}
+
+    // obj[type] = parseInt(displayPlantList[index][type])===1?0:1
+    // if(type ==="in_production" &&  obj[type]===0)
+    // obj["status"] = 0
+    // else obj["status"] =1
+    // if(type !=="in_production" &&  obj[type]===1)
+    // obj["status"] = 0
+    // else obj["status"] =1
+    if(type ==="status") {
+        if (parseInt(displaySkuList2[index][type])===1) {
+            obj.status =0
+        }
+        else if (parseInt(displaySkuList2[index][type])===0) {
+            obj.status =1
+        }
+    }
+    // alert((15*plantSkuPageNumber)+index)
+
+    // props.checkBox(id,((15*plantSkuPageNumber)+index),type,obj)
+    // console.log(plantData[((15*plantPageNumber)+index)])
+    props.checkBoxSku1(id,((15*skuPageNumber)+index),"status",obj)
+    props.updateCheckBoxsku1(id,index,"status",obj)
+
+
+    // let value = parseInt(plantSkuDataById.status) == 1?0:1
+    // plantSkuDataById.status = value
+    // props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+
+}
 
 console.log("temp",props.temp.productData.ae_product_id)
 
@@ -419,31 +479,34 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="0.00" 
+                                            <input type="number" class="form-control " placeholder="0.00" 
                                             // value="$1.25"
+                                             style={{textAlign:"right"}}
                                              id="each_cost" onChange={handleInput} 
                                               value={skuDataById.each_cost} 
                                                 // min="0"
-                                                onBlur={handleBlur}
+                                                onMouseLeave={handleBlur}
                                               />
                                               {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="0.00" 
+                                            <input type="number" class="form-control" placeholder="0.00" 
                                             // value="$1.25"
                                             id="each_price"  onChange={handleInput} 
                                              value={skuDataById.each_price} 
-                                             onBlur={handleBlur}
+                                             style={{textAlign:"right"}}
+                                             onMouseLeave={handleBlur}
                                             min="0"/>
                                             {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control text-right" placeholder="0.00" 
+                                            <input type="number" class="form-control " placeholder="0.00" 
                                             //  value="$1.25"
+                                            style={{textAlign:"right"}}
                                              id="sale_price" onChange={handleInput}
-                                             onBlur={handleBlur}
+                                             onMouseLeave={handleBlur}
                                               value={skuDataById.sale_price}
                                                min="0"/>
                                                {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price</span>:""}
@@ -489,7 +552,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" disabled={skuDataById.volume_quantity === "0"} value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            
+                                            <input type="number"    style={{textAlign:"right"}} onMouseLeave={handleBlur} class="form-control" placeholder="0.00" disabled={skuDataById.volume_quantity === "0"} value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
                                             {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
@@ -569,18 +633,18 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr>
                                             <th class="text-nowrap">Status</th>
                                             <th class="text-nowrap">SKU</th>
-                                            <th class="text-nowrap" style={{textAlign:"right"}}>Each Cost</th>
-                                            <th class="text-nowrap" style={{textAlign:"right"}}>Each Price</th>
-                                            <th class="text-nowrap" style={{textAlign:"right"}}>Sale Price</th>
-                                            <th class="text-nowrap">Sale Active</th>
-                                            <th class="text-nowrap">Volume Per Unit</th>
-                                            <th class="text-nowrap">Volume QTY</th>
+                                            <th class="text-nowrap" style={{textAlign:"center"}}>Each Cost</th>
+                                            <th class="text-nowrap" style={{textAlign:"center"}}>Each Price</th>
+                                            <th class="text-nowrap" style={{textAlign:"center"}}>Sale Price</th>
+                                            <th class="text-nowrap"  style={{textAlign:"center"}}>Sale Active</th>
+                                            <th class="text-nowrap" style={{textAlign:"center"}}>Volume Per Unit</th>
+                                            <th class="text-nowrap" style={{textAlign:"center"}}>Volume QTY</th>
                                             <th class="text-nowrap text-center">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
 
-                                    {displaySkuList2.map((sku)=>{
+                                    {displaySkuList2.map((sku,i)=>{
 
                                             // {let abc= productIDList.filter(pID =>pID.includes(sku.product_id).map(filterIDs=>
                                             //     <li>{filterIDs}</li>
@@ -601,18 +665,17 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr key={sku.id} style={{background:(selectedRow === sku.id)? "#e1e3e4":""}}>
                                             <td>{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
-                                            <td style={{textAlign:"right"}}>{sku.each_cost}</td>
-                                            <td style={{textAlign:"right"}}>{sku.each_price}</td>
-                                            <td style={{textAlign:"right"}}>{sku.sale_price}</td>
-                                            <td class="text-center">
-                                                {/* <div class="custom-control custom-checkbox mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                    <label class="custom-control-label" for="customCheck1"></label>
-                                                </div> */}
-                                                <i className={sku.status===1?'bx bx-check':'bx bx-x'}></i>
-                                            </td>
-                                            <td>{sku.volume_price_per_unit}</td>
-                                            <td>{sku.volume_quantity}</td>
+                                            <td style={{textAlign:"center"}}>{sku.each_cost}</td>
+                                            <td style={{textAlign:"center"}}>{sku.each_price}</td>
+                                            <td style={{textAlign:"center"}}>{sku.sale_price}</td>
+                                            <td style={{textAlign:"center"}}>
+                                                    <div class="custom-control custom-checkbox mb-1 text-center">
+                                                        <input type="checkbox" class="custom-control-input" id={sku.id+"_"+i} checked={parseInt(sku.status)==0?false:true} onChange={()=>handleCheckBox(sku.id,i,"status")}  />
+                                                        <label class="custom-control-label" for={sku.id+"_"+i}></label>
+                                                    </div>
+                                                </td>
+                                            <td style={{textAlign:"center"}}>{sku.volume_price_per_unit}</td>
+                                            <td style={{textAlign:"center"}}>{sku.volume_quantity}</td>
                                             <td class="text-center">
                                                 <span>
                                                    
@@ -694,7 +757,9 @@ export default reduxForm({
     handleSkuInputAction,
     pageReDirectAction,
     clearSkuFields,
-    getAllSupplierLocationMethods
+    getAllSupplierLocationMethods,
+    checkBoxSku1,
+updateCheckBoxsku1,
 
 })(SkuList));
 

@@ -396,7 +396,34 @@ function AddSupplier(props) {
 console.log("categoryData", categoryData)
 const {action } = props.supplierData
 // const {supplierData} = this.props
+const dataTochange =(e)=>{
+    setCheckedData(true)
+    // let intValue = e.target.value
+    if(e.target.value!==""){
+      if(Number.isInteger(parseFloat(e.target.value))) {
+        let intValue = e.target.value*1.0
+        // alert(e.target.value)
+        // props.handleExchangeData(val,e.target.id,"customerDataById")
+    //   props.handleExchangeData(intValue.toFixed(2),e.target.id,"supplierDataById")
+      props.handleSupplierExchnageData(intValue.toFixed(2),e.target.id,"supplierDataById")
+      }
+    
+      else{
+        // alert()
+        let splitValue = e.target.value.split(".")
+       if(splitValue[1].length<3){
+        let intValue = e.target.value*1.0
+        props.handleSupplierExchnageData(intValue.toFixed(2),e.target.id,"supplierDataById")
+       }else{
+        props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierDataById")
 
+       }
+
+       
+      }
+    }
+      return
+    }
 console.log(props.supplierData.supplierCategoryList)
 console.log(props.supplierData.supplierReasonList)
     return (
@@ -721,7 +748,7 @@ console.log(props.supplierData.supplierReasonList)
                                 </div>
                                 <div class="col-md-4 mt-3 mt-md-0">
                                     <label>Discount</label>
-                                    <input type="number" class="form-control" onChange={handleInput}  id="discount" value={supplierDataById.discount} step="0.00" placeholder={"0.00"} style={{textAlign:"right"}}/>
+                                    <input type="number" class="form-control" onChange={handleInput}  id="discount" value={supplierDataById.discount} step="0.00" placeholder={"0.00"} style={{textAlign:"right"}} onBlur={dataTochange}/>
                                 </div>
                             </div>
                         </div>

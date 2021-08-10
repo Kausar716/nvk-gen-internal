@@ -9,6 +9,7 @@ import {
     GET_ALL_PRODUCT_CATEGORIES_ACTION,
     DUPLICTE_PRODUCT,
     GET_SKU_SPECIFIED_PRODUCT,
+    UPDATE_CHECK_BOX_SKU1,
 
 
     // SKU ACTION
@@ -34,6 +35,7 @@ import {
     ERROR_HANDLE,
     HANDLE_MANUFACTURE_DATA,
     HANDLE_SELECTED_CATEGORY,
+    CHECK_BOX_SKU1,
 
     // axios config
     config,
@@ -115,6 +117,34 @@ export const createProductAction = (product,tags) => dispatch => {
     }
   
  
+}
+
+export const updateCheckBoxsku1 = (id,index,type1,obj)=>dispatch=>{
+    obj.type = "product"
+    return axios.post(`/api/update-sku/${id}`, obj, config).then(res=>{
+
+        dispatch({
+            type:UPDATE_CHECK_BOX_SKU1,
+            id:id,
+            typetoshow:type1,
+            index:index,
+            obj:obj
+
+        })
+    })
+}
+
+export const checkBoxSku1 =(id,index,type1,obj) =>dispatch=>{
+    // alert("kausar")
+    dispatch({
+        type:CHECK_BOX_SKU1,
+        id:id,
+        typetoshow:type1,
+        index:index,
+        obj:obj
+
+    })
+    
 }
 export const updateProductAction = (data,id,tag) => dispatch => {
     //debugger;

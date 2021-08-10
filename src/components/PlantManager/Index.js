@@ -276,6 +276,8 @@ const productFormAction = ()=>{
                                                     getSuggestionValue={getSuggestionValue}
                                                     renderSuggestion={renderSuggestion}
                                                     inputProps={inputProps}
+                                                    theme={{suggestionsContainerOpen:suggestions.length>5?"yes":"no",suggestionsContainer:suggestions.length>5?"yes1":"no1",
+                                                    suggestionsList:suggestions.length>5?"yes":"no1"}}
                                                 />
                                                 </div>
                                         </div>

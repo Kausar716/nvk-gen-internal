@@ -66,9 +66,9 @@ const CS_ExcahangeDetails = (props) => {
   const handleInputData =(e)=>{
     setCheckedData(true)
     if(e.target.value!==""){
-    // let intValue = e.target.value*1.000
-    props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
-    }else   props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+      var nn = e.target.value.toLocaleString("en-US", { maximumFractionDigits: 10, minimumFractionDigits: 2 });
+    props.handleExchangeData(nn,e.target.id,"customerExchange")
+    }else   props.handleExchangeData(nn,e.target.id,"customerExchange")
 
   }
   const handleInputData1 =(e)=>{
@@ -198,6 +198,7 @@ const dataTochange = (e)=>{
   }
 }
 const dataTochange1 =(e)=>{
+  // alert("onmouseout")
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate1"){
     if(Number.isInteger(parseFloat(e.target.value))){
@@ -268,7 +269,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onMouseLeave={dataTochange}/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onBlur={dataTochange}/> 
                             </div>
                            
                             
@@ -320,7 +321,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onMouseLeave={dataTochange1}/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onBlur={dataTochange1}/> 
                             </div>
                            
                            
