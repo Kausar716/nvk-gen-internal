@@ -100,7 +100,7 @@ function QuoteOrderPermission(props) {
 
         //x.id===133 || 
     let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===134 || x.id===135 || x.id===136 )
-    //let finalCMSettingsPermissions2 = customerManagementPermission.filter(x=>  x.id===133)
+    let finalCMSettingsPermissions2 = customerManagementPermission.filter(x=>  x.id===133)
 
         // x.id===137 ||
     let finalUserManagemnetPermission = userManagementPermission.filter(x=>  x.id===138 || x.id===139 || x.id===140 || x.id===141)
@@ -214,13 +214,15 @@ function QuoteOrderPermission(props) {
            setToolsAnsSettingsPermission(tempUserTS)
          }
 
-         else  if(name === "customerManagementInCustomerManagementPermissions1"){
-            // debugger;
+         else  if(name === "customerManagementInCustomerManagementPermissions"){
+        //debugger;
              //let newA = {name:e.target.name}
             // let  newlist = [{name:"customerManagementInCustomerManagementPermissions", id:1001}]
              //let final_list = [newA, ...finalCMSettingsPermissions]
              //let tempUserCS2 = finalCMSettingsPermissions2.map(user=>{return {...user, isChecked:checked}});
+             //let tempCS  = finalCMSettingsPermissions2.map(user=>{return {...user, isChecked:checked}});
             let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
+            //let finalCS = [...tempCS, ...tempUserCMS]
             setCustomerManagementPermission(tempUserCMS)
          }
 
@@ -295,6 +297,7 @@ function QuoteOrderPermission(props) {
            // setCustomerManagementPermission(tempUserALL)
         
            //debugger;
+           
             let tempUserCMS = finalCMSettingsPermissions.map((user) =>
             user.name === name ? { ...user, isChecked: checked} : user);
             setCustomerManagementPermission(tempUserCMS);
@@ -369,7 +372,7 @@ function QuoteOrderPermission(props) {
                                         <label  for="SelectAllPermissionOn"></label>
                                     </div>
             </div>
-        <div  class="bg-white mt-2">
+            <div  class="bg-white mt-2">
                 <div class="ContentSection p-15">
                         <h4>Quote &amp; Order Permissions</h4>
                             <div className="row1" style={{paddingBottom:"2em"}}>
@@ -445,9 +448,9 @@ function QuoteOrderPermission(props) {
                                                 <div class="custom-control custom-checkbox" >
                                                     <input type="checkbox" class="custom-control-input"  
                                                     onChange={handleChange} 
-                                                    checked={finalCMSettingsPermissions.filter((user) => user?.isChecked !== true).length < 3}
-                                                    name="customerManagementInCustomerManagementPermissions1" id="customerManagementInCustomerManagementPermissions1" />
-                                                    <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions1" >Customer Management  </label>
+                                                    checked={finalCMSettingsPermissions2.filter((user) => user?.isChecked !== true).length < 3}
+                                                    name="customerManagementInCustomerManagementPermissions" id="customerManagementInCustomerManagementPermissions" />
+                                                    <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions" >Customer Management  </label>
                                                 </div>
                                                 { finalCMSettingsPermissions.map((userP)=>(
                                                                 <div class="custom-control custom-checkbox">
@@ -458,7 +461,7 @@ function QuoteOrderPermission(props) {
                                                                     onChange={handleChange}
                                                                     //checked={userP.name==="customerManagementInCustomerManagementPermissions" ? finalCMSettingsPermissions.filter((user) => user?.isChecked !== true).length < 3 : userP?.isChecked || false}
                                                                     //checked={finalCMSettingsPermissions.filter((user) => user?.isChecked !== true).length < 3}
-                                                                    checked={userP?.isChecked || false}
+                                                                    checked={userP?.isChecked || false }
                                                                     />
                                                                     <label class="custom-control-label pl-2" for={userP.id}> {userP.label}</label>
 
