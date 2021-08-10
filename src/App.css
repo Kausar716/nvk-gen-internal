@@ -66,6 +66,177 @@ select label:focus {
 #checkboxes label:hover {
   background-color: #1e90ff;
 }
+.yes{
+  /* background-color:gray; */
+  /* position: absolute; */
+  position: relative;
+  z-index: 10;
+  margin-top: 30px;
+  top:0.1em
+
+} 
+.no{
+  /* background-color:gray; */
+  /* position: absolute; */
+  position: relative;
+  z-index: 10;
+  margin-top: 28px;
+  top:0.1em
+
+}
+.yes1{
+  background-color:lightgray;
+  margin-top:19%;
+  height: auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  
+
+}
+.yes1 ul{
+  background-color:lightgray;
+  margin-top:7%;
+  list-style-type:none;
+  height:300px;
+  padding:0px;
+  margin:0px;
+}
+
+.yes1 li{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  list-style-type:none;
+  padding:10px;
+  margin:0px;
+
+}
+.yes1 li:hover{
+  background-color:#629C44;
+}
+
+.yes1{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  height: auto;
+  overflow: scroll;
+  overflow-x: hidden;
+
+}
+.no1{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  height: auto;
+  /* overflow: scroll;
+  overflow-x: hidden; */
+
+}
+.no1 ul{
+  background-color:lightgray;
+  margin-top:7%;
+  list-style-type:none;
+  height:auto;
+  padding:0px;
+  margin:0px;
+}
+
+.no1 li{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  list-style-type:none;
+  padding:10px;
+  margin:0px;
+
+}
+.no1 li:hover{
+  background-color:#629C44;
+}
+
+
+/*****/
+.data{
+  /* background-color:gray; */
+  /* position: absolute; */
+  position: relative;
+  z-index: 10;
+  margin-top: 30px;
+  top:0.4em
+
+} 
+.data1{
+  /* background-color:gray; */
+  /* position: absolute; */
+  position: relative;
+  z-index: 10;
+  margin-top: 30px;
+  top:0.4em
+
+}
+.data1{
+  background-color:lightgray;
+  margin-top:19%;
+  height: auto;
+  overflow: scroll;
+  overflow-x: hidden;
+  
+
+}
+.data1 ul{
+  background-color:lightgray;
+  margin-top:7%;
+  list-style-type:none;
+  height:300px;
+  padding:0px;
+  margin:0px;
+}
+
+.data1 li{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  list-style-type:none;
+  padding:10px;
+  margin:0px;
+
+}
+.data1 li:hover{
+  background-color:#629C44;
+}
+
+.data{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  height: auto;
+  overflow: scroll;
+  overflow-x: hidden;
+
+}
+.data{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  height: auto;
+  /* overflow: scroll;
+  overflow-x: hidden; */
+
+}
+.data ul{
+  background-color:lightgray;
+  margin-top:7%;
+  list-style-type:none;
+  height:auto;
+  padding:0px;
+  margin:0px;
+}
+
+.data li{
+  background-color:#f3f3f3;
+  margin-top:7%;
+  list-style-type:none;
+  padding:10px;
+  margin:0px;
+
+}
+.data li:hover{
+  background-color:#629C44;
+}
 .react-autosuggest__suggestions-container{
   background-color:gray;
   margin-top:7%;
@@ -92,10 +263,7 @@ select label:focus {
   /* width: auto; */
   /* border:1px solid red; */
 }
-.react-autosuggest__suggestions-container--open{
-  height:300px;
 
-}
 .react-autosuggest__suggestions-container li{
   background-color:#f3f3f3;
   margin-top:7%;
@@ -191,6 +359,20 @@ input[type="radio"] {
   margin:0;
   font-size:14px;
 
+}
+.react-autosuggest__suggestions-list .yes{
+  position:relative;
+  background-color:orange;
+  height:100px;
+  z-index: 10;
+}
+
+.react-autosuggest__suggestions-container--open .yes{
+  position:relative;
+  background-color:yellow;
+  height:100px;
+  z-index: 10;
+  /* background-color:green; */
 }
 /* appearance for checked radiobutton */
 input[type="radio"]:checked {

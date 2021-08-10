@@ -12,6 +12,8 @@ import {
     GET_SPECIFIED_PRODUCT_ACTION,
     GET_SKU_SPECIFIED_PRODUCT,
     DUPLICTE_PRODUCT,
+    CHECK_BOX_SKU1,
+    UPDATE_CHECK_BOX_SKU1,
 
     // SKU ACTION
 
@@ -76,9 +78,9 @@ const initialSatate = {
         common_name:""
     },
     skuDataById         :   {
-        each_cost:"0.00",
-        each_price:"0.00",
-        sale_price:"0.00",
+        each_cost:0.00,
+        each_price:0.00,
+        sale_price:0.00,
         sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
         sku_item_name:"",
         subcategory:null,
@@ -86,7 +88,7 @@ const initialSatate = {
         archived:"0",
         status:1,
         supplier_id:1,
-        volume_price_per_unit:"0.00",
+        volume_price_per_unit:0.00,
         volume_quantity:"0",
         location_id:"0"
        
@@ -188,7 +190,20 @@ export default function(state = initialSatate, action){
                 pageToOpen:action.page,
                 productID:action.productID
             }
-
+            case CHECK_BOX_SKU1:
+                let skuData = state.productDataBySKUlist
+                skuData[action.index]["status"]= action.obj["status"]
+                return{
+                    ...state,
+                    productDataBySKUlist:skuData,
+                }
+            case UPDATE_CHECK_BOX_SKU1:
+                let skuData1 = state.productDataBySKUlist
+                skuData1[action.index]["status"]= action.obj["status"]
+                return{
+                    ...state,
+                    productDataBySKUlist:skuData1,
+                }
         //product action
         case GET_ALL_PRODUCT_ACTION:
             console.log("actions", action.payload.data)
