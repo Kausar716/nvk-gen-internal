@@ -610,7 +610,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                         return(
 
                                         <tr key={sku.id} style={{background:(selectedRow === sku.id)? "#e1e3e4":""}}>
-                                            <td>{sku.archived==="0"?"Active":"Archived"}</td>
+                                            <td style={{color:sku.archived==="0"?"":"red"}} >{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_cost}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_price}</td>
