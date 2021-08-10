@@ -798,7 +798,7 @@ saveDisable =()=>{
                 <div class="pb-4">
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
-                            <div class="col-md-10 col-lg-10" style={{marginRight:"4em"}}>
+                            <div class="col-md-10 col-lg-10" style={{marginRight:"3em"}}>
                                 <h2 class="p-15 mb-0" style={{marginTop:"0.5em"}}>Document Details</h2>
                                
                             </div>
@@ -848,12 +848,12 @@ saveDisable =()=>{
                                             </span>
                                         </a> */}
                                         
-                                        {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
+                                        <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
                                             onClick={this.goDashboard}
                                             //onClick={()=>{confirmAction("goBack"); }}
                                             />
-                                        </a> */}
+                                        </a>
 
                                         {/* <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.goDashboard}

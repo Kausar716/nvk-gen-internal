@@ -157,7 +157,7 @@ function QuoteOrderPermission(props) {
          }
 
 
-         else  if(name === "SupervisorRoleInSupervisorRolePermissions"){
+         else  if(name=== "SupervisorRoleInSupervisorRolePermissions"){
             let tempUserSVR = finalsupervisorRolePermission.map(user=>{return {...user, isChecked:checked}});
             setSupervisorRolePermission(tempUserSVR)
          }
@@ -235,7 +235,7 @@ function QuoteOrderPermission(props) {
             setInventoryManagementPermission(tempUserINV)
          }
 
-         else  if(id === "SupplierManagementInSupplierManagementPermissions"){
+         else  if(name === "SupplierManagementInSupplierManagementPermissions"){
             let tempUserSMP = finalSupplierManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
             setSupplierManagementPermission(tempUserSMP)
          }
