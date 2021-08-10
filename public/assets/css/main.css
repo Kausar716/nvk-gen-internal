@@ -54048,3 +54048,82 @@ ul.list-unstyled.searchAlpha li a:hover {
   .actionDropdown .dropdown-menu a:not(:last-child){
     margin-bottom: 2px;
 }
+
+/* Orders List page styles */
+.totalCard {
+    background-color: rgb(19, 33, 116);
+    color: #fff;
+}
+.totalCard a {
+    color: #fff;
+}
+.cardBox {
+    border: 1px solid rgb(52, 46, 87);
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 16px;
+    min-width: 120px;
+}
+.cardBoxwide {
+    border: 1px solid rgb(52, 46, 87);
+    padding: 2px;
+    border-radius: 4px;
+    font-size: 16px;
+    min-width: 150px;
+}
+.cardBox .stripe {
+    width:100%;
+    height: 8px;
+    border-radius: 4px;
+}
+.cardBox.openStsCard .stripe {
+    background-color: rgb(52, 93, 153);
+}
+.cardBox.pickingStsCard .stripe {
+    background-color: #4a9fff
+}
+.cardBox.readyStsCard .stripe {
+    background-color: #ff8c00
+}
+.cardBox.shippedStsCard .stripe {
+    background-color: rgb(228, 58, 205);
+}
+.cardBox.lateStsCard .stripe {
+    background-color: red;
+}
+.cardBox p {
+    font-size: 18px;    
+    margin-bottom: 10px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.cardBoxwide p {
+    font-size: 18px;    
+    margin-bottom: 10px;
+    font-weight: 600;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.equalSign {
+    font-size: 40px;
+    font-weight: 800;
+    color: #b2b2b2;
+    padding-top: 26px;
+}
+.totalCard {
+    background-color: rgb(92 158 240);
+    color: #fff;
+}
+.verDivider {
+    border-left:1px solid rgb(52, 46, 87);
+    min-height: 120px;
+    border-color: #a9a9a9;
+}
+.activeQuotesCard h4, .quotesFlaggedCard h4 {
+    font-size: 32px;
+}
+.editCustSec > div {
+    text-align: center;
+    margin: 0 10px;
+}

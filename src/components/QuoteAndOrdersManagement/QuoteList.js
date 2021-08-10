@@ -238,10 +238,77 @@ export class QuoteList extends React.Component {
             <div class="bg-white px-3 py-3 my-3 cardShadow">
                 <div class="row align-items-center">
                     <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
-                        <div>
-                            <label>Open Quotes's</label>
-                            <h1>{this.state.TotalPurchaseOder}</h1>
-                            <div><a href="">View All</a></div>
+                        <div class="ordersCard d-flex justify-content-md-between align-item-stretch w-100">
+                            <div class="cardBoxwide totalCard">
+                                <p>Total Orders</p>
+                                <h4>61</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">=</div>
+                            <div class="cardBox individualCard openStsCard">
+                                <div class="stripe"></div>
+                                <p>Open</p>
+                                <h4>8</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard pickingStsCard">
+                                <div class="stripe"></div>
+                                <p>Picking</p>
+                                <h4>12</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard readyStsCard">
+                                <div class="stripe"></div>
+                                <p>Ready</p>
+                                <h4>18</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard shippedStsCard">
+                                <div class="stripe"></div>
+                                <p>Shipped</p>
+                                <h4>20</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard lateStsCard">
+                                <div class="stripe"></div>
+                                <p>Late</p>
+                                <h4>3</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">&nbsp;</div>
+                            <div class="verDivider"></div>
+                            <div class="equalSign">&nbsp;</div>
+                            <div class="cardBoxwide activeQuotesCard">
+                                <p>Active Quotes</p>
+                                <h4>12</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">&nbsp;</div>
+                            <div class="cardBoxwide quotesFlaggedCard">
+                                <p>Active Quotes</p>
+                                <h4><font color="red">12</font></h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
