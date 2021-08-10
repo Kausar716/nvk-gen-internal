@@ -513,7 +513,7 @@ const showCheckboxesClose = ()=>{
                         <Tab>Order Settings</Tab>
                         <Tab>Contacts</Tab>
                         <Tab>Addresses</Tab>
-                        {/* <Tab>Print Catalog</Tab> */}
+                        <Tab>Print Catalog</Tab>
                     </TabList>
                     <TabPanel>
                         <div class="bg-white cardShadow px-3 py-3 mt-3">

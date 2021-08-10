@@ -126,7 +126,7 @@ const handleMainSelection= (id) => {
                 <ul class="sub-menu">
                 <li class= {(selectedSubBar === "orderList1" || initialSelect)?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList1")}}><Link to="/OrderList">Order List</Link></li>
+                  handleSubSelection("orderList1")}}><Link to="/QuoteList">Order List</Link></li>
                 <li class= {(selectedSubBar === "orderList2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList2")}}><Link to="/QuoteAndOrdersManagement">New Order</Link></li>
@@ -142,12 +142,6 @@ const handleMainSelection= (id) => {
                 <li class= {(selectedSubBar === "orderList6")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList6")}}><Link to="/OrderAdjusted">Requests</Link></li>
-                <li class= {(selectedSubBar === "orderList7")?"active":""} onClick={(e)=>{
-                  e.stopPropagation()
-                  handleSubSelection("orderList7")}}><Link to="/QuoteList">Quote List</Link></li>
-                <li class= {(selectedSubBar === "orderList8")?"active":""} onClick={(e)=>{
-                  e.stopPropagation()
-                  handleSubSelection("orderList8")}}><Link to="/Quote">New Quote</Link></li>
               </ul>          
             </li>
             <li class={selectedMainBarData.includes("purchaseOrder")?"active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>

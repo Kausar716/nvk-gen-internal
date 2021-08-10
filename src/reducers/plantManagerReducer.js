@@ -76,6 +76,7 @@ const initialSatate = {
     archived: 0,
     discontinued: 0,
     notes: "",
+    common_name:""
 
   },
   plantSkuDataById:{
@@ -166,7 +167,8 @@ export default function(state = initialSatate, action){
                     in_production: 1,
                     archived: 0,
                     discontinued: 0,
-                    notes: ""
+                    notes: "",
+                    common_name:""
                 },
                 plantSkuDataById         :   {
                 sku_code: "",
@@ -383,7 +385,8 @@ export default function(state = initialSatate, action){
                     in_production: 1,
                     archived: 0,
                     discontinued: 0,
-                    notes: ""
+                    notes: "",
+                    common_name:""
                 },
                 plantSkuDataById:{
                     sku_code: "",
@@ -528,7 +531,7 @@ export default function(state = initialSatate, action){
                         attributes_subattributes:[]           
                     
                         },
-                        actionType:"edit"
+                        actionType:action.actionType
 
                 }
             case GET_SINGLE_PLANT_SKU:

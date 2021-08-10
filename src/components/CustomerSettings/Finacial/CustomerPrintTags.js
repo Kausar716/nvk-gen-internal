@@ -52,10 +52,10 @@ const CustomerPrintRates = (props) => {
   const [type, setType] = useState("")
   const handleInputData =(e)=>{
     setCheckedData(true)
-    let intValue = e.target.value*1.000
-    console.log(e.target.value,e.target.id)
+    let intValue = e.target.value
+    // console.log(e.target.value,e.target.id)
     if(e.target.value !=="")
-    props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerTag")
+    props.handleExchangeData(intValue,e.target.id,"customerTag")
     else props.handleExchangeData(e.target.value,e.target.id,"customerTag")
     // props.handleExchangeData(e.target.value,"base_price","customerTag")
 
@@ -107,7 +107,35 @@ setOpen(true)
     obj.status = 1
     props.savecustomPrintData(obj)
   }
+  const dataTochange =(e)=>{
+    setCheckedData(true)
+    // let intValue = e.target.value
+    if(e.target.value!==""){
+      if(Number.isInteger(parseFloat(e.target.value))) {
+        let intValue = e.target.value*1.000
+        // alert(e.target.value)
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerTag")
+      }
+    
+      else{
+        // alert()
+        let splitValue = e.target.value.split(".")
+       if(splitValue[1].length<3){
+        let intValue = e.target.value*1.0000
+        props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerTag")
+       }else{
+        props.handleExchangeData(e.target.value,e.target.id,"customerTag")
+
+       }
+
+       
+      }
+    }
+      return
+    }
   
+  
+
   const { handleSubmit, pristine, reset, submitting,customerTag } = props.customerData;
   return (
     <>
@@ -138,7 +166,7 @@ setOpen(true)
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight"  placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData}/>
+                            <input type="number" className="textRight"  placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}/>
                               </Col>
                             
 
@@ -153,7 +181,7 @@ setOpen(true)
                         <Row>
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
-                            <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}/>
                             </Col>
                            
                             <Col sm="0">
@@ -169,7 +197,7 @@ setOpen(true)
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
 
-                            <input type="number" className="textRight" placeholder={"0.000"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData} onBlur={dataTochange}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
@@ -185,7 +213,7 @@ setOpen(true)
                             <Col sm="4">
 
                            
-                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}/>
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>

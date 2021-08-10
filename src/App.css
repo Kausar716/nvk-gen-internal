@@ -183,7 +183,15 @@ input[type="radio"] {
   /* background-color: #e7e6e7; */
   border-radius: 50%;
 }
+.inventory_loc p{
+  color:gray;
+  display:block;
+  width:100%;
+  padding:0;
+  margin:0;
+  font-size:14px;
 
+}
 /* appearance for checked radiobutton */
 input[type="radio"]:checked {
   background-color: #629C44;
