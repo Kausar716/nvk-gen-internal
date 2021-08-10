@@ -38,6 +38,8 @@ getAllSkuAction ,
 showSpecifiedSkuAction ,
 setSkuPageNumber,
 pageReDirectAction,
+checkBoxSku1,
+updateCheckBoxsku1,
 
 
 //input handle
@@ -305,6 +307,41 @@ const SkuList=(props)=> {
 
    
    }
+   const handleCheckBox = (id,index,type)=>{
+    console.log(id,index,type)
+    // alert(index)
+    // alert(index)
+   
+    let obj = {}
+
+    // obj[type] = parseInt(displayPlantList[index][type])===1?0:1
+    // if(type ==="in_production" &&  obj[type]===0)
+    // obj["status"] = 0
+    // else obj["status"] =1
+    // if(type !=="in_production" &&  obj[type]===1)
+    // obj["status"] = 0
+    // else obj["status"] =1
+    if(type ==="status") {
+        if (parseInt(displaySkuList2[index][type])===1) {
+            obj.status =0
+        }
+        else if (parseInt(displaySkuList2[index][type])===0) {
+            obj.status =1
+        }
+    }
+    // alert((15*plantSkuPageNumber)+index)
+
+    // props.checkBox(id,((15*plantSkuPageNumber)+index),type,obj)
+    // console.log(plantData[((15*plantPageNumber)+index)])
+    props.checkBoxSku1(id,((15*skuPageNumber)+index),type,obj)
+    props.updateCheckBoxsku1(id,index,"status",obj)
+
+
+    // let value = parseInt(plantSkuDataById.status) == 1?0:1
+    // plantSkuDataById.status = value
+    // props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
+
+}
 
 console.log("temp",props.temp.productData.ae_product_id)
 
@@ -591,7 +628,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     </thead>
                                     <tbody>
 
-                                    {displaySkuList2.map((sku)=>{
+                                    {displaySkuList2.map((sku,i)=>{
 
                                             // {let abc= productIDList.filter(pID =>pID.includes(sku.product_id).map(filterIDs=>
                                             //     <li>{filterIDs}</li>
@@ -616,10 +653,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <td style={{textAlign:"right"}}>{sku.each_price}</td>
                                             <td style={{textAlign:"right"}}>{sku.sale_price}</td>
                                             <td class="text-center">
-                                                {/* <div class="custom-control custom-checkbox mb-1">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                    <label class="custom-control-label" for="customCheck1"></label>
-                                                </div> */}
+                                            <div class="custom-control custom-checkbox mb-1 text-center">
+                                                        <input type="checkbox" class="custom-control-input" id={sku.id+"_"+i} checked={parseInt(sku.status)==0?false:true} onChange={()=>handleCheckBox(sku.id,i,"status")}  />
+                                                        <label class="custom-control-label" for={sku.id+"_"+i}></label>
+                                                    </div>
                                                 <i className={sku.status===1?'bx bx-check':'bx bx-x'}></i>
                                             </td>
                                             <td style={{color:sku.volume_price_per_unit==="0.00"?"lightgray":""}} >{sku.volume_price_per_unit}</td>
@@ -705,7 +742,9 @@ export default reduxForm({
     handleSkuInputAction,
     pageReDirectAction,
     clearSkuFields,
-    getAllSupplierLocationMethods
+    getAllSupplierLocationMethods,
+    checkBoxSku1,
+updateCheckBoxsku1,
 
 })(SkuList));
 

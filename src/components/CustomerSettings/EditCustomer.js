@@ -371,6 +371,40 @@ const showCheckboxesClose = ()=>{
     // }
 
 }
+const dataTochange =(e)=>{
+    setCheckedData(true)
+    // let intValue = e.target.value
+    if(e.target.value!==""){
+      if(Number.isInteger(parseFloat(e.target.value))) {
+        let intValue = e.target.value*1.0
+        // alert(e.target.value)
+        // props.handleExchangeData(val,e.target.id,"customerDataById")
+      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerDataById")
+      }
+    
+      else{
+        // alert()
+        let splitValue = e.target.value.split(".")
+       if(splitValue[1].length<3){
+        let intValue = e.target.value*1.0
+        props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerDataById")
+       }else{
+        props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
+
+       }
+
+       
+      }
+    }
+      return
+    }
+    const handleSelect=(key)=> {
+        // alert("hh")
+        // if (key === 1)
+        //     this.setState({ heading: "Log in" })
+        // else
+        //     this.setState({ heading: "Sign up" })
+    }
 
     console.log(customerDataById)
     return (
@@ -507,11 +541,12 @@ const showCheckboxesClose = ()=>{
                     </div>
                 </div>
             
-                <Tabs>
+                <Tabs onSelect={handleSelect}>
                     <TabList>
                         <Tab>Customer Information</Tab>
                         <Tab>Order Settings</Tab>
                         <Tab>Contacts</Tab>
+                         {/* <Tab>Tags &amp; Labels</Tab> */}
                         <Tab>Addresses</Tab>
                         <Tab>Print Catalog</Tab>
                     </TabList>
@@ -700,7 +735,7 @@ const showCheckboxesClose = ()=>{
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="number" class="form-control" name={"taxExemptNumber"}  style={{textAlign:"right"}} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="0.00"/>
+                                                <input type="number" class="form-control" name={"taxExemptNumber"}  style={{textAlign:"right"}} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
                                                 {/* {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
 
                                             </div>
@@ -783,7 +818,7 @@ const showCheckboxesClose = ()=>{
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                                 <label>Discount</label>
-                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"}/>
+                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange}/>
                                             </div>
                                        
                                       
@@ -810,7 +845,7 @@ const showCheckboxesClose = ()=>{
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
                                                 <label>Fee%</label>
-                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00"/>
+                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
                                             </div>
                                             </div>
                                             </div>

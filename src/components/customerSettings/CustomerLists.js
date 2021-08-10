@@ -202,8 +202,8 @@ export class CustomerSettings extends React.Component {
                         <div className="form-group row">
                                         <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="plantSearch">Search Customer</label>
-                                    <div className="searchInput" style={{height: "40px",paddingTop:5}}>
-                                            <button type="submit" className="btn btn-search" style={{marginTop:"0.8%",marginLeft:"2%"}}>
+                                    <div className="searchInput" style={{height: "2px",paddingTop:-140}}>
+                                            <button type="submit" className="btn btn-search"  style={{marginTop:"-8%",marginLeft:"2%"}}>
                                                     <img src="assets/img/search.svg" alt=""/>
                                                 </button>
                                             <Autosuggest
@@ -213,6 +213,8 @@ export class CustomerSettings extends React.Component {
                                                     getSuggestionValue={this.getSuggestionValue}
                                                     renderSuggestion={this.renderSuggestion}
                                                     inputProps={inputProps}
+                                                    theme={{suggestionsContainerOpen:this.state.suggestions.length>5?"yes":"no",suggestionsContainer:this.state.suggestions.length>5?"yes1":"no1",
+                                                    suggestionsList:this.state.suggestions.length>5?"yes":"no1"}}
                                                   
                                                 />
                                                 </div>
