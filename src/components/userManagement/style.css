@@ -70,9 +70,11 @@
 }
 .row3 div:nth-of-type(3) {
   margin-left: 2em;
+  margin-top: -4px;
 }
 .row3 div:nth-of-type(4) {
   margin-left: 2em;
+  margin-top: -12px;
 }
 
 .row4 {

@@ -324,13 +324,22 @@ export class OrganizationSettings extends React.Component {
     }
 
 
-    handleChange=({ target: { value } })=> {  
+    handleChange=({ target: { value, name } })=> {  
+
+       // const {target:{name,value}} =e
+        let {errorObj,errorCount,hadModified} = this.state  
+
         //debugger;
         console.log("enteredVALUES", this.state.phoneNumberInOrganization)
         this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
         this.setState({
             imgLoader: false
         })
+
+
+        if(name === "phone"){
+            hadModified.phone=true
+        }
       }
 
 
@@ -449,9 +458,21 @@ saveDisable =()=>{
 
          if (!this.state.disabled) {
             this.setState({
-                disabled:true
+                disabled:true,
             })
            }
+
+           this.setState({
+               hadModified:{
+                name:false,
+                sending_email_address:false,
+                phone:false,
+                main_title:false,
+                secondary_title:false,
+                main_body:false,
+                secondary_body:false,
+               }
+           })
          
 
     
@@ -756,10 +777,11 @@ saveDisable =()=>{
 {/* //|| this.state.hadModified.main_title===true || this.state.hadModified.main_body===true || this.state.hadModified.secondary_title===true || this.state.hadModified.secondary_body===true || this.state.hadModified.phone===true || this.state.hadModified.sending_email_address ===true  */}
     {/* {this.state.hadModified.name===true ?  */}
     
+    {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phone ===true ? 
     <Prompt
-      when={this.state.hadModified.name ===true ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
+      when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
-    /> 
+    /> : false}
     {/* // : false }   */}
    
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
@@ -776,8 +798,8 @@ saveDisable =()=>{
                 <div class="pb-4">
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
-                            <div class="col-md-10 col-lg-10" style={{marginRight:"4em"}}>
-                                <h2 class="p-15 mb-0">Document Details</h2>
+                            <div class="col-md-10 col-lg-10" style={{marginRight:"3em"}}>
+                                <h2 class="p-15 mb-0" style={{marginTop:"0.5em"}}>Document Details</h2>
                                
                             </div>
                             <div class="row mt-4" >
@@ -826,12 +848,12 @@ saveDisable =()=>{
                                             </span>
                                         </a> */}
                                         
-                                        {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
+                                        <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
                                             onClick={this.goDashboard}
                                             //onClick={()=>{confirmAction("goBack"); }}
                                             />
-                                        </a> */}
+                                        </a>
 
                                         {/* <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.goDashboard}
@@ -978,7 +1000,7 @@ saveDisable =()=>{
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
                                             <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={""} 
-                                             id={"phone1"} 
+                                             id={"phone1"} name="phone"
                                             value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization} 
                                              onChange={this.handleChange} />
                                             {/* <input

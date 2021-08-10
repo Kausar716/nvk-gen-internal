@@ -45,7 +45,7 @@ import {
                })
            })
    }
-//    export const showUser = id =>{
+
     export const showorganization = (id) => dispatch => {
         console.log(id)
        axios.get(`/api/organization/${id}`,config).then(res=>{   
@@ -58,11 +58,10 @@ import {
    }
 
    export const updateorganization = (organizationData) => dispatch => {
-      // debugger;
+ 
        console.log(organizationData)
 
     return axios.post(`/api/update-organization/${organizationData.id}`,organizationData,config).then(res=>{  
-       // debugger;   
         dispatch({
                 type:UPDATE_ORGANIZATION,
                 payload:res.data    

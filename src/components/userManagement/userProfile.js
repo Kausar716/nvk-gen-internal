@@ -507,8 +507,8 @@ export class UserProfile extends Component {
                                                             </div>             */}
                                 </div>
 
-                                <div  class="f-s-24 px-3 py-3 f-w-500" style={{flexGrow:"1"}}>
-                                <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginTop:"1.3em", float:"right"}}>
+                                                            <div  class="f-s-24 px-3 py-3 f-w-500" style={{flexGrow:"1"}}>
+                                                            <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginTop:"1.3em", float:"right"}}>
                                                                 <span style={{float:"right",  marginTop:"5px"}}>Active</span>
                                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"12px"}}>
                                                                     <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" 
