@@ -398,7 +398,13 @@ const dataTochange =(e)=>{
     }
       return
     }
-  
+    const handleSelect=(key)=> {
+        alert("hh")
+        // if (key === 1)
+        //     this.setState({ heading: "Log in" })
+        // else
+        //     this.setState({ heading: "Sign up" })
+    }
 
     console.log(customerDataById)
     return (
@@ -535,13 +541,14 @@ const dataTochange =(e)=>{
                     </div>
                 </div>
             
-                <Tabs>
+                <Tabs onSelect={handleSelect}>
                     <TabList>
                         <Tab>Customer Information</Tab>
                         <Tab>Order Settings</Tab>
                         <Tab>Contacts</Tab>
+                         {/* <Tab>Tags &amp; Labels</Tab> */}
                         <Tab>Addresses</Tab>
-                        {/* <Tab>Print Catalog</Tab> */}
+                        <Tab>Print Catalog</Tab>
                     </TabList>
                     <TabPanel>
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
