@@ -268,7 +268,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onMouseLeave={dataTochange}/> 
+                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onBlur={dataTochange}/> 
                             </div>
                            
                             
@@ -320,7 +320,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onMouseLeave={dataTochange1}/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onBlur={dataTochange1}/> 
                             </div>
                            
                            

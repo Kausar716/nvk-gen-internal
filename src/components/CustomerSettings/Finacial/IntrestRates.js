@@ -180,19 +180,19 @@ const confirmAction = (type)=>{
 
                     <div className="intrestRate_label">
                           <label>Monthly</label>
-                          <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData} onMouseLeave={dataTochange}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData} onBlur={dataTochange}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label"  style={{marginLeft:"-19em"}}>
                           <label>Yearly</label>
-                          <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData} onMouseLeave={dataTochange}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData} onBlur={dataTochange}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 
                     <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                           <label>Tax Rate</label>
-                          <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}onMouseLeave={dataTochange}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}onBlur={dataTochange}/><span style={{padding:"4px"}}>%</span>
                     </div>
 
 

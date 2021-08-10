@@ -46,6 +46,7 @@ const Notification = (props) => {
     const [open,setOpen] = useState(false)
     const [message,setMessage] = useState("")
     const [type, setType] = useState("")
+    const [some_array,setSomeArray] = useState([])
 
     const toggleTool = () => setTooltipOpen(!tooltipOpen);
     const [tooltipOpen1, setTooltipOpen1] = useState(false);
@@ -57,52 +58,40 @@ const Notification = (props) => {
     },[isOpen]);
 
     const resetData = ()=>{
+      setSomeArray([])
       props.getNotificationData()
 
     }
  const handleDataChange = (e)=>{
    setCheckedData(true)
-  //  alert("hi")
-  const some_array = [...notificationError]
-
+  let some_array = []
    if(e.target.id ==="ready_to_late_notice"){
-     if(isNaN(e.target.value))some_array[0] = 'Must be a number'
-      else some_array[0] = "" 
-  }
-
-   if(e.target.id ==="reserve_expiry_notice"){
-    if(isNaN(e.target.value))some_array[1] = 'Must be a number'
-    else some_array[1] = ""
-   }
-  //  alert(reserve_expiry_notice)
-  //  if(ready_to_late_notice !=="" && reserve_expiry_notice !==""){
-  //    console.log(isNaN(parseInt(ready_to_late_notice))==true ,isNaN(parseInt(reserve_expiry_notice))==true)
-  //   if(isNaN(parseInt(ready_to_late_notice))==true &&  isNaN(parseInt(reserve_expiry_notice))==true){
-    if(ready_to_late_notice >0 && reserve_expiry_notice>0)
-      setCheckedData(true)
-    else setCheckedData(false)
     
+     if(isNaN(e.target.value) || e.target.value<0){
+      some_array[0]='Number should be greater than or equal 0'
+      setSomeArray([...some_array])
+     }
+    
+      else  {
+        setSomeArray([...some_array])
+  }
+}
 
-  //   }else{
-  //     setCheckedData(false)
-
-  //   }
-  //  }else{
-  //   setCheckedData(false)
-
+   if(e.target.id ==="reserve_expiry_notice" ){
+    if(isNaN(e.target.value)|| (e.target.value<0 || e.target.value>7)){
+      some_array[1]='Reserve Notice should be between 0 to 7'
+      setSomeArray([...some_array])
+    }
    
-  
-    // 
-    // else  
-
+     else  {
+   
+      setSomeArray([...some_array])
+     }
+ }
    setNotificationError(some_array)
 
    props.handleChangeFilter(e.target.value,e.target.id)
    
-  //  if(e.target.id ==="")
-  //  setNotificationError(some_array)
-
-
  }
  const saveNotfication = ()=>{
   setIsOpen1(true)
@@ -192,7 +181,7 @@ setOpen(true)
                         </p> */}
                             <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
-                              { <span style={{color:"red"}}>{notificationError[0]}</span>}
+                              { <span style={{color:"red"}}>{some_array[0]}</span>}
                                 </div> 
     
                       </div>
@@ -208,7 +197,7 @@ setOpen(true)
             
                             <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
                               <div className="row_1">
-                              { <span style={{color:"red"}}>{notificationError[1]}</span>}
+                              { <span style={{color:"red"}}>{some_array[1]}</span>}
                                 </div> 
                       </div>
 

@@ -123,7 +123,7 @@ const initialSatate = {
    searchFilter:"",
    alphabetSearch:"All",
    ready_to_late_notice:0,
-   reserve_expiry_notice:0,
+   reserve_expiry_notice:2,
    first_notice:0,
    second_notice:0,
    quote_set_to_inactive:0,

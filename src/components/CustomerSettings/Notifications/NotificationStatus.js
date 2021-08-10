@@ -48,6 +48,7 @@ const Notification = (props) => {
 
     }
  const handleDataChange = (e)=>{
+  alert("F")
    setCheckedData(true)
   //  alert("hi")
   const some_array = [...notificationError]
