@@ -166,6 +166,7 @@ const  ProductManagement = (props) =>{
             setsubCategory("0")
             setInputValue("")
             setRadio("all")
+            setValue("")
 
             let response = props.getAllProductAction()
             response.then(res=>{
@@ -241,7 +242,7 @@ const  ProductManagement = (props) =>{
         console.log(selectedCategory)
         console.log(props.manufacturer_id)
         const inputProps = {
-            placeholder: 'Plant Name',
+            placeholder: 'Product Name',
             value,
             // className:"searchInput",
             className:" form-control  btn btn-search",

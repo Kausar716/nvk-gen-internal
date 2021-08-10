@@ -841,7 +841,7 @@ saveDisable =()=>{
 
 
                                         <a  class="btn ml-2 mt-3 mt-md-0" 
-                                         onClick={this.saveAndGo}>
+                                         onClick={this.goDashboard}>
                                             <span class="d-flex align-items-center text-left">
                                                 <span class="ml-2"><b>Cancel</b></span>
                                             </span>
