@@ -564,6 +564,18 @@ saveDisable =()=>{
                 phoneNumberInOrganization:parseInt(this.props.backupOrgDataFinal.phone)
             })
            
+            this.setState({
+                hadModified:{
+                 name:false,
+                 sending_email_address:false,
+                 phone:false,
+                 main_title:false,
+                 secondary_title:false,
+                 main_body:false,
+                 secondary_body:false,
+                }
+            })
+          
             //window.location.reload();
        
     }
@@ -790,7 +802,7 @@ saveDisable =()=>{
                     {/* <h1 class="page-header mb-0 d-flex align-items-center">
                         <img src="assets/img/tools-ic-lg.svg" class="mr-2"/>
                     </h1> */}
-                    <h1 class="page-header mb-0 d-flex flex-wrap align-items-center">
+                    <h1 class="page-header mb-0 d-flex flex-wrap align-items-center" >
                     <img src="assets/img/Tools & Settings-big-green.svg" alt="" class="mr-2" />Organization Settings
                 </h1>
                 </div>
@@ -798,8 +810,8 @@ saveDisable =()=>{
                 <div class="pb-4">
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
-                            <div class="col-md-9 col-lg-9" style={{marginRight:"4em"}}>
-                                <h2 class="p-15 mb-0" style={{marginTop:"0.5em"}}>Document Details</h2>
+                            <div class="col-md-9 col-lg-9" style={{marginRight:"8em"}}>
+                                <h2 class="p-15 mb-0" style={{marginTop:"11px"}}>Document Details</h2>
                                
                             </div>
                             <div class="row mt-4" >
@@ -829,7 +841,7 @@ saveDisable =()=>{
                                     disabled={this.state.disabled}
                                     onClick={this.handleSubmit}>
 
-                                    <img src="assets/img/save-ic.svg" alt="" /> 
+                                    <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
                                                         <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
                                         
                                     </button>
@@ -843,7 +855,7 @@ saveDisable =()=>{
                                         <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.goDashboard}>
                                             <span class="d-flex align-items-center text-left">
-                                                <span class="ml-2"><b>Cancel</b></span>
+                                                <span class="ml-2" style={{marginTop:"2px"}}><b style={{marginLeft:"-4px",marginRight:"4px"}}>Cancel</b></span>
                                             </span>
                                         </a>
                                         
