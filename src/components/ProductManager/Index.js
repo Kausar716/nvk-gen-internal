@@ -166,6 +166,7 @@ const  ProductManagement = (props) =>{
             setsubCategory("0")
             setInputValue("")
             setRadio("all")
+            setValue("")
 
             let response = props.getAllProductAction()
             response.then(res=>{
