@@ -297,7 +297,8 @@ export default function(state = initialSatate, action){
                     location_id:"0"
                     //id:null
                 },
-                needAction:false
+                needAction:false,
+                productDataBySKUlist:[]
             }
 
             case DELETE_SKU_ACTION:
