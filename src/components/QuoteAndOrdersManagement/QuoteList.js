@@ -241,7 +241,7 @@ export class QuoteList extends React.Component {
                         <div class="ordersCard d-flex justify-content-md-between align-item-stretch w-100">
                             <div class="cardBoxwide totalCard">
                                 <p>Total Orders</p>
-                                <h4>61</h4>
+                                <span style={{fontSize: "32px"}}>61</span>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -303,7 +303,7 @@ export class QuoteList extends React.Component {
                             </div>
                             <div class="equalSign">&nbsp;</div>
                             <div class="cardBoxwide quotesFlaggedCard">
-                                <p>Active Quotes</p>
+                                <p>Quotes Flagged</p>
                                 <h4><font color="red">12</font></h4>
                                 <div>
                                     <a href="#">View All</a>
