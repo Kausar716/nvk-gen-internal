@@ -14,6 +14,10 @@ import EmailSettings from './Notifications/EmailSettings';
 
 
 class CustomerSettings extends Component {
+    handleSelect = ()=>{
+        // alert("")
+
+    }
     render() {
         return (
             <div>
@@ -23,7 +27,7 @@ class CustomerSettings extends Component {
                 </h1>
 			</div>
                 <div class="px-md-3 mt-3">
-                    <Tabs>
+                    <Tabs onSelect={this.handleSelect}>
                         <TabList>
                             <Tab style={{bottom:"0px"}}>Notifications</Tab>
                             <Tab style={{bottom:"0px"}}>Financial</Tab> 

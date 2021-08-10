@@ -66,9 +66,9 @@ const CS_ExcahangeDetails = (props) => {
   const handleInputData =(e)=>{
     setCheckedData(true)
     if(e.target.value!==""){
-      var nn = e.target.value.toLocaleString("en-US", { maximumFractionDigits: 10, minimumFractionDigits: 2 });
-    props.handleExchangeData(nn,e.target.id,"customerExchange")
-    }else   props.handleExchangeData(nn,e.target.id,"customerExchange")
+    // let intValue = e.target.value*1.000
+    props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
+    }else   props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
 
   }
   const handleInputData1 =(e)=>{
@@ -198,7 +198,6 @@ const dataTochange = (e)=>{
   }
 }
 const dataTochange1 =(e)=>{
-  // alert("onmouseout")
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate1"){
     if(Number.isInteger(parseFloat(e.target.value))){

@@ -50,7 +50,7 @@ const Notification = (props) => {
   const [val,setVal] = useState(3)
 
   const handleDataChange = (e)=>{
-    alert(e.target.value)
+    // alert(e.target.value)
   }
 
 

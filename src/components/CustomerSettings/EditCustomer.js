@@ -399,7 +399,7 @@ const dataTochange =(e)=>{
       return
     }
     const handleSelect=(key)=> {
-        alert("hh")
+        // alert("hh")
         // if (key === 1)
         //     this.setState({ heading: "Log in" })
         // else
