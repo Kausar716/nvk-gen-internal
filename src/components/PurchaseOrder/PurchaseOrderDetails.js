@@ -35,11 +35,11 @@ export default function PurchaseOrderDetails() {
                         <div class="col-md-6 d-flex align-items-center">
                             <h2 class="mb-0">Draft</h2>
                             <div class="d-flex align-items-center ml-3 mb-0 bdrLeft">
-                                <div class="d-flex align-items-center">
+                                <div class="d-flex align-items-center ml-3">
                                     <img src="assets/img/date-ic-sm-green.svg" alt=""/>
                                     <span class="ml-2">March 25, 2020</span>
                                 </div>
-                                <div class="ml-3 d-flex align-items-center">
+                                <div class="ml-5 d-flex align-items-center">
                                     <img src="assets/img/price-ic-sm-green.svg" alt=""/>
                                     <span class="ml-2">CA <b class="f-s-22 lh22">$615.29</b></span>
                                 </div>
@@ -88,8 +88,8 @@ export default function PurchaseOrderDetails() {
                                         <div class="col-md-6 col-lg-6 text-md-right mt-3 mt-md-0">
                                             <h4>Ordered By</h4>
                                             <div>
-                                                <div>B. Vanderkruk</div>
-                                                <div>brent@nvknuseries.com</div>
+                                                <div><span class="textGrey">B. Vanderkruk</span></div>
+                                                <div><span class="textGrey">brent@nvknuseries.com</span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -100,7 +100,7 @@ export default function PurchaseOrderDetails() {
                                         <div class="row mt-3">
                                             <div class="col-md-12 col-lg-12">
                                                 <label>Discount</label>
-                                                <div class="row mt-3 align-items-center">
+                                                <div class="row align-items-center">
                                                     <div class="col-md-4 col-lg-2">
                                                         <input type="text" class="form-control" placeholder=""></input>
                                                     </div>
@@ -190,7 +190,7 @@ export default function PurchaseOrderDetails() {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
-                                        <label>Customer Notes <small>(Internal Only)</small></label>
+                                        <label>Customer Notes <small class="textGrey">(Internal Only)</small></label>
                                         <textarea cols="4" rows="3" class="form-control"></textarea>
                                     </div>
                                 </div>
@@ -216,7 +216,7 @@ export default function PurchaseOrderDetails() {
                                                 <div class="row mt-3 align-items-center">
                                                     <div class="col-md-12 d-flex">
                                                         <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
+                                                            <input type="radio" id="customRadio1" name="customRadio" checked="checked" class="custom-control-input" />
                                                             <label class="custom-control-label" for="customRadio1">Active Only</label>
                                                         </div>
                                                         <div class="custom-control custom-radio ml-3">
@@ -1110,7 +1110,7 @@ export default function PurchaseOrderDetails() {
                                                     </div>
                                                     <div class="row subTotLbl">
                                                         <div class="col-md-8 text-right">
-                                                            <label class="text-uppercase">Order Total (CAD) W/O taxes <span>$</span></label>
+                                                            <label>Order Total (CAD) W/O taxes <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
                                                             <label class="f-s-24">544.50</label>

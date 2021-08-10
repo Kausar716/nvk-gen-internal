@@ -144,13 +144,17 @@ const GeneralSettings=(props)=> {
             if(needAction){
                 if(actionType ==="add")
                 props.createProductAction(productDataById)
-                // console.log(props.productDataById)
-                // console.log(productDataById.product_id)
-                // console.log(props.productData.ae_product_id)
-                // console.log(actionType)
+                console.log(props.productDataById)
+                console.log(productDataById.product_id)
+                console.log(props.productData.ae_product_id)
+                console.log(actionType)
                 if(actionType ==="edit"){
                     if(productDataById){
+                        if(productDataById.product_id)
                         props.updateProductAction(productDataById,productDataById.product_id)
+                        else if(props.productData.ae_product_id){
+                            props.updateProductAction(productDataById,props.productData.ae_product_id)
+                        }
                     }                   
                     else if(props.productData.ae_product_id){
                     props.updateProductAction(productDataById,props.productData.ae_product_id)
