@@ -324,13 +324,22 @@ export class OrganizationSettings extends React.Component {
     }
 
 
-    handleChange=({ target: { value } })=> {  
+    handleChange=({ target: { value, name } })=> {  
+
+       // const {target:{name,value}} =e
+        let {errorObj,errorCount,hadModified} = this.state  
+
         //debugger;
         console.log("enteredVALUES", this.state.phoneNumberInOrganization)
         this.setState(prevState=> ({ phoneNumberInOrganization: normalizeInput(value, prevState.phoneNumberInOrganization) }));
         this.setState({
             imgLoader: false
         })
+
+
+        if(name === "phone"){
+            hadModified.phone=true
+        }
       }
 
 
@@ -768,7 +777,7 @@ saveDisable =()=>{
 {/* //|| this.state.hadModified.main_title===true || this.state.hadModified.main_body===true || this.state.hadModified.secondary_title===true || this.state.hadModified.secondary_body===true || this.state.hadModified.phone===true || this.state.hadModified.sending_email_address ===true  */}
     {/* {this.state.hadModified.name===true ?  */}
     
-    {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phoneNumberInOrganization ===true ? 
+    {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phone ===true ? 
     <Prompt
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
@@ -790,7 +799,7 @@ saveDisable =()=>{
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
                             <div class="col-md-10 col-lg-10" style={{marginRight:"4em"}}>
-                                <h2 class="p-15 mb-0">Document Details</h2>
+                                <h2 class="p-15 mb-0" style={{marginTop:"0.5em"}}>Document Details</h2>
                                
                             </div>
                             <div class="row mt-4" >
@@ -991,7 +1000,7 @@ saveDisable =()=>{
                                         <div class="col-md-6">
                                             <label style={{fontWeight:"bold"}}>Phone</label>
                                             <InputMask  class="form-control"  mask="(999) 999-9999" maskChar={""} 
-                                             id={"phone1"} 
+                                             id={"phone1"} name="phone"
                                             value={this.state.phoneNumberInOrganization===" " ? phno : this.state.phoneNumberInOrganization} 
                                              onChange={this.handleChange} />
                                             {/* <input
