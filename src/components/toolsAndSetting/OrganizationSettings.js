@@ -755,6 +755,7 @@ saveDisable =()=>{
            
 {/* //|| this.state.hadModified.main_title===true || this.state.hadModified.main_body===true || this.state.hadModified.secondary_title===true || this.state.hadModified.secondary_body===true || this.state.hadModified.phone===true || this.state.hadModified.sending_email_address ===true  */}
     {/* {this.state.hadModified.name===true ?  */}
+    
     <Prompt
       when={this.state.hadModified.name ===true ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
@@ -775,7 +776,7 @@ saveDisable =()=>{
                 <div class="pb-4">
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
-                            <div class="col-md-8 col-lg-8" style={{marginRight:"4em"}}>
+                            <div class="col-md-10 col-lg-10" style={{marginRight:"4em"}}>
                                 <h2 class="p-15 mb-0">Document Details</h2>
                                
                             </div>
@@ -817,13 +818,13 @@ saveDisable =()=>{
 
 
 
-                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        {/* <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.saveAndGo}>
                                             <span class="d-flex align-items-center text-left">
                                                 <img src="assets/img/saveDone-ic.svg" alt=""/>
                                                 <span class="ml-2"><b>Save &amp; Exit</b></span>
                                             </span>
-                                        </a>
+                                        </a> */}
                                         
                                         {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
@@ -832,15 +833,15 @@ saveDisable =()=>{
                                             />
                                         </a> */}
 
-                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        {/* <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.goDashboard}
                                        
                                         >
                                             <span class="d-flex align-items-center text-left">
-                                                {/* <img src="assets/img/saveDone-ic.svg" alt=""/> */}
+                                               
                                                 <span class="ml-2"><b>Cancel</b></span>
                                             </span>
-                                        </a>
+                                        </a> */}
                         </div>
                         </div>
                         </div>
