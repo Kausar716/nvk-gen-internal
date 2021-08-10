@@ -452,6 +452,18 @@ saveDisable =()=>{
                 disabled:true,
             })
            }
+
+           this.setState({
+               hadModified:{
+                name:false,
+                sending_email_address:false,
+                phone:false,
+                main_title:false,
+                secondary_title:false,
+                main_body:false,
+                secondary_body:false,
+               }
+           })
          
 
     
@@ -756,7 +768,8 @@ saveDisable =()=>{
 {/* //|| this.state.hadModified.main_title===true || this.state.hadModified.main_body===true || this.state.hadModified.secondary_title===true || this.state.hadModified.secondary_body===true || this.state.hadModified.phone===true || this.state.hadModified.sending_email_address ===true  */}
     {/* {this.state.hadModified.name===true ?  */}
     
-    {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phoneNumberInOrganization ===true ? <Prompt
+    {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phoneNumberInOrganization ===true ? 
+    <Prompt
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
     /> : false}
