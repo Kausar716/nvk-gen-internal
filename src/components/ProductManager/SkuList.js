@@ -283,9 +283,9 @@ const SkuList=(props)=> {
 
    }
    const handleBlur =(e)=>{
-//     var charCode = (e.which) ? e.which : e.keyCode;
-//     console.log(e.target.id)
-//     let id = e.target.id
+    var charCode = (e.which) ? e.which : e.keyCode;
+    console.log(e.target.id)
+    let id = e.target.id
 //     if(e.target.value!==""){
 //         if(Number.isInteger(parseFloat(e.target.value))) {
 //           let intValue = e.target.value*1.000
@@ -308,23 +308,23 @@ const SkuList=(props)=> {
 //         }
 //       }
 //         return
-// //     let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
-// //    if(characterCheck === null){
-// //        if(id === "each_cost"){
-// //         setEach_costError(true)
-// //        }
-// //        if(id === "each_price"){
-// //         setEach_priceError(true)
-// //        }
-// //        if(id=== "sale_price"){
-// //         setSales_priceError(true)
-// //        }
-// //        if(id=== "volume_price_per_unit"){
-// //         setVolume_priceError(true)
-// //        }
+    let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+   if(characterCheck === null){
+       if(id === "each_cost"){
+        setEach_costError(true)
+       }
+       if(id === "each_price"){
+        setEach_priceError(true)
+       }
+       if(id=== "sale_price"){
+        setSales_priceError(true)
+       }
+       if(id=== "volume_price_per_unit"){
+        setVolume_priceError(true)
+       }
    
     
-// //    }
+   }
 
 
    
@@ -492,7 +492,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              id="each_cost" onChange={handleInput} 
                                               value={skuDataById.each_cost} 
                                                 // min="0"
-                                                onMouseLeave={handleBlur}
+                                                onBlur={handleBlur}
                                               />
                                               {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost(Fixed 2 Decimals)</span>:""}
                                         </div>
@@ -503,7 +503,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             id="each_price"  onChange={handleInput} 
                                              value={skuDataById.each_price} 
                                              style={{textAlign:"right"}}
-                                             onMouseLeave={handleBlur}
+                                             onBlur={handleBlur}
                                             min="0"/>
                                             {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price(Fixed 2 Decimals)</span>:""}
                                         </div>
@@ -513,7 +513,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             //  value="$1.25"
                                             style={{textAlign:"right"}}
                                              id="sale_price" onChange={handleInput}
-                                             onMouseLeave={handleBlur}
+                                             onBlur={handleBlur}
                                               value={skuDataById.sale_price}
                                                min="0"/>
                                                {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price(Fixed 2 Decimals)</span>:""}
@@ -560,7 +560,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
                                             
-                                            <input type="number"    style={{textAlign:"right"}} onMouseLeave={handleBlur} class="form-control" placeholder="0.00" disabled={skuDataById.volume_quantity === "0"} value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            <input type="number"    style={{textAlign:"right"}} onBlur={handleBlur} class="form-control" placeholder="0.00" disabled={skuDataById.volume_quantity === "0"} value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
                                             {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
