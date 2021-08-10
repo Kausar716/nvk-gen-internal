@@ -297,7 +297,8 @@ export default function(state = initialSatate, action){
                     location_id:"0"
                     //id:null
                 },
-                needAction:false
+                needAction:false,
+                productDataBySKUlist:[]
             }
 
             case DELETE_SKU_ACTION:
@@ -385,9 +386,9 @@ export default function(state = initialSatate, action){
             ...state,
             actionType:"edit",            
             skuDataById         :   {
-                each_cost:"",
-                each_price:"",
-                sale_price:"",
+                each_cost:"0.00",
+                each_price:"0.00",
+                sale_price:"0.00",
                 sale_expiry_date:new Date(),
                 sku_item_name:"",
                 subcategory:"0",

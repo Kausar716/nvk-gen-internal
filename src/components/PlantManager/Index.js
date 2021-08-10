@@ -77,7 +77,7 @@ const  PlantManger=(props)=> {
     );
     const onChange = (event, { newValue }) => {
         setValue(newValue)
-        setLoaderMessage("No Records Found...")
+        setLoaderMessage("No Records Found.")
         props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
         setInputValue(newValue);
     };
