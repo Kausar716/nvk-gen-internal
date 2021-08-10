@@ -99,7 +99,7 @@ function QuoteOrderPermission(props) {
         || x.id===159 || x.id===160 || x.id===161 || x.id===162 || x.id===163 )
 
         //x.id===133 || 
-    let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===133 || x.id===134 || x.id===135 || x.id===136 )
+    let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===134 || x.id===135 || x.id===136 )
     //let finalCMSettingsPermissions2 = customerManagementPermission.filter(x=>  x.id===133)
 
         // x.id===137 ||
@@ -214,14 +214,13 @@ function QuoteOrderPermission(props) {
            setToolsAnsSettingsPermission(tempUserTS)
          }
 
-         else  if(name === "customerManagementInCustomerManagementPermissions"){
+         else  if(name === "customerManagementInCustomerManagementPermissions1"){
             // debugger;
              //let newA = {name:e.target.name}
             // let  newlist = [{name:"customerManagementInCustomerManagementPermissions", id:1001}]
              //let final_list = [newA, ...finalCMSettingsPermissions]
              //let tempUserCS2 = finalCMSettingsPermissions2.map(user=>{return {...user, isChecked:checked}});
             let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
-            //let temCS33 = [...tempUserCS2, ...tempUserCMS]
             setCustomerManagementPermission(tempUserCMS)
          }
 
@@ -235,10 +234,17 @@ function QuoteOrderPermission(props) {
             setInventoryManagementPermission(tempUserINV)
          }
 
-         else  if(name === "SupplierManagementInSupplierManagementPermissions"){
+        //  else  if(id === "SupplierManagementInSupplierManagementPermissions" ){
+        //     let tempUserSMP = finalSupplierManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
+        //     setSupplierManagementPermission(tempUserSMP)
+        //  }
+
+         else  if(name === "SupplierManagementInSupplierManagementPermissions" ){
             let tempUserSMP = finalSupplierManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
             setSupplierManagementPermission(tempUserSMP)
          }
+
+
 
 
         else if(name==="SelectAllPermissionOn"){
@@ -304,7 +310,7 @@ function QuoteOrderPermission(props) {
             setInventoryManagementPermission(tempUserINV);
 
 
-            debugger;
+            //debugger;
             let tempUserSMP = finalSupplierManagemnetPermission.map((user) =>
             user.name === name ? { ...user, isChecked: checked} : user);
             setSupplierManagementPermission(tempUserSMP);
@@ -436,17 +442,14 @@ function QuoteOrderPermission(props) {
                                             </div>
 
                                             <div className="row6">
-                                                {/* <div class="custom-control custom-checkbox" >
+                                                <div class="custom-control custom-checkbox" >
                                                     <input type="checkbox" class="custom-control-input"  
                                                     onChange={handleChange} 
                                                     checked={finalCMSettingsPermissions.filter((user) => user?.isChecked !== true).length < 3}
-                                                    name="customerManagementInCustomerManagementPermissions" id="customerManagementInCustomerManagementPermissions" />
-                                                    <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions" >Customer Management  </label>
-                                                </div> */}
+                                                    name="customerManagementInCustomerManagementPermissions1" id="customerManagementInCustomerManagementPermissions1" />
+                                                    <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions1" >Customer Management  </label>
+                                                </div>
                                                 { finalCMSettingsPermissions.map((userP)=>(
-                                                      
-                                                              
-
                                                                 <div class="custom-control custom-checkbox">
                                                                           
                                                                     <input type="checkbox" class="custom-control-input" 
@@ -522,6 +525,7 @@ function QuoteOrderPermission(props) {
                                                         name="SupplierManagementInSupplierManagementPermissions" id="SupplierManagementInSupplierManagementPermissions" />
                                                         <label class="custom-control-label pl-2" for="SupplierManagementInSupplierManagementPermissions" >Supplier Management </label>
                                                     </div> */}
+
                                                 { finalSupplierManagemnetPermission.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
                                                                           
