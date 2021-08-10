@@ -282,33 +282,11 @@ const SkuList=(props)=> {
    getSpecifiedProduct(id, "edit","sku")
 
    }
-   const handleBlur =(e)=>{
-    var charCode = (e.which) ? e.which : e.keyCode;
-    console.log(e.target.id)
-    let id = e.target.id
-//     if(e.target.value!==""){
-//         if(Number.isInteger(parseFloat(e.target.value))) {
-//           let intValue = e.target.value*1.000
-
-//         props.handleSkuInputAction(e.target.id,intValue.toFixed(3))
-//         }
-      
-//         else{
-//           // alert()
-//           let splitValue = e.target.value.split(".")
-//          if(splitValue[1].length<3){
-//           let intValue = e.target.value*1.0000
-//           props.handleSkuInputAction(e.target.id,intValue.toFixed(3))
-//          }else{
-//           props.handleSkuInputAction(e.target.id,e.target.value)
-  
-//          }
-  
-         
-//         }
-//       }
-//         return
-    let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+   const handleBlur =(evt)=>{
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    console.log(evt.target.id)
+    let id = evt.target.id
+    let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
    if(characterCheck === null){
        if(id === "each_cost"){
         setEach_costError(true)
@@ -329,7 +307,6 @@ const SkuList=(props)=> {
 
    
    }
-
    const handleCheckBox = (id,index,type)=>{
     console.log(id,index,type)
     // alert(index)
@@ -356,7 +333,7 @@ const SkuList=(props)=> {
 
     // props.checkBox(id,((15*plantSkuPageNumber)+index),type,obj)
     // console.log(plantData[((15*plantPageNumber)+index)])
-    props.checkBoxSku1(id,((15*skuPageNumber)+index),"status",obj)
+    props.checkBoxSku1(id,((15*skuPageNumber)+index),type,obj)
     props.updateCheckBoxsku1(id,index,"status",obj)
 
 
@@ -486,9 +463,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control " placeholder="0.00" 
+                                            <input type="text" class="form-control text-right" placeholder="0.00" 
                                             // value="$1.25"
-                                             style={{textAlign:"right"}}
                                              id="each_cost" onChange={handleInput} 
                                               value={skuDataById.each_cost} 
                                                 // min="0"
@@ -498,20 +474,18 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control" placeholder="0.00" 
+                                            <input type="text" class="form-control text-right" placeholder="0.00" 
                                             // value="$1.25"
                                             id="each_price"  onChange={handleInput} 
                                              value={skuDataById.each_price} 
-                                             style={{textAlign:"right"}}
                                              onBlur={handleBlur}
                                             min="0"/>
                                             {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="number" class="form-control " placeholder="0.00" 
+                                            <input type="text" class="form-control text-right" placeholder="0.00" 
                                             //  value="$1.25"
-                                            style={{textAlign:"right"}}
                                              id="sale_price" onChange={handleInput}
                                              onBlur={handleBlur}
                                               value={skuDataById.sale_price}
@@ -559,8 +533,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            
-                                            <input type="number"    style={{textAlign:"right"}} onBlur={handleBlur} class="form-control" placeholder="0.00" disabled={skuDataById.volume_quantity === "0"} value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" disabled={skuDataById.volume_quantity === "0"} value={skuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
                                             {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
@@ -644,12 +617,12 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr>
                                             <th class="text-nowrap">Status</th>
                                             <th class="text-nowrap">SKU</th>
-                                            <th class="text-nowrap" style={{textAlign:"center"}}>Each Cost</th>
-                                            <th class="text-nowrap" style={{textAlign:"center"}}>Each Price</th>
-                                            <th class="text-nowrap" style={{textAlign:"center"}}>Sale Price</th>
-                                            <th class="text-nowrap"  style={{textAlign:"center"}}>Sale Active</th>
-                                            <th class="text-nowrap" style={{textAlign:"center"}}>Volume Per Unit</th>
-                                            <th class="text-nowrap" style={{textAlign:"center"}}>Volume QTY</th>
+                                            <th class="text-nowrap" style={{textAlign:"right"}}>Each Cost</th>
+                                            <th class="text-nowrap" style={{textAlign:"right"}}>Each Price</th>
+                                            <th class="text-nowrap" style={{textAlign:"right"}}>Sale Price</th>
+                                            <th class="text-nowrap">Sale Active</th>
+                                            <th class="text-nowrap">Volume Per Unit</th>
+                                            <th class="text-nowrap">Volume QTY</th>
                                             <th class="text-nowrap text-center">Actions</th>
                                         </tr>
                                     </thead>
@@ -676,17 +649,18 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr key={sku.id} style={{background:(selectedRow === sku.id)? "#e1e3e4":""}}>
                                             <td style={{color:sku.archived==="0"?"":"red"}} >{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
-                                            <td style={{textAlign:"center"}}>{sku.each_cost}</td>
-                                            <td style={{textAlign:"center"}}>{sku.each_price}</td>
-                                            <td style={{textAlign:"center"}}>{sku.sale_price}</td>
-                                            <td style={{textAlign:"center"}}>
-                                                    <div class="custom-control custom-checkbox mb-1 text-center">
+                                            <td style={{textAlign:"right"}}>{sku.each_cost}</td>
+                                            <td style={{textAlign:"right"}}>{sku.each_price}</td>
+                                            <td style={{textAlign:"right"}}>{sku.sale_price}</td>
+                                            <td class="text-center">
+                                            <div class="custom-control custom-checkbox mb-1 text-center">
                                                         <input type="checkbox" class="custom-control-input" id={sku.id+"_"+i} checked={parseInt(sku.status)==0?false:true} onChange={()=>handleCheckBox(sku.id,i,"status")}  />
                                                         <label class="custom-control-label" for={sku.id+"_"+i}></label>
                                                     </div>
-                                                </td>
-                                            <td style={{textAlign:"center"}}>{sku.volume_price_per_unit}</td>
-                                            <td style={{textAlign:"center"}}>{sku.volume_quantity}</td>
+                                                <i className={sku.status===1?'bx bx-check':'bx bx-x'}></i>
+                                            </td>
+                                            <td style={{color:sku.volume_price_per_unit==="0.00"?"lightgray":""}} >{sku.volume_price_per_unit}</td>
+                                            <td style={{color:sku.volume_price_per_unit==="0.00"?"lightgray":""}} >{sku.volume_quantity}</td>
                                             <td class="text-center">
                                                 <span>
                                                    

@@ -293,34 +293,28 @@ const SkuList = (props)=>{
             }
             
         }
-        const handleBlur =(e)=>{
+        const handleBlur =(evt)=>{
 
-            // var charCode = (e.which) ? e.which : e.keyCode;
-            // console.log(e.target.id)
-            // let id = e.target.id
-            // if(e.target.value!==""){
-            //   if(Number.isInteger(parseFloat(e.target.value))) {
-            //     let intValue = e.target.value*1.000
-
-            //   props.handlePlantSkuInputAction(e.target.id,intValue.toFixed(3))
-            //   }
+            var charCode = (evt.which) ? evt.which : evt.keyCode;
+            console.log(evt.target.id)
+            let id = evt.target.id
+            let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+           if(characterCheck === null){
+               if(id === "each_cost"){
+                setEach_costError(true)
+               }
+               if(id === "each_price"){
+                setEach_priceError(true)
+               }
+               if(id=== "sale_price"){
+                setSales_priceError(true)
+               }
+               if(id=== "volume_price_per_unit"){
+                setVolume_priceError(true)
+               }
+           
             
-            //   else{
-            //     // alert()
-            //     let splitValue = e.target.value.split(".")
-            //    if(splitValue[1].length<3){
-            //     let intValue = e.target.value*1.0000
-            //     props.handlePlantSkuInputAction(e.target.id,intValue.toFixed(3))
-            //    }else{
-            //     props.handlePlantSkuInputAction(e.target.id,e.target.value)
-        
-            //    }
-        
-               
-            //   }
-            // }
-            //   return
-            // // }
+           }
            
            }
            let volumeQualityList=[]
@@ -503,7 +497,7 @@ const SkuList = (props)=>{
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Volume Price per unit</label> 
                                             {/* <input type="checkbox"  /> */}
-                                            <input type="number" onBlur={handleBlur} disabled={plantSkuDataById.volume_quantity === "0"} class="form-control text-right" placeholder="0.00" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
+                                            <input type="text" onBlur={handleBlur} disabled={plantSkuDataById.volume_quantity === "0"} class="form-control text-right" placeholder="0.00" value={plantSkuDataById.volume_price_per_unit}id="volume_price_per_unit" onChange={handleInput}/>
                                             {volume_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Volume Price Per Unit</span>:""}
                                             
                                             {/* <select class="form-control"><option>Select</option><option>Option 1</option><option>Option 2</option></select> */}
