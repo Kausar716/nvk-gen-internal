@@ -46,6 +46,7 @@ export class OrganizationSettings extends React.Component {
     constructor(){
         super()
         this.state={
+            disabled:false,
             isOpen1:false,
             message:[],
             actionId:0,
@@ -157,7 +158,9 @@ export class OrganizationSettings extends React.Component {
 
     handleInput = (e) => {
 
-      
+        // this.setState({
+        //     disabled:true
+        // })
      // debugger
        // this.setState({value1: e.target.value})
         const {target:{name,value}} =e
@@ -233,6 +236,12 @@ export class OrganizationSettings extends React.Component {
                  
         }
 
+
+        this.setState({
+            disabled:false
+        })
+
+       
 
         
     }
@@ -326,10 +335,41 @@ export class OrganizationSettings extends React.Component {
 
 
 
+saveDisable =()=>{
+
+    this.setState({
+        hadModified:true
+    })
+    if(this.state.hadModified.name===true || this.state.hadModified.phone===true || this.state.hadModified.sending_email_address===true){
+        this.handleSubmit();
+    }
+
+    else{
+        alert("change to save")
+    }
+
+  
+    // this.setState({
+    //     hadModified:false
+    // })
+   
+
+}
+
 
 
 
     handleSubmit = (e) => {
+
+        // if (!this.state.hadModified.name) {
+        //    this.setState({
+        //        hadModified:true
+        //    })
+        //   }
+
+        this.setState({
+            disabled:true
+        })
 
         let phoneNUMBER = this.state.phoneNumberInOrganization === " " ? this.props.organizationData.organizationData.phone : this.state.phoneNumberInOrganization;
         if(this.state.phoneNumberInOrganization === undefined){
@@ -400,11 +440,20 @@ export class OrganizationSettings extends React.Component {
                 let id = "2"
                 this.props.showorganization(id)
                 console.log(JSON.stringify(r))
-                // alert("Successfully Added")
+                //alert("Successfully Added")
             }).catch(c=>{
                 alert(JSON.stringify(c))
             })
          }
+
+
+         if (!this.state.disabled) {
+            this.setState({
+                disabled:true
+            })
+           }
+         
+
     
      }
 
@@ -504,6 +553,8 @@ export class OrganizationSettings extends React.Component {
 
     //  let history = useHistory();
     render(){
+
+       
         
         console.log("backupOrgDataFinal", this.props.backupOrgDataFinal);
 
@@ -702,12 +753,15 @@ export class OrganizationSettings extends React.Component {
 
 
            
-         
-         
+{/* //|| this.state.hadModified.main_title===true || this.state.hadModified.main_body===true || this.state.hadModified.secondary_title===true || this.state.hadModified.secondary_body===true || this.state.hadModified.phone===true || this.state.hadModified.sending_email_address ===true  */}
+    {/* {this.state.hadModified.name===true ?  */}
+    
     <Prompt
       when={this.state.hadModified.name ===true ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
-    />
+    /> 
+    {/* // : false }   */}
+   
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
              <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                <div class="contentHeader bg-white d-flex justify-content-between align-items-center">
@@ -722,34 +776,55 @@ export class OrganizationSettings extends React.Component {
                 <div class="pb-4">
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
-                            <div class="col-md-8 col-lg-8" style={{marginRight:"4em"}}>
+                            <div class="col-md-10 col-lg-10" style={{marginRight:"4em"}}>
                                 <h2 class="p-15 mb-0">Document Details</h2>
                                
                             </div>
                             <div class="row mt-4" >
                         {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" >
+                                    
+                                  
+                                            {/* <div >
+                                            <a  class="btn ml-2" onClick={this.handleSubmit}>
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+                                            </div> */}
+                                            
+                                 
 
-                                    <a class="btn ml-2"
-                                    onClick={this.handleSubmit}
+                                    <div className="hoverINOrg">
+                                    <a  class="btn ml-2 mt-3 mt-md-0" >
+                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                    //class="btn ml-2 mt-3 mt-md-0"
+                                    //style={{opacity:"none"}}
+                                    //class="btn btn-primary btn-lg ml-3"
+                                    //   class="btn ml-2 mt-3 mt-md-0"
+                                    //   style={{color:"#5287F5", border:"2px solid #5287F5"}}
+                                    disabled={this.state.disabled}
+                                    onClick={this.handleSubmit}>
+
+                                    <img src="assets/img/save-ic.svg" alt="" /> 
+                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
+                                        
+                                    </button>
+                                    
+                                    </a>
+                                    </div>
                                    
-                                    >
-                                            <span class="d-flex align-items-center text-left">
-                                                <img src="assets/img/save-ic.svg" alt=""/>
-                                                <span class="ml-2"><b>Save  </b></span>
-                                            </span>
-                                        </a>
 
 
-                                        <a  class="btn ml-2 mt-3 mt-md-0" 
-                                         onClick={this.saveAndGo}
-                                       
-                                        >
+
+                                        {/* <a  class="btn ml-2 mt-3 mt-md-0" 
+                                         onClick={this.saveAndGo}>
                                             <span class="d-flex align-items-center text-left">
                                                 <img src="assets/img/saveDone-ic.svg" alt=""/>
                                                 <span class="ml-2"><b>Save &amp; Exit</b></span>
                                             </span>
-                                        </a>
+                                        </a> */}
                                         
                                         {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
@@ -758,15 +833,15 @@ export class OrganizationSettings extends React.Component {
                                             />
                                         </a> */}
 
-                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        {/* <a  class="btn ml-2 mt-3 mt-md-0" 
                                          onClick={this.goDashboard}
                                        
                                         >
                                             <span class="d-flex align-items-center text-left">
-                                                {/* <img src="assets/img/saveDone-ic.svg" alt=""/> */}
+                                               
                                                 <span class="ml-2"><b>Cancel</b></span>
                                             </span>
-                                        </a>
+                                        </a> */}
                         </div>
                         </div>
                         </div>

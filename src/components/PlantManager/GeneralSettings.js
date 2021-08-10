@@ -30,7 +30,7 @@ import {
  const GeneralSettings = (props) =>{
     const [submitCount, setSubmitCount] = useState(0)
     const [count, setCount] = useState(0)
-    const [tags, setTags] = useState([]);
+    // const [tags, setTags] = useState([]);
     const [toggleForTagInput,setToggle] = useState(true)
     const [errorObj,setErrorObj] = useState({ genus:0,species:0  })
     const [errorCount,setErrorCount] = useState(0)
@@ -91,23 +91,23 @@ import {
 
 
 
-    const childAdd = (e) =>{
-        let commonArray = tagsData
-        if(commonArray.length === 0){
-         commonArray[count] =e.target.value
-         var elem = document.getElementById(count);
-         elem.parentNode.removeChild(elem);
-         setCount(count+1)
-         setToggle(true)
+    // const childAdd = (e) =>{
+    //     // let commonArray = tagsData
+    //     if(commonArray.length === 0){
+    //      commonArray[count] =e.target.value
+    //      var elem = document.getElementById(count);
+    //      elem.parentNode.removeChild(elem);
+    //      setCount(count+1)
+    //      setToggle(true)
  
-        }else{
-         commonArray[commonArray.length] =e.target.value
-         elem = document.getElementById(count);
-         elem.parentNode.removeChild(elem);
-         setCount(count+1)
-            setToggle(true)
-        }
-     }
+    //     }else{
+    //      commonArray[commonArray.length] =e.target.value
+    //      elem = document.getElementById(count);
+    //      elem.parentNode.removeChild(elem);
+    //      setCount(count+1)
+    //         setToggle(true)
+    //     }
+    //  }
     //  const handleValidation =()=>{
     //      let returnValue=true
     //      let errorcount =errorCount
@@ -136,14 +136,14 @@ import {
         if(submitCount === 0){
            if(needAction){
                if(actionType ==="add"){
-                props.createPlantAction(plantDataById,tags)
+                props.createPlantAction(plantDataById)
                }
               
   
                if(actionType ==="edit"){
                    let plantID = plantDataById.plant_id
                    if(!plantDataById.plant_id)plantID = props.plantData.ae_plant_id
-                   props.updatePlantAction(plantDataById,plantID,tags)}
+                   props.updatePlantAction(plantDataById,plantID)}
 
                setSubmitCount(1)
            }
@@ -152,23 +152,25 @@ import {
     }
 
 
-    const removeTag1 = (index) => {
-        const newTagArray = tagsData;
-        newTagArray.splice(index, 1);
-        setCount([...newTagArray]);
-      };
+    // const removeTag1 = (index) => {
+    //     const newTagArray = tagsData;
+    //     newTagArray.splice(index, 1);
+    //     setCount([...newTagArray]);
+    //   };
 
-    const addTag = (e) =>{
-        if(e.target.id==="tags" && toggleForTagInput){
-            var inputTag = document.createElement('input');
-            inputTag.id = count
-            inputTag.className= "input_tag_edit"
-            inputTag.placeholder = "add tag"
-            inputTag.onchange = childAdd
-            document.getElementById("tags").appendChild(inputTag);  
-            setToggle(false)       
-        }
-    }
+    // const addTag = (e) =>{
+    //     if(e.target.id==="tags" && toggleForTagInput){
+    //         var inputTag = document.createElement('input');
+    //         inputTag.id = count
+    //         inputTag.className= "input_tag_edit"
+    //         inputTag.placeholder = "add tag"
+    //         inputTag.onchange = childAdd
+    //         document.getElementById("tags").appendChild(inputTag);  
+    //         setToggle(false)       
+    //     }
+    // }
+
+
 
     let currentYear =  new Date().getFullYear()
     let countOfYear = 20;
@@ -176,7 +178,7 @@ import {
     for (var i = 0; i < countOfYear; i++) {
         indents.push(currentYear+i);
     }
-    const {plantData,plantDataById,tagsData, actionType,needAction} = props.plantData
+    const {plantData,plantDataById, actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData
     let flag=0
     if(plantDataById){       
@@ -185,6 +187,18 @@ import {
         }
         
     }
+    let commonNameList = []
+    if(plantDataById.common_name){
+        console.log(plantDataById.common_name)
+        if(typeof(plantDataById.common_name) === "string"){
+            commonNameList = JSON.parse(plantDataById.common_name)
+        }    
+        else{
+            commonNameList = plantDataById.common_name
+        }
+       
+    }
+    console.log(commonNameList)
 
     return (
         <div>
@@ -268,10 +282,11 @@ import {
 
 
                                         <ReactTagInput 
-                                                    tags={tags} 
+                                                    tags={commonNameList} 
                                                     onChange={(tags) =>{
-                                                        props.handlePlantInputAction("tagsData",tags)
-                                                         setTags(tags)}}
+                                                        props.handlePlantInputAction("common_name",tags)
+                                                         }}
+                                                         id="common_name"
                                                     />
                                     </div>
 

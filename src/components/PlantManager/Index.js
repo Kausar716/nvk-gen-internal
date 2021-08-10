@@ -77,7 +77,7 @@ const  PlantManger=(props)=> {
     );
     const onChange = (event, { newValue }) => {
         setValue(newValue)
-        setLoaderMessage("No Records Found...")
+        setLoaderMessage("No Records Found.")
         props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
         setInputValue(newValue);
     };
@@ -144,13 +144,13 @@ const productFormAction = ()=>{
         setId(id)
     }
         const getValue = (e)=>{
-            setLoaderMessage("No Records Found...")
+            setLoaderMessage("No Records Found.")
             console.log(e.target.value)
             props.serachPlant({plant: e.target.value, option: selectedRadio, category: categoryId})
             setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
-            setLoaderMessage("No Records Found...")
+            setLoaderMessage("No Records Found.")
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
             props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
@@ -158,7 +158,7 @@ const productFormAction = ()=>{
 
         }
         const searchBasedOnCategory = (e) =>{
-            setLoaderMessage("No Records Found...")
+            setLoaderMessage("No Records Found.")
             //console.log(e.target.value)
             //props.searchCategoryApplyAction(e.target.value)
             props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
@@ -362,9 +362,9 @@ const productFormAction = ()=>{
                                                     <a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt=""  onClick={()=>confirmAction(ae_plant_id,"delete")} />
                                                     </a>
-                                                    <a href="" class="mx-2">
+                                                    {/* <a href="" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
-                                                    </a>
+                                                    </a> */}
                                                 </div>:""}
                                             </div>
                                         </div>

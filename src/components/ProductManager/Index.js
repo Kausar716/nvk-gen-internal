@@ -114,7 +114,7 @@ const  ProductManagement = (props) =>{
         const handleCategoryData =(e)=>{
             let temSub =[];
 
-           setLoaderMessage("No Records Found...")
+           setLoaderMessage("No Records Found.")
             //console.log("propsSubCategory", props.categoryData.subCategoryData)
             if(e.target.id ==="category"){
                 // props.handleCategory(e.target.value,"0")
@@ -432,9 +432,9 @@ const  ProductManagement = (props) =>{
                                                     <a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt="" onClick={()=>confirmAction(productDataById.product_id,"delete")}/>
                                                     </a>
-                                                    <a href="#" class="mx-2">
+                                                    {/* <a href="#" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
-                                                    </a>
+                                                    </a> */}
                                                 </div>:""}
                                             </div>
                                         </div>

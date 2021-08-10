@@ -52,13 +52,13 @@ export default function QuoteAndOrdersManagement() {
                             <a href="" class="ml-2"><img src="assets/img/dig-btn-blue.svg" alt=""/></a>
                             <a href="" class="ml-2"><img src="assets/img/order-list-btn-blue.svg" alt=""/></a>
                             <a href="" class="ml-2"><img src="assets/img/times-btn-red.svg" alt=""/></a>
-                            <a href="" class="ml-2"><img src="assets/img/toggle-btn.svg" alt=""/></a>
+                            {/* <a href="" class="ml-2"><img src="assets/img/toggle-btn.svg" alt=""/></a>
                             <div class="d-flex align-items-center flex-wrap ml-3">Active
                                 <div class="switcher switcher-sm ml-2 pr-2">
                                     <input type="checkbox" name="switcher_checkboxActive" id="switcher_checkboxActive" checked="checked" value="2" />
                                     <label for="switcher_checkboxActive"></label>
                                 </div> 
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </div>
@@ -760,12 +760,21 @@ Rate</th>
                                                                                     <span class="text-success controlLabel text-right ">90</span>
                                                                                 </td>
                                                                                 <td width="8%" class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite ">
@@ -835,12 +844,21 @@ Rate</th>
                                                                                     <span class="text-success controlLabel text-right ">90</span>
                                                                                 </td>
                                                                                 <td width="8%" class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                             <tr class="trBgWhite ">
@@ -930,12 +948,21 @@ Rate</th>
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>
@@ -991,12 +1018,21 @@ Rate</th>
                                                                                     <span class="text-success controlLabel text-right">90</span>
                                                                                 </td>
                                                                                 <td class="text-center actionTd">
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                    </a>
-                                                                                    <a href="#" class="px-2 py-2 ml-2">
-                                                                                        <i class="fas fa-ellipsis-v"></i>
-                                                                                    </a>
+                                                                                    <div class="d-flex justify-content-center">
+                                                                                        <a href="#" class="">
+                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                                        </a>
+                                                                                        <div class="dropdown actionDropdown  ml-2">
+                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                                                <i class="fas fa-ellipsis-v"></i>
+                                                                                            </a>
+                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
+                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </td>
                                                                             </tr>
                                                                         </table>

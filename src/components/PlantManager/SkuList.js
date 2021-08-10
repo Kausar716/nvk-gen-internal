@@ -173,12 +173,13 @@ const SkuList = (props)=>{
     props.createPlantSkuAction(props.plantData.ae_plant_id,plantSkuDataById)
     // props.plantPageReDirectAction("all","plant")
   
-    props.clearSkuFieldsPLant()
+    props.clearSkuFieldsPLant(actionType)
     }
     else if(actionType ==="sku"){ 
         props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById)
         // props.plantPageReDirectAction("all","plant")
-
+        props.clearSkuFieldsPLant(actionType)
+        setSelectedRow(-1)
     }
     }
     else if(e.target.id === "retain"){
@@ -188,6 +189,7 @@ const SkuList = (props)=>{
         }
         else if(actionType ==="sku"){ 
             props.updatePlantSkuAction(plantSkuDataById.id,plantSkuDataById);
+            setSelectedRow(-1)
         }
        
     }
@@ -387,6 +389,8 @@ const SkuList = (props)=>{
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.plantPageReDirectAction("all","plant")}>Return To Plant Manager</button>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -447,18 +451,18 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
                                             <label>Each Cost <span class="text-danger">*</span></label>
-                                            <input type="number" onMouseLeave={handleBlur} class="form-control text-right" placeholder="0.00" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
-                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="each_cost" value={plantSkuDataById.each_cost} onChange={handleInput}/>
+                                            {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
-                                            <input type="number" onMouseLeave={handleBlur} class="form-control text-right" placeholder="0.00" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
-                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="each_price" value={plantSkuDataById.each_price} onChange={handleInput}/>
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
-                                            <input type="number" onMouseLeave={handleBlur} class="form-control text-right" placeholder="0.00" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
-                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sale Price</span>:""}
+                                            <input type="text" onBlur={handleBlur} class="form-control text-right" placeholder="0.00" id="sale_price" value={plantSkuDataById.sale_price} onChange={handleInput}/>
+                                            {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sale Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -508,14 +512,17 @@ const SkuList = (props)=>{
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
                                             
-                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Return to Plant Manager</button>
+                                        {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" id="retain" onClick={handleCancel}>Return to Plant Manager</button> */}
                                            {actionType !=="sku"? <button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{(actionType ==="add" || actionType === "edit")?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <button type="button" style={{cursor:"pointer"}} class="btn btn-primary btn-lg ml-3" disabled={(needAction===true && flag===0)?false:true} id="dontRetain" onClick={submitAction}
                                                  >{(actionType ==="add" || actionType === "edit")?"Add SKU & Clear":"Update "}</button>
-                                        <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                        {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt="" onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}} />
-                                        </a>
-                                            
+                                        </a> */}
+                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
+                                       onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant(actionType)}}
+                                        
+                                        >Cancel</button>
 
                                         </div>
                                     </div>
@@ -588,8 +595,8 @@ const SkuList = (props)=>{
                                                     </div>
                                                 </td>
 
-                                                <td class="text-right">{skuData.volume_price_per_unit===null?"0.00":skuData.volume_price_per_unit}</td>
-                                                <td class="text-right">{skuData.volume_quantity_name}</td>
+                                                <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00"?"lightgray":""}} >{skuData.volume_price_per_unit===null?"0.00":skuData.volume_price_per_unit}</td>
+                                                <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00"?"lightgray":""}} >{skuData.volume_quantity_name}</td>
                                                 <td class="text-center" >
                                                     <span>
                                                         {/* <a href="javascript:;"> */}

@@ -99,14 +99,14 @@ import {
 // "attributes[1][subattributes][1][id]":3,
 // "attributes[2][id]":3,
 // "attributes[2][subattributes][2][id]":4,
-export const createPlantAction = (plantData,tags) => dispatch => {
+export const createPlantAction = (plantData) => dispatch => {
     console.log(plantData)
     let errorArray=[];
     if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
     if(plantData.category_id.trim().length ===0 ) errorArray.push("Add Category")
     if(errorArray.length===0){
-        plantData["common_name"] = tags.length===0?["Tag"]:tags
+        // plantData["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/add-plant`,plantData,config).then(res=>{
           
             errorArray.push("Plant Added successfully")            
@@ -200,9 +200,9 @@ export const checkBoxSku =(id,index,type1,obj) =>dispatch=>{
     })
     
 }
-export const updatePlantAction = (data,id,tag) => dispatch => {
+export const updatePlantAction = (data,id) => dispatch => {
    
-    data["common_name"] = tag
+    // data["common_name"] = tag
         axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
             console.log(res.data.data.plant_id)
             dispatch(getAllPlantAction())
@@ -633,10 +633,12 @@ export const handlePlantCategory = (category,subCategory) =>dispatch=>{
 
 }
 
-export const clearSkuFieldsPLant = ()=>dispatch=>{
+export const clearSkuFieldsPLant = (actionType)=>dispatch=>{
+    if(actionType === "sku")
+    actionType="edit"
     dispatch({
         type:CLEAR_SKU_FIELDS_PLANT,
-        // actionType:actionType
+        actionType:actionType
     })
     
 }

@@ -76,6 +76,7 @@ const initialSatate = {
     archived: 0,
     discontinued: 0,
     notes: "",
+    common_name:""
 
   },
   plantSkuDataById:{
@@ -166,7 +167,8 @@ export default function(state = initialSatate, action){
                     in_production: 1,
                     archived: 0,
                     discontinued: 0,
-                    notes: ""
+                    notes: "",
+                    common_name:""
                 },
                 plantSkuDataById         :   {
                 sku_code: "",
@@ -383,7 +385,8 @@ export default function(state = initialSatate, action){
                     in_production: 1,
                     archived: 0,
                     discontinued: 0,
-                    notes: ""
+                    notes: "",
+                    common_name:""
                 },
                 plantSkuDataById:{
                     sku_code: "",
@@ -414,6 +417,46 @@ export default function(state = initialSatate, action){
                 ...state,
                 needAction:false,
                 actionType:"add",
+                plantDataById     :   {
+                    genus: "",
+                    alternate_genus: "",
+                    series: "",
+                    species: "",
+                    cultivar1: "",
+                    cultivar2: "",
+                    introduction_year: "",
+                    hardiness_zone: "",
+                    royality: "",
+                    patent: "",
+                    category_id: "",
+                    in_production: 1,
+                    archived: 0,
+                    discontinued: 0,
+                    notes: "",
+                    common_name:""
+                },
+                plantSkuDataById:{
+                    sku_code: "",
+                    product_id: null,
+                    plant_id: "",
+                    each_cost: "0.00",
+                    each_price: "0.00",
+                    sale_price: "0.00",
+                    sale_expiry_date: null,
+                    volume_quantity: "0",
+                    volume_price_per_unit: "0.00",
+                    sku_item_name: null,
+                    subcategory: null,
+                    archived: "0",
+                    discontinued: 0,
+                    location: null,
+                    status: 1,
+                    attributes_subattributes:[],
+                  },
+                  tagsData: [],
+                  status:false,
+                  ae_plant_id:"",
+                plantSkuDataList:[]
             }
         case DELETE_PLANT_SKU_ACTION:
             console.log(action)
@@ -528,7 +571,7 @@ export default function(state = initialSatate, action){
                         attributes_subattributes:[]           
                     
                         },
-                        actionType:"edit"
+                        actionType:action.actionType
 
                 }
             case GET_SINGLE_PLANT_SKU:

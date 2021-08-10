@@ -410,7 +410,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
     const handleCancle = ()=> {
         setSelectedRow(-1);
         setSkuEdit(false); 
-        props.clearSkuFields()
+        console.log(props.productData.actionType)
+        props.clearSkuFields(props.productData.actionType)
     }
     let flag =0
     if(skuDataById){       
@@ -420,10 +421,12 @@ console.log("PRODUCT.ID", productDataById.product_id)
         }
         
     }
+    console.log(actionType)
     let locationList = []
     // console.log(props.temp.attributeData.subAttribute)
     if(props.supplierLocation)
      locationList= props.supplierLocation.active
+
        
     return (
         <div> <ActionModal cancel={cancel} confirm={confirm} open={open} message="Are you sure you want to delete sku?"/>
@@ -432,9 +435,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU {skuDataById.sku_code}</h3>
+                                            <h3>GENERATED SKU </h3><p>{skuDataById.sku_code}</p>
                                         </div>
+                                        
                                         <div class="col-md-6 d-flex justify-content-end">
+                                        
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
                                                 <div class="switcher ml-2">
@@ -444,6 +449,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
+                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -487,7 +494,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 // min="0"
                                                 onMouseLeave={handleBlur}
                                               />
-                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost</span>:""}
+                                              {each_costError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Cost(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Each Price <span class="text-danger">*</span></label>
@@ -498,7 +505,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              style={{textAlign:"right"}}
                                              onMouseLeave={handleBlur}
                                             min="0"/>
-                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price</span>:""}
+                                            {each_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Each Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sale Price <span class="text-danger">*</span></label>
@@ -509,7 +516,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              onMouseLeave={handleBlur}
                                               value={skuDataById.sale_price}
                                                min="0"/>
-                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price</span>:""}
+                                               {sales_priceError?<span style={{fontSize:"small",color:"red"}}>Enter Valid Sales Price(Fixed 2 Decimals)</span>:""}
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Sales Expiry Date</label>
@@ -561,8 +568,12 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                     </div>
                                     <div class="row mt-3">
                                         <div class="col-md-12 text-md-right">
-                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
-                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
+                                            
+
+
+                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
+                                            disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
+                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{actionType === "edit" || actionType === "add"?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <button 
                                             // type="button" class="btn btn-primary btn-lg"
                                             className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
@@ -571,17 +582,17 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                              //disabled={needAction===true?false:true} 
                                              //onClick={()=>{ props.createSkuAction( finalPrID,skuDataById,skuValidation);}} 
                                             
-                                             > {!skuEdit?"Add SKU & Clear":"Update "}
+                                             > {actionType === "edit" || actionType === "add"?"Add SKU & Clear":"Update "}
                                                  {/* Add SKU &amp; Clear */}
                                                  </button>
-
-
-                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
-                                            disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
-                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
-                                            <a href="#" class=" ml-2 mt-3 mt-md-0">
-                                            <img src="assets/img/close-ic.svg" alt="" onClick={handleCancle} />
-                                        </a>
+                                            {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
+                                            <img src="assets/img/close-ic.svg" alt=""  />
+                                        </a> */}
+                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
+                                       onClick={handleCancle}
+                                        
+                                        >Cancel</button>
+                                        
                                         </div>
                                     </div>
                                 </form>
@@ -663,7 +674,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                         return(
 
                                         <tr key={sku.id} style={{background:(selectedRow === sku.id)? "#e1e3e4":""}}>
-                                            <td>{sku.archived==="0"?"Active":"Archived"}</td>
+                                            <td style={{color:sku.archived==="0"?"":"red"}} >{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
                                             <td style={{textAlign:"center"}}>{sku.each_cost}</td>
                                             <td style={{textAlign:"center"}}>{sku.each_price}</td>

@@ -133,26 +133,27 @@ const GeneralSettings=(props)=> {
 
      const submitAction = (e) =>{
          let {productDataById}  = props.productData
+        //  productDataById.common_name = productDataById.common_name
         e.preventDefault();
        // e.target.reset();
        //debugger;
-        console.log("TAGDATA", tagsData)
+        // console.log("TAGDATA", tagsData)
         //tagsData = [...tags,...tagsData]
-        let localTagData = tagsData;
+        
          if(submitCount === 0){
             if(needAction){
                 if(actionType ==="add")
-                props.createProductAction(productDataById,localTagData)
+                props.createProductAction(productDataById)
                 // console.log(props.productDataById)
                 // console.log(productDataById.product_id)
                 // console.log(props.productData.ae_product_id)
                 // console.log(actionType)
                 if(actionType ==="edit"){
                     if(productDataById){
-                        props.updateProductAction(productDataById,productDataById.product_id,localTagData)
+                        props.updateProductAction(productDataById,productDataById.product_id)
                     }                   
                     else if(props.productData.ae_product_id){
-                    props.updateProductAction(productDataById,props.productData.ae_product_id,localTagData)
+                    props.updateProductAction(productDataById,props.productData.ae_product_id)
                     }
                 }
                 //setSubmitCount(1)
@@ -179,6 +180,19 @@ const GeneralSettings=(props)=> {
 
 // }
 console.log(productDataById)
+let commonNameList = []
+if(productDataById.common_name){
+    console.log(productDataById.common_name)
+    if(typeof(productDataById.common_name) === "string"){
+        commonNameList = JSON.parse(productDataById.common_name)
+    }    
+    else{
+        commonNameList = productDataById.common_name
+    }
+   
+}
+console.log(commonNameList)
+
 let flag =0
 if(productDataById){       
     if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id || productDataById.category_id === "0"|| productDataById.manufacturer_id === "0"){
@@ -187,8 +201,6 @@ if(productDataById){
     }
     
 }
-
-//tagsData = [...tags, ...tagsData]
     return (
         <div>
             <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"1em",paddingRight:"1em"}}>
@@ -247,11 +259,11 @@ if(productDataById){
 
 
                                         <ReactTagInput 
-                                                    tags={tags} 
+                                                    tags={commonNameList} 
                                                     onChange={(tags) => {
-                                                        props.handleInputAction("tagsData",tags)
-                                                        setTags(tags)}}
-                                                    id=""
+                                                        props.handleInputAction("common_name",tags)
+                                                       }}
+                                                    id="common_name"
                                                     />
 
                                 {/* <div className="masterStackDiv">
@@ -333,7 +345,7 @@ if(productDataById){
 
                                         <button className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
                                            style={{cursor:"pointer"}} disabled={submitCount===0?(needAction===true && flag === 0)?false:true:true} onClick={submitAction}>
-                                            {actionType==="add"?"Add Product":"Update Product"}
+                                            {actionType==="add"?"Add ":"Update Product"}
                                         </button>
                                     </div>
                                 </div>

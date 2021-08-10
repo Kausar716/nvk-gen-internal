@@ -8,6 +8,9 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import './style.css';
 import InfoModal from "../Modal/InfoModal"
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
+
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
@@ -21,7 +24,17 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
        isEditing:false,
        name:'',
        selectedID:'',
-       deleteon:false
+       subName:'',
+       subName2:'',
+      
+       btnLabelAdd:'Add New Supplier Account Reason',
+       btnLabelUpdate: 'Update Supplier Account Reason',
+       btnLabelCancel:'Cancel',
+       deleteon:false,
+       errorObj:{
+        supplier_reason:0,
+       
+    },
     }
 
 
@@ -74,14 +87,17 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         //     this.props.getAllPlantCategories()
         //    })
            let doProcess = false;
+           let alertmsg = 0;
            if(tasks.length>0){
 
             if (cat === 'active' && tasks[0].status === 0) {
                
                 doProcess = true;
+                alertmsg = 1;
             }
             if (cat === 'inactive' && tasks[0].status === 1) {
                 doProcess = true;
+                alertmsg = 2;
             }
             if (doProcess === true) {
                
@@ -89,6 +105,41 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
                 result.then(res=>{
                     this.props.getAllSupplierReasonMethods()
                 })   
+                alertmsg = 3;
+            }
+
+            if (alertmsg === 1){
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Inactive to Active',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
+            if (alertmsg === 2){
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Moved from Active to InActive',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+            }
+            if (alertmsg === 3){
+                confirmAlert({
+                    title: 'Action',
+                    message: 'Successfully Done',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
             }
            }
        
@@ -101,46 +152,110 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         }
 
 
+        // onDelete =(ev)=>{
+        //     let id= ev.dataTransfer.getData("id");
+        //     console.log(id)
+        //     this.setState({deleteon:true})
+        //    let result= this.props.handleCustomerTypeDelete(id,"delete-supplier-reasons")
+        //    result.then(res=>{
+        //     this.setState({deleteon:false})
+        //     this.props.getAllSupplierReasonMethods()
+        //    })
+        // }
+
+
         onDelete =(ev)=>{
             let id= ev.dataTransfer.getData("id");
-            console.log(id)
-            this.setState({deleteon:true})
-           let result= this.props.handleCustomerTypeDelete(id,"delete-supplier-reasons")
-           result.then(res=>{
-            this.setState({deleteon:false})
-            this.props.getAllSupplierReasonMethods()
-           })
-
-
+            confirmAlert({
+                title: 'Delete Supplier Account Reason',
+                message: 'Are you sure want to delete the Supplier Account Reason?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(id)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
         }
+        onDeleteConfirm=(id)=>{
+            let result= this.props.handleCustomerTypeDelete(id,"delete-supplier-reasons")
+            this.setState({deleteon:true})
+            result.then(res=>{
+                this.props.getAllSupplierReasonMethods()
+                this.setState({deleteon:false})
+                confirmAlert({
+                    title: 'Delete Successfully',
+                    message: 'Supplier Account Reason ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
+            })
+        }
+
+
+
         handleCategoryInputAction = (e)=>{
 
             this.setState({
                 name:e.target.value
             })
-            console.log("eeeee", e.target.value,)
+          
+            let errorObj=this.state.errorObj
+            if(e.target.name === "supplierReason"){
+            errorObj.supplier_reason=0
+            this.setState({errorObj})}
             //this.props.handleReasonInputAction("supplierReason", e.target.value)
             this.props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierReason")
         }
+
+
         handleAddCategoryData = (e)=>{
-            if(this.props.supplierData.supplierReason.reason.trim() ===""){
-                
-                this.setState({isOpen1:true,message:["Please add Acount Reason"]})
+            // if(this.props.supplierData.supplierReason.reason.trim() ===""){
+            //     this.setState({isOpen1:true,message:["Please add Acount Reason"]})
+            // }else{
 
 
-            }else{
                 let obj = {}
                 obj.reason = this.props.supplierData.supplierReason.reason
                 obj.status = 1
+                //let result = this.props.saveSupplierReasonMethod(obj)
+                // result.then(data=>{
+                //     this.props.getAllSupplierReasonMethods()
+                // })
+           
+            // }
+            // this.setState({
+            //     name:"",
+            // })
+            // this.props.saveCustomerType()handleReasonInputAction
+
+            if(this.validate()){
                 let result = this.props.saveSupplierReasonMethod(obj)
-                result.then(data=>{
+                result.then(res=>{
                     this.props.getAllSupplierReasonMethods()
                 })
-            }
-            this.setState({
-                name:"",
-            })
-            // this.props.saveCustomerType()handleReasonInputAction
+                confirmAlert({
+                    title: 'Added Successfully',
+                    message: 'Supplier Reasons',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                });
+                this.setState({
+                    name: "",
+                    subName:"",
+                    isEditing:false,
+                    selectedID:'',
+                })
+            }        
         
         }
 
@@ -168,6 +283,29 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
        }
 
 
+       validate = ()=>{
+        let errorObj = this.state.errorObj
+        if(this.state.name.length === 0){
+            errorObj.supplier_reason=1
+            this.setState({errorObj})
+            return false
+        }
+        // if(this.state.subName.length < 6){
+        //     errorObj.locationTypeShortCode=1
+        //     this.setState({errorObj})
+        //     return false
+        // }
+        return true
+        
+    }
+
+    handleClear=()=>{
+        let errorObj = this.state.errorObj
+        errorObj.supplier_reason=0
+       // errorObj.locationTypeShortCode=0
+        this.setState({name: "", subName:"", isEditing:false, selectedID:'', errorObj})
+    }
+
        handleAddCategoryUpdate=()=>{
           // debugger;
         // this.props.handleSubAttributeUpdate(e.target.id)
@@ -177,15 +315,38 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         updateObject.reason=this.state.name
        // updateObject.id=this.props.showSpeciSubA.id
            
-            let res1=   this.props.updateSupplierReasonMethods(updateID, updateObject)
-            res1.then(res=>{
-                this.props.getAllSupplierReasonMethods()
-            })
+            // let res1=   this.props.updateSupplierReasonMethods(updateID, updateObject)
+            // res1.then(res=>{
+            //     this.props.getAllSupplierReasonMethods()
+            // })
 
-            this.setState({
-                isEditing:false,
-                name:""
-            })
+            // this.setState({
+            //     isEditing:false,
+            //     name:""
+            // })
+
+            if(this.validate()){
+                let res=   this.props.updateSupplierReasonMethods(updateID, updateObject)
+                    res.then(res=>{
+                        this.props.getAllSupplierReasonMethods()
+                    })
+                    if (this.state.isEditing) {
+                        confirmAlert({
+                            title: 'Updated Successfully',
+                            message: 'Supplier Reasons',
+                            buttons: [
+                              {
+                                label: 'Ok'
+                              }
+                            ]
+                        });
+                    }
+                    this.setState({
+                        isEditing:false,
+                        name:"",
+                        subName:""
+                    })
+            }
 
             
 
@@ -223,10 +384,10 @@ render() {
                                             // value={supplierData.supplierReason.reason}  
                                             value={this.state.name}
                                                onChange={this.handleCategoryInputAction}/>
-                                              
+                                              {this.state.errorObj.supplier_reason!==0?<span style={{fontSize:"small",color:"red"}}>Enter Supplier Reason</span>:""}
                                             </div>
 
-                                            {this.state.isEditing ? (
+                                            {/* {this.state.isEditing ? (
                                                 <div className="col-md-6 col-lg-3" onClick={this.handleAddCategoryUpdate}>
                                                         <div>
                                                         <a href="javascript:" className="d-flex align-items-center">
@@ -252,7 +413,24 @@ render() {
                                                 </a>
                                             </div>
 
-                                                )}     
+                                                )}      */}
+
+
+                                    <div className="d-flex justify-content-md-end mt-2"  >
+                                            <div >
+                                                <a href="javascript:" className="d-flex align-items-center" onClick={this.state.isEditing ? this.handleAddCategoryUpdate : this.handleAddCategoryData}> 
+                                                    <i className="fa fa-plus-circle fa-2x mr-2"></i> {this.state.isEditing ? this.state.btnLabelUpdate : this.state.btnLabelAdd }
+                                                </a>
+                                            </div>
+                                            <div className="d-flex justify-content-md-end mt-2"  onClick={this.handleClear}>
+                                                <a href="javascript:" className="d-flex align-items-center" style={{marginLeft:"2.5em", marginTop:"-6px"}}>
+                                                    <i className="fa fa-times-circle fa-2x mr-2"></i> {this.state.btnLabelCancel} 
+                                                </a>
+                                            </div>
+                                    </div>
+
+
+
 
                                         </div>
                                     </div>

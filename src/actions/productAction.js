@@ -66,15 +66,16 @@ import {
     5.get specified product API
 */
 
-export const createProductAction = (product,tags) => dispatch => {
+export const createProductAction = (product) => dispatch => {
+    console.log(product)
     let errorArray=[];
     if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
     if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
     if(product.name.trim().length ===0 ) errorArray.push("Add Product Name")
     if(errorArray.length===0){
-        product["common_name"] = tags.length===0?["Tag"]:tags
         axios.post(`/api/create-product`,product
         , config).then(res=>{
+            console.log(res)
             errorArray.push("Product Added successfully")
             dispatch(getAllProductAction())
             //dispatch(createSkuAction(res.data.data.product.product_id,product,"add"))
@@ -148,7 +149,6 @@ export const checkBoxSku1 =(id,index,type1,obj) =>dispatch=>{
 }
 export const updateProductAction = (data,id,tag) => dispatch => {
     //debugger;
-    data["common_name"] = tag
     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
       //debugger;
         dispatch(getAllProductAction())
@@ -217,10 +217,10 @@ export const getAllSpecifiedSkuProductList =(id)=>dispatch=>{
 
 
 export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
-    
+   
+    console.log(id)
+    console.log(actionType)
     axios.get(`/api/product/${id}`,config).then(res=>{ 
-
-        //debugger;
         console.log("getSpecifiedProductAction",res.data)
         //dispatch(showSpecifiedSkuAction(id))
         dispatch(pageReDirectAction(pageToOpen,actionType))
