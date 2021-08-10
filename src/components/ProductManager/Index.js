@@ -114,7 +114,7 @@ const  ProductManagement = (props) =>{
         const handleCategoryData =(e)=>{
             let temSub =[];
 
-           setLoaderMessage("No Records Found...")
+           setLoaderMessage("No Records Found.")
             //console.log("propsSubCategory", props.categoryData.subCategoryData)
             if(e.target.id ==="category"){
                 // props.handleCategory(e.target.value,"0")

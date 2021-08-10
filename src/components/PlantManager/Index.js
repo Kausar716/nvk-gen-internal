@@ -144,13 +144,13 @@ const productFormAction = ()=>{
         setId(id)
     }
         const getValue = (e)=>{
-            setLoaderMessage("No Records Found...")
+            setLoaderMessage("No Records Found.")
             console.log(e.target.value)
             props.serachPlant({plant: e.target.value, option: selectedRadio, category: categoryId})
             setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
-            setLoaderMessage("No Records Found...")
+            setLoaderMessage("No Records Found.")
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
             props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
@@ -158,7 +158,7 @@ const productFormAction = ()=>{
 
         }
         const searchBasedOnCategory = (e) =>{
-            setLoaderMessage("No Records Found...")
+            setLoaderMessage("No Records Found.")
             //console.log(e.target.value)
             //props.searchCategoryApplyAction(e.target.value)
             props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
