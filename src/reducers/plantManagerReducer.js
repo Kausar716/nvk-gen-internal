@@ -19,6 +19,7 @@ import {
         GET_ALL_PLANT_SKU_ACTION,
         GET_PLANT_SPECIFIED_SKU_ACTION,
         GET_SINGLE_PLANT_SKU,
+        DYNAMIC_DISPLAY_PLANT_SKU,
     
         //Plant page redirects action
     
@@ -607,6 +608,11 @@ export default function(state = initialSatate, action){
                     actionType:action.actionType,
                     plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes}
 
+                }
+            case DYNAMIC_DISPLAY_PLANT_SKU:
+                return{
+                    ...state,
+                    dynamicName:action.dynamicName
                 }
         
   

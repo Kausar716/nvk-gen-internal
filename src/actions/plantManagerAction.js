@@ -9,6 +9,7 @@ import {
     DUPLICTE_PLANT,
     CHECK_BOX,
     UPDATE_CHECK_BOX_SKU,
+    DYNAMIC_DISPLAY_PLANT_SKU,
 
     // Plant SKU ACTION
     CREATE_PLANT_SKU_ACTION,
@@ -677,7 +678,61 @@ export const serachPlant = (data) =>dispatch=>{
      })
 
  }
+ export const dynamidDisplay = (selectedName,plantId,attributeList)=>dispatch=>{
+     let requestData = {}
+     if(attributeList.length>0){
+        attributeList.map(attribute=>{
+            if(attribute.attribute_id === 1){
+                requestData.form_id = JSON.stringify(attribute.subattribute_id)
+             }
+             else if(attribute.attribute_id === 5){
+               
+                if(requestData.height_id)
+                delete requestData.height_id
+                requestData.caliper_id = JSON.stringify(attribute.subattribute_id)
+             }
+             else if(attribute.attribute_id === 4){
+                 if(requestData.caliper_id)
+                 delete requestData.caliper_id
+                requestData.height_id = JSON.stringify(attribute.subattribute_id)
+            }
+            else if(attribute.attribute_id === 3){
+                 requestData.packaging_id = JSON.stringify(attribute.subattribute_id)
+            }
+        })
 
+     }
+     if(selectedName.id === "1"){
+        requestData.form_id = selectedName.value
+     }
+     else if(selectedName.id === "5"){
+       
+        if(requestData.height_id)
+        delete requestData.height_id
+        requestData.caliper_id = selectedName.value
+     }
+     else if(selectedName.id === "4"){
+         if(requestData.caliper_id)
+         delete requestData.caliper_id
+        requestData.height_id = selectedName.value
+    }
+    else if(selectedName.id === "3"){
+         requestData.packaging_id = selectedName.value
+    }
+     axios.post(`/api/generate-sku/${plantId}`,requestData,config).then(res=>{ 
+        console.log(res)
+        dispatch({
+            type:DYNAMIC_DISPLAY_PLANT_SKU,
+            dynamicName:res.data.data
+     
+         })
+       })
+
+    
+
+}
+
+ 
 
 
 
