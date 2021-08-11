@@ -195,7 +195,7 @@ const productFormAction = ()=>{
           // Autosuggest will call this function every time you need to update suggestions.
           // You already implemented this logic above, so just use it.
        
-    const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id} = props.plantData
+    const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id,plantNameWithFormat} = props.plantData
     const {plantCategoryData} =  props.categoryData
     console.log(plantData)
     const inputProps = {
@@ -347,9 +347,9 @@ const productFormAction = ()=>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Plant ID {ae_plant_id} </h2>
+                                                    <h2>Plant ID  <span className="text-green" >{ae_plant_id}</span> <span className="text-green" style={{fontStyle:"italic"}}>{' '+plantNameWithFormat.firstName}</span><span className="text-green">{' '+plantNameWithFormat.secondName}</span></h2> 
                                                 </div>
-                                                
+                                             
                                               { actionType !== "add"?<div class="col-md-6 d-flex justify-content-md-end">
                                                 <span onClick={()=>props.plantPageReDirectAction("all","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">

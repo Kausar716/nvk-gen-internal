@@ -213,7 +213,7 @@ export const updatePlantAction = (data,id) => dispatch => {
         }
         
         axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
-            console.log(res.data.data.plant_id)
+            console.log(res.data.data)
             dispatch(getAllPlantAction())
             let error = []
             error.push("Plant Updated successfully")
@@ -231,7 +231,7 @@ export const updatePlantAction = (data,id) => dispatch => {
             dispatch({
                 type:UPDATE_PLANT_ACTION,
                 ae_plant_id:res.data.data.plant_id,
-                createdPlantData:res.data.data.plant
+                createdPlantData:res.data.data
 
             })
 

@@ -102,8 +102,23 @@ const initialSatate = {
   tagsData: [],
   status:false,
   ae_plant_id:"",
-  plantSkuDataList:[]
+  plantSkuDataList:[],
+  plantNameWithFormat:{}
 
+}
+const nameFormaterFunction = (plantData) =>{
+    let nameWithFormat={}
+    let commonNmae =JSON.parse(plantData.common_name).join()
+    nameWithFormat.firstName=plantData.genus+' '+plantData.species
+    if(!plantData.cultivar2 || plantData.cultivar2.length === 0){        
+        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+`-${commonNmae}`
+    }
+    else {
+        nameWithFormat.firstName=plantData.genus+' '+plantData.species
+        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+`-${commonNmae}`
+    }
+    
+    return nameWithFormat
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -228,10 +243,15 @@ export default function(state = initialSatate, action){
     
                 }
              case UPDATE_PLANT_ACTION:
+                 console.log(action.createdPlantData)
+                 let updatedNameWithFormat = {}    
+                 updatedNameWithFormat = nameFormaterFunction(action.createdPlantData)
+                 console.log(updatedNameWithFormat)
                  return{
                     ...state,
                     needAction:false,
                     ae_plant_id:action.ae_plant_id,
+                    plantNameWithFormat:updatedNameWithFormat,
                     createdPlantData:action.createdPlantData
                  }
 
@@ -243,7 +263,11 @@ export default function(state = initialSatate, action){
                     plantPageNumber:action.pageNumber
                 }
             case GET_SPECIFIED_PLANT_ACTION:{
-                
+                console.log(action)              
+                let nameWithFormat = {}    
+                nameWithFormat = nameFormaterFunction(action.payload.data)
+                console.log(nameWithFormat)
+ 
                 return{
                     ...state,
                     ...state,
@@ -251,7 +275,8 @@ export default function(state = initialSatate, action){
                     tagsData:JSON.parse(action.payload.data.common_name),
                     needAction:false,
                     actionType:action.actionType,
-                    ae_plant_id:action.payload.data.plant_id
+                    ae_plant_id:action.payload.data.plant_id,
+                    plantNameWithFormat:nameWithFormat,
                 }
             }
         case HANDLE_PLANT_INPUT_DATA:{
@@ -455,7 +480,7 @@ export default function(state = initialSatate, action){
                   },
                   tagsData: [],
                   status:false,
-                  ae_plant_id:"",
+                  ae_plant_id:"",                
                 plantSkuDataList:[]
             }
         case DELETE_PLANT_SKU_ACTION:
