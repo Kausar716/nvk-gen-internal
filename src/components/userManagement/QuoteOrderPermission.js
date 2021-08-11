@@ -131,7 +131,7 @@ function QuoteOrderPermission(props) {
 
 
     const handleChange=(e)=>{
-//debugger;
+debugger;
          const {name, checked, id } = e.target;
 
          if(name === "SelectAllQuote"){
@@ -207,8 +207,21 @@ function QuoteOrderPermission(props) {
 
          else  if(name === "toolsSettingsIntoolsSettingsPermissions"){
           
-
+debugger;
             let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
+
+            if(!checked){
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+                setAdditionalPermissions(tempUserALL)
+                //setToolsAnsSettingsPermission(tempUserTS)
+            }
+
+            else{
+
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+                setAdditionalPermissions(tempUserALL)
+
+            }
 
            // let tempUserTS2 =[...tempUser2, ...tempUserTS]
            setToolsAnsSettingsPermission(tempUserTS)

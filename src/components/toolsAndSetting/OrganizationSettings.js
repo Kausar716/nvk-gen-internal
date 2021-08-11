@@ -1127,3 +1127,6 @@ saveDisable =()=>{
     export default withRouter(connect(mapStateToProps,{showorganization,updateorganization,removeImage
         ,handleOrganizationSettingsInputAction,resetUserDataInOrg,
         uploadImage}) (OrganizationSettings));
+
+
+
