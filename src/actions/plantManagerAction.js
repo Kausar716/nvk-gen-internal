@@ -203,6 +203,15 @@ export const checkBoxSku =(id,index,type1,obj) =>dispatch=>{
 export const updatePlantAction = (data,id) => dispatch => {
    
     // data["common_name"] = tag
+        console.log(data)
+        let updateObj= data
+        if(typeof(data.common_name) === "string"){
+            if(data.common_name.length>0)
+            updateObj.common_name = JSON.parse(data.common_name)
+            else 
+            updateObj.common_name = []
+        }
+        
         axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
             console.log(res.data.data.plant_id)
             dispatch(getAllPlantAction())

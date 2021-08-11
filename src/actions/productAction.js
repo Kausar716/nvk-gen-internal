@@ -149,6 +149,14 @@ export const checkBoxSku1 =(id,index,type1,obj) =>dispatch=>{
 }
 export const updateProductAction = (data,id,tag) => dispatch => {
     //debugger;
+    console.log(data)
+    let updateObj= data
+    if(typeof(data.common_name) === "string"){
+        if(data.common_name.length>0)
+        updateObj.common_name = JSON.parse(data.common_name)
+        else 
+        updateObj.common_name = []
+    }
     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
       //debugger;
         dispatch(getAllProductAction())
