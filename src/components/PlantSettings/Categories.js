@@ -475,7 +475,7 @@ render() {
                                             <ul class="list-unstyled">
                                                    {tasks.inactive.map(t=>{
                                                        let backgroundToggle =  (this.state.backgroundChange === t.id)
-                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} >
+                                                    return <li id={t.id} name={t.name} draggable onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} >
                                                                  <a className="d-flex justify-content-between align-items-center" style={{backgroundColor:backgroundToggle?"#e1e3e4":"",borderStyle:backgroundToggle?"dashed":""}}>
                                                                 <span id="Wheathers">{t.name}</span>
                                                                 </a>

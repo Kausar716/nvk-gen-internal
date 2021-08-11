@@ -21,7 +21,7 @@ import {getMenuItems,updateMenuItems} from '../actions/sideMenuAction'
             <div class="row">
                 
                 <div class="col-md-6 col-lg-4" onClick={()=>{handleDashboardClick("orderList")}}>
-                <Link to="/QuoteAndOrdersManagement" >
+                <Link to="/QuoteList" >
                     <div class="p-20 dashCards dashcardHvr cursorPointer">
                         <h3 class="text-center">Customer Quotes &amp; Orders</h3>
                         <div class="text-center my-4 dashIcon">

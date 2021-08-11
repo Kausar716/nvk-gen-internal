@@ -7,6 +7,7 @@ import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
 import initialDetails from './initialDetails';
 import '../PurchaseOrder/style.css';
+import { Link } from "react-router-dom";
 
 export class QuoteList extends React.Component {
 
@@ -220,18 +221,24 @@ export class QuoteList extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quotes</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
-                    <a href="/Quote" class="btn">
+                   
+                    <Link to="/Quote">
+                    <a href="#" class="btn">
                         <span class="d-flex align-items-center text-left">
                         <img src="assets/img/Quoteblue_small-Icon.svg" alt=""/>
                             <span class="ml-2"><b>New Quote</b></span>
                         </span>
-                    </a>
-                    <a href="/QuoteAndOrdersManagement" class="btn ml-2">
+                        </a>
+                        </Link>
+                    {/* </a> */}
+                    <Link to="/QuoteAndOrdersManagement">
+                    <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
                             <span class="ml-2"><b>New Order</b></span>
                         </span>
                     </a>
+                    </Link>
 				</div>
 			</div>
             <div class="px-md-3 mt-3">
