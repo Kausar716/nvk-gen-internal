@@ -108,7 +108,7 @@ const initialSatate = {
     productDataBySKUlist:[],
     manufacturer_id:"None",
     selectedCategory:"All",
-
+    displayCancel:false
 
 }
 
@@ -155,6 +155,7 @@ export default function(state = initialSatate, action){
                 },
                 productDataBySKUlist:[],
                 message:[],
+                displayCancel:false,
                 needAction:false,
                 skuValidation:{
                     each_cost:{
@@ -280,6 +281,7 @@ export default function(state = initialSatate, action){
                     //id:null
                 },
                 needAction:false,
+                displayCancel:false,
                 productDataBySKUlist:[]
             }
         case DUPLICTE_PRODUCT:
@@ -351,7 +353,8 @@ export default function(state = initialSatate, action){
         return{
         
             ...state,
-            needAction:false
+            needAction:false,
+            displayCancel:false
             
         }
 
@@ -360,7 +363,8 @@ export default function(state = initialSatate, action){
         return{
             //const skuData = state.
             ...state, 
-            needAction:false
+            needAction:false,
+            displayCancel:false
             // skuData:[...action.payload.data]
         };
     case CREATE_SKU_ACTION_AND_CLEAR:
@@ -387,11 +391,13 @@ export default function(state = initialSatate, action){
             },
             actionType:action.actionType,
             needAction:false,
+            displayCancel:false
         }
     case UPDATE_PLANT_SKU_ACTION:{
         return{
             ...state, 
-            needAction:false
+            needAction:false,
+            displayCancel:false
         }
     }
 
@@ -419,7 +425,8 @@ export default function(state = initialSatate, action){
         
             },
             // eslint-disable-next-line no-dupe-keys
-            needAction:false
+            needAction:false,
+            displayCancel:false
         }
     case GET_SPECIFIED_SKU_ACTION:
         return{
@@ -450,7 +457,7 @@ export default function(state = initialSatate, action){
             return{
                 ...state,
                 productDataById:{...state.productDataById, [action.itemId]:action.itemValue},
-                needAction:true
+                needAction:true                
 
             }
         case HANDLE_SKU_INPUT_DATA:
@@ -458,7 +465,8 @@ export default function(state = initialSatate, action){
             return{
                 ...state,
                 skuDataById:{...state.skuDataById,[action.itemId]:action.itemValue},
-                needAction:true
+                needAction:true,
+                displayCancel:true
             }
         //filter handle
         case FILTER_CATEGORY_DATA:
@@ -588,7 +596,8 @@ export default function(state = initialSatate, action){
             
             
                 },
-                actionType:action.actionType
+                actionType:action.actionType,
+                displayCancel:false
             }
         }
         default:

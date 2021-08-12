@@ -3,7 +3,7 @@ import React,  { Component,useEffect,useState,Link } from 'react';
 import {connect} from "react-redux";
 import ReactTagInput from "@pathofdev/react-tag-input";
 import "@pathofdev/react-tag-input/build/index.css";
-
+import {getAllSubAttribute} from '../../actions/attributeAction'
 import {
     //plant actions
     createPlantAction ,
@@ -34,6 +34,11 @@ import {
     const [toggleForTagInput,setToggle] = useState(true)
     const [errorObj,setErrorObj] = useState({ genus:0,species:0  })
     const [errorCount,setErrorCount] = useState(0)
+    let hardinessZoneList =props.attributeData.subAttribute
+
+    useEffect(()=>{
+        props.getAllSubAttribute(10)
+    },[])
  
     const handleInput =(e)=>{
         setSubmitCount(0)
@@ -198,7 +203,8 @@ import {
         }
        
     }
-    console.log(commonNameList)
+    // if(props.attributeData)
+    console.log(props.attributeData.subAttribute)
 
     return (
         <div>
@@ -322,19 +328,22 @@ import {
                                         <label>Royalty</label>
                                         <input type="text" class="form-control" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
                                     </div>
-                                    {/* future requirement */}
-                                    {/* <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
+                                    {/* future requirement  10 id */}
+                                    <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Hardiness Zone</label>
                                       
-                                            <select class="form-control" >
+                                            <select class="form-control" style={{cursor:"pointer"}} id={plantDataById.hardiness_zone} onChange={handleInput} >
                                             <option>None</option>
-                                            <option>Areca</option>
-                                            <option>Zone</option>
-                                            </select> */}
+                                            {hardinessZoneList.map(zone=>{
+                                                return<option value = {zone.id}>{zone.value}</option>
+                                            })}
+                                            </select>
+
+                                            
                                    
                                         {/* <input type="text" class="form-control" placeholder="" id="hardiness_zone" value={plantDataById.hardiness_zone} onChange={handleInput}/> */}
                                         
-                                    {/* </div> */}
+                                    </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Introduction Year</label>
                                         <select class="form-control" id="introduction_year" onChange={handleInput} style={{cursor:"pointer"}} value={plantDataById.introduction_year}>
@@ -371,7 +380,9 @@ import {
 
 const mapStateToProps = (state)=> ({ 
     plantData:state.plantData,
-    categoryData: state.categoryData
+    categoryData: state.categoryData,
+    attributeData:state.attributeData
+    
 
 })
 export default connect(mapStateToProps,{
@@ -388,7 +399,8 @@ export default connect(mapStateToProps,{
 
         //hande input
         handlePlantInputAction,
-        getAllPlantCategories
+        getAllPlantCategories,
+        getAllSubAttribute
 
 
 
