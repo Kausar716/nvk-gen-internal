@@ -546,7 +546,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3" 
                                             disabled={(needAction===true && flag === 0)?false:true} onClick={handleUpdateAndClear}>{!skuEdit?"Add SKU & Retain":"Update SKU & Retain"}</button> */}
-                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-outline-secondary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{actionType === "edit" || actionType === "add"?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
+                                            {actionType !== "sku"?<button type="button" style={{cursor:"pointer"}} class="btn btn-primary btn-lg ml-3" id="retain" disabled={(needAction===true && flag===0)?false:true} onClick={submitAction}>{actionType === "edit" || actionType === "add"?"Add SKU & Retain":"Update SKU & Retain"}</button>:""}
                                             <button 
                                             // type="button" class="btn btn-primary btn-lg"
                                             className={(needAction===true && flag === 0)?"btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3"} 
