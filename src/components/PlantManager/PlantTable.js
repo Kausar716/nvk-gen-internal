@@ -184,6 +184,7 @@ const handleCheckBox =(id,index,type)=>{
                                                 <th className="text-nowrap text-center">Plant ID</th>
                                                 <th className="text-nowrap">Plant Name</th>
                                                 <th className="text-nowrap">Category</th>
+                                                <th className="text-nowrap">SKU Count</th>
                                                 <th className="text-nowrap text-center">In Production</th>
                                                 <th className="text-nowrap text-center">Discontinued</th>
                                                 <th className="text-nowrap text-center">Archived</th>
@@ -192,7 +193,7 @@ const handleCheckBox =(id,index,type)=>{
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus},index)=>{
+                                        {displayPlantList.map(({id,status, plantName, location, category,sku_count, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus},index)=>{
                                              let id2 ="discontinued"
                                              let id3 ="archived"
                                              let id4 ="in_production"
@@ -206,6 +207,7 @@ const handleCheckBox =(id,index,type)=>{
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
                                                     </td>
+                                                <td className="text-center">{sku_count}</td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
                                                         <input type="checkbox"  className="custom-control-input" checked={parseInt(in_production)===1?"checked":""} id={id4+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id4)}/>
