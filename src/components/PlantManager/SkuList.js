@@ -27,7 +27,8 @@ showSinglePlantSkuAction,
 plantPageReDirectAction,
 clearSkuFieldsPLant,
 updateCheckBoxsku,
-checkBoxSku
+checkBoxSku,
+dynamidDisplay
    
 } from "../../actions/plantManagerAction";
 import {
@@ -95,8 +96,12 @@ const SkuList = (props)=>{
         }
         setErrorObj(errorobj)
        setErrorCount(errorcount)
-       console.log(e.target.id)
-       console.log(e.target.value)
+       if(props.plantData.ae_plant_id){
+           if(props.plantData.plantSkuDataById) 
+        props.dynamidDisplay({id:e.target.id,value:e.target.value},props.plantData.ae_plant_id,props.plantData.plantSkuDataById.attributes_subattributes)
+        else 
+        props.dynamidDisplay({id:e.target.id,value:e.target.value},props.plantData.ae_plant_id,[])
+       }
         if(e.target.id =="archived") props.handlePlantSkuInputAction(e.target.id,e.target.value ==1?0:1)
         else if(e.target.id =="status") props.handlePlantSkuInputAction(e.target.id,e.target.value ==1?0:1)
         else props.handlePlantSkuInputAction(e.target.id,e.target.value)
@@ -372,7 +377,7 @@ const SkuList = (props)=>{
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU</h3>{plantSkuDataById.sku_code}
+                                            <h3>GENERATED SKU</h3>{props.plantData.dynamicName}
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
@@ -573,11 +578,9 @@ const SkuList = (props)=>{
 
                                         {
                         displayPlantSkuList.map((skuData,i)=>{
-                           console.log(i)
-                           
                             return(
                                             <tr style={{background:(selectedRow === skuData.id)? "#e1e3e4":""}}>
-                                                <td>{skuData.archived ==="0"?"Active":"Archived"}</td>
+                                                <td style={{color:skuData.archived ==="0"?"":"red"}}>{skuData.archived ==="0"?"Active":"Archived"}</td>
                                                 <td>{skuData.sku_code}</td>
                                                 <td class="text-right">{skuData.each_cost}</td>
                                                 <td class="text-right">{skuData.each_price}</td>
@@ -644,5 +647,6 @@ export default connect(mapStateToProps,{
     plantPageReDirectAction,
     clearSkuFieldsPLant,
     updateCheckBoxsku,
-    checkBoxSku
+    checkBoxSku,
+    dynamidDisplay
 })(SkuList)
