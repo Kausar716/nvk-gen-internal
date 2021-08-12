@@ -347,7 +347,10 @@ const productFormAction = ()=>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Plant ID  <span className="text-green" >{ae_plant_id}</span> <span className="text-green" style={{fontStyle:"italic"}}>{' '+plantNameWithFormat.firstName}</span><span className="text-green">{' '+plantNameWithFormat.secondName}</span></h2> 
+                                                    <h2>Plant ID {actionType !== "add"?<>
+                                                    <span className="text-green" >{ae_plant_id}</span> 
+                                                    <span className="text-green" style={{fontStyle:"italic"}}>{' '+plantNameWithFormat.firstName}</span>
+                                                    <span className="text-green">{' '+plantNameWithFormat.secondName}</span></>:""} </h2>
                                                 </div>
                                              
                                               { actionType !== "add"?<div class="col-md-6 d-flex justify-content-md-end">

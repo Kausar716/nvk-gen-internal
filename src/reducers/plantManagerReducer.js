@@ -104,19 +104,24 @@ const initialSatate = {
   status:false,
   ae_plant_id:"",
   plantSkuDataList:[],
-  plantNameWithFormat:{}
+  plantNameWithFormat:{},
+  dynamicName:""
 
 }
 const nameFormaterFunction = (plantData) =>{
     let nameWithFormat={}
     let commonNmae =JSON.parse(plantData.common_name).join()
     nameWithFormat.firstName=plantData.genus+' '+plantData.species
-    if(!plantData.cultivar2 || plantData.cultivar2.length === 0){        
-        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+`-${commonNmae}`
+    if(!plantData.cultivar2 || plantData.cultivar2.length === 0){   
+        if(!plantData.cultivar1 || plantData.cultivar1.length === 0){
+            nameWithFormat.secondName = ' '+commonNmae.length>0?`-${commonNmae}`:""
+        }
+        else     
+        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+commonNmae.length>0?`-${commonNmae}`:""
     }
     else {
         nameWithFormat.firstName=plantData.genus+' '+plantData.species
-        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+`-${commonNmae}`
+        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+commonNmae.length>0?`-${commonNmae}`:""
     }
     
     return nameWithFormat
@@ -124,7 +129,6 @@ const nameFormaterFunction = (plantData) =>{
 
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
-    console.log(action)
     switch(action.type){
         // plant page redirects
         case CHECK_BOX:
@@ -135,9 +139,6 @@ export default function(state = initialSatate, action){
             plantData1[action.index] = {...plantData1[action.index],...action.obj}
             // else  plantData1[action.index]["status"] = 1
 
-           
-            // console.log(plantData1[action.index])
-            console.log(plantData1)
             return{
                 ...state,
                 plantData:plantData1
@@ -209,7 +210,8 @@ export default function(state = initialSatate, action){
                 tagsData:[],
                 actionType:"add",
                 plantSkuDataList:[],
-                ae_plant_id:""
+                ae_plant_id:"",
+                dynamicName:""
 
 
             }
@@ -233,21 +235,20 @@ export default function(state = initialSatate, action){
 
 
             case CREATE_PLANT_ACTION:
-                console.log(action)
-                console.log(state)
+                let createdPlantNameWithFormat = {}    
+                 createdPlantNameWithFormat = nameFormaterFunction(action.createdPlantData)
                 return{
                     ...state,
                     needAction:false,
                     ae_plant_id:action.ae_plant_id,
                     createdPlantData:action.createdPlantData,
-                    actionType:"edit"
+                    actionType:"edit",
+                    plantNameWithFormat:createdPlantNameWithFormat,
     
                 }
              case UPDATE_PLANT_ACTION:
-                 console.log(action.createdPlantData)
                  let updatedNameWithFormat = {}    
                  updatedNameWithFormat = nameFormaterFunction(action.createdPlantData)
-                 console.log(updatedNameWithFormat)
                  return{
                     ...state,
                     needAction:false,
@@ -263,12 +264,9 @@ export default function(state = initialSatate, action){
                     ...state,
                     plantPageNumber:action.pageNumber
                 }
-            case GET_SPECIFIED_PLANT_ACTION:{
-                console.log(action)              
+            case GET_SPECIFIED_PLANT_ACTION:{             
                 let nameWithFormat = {}    
-                nameWithFormat = nameFormaterFunction(action.payload.data)
-                console.log(nameWithFormat)
- 
+                nameWithFormat = nameFormaterFunction(action.payload.data) 
                 return{
                     ...state,
                     ...state,
@@ -308,14 +306,11 @@ export default function(state = initialSatate, action){
                         needAction:true
                     }
                 }
-                let attributeValue = state.plantSkuDataById.attributes_subattributes
-                console.log(action.itemValue)
-             
+                let attributeValue = state.plantSkuDataById.attributes_subattributes             
                 if(action.itemId === 4 || action.itemId === "4" ){
                     let idTobeDeleted=-1
                     attributeValue.map((att,index)=>{
                         if(att.attribute_id === 5) idTobeDeleted = index
-                        console.log(att)
                     })
                     if(idTobeDeleted>=0)
                     attributeValue.splice(idTobeDeleted,1)
@@ -435,7 +430,8 @@ export default function(state = initialSatate, action){
                   tagsData: [],
                   status:false,
                   ae_plant_id:"",
-                plantSkuDataList:[]
+                plantSkuDataList:[],
+                dynamicName:""
 
             }
         case DUPLICTE_PLANT:
@@ -482,10 +478,10 @@ export default function(state = initialSatate, action){
                   tagsData: [],
                   status:false,
                   ae_plant_id:"",                
-                plantSkuDataList:[]
+                plantSkuDataList:[],
+                dynamicName:""
             }
         case DELETE_PLANT_SKU_ACTION:
-            console.log(action)
             return{
                     ...state,
                     actionType:"add",
@@ -597,11 +593,11 @@ export default function(state = initialSatate, action){
                         attributes_subattributes:[]           
                     
                         },
-                        actionType:action.actionType
+                        actionType:action.actionType,
+                        dynamicName:""
 
                 }
             case GET_SINGLE_PLANT_SKU:
-                console.log(action)
                 return{
                     ...state,
                     action:action,

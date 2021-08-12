@@ -66,7 +66,6 @@ import {
     4. get all product  API
     5.get specified product API
 */
-// console.log("working 2")
 // let plantData = {
 //     genus:"genus",
 // species:"species",
@@ -101,7 +100,6 @@ import {
 // "attributes[2][id]":3,
 // "attributes[2][subattributes][2][id]":4,
 export const createPlantAction = (plantData) => dispatch => {
-    console.log(plantData)
     let errorArray=[];
     if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     if(plantData.species.trim().length ===0 ) errorArray.push("Add plant species")
@@ -204,7 +202,6 @@ export const checkBoxSku =(id,index,type1,obj) =>dispatch=>{
 export const updatePlantAction = (data,id) => dispatch => {
    
     // data["common_name"] = tag
-        console.log(data)
         let updateObj= data
         if(typeof(data.common_name) === "string"){
             if(data.common_name.length>0)
@@ -214,7 +211,6 @@ export const updatePlantAction = (data,id) => dispatch => {
         }
         
         axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
-            console.log(res.data.data)
             dispatch(getAllPlantAction())
             let error = []
             error.push("Plant Updated successfully")
@@ -263,9 +259,7 @@ export const deletePlantAction = (id) => dispatch => {
 }
 export const deleteSkuAction = (id) => dispatch => {
     let error = []
-    console.log(id)
-    axios.post(`/api/delete-sku/${id}?type=plant`,null,config).then(res=>{ 
-        console.log(res)       
+    axios.post(`/api/delete-sku/${id}?type=plant`,null,config).then(res=>{     
         dispatch({
             type:DELETE_PLANT_SKU_ACTION
         })
@@ -284,9 +278,7 @@ export const deleteSkuAction = (id) => dispatch => {
 }
 export const duplicatePlant = (id) =>dispatch=>{
     let error = []
-    console.log(id)
     axios.get(`/api/duplicate-plant/${id}`,config).then(res=>{ 
-        console.log(res)
         dispatch(getAllPlantAction())
         dispatch(getAllPlantSkuAction())
         // dispatch(showSinglePlantSkuAction(res.data.data.product_id))
@@ -318,7 +310,6 @@ export const getAllPlantAction = () => dispatch => {
 
 export const getSpecifiedPlantAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
     axios.get(`/api/plant/${id}`,config).then(res=>{ 
-        console.log(res.data)
         dispatch(showSpecifiedPlantSkuAction(id))
         dispatch(plantPageReDirectAction(pageToOpen,actionType))
         dispatch({
@@ -348,10 +339,10 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
     let  formdata =[]
     let  caliperdata =[]
     let  heightdata =[]
-    if(data.each_cost =="" ||data.each_cost==null) error.push("Add Each Cost") 
-    if(data.each_price ==""||data.each_price==null) error.push(" Add Each Price")
-    if(data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
-    if(data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
+    if(data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
+    if(data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
+    if(data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
     if(data.attributes_subattributes){
          packagedata = data.attributes_subattributes.filter(obj=>{
             return(obj.attribute_id === 3)
@@ -412,16 +403,8 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
     // ]
     copyData.id=id
     copyData.type = "plant"
-   
-        
-    console.log(copyData,"plantcheck")
-    console.log(id)
-
-
     if(error.length===0){
-      console.log(copyData)
         axios.post(`/api/add-sku`,copyData,config).then(res=>{ 
-            console.log(res)
             // dispatch(getAllProductAction())
             dispatch(showSpecifiedPlantSkuAction(id))
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
@@ -465,7 +448,6 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     // if(data.sale_price ==0||data.sale_price == ""||data.sale_price==null) error.push("Add Sale Price") 
     // if(data.subcategory ==0||data.subcategory == null||data.subcategory==null) error.push("Select Sub Category")
     // if(data.sku_item_name==null ||data.sku_item_name.trim().length ==0 ) error.push("Add Sku Item Name")
-    console.log(data)
     delete data.sub_category_id 
     delete data.sku_item_name 
     
@@ -473,7 +455,6 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
         // delete data["id"]
         data.type = "plant"
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
-            console.log(res)
             // dispatch(getAllProductAction())
             
             // dispatch(getSpecifiedProductAction(id,"edit","sku"))
@@ -529,9 +510,7 @@ export const getAllPlantSkuAction = (id) => dispatch => {
 
 }
 export const showSpecifiedPlantSkuAction = (id) => dispatch => {
-    console.log(id)
     axios.get(`/api/skus/plants/${id}`,config).then(res=>{ 
-        console.log(res.data)
         dispatch({
                 type:GET_PLANT_SPECIFIED_SKU_ACTION,
                 payload:res.data    
@@ -540,25 +519,14 @@ export const showSpecifiedPlantSkuAction = (id) => dispatch => {
 }
 
 export const showSinglePlantSkuAction = (id,data, actionType="edit") => dispatch => {
-  
-console.log(id)
-
-     return axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{ 
-         console.log(res)
-        //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
-
-      
-        console.log("showSpecifiedSkuAction",res.data.data)
-     
+     return axios.get(`/api/sku/${id}?type=plant`,config).then(res=>{      
         dispatch({
                 type:GET_SINGLE_PLANT_SKU,
                 payload:res.data.data,
                 plantSkuDataById:res.data.data,
-                actionType:actionType
-    
+                actionType:actionType    
             })
         })
-
 }
 
 
@@ -625,8 +593,6 @@ export const handlePlantInputAction = (id, value) =>dispatch=>{
 
 }
 export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
-    console.log(id,value)
-
     dispatch({ 
         type:HANDLE_PLANT_SKU_INPUT_DATA,
         itemId:id,
@@ -720,7 +686,6 @@ export const serachPlant = (data) =>dispatch=>{
          requestData.packaging_id = selectedName.value
     }
      axios.post(`/api/generate-sku/${plantId}`,requestData,config).then(res=>{ 
-        console.log(res)
         dispatch({
             type:DYNAMIC_DISPLAY_PLANT_SKU,
             dynamicName:res.data.data
