@@ -105,7 +105,8 @@ const initialSatate = {
   ae_plant_id:"",
   plantSkuDataList:[],
   plantNameWithFormat:{},
-  dynamicName:""
+  dynamicName:"",
+  displayCancel:false
 
 }
 const nameFormaterFunction = (plantData) =>{
@@ -211,7 +212,8 @@ export default function(state = initialSatate, action){
                 actionType:"add",
                 plantSkuDataList:[],
                 ae_plant_id:"",
-                dynamicName:""
+                dynamicName:"",
+                displayCancel:false
 
 
             }
@@ -292,7 +294,8 @@ export default function(state = initialSatate, action){
                 return{
                     ...state,
                     plantSkuDataById:{...state.plantSkuDataById,attributes_subattributes:filteredAttribute},
-                    needAction:true
+                    needAction:true,
+                    displayCancel:true
                 }
             }
           
@@ -303,7 +306,8 @@ export default function(state = initialSatate, action){
                     return{
                         ...state,
                         plantSkuDataById:plantSkuDataById,
-                        needAction:true
+                        needAction:true,
+                        displayCancel:true
                     }
                 }
                 let attributeValue = state.plantSkuDataById.attributes_subattributes             
@@ -347,14 +351,16 @@ export default function(state = initialSatate, action){
                 return{
                     ...state,
                     plantSkuDataById:{...state.plantSkuDataById,attributes_subattributes:attributeValue},
-                    needAction:true
+                    needAction:true,
+                    displayCancel:true
                 }
 
             }else{
                 return{
                     ...state,
                     plantSkuDataById:{...state.plantSkuDataById, [action.itemId]:action.itemValue},
-                    needAction:true
+                    needAction:true,
+                    displayCancel:true
                 }
             }
         
@@ -431,7 +437,8 @@ export default function(state = initialSatate, action){
                   status:false,
                   ae_plant_id:"",
                 plantSkuDataList:[],
-                dynamicName:""
+                dynamicName:"",
+                displayCancel:false
 
             }
         case DUPLICTE_PLANT:
@@ -562,7 +569,8 @@ export default function(state = initialSatate, action){
            case UPDATE_PLANT_SKU_ACTION :
                return{
                 ...state, 
-                needAction:false
+                needAction:false,
+                displayCancel:false
                }
             
             case CREATE_PLANT_SKU_ACTION :
@@ -570,6 +578,7 @@ export default function(state = initialSatate, action){
                     //const skuData = state.
                     ...state, 
                     needAction:false,
+                    displayCancel:false
                     // skuData:[...action.payload.data]
                 };
             case CLEAR_SKU_FIELDS_PLANT:
@@ -594,7 +603,8 @@ export default function(state = initialSatate, action){
                     
                         },
                         actionType:action.actionType,
-                        dynamicName:""
+                        dynamicName:"",
+                        displayCancel:false
 
                 }
             case GET_SINGLE_PLANT_SKU:
@@ -602,6 +612,7 @@ export default function(state = initialSatate, action){
                     ...state,
                     action:action,
                     actionType:action.actionType,
+                    displayCancel:true,
                     plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes}
 
                 }

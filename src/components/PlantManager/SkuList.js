@@ -206,7 +206,7 @@ const SkuList = (props)=>{
 
 
    console.log(props.plantData);
-      const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList,actionType} = props.plantData
+      const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList,actionType,displayCancel} = props.plantData
       const plantPerPage = pageSize;
       const totalLength = plantSkuDataList.length;
       const pagesVisited = plantSkuPageNumber*pageSize;
@@ -518,10 +518,10 @@ const SkuList = (props)=>{
                                         {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt="" onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant()}} />
                                         </a> */}
-                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
+                                        {displayCancel?<button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
                                        onClick={()=>{ setSelectedRow(-1);props.clearSkuFieldsPLant(actionType)}}
                                         
-                                        >Cancel</button>
+                                        >Cancel</button>:""}
 
                                         </div>
                                     </div>

@@ -561,10 +561,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             {/* <a href="#" class=" ml-2 mt-3 mt-md-0">
                                             <img src="assets/img/close-ic.svg" alt=""  />
                                         </a> */}
-                                        <button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
+                                        {props.productData.displayCancel?<button type="button" class="btn btn-outline-secondary btn-lg ml-3"  
                                        onClick={handleCancle}
                                         
-                                        >Cancel</button>
+                                        >Cancel</button>:""}
                                         
                                         </div>
                                     </div>
