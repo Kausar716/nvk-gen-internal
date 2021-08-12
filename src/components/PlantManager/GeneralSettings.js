@@ -332,7 +332,7 @@ import {
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Hardiness Zone</label>
                                       
-                                            <select class="form-control" style={{cursor:"pointer"}} id={plantDataById.hardiness_zone} onChange={handleInput} >
+                                            <select class="form-control" style={{cursor:"pointer"}} id={"hardiness_zone"} onChange={handleInput} value={plantDataById.hardiness_zone} >
                                             <option>None</option>
                                             {hardinessZoneList.map(zone=>{
                                                 return<option value = {zone.id}>{zone.value}</option>
