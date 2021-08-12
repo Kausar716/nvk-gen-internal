@@ -468,6 +468,7 @@ export class PlantInventory extends Component {
                                                     {/* className="text-nowrap text-center" */}
                                                 </thead>
                                                 {/* <tbody> */}
+                                                {console.log("kkm",plantData)}
                                                     {displayPlantList.map(plantId=>{
                                                         console.log(JSON.parse(plantId))
                                                        let count =0
@@ -479,7 +480,7 @@ export class PlantInventory extends Component {
                                                                     return(
                                                                         <><tr style={{backgroundColor:"#EFEFEF"}}>
                                                         <td colspan="5">
-                                                            <a href="">{plant.genus}</a>
+                                                            <a href="">{plant.plant_name}</a>
                                                         </td>
                                                         <td colspan="8">
                                                             <a href="">View Sales Orders</a>

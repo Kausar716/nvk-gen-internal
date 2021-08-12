@@ -54075,6 +54075,11 @@ ul.list-unstyled.searchAlpha li a:hover {
     height: 8px;
     border-radius: 4px;
 }
+.cardBoxwide .stripe {
+    width:100%;
+    height: 8px;
+    border-radius: 4px;
+}
 .cardBox.openStsCard .stripe {
     background-color: rgb(52, 93, 153);
 }
@@ -54092,14 +54097,14 @@ ul.list-unstyled.searchAlpha li a:hover {
 }
 .cardBox p {
     font-size: 18px;    
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-weight: 600;
     margin-left: 10px;
     margin-right: 10px;
 }
 .cardBoxwide p {
     font-size: 18px;    
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-weight: 600;
     margin-left: 10px;
     margin-right: 10px;
@@ -54119,7 +54124,8 @@ ul.list-unstyled.searchAlpha li a:hover {
     min-height: 120px;
     border-color: #a9a9a9;
 }
-.activeQuotesCard h4, .quotesFlaggedCard h4 {
+.activeQuotesCard h4, .quotesFlaggedCard h4, .totalCard h4, .openStsCard h4, .pickingStsCard h4, .readyStsCard h4,
+    .shippedStsCard h4, .lateStsCard h4 {
     font-size: 32px;
 }
 .editCustSec > div {
