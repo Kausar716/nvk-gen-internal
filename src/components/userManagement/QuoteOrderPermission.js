@@ -100,7 +100,7 @@ function QuoteOrderPermission(props) {
 
         //x.id===133 || 
     let finalCMSettingsPermissions = customerManagementPermission.filter(x=>  x.id===134 || x.id===135 || x.id===136 )
-    let finalCMSettingsPermissions2 = customerManagementPermission.filter(x=>  x.id===133)
+    //let finalCMSettingsPermissions2 = customerManagementPermission.filter(x=>  x.id===133)
 
         // x.id===137 ||
     let finalUserManagemnetPermission = userManagementPermission.filter(x=>  x.id===138 || x.id===139 || x.id===140 || x.id===141)
@@ -131,7 +131,7 @@ function QuoteOrderPermission(props) {
 
 
     const handleChange=(e)=>{
-debugger;
+//debugger;
          const {name, checked, id } = e.target;
 
          if(name === "SelectAllQuote"){
@@ -166,17 +166,43 @@ debugger;
 
          else  if(name === "PlantManagerInPlantManagerPermissions"){
             let tempUserPM = finalPlantmanagerPermission.map(user=>{return {...user, isChecked:checked}});
+                        if(!checked){
+                            let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:false}});
+                            setAllInventoryPermissions(tempUserALL)
+                        }
+                        else{
+                            let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:true}});
+                            setAllInventoryPermissions(tempUserALL)
+                        }
             setPlantmanagerPermission(tempUserPM)
          }
 
 
          else  if(name === "ProductManagerPermissions"){
             let tempUserProM = finalProductManagerPermission.map(user=>{return {...user, isChecked:checked}});
+
+                    if(!checked){
+                        let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:false}});
+                        setAllInventoryPermissions(tempUserALL)
+                    }
+                    else{
+                        let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:true}});
+                        setAllInventoryPermissions(tempUserALL)
+                    }
             setProductManagerPermission(tempUserProM)
          }
 
          else  if(name === "InventoryManagementInInventoryManagementPermissions"){
             let tempUserINVMangement = finalInventoryMangementPermissionT.map(user=>{return {...user, isChecked:checked}});
+
+            if(!checked){
+                let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:false}});
+                setAllInventoryPermissions(tempUserALL)
+            }
+            else{
+                let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:true}});
+                setAllInventoryPermissions(tempUserALL)
+            }
             setInventoryMangementPermissionT(tempUserINVMangement)
          }
 
@@ -206,46 +232,64 @@ debugger;
 
 
          else  if(name === "toolsSettingsIntoolsSettingsPermissions"){
-          
-debugger;
+          //debugger;
             let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
 
             if(!checked){
                 let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
                 setAdditionalPermissions(tempUserALL)
-                //setToolsAnsSettingsPermission(tempUserTS)
             }
 
             else{
-
                 let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
                 setAdditionalPermissions(tempUserALL)
-
             }
-
            // let tempUserTS2 =[...tempUser2, ...tempUserTS]
            setToolsAnsSettingsPermission(tempUserTS)
          }
 
          else  if(name === "customerManagementInCustomerManagementPermissions"){
-        //debugger;
-             //let newA = {name:e.target.name}
-            // let  newlist = [{name:"customerManagementInCustomerManagementPermissions", id:1001}]
-             //let final_list = [newA, ...finalCMSettingsPermissions]
-             //let tempUserCS2 = finalCMSettingsPermissions2.map(user=>{return {...user, isChecked:checked}});
-             //let tempCS  = finalCMSettingsPermissions2.map(user=>{return {...user, isChecked:checked}});
+       
             let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
+
+            if(!checked){
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+                setAdditionalPermissions(tempUserALL)
+            }
+            else{
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+                setAdditionalPermissions(tempUserALL)
+            }
             //let finalCS = [...tempCS, ...tempUserCMS]
             setCustomerManagementPermission(tempUserCMS)
          }
 
          else  if(name === "userManagementInUserManagementPermissions"){
             let tempUserUMP = finalUserManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
+
+
+            if(!checked){
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+                setAdditionalPermissions(tempUserALL)
+            }
+            else{
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+                setAdditionalPermissions(tempUserALL)
+            }
             setUserManagementPermission(tempUserUMP)
          }
 
          else  if(name === "InventoyManagementInInventoyManagementPermissions"){
             let tempUserINV = finalInventoryManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
+
+            if(!checked){
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+                setAdditionalPermissions(tempUserALL)
+            }
+            else{
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+                setAdditionalPermissions(tempUserALL)
+            }
             setInventoryManagementPermission(tempUserINV)
          }
 
@@ -256,6 +300,15 @@ debugger;
 
          else  if(name === "SupplierManagementInSupplierManagementPermissions" ){
             let tempUserSMP = finalSupplierManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
+
+            if(!checked){
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+                setAdditionalPermissions(tempUserALL)
+            }
+            else{
+                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+                setAdditionalPermissions(tempUserALL)
+            }
             setSupplierManagementPermission(tempUserSMP)
          }
 
@@ -388,7 +441,7 @@ debugger;
             <div  class="bg-white mt-2">
                 <div class="ContentSection p-15">
                         <h4>Quote &amp; Order Permissions</h4>
-                            <div className="row1" style={{paddingBottom:"2em"}}>
+                            <div className="row1Quoate" style={{paddingBottom:"2em"}}>
                                 { finalQOPermissions.map((userP)=>(
                                                 <div  class="custom-control custom-checkbox">
                                                             {/* <div class="custom-control custom-checkbox" > */}
@@ -461,7 +514,7 @@ debugger;
                                                 <div class="custom-control custom-checkbox" >
                                                     <input type="checkbox" class="custom-control-input"  
                                                     onChange={handleChange} 
-                                                    checked={finalCMSettingsPermissions2.filter((user) => user?.isChecked !== true).length < 3}
+                                                    checked={finalCMSettingsPermissions.filter((user) => user?.isChecked !== true).length < 3}
                                                     name="customerManagementInCustomerManagementPermissions" id="customerManagementInCustomerManagementPermissions" />
                                                     <label class="custom-control-label pl-2" for="customerManagementInCustomerManagementPermissions" >Customer Management  </label>
                                                 </div>
@@ -585,7 +638,7 @@ debugger;
                 <div  class="bg-white mt-2">
                                 <div class="ContentSection p-15">
                                         <h4>Purchase Order Permissions</h4>
-                                            <div className="row1" style={{paddingBottom:"3em"}}>
+                                            <div className="row1POPermission" style={{paddingBottom:"3em"}}>
                                                 { finalPOpermissions.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
                                                                             {/* <div class="custom-control custom-checkbox" > */}

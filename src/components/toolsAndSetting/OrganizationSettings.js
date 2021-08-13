@@ -8,9 +8,12 @@ import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
 import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
-import { Prompt } from 'react-router';
+import { Prompt , BrowserRouter} from 'react-router';
 import Immutable from 'immutable';
 import './style.css';
+
+
+
 export const Component = withRouter(({ history, location }) =>{
 
 })
@@ -45,6 +48,7 @@ export class OrganizationSettings extends React.Component {
         super()
         this.state={
             disabled:false,
+            showPropmt:false,
             disableImageRemove:true,
             isOpen1:false,
             message:[],
