@@ -33,21 +33,13 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
                     btnLabelCancel:'Cancel',
                     deleteon:false,
                     startID:0,
-                    endID:0,
-                    // tasks:{
                         inactive:[],
                         active:[],
-                    // }
+                    
                 }
             
         }
-    // state ={
-    //     tasks:[
-    //         {name:"Christmas tree", category:"inactive", bgcolor:"#cfcbcbf7"},
-    //         {name:"Areac Palm", category:"inactive", bgcolor:"#cfcbcbf7"},
-    //         {name:"Peace lily", category:"active", bgcolor:"#cfcbcbf7",id:"2"},
-    //     ]
-    // }
+
     getCatgoryData = ()=>{
         let data = {};
         let active= this.props.plantCategoryList.filter(data=>data.status ==1)
@@ -103,8 +95,8 @@ onMoveData = (evt,ui)=>{
 
    if(evt.from.id == evt.to.id){
        if(evt.willInsertAfter ==true)
-    this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"up")
-    else  this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"down")
+    this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"down")
+    else  this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"up")
 
    }else{
        if(evt.from.id =="categoryActive"){
