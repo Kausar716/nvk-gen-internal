@@ -7,8 +7,9 @@ import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
 import initialDetails from './initialDetails';
 import '../PurchaseOrder/style.css';
+import { Link } from "react-router-dom";
 
-export class OrderList extends React.Component {
+export class QuoteList extends React.Component {
 
     constructor(){
         super()
@@ -218,60 +219,201 @@ export class OrderList extends React.Component {
         
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Orders</h1>
+				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote & Order List</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
+                   
+                    <Link to="/Quote">
+                    <a href="#" class="btn">
+                        <span class="d-flex align-items-center text-left">
+                        <img src="assets/img/Quoteblue_small-Icon.svg" alt=""/>
+                            <span class="ml-2"><b>New Quote</b></span>
+                        </span>
+                        </a>
+                        </Link>
+                    {/* </a> */}
+                    <Link to="/QuoteAndOrdersManagement">
                     <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
                             <span class="ml-2"><b>New Order</b></span>
                         </span>
                     </a>
+                    </Link>
 				</div>
 			</div>
             <div class="px-md-3 mt-3">
             <div class="bg-white px-3 py-3 my-3 cardShadow">
                 <div class="row align-items-center">
                     <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
-                        <div>
-                            <label>Open Orders's</label>
-                            <h1>{this.state.TotalPurchaseOder}</h1>
-                            <div><a href="">View All</a></div>
+                        <div class="ordersCard d-flex justify-content-md-between align-item-stretch w-100">
+                            {/* <div class="cardBoxwide totalCard">
+                                <p>Total Orders</p>
+                                <span style={{fontSize: "32px"}}>61</span>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div> */}
+                            <div class="cardBoxwide individualCard totalCard">
+                                <div class="stripe"></div>
+                                <p>Total Orders</p>
+                                <h4>8</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">=</div>
+                            <div class="cardBox individualCard openStsCard">
+                                <div class="stripe"></div>
+                                <p>Open</p>
+                                <h4>8</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard pickingStsCard">
+                                <div class="stripe"></div>
+                                <p>Picking</p>
+                                <h4>12</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard readyStsCard">
+                                <div class="stripe"></div>
+                                <p>Ready</p>
+                                <h4>18</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard shippedStsCard">
+                                <div class="stripe"></div>
+                                <p>Shipped</p>
+                                <h4>20</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">+</div>
+                            <div class="cardBox individualCard lateStsCard">
+                                <div class="stripe"></div>
+                                <p>Late</p>
+                                <h4>3</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            <div class="equalSign">&nbsp;</div>
+                            <div class="verDivider"></div>
+                            <div class="equalSign">&nbsp;</div>
+                            <div class="cardBoxwide individualCard activeQuotesCard">
+                                <div class="stripe"></div>
+                                <p>Active Quotes</p>
+                                <h4>12</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
+                            {/* <div class="cardBoxwide activeQuotesCard">
+                                <p>Active Quotes</p>
+                                <h4>12</h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div> */}
+                            <div class="equalSign">&nbsp;</div>
+                            <div class="cardBoxwide individualCard quotesFlaggedCard">
+                                <div class="stripe"></div>
+                                <p>Quotes Flagged</p>
+                                <h4><font color="red">12</font></h4>
+                                <div>
+                                    <a href="#">View All</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Select Order</h2>
-                        <hr/>
+                        <h2>Search Quotes & Orders</h2>
+                        
                         <div class="row mt-3 align-items-center">
                             <div class="col-md-12">
                                 <div class="row form-group">
-                                    <div class="col-md-5 col-lg-5">
-                                        <label>Status Levels</label>
+                                    <div class="col-md-12 col-lg-12">
+                                        <label><b>Orders</b></label>
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="open" 
+                                                <input type="checkbox" class="custom-control-input" id="open" checked="checked"
                                                 name="open"
                                                 onChange={this.handleClickCheckBox} />
                                                 <label class="custom-control-label" for="open" >Open</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                <label class="custom-control-label" for="customCheck2">Draft</label>
+                                                <label class="custom-control-label" for="customCheck2">Pick</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck3" />
-                                                <label class="custom-control-label" for="customCheck3">Closed</label>
+                                                <label class="custom-control-label" for="customCheck3">Ready</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck4" />
-                                                <label class="custom-control-label" for="customCheck4">Cancelled</label>
+                                                <label class="custom-control-label" for="customCheck4">Ship</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck5" />
+                                                <label class="custom-control-label" for="customCheck5">Invoiced</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck6" />
+                                                <label class="custom-control-label" for="customCheck6">Closed</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck7" />
+                                                <label class="custom-control-label" for="customCheck7">Cancelled</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                                <input type="checkbox" class="custom-control-input" id="customCheck8" />
+                                                <label class="custom-control-label" for="customCheck8">Late</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row form-group">
+                                    <div class="col-md-5 col-lg-5">
+                                        <div class="d-flex flex-wrap mt-2">
+                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select All</label></a></div>
+                                            <div><label>&nbsp;&nbsp;&nbsp;</label></div>
+                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select None</label></a></div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr/>
+                                <div class="row form-group">
+                                    <div class="col-md-2 col-lg-2">
+                                        <label><b>Quotes</b></label>
+                                        <div class="d-flex flex-wrap mt-2">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="active" 
+                                                name="active"
+                                                onChange={this.handleClickCheckBox} />
+                                                <label class="custom-control-label" for="active" >Active</label>
+                                            </div>
+                                            <div class="custom-control custom-checkbox ml-3">
+                                                <input type="checkbox" class="custom-control-input" id="inactive" />
+                                                <label class="custom-control-label" for="inactive">InActive</label>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-7 col-lg-7">
-                                        <label>Date Range</label>
+                                        <label><b>Date Range</b></label>
                                         <div class="d-flex flex-wrap align-items-center">
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
@@ -281,26 +423,31 @@ export class OrderList extends React.Component {
                                                 <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
                                                 <label class="custom-control-label" for="customRadio2">Last 30 Days</label>
                                             </div>
+                                            <div class="custom-control custom-radio ml-3">
+                                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" />
+                                                <label class="custom-control-label" for="customRadio3">Select Range</label>
+                                            </div>
                                             <div class="ml-3">
-                                                <DatePicker 
+                                                {/* <DatePicker 
                                                 // onChange={onChange} value={value} 
-                                                />
+                                                /> */}
+                                                <input type="date" className="dateDesign"  />
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="row form-group">
                                     <div class="col-md-4 col-lg-4">
-                                        <label>Supplier</label>
+                                        <label><b>Customer</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange2}  placeholder="Search Supplier Name/Number"/>
+                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange2}  placeholder="Search Customer Name/Number"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
-                                        <label>Job Description</label>
+                                        <label><b>Job Description</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -309,7 +456,7 @@ export class OrderList extends React.Component {
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
-                                        <label>Order#</label>
+                                        <label><b>Order#</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -320,7 +467,7 @@ export class OrderList extends React.Component {
                                 </div>
                                 <div class="row form-group mb-2">
                                     <div class="col-md-4 col-lg-4">
-                                        <label>Search Plants or Products</label>
+                                        <label><b>Search Plants or Products</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
@@ -329,93 +476,29 @@ export class OrderList extends React.Component {
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
-                                        <label>SKU</label>
+                                        <label><b>SKU</b></label>
                                         <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" onChange={this.onSearchInputChange2} placeholder="Search Plants or Products"/>
+                                            <input type="text" class="form-control" onChange={this.onSearchInputChange2} placeholder="Search SKU"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 ">
-                                        <label>Supplier Order#</label>
+                                    <div class="col-md-4 col-lg-4 pt-md-1 mt-2 ">
+                                        <label>&nbsp;</label>
                                         <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
-                                                <img src="assets/img/search.svg" alt=""/>
-                                            </button>
-                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange3} placeholder="Search SKU"/>
+                                        <a href="javascript:;" style={{cursor:"pointer"}}>Reset</a>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-md-12 col-lg-12 text-right">
-                                        <a href="javascript:;">Reset</a>
-                                    </div>
-                                </div>
-
-                                {/* <div class="form-group row mt-3">
-                                    <div class="col-md-12 col-lg-12">
-                                        <ul class="list-unstyled searchAlpha d-flex flex-wrap mb-0">
-                                            <li><a href="#" class="active">All</a></li>
-                                            <li><a href="#">A</a></li>
-                                            <li><a href="#">B</a></li>
-                                            <li><a href="#">C</a></li>
-                                            <li><a href="#">D</a></li>
-                                            <li><a href="#">E</a></li>
-                                            <li><a href="#">F</a></li>
-                                            <li><a href="#">G</a></li>
-                                            <li><a href="#">H</a></li>
-                                            <li><a href="#">I</a></li>
-                                            <li><a href="#">J</a></li>
-                                            <li><a href="#">K</a></li>
-                                            <li><a href="#">L</a></li>
-                                            <li><a href="#">M</a></li>
-                                            <li><a href="#">N</a></li>
-                                            <li><a href="#">O</a></li>
-                                            <li><a href="#">P</a></li>
-                                            <li><a href="#">Q</a></li>
-                                            <li><a href="#">R</a></li>
-                                            <li><a href="#">S</a></li>
-                                            <li><a href="#">T</a></li>
-                                            <li><a href="#">U</a></li>
-                                            <li><a href="#">V</a></li>
-                                            <li><a href="#">W</a></li>
-                                            <li><a href="#">X</a></li>
-                                            <li><a href="#">Y</a></li>
-                                            <li><a href="#">Z</a></li>
-                                        </ul>
-                                    </div>
-                                </div> */}
-
-
-                        {/* <input type="search" onChange={this.onSearchInputChange} /> */}
-
-
-
-                       
-
-
-                    
-                            <div class="form-group row mt-4">
-                                <div class="col-md-12 col-lg-12">
-                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        {/* <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li> */}
-
-                                        <button type="button" className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
-                                            {this.prepareAlphabets()}
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="row_1">
-                                <div style={{float:"left",marginBottom:15}}>
-                                {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
-                                {/* </div> */}
-                                </div>
-
-
-                                    <div >
-                                    <label className="greenText">Show</label>
+                            <div className="row_1 mt-4">
+                                        <div style={{float:"left",marginBottom:15}}>
+                                            {/* <div> */}
+                                                <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                            {/* </div> */}
+                                        </div>
+                                        <div style={{float:"left",marginBottom:15}}>
+                                            <label className="greenText">Show</label>
                                                 <select 
                                                     value={this.state.pageSize}
                                                     onChange={e => {
@@ -429,50 +512,56 @@ export class OrderList extends React.Component {
                                                         {pageSize}
                                                         </option>
                                                     ))}
-                                                </select>
+                                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <input type="checkbox" class="custom-control-input customer-checkbox" id="dispquote" />
+                                                <label class="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
                                         </div>
-
-                
-
-
-
-                                <div style={{float:"right",marginBottom:15}}>
-                                    <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
-                                </div>
+                                        <div style={{float:"right",marginBottom:15}}>
+                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+                                        </div>
                                
                             </div>
-                            <div style={{clear:"both"}}></div>
+                            <div class="form-group row mt-0">
+                                <div class="col-md-12 col-lg-12">
+                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
+                                        {/* <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li> */}
+
+                                        <button type="button" className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
+                                            {this.prepareAlphabets()}
+                                    </ul>
+                                </div>
+                            </div>
 
 
-                                <div class="form-group row">
+                                <div class="form-group row" style={{marginBottom: "5px"}}>
                                     <div class="col-md-12 table-responsive">
                                         <table id="plantDetails" class="table table-striped w-100">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-nowrap">Status</th>
-                                                    <th class="text-nowrap">Order#</th>
-                                                    <th class="text-nowrap">Supplier Name</th>
-                                                    <th class="text-nowrap">Supplier Order</th>
-                                                    <th class="text-nowrap">Created By</th>
-                                                    <th class="text-nowrap">Order Date</th>
-                                                    <th class="text-nowrap">Expected Date</th>
-                                                    <th class="text-nowrap">Dispatch</th>
-                                                    <th class="text-nowrap">Amount</th>
+                                                    <th class="text-nowrap text-center">Status</th>
+                                                    <th class="text-nowrap text-center">Order#</th>
+                                                    <th class="text-nowrap text-center">Order Parts</th>
+                                                    <th class="text-nowrap text-left" width="20%">Customer Name</th>
+                                                    <th class="text-nowrap text-center">Type</th>
+                                                    <th class="text-nowrap text-center">PO#</th>
+                                                    <th class="text-nowrap text-center">Order Date</th>
+                                                    <th class="text-nowrap text-center">Requested Date</th>
+                                                    <th class="text-nowrap text-center">Remaining Balance</th>
                                                     <th class="text-nowrap text-center">Actions</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {filteredList.map(pOrderList=>{
-                                                    return <tr key={pOrderList.suppliearName}>
-                                                    <td><span  class='stsBadge stsClosed'>{pOrderList.status}</span></td>
-                                                    <td><a href="">{pOrderList.orderNumber}</a></td>
-                                                    <td>{pOrderList.suppliearName}</td>
-                                                    <td>{pOrderList.supplierOrder}</td>
-                                                    <td>{pOrderList.createdBy}</td>
-                                                    <td>{pOrderList.orderDate}</td>
-                                                    <td>{pOrderList.expectedDate}</td>
-                                                    <td>{pOrderList.dispatch}</td>
-                                                    <td>{pOrderList.amount}</td>
+                                                {filteredList.map(pQuoteList=>{
+                                                    return <tr key={pQuoteList.suppliearName}>
+                                                    <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
+                                                    <td><a href="">{pQuoteList.orderNumber}</a></td>
+                                                    <td class="text-nowrap text-center">4</td>
+                                                    <td>{pQuoteList.suppliearName}</td>
+                                                    <td class="text-center">LARC</td>
+                                                    <td class="text-center">8458788</td>
+                                                    <td class="text-center">{pQuoteList.orderDate}</td>
+                                                    <td class="text-center">{pQuoteList.expectedDate}</td>
+                                                    <td class="text-nowrap text-right">6,085.00 <br/>32,058.12</td>
                                                     <td class="text-center">
                                                         <span>
                                                             <a href="javascript;">
@@ -481,60 +570,7 @@ export class OrderList extends React.Component {
                                                         </span>
                                                     </td>
                                                 </tr>
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsClosed'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>Windham Gardens</td>
-                                                    <td>1024275</td>
-                                                    <td>Brendan Weirs</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Delivery</td>
-                                                    <td>8,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsDraft'>Draft</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsOpen'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
+                                                
 
 
                                             })}
@@ -563,4 +599,4 @@ const mapStateToProps = (state)=> (
 )
 
 
-export default connect(mapStateToProps,{handleSearchFilterByAlpha, setPageNumberPo})(OrderList)
+export default connect(mapStateToProps,{handleSearchFilterByAlpha, setPageNumberPo})(QuoteList)

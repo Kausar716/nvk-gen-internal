@@ -124,12 +124,18 @@ const handleMainSelection= (id) => {
                 <span>Customer Quotes &amp; Orders</span>
               </Link>  
                 <ul class="sub-menu">
-                <li class= {(selectedSubBar === "orderList1" || initialSelect)?"active":""} onClick={(e)=>{
+                <li class= {(selectedSubBar === "orderList1")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList1")}}><Link to="/QuoteList">Order List</Link></li>
+                  handleSubSelection("orderList1")}}><Link to="/OrderList">Order List</Link></li>
+                <li class= {(selectedSubBar === "orderList12" )?"active":""} onClick={(e)=>{
+                  e.stopPropagation()
+                  handleSubSelection("orderList12")}}><Link to="/QuoteList">Quote List</Link></li>
                 <li class= {(selectedSubBar === "orderList2")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList2")}}><Link to="/QuoteAndOrdersManagement">New Order</Link></li>
+                  <li class= {(selectedSubBar === "orderList13" )?"active":""} onClick={(e)=>{
+                  e.stopPropagation()
+                  handleSubSelection("orderList13")}}><Link to="/Quote">New Quote</Link></li>
                 <li class= {(selectedSubBar === "orderList3")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList3")}}><Link to="/OrderReady">Quick Pick</Link></li>
@@ -139,9 +145,9 @@ const handleMainSelection= (id) => {
                 <li class= {(selectedSubBar === "orderList5")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
                   handleSubSelection("orderList5")}}><Link to="/InvoiceList">Invoices & Adjustments</Link></li>
-                <li class= {(selectedSubBar === "orderList6")?"active":""} onClick={(e)=>{
+                {/* <li class= {(selectedSubBar === "orderList6")?"active":""} onClick={(e)=>{
                   e.stopPropagation()
-                  handleSubSelection("orderList6")}}><Link to="/OrderAdjusted">Requests</Link></li>
+                  handleSubSelection("orderList6")}}><Link to="/OrderAdjusted">Requests</Link></li> */}
               </ul>          
             </li>
             <li class={selectedMainBarData.includes("purchaseOrder")?"active":""} onClick={()=>{handleMainSelection("purchaseOrder")}}>

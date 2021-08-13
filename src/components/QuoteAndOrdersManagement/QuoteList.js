@@ -401,7 +401,7 @@ export class QuoteList extends React.Component {
                                         <label><b>Quotes</b></label>
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="active" 
+                                                <input type="checkbox" class="custom-control-input" id="active" checked="checked"
                                                 name="active"
                                                 onChange={this.handleClickCheckBox} />
                                                 <label class="custom-control-label" for="active" >Active</label>

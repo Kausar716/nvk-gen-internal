@@ -308,6 +308,7 @@ import {
                                         <select class="form-control"  onChange={handleInput} id="category_id" value={plantDataById.category_id} style={{cursor:"pointer"}} >
                                         <option>None</option>
                                         {plantCategoryData.map(plantCategory=>{
+                                                if(plantCategory.status === "1")
                                                     return(
                                                         <option value={plantCategory.id}>{plantCategory.name} </option>
                                                     )
@@ -335,6 +336,7 @@ import {
                                             <select class="form-control" style={{cursor:"pointer"}} id={"hardiness_zone"} onChange={handleInput} value={plantDataById.hardiness_zone} >
                                             <option>None</option>
                                             {hardinessZoneList.map(zone=>{
+                                                if(zone.status === 1)
                                                 return<option value = {zone.id}>{zone.value}</option>
                                             })}
                                             </select>

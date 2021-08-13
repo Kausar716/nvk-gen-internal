@@ -8,7 +8,7 @@ export default function QuoteAndOrdersManagement() {
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0 d-flex flex-md-nowrap align-items-center"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/> Edit Customer Order <span class="text-green ml-3">#00234-2000132</span></h1>
+				<h1 class="page-header mb-0 d-flex flex-md-nowrap align-items-center"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/> New Customer Order <span class="text-green ml-3">#00234-2000132</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
                         <span class="d-flex align-items-center text-left">
@@ -68,7 +68,7 @@ export default function QuoteAndOrdersManagement() {
                     <TabList>
                         <Tab>Order Details</Tab>
                         <Tab>Add to Order</Tab>
-                        <Tab>Current Order <span class="badge badge-pill badge-success">2</span></Tab>
+                        <Tab>Current Order <span class="badge badge-pill badge-success">02</span></Tab>
                         <Tab>Order History</Tab>
                         <Tab>Notes</Tab>    
                     </TabList>
@@ -80,26 +80,38 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="px-3 py-3 bg-grey-transparent-2">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h4>John Smith Landscaping</h4>
+                                            <h3>John Smith Landscaping</h3>
                                         </div>
                                     </div>
                                     <div class="row ">
-                                        <div class="col-md-4 col-lg-4">
-                                            <div>
-                                                <div><b class="mr-3">Type:</b>Finished Plants, Liners</div>
-                                                <div class="mt-1"><b class="mr-3">Tax Exempt:</b>No</div>
+                                        <div class="col-md-4 col-lg-6">
+                                            <div class="row ">
+                                                <div class="col-md-1 col-lg-2 text-md-right">
+                                                    <b>Type:</b>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <span className="textGrey"><b>Finished Plants, Liners</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-md-1 col-lg-2 text-md-right">
+                                                    <b>Tax Exempt:</b>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <span className="textGrey"><b>No</b></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-lg-4">
+                                        <div class="col-md-4 col-lg-2">
                                             <div>
-                                                <div><b class="mr-3">Terms:</b>Net 20</div>
+                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>Net 20</b></span></div>
                                                 <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 text-md-right mt-3 mt-md-0">
                                             <div>
-                                                <div><b class="mr-3">Source:</b>Internal</div>
-                                                <div class="mt-1"><b class="mr-3">Price Year:</b>2020</div>
+                                                <div><b class="mr-3">Source:</b><span className="textGrey"><b>Internal</b></span></div>
+                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span className="textGrey"><b>2020</b></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -135,7 +147,8 @@ export default function QuoteAndOrdersManagement() {
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
-                                                <DatePicker onChange={onChange} value={value} />
+                                                {/* <DatePicker onChange={onChange} value={value} /> */}
+                                                <input type="date" className="dateDesign"  />
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Time</label>
@@ -186,7 +199,7 @@ export default function QuoteAndOrdersManagement() {
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Discount</label>
-                                                <input type="text" class="form-control" placeholder="" value="0.00" />
+                                                <input type="text" class="form-control text-right" placeholder="" value="0.00" />
                                             </div>
                                         </div>
                                     </div>
@@ -198,11 +211,11 @@ export default function QuoteAndOrdersManagement() {
                                     <div class="col-md-12 col-lg-5 col-xl-5">
                                         <div class="row">
                                             <div class="col-md-6 col-lg-6">
-                                                <label>Include Royalty</label>
+                                                <label>Discount by Line Item</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                        <label for="switcher_checkbox_date"></label>
+                                                        <input type="checkbox" name="dislineitem" id="dislineitem" value="2" />
+                                                        <label for="dislineitem"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -210,8 +223,8 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Display Discount Column</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                        <label for="switcher_checkbox_date"></label>
+                                                        <input type="checkbox" name="dispdisccol" id="dispdisccol" value="2" />
+                                                        <label for="dispdisccol"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -219,21 +232,21 @@ export default function QuoteAndOrdersManagement() {
                                     </div>
                                     <div class="col-md-12 col-lg-7 col-xl-7">
                                         <div class="row">
-                                            <div class="col-md-6 col-lg-3">
+                                            <div class="col-md-6 col-lg-4">
                                                 <label>Display Substitution Line</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                        <label for="switcher_checkbox_date"></label>
+                                                        <input type="checkbox" name="dispsubline" id="dispsubline" value="2" />
+                                                        <label for="dispsubline"></label>
                                                     </div> On
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-lg-3">
+                                            <div class="col-md-6 col-lg-6">
                                                 <label>Show Pricing on Output</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                        <label for="switcher_checkbox_date"></label>
+                                                        <input type="checkbox" name="showpricout" id="showpricout" value="2" />
+                                                        <label for="showpricout"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -242,7 +255,7 @@ export default function QuoteAndOrdersManagement() {
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
-                                        <label>Customer Notes <small>(Internal Only)</small></label>
+                                        <label>Order Notes <small class="textGrey">(Internal Only)</small></label>
                                         <textarea class="form-control"></textarea>
                                     </div>
                                 </div>
@@ -263,17 +276,25 @@ export default function QuoteAndOrdersManagement() {
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder=""/>
+                                                    <input type="text" class="form-control" placeholder="Search Plants or Products"/>
                                                 </div>
                                                 <div class="row mt-3 align-items-center">
                                                     <div class="col-md-12 d-flex">
-                                                        <div class="custom-control custom-radio">
+                                                        {/* <div class="custom-control custom-radio">
                                                             <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
                                                             <label class="custom-control-label" for="customRadio1">Active Only</label>
+                                                        </div> */}
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="active" id="activePlants" value="" />
+                                                            <label class="form-check-label" for="active">Active Only</label>
                                                         </div>
-                                                        <div class="custom-control custom-radio ml-3">
+                                                        {/* <div class="custom-control custom-radio ml-3">
                                                             <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
                                                             <label class="custom-control-label" for="customRadio2">Both Active and Inactive</label>
+                                                        </div> */}
+                                                        <div class="form-check form-check-inline">
+                                                            <input class="form-check-input" type="radio" name="bothactive" id="bothactive" value="" />
+                                                            <label class="form-check-label" for="bothactive">Both Active and Inactive</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -284,7 +305,7 @@ export default function QuoteAndOrdersManagement() {
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder=""/>
+                                                    <input type="text" class="form-control" placeholder="Search SKU"/>
                                                 </div>
                                             </div>
                                         </div>
@@ -534,7 +555,7 @@ Rate</th>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-primary btn-lg ml-3">Add All</button>
+                                        <button type="button" class="btn active btn-lg ml-3">Add All</button>
                                     </div>
                                 </div>
                             </form>
@@ -1079,6 +1100,22 @@ Rate</th>
                                                         </div>
                                                         <div class="col-md-2 text-right">
                                                             <label class="f-s-24">544.50</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row">
+                                                        <div class="col-md-8 text-right">
+                                                            <label >Sales Tax Rate @ 13.0% <span>$</span></label>
+                                                        </div>
+                                                        <div class="col-md-2 text-right">
+                                                            <label >60.00</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row subTotLbl">
+                                                        <div class="col-md-8 text-right">
+                                                            <label >Order Total <span>$</span></label>
+                                                        </div>
+                                                        <div class="col-md-2 text-right">
+                                                            <label >544.50</label>
                                                         </div>
                                                     </div>
                                                 </div>

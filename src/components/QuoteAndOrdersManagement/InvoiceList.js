@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import DatePicker from 'react-date-picker';
 import 'react-tabs/style/react-tabs.css';
+import { Link } from "react-router-dom";
+import TablePagination from '../Pagination/index';
 
 export default function InvoiceList() {
     const [value, onChange] = useState(new Date());
@@ -22,8 +24,8 @@ export default function InvoiceList() {
                                 </div>
                             </div>
                             <div class="d-flex text-nowrap ml-3 mb-0 bdrLeft">
-                                <div class="mr-3">
-                                    <h5 class="mb-0">Next Export batch Count</h5>
+                                <div class="mr-3 text-center">
+                                    <h5 class="mb-0">Next Export Batch Count</h5>
                                     <h3 class="batchCountLbl">7</h3>
                                     <div><a href="" class="f-s-14">View All</a></div>
                                 </div>
@@ -47,15 +49,22 @@ export default function InvoiceList() {
                                     <label>Date Range</label>
                                     <div class="d-flex flex-wrap align-items-center">
                                         <div class="custom-control custom-radio">
-                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
-                                            <label class="custom-control-label" for="customRadio1">Last 7 Days</label>
-                                        </div>
+                                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
+                                                <label class="custom-control-label" for="customRadio1">Last 7 Days</label>
+                                            </div>
+                                            <div class="custom-control custom-radio ml-3">
+                                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
+                                                <label class="custom-control-label" for="customRadio2">Last 30 Days</label>
+                                            </div>
                                         <div class="custom-control custom-radio ml-3">
-                                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
-                                            <label class="custom-control-label" for="customRadio2">Last 30 Days</label>
+                                            <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" />
+                                            <label class="custom-control-label" for="customRadio3">Select Range</label>
                                         </div>
                                         <div class="ml-3">
-                                            <DatePicker onChange={onChange} value={value} />
+                                            {/* <DatePicker 
+                                            // onChange={onChange} value={value} 
+                                            /> */}
+                                            <input type="date" className="dateDesign"  />
                                         </div>
                                     </div>
                                 </div>
@@ -94,7 +103,27 @@ export default function InvoiceList() {
                                     <a href="">Reset</a>
                                 </div>
                             </div>
-                            <div class="form-group row mt-4">
+                            <div className="row_1 mt-4">
+                                        <div style={{float:"left",marginBottom:15}}>
+                                            {/* <div> */}
+                                                <label className="greenText">{"Showing 1 to 5 of 6"  }</label>
+                                            {/* </div> */}
+                                        </div>
+                                        <div style={{float:"left",marginBottom:15}}>
+                                            <label className="greenText">Show</label>
+                                                <select >
+                                                    <option>5</option>
+                                                    <option>10</option>
+                                                    <option>15</option>
+                                                </select>
+                                                
+                                        </div>
+                                        <div style={{float:"right",marginBottom:15}}>
+                                            <TablePagination  pageCount={5} pageNumber={0+1}/>
+                                        </div>
+                               
+                            </div>
+                            <div class="form-group row mt-0">
                                 <div class="col-md-12 col-lg-12">
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
                                         <li><a href="#" class="active">All</a></li>
@@ -144,7 +173,7 @@ export default function InvoiceList() {
                                                 <th class="text-nowrap">Customer Name</th>
                                                 <th class="text-nowrap">Invoice Date</th>
                                                 <th class="text-nowrap">Dispatch</th>
-                                                <th class="text-nowrap">Amount</th>
+                                                <th class="text-nowrap text-right">Amount</th>
                                                 <th class="text-nowrap text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -156,18 +185,20 @@ export default function InvoiceList() {
                                                         <label class="custom-control-label" for="chk1"></label>
                                                     </div>
                                                 </td>
-                                                <td>0023555</td>
+                                                <td><a href="#">0023555</a></td>
                                                 <td>-</td>
                                                 <td>00234-2000485</td>
                                                 <td>John Smith Landscaping</td>
                                                 <td>20/08/2020</td>
                                                 <td>Delivery</td>
-                                                <td>85.00</td>
+                                                <td class="text-right">85.00</td>
                                                 <td class="text-center">
                                                     <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                        </a>
+                                                        <Link to="/OrderAdjusted">
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
+                                                            </a>
+                                                        </Link>
                                                     </span>
                                                     <span class="mx-1">
                                                         <a href="javascript:;">
@@ -193,18 +224,20 @@ export default function InvoiceList() {
                                                         <label class="custom-control-label" for="chk1"></label>
                                                     </div>
                                                 </td>
-                                                <td>0023555</td>
+                                                <td><a href="#">0023555</a></td>
                                                 <td>-</td>
                                                 <td>00234-2000485</td>
                                                 <td>John Smith Landscaping</td>
                                                 <td>20/08/2020</td>
                                                 <td>Delivery</td>
-                                                <td>85.00</td>
+                                                <td class="text-right">85.00</td>
                                                 <td class="text-center">
                                                     <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                        </a>
+                                                        <Link to="/OrderAdjusted">
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
+                                                            </a>
+                                                        </Link>
                                                     </span>
                                                     <span class="mx-1">
                                                         <a href="javascript:;">
@@ -230,18 +263,20 @@ export default function InvoiceList() {
                                                         <label class="custom-control-label" for="chk1"></label>
                                                     </div>
                                                 </td>
-                                                <td>0023555</td>
+                                                <td><a href="#">0023555</a></td>
                                                 <td>-</td>
                                                 <td>00234-2000485</td>
                                                 <td>John Smith Landscaping</td>
                                                 <td>20/08/2020</td>
                                                 <td>Delivery</td>
-                                                <td>85.00</td>
+                                                <td class="text-right">85.00</td>
                                                 <td class="text-center">
                                                     <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                        </a>
+                                                        <Link to="/OrderAdjusted">
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
+                                                            </a>
+                                                        </Link>
                                                     </span>
                                                     <span class="mx-1">
                                                         <a href="javascript:;">
@@ -267,18 +302,20 @@ export default function InvoiceList() {
                                                         <label class="custom-control-label" for="chk2"></label>
                                                     </div>
                                                 </td>
-                                                <td>0023478</td>
-                                                <td>002963</td>
+                                                <td><a href="#">0023555</a></td>
+                                                <td><a href="#">0023963</a></td>
                                                 <td>00234-2000409</td>
                                                 <td>John Smith Landscaping</td>
                                                 <td>19/08/2020</td>
                                                 <td>Delivery</td>
-                                                <td>125.02</td>
+                                                <td class="text-right">125.02</td>
                                                 <td class="text-center">
                                                 <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                        </a>
+                                                        <Link to="/OrderAdjusted">
+                                                            <a href="javascript:;">
+                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
+                                                            </a>
+                                                        </Link>
                                                     </span>
                                                     <span class="mx-1">
                                                         <a href="javascript:;">
