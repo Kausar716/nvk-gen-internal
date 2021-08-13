@@ -598,7 +598,14 @@ export class UserProfile extends Component {
                                         <div class="col-md-4 col-lg-3">
                                             <div class="bg-grey-transparent-2 text-center px-3 py-3">
                                                 <div class="logCircle mb-3" key={new Date().getTime()}>
-                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} alt="" className="imageCircle" />
+                                                <div className="backgroundImageCover" style={{margin:'auto'}}>
+                                                    <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:noImageURL} 
+                                                    alt="" 
+                                                    style={{objectFit:"contain"}}
+                                                    class="resposiveImageParent"
+                                                      />
+                                                    </div>
+                                                
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
                                                 </div>
 
@@ -609,7 +616,7 @@ export class UserProfile extends Component {
                                                     onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg" />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
-                                                    <img src="assets/img/upload-ic-white.svg" alt="" style={{borderRadius:"7em"}}/>
+                                                    <img src="assets/img/upload-ic-white.svg"  alt="" style={{borderRadius:"7em"}}/>
                                                 </a>
                                                 <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                                     <span class="d-flex align-items-center justify-content-around" 

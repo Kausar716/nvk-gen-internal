@@ -23,6 +23,26 @@
   /* flex: 6; */
 }
 
+.row1Quoate {
+  display: grid;
+  grid-auto-flow: column;
+  /* grid-auto-columns: 30px 100px; */
+  grid-auto-flow: column;
+  grid-template-rows: repeat(6, 35px);
+  /* grid-template-rows: repeat(2px); */
+  gap: 2px;
+}
+
+.row1POPermission {
+  display: grid;
+  grid-auto-flow: column;
+  /* grid-auto-columns: 30px 100px; */
+  grid-auto-flow: column;
+  grid-template-rows: repeat(6, 35px);
+  /* grid-template-rows: repeat(2px); */
+  gap: 2px;
+}
+
 /* .row1 div:nth-of-type(2) {
   margin-right: 2em;
   flex-grow: 9;
@@ -191,4 +211,45 @@
   border-bottom-left-radius: 50% 50%;
   width: 100px;
   height: 100px;
+  object-fit: contain;
+}
+
+.resposiveImageParentsmall {
+  /* display: block;
+  max-width: 200px;
+  max-height: 95px;
+  width: auto;
+  height: auto;
+  margin: auto;
+
+  margin-top: 10%;
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%; */
+  display: block;
+  max-width: 100px;
+  max-height: 100px;
+  /* width: 220px; */
+  height: 100px;
+  /* height: 234px; */
+  margin: auto;
+  /* margin: 20% 20%; */
+  /* margin-right: 50%; */
+  /* margin-left: 50%; */
+  /* margin-top: 27%; */
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
+}
+
+.backgroundImageCoverSmall {
+  height: 100px;
+  width: 100px;
+  background-color: white;
+  border-top-left-radius: 50% 50%;
+  border-top-right-radius: 50% 50%;
+  border-bottom-right-radius: 50% 50%;
+  border-bottom-left-radius: 50% 50%;
 }
