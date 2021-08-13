@@ -462,12 +462,24 @@ export default function(state = initialSatate, action){
             }
         case HANDLE_SKU_INPUT_DATA:
             console.log(action)
+            console.log(action.itemId)
+            console.log(action.itemValue)
+            if(action.itemId === "volume_quantity" && action.itemValue === "0" ){
+                return{
+                    ...state,
+                    skuDataById:{...state.skuDataById,[action.itemId]:action.itemValue,volume_price_per_unit:"0.00"},
+                    needAction:true,
+                    displayCancel:true
+                }
+            }
+            else{
             return{
                 ...state,
                 skuDataById:{...state.skuDataById,[action.itemId]:action.itemValue},
                 needAction:true,
                 displayCancel:true
             }
+        }
         //filter handle
         case FILTER_CATEGORY_DATA:
             return{

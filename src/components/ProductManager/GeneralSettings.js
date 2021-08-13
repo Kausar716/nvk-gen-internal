@@ -312,6 +312,7 @@ if(productDataById){
                                         <select class="form-control" style={{cursor:"pointer"}} id="category_id" onChange={handleInput} value={productDataById.category_id}>
                                         <option value="0" selected>Select...</option>
                                             {categoryData.map(category=>{
+                                                if(category.status === "1")
                                                 return (<option value={category.id} selected={category.id===productDataById.category_id?"selected":""}>{category.name}</option>)
 
                                             })}
@@ -323,6 +324,7 @@ if(productDataById){
                                         <select class="form-control" style={{cursor:"pointer"}} id="manufacturer_id"  onChange={handleInput} value={productDataById.manufacturer_id}>
                                         <option value="0" selected>None</option>
                                             {manufactureData.map(manufacture=>{
+                                                if(manufacture.status===1)
                                                 return(<option value={manufacture.id} selected={manufacture.id===productDataById.manufacturer_id?"selected":""}>{manufacture.name}</option>)
                                             })
                                             }

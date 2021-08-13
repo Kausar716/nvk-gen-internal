@@ -297,6 +297,7 @@ const  ProductManagement = (props) =>{
                                     {/* <option value="All" selected={category==="All"?"selected":""}>All</option> */}
                                     <option value="All">All</option>
                                     {categoryData.map(categoryData=>{
+                                        if(categoryData.status === "1")
                                         return(<option value={categoryData.id} key={categoryData.id} selected={category===categoryData.id?"selected":""}>{categoryData.name}</option>)
                                     })
                                     }
@@ -323,6 +324,7 @@ const  ProductManagement = (props) =>{
                                  <select className="form-control" style={{cursor:"pointer"}}  disabled={disable?true:false}   id="subcategory" onChange={handleManufactureData} value={parseInt(props.manufacturer_id)}   >
                                 <option  value="0" selected={subCategory==="0"?"selected":""}>None</option>
                                     {manufactureData.map(manufactureObj=>{
+                                        if(manufactureObj.status === 1)
                                         return(<option  value={manufactureObj.id} key={manufactureObj.id}>{manufactureObj.name}</option>)
                                     })
                                     }
