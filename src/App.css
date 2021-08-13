@@ -101,7 +101,12 @@ select label:focus {
   padding:0px;
   margin:0px;
 }
-
+.yellow{
+  display: none;
+}
+.green{
+  display:block;
+}
 .yes1 li{
   background-color:#f3f3f3;
   margin-top:7%;
