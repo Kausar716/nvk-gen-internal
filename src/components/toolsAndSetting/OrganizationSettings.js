@@ -8,9 +8,12 @@ import InfoModal from "../Modal/InfoModal";
 import { Link ,withRouter} from "react-router-dom";
 import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
-import { Prompt } from 'react-router';
+import { Prompt , BrowserRouter} from 'react-router';
 import Immutable from 'immutable';
 import './style.css';
+
+
+
 export const Component = withRouter(({ history, location }) =>{
 
 })
@@ -39,14 +42,14 @@ const normalizeInput = (value, previousValue) => {
   
 
 
-
-
 export class OrganizationSettings extends React.Component {  
    
     constructor(){
         super()
         this.state={
             disabled:false,
+            showPropmt:false,
+            disableImageRemove:true,
             isOpen1:false,
             message:[],
             actionId:0,
@@ -117,6 +120,11 @@ export class OrganizationSettings extends React.Component {
         }
         this.setState({
             imgLoader: true
+        })
+
+
+        this.setState({
+            disableImageRemove: false
         })
         
          
@@ -586,8 +594,8 @@ saveDisable =()=>{
 
     //  let history = useHistory();
     render(){
-
-       
+        //const { when, onOK, onCancel, title, okText, cancelText } = this.props;
+       //console.log("propmpt", this.props)
         
         console.log("backupOrgDataFinal", this.props.backupOrgDataFinal);
 
@@ -698,6 +706,9 @@ saveDisable =()=>{
             else if(actionType==="deleteImage"){
 
                 this.handleRemoveImage();
+                this.setState({
+                    disableImageRemove: true
+                })
             }
             
             
@@ -793,6 +804,9 @@ saveDisable =()=>{
     <Prompt
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
+       //onCancel="ignore &amp; Proced"
+       //cancelText ="1123"
+       
     /> : false}
     {/* // : false }   */}
    
@@ -803,18 +817,18 @@ saveDisable =()=>{
                         <img src="assets/img/tools-ic-lg.svg" class="mr-2"/>
                     </h1> */}
                     <h1 class="page-header mb-0 d-flex flex-wrap align-items-center" >
-                    <img src="assets/img/Tools & Settings-big-green.svg" alt="" class="mr-2" />Organization Settings
+                    <img src="assets/img/Tools &amp; Settings-big-green.svg" alt="" class="mr-2" />Organization Settings
                 </h1>
                 </div>
                 <div class="px-md-3 mt-3">
                 <div class="pb-4">
                     <div class="bg-white">
                         <div class="row mb-6 mb-md-0">
-                            <div class="col-md-9 col-lg-9" style={{marginRight:"8em"}}>
+                            <div class="col-md-10 col-lg-10" >
                                 <h2 class="p-15 mb-0" style={{marginTop:"11px"}}>Document Details</h2>
                                
                             </div>
-                            <div class="row mt-4" >
+                            <div class="row mt-4 mb-6" >
                         {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" >
                                     
@@ -833,11 +847,6 @@ saveDisable =()=>{
                                     <div className="hoverINOrg">
                                     <a  class="btn ml-2 mt-3 mt-md-0" >
                                     <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
-                                    //class="btn ml-2 mt-3 mt-md-0"
-                                    //style={{opacity:"none"}}
-                                    //class="btn btn-primary btn-lg ml-3"
-                                    //   class="btn ml-2 mt-3 mt-md-0"
-                                    //   style={{color:"#5287F5", border:"2px solid #5287F5"}}
                                     disabled={this.state.disabled}
                                     onClick={this.handleSubmit}>
 
@@ -890,14 +899,43 @@ saveDisable =()=>{
                                 <div class="col-md-4 col-lg-3">
                                 <label style={{fontWeight:"bold"}}>Logo</label>
                                     <div class="bg-grey-transparent-2 text-center px-3 py-3">
-                                        <div class="logCircle mb-3" key={new Date().getTime()}>
-                                            {/* <img src="assets/img/nvk-circle-logo.png" /> */}
-                                            <img 
+
+
+                                        <div 
+                                        //class="logCircle mb-3"
+                                         key={new Date().getTime()}>
+                                             <div className="backgroundImageCover" style={{margin:'auto'}}>
+                                        <img 
                                               src={url}
                                               id="imageid"
-                                              className="imageCircle"
-                                            // style={{height:"250px",width:"255px", borderRadius:"50%"}}
+                                              style={{objectFit:"contain"}}
+                                              class="resposiveImageParent"
+                                              //className="imageCircle"
+                                               //style={{display:"block", maxWidth:"230px", maxHeight:"95px", width:"auto", height:"auto"}} 
+                                                             // style={{height:"250px",width:"255px", borderRadius:"50%"}}
                                             />
+
+                                        </div>
+                                            {/* <img src="assets/img/nvk-circle-logo.png" /> */}
+                                            
+
+
+                                    {/* <div style={{border:"1px solid lightgray",
+                                        width:151,borderRadius:"12px",height:150,padding:2,backgroundColor:"white",marginBottom:4}}>
+                                        <input  type="file" id = "imageid"   onChange={this.handlImageUpload} 
+                                        style={{position:"relative",width:"18%",height:"18%"}} />
+                                        <div class={"resposiveImageParent"} style={{  width: "140px", height: "100px" }}>
+                                        <img 
+                                              src={url}
+                                              id="imageid"
+                                              //className="imageCircle"
+                                                // style={{height:"250px",width:"255px", borderRadius:"50%"}}
+                                            />
+                                        </div>
+                                    </div> */}
+
+
+                                            
                                             <div className="loaderCenter">
                                                 {this.state.imgLoader===true ? 
                                                     <p >
@@ -909,9 +947,9 @@ saveDisable =()=>{
                                             }
                                            
                                             </div>
-                                          
-                                             
                                         </div>
+
+
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
                                             <span class="d-flex align-items-center justify-content-around">
@@ -920,20 +958,57 @@ saveDisable =()=>{
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
+
                                                 <span class="f-s-20" style={{position:"absolute",fontWeight:"bold"}} >Upload</span>
                                             </span>
-                                            <img src="assets/img/upload-ic-white.svg" alt="" />
-                                            {/* <img src="assets/img/upload-ic-white.svg" alt="" /> */}
+                                            <img src="assets/img/upload-ic-white.svg" alt=""   />
+                                            
                                         </a>
-                                        <div className="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
-                                            <span class="d-flex align-items-center justify-content-around"
-                                            onClick={()=>{confirmAction("deleteImage"); }}
-                                             //onClick={this.handleRemoveImage}
+
+
+                                   
+
+
+
+
+                                        <div >
+
+
+
+                            
+
+
+                                            {/* <span class="d-flex align-items-center justify-content-around"
+                                                    //onClick={()=>{confirmAction("deleteImage"); }}
+                                                    //onClick={this.handleRemoveImage}
                                              >
                                                 <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold"}}>Remove</span>
-                                            </span>
-                                            <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
+                                            </span> */}
+
+
+                                    {/* <a  class="btn ml-2 mt-3 mt-md-0" >
+                                            <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                            disabled={this.state.disabled}
+                                            onClick={this.handleSubmit}>
+
+                                            <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
+                                                                <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
+                                                
+                                            </button>
+                                    </a> */}
+                                            
+                                             <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
+                                             disabled={this.state.disableImageRemove}
+                                            // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
+                                             onClick={()=>{confirmAction("deleteImage")}}>
+                                             <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold", backgroundColor:"transparent"}}>Remove</span>
+                                            <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"3px"}}/>
+                                            </button>
                                         </div>
+
+
+
+
                                     </div>
                                 </div>
 
@@ -1127,3 +1202,6 @@ saveDisable =()=>{
     export default withRouter(connect(mapStateToProps,{showorganization,updateorganization,removeImage
         ,handleOrganizationSettingsInputAction,resetUserDataInOrg,
         uploadImage}) (OrganizationSettings));
+
+
+
