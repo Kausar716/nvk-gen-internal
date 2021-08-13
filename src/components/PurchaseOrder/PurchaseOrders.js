@@ -408,7 +408,7 @@ export class PurchaseOrders extends React.Component {
 
 
                                     <div >
-                                    <label>Purchase Orders&nbsp;</label>
+                                    <label className="greenText">Purchase Orders&nbsp;</label>
                                     <label className="greenText"> Show</label>
                                                 <select 
                                                     value={this.state.pageSize}

@@ -416,9 +416,9 @@ const  ProductManagement = (props) =>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Product ID &nbsp;&nbsp;
+                                                    <h2 >Product ID &nbsp;&nbsp;
                                                         {/* //{product_idFromGeneral||productDataById.product_id} */}
-                                                        {props.temp.productData.ae_product_id ==="" ? productDataById.product_id: product_idFromGeneral}
+                                                        <snap className="text-green">{props.temp.productData.ae_product_id ==="" ? productDataById.product_id: product_idFromGeneral}</snap>
                                                     </h2>
                                                 </div>
                                                 

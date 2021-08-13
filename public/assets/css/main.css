@@ -53507,31 +53507,31 @@ ul.list-unstyled.searchAlpha li a:hover {
 }
 .stsClosed {
     background-color: #C4E9C4;
-    color: #069D06;
+    color: #007200;
 }
 .stsDraft {
     background-color: #D4D4D4;
     color: #000000;
 }
 .stsOpen {
-    background-color: #B2D4FF;
-    color: #2D71FF;
+    background-color: #D2EAFF;
+    color: #357EBD;
 }
 .stsReady {
-    background-color: #ffb347;
-    color: #ff8c00;
+    background-color: #FBE1A7;
+    color: #FF8800;
 }
 .stsReserve {
-    background-color: #9370db;
-    color: #8a2be2;
+    background-color: #D4BCFF;
+    color: #8B51F5;
 }
 .stsPicking {
-    background-color: #afeeee;
-    color: #00ffff;
+    background-color: #CBF4FF;
+    color: #00B9EB;
 }
 .stsQuote {
-    background-color: #a9a9a9;
-    color: #808080;
+    background-color: #A4A9B5;
+    color: #101929;
 }
 .editPurchaseHead h2 {
     background-color: #D4D4D4;
@@ -54075,6 +54075,11 @@ ul.list-unstyled.searchAlpha li a:hover {
     height: 8px;
     border-radius: 4px;
 }
+.cardBoxwide .stripe {
+    width:100%;
+    height: 8px;
+    border-radius: 4px;
+}
 .cardBox.openStsCard .stripe {
     background-color: rgb(52, 93, 153);
 }
@@ -54092,14 +54097,14 @@ ul.list-unstyled.searchAlpha li a:hover {
 }
 .cardBox p {
     font-size: 18px;    
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-weight: 600;
     margin-left: 10px;
     margin-right: 10px;
 }
 .cardBoxwide p {
     font-size: 18px;    
-    margin-bottom: 10px;
+    margin-bottom: 5px;
     font-weight: 600;
     margin-left: 10px;
     margin-right: 10px;
@@ -54119,7 +54124,8 @@ ul.list-unstyled.searchAlpha li a:hover {
     min-height: 120px;
     border-color: #a9a9a9;
 }
-.activeQuotesCard h4, .quotesFlaggedCard h4 {
+.activeQuotesCard h4, .quotesFlaggedCard h4, .totalCard h4, .openStsCard h4, .pickingStsCard h4, .readyStsCard h4,
+    .shippedStsCard h4, .lateStsCard h4 {
     font-size: 32px;
 }
 .editCustSec > div {

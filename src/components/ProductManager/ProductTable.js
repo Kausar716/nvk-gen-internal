@@ -173,8 +173,9 @@ const ProductTable  = (props) => {
                                                 <th className="text-nowrap">Product ID</th>
                                                 <th className="text-nowrap">Product Name</th>
 
-                                                <th className="text-nowrap">Location</th>
+                                                {/* <th className="text-nowrap">Location</th> */}
                                                 <th className="text-nowrap">Category</th>
+                                                <th className="text-nowrap">SKU Count</th>
                                                 {/* <th className="text-nowrap">Sub Category</th> */}
                                                 <th className="text-nowrap">Manufacturer</th>
 
@@ -205,7 +206,7 @@ const ProductTable  = (props) => {
                                                 <td style={{color: (product.archived===0)?"":"red"}}>{product.archived===0?"Active":"Archived"}</td>
                                                 <td>{product.product_id}</td>
                                                 <td>{product.name}</td>
-                                                <td>--</td> 
+                                                {/* <td>--</td>  */}
                                                 <td>
                                               
                                                     {/* {categoryData.length>0 ? categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:""} */}
@@ -213,6 +214,7 @@ const ProductTable  = (props) => {
                                                     {categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:"":""}
                                                     {/* {abcd[0].name} */}
                                                     </td>
+                                                <td className="text-center">{product.sku_count}</td>
 
                                                
                                                 {/* <td>{product.subcategory_id}</td> */}
