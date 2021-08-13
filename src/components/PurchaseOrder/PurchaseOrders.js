@@ -7,7 +7,7 @@ import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
 import initialDetails from './initialDetails';
 import './style.css'
-
+import { Link } from "react-router-dom";
 export class PurchaseOrders extends React.Component {
 
     constructor(){
@@ -220,12 +220,14 @@ export class PurchaseOrders extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Purchase Orders</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
-                    <a href="/PurchaseOrder" class="btn ml-2">
+                <Link to="/PurchaseOrder">
+                    <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
                             <span class="ml-2"><b>New P.O.</b></span>
                         </span>
                     </a>
+                    </Link>
 				</div>
 			</div>
             <div class="px-md-3 mt-3">
@@ -406,7 +408,7 @@ export class PurchaseOrders extends React.Component {
 
 
                                     <div >
-                                    <label>Purchase Orders&nbsp;</label>
+                                    <label className="greenText">Purchase Orders&nbsp;</label>
                                     <label className="greenText"> Show</label>
                                                 <select 
                                                     value={this.state.pageSize}

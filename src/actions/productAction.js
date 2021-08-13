@@ -67,7 +67,6 @@ import {
 */
 
 export const createProductAction = (product) => dispatch => {
-    console.log(product)
     let errorArray=[];
     if(product.manufacturer_id===0||product.manufacturer_id ==null) errorArray.push("Select Manufacturer") 
     if(product.category_id ===0||product.category_id == null) errorArray.push(" Select Category")
@@ -75,12 +74,11 @@ export const createProductAction = (product) => dispatch => {
     if(errorArray.length===0){
         axios.post(`/api/create-product`,product
         , config).then(res=>{
-            console.log(res)
             errorArray.push("Product Added successfully")
             dispatch(getAllProductAction())
             //dispatch(createSkuAction(res.data.data.product.product_id,product,"add"))
            //dispatch(getAllSpecifiedSkuProductList(res.data.data.product.product_id))
-            console.log("res12345",res.data.data.product.product_id)
+           
         
         //disppath(updateProductAction(product,res.data.data.product.product_id,))
             dispatch({
@@ -148,9 +146,14 @@ export const checkBoxSku1 =(id,index,type1,obj) =>dispatch=>{
     
 }
 export const updateProductAction = (data,id,tag) => dispatch => {
-    //debugger;
+    let updateObj= data
+    if(typeof(data.common_name) === "string"){
+        if(data.common_name.length>0)
+        updateObj.common_name = JSON.parse(data.common_name)
+        else 
+        updateObj.common_name = []
+    }
     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
-      //debugger;
         dispatch(getAllProductAction())
         //dispatch(createSkuAction(res.data.data.product.product_id,data,"add"))
         let error = []
@@ -201,15 +204,10 @@ export const getAllProductAction = () => dispatch => {
 
 
 export const getAllSpecifiedSkuProductList =(id)=>dispatch=>{
-  // debugger;
     axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
-    //debugger;
-        console.log("getAllSpecifiedSkuProductList",res.data)
         dispatch({
                 type:GET_SKU_SPECIFIED_PRODUCT,
-                payload:res.data,
-
-    
+                payload:res.data,    
             })
         })
 }
@@ -217,35 +215,24 @@ export const getAllSpecifiedSkuProductList =(id)=>dispatch=>{
 
 
 export const getSpecifiedProductAction = (id, actionType="edit",pageToOpen="general") => dispatch => {
-   
-    console.log(id)
-    console.log(actionType)
     axios.get(`/api/product/${id}`,config).then(res=>{ 
-        console.log("getSpecifiedProductAction",res.data)
-        //dispatch(showSpecifiedSkuAction(id))
         dispatch(pageReDirectAction(pageToOpen,actionType))
         dispatch({
                 type:GET_SPECIFIED_PRODUCT_ACTION,
                 payload:res.data,
-                actionType:actionType
-    
+                actionType:actionType    
             },
             dispatch(getAllSpecifiedSkuProductList(id)),
             )
-        })
-   
+        })   
 }
 
 export const duplicateProduct = (id) =>dispatch=>{
-    // dispatch(getSpecifiedProductAction(id, "add"))
     let error = []
-    console.log(id)
     let filteredID = id.match(/\d+/g).map(Number);
     axios.get(`/api/duplicate-product/${filteredID[0]}`,config).then(res=>{ 
-        console.log(res)
         dispatch(getAllProductAction())
         dispatch(getAllSkuAction())
-        // dispatch(getAllSpecifiedSkuProductList(res.data.data.product_id))
         dispatch({
             type:DUPLICTE_PRODUCT
         })
@@ -256,8 +243,6 @@ export const duplicateProduct = (id) =>dispatch=>{
                         status:true
                     })
         })
-    
-
 }
 
 
@@ -278,12 +263,7 @@ export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>a
                 supplier_id:1,
             };
             const FinalData = {...data1, id, ...skuData}
-    
-    //debugger;
     let error = []
-    
-    //console.log("DATADATA", data);
-    console.log("DATADATA", FinalData);
     if(skuData.each_cost===0||skuData.each_cost ==="" ||skuData.each_cost==null) error.push("Add Each Cost") 
     if(skuData.each_price ===0||skuData.each_price ===""||skuData.each_price==null) error.push(" Add Each Price")
     if(skuData.sale_price ===0||skuData.sale_price === ""||skuData.sale_price==null) error.push("Add Sale Price") 
@@ -294,11 +274,8 @@ export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>a
      
         // FinalData.subcategory_id =FinalData.subcategory
         delete FinalData.subcategory
-        console.log(FinalData,id)
        
         axios.post(`/api/add-sku`,FinalData,config).then(res=>{ 
-           
-            console.log("createSKU", res)
             //dispatch(getAllProductAction())
                             // dispatch(showSpecifiedSkuAction(id))
             //dispatch(getSpecifiedProductAction(id,"edit","sku"))
@@ -354,9 +331,6 @@ export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>a
 
 
 export const updateSkuAction = (id, data) =>async dispatch => {
- // debugger;
-console.log(data)
-
  let error  = []
  if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
  if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
@@ -371,8 +345,6 @@ console.log(data)
         supplier_id:1,
     };
     const FinalData = {...data1, id, ...data}
-    console.log("DATADATA", data);
-
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{ 
             //debugger;
             dispatch(getAllSkuAction(id))
@@ -410,10 +382,6 @@ console.log(data)
 
 
 export const updateSkuActionClear = (id,data) => async dispatch=>{
-    console.log(data)
-   // debugger
-    // delete data["id"]
-    // 
     let error  = []
     if(data.each_cost===0||data.each_cost ==="" ||data.each_cost==null) error.push("Add Each Cost") 
     if(data.each_price ===0||data.each_price ===""||data.each_price==null) error.push(" Add Each Price")
@@ -427,10 +395,7 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
             supplier_id:1,
         };
         const FinalData = {...data1, id, ...data}
-        console.log(FinalData)
-
         axios.post(`/api/update-sku/${id}`,FinalData,config).then(res=>{
-           console.log(res)
            // error.push("Product Updated Successfully")
         dispatch({
             type:UPDATE_SKU_ACTION_CLEAR
@@ -489,8 +454,6 @@ export const deleteSkuAction = (id) => dispatch => {
 }
 export const getAllSkuAction = (id) => dispatch => {
     axios.get("/api/skus/products",config).then(res=>{ 
-       // debugger;
-        console.log(res.data)
         dispatch({
                 type:GET_ALL_SKU_ACTION,
                 payload:res.data
@@ -505,12 +468,8 @@ export const getAllSkuAction = (id) => dispatch => {
 
 export const showSpecifiedSkuAction = (id,data, actionType="edit") => dispatch => {
   
-console.log(actionType)
      axios.get(`/api/sku/${id}?type=product`,config).then(res=>{ 
         //axios.get(`/api/skus/products/${id}`,config).then(res=>{ 
-        console.log(res)
-    
-        console.log("showSpecifiedSkuAction",res.data.data[0])
         dispatch({
                 type:GET_SPECIFIED_SKU_ACTION,
                 payload:res.data.data[0],
@@ -522,7 +481,6 @@ console.log(actionType)
 }
 
 export const serachProduct = (data) =>dispatch=>{
-    console.log(data)
     dispatch({
         type:HANDLE_PRODUCT_SEARCH_INPUT,
         payload:data,
@@ -612,7 +570,7 @@ export const handleInputAction = (id, value) =>dispatch=>{
 
 }
 export const handleSkuInputAction =(id,value) =>dispatch=>{
-    console.log(id,value)
+ 
       dispatch({
         type:HANDLE_SKU_INPUT_DATA,
         itemId:id,
@@ -648,9 +606,7 @@ export const modalAction =() =>dispatch=>{
 
 //handle category Filter action
 export const handleCategory = (category,subCategory) =>dispatch=>{
-    console.log("AforAA",category,subCategory)
     if(category ==="All"){
-         console.log("only all", category)
         dispatch({
             type:FILTER_GET_ALL_CATEGORY_DATA,
             categoryId:category,
@@ -658,7 +614,6 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
         })
 
     }else if(category!=="All" && subCategory ==="0"){
-        console.log("acategoryllsubCategory", category, subCategory)
         dispatch({
             type:FILTER_GET_SLECTED_CATEGORY_DATA,
             categoryId:category,
@@ -666,7 +621,6 @@ export const handleCategory = (category,subCategory) =>dispatch=>{
         })
 
     }else if(category!=="All" && subCategory !=="0"){
-        console.log("both")
         dispatch({
             type:FILTER_GET_SLECTED_CATEGORY_SUB_DATA,
             categoryId:category,
@@ -685,7 +639,6 @@ export const handleSelectedCategory = (categoryId) =>dispatch=> {
 }
 
 export const handleManufactureData = (manufacture) =>dispatch=> {
-    console.log(manufacture)
     dispatch({
         type:HANDLE_MANUFACTURE_DATA,
         manufacturer_id:manufacture
