@@ -420,7 +420,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                     return <li id={t.id} name={t.id}>
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                 <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span>
-                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}} ><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
                                                                 </a>

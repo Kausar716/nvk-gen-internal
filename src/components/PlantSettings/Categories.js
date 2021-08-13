@@ -480,7 +480,7 @@ render() {
                                                     
                                                     return <li id={t.id}>
                                                                  <a className="d-flex justify-content-between align-items-center"  id={t.id}>
-                                                                      <span id={t.id} >{t.name}</span>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData" : "eplisData"} >{t.name}</span>
 
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
@@ -526,7 +526,7 @@ render() {
                                                    {this.props.plantCategoryList.filter(data=>data.status ==1).map(t=>{
                                                     return <li id={t.id}>
                                                                  <a className="d-flex justify-content-between align-items-center"  id={t.id}>
-                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "} >{t.name}</span>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
 
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
