@@ -290,6 +290,7 @@ const productFormAction = ()=>{
                                             <select className="form-control"  id="sub_category" onChange={searchBasedOnCategory} style={{cursor:"pointer"}}>
                                                 <option value={0}>None</option>
                                             {plantCategoryData.map(plantCategory=>{
+                                                if(plantCategory.status === "1")
                                                 return(
                                                     <option value={plantCategory.id}  selected={Number(categoryId) ===plantCategory.id?"selected":""} >{plantCategory.name} </option>
                                                 )
