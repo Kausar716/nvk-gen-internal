@@ -140,6 +140,17 @@ RESET_SUPPLIER_DATA,
 //         }) 
      
 // }
+
+
+export const supplierCategorySort =()=>dispatch => {
+
+}
+export const supplierReasonSort =()=>dispatch => {
+
+}
+export const supplierLocationSort =()=>dispatch => {
+
+}
 export const resetSupplierData=()=>dispatch=>{
     dispatch({
         type:RESET_SUPPLIER_DATA,

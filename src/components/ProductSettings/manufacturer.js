@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert';
 import {connect} from "react-redux";
+import Sortable from 'sortablejs'
 // import './style.css';
 import {getAllProductManufacturers,handleProductManufacturerInputAction,handleAddProductManufacturer,
     handleDragDrop,handleManufacturerDragSort,handleProductManufacturerDelete, showSpecificProductSettingManufacture, updateProductSettingManufacture} from '../../actions/productManufacturerAction'
@@ -26,89 +27,191 @@ class Manufacturer extends Component {
                 btnLabelAdd:'Add New manufacture Type',
                 btnLabelUpdate: 'Update manufacture Type',
                 btnLabelCancel:'Cancel',
-                deleteon:false
+                deleteon:false,
+                active:[],
+                inactive:[]
             }
         
     }
-    onDragOver = (ev)=>{
-        ev.preventDefault();
+  
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.productManufacturerList.filter(data=>data.status ==1)
+       let inactive=this.props.productManufacturerList.filter(data=>data.status ==0)
+        this.setState({active:active,inactive:inactive})
     }
-    onDragStart=(ev, id)=>{
-        ev.dataTransfer.setData("id",id)
-        let activeId=this.state.activeId
-        activeId=id;
-        this.setState({activeId})
-    }
-    componentDidMount(){
-        this.props.getAllProductManufacturers()
-    }
-    onMouseLeave =((ev, id)=>{
-        let sortId=this.state.sortId
-        sortId=id;
-        this.setState({sortId})
+componentDidMount(){
+    
+
+    var elData = document.getElementById('categoryActive');
+    var elData1 = document.getElementById('categoryInactive');
+    this.props.getAllProductManufacturers().then(()=>{
+        // alert("ji")
+        this.getCatgoryData()
     })
-    onDrop=(ev,cat)=>{
-        let id= ev.dataTransfer.getData("id");        
-        let tasks = this.props.productManufacturerList.filter((task)=>{
-            return JSON.stringify(task.id) === id;
-        });
-        let doProcess = false;
-        let alertmsg = 0;
-        if (cat === 'active' && tasks[0].status === 0) {
-            doProcess = true;
-            alertmsg = 1;
+    new Sortable(elData, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this)
+    })
+    new Sortable(elData1, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this),
+     
+
+        // onFilter:function(){
+        //     alert("hi")
+        // }
+    })
+
+}
+onDragOver = (ev)=>{
+    ev.preventDefault();
+}
+startIDData  =(e)=>{
+    this.setState({selectedID:e.item.id})
+}
+onAddData = (evt)=>{
+    console.log(evt)
+    evt.preventDefault()
+
+//     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+//  evt.from.insertBefore(evt.item, null); 
+
+}
+onMoveData = (evt,ui)=>{
+
+   if(evt.from.id == evt.to.id){
+       if(evt.willInsertAfter ==true)
+    this.props.handleManufacturerDragSort(evt.dragged.id,evt.related.id,"down")
+    else  this.props.handleManufacturerDragSort(evt.dragged.id,evt.related.id,"up")
+
+   }else{
+       if(evt.from.id =="categoryActive"){
+          let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+          //console.log(task)
+          if(task.length > 0){
+            this.props.handleDragDrop(task[0]).then(data=>{
+            //     this.props.getAllPlantCategories().then(()=>{
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
+            // this.getCatgoryData()
+      
+            // })
+        })
+
         }
-        if (cat === 'inactive' && tasks[0].status === 1) {
-            doProcess = true;
-            alertmsg = 2;
-        }
-        if (doProcess === true) {
-            let result= this.props.handleDragDrop(tasks[0])
-            result.then(res=>{
-                this.props.getAllProductManufacturers()
-            })  
-        }
-        if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
-            let result= this.props.handleManufacturerDragSort(this.state.activeId, this.state.sortId)
-            result.then(res=>{
-                this.props.getAllProductManufacturers()
-            }) 
-            alertmsg = 3;
-        }
-        if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: 'Sort Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
+
+       }else if(evt.from.id =="categoryInactive"){
+           //console.log(evt.dragged.id,evt.related.id)
+        let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+        //console.log(task)
+        if(task.length > 0){
+            this.props.handleDragDrop(task[0]).then(data=>{
+        //         this.props.getAllPlantCategories().then(()=>{
+        //             this.props.getAllPlantCategories().then(()=>{
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
+        //                 this.getCatgoryData()
+        //             })
+        //             // this.getCatgoryData() 
+        //         })
+        //     })
+
+        // }
+        
+       })
     }
+
+   }
+}
+}
+    // onMouseLeave =((ev, id)=>{
+    //     let sortId=this.state.sortId
+    //     sortId=id;
+    //     this.setState({sortId})
+    // })
+    // onDrop=(ev,cat)=>{
+    //     let id= ev.dataTransfer.getData("id");        
+    //     let tasks = this.props.productManufacturerList.filter((task)=>{
+    //         return JSON.stringify(task.id) === id;
+    //     });
+    //     let doProcess = false;
+    //     let alertmsg = 0;
+    //     if (cat === 'active' && tasks[0].status === 0) {
+    //         doProcess = true;
+    //         alertmsg = 1;
+    //     }
+    //     if (cat === 'inactive' && tasks[0].status === 1) {
+    //         doProcess = true;
+    //         alertmsg = 2;
+    //     }
+    //     if (doProcess === true) {
+    //         let result= this.props.handleDragDrop(tasks[0])
+    //         result.then(res=>{
+    //             this.props.getAllProductManufacturers()
+    //         })  
+    //     }
+    //     if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
+    //         let result= this.props.handleManufacturerDragSort(this.state.activeId, this.state.sortId)
+    //         result.then(res=>{
+    //             this.props.getAllProductManufacturers()
+    //         }) 
+    //         alertmsg = 3;
+    //     }
+    //     if (alertmsg === 1){
+    //         confirmAlert({
+    //             title: 'Action',
+    //             message: 'Successfully Moved from Inactive to Active',
+    //             buttons: [
+    //               {
+    //                 label: 'Ok'
+    //               }
+    //             ]
+    //         });
+    //     }
+    //     if (alertmsg === 2){
+    //         confirmAlert({
+    //             title: 'Action',
+    //             message: 'Successfully Moved from Active to InActive',
+    //             buttons: [
+    //               {
+    //                 label: 'Ok'
+    //               }
+    //             ]
+    //         });
+    //     }
+    //     if (alertmsg === 3){
+    //         confirmAlert({
+    //             title: 'Action',
+    //             message: 'Sort Successfully Done',
+    //             buttons: [
+    //               {
+    //                 label: 'Ok'
+    //               }
+    //             ]
+    //         });
+    //     }
+    // }
     onDelete =(ev)=>{
         let id= ev.dataTransfer.getData("id");
         confirmAlert({
@@ -131,16 +234,11 @@ class Manufacturer extends Component {
         this.setState({deleteon:true})
         result.then(res=>{
             this.setState({deleteon:false})
-            this.props.getAllProductManufacturers()
-            confirmAlert({
-                title: 'Delete Successfully',
-                message: 'Manufacture  ',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-              });
+            this.props.getAllProductManufacturers().then(()=>{
+                // alert("ji")
+                this.getCatgoryData()
+            })
+        
         })
     }
 
@@ -193,17 +291,11 @@ class Manufacturer extends Component {
     if(this.validate()){
         let result = this.props.handleAddProductManufacturer(this.props.name)
         result.then(res=>{
-            this.props.getAllProductManufacturers()
+            this.props.getAllProductManufacturers().then(()=>{
+                // alert("ji")
+                this.getCatgoryData()
+            })
         })
-        confirmAlert({
-            title: 'Added Successfully',
-            message: 'Manufacture',
-            buttons: [
-              {
-                label: 'Ok'
-              }
-            ]
-        });
         this.setState({
             name: "",
             subName:"",
@@ -254,19 +346,14 @@ handleAddCategoryUpdate=()=>{
       if(this.validate()){
         let res=   this.props.updateProductSettingManufacture(updateID, updateObject)
             res.then(res=>{
-                this.props.getAllProductManufacturers()
+                this.props.getAllProductManufacturers().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             })
             
             if (this.state.isEditing) {
-                confirmAlert({
-                    title: 'Updated Successfully',
-                    message: 'Manufacture ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
+            
             }
             this.setState({
                 isEditing:false,
@@ -393,13 +480,15 @@ render()
 
 
                                     <div class="card-body cardBg"
-                                    onDragOver={(e)=>this.onDragOver(e)}
-                                    onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                        <ul class="list-unstyled">
-                                            {tasks.inactive.map(t=>{
-                                            return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                   >
+                                        <ul class="list-unstyled" id="categoryInactive">
+                                            {this.state.inactive.map(t=>{
+                                            return <li id={t.id} >
                                                         <a className="d-flex justify-content-between align-items-center">
-                                                            <span id="Wheathers">{t.name}</span>
+                                                            <span id={t.id} className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
+                                                            <span id={t.id} style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
                                                         </a>
                                                     </li>
                                             })}
@@ -434,13 +523,13 @@ render()
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                    <ul class="list-unstyled">
-                                            {tasks.active.map(t=>{
-                                            return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                    <div class="card-body cardBg" >
+                                    <ul class="list-unstyled" id="categoryActive">
+                                            {this.state.active.map(t=>{
+                                            return <li id={t.id} >
                                                         <a className="d-flex justify-content-between align-items-center">
-                                                            <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
-                                                            <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                            <span id={t.id} className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
+                                                            <span id={t.id} style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
                                                         </a>

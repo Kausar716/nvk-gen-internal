@@ -105,12 +105,15 @@ export default function(state = initialSatate, action){
             }
 
         case HANDLE_DRAG_PLANT_CATEGORY:
+            console.log(action.payload.data)
             return{
-                ...state
+                ...state,
+                // plantCategoryData:[...state.plantCategoryData,action.payload.data]
             }
         case HANDLE_DRAG_CATEGORY_SORT:
             return{
-                ...state
+                ...state,
+                // plantCategoryData:[]
             }
         case HANDLE_CATEGORY_DELETE:
             return{

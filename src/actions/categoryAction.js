@@ -64,7 +64,7 @@ export const getAllManufactureAction = () => dispatch =>{
 
 //PLANTCATEGORY
 export const getAllPlantCategories = ()=> dispatch =>{
-    axios.get("/api/plant-categories",config).then(res=>{ 
+    return  axios.get("/api/plant-categories",config).then(res=>{ 
         console.log(res)
     dispatch({
             type:GET_ALL_PLANT_CATEGORIES,
@@ -148,11 +148,11 @@ export const handleDragDrop = (data) =>dispatch=>{
         })
     })
 }
-export const handleCategoryDragSort = (fromId, toId) =>dispatch=>{
+export const handleCategoryDragSort = (fromId, toId,type) =>dispatch=>{
     let attributeObject={}
     attributeObject.from=fromId;
     attributeObject.to=toId;
-    attributeObject.position="up";
+    attributeObject.position=type;
     return axios.post(`/api/drag-sort-category`,attributeObject,config).then(res=>{ 
         console.log(res)
     dispatch({
@@ -163,10 +163,10 @@ export const handleCategoryDragSort = (fromId, toId) =>dispatch=>{
 }
 export const handleCategoryDelete = (id) =>dispatch=>{
     let deleteId = parseInt(id)
-    let plantCategoryObject={}
+    // let plantCategoryObject={}
 
  
-    return axios.post(`/api/plant-delete-category/${deleteId}`,plantCategoryObject,config).then(res=>{ 
+    return axios.post(`/api/plant-delete-category/${deleteId}`,null,config).then(res=>{ 
         console.log(res)
     dispatch({
             type:HANDLE_CATEGORY_DELETE,
