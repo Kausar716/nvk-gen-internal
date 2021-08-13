@@ -240,12 +240,15 @@ export const Component = withRouter(({ history, location }) =>{
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
                                                         {/* <div className="profImg" style={{width:"60%", height:"60%"}}> */}
+                                                        <div className="backgroundImageCoverSmall" style={{margin:'auto'}}>
                                                         <img src=
                                                          {
                                                         this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.avatar===null?tempImage:"https://zvky.flamingotech.ml/"+this.props.reduxSelectedUser.selectedUser.data.avatar :tempImage:tempImage}
-                                                         className="imageCircleSmall"
+                                                         className="resposiveImageParentsmall"
                                                         //   style={{ width:"auto", height:"7em", borderRadius:"50%"}}  class="img-fluid" 
                                                           />
+                                                            </div>
+                                                   
                                                         {/* <img src="assets/img/profile-img.png" class="img-fluid" /> */}
                                                         {/* </div> */}
                                                        
