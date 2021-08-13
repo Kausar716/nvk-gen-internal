@@ -191,15 +191,15 @@ onMoveData = (evt,ui)=>{
           if(task.length > 0){
             this.props.handleAttributeDragDrop(task[0]).then(data=>{
             //     this.props.getAllPlantCategories().then(()=>{
-                confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                    {
-                    label: 'Ok'
-                    }
-                ]
-            });
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
             // this.getCatgoryData()
       
             // })
@@ -215,15 +215,15 @@ onMoveData = (evt,ui)=>{
             this.props.handleAttributeDragDrop(task[0]).then(data=>{
         //         this.props.getAllPlantCategories().then(()=>{
         //             this.props.getAllPlantCategories().then(()=>{
-                        confirmAlert({
-                            title: 'Action',
-                            message: 'Successfully Moved from InActive to Active',
-                            buttons: [
-                                {
-                                label: 'Ok'
-                                }
-                            ]
-                        });
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
         //                 this.getCatgoryData()
         //             })
         //             // this.getCatgoryData() 
@@ -261,16 +261,19 @@ onMoveData = (evt,ui)=>{
             this.setState({deleteon:true})
             result.then(res=>{
                 this.setState({deleteon:false})
-                this.props.getAllSubAttribute(14)
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Location Type ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+                this.props.getAllSubAttribute(14).then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
+                // confirmAlert({
+                //     title: 'Delete Successfully',
+                //     message: 'Location Type ',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                //   });
             })
         }
 
@@ -317,17 +320,20 @@ onMoveData = (evt,ui)=>{
         if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
-                this.props.getAllSubAttribute(14)
+                this.props.getAllSubAttribute(14).then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Bloom Color',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+            // confirmAlert({
+            //     title: 'Added Successfully',
+            //     message: 'Bloom Color',
+            //     buttons: [
+            //       {
+            //         label: 'Ok'
+            //       }
+            //     ]
+            // });
             this.setState({
                 name: "",
                 subName:"",
@@ -398,18 +404,21 @@ onMoveData = (evt,ui)=>{
              if(this.validate()){
                 let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
                     res.then(res=>{
-                        this.props.getAllSubAttribute(14)
+                        this.props.getAllSubAttribute(14).then(()=>{
+                            // alert("ji")
+                            this.getCatgoryData()
+                        })
                     })
                     if (this.state.isEditing) {
-                        confirmAlert({
-                            title: 'Updated Successfully',
-                            message: 'Bloom Color ',
-                            buttons: [
-                              {
-                                label: 'Ok'
-                              }
-                            ]
-                        });
+                        // confirmAlert({
+                        //     title: 'Updated Successfully',
+                        //     message: 'Bloom Color ',
+                        //     buttons: [
+                        //       {
+                        //         label: 'Ok'
+                        //       }
+                        //     ]
+                        // });
                     }
                     this.setState({
                         isEditing:false,

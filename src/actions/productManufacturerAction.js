@@ -18,7 +18,7 @@ import {
 
 // Product Manufacture data
 export const getAllProductManufacturers = ()=> dispatch =>{
-    axios.get("/api/manufacture-list",config).then(res=>{ 
+    return axios.get("/api/manufacture-list",config).then(res=>{ 
         console.log(res)
     dispatch({
             type:GET_ALL_PRODUCT_MANUFACTURES,
@@ -102,11 +102,11 @@ export const handleDragDrop = (data) =>dispatch=>{
         })
     })
 }
-export const handleManufacturerDragSort = (fromId, toId) =>dispatch=>{
+export const handleManufacturerDragSort = (fromId, toId,type) =>dispatch=>{
     let attributeObject={}
     attributeObject.from=fromId;
     attributeObject.to=toId;
-    attributeObject.position="up";
+    attributeObject.position=type
     return axios.post(`/api/drag-sort-manufacturer`,attributeObject,config).then(res=>{ 
         console.log(res)
     dispatch({

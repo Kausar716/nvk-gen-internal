@@ -105,15 +105,15 @@ onMoveData = (evt,ui)=>{
           if(task.length > 0){
             this.props.handleDragDrop(task[0]).then(data=>{
             //     this.props.getAllPlantCategories().then(()=>{
-                confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                    {
-                    label: 'Ok'
-                    }
-                ]
-            });
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
             // this.getCatgoryData()
       
             // })
@@ -129,15 +129,15 @@ onMoveData = (evt,ui)=>{
             this.props.handleDragDrop(task[0]).then(data=>{
         //         this.props.getAllPlantCategories().then(()=>{
         //             this.props.getAllPlantCategories().then(()=>{
-                        confirmAlert({
-                            title: 'Action',
-                            message: 'Successfully Moved from InActive to Active',
-                            buttons: [
-                                {
-                                label: 'Ok'
-                                }
-                            ]
-                        });
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
         //                 this.getCatgoryData()
         //             })
         //             // this.getCatgoryData() 
@@ -206,15 +206,15 @@ onMoveData = (evt,ui)=>{
                     // alert("ji")
                     this.getCatgoryData()
                 })
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Category Type ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+                // confirmAlert({
+                //     title: 'Delete Successfully',
+                //     message: 'Category Type ',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                //   });
             })
         }
 
@@ -242,15 +242,15 @@ onMoveData = (evt,ui)=>{
                     this.getCatgoryData()
                 })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Category Type',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+            // confirmAlert({
+            //     title: 'Added Successfully',
+            //     message: 'Category Type',
+            //     buttons: [
+            //       {
+            //         label: 'Ok'
+            //       }
+            //     ]
+            // });
             this.setState({
                 name: "",
                 subName:"",
@@ -327,15 +327,15 @@ onMoveData = (evt,ui)=>{
                         })
                     })
                     if (this.state.isEditing) {
-                        confirmAlert({
-                            title: 'Updated Successfully',
-                            message: 'Category Type',
-                            buttons: [
-                              {
-                                label: 'Ok'
-                              }
-                            ]
-                        });
+                        // confirmAlert({
+                        //     title: 'Updated Successfully',
+                        //     message: 'Category Type',
+                        //     buttons: [
+                        //       {
+                        //         label: 'Ok'
+                        //       }
+                        //     ]
+                        // });
                     }
                     this.setState({
                         isEditing:false,
