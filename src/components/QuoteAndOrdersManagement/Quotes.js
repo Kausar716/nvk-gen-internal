@@ -33,7 +33,7 @@ export default function QuoteAndOrdersManagement() {
                 <div class="px-3 py-3 mb-3 bg-white cardShadow">
                     <div class="row align-items-center purchaseOrderTabHead">
                         <div class="col-md-6 d-flex align-items-center">
-                            <span className="stsQuote" style={{fontSize:32}}>Quote</span>
+                            <span className="stsBadge stsQuote" style={{fontSize:32}}>Quote</span>
                             <div class="d-flex ml-3 mb-0 bdrLeft">
                                 <div class="">
                                     <img src="assets/img/date-ic-sm-green.svg" alt=""/>
@@ -69,7 +69,7 @@ export default function QuoteAndOrdersManagement() {
                     <TabList>
                         <Tab>Quote Details</Tab>
                         <Tab>Add to Quote</Tab>
-                        <Tab>Current Quote <span class="badge badge-pill badge-success">2</span></Tab>
+                        <Tab>Current Quote <span class="badge badge-pill badge-success">02</span></Tab>
                         <Tab>Order History</Tab>
                         <Tab>Notes</Tab>    
                     </TabList>
@@ -81,26 +81,38 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="px-3 py-3 bg-grey-transparent-2">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h4>John Smith Landscaping</h4>
+                                            <h3>John Smith Landscaping</h3>
                                         </div>
                                     </div>
                                     <div class="row ">
-                                        <div class="col-md-4 col-lg-4">
-                                            <div>
-                                                <div><b class="mr-3">Type:</b><span class="textGrey">Finished Plants, Liners</span></div>
-                                                <div class="mt-1"><b class="mr-3">Tax Exempt:</b><span class="textGrey">No</span></div>
+                                        <div class="col-md-4 col-lg-6">
+                                            <div class="row ">
+                                                <div class="col-md-1 col-lg-2 text-md-right">
+                                                    <b>Type:</b>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <span className="textGrey"><b>Finished Plants, Liners</b></span>
+                                                </div>
+                                            </div>
+                                            <div class="row ">
+                                                <div class="col-md-1 col-lg-2 text-md-right">
+                                                    <b>Tax Exempt:</b>
+                                                </div>
+                                                <div class="col-md-10">
+                                                    <span className="textGrey"><b>No</b></span>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4 col-lg-4">
+                                        <div class="col-md-4 col-lg-2">
                                             <div>
-                                                <div><b class="mr-3">Terms:</b><span class="textGrey">Net 20</span></div>
+                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>Net 20</b></span></div>
                                                 <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 text-md-right mt-3 mt-md-0">
                                             <div>
-                                                <div><b class="mr-3">Source:</b><span class="textGrey">Internal</span></div>
-                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span class="textGrey">2020</span></div>
+                                                <div><b class="mr-3">Source:</b><span className="textGrey"><b>Internal</b></span></div>
+                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span className="textGrey"><b>2020</b></span></div>
                                             </div>
                                         </div>
                                     </div>
@@ -136,7 +148,8 @@ export default function QuoteAndOrdersManagement() {
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
-                                                <DatePicker onChange={onChange} value={value} />
+                                                {/* <DatePicker onChange={onChange} value={value} /> */}
+                                                <input type="date" className="dateDesign"  />
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Time</label>

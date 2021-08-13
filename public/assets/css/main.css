@@ -18193,7 +18193,7 @@ input[type=submit].btn-block {
 }
 
 .custom-radio .custom-control-label::before {
-    border-radius: 50%
+    border-radius: 100%
 }
 
 .custom-radio .custom-control-input:checked~.custom-control-label::after {
