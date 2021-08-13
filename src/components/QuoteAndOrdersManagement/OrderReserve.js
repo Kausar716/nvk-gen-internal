@@ -8,7 +8,7 @@ export default function OrderReserve() {
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/> Order Status - Reserve <span class="text-blue ml-3">#00234-2000133</span></h1>
+				<h1 class="page-header mb-0"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/> Order Status - Reserve <span class="text-green ml-3">#00234-2000133</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn ml-2">
                         <span class="d-flex align-items-center text-left">
@@ -44,13 +44,13 @@ export default function OrderReserve() {
                                     <h5>Reserved By</h5>
                                     <label>J. Wanders</label>
                                 </div>
-                                <div class="mr-3 bdrLeft">
+                                {/* <div class="mr-3 bdrLeft">
                                     <h5>Ready By</h5>
                                     <label>E. Vandenbrink</label>
-                                </div>
+                                </div> */}
                                 <div class="mr-3 bdrLeft text-center">
                                     <h5>Reserved</h5>
-                                    <h4 class="text-indigo f-s-20">6</h4>
+                                    <h3 class="text-indigo f-s-20">6</h3>
                                 </div>
                                 <div class="mr-3 bdrLeft">
                                     <h5>Picking with</h5>
@@ -66,8 +66,8 @@ export default function OrderReserve() {
                         </div>
                         <div class="col-md-6 d-flex justify-content-md-end  align-items-center">
                             <a href="" class="ml-4 mr-4"><img src="assets/img/reserve-ic-purple.svg" alt=""/></a>
-                            <a href="" class="ml-2"><img src="assets/img/copy-ic.svg" alt=""/></a>
-                            <a href="" class="ml-2"><img src="assets/img/shipping-ic-green.svg" alt=""/></a>
+                            <a href="" class="ml-2"><img src="assets/img/add-segment-ic-blue.svg" alt=""/></a>
+                            <a href="" class="ml-2"><img src="assets/img/delete.svg" alt=""/></a>
                         </div>
                     </div>
                 </div>
@@ -552,8 +552,8 @@ Rate</th>
                                                 <th width="10%" class="text-center">Size</th>
                                                 <th width="15%" class="text-center productionBg">Picked Locations</th>
                                                 <th width="15%" class="text-center productionBg">Total</th>
-                                                <th width="10%" class="">Each price</th>
-                                                <th width="10%" class="">Total</th>
+                                                <th width="10%" class="text-right">Each price</th>
+                                                <th width="10%" class="text-right">Total</th>
                                                 <th width="10%" class="text-center">Check</th>
                                             </tr>
                                         </thead>
@@ -590,13 +590,13 @@ Rate</th>
                                                                     </td>
                                                                     <td width="10%" class="text-center">3cm 1 gal</td>
                                                                     <td width="15%">
-                                                                        <select class="form-control w-240">
+                                                                        <select class="form-control w-200">
                                                                             <option>FARM A</option>
                                                                             <option>Option 1</option>
                                                                             <option>Option 2</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td width="10%" class="text-center">
+                                                                    <td width="15%" class="text-center">
                                                                         <div class="pickTotal purpleBg justify-content-center">
                                                                             <input type="text" value="3" class="form-control w-60 txtReserveTot"/>
                                                                             <div class="">
@@ -604,13 +604,13 @@ Rate</th>
                                                                             </div>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-center">
+                                                                    <td class="text-right">
                                                                         <div class="plainText">90.00</div>
                                                                         <div class="">
                                                                             <span class="text-green">8.25</span>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-center">
+                                                                    <td class="text-right">
                                                                         <div class="plainText">90.00</div>
                                                                         <div class="">
                                                                             <span class="text-green">8.25</span>
@@ -648,13 +648,13 @@ Rate</th>
                                                                     </td>
                                                                     <td width="10%" class="text-center">3cm 1 gal</td>
                                                                     <td width="15%">
-                                                                        <select class="form-control w-240">
+                                                                        <select class="form-control w-200">
                                                                             <option>FARM A</option>
                                                                             <option>Option 1</option>
                                                                             <option>Option 2</option>
                                                                         </select>
                                                                     </td>
-                                                                    <td width="10%" class="text-center">
+                                                                    <td width="15%" class="text-center">
                                                                         <div class="pickTotal purpleBg justify-content-center">
                                                                             <input type="text" value="3" class="form-control w-60 txtReserveTot"/>
                                                                             <div class="">
@@ -662,13 +662,13 @@ Rate</th>
                                                                             </div>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-center">
+                                                                    <td class="text-right">
                                                                         <div class="plainText">90.00</div>
                                                                         <div class="">
                                                                             <span class="text-green">8.25</span>
                                                                         </div>
                                                                     </td>
-                                                                    <td class="text-center">
+                                                                    <td class="text-right">
                                                                         <div class="plainText">90.00</div>
                                                                         <div class="">
                                                                             <span class="text-green">8.25</span>
