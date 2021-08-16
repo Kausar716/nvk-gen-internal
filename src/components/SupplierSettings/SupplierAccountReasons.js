@@ -7,6 +7,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import './style.css';
+import Sortable from 'sortablejs'
 import InfoModal from "../Modal/InfoModal"
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -14,7 +15,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
-import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData, showSpecificSubAttribute,handleReasonInputAction, updateSupplierReasonMethods}   from "../../actions/supplierManagementAction"
+import {supplierReasonSort,getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData, showSpecificSubAttribute,handleReasonInputAction, updateSupplierReasonMethods}   from "../../actions/supplierManagementAction"
 //import {handlePositionInputAction} from '../../actions/attributeAction'
 
     class SupplierAccountReasons extends Component {
@@ -35,121 +36,129 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         supplier_reason:0,
        
     },
+    active:[],inactive:[]
+   
     }
 
+    
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.supplierData.supplierReasonList.active
+       let inactive=this.props.supplierData.supplierReasonList.inactive
+        this.setState({active:active,inactive:inactive})
+    }
+componentDidMount(){
+    
 
-        onDragOver = (ev)=>{
-            ev.preventDefault();
-        }
+    var elData = document.getElementById('categoryActive');
+    var elData1 = document.getElementById('categoryInactive');
+this.props.getAllSupplierReasonMethods().then(()=>{
+        // alert("ji")
+        this.getCatgoryData()
+    })
+    new Sortable(elData, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this)
+    })
+    new Sortable(elData1, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this),
+     
 
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
-        }
-        componentDidMount(){
-            this.props.getAllSupplierReasonMethods()
+        // onFilter:function(){
+        //     alert("hi")
+        // }
+    })
 
-        }
+}
 
+onDragOver = (ev)=>{
+    ev.preventDefault();
+}
+startIDData  =(e)=>{
+    this.setState({selectedID:e.item.id})
+}
+onAddData = (evt)=>{
+    console.log(evt)
+    evt.preventDefault()
 
-        toggle1 =()=>{
-            this.setState({isOpen1:false})
-        }
+//     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+//  evt.from.insertBefore(evt.item, null); 
 
-        onDrop=(ev,cat)=>{
-            let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.supplierData.supplierReasonList
-            console.log(cat)
+}
+onMoveData = (evt,ui)=>{
 
-            let tasks = []
-            console.log( datatoParse.active)
-           
-            datatoParse.active.filter(task=>{
-                 if(task.id === id){
-                    tasks.push(task)
-                 }
-             })
-             datatoParse.inactive.filter(task=>{
-                if(task.id === id){
-                   tasks.push(task)
-                }
-            })
+   if(evt.from.id == evt.to.id){
+       if(evt.willInsertAfter ==true)
+    this.props.supplierReasonSort(evt.dragged.id,evt.related.id,"down")
+    else  this.props.supplierReasonSort(evt.dragged.id,evt.related.id,"up")
 
-        
-            //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
-             
-
-         
-         console.log(tasks)
-            // console.log(tasks)
-        //    let result= this.props.handleDragDrop(tasks[0])
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
-           let doProcess = false;
-           let alertmsg = 0;
-           if(tasks.length>0){
-
-            if (cat === 'active' && tasks[0].status === 0) {
-               
-                doProcess = true;
-                alertmsg = 1;
-            }
-            if (cat === 'inactive' && tasks[0].status === 1) {
-                doProcess = true;
-                alertmsg = 2;
-            }
-            if (doProcess === true) {
-               
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-supplier-reasons")
-                result.then(res=>{
-                    this.props.getAllSupplierReasonMethods()
-                })   
-                alertmsg = 3;
-            }
-
-            if (alertmsg === 1){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Moved from Inactive to Active',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-            if (alertmsg === 2){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Moved from Active to InActive',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-            if (alertmsg === 3){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Done',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-           }
-       
-
-            // this.setState({
-            //     ...this.state,
-            //     tasks
+   }else{
+       if(evt.from.id =="categoryActive"){
+          let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+          //console.log(task)
+          if(task.length > 0){
+              let taskData = task[0]
+              taskData.status =parseInt(taskData.status)==1? 0:1
+              this.props.updateSupplierReasonMethods(taskData.id,taskData).then(data=>{
+            //     this.props.getAllPlantCategories().then(()=>{
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
+            // this.getCatgoryData()
+      
             // })
+        })
 
         }
+
+       }else if(evt.from.id =="categoryInactive"){
+           //console.log(evt.dragged.id,evt.related.id)
+        let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+        //console.log(task)
+        if(task.length > 0){
+            let taskData = task[0]
+            taskData.status =parseInt(taskData.status)==1? 0:1
+            this.props.updateSupplierReasonMethods(taskData.id,taskData).then(data=>{
+        //         this.props.getAllPlantCategories().then(()=>{
+        //             this.props.getAllPlantCategories().then(()=>{
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
+        //                 this.getCatgoryData()
+        //             })
+        //             // this.getCatgoryData() 
+        //         })
+        //     })
+
+        // }
+        
+       })
+    }
+
+   }
+}
+}
+
+
 
 
         // onDelete =(ev)=>{
@@ -165,7 +174,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
 
         onDelete =(ev)=>{
-            let id= ev.dataTransfer.getData("id");
+            let id= this.state.selectedID
             confirmAlert({
                 title: 'Delete Supplier Account Reason',
                 message: 'Are you sure want to delete the Supplier Account Reason?',
@@ -184,17 +193,20 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             let result= this.props.handleCustomerTypeDelete(id,"delete-supplier-reasons")
             this.setState({deleteon:true})
             result.then(res=>{
-                this.props.getAllSupplierReasonMethods()
+                this.props.getAllSupplierReasonMethods().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
                 this.setState({deleteon:false})
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Supplier Account Reason ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+                // confirmAlert({
+                //     title: 'Delete Successfully',
+                //     message: 'Supplier Account Reason ',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                //   });
             })
         }
 
@@ -238,17 +250,20 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             if(this.validate()){
                 let result = this.props.saveSupplierReasonMethod(obj)
                 result.then(res=>{
-                    this.props.getAllSupplierReasonMethods()
+                    this.props.getAllSupplierReasonMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
-                confirmAlert({
-                    title: 'Added Successfully',
-                    message: 'Supplier Reasons',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
+                // confirmAlert({
+                //     title: 'Added Successfully',
+                //     message: 'Supplier Reasons',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                // });
                 this.setState({
                     name: "",
                     subName:"",
@@ -328,18 +343,21 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             if(this.validate()){
                 let res=   this.props.updateSupplierReasonMethods(updateID, updateObject)
                     res.then(res=>{
-                        this.props.getAllSupplierReasonMethods()
+                        this.props.getAllSupplierReasonMethods().then(()=>{
+                            // alert("ji")
+                            this.getCatgoryData()
+                        })
                     })
                     if (this.state.isEditing) {
-                        confirmAlert({
-                            title: 'Updated Successfully',
-                            message: 'Supplier Reasons',
-                            buttons: [
-                              {
-                                label: 'Ok'
-                              }
-                            ]
-                        });
+                        // confirmAlert({
+                        //     title: 'Updated Successfully',
+                        //     message: 'Supplier Reasons',
+                        //     buttons: [
+                        //       {
+                        //         label: 'Ok'
+                        //       }
+                        //     ]
+                        // });
                     }
                     this.setState({
                         isEditing:false,
@@ -355,12 +373,12 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
 render() {
 
-    console.log("showSpeciSubA", this.props.showSpeciSubA)
+    // console.log("showSpeciSubA", this.props.showSpeciSubA)
  
-    const {supplierData} = this.props
+    // const {supplierData} = this.props
 
-    console.log(this.props.supplierData.supplierReasonList)
-    let inActiveList = this.props.supplierData.supplierReasonList.inactive;
+    // console.log(this.props.supplierData.supplierReasonList)
+    // let inActiveList = this.props.supplierData.supplierReasonList.inactive;
 
         return (
            
@@ -444,15 +462,17 @@ render() {
 
 
                                             <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
+                                           >
+                                            <ul class="list-unstyled" id="categoryInactive">
                                                    {
-                                                  inActiveList && inActiveList.map(t=>{
-                                                    return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                                  this.state.inactive.map(t=>{
+                                                    return <li id={t.id} >
                                                                  <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.reason}</span>
-                                                                </a>
+                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.reason}</span>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a>
                                                             </li>
                                                     })}
                                             </ul>
@@ -483,10 +503,10 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierReasonList.active && this.props.supplierData.supplierReasonList.active.map(t=>{
-                                                    return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
+                                            <div class="card-body cardBg">
+                                            <ul class="list-unstyled" id="categoryActive">
+                                                   {this.state.active.map(t=>{
+                                                    return <li id={t.id} >
                                                                  <a className="d-flex justify-content-between align-items-center">
                                                                       <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.reason}</span>
                                                                       <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
@@ -529,7 +549,7 @@ render() {
         showSpecificSubAttribute,
         handleReasonInputAction,
         updateSupplierReasonMethods,
-
+        supplierReasonSort,
         
 handleDragDropCustomer    })((SupplierAccountReasons))
 
