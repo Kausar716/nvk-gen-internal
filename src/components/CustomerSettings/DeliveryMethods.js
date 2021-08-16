@@ -6,11 +6,12 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert';
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 
-import {handleCustomerTypeDelete,handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,
+import {customerDeliverySort,handleCustomerTypeDelete,handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,
     saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods, showSpecificCustomerDeliveryMethodSettings, updateCustomerDeliveryMethodSettings} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
 
@@ -37,158 +38,129 @@ import { is } from 'immutable';
             delivery_method :0,
            short_code:0
        },
+       active:[],inactive:[]
 
     }
-
-
-        onDragOver = (ev)=>{
-            ev.preventDefault();
+        getCatgoryData = ()=>{
+            let data = {};
+            let active= this.props.customerData.customerDeliveryList.active
+           let inactive=this.props.customerData.customerDeliveryList.inactive
+            this.setState({active:active,inactive:inactive})
         }
-
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
-        }
-        componentDidMount(){
-            this.props.getAllDeliveryMethods()
-
-        }
-
-
-        toggle1 =()=>{
-            this.setState({isOpen1:false})
-        }
-
-        onDrop=(ev,cat)=>{
-
-            let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.customerData.customerDeliveryList
-            console.log(cat)
-
-            let tasks = []
-            console.log( datatoParse.active)
-           
-            datatoParse.active.filter(task=>{
-                 if(task.id === id){
-                    tasks.push(task)
-                 }
-             })
-
-             datatoParse.inactive.filter(task=>{
-                if(task.id === id){
-                   tasks.push(task)
-                }
-            })
-
+    componentDidMount(){
         
-            //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
-             
-
+    
+        var elData = document.getElementById('categoryActive');
+        var elData1 = document.getElementById('categoryInactive');
+        this.props.getAllDeliveryMethods().then(()=>{
+            // alert("ji")
+            this.getCatgoryData()
+        })
+        new Sortable(elData, {
+            group: 'shared',
+            animation: 150,
+            onAdd:this.onAddData.bind(this),
+            onStart: this.startIDData.bind(this),
+            onMove:this.onMoveData.bind(this)
+        })
+        new Sortable(elData1, {
+            group: 'shared',
+            animation: 150,
+            onAdd:this.onAddData.bind(this),
+            onStart: this.startIDData.bind(this),
+            onMove:this.onMoveData.bind(this),
          
-         console.log(tasks)
-            // console.log(tasks)
-        //    let result= this.props.handleDragDrop(tasks[0])
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
-        let alertmsg = 0;
-           let doProcess = false;
-           if (cat === 'active' && tasks[0].status === 0) {
-            doProcess = true;
-            alertmsg = 1;
-        }
-           if(tasks.length>0){
-
-            // if (cat === 'active' && tasks[0].status === 0) {
-               
-            //     doProcess = true;
-            //     alertmsg = 1;
+    
+            // onFilter:function(){
+            //     alert("hi")
             // }
-
-            if (cat === 'inactive' && tasks[0].status === 1) {
-                doProcess = true;
-                alertmsg = 2;
+        })
+    
+    }
+    
+    onDragOver = (ev)=>{
+        ev.preventDefault();
+    }
+    startIDData  =(e)=>{
+        this.setState({selectedID:e.item.id})
+    }
+    onAddData = (evt)=>{
+        console.log(evt)
+        evt.preventDefault()
+    
+    //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+    //  evt.from.insertBefore(evt.item, null); 
+    
+    }
+    onMoveData = (evt,ui)=>{
+    
+       if(evt.from.id == evt.to.id){
+           if(evt.willInsertAfter ==true)
+        this.props.customerDeliverySort(evt.dragged.id,evt.related.id,"down")
+        else  this.props.customerDeliverySort(evt.dragged.id,evt.related.id,"up")
+    
+       }else{
+           if(evt.from.id =="categoryActive"){
+              let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+              //console.log(task)
+              if(task.length > 0){
+                  let taskData = task[0]
+                  taskData.status =parseInt(taskData.status)==1? 0:1
+                  this.props.updateCustomerDeliveryMethodSettings(taskData.id,taskData).then(data=>{
+                //     this.props.getAllPlantCategories().then(()=>{
+                //     confirmAlert({
+                //     title: 'Action',
+                //     message: 'Successfully Moved from Active to InActive',
+                //     buttons: [
+                //         {
+                //         label: 'Ok'
+                //         }
+                //     ]
+                // });
+                // this.getCatgoryData()
+          
+                // })
+            })
+    
             }
-
-
-
-            if (doProcess === true) {
-               
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-delivery-method")
-                result.then(res=>{
-                    this.props.getAllDeliveryMethods()
-                })   
-
-                alertmsg = 3;
-            }
-
-
-
-            if (alertmsg === 1){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Moved from Inactive to Active',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-            if (alertmsg === 2){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Moved from Active to InActive',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-            if (alertmsg === 3){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Done',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-           }
-
-
-
-
-
-        
-       
-
-            // this.setState({
-            //     ...this.state,
-            //     tasks
-            // })
-
+    
+           }else if(evt.from.id =="categoryInactive"){
+               //console.log(evt.dragged.id,evt.related.id)
+            let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+            //console.log(task)
+            if(task.length > 0){
+                let taskData = task[0]
+                taskData.status =parseInt(taskData.status)==1? 0:1
+                this.props.updateCustomerDeliveryMethodSettings(taskData.id,taskData).then(data=>{
+            //         this.props.getAllPlantCategories().then(()=>{
+            //             this.props.getAllPlantCategories().then(()=>{
+                            // confirmAlert({
+                            //     title: 'Action',
+                            //     message: 'Successfully Moved from InActive to Active',
+                            //     buttons: [
+                            //         {
+                            //         label: 'Ok'
+                            //         }
+                            //     ]
+                            // });
+            //                 this.getCatgoryData()
+            //             })
+            //             // this.getCatgoryData() 
+            //         })
+            //     })
+    
+            // }
+            
+           })
         }
-
-
-        // onDelete =(ev)=>{
-        //     let id= ev.dataTransfer.getData("id");
-        //     console.log(id)
-        //     this.setState({deleteon:true})
-        //    let result= this.props.handleCustomerTypeDelete(id,"delete-customer-delivery-method")
-        //    result.then(res=>{
-        //     this.props.getAllDeliveryMethods()
-        //     this.setState({deleteon:false})
-        //    })
-
-
-        // }
+    
+       }
+    }
+    }
+    
 
         onDelete =(ev)=>{
-            let id= ev.dataTransfer.getData("id");
+            let id= this.state.selectedID
             confirmAlert({
                 title: 'Delete Delivery Method',
                 message: 'Are you sure want to delete the Delivery Method?',
@@ -209,17 +181,12 @@ import { is } from 'immutable';
             let result= this.props.handleCustomerTypeDelete(id,"delete-customer-type")
             this.setState({deleteon:true})
             result.then(res=>{
-                this.props.getAllCustomerType()
+                this.props.getAllDeliveryMethods().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
                 this.setState({deleteon:false})
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Delivery Method  ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+            
             })
         }
 
@@ -260,7 +227,10 @@ import { is } from 'immutable';
             if(this.validate()){
                 let result = this.props.saveDeliveryMethod(obj)
                 result.then(res=>{
-                    this.props.getAllDeliveryMethods()
+                    this.props.getAllDeliveryMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
                 confirmAlert({
                     title: 'Added Successfully',
@@ -335,18 +305,12 @@ import { is } from 'immutable';
              if(this.validate()){
                 let res=   this.props.updateCustomerDeliveryMethodSettings(updateID, updateObject)
                     res.then(res=>{
-                        this.props.getAllDeliveryMethods()
+                        this.props.getAllDeliveryMethods().then(()=>{
+                            // alert("ji")
+                            this.getCatgoryData()
+                        })
                     })
                     if (this.state.isEditing) {
-                        confirmAlert({
-                            title: 'Updated Successfully',
-                            message: 'Delivery Method ',
-                            buttons: [
-                              {
-                                label: 'Ok'
-                              }
-                            ]
-                        });
                     }
                     this.setState({
                         isEditing:false,
@@ -471,14 +435,26 @@ render() {
 
 
                                             <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.customerData.customerDeliveryList.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.delivery_method} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.delivery_method}</span>
-                                                                </a>
+                                           >
+                                            <ul class="list-unstyled" id="categoryInactive">
+                                                   {this.state.inactive.map(t=>{
+                                                    return  <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.delivery_method}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
@@ -512,21 +488,26 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.customerData.customerDeliveryList.active.map(t=>{
-                                                    return <li id={t.id} name={t.delivery_method} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a 
-                                                                className="d-flex justify-content-between align-items-center" 
-                                                                  //className={this.state.isEditing===false ? "form-d-flex justify-content-between align-items-center" : "formControl2 abcd" }
-                                                                //   className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                                                  
-                                                                  >
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.delivery_method}</span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                            <div class="card-body cardBg" >
+                                            <ul class="list-unstyled" id="categoryActive">
+                                                   {this.state.active.map(t=>{
+                                                    return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.delivery_method}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
-                                                                 </a>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
@@ -560,6 +541,7 @@ render() {
         handleCustomerTypeDelete,
         updateCustomerDeliveryMethodSettings,
         showSpecificCustomerDeliveryMethodSettings,
+        customerDeliverySort,
         
 handleDragDropCustomer    })(DeliveryMethods)
 

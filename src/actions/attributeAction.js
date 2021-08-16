@@ -15,6 +15,7 @@ import {
     HANDLE_UPDATE_ATTRIBUTE,
     HANDLE_ZONE_INPUT_ACTION2,
     HANDLE_ZONE_INPUT_ACTION3,
+    HANDLE_UPDATE_ATTRIBUTE_CHILD,
     SHOW_LOCATION_TYPE_SUB_ATTRIBUTE,
     GET_ALL_CATEGORIES,
     // axios config
@@ -54,7 +55,7 @@ export const getAllSubAttribute = (id) => dispatch => {
     })
 }
 export const getAllCategories = () => dispatch => {
-    axios.get(`/api/product-categories`,config).then(res=>{ 
+    return axios.get(`/api/product-categories`,config).then(res=>{ 
         //debugger
         console.log(res.data)
     dispatch({
@@ -173,6 +174,21 @@ export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
         })
     })
 }
+
+export const handleSubAttributeUpdateChild = (id, data) =>dispatch=>{
+    // debugger;
+     console.log(id, data)
+     //let attributeObject={}
+ 
+     return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
+       // debugger;
+         console.log(res)
+     dispatch({
+             type:HANDLE_UPDATE_ATTRIBUTE_CHILD,
+             payload:res.data
+         })
+     })
+ }
 export const handleUpdateCategory = (id, data) =>dispatch=>{
      return axios.post(`/api/product-update-category/${id}`,data,config).then(res=>{ 
          console.log(res)

@@ -114,6 +114,9 @@ GET_SUPPLIER_CONTACT,
 GET_ALL_SUPPLIER_CONTACT,
 DELETE_SUPPLIER_CONTACT,
 UPDATE_SUPPLIER_CONTACT,
+HANDLE_SUPPLIER_CATEGORY_SORT,
+HANDLE_SUPPLIER_REASON_SORT,
+HANDLE_SUPPLIER_LOCATION_SORT,
 
 
 //supplier address
@@ -142,13 +145,46 @@ RESET_SUPPLIER_DATA,
 // }
 
 
-export const supplierCategorySort =()=>dispatch => {
+export const supplierCategorySort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-supplier-category`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_SUPPLIER_CATEGORY_SORT,
+            payload:res.data
+        })
+    })
 
 }
-export const supplierReasonSort =()=>dispatch => {
+export const supplierReasonSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-supplier-reason`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_SUPPLIER_REASON_SORT,
+            payload:res.data
+        })
+    })
 
 }
-export const supplierLocationSort =()=>dispatch => {
+export const supplierLocationSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-supplier-delivery`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_SUPPLIER_LOCATION_SORT,
+            payload:res.data
+        })
+    })
 
 }
 export const resetSupplierData=()=>dispatch=>{
@@ -480,7 +516,7 @@ export const showSpecificDeliveryLocation = (id) => dispatch => {
  export const updateSupplierCategory = (id, data) =>dispatch => {
      //debugger;
     return axios.post(`/api/update-supplier-category/${id}`,data,config).then(res=>{ 
-        debugger;
+        // debugger;
         console.log(res.data)
     dispatch({
             type:UPDATE_SUPPLIER_CATEGORY,

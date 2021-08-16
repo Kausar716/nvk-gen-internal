@@ -917,9 +917,10 @@
   background: red; */
   background-color: #d5ecf5;
   border-radius: 2px solid grey;
-  padding: 6px;
+  padding-left: 10px;
+  /* padding: 3px; */
   /* margin-top: -2px; */
-  width: 90%;
-  height: -8%;
+  /* width: 90%; */
+  /* height: 30px; */
   border-radius: 0.6em;
 }

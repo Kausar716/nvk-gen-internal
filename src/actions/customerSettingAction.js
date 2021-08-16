@@ -72,10 +72,110 @@ SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
 UPDATE_CUSTOMER_TERMS_SETTING,
 SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
 
+HANDLE_CUSTOMER_TYPE_SORT,
+HANDLE_CUSTOMER_DELIVERY_SORT,
+HANDLE_CUSTOMER_STATUS_SORT,
+HANDLE_CUSTOMER_RETURN_SORT,
+HANDLE_CUSTOMER_ACCOUNT_SORT,
+HANDLE_CUSTOMER_TERM_SORT,
+
+
 
  axios,
  config
  } from './types'
+///start of sort////////////////////////
+ export const customerTypeSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-customer-type`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CUSTOMER_TYPE_SORT,
+            payload:res.data
+        })
+    })
+
+}
+export const customerDeliverySort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-customer-delivery`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CUSTOMER_DELIVERY_SORT,
+            payload:res.data
+        })
+    })
+
+}
+export const customerStatusSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-customer-statuslevel`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CUSTOMER_STATUS_SORT,
+            payload:res.data
+        })
+    })
+
+}
+export const customerReturnSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-customer-return-reason`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CUSTOMER_RETURN_SORT,
+            payload:res.data
+        })
+    })
+
+}
+export const customerAccountSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-customer-account-reason`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CUSTOMER_ACCOUNT_SORT,
+            payload:res.data
+        })
+    })
+
+}
+export const customerTermSort =(fromId, toId,type)=>dispatch => {
+    let attributeObject={}
+    attributeObject.from=fromId;
+    attributeObject.to=toId;
+    attributeObject.position=type;
+    return axios.post(`/api/drag-sort-customer-terms`,attributeObject,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:HANDLE_CUSTOMER_TERM_SORT,
+            payload:res.data
+        })
+    })
+
+}
+
+
+//////////////end of sort////////////////////////////
+
+
+
+
 
 ////customer details////////////////////////////////
 export const typeOfActionShow = (type) =>dispatch=>{
@@ -147,7 +247,7 @@ export const updateCustomerTypeSettings = (id, data) =>dispatch => {
     //debugger;
    return axios.post(`/api/update-customer-type/${id}`,data,config).then(res=>{ 
      // debugger;
-       console.log(res.data)
+      
    dispatch({
            type:UPDATE_CUSTOMER_TYPE_SETTING,
            payload:res.data.data,

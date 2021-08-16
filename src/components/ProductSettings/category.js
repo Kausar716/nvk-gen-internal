@@ -6,7 +6,9 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
-
+import Sortable from 'sortablejs'
+import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,
+    updatePlantSettingCategory, showSpecificPlantSettingAttribute, handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import 
     {
         getAllCategories, 
@@ -46,92 +48,151 @@ class Category extends Component {
             deleteon:false,
             isEditingSubCategory:false,
             btnLabelAddFeature:'Add New Sub Category',
-            btnLabelUpdateFeature: 'Update Sub Category'
+            btnLabelUpdateFeature: 'Update Sub Category',
+            active:[],inactive:[],openInactive:[],openActive:[]
         }
                 
+    }
+
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.zoneCategoryList.filter(data=>data.status ==1)
+       let inactive=this.props.zoneCategoryList.filter(data=>data.status ==0)
+       let openActive=[]
+       let openInactive=[]
+       this.props.zoneCategoryList.map(data=>{
+        if(data.status ==1){
+            openActive.push(0)
+            // this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive})
+
+        }
+
+       })
+       this.props.zoneCategoryList.map(data=>{
+        if(data.status ==0){
+            openInactive.push(0)
+            // this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive})
+
+        }
+
+       })
+     
+        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive})
     }
     onDragOver = (ev)=>{
         ev.preventDefault();
     }
-    onDragStart=(ev, id)=>{
-        console.log("dragstart:", id);
-        ev.dataTransfer.setData("id",id)
-        let activeId=this.state.activeId
-        activeId=id;
-        this.setState({activeId})
+    startIDData  =(e)=>{
+        this.setState({selectedID:e.item.id})
     }
-    componentDidMount(){
-        this.props.getAllCategories()
+    onAddData = (evt)=>{
+        console.log(evt)
+        evt.preventDefault()
+    
+    //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+    //  evt.from.insertBefore(evt.item, null); 
+    
     }
-    onMouseLeave =((ev, id)=>{
-        let sortId=this.state.sortId
-        sortId=id;
-        this.setState({sortId})
+    onMoveData = (evt,ui)=>{
+    
+       if(evt.from.id == evt.to.id){
+           if(evt.willInsertAfter ==true)
+        this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"down")
+        else  this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"up")
+    
+       }else{
+           if(evt.from.id =="categoryActive"){
+              let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+              //console.log(task)
+
+              if(task.length > 0){
+                let taskData = task[0]
+                taskData.status =parseInt(taskData.status)==1? 0:1
+                this.props.handleUpdateCategory(taskData.id,taskData).then(data=>{
+   
+                //     this.props.getAllPlantCategories().then(()=>{
+                //     confirmAlert({
+                //     title: 'Action',
+                //     message: 'Successfully Moved from Active to InActive',
+                //     buttons: [
+                //         {
+                //         label: 'Ok'
+                //         }
+                //     ]
+                // });
+                // this.getCatgoryData()
+          
+                // })
+            })
+    
+            }
+    
+           }else if(evt.from.id =="categoryInactive"){
+               //console.log(evt.dragged.id,evt.related.id)
+            let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+            //console.log(task)
+            if(task.length > 0){
+                let taskData = task[0]
+                taskData.status =parseInt(taskData.status)==1? 0:1
+                this.props.handleUpdateCategory(taskData.id,taskData).then(data=>{
+            //         this.props.getAllPlantCategories().then(()=>{
+            //             this.props.getAllPlantCategories().then(()=>{
+                            // confirmAlert({
+                            //     title: 'Action',
+                            //     message: 'Successfully Moved from InActive to Active',
+                            //     buttons: [
+                            //         {
+                            //         label: 'Ok'
+                            //         }
+                            //     ]
+                            // });
+            //                 this.getCatgoryData()
+            //             })
+            //             // this.getCatgoryData() 
+            //         })
+            //     })
+    
+            // }
+            
+           })
+        }
+    
+       }
+    }
+    }
+componentDidMount(){
+    // this.props.getAllSubAttribute(1)
+    var elData = document.getElementById('categoryActive');
+    var elData1 = document.getElementById('categoryInactive');
+    this.props.getAllCategories().then(()=>{
+        // alert("ji")
+        this.getCatgoryData()
     })
-    onDrop=(ev,cat)=>{
-        let id= ev.dataTransfer.getData("id");
-        let tasks = this.props.zoneCategoryList.filter((task)=>{                
-                return JSON.stringify(task.id) === id;
-        });
-        let doProcess = false;
-        let alertmsg = 0;
-        if (cat === 'active' && tasks[0].status === "0") {
-            doProcess = true;
-            alertmsg = 1;
-        }
-        if (cat === 'inactive' && tasks[0].status === "1") {
-            doProcess = true;
-            alertmsg = 2;
-        }
-        if (doProcess === true) {
-            let result= this.props.handleCategoryDragDrop(tasks[0])
-            result.then(res=>{
-                this.props.getAllCategories()
-            })   
-        }
-        if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
-            let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
-            result.then(res=>{
-                this.props.getAllCategories()
-            }) 
-            alertmsg = 3;
-        }
-        if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: 'Sort Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-    }
+    // this.props.getAllSubAttribute(14)
+    new Sortable(elData, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this)
+    })
+    new Sortable(elData1, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this),
+     
+
+        // onFilter:function(){
+        //     alert("hi")
+        // }
+    })
+}
+
+
     onDelete =(ev)=>{
-        let id= ev.dataTransfer.getData("id");
+        let id= this.state.selectedID
         confirmAlert({
             title: 'Delete Category',
             message: 'Are you sure want to delete the Category?',
@@ -150,17 +211,12 @@ class Category extends Component {
         let result= this.props.handCategoryDelete(id)
         this.setState({deleteon:true})
         result.then(res=>{
-            this.props.getAllCategories()
+            this.props.getAllCategories().then(()=>{
+                // alert("ji")
+                this.getCatgoryData()
+            })
             this.setState({deleteon:false})
-            confirmAlert({
-                title: 'Delete Successfully',
-                message: 'Category ',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-              });
+    
         })
     }
     handleZoneInputAction = (e)=>{
@@ -199,17 +255,12 @@ class Category extends Component {
         if(this.validate()){
             let result = this.props.handleAddCategory(zoneObj)
             result.then(res=>{
-                this.props.getAllCategories()
+                this.props.getAllCategories().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Category',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+      
             this.setState({
                 name: "",
                 subName:"",
@@ -248,17 +299,12 @@ class Category extends Component {
             if(this.validateFeature()){
                 let result = this.props.handleAddSubCategory(zoneObj)
                 result.then(res=>{
-                    this.props.getAllCategories()
+                    this.props.getAllCategories().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
-                confirmAlert({
-                    title: 'Added Successfully',
-                    message: 'Sub Category Name',
-                    buttons: [
-                    {
-                        label: 'Ok'
-                    }
-                    ]
-                });
+        
                 this.setState({
                     subName:"",
                     isEditingSubCategory:false,
@@ -297,17 +343,12 @@ class Category extends Component {
                 if(this.validateFeature()){
                     let result = this.props.handleUpdateSubCategory(updateID, zoneObj)
                     result.then(res=>{
-                        this.props.getAllCategories()
+                        this.props.getAllCategories().then(()=>{
+                            // alert("ji")
+                            this.getCatgoryData()
+                        })
                     })
-                    confirmAlert({
-                        title: 'Updated Successfully',
-                        message: 'Sub Category Name',
-                        buttons: [
-                        {
-                            label: 'Ok'
-                        }
-                        ]
-                    });
+        
                     this.setState({
                         subName:"",
                         isEditingSubCategory:false,
@@ -369,7 +410,10 @@ class Category extends Component {
         if(this.validate()){
             let res=   this.props.handleUpdateCategory(updateID, updateObject)
                 res.then(res=>{
-                    this.props.getAllCategories()
+                    this.props.getAllCategories().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
                 if (this.state.isEditing) {
                     confirmAlert({
@@ -389,22 +433,37 @@ class Category extends Component {
                 })
         }
     }
+    openLinkData = (index,type)=>{
+        // alert(index)
+        if(type=== "active"){
+            let data = this.state.openActive
+            data[index] = data[index]==0?1:0
+            // alert(data[index]+" "+index)
+            console.log(data)
+            this.setState({openActive:data})
+        }else if(type=== "inactive"){
+            let data = this.state.openInactive
+            data[index] = data[index]==0?1:0
+            this.setState({openInactive:data})
 
+        }
+
+    }
     render() {
-        var tasks={
-            inactive:[],
-            active:[],
-        }
-        if(this.props.zoneCategoryList){
-            this.props.zoneCategoryList.forEach((t)=>{
-                if(t.status === "1"){
-                    tasks.active.push(t)
-                }
-                else if(t.status=== "0"){
-                    tasks.inactive.push(t)
-                }
-            })
-        }
+        // var tasks={
+        //     inactive:[],
+        //     active:[],
+        // }
+        // if(this.props.zoneCategoryList){
+        //     this.props.zoneCategoryList.forEach((t)=>{
+        //         if(t.status === "1"){
+        //             tasks.active.push(t)
+        //         }
+        //         else if(t.status=== "0"){
+        //             tasks.inactive.push(t)
+        //         }
+        //     })
+        // }
         
         return (
         <>
@@ -473,15 +532,49 @@ class Category extends Component {
                                     Inactive
                                 </div>
                                 <div class="card-body cardBg"
-                                    onDragOver={(e)=>this.onDragOver(e)}
-                                    onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                    <ul class="list-unstyled">
-                                        {tasks.inactive.map(t=>{
-                                        return <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                        <a className="d-flex justify-content-between align-items-center">
-                                                    <span id="Wheathers">{t.name}</span>
-                                                    </a>
-                                                </li>
+                                    >
+                                    <ul class="list-unstyled" id="categoryInactive">
+                                        {this.state.inactive.map((t,index)=>{
+                                        return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.name}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t,"active")}
+                                                                />   <i class="fa fa-th" onClick={()=>this.openLinkData(index,"inactive")}></i></span>
+                                                        </div>
+
+                                                        <div class={parseInt(this.state.openInactive[index])==1?"openChildData":"closeChildData"}>
+                                                        <ul class={"list-unstyled childUl"}>
+                                                            {t.sub_category.map((t1,index)=>{
+                                                                return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditingSubCategory===false  ? "ab" :this.state.selectedSubID === t1.id ? "reasonBackground ab" : "ab"}><span id={t1.id}    >{t1.name}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick3(t, t1,"active")}
+                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
+                                                            </li>
+                                                                
+                                                                
+            
+                                                            })}
+                                                        </ul>
+
+                                                        </div>
+                                                   
+                                                 </li>
                                         })}
                                     </ul>
                                 </div>
@@ -511,31 +604,49 @@ class Category extends Component {
                                 <div class="card-header">
                                     Active
                                 </div>
-                                <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                    <ul class="list-unstyled">
-                                            {tasks.active.map(t=>{
-                                            return <li class="hasChild" id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                        <a className="d-flex justify-content-between align-items-center">
-                                                            <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.name}</span>
-                                                            <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t)}/>
-                                                                <i class="fa fa-th"></i>
-                                                            </span>
-                                                        </a>
-                                                        <ul class="list-unstyled childUl">
-                                                            {t.sub_category.map(t1=>{
-                                                                return <li>
-                                                                            <a class="d-flex justify-content-between align-items-center">
-                                                                                <span className={this.state.isEditingSubCategory===false  ? "" :this.state.selectedSubID === t1.id ? "reasonBackground" : " "}>{t1.name}</span>
-                                                                                <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
-                                                                                    onClick={() =>this.handleEditClick3(t, t1)}/>
-                                                                                    <i class="fa fa-th-large" style={{fontSize: 12}}></i>
-                                                                                </span>
-                                                                            </a>
-                                                                        </li>
+                                <div class="card-body cardBg">
+                                    <ul class="list-unstyled" id="categoryActive">
+                                            {this.state.active.map((t,index1)=>{
+                                            return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.name}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t,"active")}
+                                                                />   <i class="fa fa-th" onClick={()=>this.openLinkData(index1,"active")}></i></span>
+                                                        </div>
+
+                                                        <div class={parseInt(this.state.openActive[index1])==1?"openChildData":"closeChildData"}>
+                                                        <ul class={"list-unstyled childUl"}>
+                                                            {t.sub_category.map((t1,index)=>{
+                                                                return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditingSubCategory===false  ? "ab" :this.state.selectedSubID === t1.id ? "reasonBackground ab" : "ab"}><span id={t1.id}    >{t1.name}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick3(t, t1,"active")}
+                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
+                                                            </li>
+                                                                
+                                                                
+            
                                                             })}
                                                         </ul>
-                                                    </li>
+
+                                                        </div>
+                                                   
+                                                 </li>
                                             })}
                                     </ul>
                                 </div>
@@ -569,4 +680,5 @@ export default connect(mapStateToProps,{
     showSubSubAttribute,
     handleUpdateCategory, 
     handleZoneInputAction2,    
+    handleCategoryDragSort
 })(Category)

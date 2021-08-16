@@ -12,6 +12,7 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import Sortable from 'sortablejs'
 // import './style.css';
 import InfoModal from "../Modal/InfoModal";
 import { confirmAlert } from 'react-confirm-alert'; // Import
@@ -19,7 +20,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
-import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,saveSupplierCategoryMethod,getAllSupplierCategoryMethods,showSpecificCategorySubAttribute,updateSupplierCategory}   from "../../actions/supplierManagementAction"
+import {supplierCategorySort,getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,saveSupplierCategoryMethod,getAllSupplierCategoryMethods,showSpecificCategorySubAttribute,updateSupplierCategory}   from "../../actions/supplierManagementAction"
 
 
     class SupplierCategories extends Component {
@@ -41,124 +42,132 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
        errorObj:{
         supplier_category:0,
     },
+    active:[],inactive:[]
 
     }
 
 
-        onDragOver = (ev)=>{
-            ev.preventDefault();
-        }
+     
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.supplierData.supplierCategoryList.active
+       let inactive=this.props.supplierData.supplierCategoryList.inactive
+        this.setState({active:active,inactive:inactive})
+    }
+componentDidMount(){
+    
 
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
-        }
-        componentDidMount(){
-            this.props.getAllSupplierCategoryMethods()
+    var elData = document.getElementById('categoryActive');
+    var elData1 = document.getElementById('categoryInactive');
+    this.props.getAllSupplierCategoryMethods().then(()=>{
+        // alert("ji")
+        this.getCatgoryData()
+    })
+    new Sortable(elData, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this)
+    })
+    new Sortable(elData1, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this),
+     
 
-        }
+        // onFilter:function(){
+        //     alert("hi")
+        // }
+    })
 
+}
 
-        toggle1 =()=>{
-            this.setState({isOpen1:false})
-        }
+onDragOver = (ev)=>{
+    ev.preventDefault();
+}
+startIDData  =(e)=>{
+    this.setState({selectedID:e.item.id})
+}
+onAddData = (evt)=>{
+    console.log(evt)
+    evt.preventDefault()
 
-        onDrop=(ev,cat)=>{
-            let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.supplierData.supplierCategoryList
-            console.log(cat)
+//     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+//  evt.from.insertBefore(evt.item, null); 
 
-            let tasks = []
-            console.log( datatoParse.active)
-           
-            datatoParse.active.filter(task=>{
-                 if(task.id === id){
-                    tasks.push(task)
-                 }
-             })
-             datatoParse.inactive.filter(task=>{
-                if(task.id === id){
-                   tasks.push(task)
-                }
-            })
+}
+onMoveData = (evt,ui)=>{
 
-        
-            //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
-             
+   if(evt.from.id == evt.to.id){
+       if(evt.willInsertAfter ==true)
+    this.props.supplierCategorySort(evt.dragged.id,evt.related.id,"down")
+    else  this.props.supplierCategorySort(evt.dragged.id,evt.related.id,"up")
 
-         
-         console.log(tasks)
-            // console.log(tasks)
-        //    let result= this.props.handleDragDrop(tasks[0])
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
-           let doProcess = false;
-           let alertmsg = 0;
-           if(tasks.length>0){
-
-            if (cat === 'active' && tasks[0].status === 0) {
-               
-                doProcess = true;
-                alertmsg = 1;
-            }
-            if (cat === 'inactive' && tasks[0].status === 1) {
-                doProcess = true;
-                alertmsg = 2;
-            }
-            if (doProcess === true) {
-               
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-supplier-category")
-                result.then(res=>{
-                    this.props.getAllSupplierCategoryMethods()
-                })   
-
-                alertmsg = 3;
-            }
-           }
-
-           if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-       
-       
-
-            // this.setState({
-            //     ...this.state,
-            //     tasks
+   }else{
+       if(evt.from.id =="categoryActive"){
+          let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+          //console.log(task)
+          if(task.length > 0){
+              let taskData = task[0]
+              taskData.status =parseInt(taskData.status)==1? 0:1
+              this.props.updateSupplierCategory(taskData.id,taskData).then(data=>{
+            //     this.props.getAllPlantCategories().then(()=>{
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
+            // this.getCatgoryData()
+      
             // })
+        })
 
         }
+
+       }else if(evt.from.id =="categoryInactive"){
+           //console.log(evt.dragged.id,evt.related.id)
+        let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+        //console.log(task)
+        if(task.length > 0){
+            let taskData = task[0]
+            taskData.status =parseInt(taskData.status)==1? 0:1
+            this.props.updateSupplierCategory(taskData.id,taskData).then(data=>{
+        //         this.props.getAllPlantCategories().then(()=>{
+        //             this.props.getAllPlantCategories().then(()=>{
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
+        //                 this.getCatgoryData()
+        //             })
+        //             // this.getCatgoryData() 
+        //         })
+        //     })
+
+        // }
+        
+       })
+    }
+
+   }
+}
+}
+   
+
+
+
 
 
         // onDelete =(ev)=>{
@@ -177,7 +186,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
 
         onDelete =(ev)=>{
-            let id= ev.dataTransfer.getData("id");
+            let id= this.state.selectedID
             confirmAlert({
                 title: 'Delete Supplier Category ',
                 message: 'Are you sure want to delete the Supplier Category ?',
@@ -196,17 +205,12 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             let result= this.props.handleCustomerTypeDelete(id,"delete-supplier-category")
             this.setState({deleteon:true})
             result.then(res=>{
-                this.props.getAllSupplierCategoryMethods()
+                this.props.getAllSupplierCategoryMethods().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
                 this.setState({deleteon:false})
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Supplier Account Reason ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+            
             })
         }
 
@@ -247,17 +251,12 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             if(this.validate()){
                 let result = this.props.saveSupplierCategoryMethod(obj)
                 result.then(res=>{
-                    this.props.getAllSupplierCategoryMethods()
+                    this.props.getAllSupplierCategoryMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
-                confirmAlert({
-                    title: 'Added Successfully',
-                    message: 'Supplier Category',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
+          
                 this.setState({
                     name: "",
                     subName:"",
@@ -340,18 +339,13 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
           if(this.validate()){
             let res=   this.props.updateSupplierCategory(updateID, updateObject)
                 res.then(res=>{
-                    this.props.getAllSupplierCategoryMethods()
+                    this.props.getAllSupplierCategoryMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
                 if (this.state.isEditing) {
-                    confirmAlert({
-                        title: 'Updated Successfully',
-                        message: 'Supplier Category',
-                        buttons: [
-                          {
-                            label: 'Ok'
-                          }
-                        ]
-                    });
+                
                 }
                 this.setState({
                     isEditing:false,
@@ -464,14 +458,26 @@ render() {
 
 
                                             <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierCategoryList && this.props.supplierData.supplierCategoryList.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.category} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.category}</span>
-                                                                </a>
+                                            >
+                                            <ul class="list-unstyled" id="categoryInactive">
+                                                   {this.state.inactive.map(t=>{
+                                                    return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.category}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
@@ -505,20 +511,29 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierCategoryList ? this.props.supplierData.supplierCategoryList.active.map(t=>{
-                                                    return <li id={t.id} name={t.category} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.category}</span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                            <div class="card-body cardBg" >
+                                            <ul class="list-unstyled" id="categoryActive">
+                                            {this.state.active.map(t=>{
+                                                    return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.category}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
-                                                                 </a>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })
-                                                    :
-                                                    "Loading..."
+                                                   
                                                     
                                                     }
                                             </ul>
@@ -556,6 +571,7 @@ render() {
         saveSupplierCategoryMethod,
         showSpecificCategorySubAttribute,
         updateSupplierCategory,
+        supplierCategorySort,
 
         
 handleDragDropCustomer    })((SupplierCategories))
