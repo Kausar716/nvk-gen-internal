@@ -50,6 +50,10 @@ import {
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
+let minMonth = new Date().getMonth()
+let minDate = new Date().getDate()
+let minDateFormate = minDate.toString().length===1?"0"+minDate:minDate
+let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
 
 const initialSatate = {
     backupData:[],
@@ -87,7 +91,7 @@ const initialSatate = {
     each_cost: "0.00",
     each_price: "0.00",
     sale_price: "0.00",
-    sale_expiry_date: null,
+    sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
     volume_quantity: "0",
     volume_price_per_unit: "0.00",
     sku_item_name: null,
@@ -221,7 +225,7 @@ export default function(state = initialSatate, action){
                 each_cost: "0.00",
                 each_price: "0.00",
                 sale_price: "0.00",
-                sale_expiry_date: null,
+                sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                 volume_quantity: "0",
                 volume_price_per_unit: "0.00",
                 sku_item_name: null,
@@ -452,7 +456,7 @@ export default function(state = initialSatate, action){
                     each_cost: "0.00",
                     each_price: "0.00",
                     sale_price: "0.00",
-                    sale_expiry_date: null,
+                    sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                     volume_quantity: "0",
                     volume_price_per_unit: "0.00",
                     sku_item_name: null,
@@ -501,7 +505,7 @@ export default function(state = initialSatate, action){
                     each_cost: "0.00",
                     each_price: "0.00",
                     sale_price: "0.00",
-                    sale_expiry_date: null,
+                    sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                     volume_quantity: "0",
                     volume_price_per_unit: "0.00",
                     sku_item_name: null,
@@ -620,7 +624,7 @@ export default function(state = initialSatate, action){
                         each_cost: "0.00",
                         each_price: "0.00",
                         sale_price: "0.00",
-                        sale_expiry_date: "",
+                        sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                         volume_quantity: "0",
                         volume_price_per_unit: "0.00",
                         sku_item_name: "",
