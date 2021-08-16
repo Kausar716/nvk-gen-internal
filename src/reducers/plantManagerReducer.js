@@ -126,9 +126,8 @@ const nameFormaterFunction = (plantData) =>{
     }
     else {
         nameWithFormat.firstName=plantData.genus+' '+plantData.species
-        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+`${commonNmae.length>0?`-${commonNmae}`:""}`
-    }
-    
+        nameWithFormat.secondName = plantData.cultivar2+' '+ `('`+ `${plantData.cultivar1?plantData.cultivar1:""}`+`')`+`${commonNmae.length>0?`-${commonNmae}`:""}`
+    }    
     return nameWithFormat
 }
 const nameFormaterFunctionForHandler = (currentAction,plantData)=>{  
@@ -145,15 +144,20 @@ const nameFormaterFunctionForHandler = (currentAction,plantData)=>{
     nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
     if(!copiedPlantData.cultivar2 || copiedPlantData.cultivar2.length === 0){
         if(!copiedPlantData.cultivar1 || copiedPlantData.cultivar1.length === 0){            
-            nameWithFormat.secondName = ' '+commonNmae.length>0?`-${commonNmae}`:""
+            nameWithFormat.secondName = ' '+commonNmae.length>0?`- ${commonNmae}`:""
         }
         else{
-            nameWithFormat.secondName ="'"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:""}`+"'"
+            nameWithFormat.secondName ="'"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:""}`+"'"+` ${commonNmae.length>0?`- ${commonNmae}`:""}`
+           
         }        
     }
     else {
         nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
-        nameWithFormat.secondName = copiedPlantData.cultivar2+" "+"('"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:"" }`+"')"+`${commonNmae.length>0?`-${commonNmae}`:''}`        
+        if(copiedPlantData.cultivar1.length)
+        nameWithFormat.secondName = copiedPlantData.cultivar2+" "+"('"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:"" }`+"')"+` ${commonNmae.length>0?`-${commonNmae}`:''}`        
+        else {
+            nameWithFormat.secondName = copiedPlantData.cultivar2+" "+`${commonNmae.length>0?`- ${commonNmae}`:''}`
+        }
     }   
     return nameWithFormat
    
@@ -244,7 +248,8 @@ export default function(state = initialSatate, action){
                 plantSkuDataList:[],
                 ae_plant_id:"",
                 dynamicName:"",
-                displayCancel:false
+                displayCancel:false,
+                plantNameWithFormat:{firstName:"",secondName:""}
 
 
             }
@@ -472,7 +477,8 @@ export default function(state = initialSatate, action){
                   ae_plant_id:"",
                 plantSkuDataList:[],
                 dynamicName:"",
-                displayCancel:false
+                displayCancel:false,
+                plantNameWithFormat:{firstName:"",secondName:""}
 
             }
         case DUPLICTE_PLANT:
@@ -520,7 +526,8 @@ export default function(state = initialSatate, action){
                   status:false,
                   ae_plant_id:"",                
                 plantSkuDataList:[],
-                dynamicName:""
+                dynamicName:"",
+                plantNameWithFormat:{firstName:"",secondName:""}
             }
         case DELETE_PLANT_SKU_ACTION:
             return{
