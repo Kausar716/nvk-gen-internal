@@ -377,7 +377,7 @@ const SkuList = (props)=>{
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU</h3>{props.plantData.dynamicName}
+                                            <h3>GENERATED SKU <span className="text-green">{props.plantData.dynamicName}</span> </h3>
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
@@ -388,8 +388,8 @@ const SkuList = (props)=>{
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
-                                            onClick={()=>props.plantPageReDirectAction("all","plant")}>Return To Plant Manager</button>
+                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.plantPageReDirectAction("all","plant")}>Return To Plant Manager</button> */}
                                         </div>
                                     </div>
                                     <div class="row mt-3">

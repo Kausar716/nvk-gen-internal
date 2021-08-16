@@ -348,28 +348,34 @@ const productFormAction = ()=>{
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
-                                                    <h2>Plant ID {actionType !== "add"?<>
+                                                    <h2>Plant ID
                                                     <span className="text-green" >{ae_plant_id}</span> 
                                                     <span className="text-green" style={{fontStyle:"italic"}}>{' '+plantNameWithFormat.firstName}</span>
-                                                    <span className="text-green">{' '+plantNameWithFormat.secondName}</span></>:""} </h2>
+                                                    <span className="text-green">{' '+plantNameWithFormat.secondName}</span> </h2>
+                                                    
                                                 </div>
                                              
-                                              { actionType !== "add"?<div class="col-md-6 d-flex justify-content-md-end">
-                                                <span onClick={()=>props.plantPageReDirectAction("all","add")} 
+                                             <div class="col-md-6 d-flex justify-content-md-end">
+                                                {/* <span onClick={()=>props.plantPageReDirectAction("all","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
                                                     <i class='bx bx-arrow-back' ></i>
-                                                    {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
-                                                    </span>
-                                                    <a href="#" class="mx-2">
+                                                    <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label>
+                                                    </span> */}
+                                                    { actionType !== "add"? <a href="#" class="mx-2">
                                                         <img src="assets/img/copy-ic.svg" alt="" onClick={()=>{confirmAction(ae_plant_id,"duplicate"); }} />
-                                                    </a>
-                                                    <a href="#" class="mx-2">
+                                                    </a>:""}
+                                                    { actionType !== "add"?<a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt=""  onClick={()=>confirmAction(ae_plant_id,"delete")} />
-                                                    </a>
+                                                    </a>:""}
+                                                    <span>
+                                                    <button type="button" class="btn btn-primary  btn-lg" 
+                                                    onClick={()=>props.plantPageReDirectAction("all","plant")}
+                                                    >Return to Plant Manager</button>
+                                                    </span>
                                                     {/* <a href="" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
                                                     </a> */}
-                                                </div>:""}
+                                                </div>
                                             </div>
                                         </div>
                                         {/* <Tabs>
