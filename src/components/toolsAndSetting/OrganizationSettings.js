@@ -10,6 +10,7 @@ import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
 import { Prompt , BrowserRouter} from 'react-router';
 import Immutable from 'immutable';
+import { Button, Confirm } from 'semantic-ui-react'
 import './style.css';
 
 
@@ -806,7 +807,6 @@ saveDisable =()=>{
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
-       
     /> : false}
     {/* // : false }   */}
    
