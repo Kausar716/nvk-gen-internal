@@ -366,9 +366,9 @@ import {
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
                                         {/* <a href='/plantManager'> */}
-                                        <button type="button" class="btn btn-outline-secondary btn-lg"
+                                        {/* <button type="button" class="btn btn-outline-secondary btn-lg"
                                          onClick={()=>props.plantPageReDirectAction("all","plant")}
-                                        >Return to Plant Manager</button>
+                                        >Return to Plant Manager</button> */}
                                         {/* </a> */}
                                         <button type="button" class="btn btn-primary btn-lg ml-3" style={{cursor:"pointer"}} disabled={submitCount===0?(needAction===true && flag ===0)?false:true:true} onClick={submitAction} >{actionType==="add"?"Add":"Update Plant"}</button>
                                     </div>

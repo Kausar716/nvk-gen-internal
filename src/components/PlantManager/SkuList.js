@@ -388,8 +388,8 @@ const SkuList = (props)=>{
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
-                                            onClick={()=>props.plantPageReDirectAction("all","plant")}>Return To Plant Manager</button>
+                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.plantPageReDirectAction("all","plant")}>Return To Plant Manager</button> */}
                                         </div>
                                     </div>
                                     <div class="row mt-3">
