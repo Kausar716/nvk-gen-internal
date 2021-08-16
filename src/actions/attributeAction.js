@@ -45,7 +45,7 @@ export const createSubAttributeAction = (name,status) => dispatch => {
     })
 }
 export const getAllSubAttribute = (id) => dispatch => {
-    axios.get(`/api/show-attribute/${id}`,config).then(res=>{ 
+    return axios.get(`/api/show-attribute/${id}`,config).then(res=>{ 
         console.log(res.data)
     dispatch({
             type:GET_ALL_SUB_ATTRIBUtTES,
@@ -121,11 +121,11 @@ export const handleCategoryDragDrop = (data) =>dispatch=>{
         })
     })
 }
-export const handleAttributeDragSort = (fromId, toId) =>dispatch=>{
+export const handleAttributeDragSort = (fromId, toId,type) =>dispatch=>{
     let attributeObject={}
     attributeObject.from=fromId;
     attributeObject.to=toId;
-    attributeObject.position="up";
+    attributeObject.position=type
     return axios.post(`/api/drag-sort-subattribute`,attributeObject,config).then(res=>{ 
         console.log(res)
     dispatch({

@@ -1,9 +1,10 @@
 /* eslint-disable no-script-url */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
-import React, { Component } from 'react'
+import React, { Component ,useEffect} from 'react'
 import * as MdIcons from "react-icons/md";
 import {connect} from "react-redux";
+import Sortable from 'sortablejs'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { confirmAlert } from 'react-confirm-alert'; 
 // import './style.css';
@@ -30,141 +31,156 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
                     btnLabelAdd:'Add New Category Type',
                     btnLabelUpdate: 'Update Category Type',
                     btnLabelCancel:'Cancel',
-                    deleteon:false
+                    deleteon:false,
+                    startID:0,
+                        inactive:[],
+                        active:[],
+                    
                 }
             
         }
-    // state ={
-    //     tasks:[
-    //         {name:"Christmas tree", category:"inactive", bgcolor:"#cfcbcbf7"},
-    //         {name:"Areac Palm", category:"inactive", bgcolor:"#cfcbcbf7"},
-    //         {name:"Peace lily", category:"active", bgcolor:"#cfcbcbf7",id:"2"},
-    //     ]
-    // }
 
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.plantCategoryList.filter(data=>data.status ==1)
+       let inactive=this.props.plantCategoryList.filter(data=>data.status ==0)
+        this.setState({active:active,inactive:inactive})
+    }
+componentDidMount(){
+    
 
-        onDragOver = (ev)=>{
-            ev.preventDefault();
-        }
+    var elData = document.getElementById('categoryActive');
+    var elData1 = document.getElementById('categoryInactive');
+    this.props.getAllPlantCategories().then(()=>{
+        // alert("ji")
+        this.getCatgoryData()
+    })
+    new Sortable(elData, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this)
+    })
+    new Sortable(elData1, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this),
+     
 
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
-            
-            let activeId=this.state.activeId
-            activeId=id;
-            this.setState({activeId})
-        }
-        componentDidMount(){
-            this.props.getAllPlantCategories()
+        // onFilter:function(){
+        //     alert("hi")
+        // }
+    })
 
-        }
-        onMouseLeave =((ev, id)=>{
-            let sortId=this.state.sortId
-            sortId=id;
-            this.setState({sortId})
+}
+
+onDragOver = (ev)=>{
+    ev.preventDefault();
+}
+startIDData  =(e)=>{
+    this.setState({selectedID:e.item.id})
+}
+onAddData = (evt)=>{
+    console.log(evt)
+    evt.preventDefault()
+
+//     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+//  evt.from.insertBefore(evt.item, null); 
+
+}
+onMoveData = (evt,ui)=>{
+
+   if(evt.from.id == evt.to.id){
+       if(evt.willInsertAfter ==true)
+    this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"down")
+    else  this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"up")
+
+   }else{
+       if(evt.from.id =="categoryActive"){
+          let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+          //console.log(task)
+          if(task.length > 0){
+            this.props.handleDragDrop(task[0]).then(data=>{
+            //     this.props.getAllPlantCategories().then(()=>{
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
+            // this.getCatgoryData()
+      
+            // })
         })
 
+        }
+
+       }else if(evt.from.id =="categoryInactive"){
+           //console.log(evt.dragged.id,evt.related.id)
+        let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+        //console.log(task)
+        if(task.length > 0){
+            this.props.handleDragDrop(task[0]).then(data=>{
+        //         this.props.getAllPlantCategories().then(()=>{
+        //             this.props.getAllPlantCategories().then(()=>{
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
+        //                 this.getCatgoryData()
+        //             })
+        //             // this.getCatgoryData() 
+        //         })
+        //     })
+
+        // }
+        
+       })
+    }
+
+   }
+}
+}
+    
+        onDrop=(evt)=>{
+            if(evt.newIndex !==evt.oldIndex)
+            return
+            // alert("dropping")
+  
+            //console.log(evt)
+            let id= evt.item.id
 
 
-        onDrop=(ev,cat)=>{
-            let id= ev.dataTransfer.getData("id");
-            console.log(id)
-           
-            let tasks = this.props.plantCategoryList.filter((task)=>{
-                
-                   return JSON.stringify(task.id) === id;
-                
-
-            });
-            // console.log(tasks)
-        //    let result= this.props.handleDragDrop(tasks[0])
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
+            let oldIndex  = this.state.tasks.active[evt.oldIndex]
+            let newIndex  = this.state.tasks.active[evt.newIndex]
            let doProcess = false;
            let alertmsg = 0;
-            if (cat === 'active' && tasks[0].status === "0") {
-                doProcess = true;
-                alertmsg = 1;
-            }
-            if (cat === 'inactive' && tasks[0].status === "1") {
-                doProcess = true;
-                alertmsg = 2;
-            }
-            if (doProcess === true) {
-                let result= this.props.handleDragDrop(tasks[0])
+        
+                let result= this.props.handleCategoryDragSort(oldIndex.id,newIndex.id)
                 result.then(res=>{
-                    this.props.getAllPlantCategories()
-                })   
-            }
-            if (doProcess === false && cat === 'active' && tasks[0].status === "1" && this.state.sortId !== this.state.activeId) {
-                console.log('kkm')
-                let result= this.props.handleCategoryDragSort(this.state.activeId, this.state.sortId)
-                result.then(res=>{
-                    this.props.getAllPlantCategories()
+                    // this.props.getAllPlantCategories()
                 }) 
                 alertmsg = 3;
-            }
-            // if (alertmsg === 1){
-            //     alert('Successfully Moved from Inactive to Active');
-            // }
-            // if (alertmsg === 2){
-            //     alert('Successfully Moved from Active to Inactive');
-            // }
-            // if (alertmsg === 3){
-            //     alert('Sort Successfully Done');
-            // }
-
-            if (alertmsg === 1){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Moved from Inactive to Active',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-            if (alertmsg === 2){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Successfully Moved from Active to InActive',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-            if (alertmsg === 3){
-                confirmAlert({
-                    title: 'Action',
-                    message: 'Sort Successfully Done',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
-            }
-
+  
 
         }
 
 
-        // onDelete =(ev)=>{
-        //     let id= ev.dataTransfer.getData("id");
-        //     console.log(id)
-        //    let result= this.props.handleCategoryDelete(id)
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
-        // }
 
         onDelete =(ev)=>{
-            let id= ev.dataTransfer.getData("id");
+            let id= this.state.selectedID
+            // alert(id)
             confirmAlert({
                 title: 'Delete Category Type',
                 message: 'Are you sure want to delete the Category Type?',
@@ -181,20 +197,24 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
         }
 
         onDeleteConfirm=(id)=>{
+            // alert(id)
             let result= this.props.handleCategoryDelete(id)
             this.setState({deleteon:true})
             result.then(res=>{
                 this.setState({deleteon:false})
-                this.props.getAllPlantCategories()
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Category Type ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+                this.props.getAllPlantCategories().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
+                // confirmAlert({
+                //     title: 'Delete Successfully',
+                //     message: 'Category Type ',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                //   });
             })
         }
 
@@ -214,30 +234,23 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
 
 
         handleAddCategory = (e)=>{
-        //     if(this.props.name){
-        //     let result = this.props.handleAddCategory(this.props.name)
-        //     result.then(res=>{
-        //         this.props.getAllPlantCategories()
-        //     })
-        //     alert('Added Successfully Done');
-        // }
-        // this.setState({
-        //     name:""
-        // })
         if(this.validate()){
             let result = this.props.handleAddCategory(this.props.name)
             result.then(res=>{
-                this.props.getAllPlantCategories()
+                this.props.getAllPlantCategories().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Category Type',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+            // confirmAlert({
+            //     title: 'Added Successfully',
+            //     message: 'Category Type',
+            //     buttons: [
+            //       {
+            //         label: 'Ok'
+            //       }
+            //     ]
+            // });
             this.setState({
                 name: "",
                 subName:"",
@@ -308,18 +321,21 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
               if(this.validate()){
                 let res=   this.props.updatePlantSettingCategory(updateID, updateObject)
                     res.then(res=>{
-                        this.props.getAllPlantCategories()
+                        this.props.getAllPlantCategories().then(()=>{
+                            // alert("ji")
+                            this.getCatgoryData()
+                        })
                     })
                     if (this.state.isEditing) {
-                        confirmAlert({
-                            title: 'Updated Successfully',
-                            message: 'Category Type',
-                            buttons: [
-                              {
-                                label: 'Ok'
-                              }
-                            ]
-                        });
+                        // confirmAlert({
+                        //     title: 'Updated Successfully',
+                        //     message: 'Category Type',
+                        //     buttons: [
+                        //       {
+                        //         label: 'Ok'
+                        //       }
+                        //     ]
+                        // });
                     }
                     this.setState({
                         isEditing:false,
@@ -334,7 +350,7 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
 
         handleEditClick2 =(t)=> {
 
-            console.log("ttt", t)
+            //console.log("ttt", t)
             // debugger;
              
          this.setState({
@@ -347,30 +363,16 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
           this.props.showSpecificPlantSettingAttribute(t.id)
        }
 
+    getId =(e)=>{
+       this.setState({startID:e.target.id})
 
-
-
+    }
+    
 render() {
-    var tasks={
-        inactive:[],
-        active:[],
-    }
 
-    if(this.props.plantCategoryList){
-        // tasks=this.props.plantCategoryList
-         this.props.plantCategoryList.forEach((t)=>{
-             console.log(t)
-            if(t.status === "1"){
-                tasks.active.push(t)
-            }
-            else if(t.status=== "0"){
-                tasks.inactive.push(t)
-            }
-         })
-    }
-    console.log("plantCategoryList",this.props.plantCategoryList)
+    //console.log("plantCategoryList",this.props.plantCategoryList)
 
-    console.log("showSpecificPlantCategory", this.props.showSpecificPlantCategory)
+    //console.log("showSpecificPlantCategory", this.props.showSpecificPlantCategory)
     // this.props.plantCategoryList.forEach((t)=>{
     //         tasks[t.category].push(
     //             <div key={t.name} onDragStart={(e)=>this.onDragStart(e, t.name)} onDelete={(e)=>this.onDelete(e, t.name)} draggable className="draggable" style={{backgroundColor:t.bgcolor}}>
@@ -380,7 +382,7 @@ render() {
     // });
 
 
-  
+//   alert("nice")
     
         return (
            
@@ -470,20 +472,25 @@ render() {
 
 
                                             <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
-                                                   {tasks.inactive.map(t=>{
-                                                       let backgroundToggle =  (this.state.backgroundChange === t.id)
-                                                    return <li id={t.id} name={t.name} draggable onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} >
-                                                                 <a className="d-flex justify-content-between align-items-center" style={{backgroundColor:backgroundToggle?"#e1e3e4":"",borderStyle:backgroundToggle?"dashed":""}}>
-                                                                <span id="Wheathers">{t.name}</span>
-                                                                </a>
+                                           >
+                                           <React.Fragment>
+                                            <ul class="list-unstyled" id="categoryInactive" >
+                                            {/* <li></li> */}
+                                                   {this.props.plantCategoryList.filter(data=>data.status ==0).map(t=>{
+                                                    
+                                                    return <li id={t.id}>
+                                                                 <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a>
                                                             </li>
                                                     })}
                                             </ul>
                                                
-
+                                            </React.Fragment>
 
                                             </div>
                                         </div>
@@ -500,7 +507,7 @@ render() {
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
                                                 
                                             </div>
-                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                            <div className="deleteSpace" onDrop={(e)=>this.onDelete(e)} onDragOver={(e)=>{this.onDragOver(e)}}>
                                                 <i className ={`fa fa-trash ${this.state.deleteon==true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
@@ -512,20 +519,23 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                   {tasks.active.map(t=>{
-                                                    return <li id={t.id} name={t.name} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center" >
-                                                                      <span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "} >{t.name}</span>
+                                            <div class="card-body cardBg" >
+                                            <React.Fragment>
+                                            <ul class="list-unstyled" id="categoryActive" >
+                                                {/* <li></li> */}
+                                                   {this.props.plantCategoryList.filter(data=>data.status ==1).map(t=>{
+                                                    return <li id={t.id}>
+                                                                 <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "} >{t.name}</span>
 
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
                                                                  </a>
                                                             </li>
                                                     })}
                                             </ul>
+                                            </React.Fragment>
                                             </div>
                                         </div>
                                     </div>
@@ -539,7 +549,7 @@ render() {
 }
 
      const mapStateToProps = (state)=> (
-        // console.log(state)
+        // //console.log(state)
          {
         
     plantCategoryList:state.categoryData.plantCategoryData,

@@ -89,6 +89,11 @@ const ProductTable  = (props) => {
         props.showSpecifiedSkuAction(id,"edit","sku")
   
   }
+  const handleSkuClick = (productId)=>{
+    let actionType="edit"
+    let pageToOpen = "sku"
+    props.getSpecifiedProductAction(productId,actionType,pageToOpen) 
+}
 
   const getSpecifiedProduct1 =async(id) =>{
     // debugger
@@ -214,8 +219,7 @@ const ProductTable  = (props) => {
                                                     {categoryData.length>0?categoryData.filter(cat=>cat.id===product.category_id)[0]?categoryData.filter(cat=>cat.id===product.category_id)[0]["name"]:"":""}
                                                     {/* {abcd[0].name} */}
                                                     </td>
-                                                <td className="text-center">{product.sku_count}</td>
-
+                                                <td className="text-center"><a href="#" onClick={()=>{handleSkuClick(product.product_id)}}>{product.sku_count}</a></td>
                                                
                                                 {/* <td>{product.subcategory_id}</td> */}
                                                 <td>
