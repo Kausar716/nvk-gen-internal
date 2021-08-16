@@ -439,15 +439,23 @@ render() {
                                             <div class="card-body cardBg" >
                                             <ul class="list-unstyled" id="categoryInactive">
                                                    {this.state.inactive.map(t=>{
-                                                    return <li id={t.id}  >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" 
-                                                                       className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}
-                                                                      >{t.status_level}</span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                    return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.status_level}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
-                                                                 </a>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
@@ -492,15 +500,23 @@ render() {
                                             <div class="card-body cardBg" >
                                             <ul class="list-unstyled" id="categoryActive">
                                                    {this.state.active.map(t=>{
-                                                    return <li id={t.id}  >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers" 
-                                                                       className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}
-                                                                      >{t.status_level}</span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                                    return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.status_level}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
-                                                                 </a>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
