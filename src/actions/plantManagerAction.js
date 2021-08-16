@@ -9,7 +9,6 @@ import {
     DUPLICTE_PLANT,
     CHECK_BOX,
     UPDATE_CHECK_BOX_SKU,
-    DYNAMIC_DISPLAY_PLANT_SKU,
 
     // Plant SKU ACTION
     CREATE_PLANT_SKU_ACTION,
@@ -17,6 +16,7 @@ import {
     DELETE_PLANT_SKU_ACTION,
     GET_ALL_PLANT_SKU_ACTION,
     UPDATE_CHECK_BOX,
+    DYNAMIC_DISPLAY_PLANT_SKU,
 
     GET_PLANT_SPECIFIED_SKU_ACTION,
     GET_SINGLE_PLANT_SKU,
@@ -698,8 +698,6 @@ export const serachPlant = (data) =>dispatch=>{
 }
 
  
-
-
 
 
 

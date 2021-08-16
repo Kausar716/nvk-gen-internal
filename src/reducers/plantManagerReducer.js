@@ -104,7 +104,7 @@ const initialSatate = {
   status:false,
   ae_plant_id:"",
   plantSkuDataList:[],
-  plantNameWithFormat:{},
+  plantNameWithFormat:{firstName:"",secondName:""},
   dynamicName:"",
   displayCancel:false
 
@@ -118,14 +118,41 @@ const nameFormaterFunction = (plantData) =>{
             nameWithFormat.secondName = ' '+commonNmae.length>0?`-${commonNmae}`:""
         }
         else     
-        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+commonNmae.length>0?`-${commonNmae}`:""
+        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+`${commonNmae.length>0?`-${commonNmae}`:""}`
     }
     else {
         nameWithFormat.firstName=plantData.genus+' '+plantData.species
-        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+commonNmae.length>0?`-${commonNmae}`:""
+        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+`${commonNmae.length>0?`-${commonNmae}`:""}`
     }
     
     return nameWithFormat
+}
+const nameFormaterFunctionForHandler = (currentAction,plantData)=>{  
+    let copiedPlantData = plantData 
+    copiedPlantData={...copiedPlantData, [currentAction.itemId]:currentAction.itemValue}
+    let nameWithFormat={}
+    let commonNmae =""
+    if(copiedPlantData.common_name){
+        if(typeof(copiedPlantData.common_name) === "string")
+    commonNmae = JSON.parse(copiedPlantData.common_name).join()
+    else
+    commonNmae = copiedPlantData.common_name.join()    
+    }
+    nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
+    if(!copiedPlantData.cultivar2 || copiedPlantData.cultivar2.length === 0){
+        if(!copiedPlantData.cultivar1 || copiedPlantData.cultivar1.length === 0){            
+            nameWithFormat.secondName = ' '+commonNmae.length>0?`-${commonNmae}`:""
+        }
+        else{
+            nameWithFormat.secondName ="'"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:""}`+"'"
+        }        
+    }
+    else {
+        nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
+        nameWithFormat.secondName = copiedPlantData.cultivar2+" "+"('"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:"" }`+"')"+`${commonNmae.length>0?`-${commonNmae}`:''}`        
+    }   
+    return nameWithFormat
+   
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -281,10 +308,13 @@ export default function(state = initialSatate, action){
                 }
             }
         case HANDLE_PLANT_INPUT_DATA:{
+            let nameWithFormat = {}    
+                nameWithFormat = nameFormaterFunctionForHandler(action,state.plantDataById) 
             return{
                 ...state,
                 plantDataById:{...state.plantDataById, [action.itemId]:action.itemValue},
-                needAction:true
+                needAction:true,
+                plantNameWithFormat:nameWithFormat,
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
@@ -613,8 +643,8 @@ export default function(state = initialSatate, action){
                     action:action,
                     actionType:action.actionType,
                     displayCancel:true,
-                    plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes}
-
+                    plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes},
+                    dynamicName:action.plantSkuDataById.plant[0].sku_code
                 }
             case DYNAMIC_DISPLAY_PLANT_SKU:
                 return{

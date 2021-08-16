@@ -198,7 +198,7 @@ const handleCheckBox =(id,index,type)=>{
                                         </thead>
                                         <tbody>
 
-                                        {displayPlantList.map(({id,status, plantName, location, category,sku_count, onWebsite, PrintCatalog, in_production, discontinued, archived, patent,category_id,plant_id,genus},index)=>{
+                                        {displayPlantList.map(({id,status, plantName, location, category,sku_count, onWebsite, PrintCatalog,plant_name, in_production, discontinued, archived, patent,category_id,plant_id,genus},index)=>{
                                              let id2 ="discontinued"
                                              let id3 ="archived"
                                              let id4 ="in_production"
@@ -207,7 +207,7 @@ const handleCheckBox =(id,index,type)=>{
                                             <tr>
                                                 <td style={{color:parseInt(archived)===0 ? "black" :"red"}}>{parseInt(archived) === 0 ?"Active":"Archived"}</td>
                                                 <td className="text-nowrap text-center">{plant_id}</td>
-                                                <td>{genus}</td>
+                                                <td>{plant_name}</td>
                                                 <td>
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
