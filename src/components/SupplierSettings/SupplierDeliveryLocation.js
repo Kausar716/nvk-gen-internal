@@ -544,6 +544,7 @@ render() {
     console.log("supplierLocationDataOnly", this.props.supplierLocationDataOnly)
  
     const {supplierData} = this.props
+    console.log("supplierData", supplierData)
 
     console.log("showSpeciSubA",this.props.specificSupplierDelivery)
     let allCountry = Object.keys(countryDetails);

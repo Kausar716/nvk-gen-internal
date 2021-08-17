@@ -53,6 +53,7 @@ import {
     }
 
     export const updateUser = (userData) => dispatch => {
+        debugger;
         console.log(userData)
         // userData.role="1"
         // userData.password="pass"

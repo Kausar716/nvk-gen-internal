@@ -31,7 +31,7 @@ export class UserProfile extends Component {
             lastName:"",
             phone:"",
             email:"",
-            position:"",
+            position:"Select..",
             actionType:"",
             fileInput : null,
             locationAccess:false,
@@ -182,7 +182,6 @@ export class UserProfile extends Component {
     }
 
     validate = () =>{
-        debugger;
 
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -226,7 +225,7 @@ export class UserProfile extends Component {
         //     errorCount++
         // }
 
-         if(this.state.position.length ===1 || this.state.position.length === 8){
+         if(this.state.position === "Select.."){
             //debugger
             errorObj.positionError=1
             this.setState({errorObj})
@@ -234,11 +233,11 @@ export class UserProfile extends Component {
             //return false
         }
 
-        else{
-            errorObj.positionError=0;  
-            this.setState({errorObj})
-            errorCount--
-        }
+        // else{
+        //     errorObj.positionError=0;  
+        //     this.setState({errorObj})
+        //     errorCount--
+        // }
 
          if(! emailReg.test(this.state.email)){
             errorObj.emailError=1
@@ -289,7 +288,6 @@ export class UserProfile extends Component {
             disableButton:true
         })
         let finalNumber = this.state.phone
-
         finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
         let removedNumber = finalNumber.split(" ").join("");
         removedNumber = parseInt(removedNumber)
@@ -301,6 +299,7 @@ export class UserProfile extends Component {
              console.log(this.state)
              console.log("success")
              if(count === 0){
+                
                 console.log(this.state)
                 let userStateObject = this.state
                 let userObject={}
@@ -312,7 +311,6 @@ export class UserProfile extends Component {
                 if(this.props.selectedUser.email !== userStateObject.email)userObject['email'] = userStateObject.email
                 // if(this.props.selectedUser.phone !== userStateObject.phone)userObject['phone'] = userStateObject.phone
                 if(this.props.selectedUser.position !== userStateObject.position)userObject['position'] = userStateObject.position
-
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
@@ -476,7 +474,7 @@ export class UserProfile extends Component {
     }
     render() {
         console.log("roles123", this.props.roles)
-        console.log("usersUSER", this.props.users.payload.active)
+        console.log("usersUSER", this.props.data,  this.props.users.payload.active)
         const { actionType } = this.state;
         let roles=[]
         console.log(this.props.roles)
@@ -660,7 +658,6 @@ export class UserProfile extends Component {
                                                                         <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
                                                                                             <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
                                                                         </button>
-                                                                        
                                                                         </a>
                                                                 </div>
 
@@ -674,7 +671,6 @@ export class UserProfile extends Component {
                                                                         <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
                                                                                             <span class="ml-2" style={{fontSize:"16px", }}>Save &amp; Done</span>
                                                                         </button>
-                                                                        
                                                                         </a>
                                                                 </div>
 
@@ -795,12 +791,16 @@ export class UserProfile extends Component {
                                                     <label>Position<span class="text-danger">*</span></label>
                                                    
                                                     <select class="form-control" name="position" id="position" onChange={this.handleInput} 
-                                                                value={this.state.position} 
+                                                                 value={this.state.position} 
                                                      >
                                                     <option>Select..</option>
                                                     {roles ? roles.map((userObj,i)=>{
                                                             //console.log(userObj)
-                                                            return  <option value={userObj.id} id={this.props.roles[i]} >{userObj.name}</option>
+                                                            return  <option  
+                                                           
+                                                            id={userObj.id}
+                                                             value={userObj.id}
+                                                             >{userObj.name} </option>
                                                         }) : null} 
 
 
