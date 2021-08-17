@@ -66,8 +66,8 @@ export default function OrderReserve() {
                         </div>
                         <div class="col-md-6 d-flex justify-content-md-end  align-items-center">
                             <a href="" class="ml-4 mr-4"><img src="assets/img/reserve-ic-purple.svg" alt=""/></a>
-                            <a href="" class="ml-2"><img src="assets/img/add-segment-ic-blue.svg" alt=""/></a>
-                            <a href="" class="ml-2"><img src="assets/img/delete.svg" alt=""/></a>
+                            <a href="" class="ml-2"><img src="assets/img/Add Segment.svg" alt=""/></a>
+                            <a href="" class="ml-2"><img src="assets/img/delete2.svg" alt=""/></a>
                         </div>
                     </div>
                 </div>
