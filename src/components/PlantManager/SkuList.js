@@ -60,13 +60,11 @@ const SkuList = (props)=>{
     
       const onFormSubmit=(e)=> {
         e.preventDefault();
-        console.log(this.state.startDate)
       }
       const paginationChange =(event, page)=>{
         props.setPlantSkuPageNumber(page-1)
     }
     const handleChange1 = (e) =>{
-        console.log(e.target);
         let dateInformate = e.target.value
         props.handlePlantSkuInputAction("sale_expiry_date",dateInformate)
 
@@ -144,7 +142,6 @@ const SkuList = (props)=>{
         
     }
     const confirm = ()=>{
-       console.log(id)
        props.deleteSkuAction(id)
        setOpen(false)
        setId(0)
@@ -164,14 +161,12 @@ const SkuList = (props)=>{
     setId(id)
 }
    const getSpecifiedplant = (skudata,data,value) =>{
-     console.log(id)
       window.scrollTo(100, -100)
       setSelectedRow(skudata.id)
       props.showSinglePlantSkuAction(skudata.id,"edit","sku")
    
    }
    const submitAction = (e) => {
-       console.log(props.plantData)
     if(!each_costError&& !each_priceError&& !sales_priceError && !volume_priceError){
     if(e.target.id === "dontRetain"){
     if(actionType ==="add" || actionType === "edit"){
@@ -204,8 +199,6 @@ const SkuList = (props)=>{
     props.plantPageReDirectAction("all","plant")
    }
 
-
-   console.log(props.plantData);
       const {plantData,plantSkuData,plantSkuPageNumber,needAction,plantSkuDataById,plantSkuDataList,actionType,displayCancel} = props.plantData
       const plantPerPage = pageSize;
       const totalLength = plantSkuDataList.length;
@@ -213,14 +206,11 @@ const SkuList = (props)=>{
       const displayPlantSkuList = plantSkuDataList.slice(pagesVisited,pagesVisited+plantPerPage)
       const pageCount = Math.ceil(plantSkuDataList.length/plantPerPage)
         const {allAttributes} = props.attributeData
-        console.log(allAttributes)
         let minMonth = new Date().getMonth()
         let minDate = new Date().getDate()
         let minDateFormate = minDate.toString().length==1?"0"+minDate:minDate
         let minMonthFormate = minMonth.toString().length==1?"0"+(minMonth+1):(minMonth+1)
-        console.log(new Date().getFullYear()+"-"+(new Date().getMonth()+1)+"-"+new Date().getDate())
-        console.log(props.plantData)
-        console.log(props.plantData.plantSkuDataList)
+        
         let selectedForm =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
             if(attributeObj.attribute_id === 1){
                return attributeObj.subattribute_id
@@ -241,21 +231,23 @@ const SkuList = (props)=>{
             return attributeObj.subattribute_id
         }
         })[0]
-        // let selectedVolumeQuality =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
-        // if(attributeObj.attribute_id === 6){
-        //     // if(plantSkuDataById.Volume_Quality )
-        // return attributeObj.subattribute_id
-        // }
-        // })[0]
-        // console.log(selectedVolumeQuality)
         let flag=0
         if(plantSkuDataById){       
             if(!plantSkuDataById.each_cost || !plantSkuDataById.each_price || !plantSkuDataById.sale_price){
-                flag=1
-                
+                flag=1               
             }
             if(plantSkuDataById.attributes_subattributes.length === 0){
                 flag=1
+            }
+            else if(plantSkuDataById.attributes_subattributes.length === 3){
+               let toggleDropdown =  plantSkuDataById.attributes_subattributes.filter(attributeData=>{
+                    return(attributeData.attribute_id === 4 || attributeData.attribute_id === 5 || attributeData.attribute_id === 3 )
+                })
+                toggleDropdown.map(obj=>{
+                    if(isNaN(obj.subattribute_id )){
+                        flag=1
+                    }
+                })
             }
             else if(plantSkuDataById.attributes_subattributes.length>0){
                 let checkForData
@@ -301,7 +293,7 @@ const SkuList = (props)=>{
         const handleBlur =(evt)=>{
 
             var charCode = (evt.which) ? evt.which : evt.keyCode;
-            console.log(evt.target.id)
+          
             let id = evt.target.id
             let characterCheck = evt.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
            if(characterCheck === null){
@@ -330,14 +322,9 @@ const SkuList = (props)=>{
         //         return(<option value={subData.id}>{subData.value}</option>)
         //     }))
         // })   
-        console.log(plantSkuDataById)
-        const handleCheckBox = (id,index,type)=>{
-            console.log(id,index,type)
-            // alert(index)
-            // alert(index)
-           
-            let obj = {}
-    
+  
+        const handleCheckBox = (id,index,type)=>{           
+            let obj = {}    
             // obj[type] = parseInt(displayPlantList[index][type])===1?0:1
             // if(type ==="in_production" &&  obj[type]===0)
             // obj["status"] = 0
@@ -356,7 +343,7 @@ const SkuList = (props)=>{
             // alert((15*plantSkuPageNumber)+index)
         
             // props.checkBox(id,((15*plantSkuPageNumber)+index),type,obj)
-            // console.log(plantData[((15*plantPageNumber)+index)])
+          
             props.checkBoxSku(id,((15*plantSkuPageNumber)+index),type,obj)
             props.updateCheckBoxsku(id,index,"status",obj)
         

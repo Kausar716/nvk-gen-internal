@@ -247,7 +247,7 @@ export const deletePlantAction = (id) => dispatch => {
         dispatch({
             type:DELETE_PLANT_ACTION
         })
-        error.push("Plant deleted successfully",)
+        error.push("Plant deleted",)
         dispatch({
             type:ERROR_HANDLE,
             message:error,
@@ -422,7 +422,6 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             })
             // dispatch(plantPageReDirectAction(actionType = "all"))
             }).catch(error1=>{
-                console.log(error1)
                 error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,
@@ -623,7 +622,6 @@ export const clearSkuFieldsPLant = (actionType)=>dispatch=>{
 
 //search plant
 export const serachPlant = (data) =>dispatch=>{
-    //console.log(data)
     dispatch({
         type:HANDLE_SEARCH_INPUT,
         payload:data,
