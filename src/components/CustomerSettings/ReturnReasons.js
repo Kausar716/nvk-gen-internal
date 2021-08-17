@@ -4,9 +4,10 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert';
 // import './style.css';
+import Sortable from 'sortablejs'
 import InfoModal from "../Modal/InfoModal"
 
-import {getAllReturnReasonMethods,saveReturnReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,
+import {customerReturnSort,getAllReturnReasonMethods,saveReturnReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,
     handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,
     getAllDeliveryMethods,  updateCustomerReturnReasonSettings,handleExchangeData2,
     showSpecificReturnReasonSettings,} from "../../actions/customerSettingAction";
@@ -37,119 +38,128 @@ import { is } from 'immutable';
             return_reason :0,
            short_code:0
        },
+       active:[],inactive:[]
        //return_to_inventoryNumber:0,
     }
 
-
-        onDragOver = (ev)=>{
-            ev.preventDefault();
+        getCatgoryData = ()=>{
+            let data = {};
+            let active= this.props.customerData.customerReturnReasonList.active
+           let inactive=this.props.customerData.customerReturnReasonList.inactive
+            this.setState({active:active,inactive:inactive})
         }
-
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
-        }
-        componentDidMount(){
-            this.props.getAllReturnReasonMethods()
-
-        }
-
-
-        toggle1 =()=>{
-            this.setState({isOpen1:false})
-        }
-
-        onDrop=(ev,cat)=>{
-            let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.customerData.customerReturnReasonList
-            console.log(cat)
-
-            let tasks = []
-            console.log( datatoParse.active)
-           
-            datatoParse.active.filter(task=>{
-                 if(task.id === id){
-                    tasks.push(task)
-                 }
-             })
-             datatoParse.inactive.filter(task=>{
-                if(task.id === id){
-                   tasks.push(task)
-                }
+    componentDidMount(){
+        
+    
+        var elData = document.getElementById('categoryActive');
+        var elData1 = document.getElementById('categoryInactive');
+        this.props.getAllReturnReasonMethods().then(()=>{
+            // alert("ji")
+            this.getCatgoryData()
+        })
+        new Sortable(elData, {
+            group: 'shared',
+            animation: 150,
+            onAdd:this.onAddData.bind(this),
+            onStart: this.startIDData.bind(this),
+            onMove:this.onMoveData.bind(this)
+        })
+        new Sortable(elData1, {
+            group: 'shared',
+            animation: 150,
+            onAdd:this.onAddData.bind(this),
+            onStart: this.startIDData.bind(this),
+            onMove:this.onMoveData.bind(this),
+         
+    
+            // onFilter:function(){
+            //     alert("hi")
+            // }
+        })
+    
+    }
+    
+    onDragOver = (ev)=>{
+        ev.preventDefault();
+    }
+    startIDData  =(e)=>{
+        this.setState({selectedID:e.item.id})
+    }
+    onAddData = (evt)=>{
+        console.log(evt)
+        evt.preventDefault()
+    
+    //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+    //  evt.from.insertBefore(evt.item, null); 
+    
+    }
+    onMoveData = (evt,ui)=>{
+    
+       if(evt.from.id == evt.to.id){
+           if(evt.willInsertAfter ==true)
+        this.props.customerReturnSort(evt.dragged.id,evt.related.id,"down")
+        else  this.props.customerReturnSort(evt.dragged.id,evt.related.id,"up")
+    
+       }else{
+           if(evt.from.id =="categoryActive"){
+              let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+              //console.log(task)
+              if(task.length > 0){
+                  let taskData = task[0]
+                  taskData.status =parseInt(taskData.status)==1? 0:1
+                  this.props.updateCustomerReturnReasonSettings(taskData.id,taskData).then(data=>{
+                //     this.props.getAllPlantCategories().then(()=>{
+                //     confirmAlert({
+                //     title: 'Action',
+                //     message: 'Successfully Moved from Active to InActive',
+                //     buttons: [
+                //         {
+                //         label: 'Ok'
+                //         }
+                //     ]
+                // });
+                // this.getCatgoryData()
+          
+                // })
             })
-            //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
-         console.log(tasks)
-            // console.log(tasks)
-        //    let result= this.props.handleDragDrop(tasks[0])
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
-           let doProcess = false;
-           let alertmsg = 0;
-           if(tasks.length>0){
-
-            if (cat === 'active' && tasks[0].status === 0) {
-               
-                doProcess = true;
-                alertmsg = 1;
+    
             }
-            if (cat === 'inactive' && tasks[0].status === 1) {
-                doProcess = true;
-                alertmsg = 2;
-            }
-            if (doProcess === true) {
-               
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-customer-reason")
-                result.then(res=>{
-                    this.props.getAllReturnReasonMethods()
-                })   
-                alertmsg = 3;
-            }
-           }
-
-
-
-           if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+    
+           }else if(evt.from.id =="categoryInactive"){
+               //console.log(evt.dragged.id,evt.related.id)
+            let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+            //console.log(task)
+            if(task.length > 0){
+                let taskData = task[0]
+                taskData.status =parseInt(taskData.status)==1? 0:1
+                this.props.updateCustomerReturnReasonSettings(taskData.id,taskData).then(data=>{
+            //         this.props.getAllPlantCategories().then(()=>{
+            //             this.props.getAllPlantCategories().then(()=>{
+                            // confirmAlert({
+                            //     title: 'Action',
+                            //     message: 'Successfully Moved from InActive to Active',
+                            //     buttons: [
+                            //         {
+                            //         label: 'Ok'
+                            //         }
+                            //     ]
+                            // });
+            //                 this.getCatgoryData()
+            //             })
+            //             // this.getCatgoryData() 
+            //         })
+            //     })
+    
+            // }
+            
+           })
         }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-       
+    
+       }
+    }
+    }
 
-            // this.setState({
-            //     ...this.state,
-            //     tasks
-            // })
 
-        }
 
 
         // onDelete =(ev)=>{
@@ -166,7 +176,7 @@ import { is } from 'immutable';
 
 
         onDelete =(ev)=>{
-            let id= ev.dataTransfer.getData("id");
+            let id= this.state.selectedID
             confirmAlert({
                 title: 'Delete Return Reason',
                 message: 'Are you sure want to delete the Return Reason ?',
@@ -187,17 +197,12 @@ import { is } from 'immutable';
             let result= this.props.handleCustomerTypeDelete(id,"delete-customer-reason")
             this.setState({deleteon:true})
             result.then(res=>{
-                this.props.getAllReturnReasonMethods()
+                this.props.getAllReturnReasonMethods().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
                 this.setState({deleteon:false})
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Return Reason',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+            
             })
         }
 
@@ -248,7 +253,10 @@ import { is } from 'immutable';
                 obj.status = 1
                 let result = this.props.saveReturnReasonMethod(obj)
                 result.then(data=>{
-                    this.props.getAllReturnReasonMethods()
+                    this.props.getAllReturnReasonMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
             // }
 
@@ -260,17 +268,12 @@ import { is } from 'immutable';
             if(this.validate()){
                 let result = this.props.saveReturnReasonMethod(obj)
                 result.then(res=>{
-                    this.props.getAllReturnReasonMethods()
+                    this.props.getAllReturnReasonMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
-                confirmAlert({
-                    title: 'Added Successfully',
-                    message: 'Return Reason',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
+          
                 this.setState({
                     name: "",
                     subName:"",
@@ -341,23 +344,20 @@ import { is } from 'immutable';
             //      name:"",
                 
             //  })
-
+            let obj = {}
+            obj.reason = this.state.name
+            obj.return_to_inventory = this.state.selectedOption
 
             if(this.validate()){
-                let res=   this.props.updateCustomerReturnReasonSettings(updateID, updateObject)
-                    res.then(res=>{
-                        this.props.getAllReturnReasonMethods()
+                let res=   this.props.updateCustomerReturnReasonSettings(updateID,obj).then(res=>{
+                    
+                        this.props.getAllReturnReasonMethods().then(()=>{
+                            
+                            this.getCatgoryData()
+                        })
                     })
                     if (this.state.isEditing) {
-                        confirmAlert({
-                            title: 'Updated Successfully',
-                            message: 'Reurn Reason ',
-                            buttons: [
-                              {
-                                label: 'Ok'
-                              }
-                            ]
-                        });
+                  
                     }
                     this.setState({
                         isEditing:false,
@@ -518,14 +518,26 @@ render() {
 
 
                                             <div class="card-body cardBg"
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.customerData.customerReturnReasonList.inactive.map(t=>{
-                                                    return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                <span id="Wheathers">{t.reason}</span>
-                                                                </a>
+                                            >
+                                            <ul class="list-unstyled" id="categoryInactive">
+                                                   {this.state.inactive.map(t=>{
+                                                    return  <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.reason}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
@@ -559,20 +571,26 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.customerData.customerReturnReasonList.active.map(t=>{
-                                                    return <li id={t.id} name={t.reason} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-center">
-                                                                      <span id="Wheathers"
-                                                                     
-                                                                       className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}
-                                                                    
-                                                                       > <p style={{paddingTop:"12px"}}>{t.reason}</p></span>
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}><MdIcons.MdEdit  
+                                            <div class="card-body cardBg" >
+                                            <ul class="list-unstyled" id="categoryActive">
+                                                   {this.state.active.map(t=>{
+                                                    return <li id={t.id}>
+                                                        <div class="showElipse">
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.reason}</span>
+                                                        
+                                                        </div>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(t)}
                                                                 /></span>
-                                                                 </a>
+                                                        </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
+
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
                                                             </li>
                                                     })}
                                             </ul>
@@ -611,6 +629,7 @@ render() {
         updateCustomerReturnReasonSettings,
         showSpecificReturnReasonSettings,
         handleExchangeData2,
+        customerReturnSort,
 
 
         

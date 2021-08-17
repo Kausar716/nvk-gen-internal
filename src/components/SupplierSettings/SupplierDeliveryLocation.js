@@ -7,11 +7,12 @@ import * as MdIcons from "react-icons/md";
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
 import { countryDetails } from '../Help/countryList';
+import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import {saveReasonMethod,getAllReasonMethods,handleCustomerTypeDelete,handleDragDropCustomer,saveDeliveryMethod,saveNoticationData,getNotificationData,handleExchangeData,getAllDeliveryMethods} from "../../actions/customerSettingAction";
 import { is } from 'immutable';
-import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,
+import {supplierLocationSort,getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchnageData,
     saveSupplierCategoryMethod,getAllSupplierCategoryMethods,getAllSupplierLocationMethods,
     saveSupplierLocationMethod,  updateSupplierLocation, showSpecificDeliveryLocation,resetSupplierData}   from "../../actions/supplierManagementAction"
 
@@ -46,6 +47,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
                     state:0,
                     zip:0,
                 },
+                active:[],inactive:[]
 
 
 
@@ -74,117 +76,129 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
         this.props.resetSupplierData();
     }
-
-        onDragOver = (ev)=>{
-            ev.preventDefault();
-        }
-
-        onDragStart=(ev, id)=>{
-            console.log("dragstart:", id);
-            ev.dataTransfer.setData("id",id)
-        }
-        componentDidMount(){
-            this.props.getAllSupplierLocationMethods()
-            this.props.resetSupplierData()
-        }
-
-
-        toggle1 =()=>{
-            this.setState({isOpen1:false})
-        }
-
-        onDrop=(ev,cat)=>{
-            let id= JSON.parse(ev.dataTransfer.getData("id"))
-            let datatoParse = this.props.supplierData.supplierLocationList
-            console.log(cat)
-
-            let tasks = []
-            console.log( datatoParse.active)
+        // componentDidMount(){
+        //     this.props.getAllSupplierLocationMethods().then()
+          
+        // }
            
-            datatoParse.active.filter(task=>{
-                 if(task.id === id){
-                    tasks.push(task)
-                 }
-             })
-             datatoParse.inactive.filter(task=>{
-                if(task.id === id){
-                   tasks.push(task)
-                }
-            })
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.supplierData.supplierLocationList.active
+       let inactive=this.props.supplierData.supplierLocationList.inactive
+        this.setState({active:active,inactive:inactive})
+    }
+componentDidMount(){
+    
 
-        
-            //  tasks = datatoParse.inactive.filter((task)=>task.id === id)
-             
+    var elData = document.getElementById('categoryActive');
+    var elData1 = document.getElementById('categoryInactive');
+    this.props.resetSupplierData()
+    this.props.getAllSupplierLocationMethods().then(()=>{
+        // alert("ji")
+        this.getCatgoryData()
+    })
+    new Sortable(elData, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this)
+    })
+    new Sortable(elData1, {
+        group: 'shared',
+        animation: 150,
+        onAdd:this.onAddData.bind(this),
+        onStart: this.startIDData.bind(this),
+        onMove:this.onMoveData.bind(this),
+     
 
-         
-         console.log(tasks)
-            // console.log(tasks)
-        //    let result= this.props.handleDragDrop(tasks[0])
-        //    result.then(res=>{
-        //     this.props.getAllPlantCategories()
-        //    })
-           let doProcess = false;
-           let alertmsg = 0;
-           if(tasks.length>0){
+        // onFilter:function(){
+        //     alert("hi")
+        // }
+    })
 
-            if (cat === 'active' && tasks[0].status === 0) {
-               
-                doProcess = true;
-                alertmsg = 1;
-            }
-            if (cat === 'inactive' && tasks[0].status === 1) {
-                doProcess = true;
-                alertmsg = 2;
-            }
-            if (doProcess === true) {
-               
-                let result= this.props.handleDragDropCustomer(tasks[0],"update-delivery-supplier")
-                result.then(res=>{
-                    this.props.getAllSupplierLocationMethods()
-                })   
-                alertmsg = 3;
-            }
-           }
-       
-           if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: ' Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-            // this.setState({
-            //     ...this.state,
-            //     tasks
+}
+
+onDragOver = (ev)=>{
+    ev.preventDefault();
+}
+startIDData  =(e)=>{
+    this.setState({selectedID:e.item.id})
+}
+onAddData = (evt)=>{
+    console.log(evt)
+    evt.preventDefault()
+
+//     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+//  evt.from.insertBefore(evt.item, null); 
+
+}
+onMoveData = (evt,ui)=>{
+
+   if(evt.from.id == evt.to.id){
+       if(evt.willInsertAfter ==true)
+    this.props.supplierLocationSort(evt.dragged.id,evt.related.id,"down")
+    else  this.props.supplierLocationSort(evt.dragged.id,evt.related.id,"up")
+
+   }else{
+       if(evt.from.id =="categoryActive"){
+          let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+          //console.log(task)
+          if(task.length > 0){
+              let taskData = task[0]
+              taskData.status =parseInt(taskData.status)==1? 0:1
+              this.props.updateSupplierLocation(taskData.id,taskData).then(data=>{
+            //     this.props.getAllPlantCategories().then(()=>{
+            //     confirmAlert({
+            //     title: 'Action',
+            //     message: 'Successfully Moved from Active to InActive',
+            //     buttons: [
+            //         {
+            //         label: 'Ok'
+            //         }
+            //     ]
+            // });
+            // this.getCatgoryData()
+      
             // })
+        })
 
         }
+
+       }else if(evt.from.id =="categoryInactive"){
+           //console.log(evt.dragged.id,evt.related.id)
+        let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+        //console.log(task)
+        if(task.length > 0){
+            let taskData = task[0]
+            taskData.status =parseInt(taskData.status)==1? 0:1
+            this.props.updateSupplierLocation(taskData.id,taskData).then(data=>{
+        //         this.props.getAllPlantCategories().then(()=>{
+        //             this.props.getAllPlantCategories().then(()=>{
+                        // confirmAlert({
+                        //     title: 'Action',
+                        //     message: 'Successfully Moved from InActive to Active',
+                        //     buttons: [
+                        //         {
+                        //         label: 'Ok'
+                        //         }
+                        //     ]
+                        // });
+        //                 this.getCatgoryData()
+        //             })
+        //             // this.getCatgoryData() 
+        //         })
+        //     })
+
+        // }
+        
+       })
+    }
+
+   }
+}
+}
+
 
 
         // onDelete =(ev)=>{
@@ -202,7 +216,7 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
 
 
         onDelete =(ev)=>{
-            let id= ev.dataTransfer.getData("id");
+            let id= this.state.selectedID
             confirmAlert({
                 title: 'Delete Supplier Location ',
                 message: 'Are you sure want to delete the Delivery Location?',
@@ -223,17 +237,12 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
             let result= this.props.handleCustomerTypeDelete(id,"delete-delivery-supplier")
             this.setState({deleteon:true})
             result.then(res=>{
-                this.props.getAllSupplierLocationMethods()
+                this.props.getAllSupplierLocationMethods().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
                 this.setState({deleteon:false})
-                confirmAlert({
-                    title: 'Delete Successfully',
-                    message: 'Supplier Delivery Location  ',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                  });
+        
             })
         }
 
@@ -394,7 +403,10 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
         if(this.validate()){
             let result = this.props.saveSupplierLocationMethod(obj)
             result.then(res=>{
-                this.props.getAllSupplierLocationMethods()
+                this.props.getAllSupplierLocationMethods().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             })
             confirmAlert({
                 title: 'Added Successfully',
@@ -462,18 +474,21 @@ import {getAllSupplierReasonMethods,saveSupplierReasonMethod,handleSupplierExchn
           if(this.validate()){
             let res=   this.props.updateSupplierLocation(updateID, updateObject)
                 res.then(res=>{
-                    this.props.getAllSupplierLocationMethods()
+                    this.props.getAllSupplierLocationMethods().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
                 if (this.state.isEditing) {
-                    confirmAlert({
-                        title: 'Updated Successfully',
-                        message: 'Supplier Location ',
-                        buttons: [
-                          {
-                            label: 'Ok'
-                          }
-                        ]
-                    });
+                    // confirmAlert({
+                    //     title: 'Updated Successfully',
+                    //     message: 'Supplier Location ',
+                    //     buttons: [
+                    //       {
+                    //         label: 'Ok'
+                    //       }
+                    //     ]
+                    // });
                 }
                 this.setState({
                     isEditing:false,
@@ -717,23 +732,22 @@ render() {
 
 
                                             <div class="card-body cardBg" 
-                                            onDragOver={(e)=>this.onDragOver(e)}
-                                            onDrop={(e)=>{this.onDrop(e,"inactive")}}>
-                                            <ul class="list-unstyled" >
-                                                   {this.props.supplierData.supplierLocationList.inactive.map(t=>{
-                                                    return <li id={t.id}  name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                      <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}} >  
-                                                                      <p  id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                            >
+                                            <ul class="list-unstyled" id="categoryInactive">
+                                                   {this.state.inactive.map(t=>{
+                                                    return  <li id={t.id} >
+                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:2,paddingTop:2}}>
+                                                                      <div id="Wheathers" className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}>
                                                                       <div style={{display:"block",float:"left"}}>
                                                                       <p style={{padding:0,margin:0}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
-                                                                        <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
-                                                                      </p>
+                                                                      </div>
                                                                    
-                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><MdIcons.MdEdit  
-                                                                           
-                                                                /></span><p style={{marginTop:"22px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
+                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                /></span><p style={{marginTop:"27px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -768,24 +782,26 @@ render() {
                                             <div class="card-header">
                                                 Active
                                             </div>
-                                            <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                   {this.props.supplierData.supplierLocationList.active.map(t=>{
-                                                    return <li id={t.id} name={t.location} onDragStart={(e)=>this.onDragStart(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
-                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}>
-                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                            <div class="card-body cardBg" >
+                                            <ul class="list-unstyled" id="categoryActive">
+                                                   {this.state.active.map(t=>{
+                                                    return <li id={t.id} >
+                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:2,paddingTop:2}}>
+                                                                      <div id="Wheathers" className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}>
                                                                       <div style={{display:"block",float:"left"}}>
                                                                       <p style={{padding:0,margin:0}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
                                                                       <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
-                                                                      </p>
+                                                                      </div>
                                                                    
-                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
                                                                             onClick={() =>this.handleEditClick2(t)}
-                                                                /></span><p style={{marginTop:"22px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"27px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
+
+                                                         
                                                     })}
                                             </ul>
                                             </div>
@@ -825,6 +841,7 @@ render() {
         updateSupplierLocation,
         showSpecificDeliveryLocation,
         handleDragDropCustomer,
+        supplierLocationSort,
         resetSupplierData, })((SupplierDeliveryLocation))
 
 

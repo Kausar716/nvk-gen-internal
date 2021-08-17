@@ -392,7 +392,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
     }
     let flag =0
     if(skuDataById){       
-        if(!skuDataById.each_cost||skuDataById.sub_category_id  === "0" || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
+        if(!skuDataById.each_cost||skuDataById.location_id  === "0" || !skuDataById.location_id ||skuDataById.sub_category_id  === "0" || !skuDataById.sub_category_id || !skuDataById.sale_price|| !skuDataById.each_price ||skuDataById.sku_item_name=== ""){
             flag=1
             
         }
@@ -411,21 +411,26 @@ console.log("PRODUCT.ID", productDataById.product_id)
                             <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"0.5em",paddingRight:"1em"}}>
                                 <form>
                                     <div class="row">
-                                        <div class="col-md-6">
-                                            <h3>GENERATED SKU </h3><p>{skuDataById.sku_code}</p>
+                                        <div class="col-md-2">
+                                            <h3>GENERATED SKU </h3>
                                         </div>
-                                        
-                                        <div class="col-md-6 d-flex justify-content-end">
+                                        <div class="col-md-4 ml-0">
+                                            <p>{skuDataById.sku_code}</p>
+                                        </div>
+                                        <div class="col-md-3 d-flex justify-content-end">
                                         
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
                                                 <div class="switcher ml-2">
                                                     <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} 
-                                                    checked={skuDataById.archived==="0"?false:true}
+                                                    checked={skuDataById.archived==="1"?true:false}
                                                     />
                                                     <label for="archived" style={{cursor:"pointer"}}></label>
                                                 </div>
                                             </div>
+                                            
+                                        </div>
+                                        <div class="col-md-3 d-flex justify-content-end">
                                             <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
                                             onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
                                         </div>
@@ -497,7 +502,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                             <div class="row">
                                                 <div class="col-md-12 col-lg-12 d-flex">
-                                                    <input type="date" onChange={handleChange1} className="dateDesign"style={{cursor:"pointer"}}  disabled={skuDataById.status===0?true:false}
+                                                    <input type="date" onChange={handleChange1} className="dateDesign"style={{cursor:"pointer"}}  disabled={skuDataById.status===0?false:true}
                                                     value={skuDataById.sale_expiry_date}  min={minDateFormate +"-"+minMonthFormate+"-"+new Date().getFullYear()} value={skuDataById.sale_expiry_date}/>
                                                    
                                                     <div class="d-flex align-items-center flex-wrap ml-2">
@@ -505,7 +510,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                         <div class="switcher switcher-sm ml-2 pr-2">
                                                             <input type="checkbox" name="status" id="status" value="2"
                                                             onChange={handleInput} value={skuDataById.status}  
-                                                             checked={skuDataById.status===0?false:true}
+                                                             checked={skuDataById.status===0?true:false}
                                                               />
                                                             <label for="status" style={{cursor:"pointer"}}></label>
                                                         </div>

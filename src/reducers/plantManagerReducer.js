@@ -50,6 +50,10 @@ import {
 
 } from '../actions/types';
 // import {getAllImageAssets} from "../";
+let minMonth = new Date().getMonth()
+let minDate = new Date().getDate()
+let minDateFormate = minDate.toString().length===1?"0"+minDate:minDate
+let minMonthFormate = minMonth.toString().length===1?"0"+(minMonth+1):(minMonth+1)
 
 const initialSatate = {
     backupData:[],
@@ -87,7 +91,7 @@ const initialSatate = {
     each_cost: "0.00",
     each_price: "0.00",
     sale_price: "0.00",
-    sale_expiry_date: null,
+    sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
     volume_quantity: "0",
     volume_price_per_unit: "0.00",
     sku_item_name: null,
@@ -104,7 +108,7 @@ const initialSatate = {
   status:false,
   ae_plant_id:"",
   plantSkuDataList:[],
-  plantNameWithFormat:{},
+  plantNameWithFormat:{firstName:"",secondName:""},
   dynamicName:"",
   displayCancel:false
 
@@ -118,14 +122,45 @@ const nameFormaterFunction = (plantData) =>{
             nameWithFormat.secondName = ' '+commonNmae.length>0?`-${commonNmae}`:""
         }
         else     
-        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+commonNmae.length>0?`-${commonNmae}`:""
+        nameWithFormat.secondName = ' '+ ` '${plantData.cultivar1?plantData.cultivar1:""}'`+`${commonNmae.length>0?`-${commonNmae}`:""}`
     }
     else {
         nameWithFormat.firstName=plantData.genus+' '+plantData.species
-        nameWithFormat.secondName = plantData.cultivar2+' '+ `(${plantData.cultivar1?plantData.cultivar1:""})`+commonNmae.length>0?`-${commonNmae}`:""
-    }
-    
+        nameWithFormat.secondName = plantData.cultivar2+' '+ `('`+ `${plantData.cultivar1?plantData.cultivar1:""}`+`')`+`${commonNmae.length>0?`-${commonNmae}`:""}`
+    }    
     return nameWithFormat
+}
+const nameFormaterFunctionForHandler = (currentAction,plantData)=>{  
+    let copiedPlantData = plantData 
+    copiedPlantData={...copiedPlantData, [currentAction.itemId]:currentAction.itemValue}
+    let nameWithFormat={}
+    let commonNmae =""
+    if(copiedPlantData.common_name){
+        if(typeof(copiedPlantData.common_name) === "string")
+    commonNmae = JSON.parse(copiedPlantData.common_name).join()
+    else
+    commonNmae = copiedPlantData.common_name.join()    
+    }
+    nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
+    if(!copiedPlantData.cultivar2 || copiedPlantData.cultivar2.length === 0){
+        if(!copiedPlantData.cultivar1 || copiedPlantData.cultivar1.length === 0){            
+            nameWithFormat.secondName = ' '+commonNmae.length>0?`- ${commonNmae}`:""
+        }
+        else{
+            nameWithFormat.secondName ="'"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:""}`+"'"+` ${commonNmae.length>0?`- ${commonNmae}`:""}`
+           
+        }        
+    }
+    else {
+        nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
+        if(copiedPlantData.cultivar1.length)
+        nameWithFormat.secondName = copiedPlantData.cultivar2+" "+"('"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:"" }`+"')"+` ${commonNmae.length>0?`-${commonNmae}`:''}`        
+        else {
+            nameWithFormat.secondName = copiedPlantData.cultivar2+" "+`${commonNmae.length>0?`- ${commonNmae}`:''}`
+        }
+    }   
+    return nameWithFormat
+   
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
@@ -194,7 +229,7 @@ export default function(state = initialSatate, action){
                 each_cost: "0.00",
                 each_price: "0.00",
                 sale_price: "0.00",
-                sale_expiry_date: null,
+                sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                 volume_quantity: "0",
                 volume_price_per_unit: "0.00",
                 sku_item_name: null,
@@ -213,7 +248,8 @@ export default function(state = initialSatate, action){
                 plantSkuDataList:[],
                 ae_plant_id:"",
                 dynamicName:"",
-                displayCancel:false
+                displayCancel:false,
+                plantNameWithFormat:{firstName:"",secondName:""}
 
 
             }
@@ -281,10 +317,13 @@ export default function(state = initialSatate, action){
                 }
             }
         case HANDLE_PLANT_INPUT_DATA:{
+            let nameWithFormat = {}    
+                nameWithFormat = nameFormaterFunctionForHandler(action,state.plantDataById) 
             return{
                 ...state,
                 plantDataById:{...state.plantDataById, [action.itemId]:action.itemValue},
-                needAction:true
+                needAction:true,
+                plantNameWithFormat:nameWithFormat,
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
@@ -422,7 +461,7 @@ export default function(state = initialSatate, action){
                     each_cost: "0.00",
                     each_price: "0.00",
                     sale_price: "0.00",
-                    sale_expiry_date: null,
+                    sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                     volume_quantity: "0",
                     volume_price_per_unit: "0.00",
                     sku_item_name: null,
@@ -438,7 +477,8 @@ export default function(state = initialSatate, action){
                   ae_plant_id:"",
                 plantSkuDataList:[],
                 dynamicName:"",
-                displayCancel:false
+                displayCancel:false,
+                plantNameWithFormat:{firstName:"",secondName:""}
 
             }
         case DUPLICTE_PLANT:
@@ -471,7 +511,7 @@ export default function(state = initialSatate, action){
                     each_cost: "0.00",
                     each_price: "0.00",
                     sale_price: "0.00",
-                    sale_expiry_date: null,
+                    sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                     volume_quantity: "0",
                     volume_price_per_unit: "0.00",
                     sku_item_name: null,
@@ -486,7 +526,8 @@ export default function(state = initialSatate, action){
                   status:false,
                   ae_plant_id:"",                
                 plantSkuDataList:[],
-                dynamicName:""
+                dynamicName:"",
+                plantNameWithFormat:{firstName:"",secondName:""}
             }
         case DELETE_PLANT_SKU_ACTION:
             return{
@@ -590,7 +631,7 @@ export default function(state = initialSatate, action){
                         each_cost: "0.00",
                         each_price: "0.00",
                         sale_price: "0.00",
-                        sale_expiry_date: "",
+                        sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
                         volume_quantity: "0",
                         volume_price_per_unit: "0.00",
                         sku_item_name: "",
@@ -613,8 +654,8 @@ export default function(state = initialSatate, action){
                     action:action,
                     actionType:action.actionType,
                     displayCancel:true,
-                    plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes}
-
+                    plantSkuDataById:{...action.plantSkuDataById.plant[0],attributes_subattributes:action.plantSkuDataById.attributes_subattributes},
+                    dynamicName:action.plantSkuDataById.plant[0].sku_code
                 }
             case DYNAMIC_DISPLAY_PLANT_SKU:
                 return{
