@@ -236,8 +236,7 @@ onMoveData = (evt,ui)=>{
 
 
             if(this.validate()){
-                this.props.saveCustomerType(obj).
-                result.then(res=>{
+                this.props.saveCustomerType(obj).then(res=>{
                     this.props.getAllCustomerType().then(data=>{
                         this.getCatgoryData()
                         this.setState({

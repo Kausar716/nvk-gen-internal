@@ -182,13 +182,13 @@ const dataTochange = (e)=>{
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate"){
     if(Number.isInteger(parseFloat(e.target.value))){
-      let intValue = e.target.value*1.000
-      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+      let intValue = e.target.value*1.00
+      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerExchange")
     }else{
       let splitValue = e.target.value.split(".")
      if(splitValue[1].length<3){
-      let intValue = e.target.value*1.000
-      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
+      let intValue = e.target.value*1.00
+      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerExchange")
 
      }else{
       props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
@@ -201,13 +201,13 @@ const dataTochange1 =(e)=>{
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate1"){
     if(Number.isInteger(parseFloat(e.target.value))){
-      let intValue = e.target.value*1.000
-      props.handleSupplierExchnageData(intValue.toFixed(3),"exchange_rate","supplierExchange")
+      let intValue = e.target.value*1.00
+      props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
     }else{
       let splitValue = e.target.value.split(".")
      if(splitValue[1].length<3){
-      let intValue = e.target.value*1.000
-      props.handleSupplierExchnageData(intValue.toFixed(3),"exchange_rate","supplierExchange")
+      let intValue = e.target.value*1.00
+      props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
 
      }else{
       props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")

@@ -331,15 +331,7 @@ componentDidMount(){
                     this.getCatgoryData()
                 })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Section Name',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+   
             this.setState({
                 name: "",
                 subName:"",
