@@ -798,7 +798,7 @@ saveDisable =()=>{
     {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phone ===true ? 
     <Prompt
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
-       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
+       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'You have unsaved changes. Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
     /> : false}

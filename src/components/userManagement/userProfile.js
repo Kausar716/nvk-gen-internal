@@ -595,7 +595,7 @@ export class UserProfile extends Component {
          {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
          <Prompt
         when={this.state.disabled===false ? this.state.firstName && this.state.lastName && this.state.phone && this.state.email :" " }
-        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.phone || this.state.email  ? "Are you sure you want to save and leave?" : "Are you sure you want to leave ?" } 
+        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.phone || this.state.email  ? "You have unsaved changes. Are you sure you want to save and leave? ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
