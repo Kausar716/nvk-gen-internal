@@ -112,17 +112,17 @@ setOpen(true)
     // let intValue = e.target.value
     if(e.target.value!==""){
       if(Number.isInteger(parseFloat(e.target.value))) {
-        let intValue = e.target.value*1.000
+        let intValue = e.target.value*1.00
         // alert(e.target.value)
-      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerTag")
+      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerTag")
       }
     
       else{
         // alert()
         let splitValue = e.target.value.split(".")
        if(splitValue[1].length<3){
-        let intValue = e.target.value*1.0000
-        props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerTag")
+        let intValue = e.target.value*1.00
+        props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerTag")
        }else{
         props.handleExchangeData(e.target.value,e.target.id,"customerTag")
 
