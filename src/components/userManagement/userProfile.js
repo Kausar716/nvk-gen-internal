@@ -12,7 +12,7 @@ import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
 import * as BsIcons from "react-icons/io";
-import { Prompt , BrowserRouter} from 'react-router';
+import { Prompt , BrowserRouter, withRouter} from 'react-router';
 import './style.css';
 
 
@@ -24,7 +24,7 @@ export class UserProfile extends Component {
     constructor(){
         super()
         this.state={
-            disabled:false,
+            disabled:true,
             disableButton:true,
             firstName:"",
             phoneNumberInOrganization:" ",
@@ -103,16 +103,51 @@ export class UserProfile extends Component {
                deleted_at:selectedUser.deleted_at
             })
 
+ 
+            // this.props.router.setRouteLeaveHook(this.props.route,this.routerWillLeave, () => {
+            //     if (this.state.unsaved)
+            //       return 'You have unsaved information, are you sure you want to leave this page?'
+            //   })
 
-            if (this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
+
+            if ( this.state.disableButton===true ? this.state.firstName && selectedUser.lastName && selectedUser.position && selectedUser.name && selectedUser.email:" "   )  {
+                //debugger;
+               
                 window.onbeforeunload = () => true
                 this.handleSubmit();
-              } else {
+            
+            } else {
                 window.onbeforeunload = undefined
-               
-              }
+            
+            }
+
+
+            // this.props.router.setRouteLeaveHook(this.props.route, () => {
+            //     if (this.state.hadModified.firstName===true ||this.state.hadModified.lastName===true || this.state.hadModified.email===true || this.state.hadModified.phone===true   )
+            //       return 'You have unsaved information, are you sure you want to leave this page?'
+            //   })
+            
+        
 
     }
+
+
+    
+
+    // componentDidUpdate=()=>{
+      
+    //     if (this.state.hadModified && this.state.hadModified.firstName===true ||this.state.hadModified.lastName===true || this.state.hadModified.email===true || this.state.hadModified.phone===true   )  {
+    //         //debugger;
+           
+    //        // window.onbeforeunload = () => true
+    //         this.handleSubmit();
+        
+    //     } else {
+    //        // window.onbeforeunload = undefined
+        
+    //     }
+
+    // }
 
 
     handleAllChecked = event => {
@@ -585,6 +620,8 @@ export class UserProfile extends Component {
      const checkedCount = Object.keys(checked).filter(key => checked[key]).length;
      const disabled = checkedCount > 1;
 
+     let selectedUser = this.props.selectedUser 
+
      
     return (
         <>
@@ -592,8 +629,12 @@ export class UserProfile extends Component {
 
          {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
          <Prompt
-        when={this.state.disabled===false ? this.state.firstName && this.state.lastName && this.state.phone && this.state.email :" " }
-        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.phone || this.state.email  ? "You have unsaved changes. Are you sure you want to save and leave? ?" : "Are you sure you want to leave ?" } 
+         //when={shouldBlockNavigation}
+         //key='block-nav'
+        //when={this.state.shouldBlockNavigation}
+       // when={this.saveChanges()}
+        when={this.state.disableButton===true ? this.state.firstName && selectedUser.lastName && selectedUser.position && selectedUser.name && selectedUser.email:" " }
+        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to save and leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
@@ -988,4 +1029,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{updateUser,removeImage,getRolesList,showUser,uploadImage,deleteUser})(UserProfile)
+export default withRouter(connect(mapStateToProps,{updateUser,removeImage,getRolesList,showUser,uploadImage,deleteUser})(UserProfile));

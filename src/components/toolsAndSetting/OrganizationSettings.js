@@ -51,7 +51,8 @@ export class OrganizationSettings extends React.Component {
             disabled:true,
             disabledCancel:true,
             showPropmt:false,
-            disableImageRemove:true,
+            disableImageRemove:false,
+            disableImageUpload:true,
             isOpen1:false,
             message:[],
             actionId:0,
@@ -126,7 +127,8 @@ export class OrganizationSettings extends React.Component {
 
 
         this.setState({
-            disableImageRemove: false
+            disableImageRemove: false,
+            disableImageUpload: true
         })
         
          
@@ -520,6 +522,11 @@ saveDisable =()=>{
         alert("Image Removed Successfully")
         this.setState({
             imgLoader: true
+        })
+
+
+        this.setState({
+            disableImageUpload: false
         })
      }
 
@@ -989,17 +996,19 @@ saveDisable =()=>{
 
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
+                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none"}} disabled={this.state.disableImageUpload}>
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg"
-                                              onChange={this.handlImageUpload} 
+                                              onChange={this.handlImageUpload}  disabled={this.state.disableImageUpload}
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
 
+
                                                 <span class="f-s-20" style={{position:"absolute",fontWeight:"bold"}} >Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt=""   />
-                                            
+                                            </button>
                                         </a>
 
 
