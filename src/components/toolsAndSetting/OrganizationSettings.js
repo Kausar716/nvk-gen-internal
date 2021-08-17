@@ -43,7 +43,7 @@ const normalizeInput = (value, previousValue) => {
   
 
 
-export class OrganizationSettings extends React.Component {  
+class OrganizationSettings extends React.Component {  
    
     constructor(){
         super()

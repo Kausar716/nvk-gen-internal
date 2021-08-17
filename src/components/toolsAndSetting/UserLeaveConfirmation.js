@@ -1,7 +1,9 @@
-import ReactDOM from "react-dom";
-import React from "react";
+import React  from 'react';
+import ReactDOM from 'react-dom';
 
-import { Confirm, TransitionablePortal } from "semantic-ui-react";
+
+
+import { Confirm, TransitionablePortal } from 'semantic-ui-react';
 
 const UserLeaveConfirmation = (
   message,
@@ -26,19 +28,19 @@ const UserLeaveConfirmation = (
   };
 
   document.body.appendChild(container);
-  const { header, content } = JSON.parse(message);
+  //const { header, content } = JSON.parse(message);
   ReactDOM.render(
-    <TransitionablePortal open={confirmOpen} onClose={handleCancel}>
+
+    // <TransitionablePortal open={confirmOpen} onClose={handleCancel}>
       <Confirm
         open={confirmOpen}
-        header={"header"}
+        header="this is header"
         onCancel={handleCancel}
-        content={content}
+        //content={content}
         centered={false}
         onConfirm={handleConfirm}
-      />
-    </TransitionablePortal>,
-
+      />,
+    // </TransitionablePortal>,
     container
   );
 };

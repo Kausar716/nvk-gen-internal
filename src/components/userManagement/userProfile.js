@@ -1,29 +1,40 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
-import React, {Component} from 'react'
+import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css';
+//import { confirmAlert } from 'react-confirm-alert'; // Import
+//import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
-import {getRolesList} from "../../actions/userAccessAction";
+//import getRolesList from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
-import * as BsIcons from "react-icons/io";
-import { Prompt , BrowserRouter, withRouter} from 'react-router';
+//import * as BsIcons from "react-icons/io";
+import { Prompt , BrowserRouter, withRouter, Lifecycle} from 'react-router';
 import './style.css';
 
 
+// export const Component = withRouter(({ history, location }) =>{
 
-  
+// })
 
+//@reactMixin.decorate(Lifecycle)
+class UserProfile extends React.Component { 
+    
+    // static contextTypes = {
+    //     router: React.PropTypes.object.isRequired
+    //   }
 
-export class UserProfile extends Component {  
     constructor(){
-        super()
+        super();
+      
         this.state={
+            unsaved: true,
+        
+            shouldBlockNavigation:true,
+        
             disabled:true,
             disableButton:true,
             firstName:"",
@@ -86,9 +97,16 @@ export class UserProfile extends Component {
                 { id: 4, value: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
               ]
         }
+
+        // this.props.router.setRouteLeaveHook(
+        //     this.props.route,
+        //     this.routerLeaveInformation
+        //   )
+
+       
     }
     componentDidMount(){
-        //debugger;
+
            let selectedUser = this.props.selectedUser 
           console.log(selectedUser)
            this.setState({
@@ -101,53 +119,33 @@ export class UserProfile extends Component {
                id:selectedUser.id,
                logo:selectedUser.avatar?selectedUser.avatar:"",
                deleted_at:selectedUser.deleted_at
-            })
-
- 
-            // this.props.router.setRouteLeaveHook(this.props.route,this.routerWillLeave, () => {
-            //     if (this.state.unsaved)
-            //       return 'You have unsaved information, are you sure you want to leave this page?'
-            //   })
-
-
-            if ( this.state.disableButton===true ? this.state.firstName && selectedUser.lastName && selectedUser.position && selectedUser.name && selectedUser.email:" "   )  {
-                //debugger;
-               
-                window.onbeforeunload = () => true
-                this.handleSubmit();
-            
-            } else {
-                window.onbeforeunload = undefined
-            
-            }
+            });
 
 
             // this.props.router.setRouteLeaveHook(this.props.route, () => {
-            //     if (this.state.hadModified.firstName===true ||this.state.hadModified.lastName===true || this.state.hadModified.email===true || this.state.hadModified.phone===true   )
-            //       return 'You have unsaved information, are you sure you want to leave this page?'
+            //     if (this.state.unsaved) {
+            //       return false;
+            //         // At here you can give a confirm dialog, return true when confirm true
+            //      }else {
+            //         return true;
+            //      }
             //   })
-            
-        
-
+           
     }
 
 
     
 
-    // componentDidUpdate=()=>{
+    componentWillUnmount=()=>{
       
-    //     if (this.state.hadModified && this.state.hadModified.firstName===true ||this.state.hadModified.lastName===true || this.state.hadModified.email===true || this.state.hadModified.phone===true   )  {
-    //         //debugger;
-           
-    //        // window.onbeforeunload = () => true
-    //         this.handleSubmit();
-        
-    //     } else {
-    //        // window.onbeforeunload = undefined
-        
-    //     }
+        if (this.state.hadModified && this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
+            window.onbeforeunload = () => true
+            this.handleSubmit();
+          } else {
+            window.onbeforeunload = undefined
+          }
 
-    // }
+    }
 
 
     handleAllChecked = event => {
@@ -212,8 +210,11 @@ export class UserProfile extends Component {
 
 
         this.setState({
-            disableButton:false
+            disableButton:false,
+            shouldBlockNavigation:false
         })
+
+        
     }
 
     validate = () =>{
@@ -224,7 +225,9 @@ export class UserProfile extends Component {
         let nameReg = /^[a-zA-Z]+$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
-        let enteredNumber = this.state.phone.trim().match(/\d/g)
+        let enteredNumber2 = JSON.stringify(this.state.phone)
+        //let enteredNumber = enteredNumber2
+        let enteredNumber = enteredNumber2.trim().match(/\d/g)
        // let errorObj = this.state.errorObj
         if(this.state.firstName.length === 0){
             errorObj.firstNameError=1
@@ -316,16 +319,35 @@ export class UserProfile extends Component {
         
     }
 
+      stringHasTheWhiteSpaceOrNot=(value)=>{
+        return value.indexOf(' ') >= 0;
+     }
 
     handleSubmit = (e) => {
 
+       // debugger;
         this.setState({
             disableButton:true
         })
         let finalNumber = this.state.phone
-        finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
-        let removedNumber = finalNumber.split(" ").join("");
-        removedNumber = parseInt(removedNumber)
+
+        let whiteSpace = this.stringHasTheWhiteSpaceOrNot(JSON.stringify(finalNumber));
+
+        if(whiteSpace===true){
+            finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+            var removedNumber = finalNumber.split(" ").join("");
+            removedNumber = parseInt(removedNumber)
+        }
+
+        else{
+            removedNumber = finalNumber;
+            //var removedNumber = finalNumber.split(" ").join("");
+            //removedNumber = parseInt(removedNumber)
+        }
+
+        // finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+        // let removedNumber = finalNumber.split(" ").join("");
+        // removedNumber = parseInt(removedNumber)
 
         //debugger;
         let count= this.validate()
@@ -349,7 +371,7 @@ export class UserProfile extends Component {
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
-                  alert("updated")
+                 // alert("updated")
                   //this.props.cancle() 
                     console.log(this.props.users)
                     if(this.props.users.payload.status === "Success"){
@@ -621,24 +643,29 @@ export class UserProfile extends Component {
      const disabled = checkedCount > 1;
 
      let selectedUser = this.props.selectedUser 
-
+     
      
     return (
         <>
 
-
+        
          {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
          <Prompt
          //when={shouldBlockNavigation}
          //key='block-nav'
         //when={this.state.shouldBlockNavigation}
        // when={this.saveChanges()}
-        when={this.state.disableButton===true ? this.state.firstName && selectedUser.lastName && selectedUser.position && selectedUser.name && selectedUser.email:" " }
+        when={this.state.disableButton===true ? this.state.firstName:" " }
         message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to save and leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
     />: false}
+
+            {/* <Prompt
+                when={this.state.hadModified}
+                message='You have unsaved changes, are you sure you want to leave?'
+                /> */}
          <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
    
                     <Tabs>
@@ -1029,4 +1056,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default withRouter(connect(mapStateToProps,{updateUser,removeImage,getRolesList,showUser,uploadImage,deleteUser})(UserProfile));
+export default withRouter(connect(mapStateToProps,{updateUser,removeImage,
+    showUser,uploadImage,deleteUser}) (UserProfile));
