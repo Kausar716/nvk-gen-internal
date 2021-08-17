@@ -25,7 +25,7 @@ export class UserProfile extends Component {
         super()
         this.state={
             disabled:false,
-            disableButton:false,
+            disableButton:true,
             firstName:"",
             phoneNumberInOrganization:" ",
             lastName:"",
@@ -653,7 +653,8 @@ export class UserProfile extends Component {
                                                                         <a  class="btn ml-2 mt-3 mt-md-0" >
 
                                                                         <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
-                                                                        disabled={this.state.disableButton}
+                                                                        disabled={this.state.disableButton} 
+                                                                        className={this.state.disableButton===true ? "hoverOFF" : ""} 
                                                                         onClick={this.handleSubmit}>
                                                                         <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
                                                                                             <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
