@@ -48,7 +48,8 @@ export class OrganizationSettings extends React.Component {
     constructor(){
         super()
         this.state={
-            disabled:false,
+            disabled:true,
+            disabledCancel:true,
             showPropmt:false,
             disableImageRemove:true,
             isOpen1:false,
@@ -247,7 +248,8 @@ export class OrganizationSettings extends React.Component {
 
 
         this.setState({
-            disabled:false
+            disabled:false,
+            disabledCancel:false
         })
 
     }
@@ -383,7 +385,8 @@ saveDisable =()=>{
         //   }
 
         this.setState({
-            disabled:true
+            disabled:true,
+            disabledCancel:true
         })
 
         let phoneNUMBER = this.state.phoneNumberInOrganization === " " ? this.props.organizationData.organizationData.phone : this.state.phoneNumberInOrganization;
@@ -469,6 +472,16 @@ saveDisable =()=>{
                 disabled:true,
             })
            }
+
+           if (!this.state.disabledCancel) {
+            this.setState({
+                disabledCancel:true,
+            })
+           }
+
+
+
+           
 
            this.setState({
                hadModified:{
@@ -864,16 +877,33 @@ saveDisable =()=>{
                                     
                                     </a>
                                     </div>
+
+
+                                    <div className="hoverINOrg">
+                                    <a  class="btn ml-2 mt-3 mt-md-0" >
+
+                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                    disabled={this.state.disabledCancel}
+                                    onClick={this.goDashboard}>
+                                        <span class="d-flex align-items-center text-left" style={{marginLeft:"-16px"}}>
+                                            <span class="ml-2" style={{fontSize:"16px"}}>Cancel</span>
+                                        </span>
+                                    </button>
+                                    
+                                    </a>
+                                    </div>
                                    
 
 
 
-                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        {/* <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        
+                                         disabled={this.state.disabled}
                                          onClick={this.goDashboard}>
                                             <span class="d-flex align-items-center text-left">
                                                 <span class="ml-2" style={{marginTop:"2px"}}><b style={{marginLeft:"-4px",marginRight:"4px"}}>Cancel</b></span>
                                             </span>
-                                        </a>
+                                        </a> */}
                                         
                                         {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
