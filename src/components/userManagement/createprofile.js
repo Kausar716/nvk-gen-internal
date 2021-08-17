@@ -282,6 +282,13 @@ export class CreateUserProfile extends Component {
        }
 
 
+       let finalNumber= this.state.phone;
+     finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+    let removedNumber = finalNumber.split(" ").join("");
+    removedNumber = parseInt(removedNumber)
+        console.log("removedNumber",removedNumber)
+
+
        let activeRecords = this.props.userListBackup.payload.active;
             // let existingEmail   = activeRecords.map(em=>e.email === this.state.email ? alert("email already exist") : "" )
             // if( activeRecords.map(em=>em.email === this.state.email)){
@@ -295,6 +302,8 @@ export class CreateUserProfile extends Component {
        console.log(count)
         if(count === 0){
 
+            debugger;
+
             console.log(this.state)
             let userStateObject = this.state
             let userObject={}  
@@ -302,7 +311,7 @@ export class CreateUserProfile extends Component {
             userObject['last_name'] = userStateObject.lastName
            // userObject['role'] = userStateObject.position
             userObject['email'] = userStateObject.email
-            userObject['phone'] = parseInt(userStateObject.phone)
+            userObject['phone'] = removedNumber
             userObject['role'] = userStateObject.position
             // userObject['password']
             // userObject['status'] = 

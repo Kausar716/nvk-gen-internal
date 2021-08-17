@@ -3,6 +3,8 @@
 import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import { confirmAlert } from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
@@ -10,6 +12,7 @@ import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
 import * as BsIcons from "react-icons/io";
+import { Prompt , BrowserRouter} from 'react-router';
 import './style.css';
 
 
@@ -21,6 +24,8 @@ export class UserProfile extends Component {
     constructor(){
         super()
         this.state={
+            disabled:false,
+            disableButton:false,
             firstName:"",
             phoneNumberInOrganization:" ",
             lastName:"",
@@ -48,6 +53,15 @@ export class UserProfile extends Component {
                 email:false,
                 position:false
             },
+
+            hadModified:{
+                firstName:false,
+                lastName:false,
+                phone:false,
+                email:false,
+                position:false
+            },
+
             errorCount:0,
             display:false,
             deleteProfile:false,
@@ -74,6 +88,7 @@ export class UserProfile extends Component {
         }
     }
     componentDidMount(){
+        //debugger;
            let selectedUser = this.props.selectedUser 
           console.log(selectedUser)
            this.setState({
@@ -87,6 +102,15 @@ export class UserProfile extends Component {
                logo:selectedUser.avatar?selectedUser.avatar:"",
                deleted_at:selectedUser.deleted_at
             })
+
+
+            if (this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
+                window.onbeforeunload = () => true
+                this.handleSubmit();
+              } else {
+                window.onbeforeunload = undefined
+               
+              }
 
     }
 
@@ -110,75 +134,119 @@ export class UserProfile extends Component {
 
     handleInput = (e) => {
         const {target:{name,value}} =e
-        let {errorObj,errorCount} = this.state
+        let {errorObj,errorCount,hadModified} = this.state
         console.log(name)
         console.log(value)
         this.setState({[name]:value})
         if(name === "firstName" ){
+            hadModified.firstName=true
             if(errorObj.firstNameError>0){
                 errorObj.firstNameError=0
                 errorCount--
             }           
         }
         else if(name === "lastName" ){
+            hadModified.lastName=true
             if(errorObj.lastNameError>0){
                 errorObj.lastNameError=0
                 errorCount--
             }            
         }
-        // else if(name === "phone" ){
-        //     if(errorObj.phoneError>0){
-        //         errorObj.phoneError=0
-        //         errorCount--
-        //     }            
-        // }
+        else if(name === "phone" ){
+            hadModified.phone=true
+            // if(errorObj.phoneError>0){
+            //     errorObj.phoneError=0
+            //     errorCount--
+            // }            
+        }
         else if(name === "email" ){
+            hadModified.email=true
             if(errorObj.emailError>0){
                 errorObj.emailError=0
                 errorCount-- 
             }            
         }
         else if(name === "postiton"){
+            hadModified.position=true
             if(errorObj.positionError>0){
                 errorObj.positionError=0
                 errorCount--
             }   
         }  
-        this.setState({errorObj,errorCount})
+        this.setState({errorObj,errorCount, hadModified})
+
+
+        this.setState({
+            disableButton:false
+        })
     }
 
     validate = () =>{
+        debugger;
+
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
         let nameReg = /^[a-zA-Z]+$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
+        let enteredNumber = this.state.phone.trim().match(/\d/g)
+       // let errorObj = this.state.errorObj
         if(this.state.firstName.length === 0){
-           errorObj.firstNameError=1
-           errorCount++
-        }
-        if(!nameReg.test(this.state.firstName)){
             errorObj.firstNameError=1
-           errorCount++
+            this.setState({errorObj})
+            errorCount++
+            //return false
         }
-        else{
-            errorObj.firstNameError=0
-        }
-         if(this.state.lastName.length === 0){
+       
+       
+        // if(this.state.firstName.length === 0){
+        //    errorObj.firstNameError=1
+        //    errorCount++
+        // }
+        // if(!nameReg.test(this.state.firstName)){
+        //     errorObj.firstNameError=1
+        //    errorCount++
+        // }
+        // else{
+        //     errorObj.firstNameError=0
+        // }
+        else if(this.state.lastName.length === 0){
+            // errorObj.lastNameError=1
+           
             errorObj.lastNameError=1
+            this.setState({errorObj})
             errorCount++
         }
-        else{
-            errorObj.lastNameError=0
-        }
+        // else{
+        //     errorObj.lastNameError=0
+        // }
         // if(!phoneReg.test(this.state.phone)){
         //     errorObj.phoneError=1
         //     errorCount++
         // }
 
-        let enteredNumber = this.state.phone.trim().match(/\d/g)
-        if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+         if(this.state.position.length ===1 || this.state.position.length === 8){
+            //debugger
+            errorObj.positionError=1
+            this.setState({errorObj})
+            errorCount++
+            //return false
+        }
+
+        else{
+            errorObj.positionError=0;  
+            this.setState({errorObj})
+            errorCount--
+        }
+
+         if(! emailReg.test(this.state.email)){
+            errorObj.emailError=1
+            errorCount++
+        }
+
+           
+       else if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
             document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
             errorCount++;
@@ -192,22 +260,41 @@ export class UserProfile extends Component {
         //     errorObj.phoneError=1
         //     errorCount++
         // }
-        if(this.state.position.length === 0){
-            console.log(this.state.position)
-            errorObj.positionError=1
-            errorCount++
-        }
-         if(! emailReg.test(this.state.email)){
-            errorObj.emailError=1
-            errorCount++
-        }
+        // if(this.state.position.length === 0){
+        //     console.log(this.state.position)
+        //     errorObj.positionError=1
+        //     errorCount++
+        // }
+
+
+      
+
+
+    
+
+
+
+
         this.setState({errorObj,errorCount})
         return errorCount
+
+
+        
     }
 
 
     handleSubmit = (e) => {
-   
+
+        this.setState({
+            disableButton:true
+        })
+        let finalNumber = this.state.phone
+
+        finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+        let removedNumber = finalNumber.split(" ").join("");
+        removedNumber = parseInt(removedNumber)
+
+        //debugger;
         let count= this.validate()
         console.log(count)
          if(count === 0){
@@ -217,8 +304,8 @@ export class UserProfile extends Component {
                 console.log(this.state)
                 let userStateObject = this.state
                 let userObject={}
-                userObject.id= this.props.selectedUser.id
-                userObject['phone'] = userStateObject.phone
+                userObject.id= this.props.selectedUser.id;
+                userObject['phone'] = removedNumber;
                 console.log(this.props.selectedUser)
                 if(this.props.selectedUser.name !== userStateObject.firstName)userObject['name'] = userStateObject.firstName
                 if(this.props.selectedUser.last_name !== userStateObject.lastName)userObject['last_name'] = userStateObject.lastName
@@ -242,7 +329,23 @@ export class UserProfile extends Component {
             }
          }
       
+         if (!this.state.disableButton) {
+            this.setState({
+                disableButton:true,
+            })
+           }
  
+
+           this.setState({
+            hadModified:{
+             firstName:false,
+             lastName:false,
+             phone:false,
+             position:false,
+             email:false,
+            
+            }
+        })
  
      }
 
@@ -372,6 +475,8 @@ export class UserProfile extends Component {
         this.setState({open:false})
     }
     render() {
+        console.log("roles123", this.props.roles)
+        console.log("usersUSER", this.props.users.payload.active)
         const { actionType } = this.state;
         let roles=[]
         console.log(this.props.roles)
@@ -485,6 +590,16 @@ export class UserProfile extends Component {
      
     return (
         <>
+
+
+         {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
+         <Prompt
+        when={this.state.disabled===false ? this.state.firstName && this.state.lastName && this.state.phone && this.state.email :" " }
+        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.phone || this.state.email  ? "You have unsaved changes. Are you sure you want to save and leave? ?" : "Are you sure you want to leave ?" } 
+      // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
+       //onCancel="ignore &amp; Proced"
+       //cancelText ="1123"
+    />: false}
          <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
    
                     <Tabs>
@@ -528,22 +643,50 @@ export class UserProfile extends Component {
                                                     {/* <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right"> */}
                                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 
-                                                            <a class="btn ml-2"onClick={ this.handleSubmit}>
+                                                            {/* <a class="btn ml-2" onClick={this.handleSubmit}>
                                                                     <span class="d-flex align-items-center text-left">
                                                                         <img src="assets/img/save-ic.svg" alt=""/>
                                                                         <span class="ml-2"><b>Save  </b></span>
                                                                     </span>
-                                                                </a>
+                                                                </a> */}
 
-                                                                <a  class="btn ml-2 mt-3 mt-md-0" 
+
+                                                                <div className="hoverINOrg">
+                                                                        <a  class="btn ml-2 mt-3 mt-md-0" >
+
+                                                                        <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                                                        disabled={this.state.disableButton}
+                                                                        onClick={this.handleSubmit}>
+                                                                        <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
+                                                                                            <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
+                                                                        </button>
+                                                                        
+                                                                        </a>
+                                                                </div>
+
+
+                                                                <div className="hoverINOrg">
+                                                                        <a  class="btn ml-2 mt-3 mt-md-0" >
+
+                                                                        <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                                                        disabled={this.state.disableButton}
+                                                                        onClick={()=>{confirmAction("save")}}>
+                                                                        <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
+                                                                                            <span class="ml-2" style={{fontSize:"16px", }}>Save &amp; Done</span>
+                                                                        </button>
+                                                                        
+                                                                        </a>
+                                                                </div>
+
+                                                                {/* <a  class="btn ml-2 mt-3 mt-md-0" 
                                                                 onClick={()=>{confirmAction("save"); }}
-                                                                //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
+                                                                    //  onClick={()=>checkedData==true?saveCustomerData1("done"):""}
                                                                 >
                                                                     <span class="d-flex align-items-center text-left">
                                                                         <img src="assets/img/saveDone-ic.svg" alt=""/>
                                                                         <span class="ml-2"><b>Save &amp; Done</b></span>
                                                                     </span>
-                                                                </a>
+                                                                </a> */}
 
                                                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                                                     <img src="assets/img/close-ic.svg" alt="" onClick={this.props.cancle}/>
@@ -639,6 +782,7 @@ export class UserProfile extends Component {
                                                     <label>First Name<span class="text-danger">*</span></label>
                                                     <input type="text" placeholder="First Name" class="form-control" name="firstName" value={this.state.firstName} onChange={this.handleInput} />
                                                     {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid First Name</span>:""}
+                                                    {/* {this.state.errorObj.firstNameError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid First Name</span>:""} */}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Last Name<span class="text-danger">*</span></label>
@@ -650,12 +794,20 @@ export class UserProfile extends Component {
                                                 <div class="col-md-6">
                                                     <label>Position<span class="text-danger">*</span></label>
                                                    
-                                                    <select class="form-control" name="position"  onChange={this.handleInput} value={this.state.position}  >
-                                                    <option>Select...</option>
-                                                    {roles?roles.map(userObj=>{
+                                                    <select class="form-control" name="position" id="position" onChange={this.handleInput} 
+                                                                value={this.state.position} 
+                                                     >
+                                                    <option>Select..</option>
+                                                    {roles ? roles.map((userObj,i)=>{
                                                             //console.log(userObj)
-                                                            return  <option value={userObj.id}>{userObj.name}</option>
-                                                        }):null}   
+                                                            return  <option value={userObj.id} id={this.props.roles[i]} >{userObj.name}</option>
+                                                        }) : null} 
+
+
+                                                            {/* <option>{supplierData.supplierLocation.country}</option>
+                                                                {allCountry.map((country, i)=>{
+                                                                    return <option id={allCountry[i]}>{allCountry[i]}</option>
+                                                                })} */}
                                                     </select>
                                                     {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>

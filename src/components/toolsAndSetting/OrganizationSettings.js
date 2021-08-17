@@ -10,6 +10,7 @@ import Loader from '../Modal/LoaderModal';
 import InputMask from 'react-input-mask';
 import { Prompt , BrowserRouter} from 'react-router';
 import Immutable from 'immutable';
+import { Button, Confirm } from 'semantic-ui-react'
 import './style.css';
 
 
@@ -249,9 +250,6 @@ export class OrganizationSettings extends React.Component {
             disabled:false
         })
 
-       
-
-        
     }
 
 
@@ -404,6 +402,8 @@ saveDisable =()=>{
        }
     })   
 
+    //debugger;
+
     let finalNumber= phoneNUMBER;
      finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
     let removedNumber = finalNumber.split(" ").join("");
@@ -527,7 +527,7 @@ saveDisable =()=>{
         this.handleSubmit();
       } else {
         window.onbeforeunload = undefined
-        //  history.push("/Dashboard")
+       
       }
      }
 
@@ -665,11 +665,6 @@ saveDisable =()=>{
         console.log(url)
 
 
-
-   
-
-
-
         const confirm = ()=>{
             const { history } = this.props;
             if(actionType==="goBack"){
@@ -803,11 +798,24 @@ saveDisable =()=>{
     {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phone ===true ? 
     <Prompt
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
-       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
+       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'You have unsaved changes. Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
-       
     /> : false}
+
+
+
+    {/* <Prompt
+     //when={organizationDataById}
+     // when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
+    //   message={JSON.stringify({
+    //     header: "Confirm",
+    //     content: "You have unsaved changes, Are you sure you want to leave?",
+    //   })}
+      // message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
+       //onCancel="ignore &amp; Proced"
+       //cancelText ="1123"
+    />  */}
     {/* // : false }   */}
    
             	<InfoModal status={this.state.isOpen1} message={this.state.message} modalAction={this.toggle1}/>
@@ -846,13 +854,12 @@ saveDisable =()=>{
 
                                     <div className="hoverINOrg">
                                     <a  class="btn ml-2 mt-3 mt-md-0" >
+
                                     <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
                                     disabled={this.state.disabled}
                                     onClick={this.handleSubmit}>
-
                                     <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
                                                         <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
-                                        
                                     </button>
                                     
                                     </a>

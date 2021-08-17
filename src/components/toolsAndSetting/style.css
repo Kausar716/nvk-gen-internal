@@ -55,41 +55,35 @@ img .ml-2 .btn {
   max-height: 100%;
   margin: auto;
   display: block; */
-  display: block;
-  max-width: 200px;
-  max-height: 95px;
-  width: auto;
-  height: auto;
-  /* margin: 20% 20%; */
-  margin-right: 50%;
-  margin-left: 50%;
-  margin-top: 10%;
-}
-
-.resposiveImageParent {
   /* display: block;
   max-width: 200px;
   max-height: 95px;
   width: auto;
-  height: auto;
-  margin: auto;
+  height: auto; */
+  /* margin: 20% 20%; */
+  /* margin-right: 50%;
+  margin-left: 50%;
+  margin-top: 10%; */
+}
 
-  margin-top: 10%;
-  border-top-left-radius: 50% 50%;
-  border-top-right-radius: 50% 50%;
-  border-bottom-right-radius: 50% 50%;
-  border-bottom-left-radius: 50% 50%; */
+.resposiveImageParent {
   display: block;
   max-width: 230px;
   max-height: 230px;
   /* width: 220px; */
-  height: 230px;
+
   /* height: 234px; */
   margin: auto;
+  width: 100%;
+  height: auto;
   /* margin: 20% 20%; */
   /* margin-right: 50%; */
   /* margin-left: 50%; */
   /* margin-top: 27%; */
+  height: 220px;
+  width: 220px;
+  overflow: hidden;
+
   border-top-left-radius: 50% 50%;
   border-top-right-radius: 50% 50%;
   border-bottom-right-radius: 50% 50%;
@@ -105,12 +99,17 @@ img .ml-2 .btn {
 }
 
 .backgroundImageCover {
-  border-radius: 12px;
-  height: 230px;
-  width: 230px;
+  /* height: 230px;
+  width: 230px; */
   background-color: white;
   border-top-left-radius: 50% 50%;
   border-top-right-radius: 50% 50%;
   border-bottom-right-radius: 50% 50%;
   border-bottom-left-radius: 50% 50%;
+
+  position: relative;
+  width: 220px;
+  height: 220px;
+  overflow: hidden;
+  border-radius: 50%;
 }

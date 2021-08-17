@@ -5,7 +5,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import { confirmAlert } from 'react-confirm-alert'; 
 import * as MdIcons from "react-icons/md";
-import Sortable from 'sortablejs'
+import Sortable from 'sortablejs';
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
     handleZoneInputAction,handleAddZone, handleZoneInputAction2, handleZoneInputAction3, showSubSubAttribute, handleSubAttributeUpdate} from '../../actions/attributeAction'
