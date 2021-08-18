@@ -781,7 +781,7 @@ export const getAllCustomerType = ()=>dispatch=>{
 }
 export const saveCustomerType = (data)=>dispatch=>{
     return axios.post("/api/add-customer-type",data,config).then(res=>{ 
-        console.log(res)
+       
         dispatch({
                 type:ADD_CUSTOMER_TYPE,
                 payload:res.data   
