@@ -32,6 +32,9 @@ class UserProfile extends React.Component {
       
         this.state={
             unsaved: true,
+
+            disableImageRemove:true,
+            disableImageUpload:false,
         
             shouldBlockNavigation:true,
         
@@ -433,15 +436,23 @@ class UserProfile extends React.Component {
         
        })
 
+       this.setState({
+        //disableImageRemove: false,
+        disableImageUpload: true
+    })
  
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
         if( e.target.files[0]){
             this.fileInput.value = ""
         }
-        // setTimeout(function() {
-        //     window.location.reload();
-        //  }, 2000);
+
+        
+        setTimeout(function() {
+            window.location.reload();
+         }, 1000);
+
+       
 
     }
 
@@ -465,6 +476,11 @@ class UserProfile extends React.Component {
              logo:updatedData.avatar?updatedData.avatar:"",
              deleted_at:updatedData.deleted_at
           })
+        })
+
+        this.setState({
+            disableImageUpload: false,
+            disableImageRemove:true
         })
         
     }
@@ -569,10 +585,11 @@ class UserProfile extends React.Component {
             else if(actionType==="deleteImage"){
 
                 this.handleRemoveImage();
+                this.setState({
+                    disableImageRemove: true
+                })
             }
-            else{
-                //
-            }
+          
 
             this.setState({
                 actionOpen:false,
@@ -642,9 +659,10 @@ class UserProfile extends React.Component {
      const checkedCount = Object.keys(checked).filter(key => checked[key]).length;
      const disabled = checkedCount > 1;
 
+     //let selectedUser = this.props.selectedUser 
+     
      let selectedUser = this.props.selectedUser 
-     
-     
+     console.log("thislogolength ", this.state.logo.length )
     return (
         <>
 
@@ -819,14 +837,23 @@ class UserProfile extends React.Component {
 
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
+                                                <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}}
+                                                disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                 >
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id={new Date().getTime()}  ref={fileInput => (this.fileInput = fileInput)}
-                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg" />
+                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg"
+                                                    disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                      />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg"  alt="" style={{borderRadius:"7em"}}/>
+                                                    </button>
                                                 </a>
-                                                <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
+
+
+
+                                                {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
                                                     <span class="d-flex align-items-center justify-content-around" 
                                                       onClick={()=>{confirmAction("deleteImage"); }}
                                                     // onClick={this.handleRemoveImage}
@@ -834,7 +861,19 @@ class UserProfile extends React.Component {
                                                         <span class="f-s-20 text-danger" style={{marginTop:"-3px"}}>Remove</span>
                                                     </span>
                                                     <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
-                                                </a>
+                                                </a> */}
+                                                <div>
+                                                <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
+                                                    disabled={this.state.logo.length >0 ? this.state.disableImageRemove ===false : this.state.disableImageRemove===true}
+                                                    // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
+                                                    onClick={()=>{confirmAction("deleteImage")}}>
+                                                    <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold", backgroundColor:"transparent"}}>Remove</span>
+                                                    <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"3px"}}/>
+                                                    </button>
+                                                </div>
+                                         
+
+
                                                 <div class="text-left mt-2">
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
