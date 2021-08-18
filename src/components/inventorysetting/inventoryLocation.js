@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Sortable from 'sortablejs';
 
 import 
     {
@@ -48,93 +49,124 @@ class InventoryLocation extends Component {
             btnLabelUpdate: 'Update Location Type',
             btnLabelCancel:'Cancel',
             locationTypevaluechild:0,
-            deleteon:false
+            deleteon:false,
+            active:[],inactive:[]
         }
                 
+    }
+    getCatgoryData = ()=>{
+        let data = {};
+        let active= this.props.zoneCategoryList.filter(data=>data.status ==1)
+       let inactive=this.props.zoneCategoryList.filter(data=>data.status ==0)
+        this.setState({active:active,inactive:inactive})
     }
     onDragOver = (ev)=>{
         ev.preventDefault();
     }
-    onDragStart=(ev, id)=>{
-        console.log("dragstart:", id);
-        ev.dataTransfer.setData("id",id)
-        let activeId=this.state.activeId
-        activeId=id;
-        this.setState({activeId})
+    startIDData  =(e)=>{
+        this.setState({selectedID:e.item.id})
+    }
+    onAddData = (evt)=>{
+        console.log(evt)
+        evt.preventDefault()
+    
+    //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+    //  evt.from.insertBefore(evt.item, null); 
+    
+    }
+    onMoveData = (evt,ui)=>{
+    
+       if(evt.from.id == evt.to.id){
+           if(evt.willInsertAfter ==true)
+        this.props.handleAttributeDragSort(evt.dragged.id,evt.related.id,"down")
+        else  this.props.handleAttributeDragSort(evt.dragged.id,evt.related.id,"up")
+    
+       }else{
+           if(evt.from.id =="categoryActive"){
+              let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+              //console.log(task)
+              if(task.length > 0){
+                this.props.handleAttributeDragDrop(task[0]).then(data=>{
+                //     this.props.getAllPlantCategories().then(()=>{
+                //     confirmAlert({
+                //     title: 'Action',
+                //     message: 'Successfully Moved from Active to InActive',
+                //     buttons: [
+                //         {
+                //         label: 'Ok'
+                //         }
+                //     ]
+                // });
+                // this.getCatgoryData()
+          
+                // })
+            })
+    
+            }
+    
+           }else if(evt.from.id =="categoryInactive"){
+               //console.log(evt.dragged.id,evt.related.id)
+            let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+            //console.log(task)
+            if(task.length > 0){
+                this.props.handleAttributeDragDrop(task[0]).then(data=>{
+            //         this.props.getAllPlantCategories().then(()=>{
+            //             this.props.getAllPlantCategories().then(()=>{
+                            // confirmAlert({
+                            //     title: 'Action',
+                            //     message: 'Successfully Moved from InActive to Active',
+                            //     buttons: [
+                            //         {
+                            //         label: 'Ok'
+                            //         }
+                            //     ]
+                            // });
+            //                 this.getCatgoryData()
+            //             })
+            //             // this.getCatgoryData() 
+            //         })
+            //     })
+    
+            // }
+            
+           })
+        }
+    
+       }
+    }
     }
     componentDidMount(){
-        this.props.getAllSubAttribute(18)
+        // this.props.getAllSubAttribute(5)
         this.props.getAllLocationTypesSubAttribute()
-    }
-    onMouseLeave =((ev, id)=>{
-        let sortId=this.state.sortId
-        sortId=id;
-        this.setState({sortId})
-    })
-    onDrop=(ev,cat)=>{
-        let id= ev.dataTransfer.getData("id");
-        let tasks = this.props.zoneCategoryList.filter((task)=>{                
-                return JSON.stringify(task.id) === id;
-        });
-        let doProcess = false;
-        let alertmsg = 0;
-        if (cat === 'active' && tasks[0].status === 0) {
-            doProcess = true;
-            alertmsg = 1;
-        }
-        if (cat === 'inactive' && tasks[0].status === 1) {
-            doProcess = true;
-            alertmsg = 2;
-        }
-        if (doProcess === true) {
-            let result= this.props.handleAttributeDragDrop(tasks[0])
-            result.then(res=>{
-                this.props.getAllSubAttribute(18)
-            })   
-        }
-        if (doProcess === false && cat === 'active' && tasks[0].status === 1 && this.state.sortId !== this.state.activeId) {
-            let result= this.props.handleAttributeDragSort(this.state.activeId, this.state.sortId)
-            result.then(res=>{
-                this.props.getAllSubAttribute(18)
-            }) 
-            alertmsg = 3;
-        }
-        if (alertmsg === 1){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Inactive to Active',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 2){
-            confirmAlert({
-                title: 'Action',
-                message: 'Successfully Moved from Active to InActive',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
-        if (alertmsg === 3){
-            confirmAlert({
-                title: 'Action',
-                message: 'Sort Successfully Done',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
-        }
+        var elData = document.getElementById('categoryActive');
+        var elData1 = document.getElementById('categoryInactive');
+        this.props.getAllSubAttribute(18).then(()=>{
+            // alert("ji")
+            this.getCatgoryData()
+        })
+        // this.props.getAllSubAttribute(14)
+        new Sortable(elData, {
+            group: 'shared',
+            animation: 150,
+            onAdd:this.onAddData.bind(this),
+            onStart: this.startIDData.bind(this),
+            onMove:this.onMoveData.bind(this)
+        })
+        new Sortable(elData1, {
+            group: 'shared',
+            animation: 150,
+            onAdd:this.onAddData.bind(this),
+            onStart: this.startIDData.bind(this),
+            onMove:this.onMoveData.bind(this),
+         
+    
+            // onFilter:function(){
+            //     alert("hi")
+            // }
+        })
     }
     onDelete =(ev)=>{
-        let id= ev.dataTransfer.getData("id");
+        let id= this.state.selectedID
         confirmAlert({
             title: 'Delete Location Type',
             message: 'Are you sure want to delete the Location Type?',
@@ -153,17 +185,12 @@ class InventoryLocation extends Component {
         let result= this.props.handleAttributeDelete(id)
         this.setState({deleteon:true})
         result.then(res=>{
-            this.props.getAllSubAttribute(18)
+            this.props.getAllSubAttribute(18).then(()=>{
+                // alert("ji")
+                this.getCatgoryData()
+            })
             this.setState({deleteon:false})
-            confirmAlert({
-                title: 'Delete Successfully',
-                message: 'Location Type ',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-              });
+         
         })
     }
     handleZoneInputAction = (e)=>{
@@ -272,17 +299,12 @@ class InventoryLocation extends Component {
         if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
-                this.props.getAllSubAttribute(18)
+                this.props.getAllSubAttribute(18).then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Inventory Location',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+    
             this.setState({
                 locationName: '',
                 locationShortCode: "",
@@ -422,7 +444,10 @@ class InventoryLocation extends Component {
         if(this.validate()){
             let res=   this.props.handleSubAttributeUpdate(updateID, updateObject)
                 res.then(res=>{
-                    this.props.getAllSubAttribute(18)
+                    this.props.getAllSubAttribute(18).then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 })
                 if (this.state.isEditing) {
                     confirmAlert({
@@ -451,21 +476,7 @@ class InventoryLocation extends Component {
     }
 
     render() {
-        var tasks={
-            inactive:[],
-            active:[],
-        }
-        if(this.props.zoneCategoryList){
-            this.props.zoneCategoryList.forEach((t)=>{
-                console.log(t)
-                if(t.status === 1){
-                    tasks.active.push(t)
-                }
-                else if(t.status=== 0){
-                    tasks.inactive.push(t)
-                }
-            })
-        }
+  
         return (
         <>
             <div className="bg-white">
@@ -599,12 +610,13 @@ class InventoryLocation extends Component {
                                     <div class="card-header">
                                         Inactive
                                     </div>
-                                    <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
-                                                {tasks.active !==undefined ?tasks.inactive.map(t=>{
+                                    <div class="card-body cardBg">
+                                            <ul class="list-unstyled" id="categoryInactive">
+                                                {this.state.inactive.map(t=>{
                                                 return <>
+                                                
+                                                <li id={t.id} name={t.id} >
                                                 <p style={{float:"left",paddingRight:4,paddingLeft:0}}><img class="arrowIc" src="assets/img/arrow-right-ic.svg" style={{width:21,height:21}}/></p>
-                                                <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}> 
 
                                                             {/* <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}> */}
@@ -639,7 +651,7 @@ class InventoryLocation extends Component {
                                                             {/* </a> */} 
                                                             </a>
                                                         </li></>
-                                                }):""}
+                                                })}
                                         </ul>
                                     </div>
                                 </div>
@@ -668,13 +680,14 @@ class InventoryLocation extends Component {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDrop(e,"active")}>
-                                            <ul class="list-unstyled">
+                                    <div class="card-body cardBg">
+                                            <ul class="list-unstyled" id="categoryActive">
                                            
-                                                {tasks.active !==undefined ?tasks.active.map(t=>{
+                                                {this.state.active.map(t=>{
                                                 return <>
+                                     
+                                                <li id={t.id} >
                                                 <p style={{float:"left",paddingRight:4,paddingLeft:0}}><img class="arrowIc" src="assets/img/arrow-right-ic.svg" style={{width:21,height:21}}/></p>
-                                                <li id={t.id} name={t.id} onDragStart={(e)=>this.onDragStart(e, t.id)} onMouseLeave={(e)=>this.onMouseLeave(e, t.id)} onDelete={(e)=>this.onDelete(e, t.id)} draggable >
                                                             <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}>
 
                                                             {/* <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}> */}
@@ -710,7 +723,7 @@ class InventoryLocation extends Component {
                                                             {/* </a> */} 
                                                             </a>
                                                         </li></>
-                                                }):""}
+                                                })}
                                         </ul>
                                     </div>
                                 </div>

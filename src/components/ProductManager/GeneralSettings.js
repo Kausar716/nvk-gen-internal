@@ -340,11 +340,11 @@ if(productDataById){
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
-                                        <button type="button" class="btn btn-outline-secondary btn-lg"  
+                                        {/* <button type="button" class="btn btn-outline-secondary btn-lg"  
                                        onClick={()=>props.pageReDirectAction("product","add")}
                                         // onClick={goToParentPage}
                                         
-                                        >Return To Product Manager</button>
+                                        >Return To Product Manager</button> */}
                                         {/* <button type="reset" class="btn btn-primary btn-lg ml-3"  
                                         disabled={submitCount===0?needAction===true?false:true:true} onClick={submitAction} > 
                                         {actionType==="add"?"Add Product":"Update Product"}</button> */}

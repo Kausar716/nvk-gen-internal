@@ -121,7 +121,7 @@ export default function QuoteAndOrdersManagement() {
                                     <div class="col-md-12 col-lg-5 col-xl-5">
                                     <div class="row ">
                                             <div class="col-md-6 col-lg-6">
-                                                <label>Ordered By <span class="text-danger">*</span></label>
+                                                <label>Ordered By<span class="text-danger">*</span></label>
                                                 <select class="form-control">
                                                     <option>John Smith</option>
                                                     <option>Option 1</option>
@@ -129,7 +129,7 @@ export default function QuoteAndOrdersManagement() {
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
-                                                <label>Bill To <span class="text-danger">*</span></label>
+                                                <label>Bill To<span class="text-danger">*</span></label>
                                                 <select class="form-control">
                                                     <option>1234 Main St, Waterdown </option>
                                                     <option>Option 1</option>
@@ -569,7 +569,7 @@ Rate</th>
                                         <h2>Current Order</h2>
                                     </div>
                                 </div>
-                                <hr/>
+                                
                                 <div class="row">
                                     <div class="col-md-10">
                                         <a href="#" class="btn btnGrey">

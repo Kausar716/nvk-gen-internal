@@ -141,7 +141,15 @@ div.a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+#categoryActive{
+  height:252px;
+  
+  /* border:1px solid red; */
+}
+#categoryInactive{
+  height:252px;
+  /* border:1px solid red; */
+}
 div.ab {
   white-space: nowrap; 
   width: 200px; 
@@ -420,7 +428,7 @@ input[type="radio"]:checked {
   
 } */
 /* .trashShake { transition: all .2s ease-in-out; } */
-.trashShake{ transform: scale(1.3);}
+.trashShake{ transform: scale(1.7);}
 /* .trashShake.clicked { background: orange; } */
 
 /* button.clicked:hover { background: black; } */

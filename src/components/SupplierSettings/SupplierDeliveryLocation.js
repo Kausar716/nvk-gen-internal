@@ -736,9 +736,9 @@ render() {
                                             >
                                             <ul class="list-unstyled" id="categoryInactive">
                                                    {this.state.inactive.map(t=>{
-                                                    return  <li id={t.id} >
-                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:2,paddingTop:2}}>
-                                                                      <div id="Wheathers" className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}>
+                                                    return <li id={t.id} >
+                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:1,paddingTop:2}}>
+                                                                      <div id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground1" : ""}>
                                                                       <div style={{display:"block",float:"left"}}>
                                                                       <p style={{padding:0,margin:0,color:"#348fe2"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
@@ -746,9 +746,9 @@ render() {
                                                                       </div>
                                                                       </div>
                                                                    
-                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:2,margin:2}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
                                                                             onClick={() =>this.handleEditClick2(t)}
-                                                                /></span><p style={{marginTop:"27px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"27px",cursor:"pointer"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -787,8 +787,8 @@ render() {
                                             <ul class="list-unstyled" id="categoryActive">
                                                    {this.state.active.map(t=>{
                                                     return <li id={t.id} >
-                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:2,paddingTop:2}}>
-                                                                      <div id="Wheathers" className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}>
+                                                                 <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:1,paddingTop:2}}>
+                                                                      <div id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground1" : ""}>
                                                                       <div style={{display:"block",float:"left"}}>
                                                                       <p style={{padding:0,margin:0,color:"#348fe2"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
@@ -796,9 +796,9 @@ render() {
                                                                       </div>
                                                                       </div>
                                                                    
-                                                                      <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:2,margin:2}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
                                                                             onClick={() =>this.handleEditClick2(t)}
-                                                                /></span><p style={{marginTop:"27px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"27px",cursor:"pointer"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
 

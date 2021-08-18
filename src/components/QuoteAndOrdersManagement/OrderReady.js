@@ -48,7 +48,7 @@ export default function OrderReady() {
                                     <h5>Ready By</h5>
                                     <label>E. Vandenbrink</label>
                                 </div>
-                                <div class="mr-3 bdrLeft">
+                                <div class="mr-3 bdrLeft text-center">
                                     <h5>Ready</h5>
                                     <h4 class="text-warning f-s-20">7</h4>
                                 </div>

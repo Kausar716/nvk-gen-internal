@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
+import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
 import {deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
@@ -336,10 +337,38 @@ function AddCustomer(props) {
     }
     const deleteCustomerData =(id)=>{
         // alert(id)
-       props.deleteCustomer(id).then(data=>{
-        props.typeOfActionShow("")
-        props.getAllCustomer()
-       })
+
+        confirmAlert({
+            title: 'Delete Location Type',
+            message: 'Are you sure want to delete the Customer?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {props.deleteCustomer(id).then(data=>{
+                    // setMessage2(["Customer Successfully"])
+                    // setIsOpen2(true)
+                    props.resetCustomerFilds()
+                    props.getAllCustomer().then(data=>{
+                        
+            
+            
+                        setTimeout(
+                            function() {
+                                props.typeOfActionShow("")
+                            }
+                            .bind(this),
+                            1000
+                        );
+            
+                    })
+                   })}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
+
 
     }
     const openNewLink = ()=>{
@@ -707,7 +736,7 @@ const dataTochange =(e)=>{
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="delivery" name="delivery" value={"Delivery"} checked = {customerDataById.dispatch_type =="Delivery"?true:false} class="custom-control-input" onClick={handleInput} />
                                                
-                                                <label class="custom-control-label" for="delivery">Discount</label>
+                                                <label class="custom-control-label" for="delivery">Delivery</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
                                                 <input type="radio" id="pickup" name="pickup" value={"Pickup"}  checked = {customerDataById.dispatch_type =="Pickup"?true:false} onClick={handleInput} class="custom-control-input" />
