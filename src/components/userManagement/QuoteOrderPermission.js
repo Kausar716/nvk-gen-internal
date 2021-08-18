@@ -228,30 +228,29 @@ function QuoteOrderPermission(props) {
             setCustomerManagementPermission(tempUserALL)
             setToolsAnsSettingsPermission(tempUserALL)
             setUserManagementPermission(tempUserALL)
-           // setCustomerManagementPermission(tempUserALL)
-            // setUserManagementPermission(tempUserALL)
             setSupplierManagementPermission(tempUserALL)
             setInventoryManagementPermission(tempUserALL)
             setAdditionalPermissions(tempUserALL)
-
             // let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
             // //let temCS33 = [...tempUserCS2, ...tempUserCMS]
-            // setCustomerManagementPermission(tempUserCMS)
-           
-            
+            // setCustomerManagementPermission(tempUserCMS)           
          }
-
 
 
          else  if(name === "toolsSettingsIntoolsSettingsPermissions"){
           //debugger;
             let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
 
+
+            // if(id==="toolsSettingsIntoolsSettingsPermissions" && id==="customerManagementInCustomerManagementPermissions" && id==="userManagementInUserManagementPermissions" && id==="userManagementInUserManagementPermissions"){ 
+            // }
+
+            //let tempUserALL1 = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
+
             if(!checked){
                 let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
                 setAdditionalPermissions(tempUserALL)
             }
-
             else{
                 let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
                 setAdditionalPermissions(tempUserALL)

@@ -821,7 +821,9 @@ saveDisable =()=>{
     {this.state.hadModified.name ===true || this.state.hadModified.sending_email_address ===true ||this.state.hadModified.phone ===true ? 
     <Prompt
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
-       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body || this.state.hadModified.name || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'You have unsaved changes. Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
+       message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body
+         || this.state.hadModified.name || this.state.hadModified.sending_email_address 
+         || this.state.hadModified.phone ? 'You have unsaved changes. Are you sure you want to leave ?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
     /> : false}
@@ -1051,7 +1053,7 @@ saveDisable =()=>{
                                             // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
                                              onClick={()=>{confirmAction("deleteImage")}}>
                                              <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold", backgroundColor:"transparent"}}>Remove</span>
-                                            <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"3px"}}/>
+                                            <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"15px"}}/>
                                             </button>
                                         </div>
 

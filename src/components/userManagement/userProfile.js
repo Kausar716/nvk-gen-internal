@@ -674,7 +674,8 @@ class UserProfile extends React.Component {
         //when={this.state.shouldBlockNavigation}
        // when={this.saveChanges()}
         when={this.state.disableButton===true ? this.state.firstName:" " }
-        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to save and leave ?" : "Are you sure you want to leave ?" } 
+        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone 
+            || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
@@ -868,7 +869,7 @@ class UserProfile extends React.Component {
                                                     // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
                                                     onClick={()=>{confirmAction("deleteImage")}}>
                                                     <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold", backgroundColor:"transparent"}}>Remove</span>
-                                                    <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"3px"}}/>
+                                                    <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"15px"}}/>
                                                     </button>
                                                 </div>
                                          

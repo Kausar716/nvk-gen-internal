@@ -75,9 +75,6 @@ const validate = values => {
       {/* <label>{label}</label> */}
       <div>
         <input {...input} class="form-control" placeholder={label} 
-        
-    
-        
           type={type} onchange={changingValue}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
@@ -152,7 +149,7 @@ const SignInPage = (props) => {
                         
                     
 
-                    <div class="col-md-6" style={{marginTop:"2em"}}>
+                    <div class="col-md-6" style={{marginTop:"0.8em"}}>
                         <div class="bg-white px-3 py-3 signInContent" style={{borderRadius:"5px"}}>
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
