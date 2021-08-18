@@ -740,7 +740,7 @@ render() {
                                                                  <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:2,paddingTop:2}}>
                                                                       <div id="Wheathers" className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:0,margin:0}}>{t.location}</p>
+                                                                      <p style={{padding:0,margin:0,color:"#348fe2"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
                                                                       <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
@@ -790,7 +790,7 @@ render() {
                                                                  <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:2,paddingTop:2}}>
                                                                       <div id="Wheathers" className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:0,margin:0}}>{t.location}</p>
+                                                                      <p style={{padding:0,margin:0,color:"#348fe2"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
                                                                       <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>

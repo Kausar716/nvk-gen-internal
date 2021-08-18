@@ -532,8 +532,8 @@ componentDidMount(){
                                     Inactive
                                 </div>
                                 <div class="card-body cardBg"
-                                    >
-                                    <ul class="list-unstyled" id="categoryInactive">
+                             >
+                                    <ul class="list-unstyled" id="categoryInactive" style={{height:this.state.inactive.length<5?"200px":"auto"}}>
                                         {this.state.inactive.map((t,index)=>{
                                         return <li id={t.id}>
                                                         <div class="showElipse">
@@ -600,12 +600,12 @@ componentDidMount(){
                                         </div>
                                     </div>
                         <div class="col">
-                            <div class="card midCard">
-                                <div class="card-header">
+                            <div class="card midCard" >
+                                <div class="card-header"  >
                                     Active
                                 </div>
-                                <div class="card-body cardBg">
-                                    <ul class="list-unstyled" id="categoryActive">
+                                <div class="card-body cardBg" >
+                                    <ul class="list-unstyled" id="categoryActive" style={{height:this.state.active.length<5?"200px":"auto"}}>
                                             {this.state.active.map((t,index1)=>{
                                             return <li id={t.id}>
                                                         <div class="showElipse">
