@@ -146,7 +146,7 @@ export class CustomerSettings extends React.Component {
             if(this.props.customerData.customerList){
                 pageNumber = this.props.customerData.pageNumber
                 // console.log()
-                customerData = [...this.props.customerData.customerList]
+                customerData = [...this.props.customerData.customerList.sort((a, b) => parseInt(b.id) - parseInt(a.id))]
                 totalLength = this.props.customerData.customerList.length
                 plantPerPage = this.state.pageSize;
                 pagesVisited =  this.props.customerData.pageNumber*this.state.pageSize;
@@ -174,7 +174,7 @@ export class CustomerSettings extends React.Component {
         value:this.state.value,
             // className:"searchInput",
             className:" form-control  btn btn-search ",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"13%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"9%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.onChange
         };
         console.log(displayCustomerList)
@@ -314,7 +314,7 @@ export class CustomerSettings extends React.Component {
                                         <tbody>
                                         {displayCustomerList.map(customerData=>{
                                             return <tr>
-                                                        <td>{customerData.status === 1?"Active":"Inactive" }</td>
+                                                        <td style={{color:customerData.status === 1?"":"red"}}>{customerData.status === 1?"Active":"Inactive" }</td>
                                                         <td>{customerData.id}</td>
                                                         <td>{customerData.name}</td>
                                                         <td>

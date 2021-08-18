@@ -707,7 +707,7 @@ const dataTochange =(e)=>{
                                             <div class="custom-control custom-radio">
                                                 <input type="radio" id="delivery" name="delivery" value={"Delivery"} checked = {customerDataById.dispatch_type =="Delivery"?true:false} class="custom-control-input" onClick={handleInput} />
                                                
-                                                <label class="custom-control-label" for="delivery">Discount</label>
+                                                <label class="custom-control-label" for="delivery">Delivery</label>
                                             </div>
                                             <div class="custom-control custom-radio ml-4">
                                                 <input type="radio" id="pickup" name="pickup" value={"Pickup"}  checked = {customerDataById.dispatch_type =="Pickup"?true:false} onClick={handleInput} class="custom-control-input" />
