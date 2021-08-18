@@ -364,7 +364,7 @@ const SkuList = (props)=>{
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU <span className="text-green">{props.plantData.dynamicName}</span> </h3>
+                                            <h3>GENERATED SKU <span className="text-green">{props.plantData.dynamicName?props.plantData.dynamicName:props.plantData.ae_plant_id}</span> </h3>
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
