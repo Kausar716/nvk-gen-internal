@@ -522,7 +522,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Volume Quantity <span class="text-danger">*</span></label>
+                                            <label>Volume Quantity </label>
                                             <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} value={skuDataById.volume_quantity} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}

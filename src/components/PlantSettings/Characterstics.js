@@ -585,7 +585,7 @@ componentDidMount(){
                                     name="featureName"
                                 value={this.state.subName}
                                     placeholder="Feature Name" onChange={this.handleZoneInputAction}/>
-                                {this.state.errorObj.featureName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Feture Name</span>:""}
+                                {this.state.errorObj.featureName!==0?<span style={{fontSize:"small",color:"red"}}>Enter Feature Name</span>:""}
                             </div>
 
                             <div className="d-flex justify-content-md-end mt-2">

@@ -284,9 +284,10 @@ export class PurchaseOrders extends React.Component {
                                                 <label class="custom-control-label" for="customRadio2">Last 30 Days</label>
                                             </div>
                                             <div class="ml-3">
-                                                <DatePicker 
+                                                {/* <DatePicker 
                                                 // onChange={onChange} value={value} 
-                                                />
+                                                /> */}
+                                                <input type="date" className="dateDesign"  />
                                             </div>
                                         </div>
                                     </div>
