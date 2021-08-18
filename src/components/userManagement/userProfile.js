@@ -20,13 +20,8 @@ import './style.css';
 
 // })
 
-//@reactMixin.decorate(Lifecycle)
 class UserProfile extends React.Component { 
     
-    // static contextTypes = {
-    //     router: React.PropTypes.object.isRequired
-    //   }
-
     constructor(){
         super();
       
@@ -101,10 +96,7 @@ class UserProfile extends React.Component {
               ]
         }
 
-        // this.props.router.setRouteLeaveHook(
-        //     this.props.route,
-        //     this.routerLeaveInformation
-        //   )
+   
 
        
     }
@@ -124,15 +116,6 @@ class UserProfile extends React.Component {
                deleted_at:selectedUser.deleted_at
             });
 
-
-            // this.props.router.setRouteLeaveHook(this.props.route, () => {
-            //     if (this.state.unsaved) {
-            //       return false;
-            //         // At here you can give a confirm dialog, return true when confirm true
-            //      }else {
-            //         return true;
-            //      }
-            //   })
            
     }
 
@@ -190,10 +173,7 @@ class UserProfile extends React.Component {
         }
         else if(name === "phone" ){
             hadModified.phone=true
-            // if(errorObj.phoneError>0){
-            //     errorObj.phoneError=0
-            //     errorCount--
-            // }            
+                    
         }
         else if(name === "email" ){
             hadModified.email=true
@@ -240,17 +220,7 @@ class UserProfile extends React.Component {
         }
        
        
-        // if(this.state.firstName.length === 0){
-        //    errorObj.firstNameError=1
-        //    errorCount++
-        // }
-        // if(!nameReg.test(this.state.firstName)){
-        //     errorObj.firstNameError=1
-        //    errorCount++
-        // }
-        // else{
-        //     errorObj.firstNameError=0
-        // }
+      
         else if(this.state.lastName.length === 0){
             // errorObj.lastNameError=1
            
@@ -258,13 +228,7 @@ class UserProfile extends React.Component {
             this.setState({errorObj})
             errorCount++
         }
-        // else{
-        //     errorObj.lastNameError=0
-        // }
-        // if(!phoneReg.test(this.state.phone)){
-        //     errorObj.phoneError=1
-        //     errorCount++
-        // }
+      
 
          if(this.state.position === "Select.."){
             //debugger
@@ -274,11 +238,7 @@ class UserProfile extends React.Component {
             //return false
         }
 
-        // else{
-        //     errorObj.positionError=0;  
-        //     this.setState({errorObj})
-        //     errorCount--
-        // }
+       
 
          if(! emailReg.test(this.state.email)){
             errorObj.emailError=1
@@ -295,26 +255,6 @@ class UserProfile extends React.Component {
             document.getElementById("contactPhone-validtor").innerText = ""
         }
 
-       
-        // if(this.state.phone.length>14){
-        //     errorObj.phoneError=1
-        //     errorCount++
-        // }
-        // if(this.state.position.length === 0){
-        //     console.log(this.state.position)
-        //     errorObj.positionError=1
-        //     errorCount++
-        // }
-
-
-      
-
-
-    
-
-
-
-
         this.setState({errorObj,errorCount})
         return errorCount
 
@@ -328,7 +268,7 @@ class UserProfile extends React.Component {
 
     handleSubmit = (e) => {
 
-       // debugger;
+  
         this.setState({
             disableButton:true
         })
@@ -344,15 +284,10 @@ class UserProfile extends React.Component {
 
         else{
             removedNumber = finalNumber;
-            //var removedNumber = finalNumber.split(" ").join("");
-            //removedNumber = parseInt(removedNumber)
+         
         }
 
-        // finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
-        // let removedNumber = finalNumber.split(" ").join("");
-        // removedNumber = parseInt(removedNumber)
 
-        //debugger;
         let count= this.validate()
         console.log(count)
          if(count === 0){
@@ -535,7 +470,7 @@ class UserProfile extends React.Component {
                  deleted_at:updatedData.deleted_at
                  
               })
-              alert("deleted")
+              alert("restored successfully")
             })
         }
     }
@@ -798,28 +733,7 @@ class UserProfile extends React.Component {
 
                         <div class="pb-4">
                             <div class="bg-white">
-                                {/* <div class="row mb-3 mb-md-0">
-                                    <div class="col-md-6 col-lg-6">
-                                        <h4 class="p-15 mb-0">Add, Edit or Remove User</h4>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 pl-4 pl-md-0 d-flex align-items-center justify-content-md-end">
-                                        Active
-                                        <div class="switcher ml-2 pr-md-3 ml-3">
-                                            <input type="checkbox" name="switcher_checkbox_1" id="switcher_checkbox_1" value="1"/>
-                                            <label for="switcher_checkbox_1"></label>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                {/* <hr class="m-0"/> */}
-                                {/* <div class="ContentSection p-15"> */}
-                                    {/* <div class="row">
-                                        <div class="col-md-12 col-lg-12">
-                                            <div class="bg-grey-transparent-2 text-center px-2 py-2">
-                                                <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                                <p class="m-0">Inactive users will not have access to this system. User permissions can be sent via <a href="">User Access</a>.</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
+                             
 
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-3">
@@ -853,16 +767,6 @@ class UserProfile extends React.Component {
                                                 </a>
 
 
-
-                                                {/* <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
-                                                    <span class="d-flex align-items-center justify-content-around" 
-                                                      onClick={()=>{confirmAction("deleteImage"); }}
-                                                    // onClick={this.handleRemoveImage}
-                                                    >
-                                                        <span class="f-s-20 text-danger" style={{marginTop:"-3px"}}>Remove</span>
-                                                    </span>
-                                                    <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
-                                                </a> */}
                                                 <div>
                                                 <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
                                                     disabled={this.state.logo.length >0 ? this.state.disableImageRemove ===false : this.state.disableImageRemove===true}
@@ -913,19 +817,11 @@ class UserProfile extends React.Component {
                                                         }) : null} 
 
 
-                                                            {/* <option>{supplierData.supplierLocation.country}</option>
-                                                                {allCountry.map((country, i)=>{
-                                                                    return <option id={allCountry[i]}>{allCountry[i]}</option>
-                                                                })} */}
                                                     </select>
                                                     {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
-                                                    {/* <InputMask type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
-                                                     mask="(999) 999-9999" maskChar={" "} 
-                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
-                                                     /> */}
 
                                                     <InputMask
                                                     class="form-control"  
@@ -941,11 +837,6 @@ class UserProfile extends React.Component {
                                               
                                               <span style={{fontSize:"small",color:"red"}} id="contactPhone-validtor"></span>
 
-                                                    {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
-                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
-                                                     /> */}
-                                                    
-                                                    {/* {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""} */}
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -972,38 +863,7 @@ class UserProfile extends React.Component {
                                                     })}
 
                                                    
-                                                        {/* <ul class="list-unstyled">
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm A <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li class="active">
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck2">Farm B <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck3">Farm C <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck4"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck4">Farm D <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck5"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                        </ul> */}
+                                                   
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="custom-control custom-checkbox">
@@ -1042,30 +902,7 @@ class UserProfile extends React.Component {
                                 </div>
                             </div>
                                 }
-                                {/* <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
-                                    <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3"
-                                     onClick={()=>{confirmAction("save"); }}
-                                    //  onClick={this.handleSubmit}
-                                    
-                                     >Update</button>
-                                </div> */}
-
-
-
-
                             </div>
-
-                            {/* <div style={{float:"left", marginLeft:"2em"}}>
-
-                                    <span style={{float:"right", marginRight:"3em", marginLeft:"-5em"}}>Active</span>
-                                        <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"8px"}}>
-                                            <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value={this.state.checkedActive} checked={(this.state.checkedActive === true ? true : false)}  onChange={this.handleActive}
-                                            />
-                                            <label for="switcher_checkbox_date"></label>
-                                        </div> 
-                            </div> */}
-
 
 
 
