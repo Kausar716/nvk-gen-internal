@@ -387,6 +387,7 @@ const SkuList = (props)=>{
                                                  <option value="">None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -400,6 +401,7 @@ const SkuList = (props)=>{
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -413,6 +415,7 @@ const SkuList = (props)=>{
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -426,7 +429,7 @@ const SkuList = (props)=>{
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
-                                                    
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
