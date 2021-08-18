@@ -155,7 +155,7 @@ const nameFormaterFunctionForHandler = (currentAction,plantData)=>{
     else {
         nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
         if(copiedPlantData.cultivar1.length)
-        nameWithFormat.secondName = copiedPlantData.cultivar2+" "+"('"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:"" }`+"')"+` ${commonNmae.length>0?`-${commonNmae}`:''}`        
+        nameWithFormat.secondName = copiedPlantData.cultivar2+" "+"('"+`${copiedPlantData.cultivar1.length>0?copiedPlantData.cultivar1:"" }`+"')"+` ${commonNmae.length>0?`- ${commonNmae}`:''}`        
         else {
             nameWithFormat.secondName = copiedPlantData.cultivar2+" "+`${commonNmae.length>0?`- ${commonNmae}`:''}`
         }
