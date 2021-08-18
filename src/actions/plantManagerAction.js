@@ -129,6 +129,7 @@ export const createPlantAction = (plantData) => dispatch => {
         })
         .catch(error=>{
             // errorArray.push("Please select mandate fileds")
+
             dispatch({
                 type:ERROR_HANDLE,
                 message:errorArray,
@@ -422,6 +423,7 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
             })
             // dispatch(plantPageReDirectAction(actionType = "all"))
             }).catch(error1=>{
+                console.log(error1)
                 error.push("Please add Plant first")
                 dispatch({
                     type:ERROR_HANDLE,

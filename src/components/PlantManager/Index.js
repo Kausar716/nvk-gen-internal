@@ -349,7 +349,7 @@ const productFormAction = ()=>{
                                             <div class="row align-items-center">
                                                 <div class="col-md-6">
                                                     <h2>Plant ID
-                                                    <span className="text-green" >{ae_plant_id}</span> 
+                                                    <span className="text-green" > {ae_plant_id}</span> 
                                                     <span className="text-green" style={{fontStyle:"italic"}}>{' '+plantNameWithFormat.firstName}</span>
                                                     <span className="text-green">{' '+plantNameWithFormat.secondName}</span> </h2>
                                                     

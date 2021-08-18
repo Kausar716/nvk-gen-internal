@@ -420,26 +420,30 @@ const  ProductManagement = (props) =>{
                                                 <div class="col-md-6">
                                                     <h2 >Product ID &nbsp;&nbsp;
                                                         {/* //{product_idFromGeneral||productDataById.product_id} */}
-                                                        <snap className="text-green">{props.temp.productData.ae_product_id ==="" ? productDataById.product_id: product_idFromGeneral}</snap>
+                                                        <snap className="text-green">{props.temp.productData.ae_product_id ==="" ? productDataById.product_id?productDataById.product_id:"HG": product_idFromGeneral}</snap>
                                                     </h2>
                                                 </div>
                                                 
-                                               {actionType !== "add" ?<div class="col-md-6 d-flex justify-content-md-end">
+                                               <div class="col-md-6 d-flex justify-content-md-end">
                                                 <span onClick={()=>props.pageReDirectAction("product","add")} 
                                                 style={{textDecoration:"none",cursor:"pointer"}}  className="right_float">
                                                     <i class='bx bx-arrow-back' ></i>
                                                     {/* <label className="trashIcon" style={{marginLeft:"-49px"}}>GoBack</label> */}
                                                     </span>
-                                                    <a href="#" class="mx-2">
+                                                    {actionType !== "add" ?<a href="#" class="mx-2">
                                                         <img src="assets/img/copy-ic.svg" alt=""  onClick={()=>{confirmAction(productDataById.product_id,"duplicate"); }}/>
-                                                    </a>
-                                                    <a href="#" class="mx-2">
+                                                    </a>:""}
+                                                    {actionType !== "add" ? <a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt="" onClick={()=>confirmAction(productDataById.product_id,"delete")}/>
-                                                    </a>
+                                                    </a>:""}
+                                                    <span>
+                                                    <button type="button" class="btn btn-primary  btn-lg"    
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>                                                    
+                                                    </span>
                                                     {/* <a href="#" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
                                                     </a> */}
-                                                </div>:""}
+                                                </div>
                                             </div>
                                         </div>
 

@@ -364,7 +364,7 @@ const SkuList = (props)=>{
                                 <form>
                                     <div class="row">
                                         <div class="col-md-6">
-                                            <h3>GENERATED SKU <span className="text-green">{props.plantData.dynamicName}</span> </h3>
+                                            <h3>GENERATED SKU <span className="text-green">{props.plantData.dynamicName?props.plantData.dynamicName:props.plantData.ae_plant_id}</span> </h3>
                                         </div>
                                         <div class="col-md-6 d-flex justify-content-end">
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
@@ -387,6 +387,7 @@ const SkuList = (props)=>{
                                                  <option value="">None</option>
                                                 {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Form").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -400,6 +401,7 @@ const SkuList = (props)=>{
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name =="Caliper").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -413,6 +415,7 @@ const SkuList = (props)=>{
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Height").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -426,7 +429,7 @@ const SkuList = (props)=>{
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
                                                     return (filterData.sub_attributes.map(subData=>{
-                                                    
+                                                        if(subData.status === 1)
                                                         return(<option value={subData.id}>{subData.value}</option>)
                                                     }))
                                                 })                          
@@ -580,7 +583,7 @@ const SkuList = (props)=>{
                                                 </td>
 
                                                 <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00"?"lightgray":""}} >{skuData.volume_price_per_unit===null?"0.00":skuData.volume_price_per_unit}</td>
-                                                <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00"?"lightgray":""}} >{skuData.volume_quantity_name}</td>
+                                                <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00"?"lightgray":""}} >{skuData.volume_price_per_unit===null || skuData.volume_price_per_unit === "0.00"?"None":skuData.volume_quantity_name}</td>
                                                 <td class="text-center" >
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
