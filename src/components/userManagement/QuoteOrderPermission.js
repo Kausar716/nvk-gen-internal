@@ -158,7 +158,20 @@ function QuoteOrderPermission(props) {
 
          else if(name=== "SupervisorRoleInSupervisorRolePermissions"){
             let tempUserSVR = finalsupervisorRolePermission.map(user=>{return {...user, isChecked:checked}});
+           
+
+           
+             if(!checked){
+                let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:false}});
+                setAllInventoryPermissions(tempUserALL)
+            }
+            else{
+                let tempUserALL = finalAllInventoryPermissions.map(user=>{return {...user, isChecked:true}});
+                setAllInventoryPermissions(tempUserALL)
+            }
+
             setSupervisorRolePermission(tempUserSVR)
+
          }
 
 

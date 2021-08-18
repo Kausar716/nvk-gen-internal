@@ -51,8 +51,8 @@ class OrganizationSettings extends React.Component {
             disabled:true,
             disabledCancel:true,
             showPropmt:false,
-            disableImageRemove:false,
-            disableImageUpload:true,
+            disableImageRemove:true,
+            disableImageUpload:false,
             isOpen1:false,
             message:[],
             actionId:0,
@@ -127,7 +127,7 @@ class OrganizationSettings extends React.Component {
 
 
         this.setState({
-            disableImageRemove: false,
+            //disableImageRemove: false,
             disableImageUpload: true
         })
         
@@ -806,6 +806,9 @@ saveDisable =()=>{
      console.log("phoneNumber", this.state.value)
       
         const { value1} = this.state;
+
+
+        console.log("thisorganizationData", this.props.organizationData.organizationData.logo)
     return (
         <div clas="userManagementSection">
 
@@ -996,18 +999,18 @@ saveDisable =()=>{
 
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
-                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none"}} disabled={this.state.disableImageUpload}>
+                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}} disabled={this.props.organizationData.organizationData.logo===null || this.props.organizationData.organizationData.logo===undefined ? this.state.disableImageUpload ===true : this.state.disableImageUpload===false}>
                                             <span class="d-flex align-items-center justify-content-around">
-                                            <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg"
-                                              onChange={this.handlImageUpload}  disabled={this.state.disableImageUpload}
+                                            <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg" 
+                                              onChange={this.handlImageUpload}  disabled={ this.props.organizationData.organizationData.logo===null ||  this.props.organizationData.organizationData.logo===undefined? this.state.disableImageUpload ===true : this.state.disableImageUpload===false }
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
-                                             style={{zIndex:1,opacity:0}}  />
+                                             style={{zIndex:1,opacity:0,  cursor:"pointer"}}  />
 
 
-                                                <span class="f-s-20" style={{position:"absolute",fontWeight:"bold"}} >Upload</span>
+                                                <span class="f-s-20" style={{position:"absolute",fontWeight:"bold", cursor:"pointer"}} >Upload</span>
                                             </span>
-                                            <img src="assets/img/upload-ic-white.svg" alt=""   />
+                                            <img src="assets/img/upload-ic-white.svg" alt=""  style={{cursor:"pointer"}} />
                                             </button>
                                         </a>
 
@@ -1044,7 +1047,7 @@ saveDisable =()=>{
                                     </a> */}
                                             
                                              <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
-                                             disabled={this.state.disableImageRemove}
+                                             disabled={this.props.organizationData.organizationData.logo===null ? this.state.disableImageRemove ===true : this.state.disableImageRemove===false}
                                             // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
                                              onClick={()=>{confirmAction("deleteImage")}}>
                                              <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold", backgroundColor:"transparent"}}>Remove</span>
