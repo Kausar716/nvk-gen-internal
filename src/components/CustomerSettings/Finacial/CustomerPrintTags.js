@@ -46,10 +46,14 @@ const CustomerPrintRates = (props) => {
   const [isOpen1, setIsOpen1] = useState(false);
   const [successMessage,setSuccessMessage] = useState([])
   const [data,setData] = useState("")
-  const toggle1  = ()=>setIsOpen1(!isOpen);
-  const [open,setOpen] = useState(false)
+  const [type,setType] = useState("")
+  const [open,setOpen] = useState("")
   const [message,setMessage] = useState("")
-  const [type, setType] = useState("")
+  const toggle1  = ()=>setIsOpen1(!isOpen);
+  const [price,setPrice] = useState(false)
+  const [logo,setLogo] = useState(false)
+  const [base, setBase] = useState(false)
+  const [app, setApp] =  useState(false)
   const handleInputData =(e)=>{
     setCheckedData(true)
     let intValue = e.target.value
@@ -64,6 +68,7 @@ const CustomerPrintRates = (props) => {
     props.getPrintData()
   },[data])
 const resetData = ()=> {
+  setApp(false);setPrice(false); setLogo(false); setBase(false);
   setCheckedData(false)
   props.getPrintData()
 }
@@ -87,12 +92,14 @@ const confirm = ()=>{
   setMessage("")
 }
 const confirmAction = (type)=>{
+  if(base==false && logo==false && price ==false&& app==false ){
 if(type=="save"){
     setType(type)
     setMessage("Are you sure you want to Save?")
 
 }
 setOpen(true)
+  }
 // setId(id)
 }
   const saveExchangeData = ()=>{
@@ -111,6 +118,7 @@ setOpen(true)
     setCheckedData(true)
     // let intValue = e.target.value
     if(e.target.value!==""){
+      setApp(false);setPrice(false); setLogo(false); setBase(false);
       if(Number.isInteger(parseFloat(e.target.value))) {
         let intValue = e.target.value*1.00
         // alert(e.target.value)
@@ -120,11 +128,37 @@ setOpen(true)
       else{
         // alert()
         let splitValue = e.target.value.split(".")
-       if(splitValue[1].length<3){
+       if(splitValue[1].length<2){
         let intValue = e.target.value*1.00
         props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerTag")
        }else{
-        props.handleExchangeData(e.target.value,e.target.id,"customerTag")
+        var charCode = (e.which) ? e.which : e.keyCode;
+          
+        let id = e.target.id
+        let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+
+        if(characterCheck === null){
+          if(id === "base_price"){
+           setBase(true)
+          }
+          if(id === "custom_logo"){
+           setLogo(true)
+          }
+          if(id === "custom_pricing"){
+           setPrice(true)
+          }
+          if(id === "custom_application"){
+           setApp(true)
+          }
+   
+       
+      }else {
+        setApp(false);setPrice(false); setLogo(false); setBase(false);
+      }
+      props.handleExchangeData(e.target.value,e.target.id,"customerTag")
+      
+
+      
 
        }
 
@@ -165,14 +199,16 @@ setOpen(true)
                     <Label className="subHeadingLabels" style={{marginLeft:"1.2em"}}>Base Price</Label>
                         <Row className="spacebelow">
                             <Col sm="0"><p className="moveRight">$</p></Col>
-                            <Col sm="4">
+                            <Col sm="5">
                             <input type="number" className="textRight"  placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}/>
+                           
                               </Col>
                             
 
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
                             </Col>
+                            <p style={{paddingLeft:28}}>{base?<span style={{fontSize:"small",color:"red"}}>Enter Valid Base Price(Fixed 2 Decimals)</span>:""}</p>
                         </Row>
               </Col>
 
@@ -182,11 +218,13 @@ setOpen(true)
                             <Col sm="0"><p className="moveRight">$</p></Col>
                             <Col sm="4">
                             <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.000"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}/>
+                         
                             </Col>
                            
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
                             </Col>
+                            <p  style={{paddingLeft:28}}>{logo?<span style={{fontSize:"small",color:"red"}}>Enter Valid Custom Logo(Fixed 2 Decimals)</span>:""}</p>
                         </Row>
               </Col>
 
@@ -198,10 +236,12 @@ setOpen(true)
                             <Col sm="4">
 
                             <input type="number" className="textRight" placeholder={"0.000"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData} onBlur={dataTochange}/>
+                          
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
                             </Col>
+                            <p  style={{paddingLeft:28}}>{price?<span style={{fontSize:"small",color:"red"}}>Enter Valid Custom Pricing(Fixed 2 Decimals)</span>:""}</p>
                         </Row>
               </Col>
 
@@ -213,11 +253,13 @@ setOpen(true)
                             <Col sm="4">
 
                            
-                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}/>
+                            <input type="number" className="textRight" placeholder={"0.000"}  style={{textAlign:"left"}} step="0.01" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}/>
+                          
                             </Col>
                             <Col sm="0">
                             <Label className="moveLittleInCPR">per tag/label </Label>
                             </Col>
+                            <p  style={{paddingLeft:28}}>{app?<span style={{fontSize:"small",color:"red"}}>Enter Valid Custom Application(Fixed 2 Decimals)</span>:""}</p>
                         </Row>
               </Col>
               <Col xs="12">
