@@ -343,7 +343,10 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
         if(this.validate()){
             let result = this.props.handleAddZone(zoneObj)
             result.then(res=>{
-                this.props.getAllSubAttribute(5)
+                this.props.getAllSubAttribute(5).then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
                 // alert("fff")
             })
             // confirmAlert({

@@ -34,7 +34,7 @@ class Category extends Component {
                 categoryName:0,
                 subCategoryName:0
             },
-            sortId: 0,
+            sortId: 0, 
             activeId: 0,
             isEditing:false,
             name:'',
@@ -533,7 +533,7 @@ componentDidMount(){
                                 </div>
                                 <div class="card-body cardBg"
                              >
-                                    <ul class="list-unstyled" id="categoryInactive" style={{height:this.state.inactive.length<5?"200px":"auto"}}>
+                                    <ul class="list-unstyled" id="categoryInactive" >
                                         {this.state.inactive.map((t,index)=>{
                                         return <li id={t.id}>
                                                         <div class="showElipse">
@@ -605,7 +605,7 @@ componentDidMount(){
                                     Active
                                 </div>
                                 <div class="card-body cardBg" >
-                                    <ul class="list-unstyled" id="categoryActive" style={{height:this.state.active.length<5?"200px":"auto"}}>
+                                    <ul class="list-unstyled" id="categoryActive">
                                             {this.state.active.map((t,index1)=>{
                                             return <li id={t.id}>
                                                         <div class="showElipse">

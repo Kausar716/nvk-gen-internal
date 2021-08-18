@@ -141,7 +141,14 @@ div.a {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-
+#categoryActive{
+  height:252px;
+  /* border:1px solid red; */
+}
+#categoryInactive{
+  height:252px;
+  /* border:1px solid red; */
+}
 div.ab {
   white-space: nowrap; 
   width: 200px; 
