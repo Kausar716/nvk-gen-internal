@@ -34,6 +34,7 @@ import {
    }
 
    export const addUser = (userData) => dispatch => {
+      
        console.log(userData)
     //    userData.role="1"
        userData.password="pass"
@@ -53,6 +54,7 @@ import {
     }
 
     export const updateUser = (userData) => dispatch => {
+     
         console.log(userData)
         // userData.role="1"
         // userData.password="pass"

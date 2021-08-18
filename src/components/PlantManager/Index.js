@@ -78,7 +78,7 @@ const  PlantManger=(props)=> {
     const onChange = (event, { newValue }) => {
         setValue(newValue)
         setLoaderMessage("No Records Found.")
-        props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
+        props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
         setInputValue(newValue);
     };
 
@@ -146,7 +146,7 @@ const productFormAction = ()=>{
         const getValue = (e)=>{
             setLoaderMessage("No Records Found.")
             console.log(e.target.value)
-            props.serachPlant({plant: e.target.value, option: selectedRadio, category: categoryId})
+            props.serachPlant({plant: e.target.value, option: props.plantData.plantRadioButton, category: categoryId})
             setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
@@ -154,14 +154,14 @@ const productFormAction = ()=>{
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
             props.serachPlant({plant: inputValue, option: e.target.id, category: categoryId})
-            setRadio(e.target.id)
+            // setRadio(e.target.id)
 
         }
         const searchBasedOnCategory = (e) =>{
             setLoaderMessage("No Records Found.")
             //console.log(e.target.value)
             //props.searchCategoryApplyAction(e.target.value)
-            props.serachPlant({plant: inputValue, option: selectedRadio, category: e.target.value})
+            props.serachPlant({plant: inputValue, option: props.plantData.plantRadioButton, category: e.target.value})
             setCategoryId(e.target.value)
             // searchCategoryApply()
         }
@@ -179,7 +179,7 @@ const productFormAction = ()=>{
             result.then(res=>{
                 setLoader(false)
             })
-            setRadio("all")
+            // setRadio("all")
             setCategoryId(0);
             setInputValue("");
             setValue("")
@@ -195,7 +195,7 @@ const productFormAction = ()=>{
           // Autosuggest will call this function every time you need to update suggestions.
           // You already implemented this logic above, so just use it.
        
-    const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id,plantNameWithFormat} = props.plantData
+    const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id,plantNameWithFormat,plantRadioButton} = props.plantData
     const {plantCategoryData} =  props.categoryData
     console.log(plantData)
     const inputProps = {
@@ -308,17 +308,17 @@ const productFormAction = ()=>{
                                     <div className="form-group row">
                                         <div className="col-md-12">
                                             <div className="form-check form-check-inline">
-                                            <input className="form-check-input"  type="radio" checked={selectedRadio ==="active"?"checked":""} style={{cursor:"pointer"}} name="radio1" onClick={radioSearchAction} id="active"/>
+                                            <input className="form-check-input"  type="radio" checked={plantRadioButton ==="active"?"checked":""} style={{cursor:"pointer"}} name="radio1" onClick={radioSearchAction} id="active"/>
                                                 {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
                                                 <label className="form-check-label" for="activePlants" >Active</label>
                                             </div>
                                             <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="radio1" style={{cursor:"pointer"}} checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                            <input className="form-check-input" type="radio" name="radio1" style={{cursor:"pointer"}} checked={plantRadioButton ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
                                                 {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
                                                 <label className="form-check-label" for="archivedPlants" >Archived</label>
                                             </div>
                                             <div className="form-check form-check-inline">
-                                            <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}  style={{cursor:"pointer"}} onClick={radioSearchAction} id="all"/>
+                                            <input type="radio" name="radio1"checked={plantRadioButton ==="all"?"checked":""}  style={{cursor:"pointer"}} onClick={radioSearchAction} id="all"/>
                                                 {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
                                                 <label className="form-check-label" for="allPlants" > &nbsp;All</label>
                                             </div>

@@ -48,9 +48,11 @@ export class OrganizationSettings extends React.Component {
     constructor(){
         super()
         this.state={
-            disabled:false,
+            disabled:true,
+            disabledCancel:true,
             showPropmt:false,
-            disableImageRemove:true,
+            disableImageRemove:false,
+            disableImageUpload:true,
             isOpen1:false,
             message:[],
             actionId:0,
@@ -125,7 +127,8 @@ export class OrganizationSettings extends React.Component {
 
 
         this.setState({
-            disableImageRemove: false
+            disableImageRemove: false,
+            disableImageUpload: true
         })
         
          
@@ -247,7 +250,8 @@ export class OrganizationSettings extends React.Component {
 
 
         this.setState({
-            disabled:false
+            disabled:false,
+            disabledCancel:false
         })
 
     }
@@ -383,7 +387,8 @@ saveDisable =()=>{
         //   }
 
         this.setState({
-            disabled:true
+            disabled:true,
+            disabledCancel:true
         })
 
         let phoneNUMBER = this.state.phoneNumberInOrganization === " " ? this.props.organizationData.organizationData.phone : this.state.phoneNumberInOrganization;
@@ -470,6 +475,16 @@ saveDisable =()=>{
             })
            }
 
+           if (!this.state.disabledCancel) {
+            this.setState({
+                disabledCancel:true,
+            })
+           }
+
+
+
+           
+
            this.setState({
                hadModified:{
                 name:false,
@@ -507,6 +522,11 @@ saveDisable =()=>{
         alert("Image Removed Successfully")
         this.setState({
             imgLoader: true
+        })
+
+
+        this.setState({
+            disableImageUpload: false
         })
      }
 
@@ -864,16 +884,33 @@ saveDisable =()=>{
                                     
                                     </a>
                                     </div>
+
+
+                                    <div className="hoverINOrg">
+                                    <a  class="btn ml-2 mt-3 mt-md-0" >
+
+                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                    disabled={this.state.disabledCancel}
+                                    onClick={this.goDashboard}>
+                                        <span class="d-flex align-items-center text-left" style={{marginLeft:"-16px"}}>
+                                            <span class="ml-2" style={{fontSize:"16px"}}>Cancel</span>
+                                        </span>
+                                    </button>
+                                    
+                                    </a>
+                                    </div>
                                    
 
 
 
-                                        <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        {/* <a  class="btn ml-2 mt-3 mt-md-0" 
+                                        
+                                         disabled={this.state.disabled}
                                          onClick={this.goDashboard}>
                                             <span class="d-flex align-items-center text-left">
                                                 <span class="ml-2" style={{marginTop:"2px"}}><b style={{marginLeft:"-4px",marginRight:"4px"}}>Cancel</b></span>
                                             </span>
-                                        </a>
+                                        </a> */}
                                         
                                         {/* <a  class=" ml-2 mt-3 mt-md-0" style={{cursor:"pointer"}}>
                                             <img src="assets/img/close-ic.svg" alt="" 
@@ -959,17 +996,19 @@ saveDisable =()=>{
 
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
+                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none"}} disabled={this.state.disableImageUpload}>
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg"
-                                              onChange={this.handlImageUpload} 
+                                              onChange={this.handlImageUpload}  disabled={this.state.disableImageUpload}
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0}}  />
 
+
                                                 <span class="f-s-20" style={{position:"absolute",fontWeight:"bold"}} >Upload</span>
                                             </span>
                                             <img src="assets/img/upload-ic-white.svg" alt=""   />
-                                            
+                                            </button>
                                         </a>
 
 

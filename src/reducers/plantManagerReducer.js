@@ -64,6 +64,7 @@ const initialSatate = {
   plantPageNumber:0,
   plantSkuPageNumber:0,
   needAction: false,
+  plantRadioButton:"active",
   plantDataById:{
 
     genus: "",
@@ -163,21 +164,36 @@ const nameFormaterFunctionForHandler = (currentAction,plantData)=>{
    
 }
 
+const getFilteredPlantList = (plantDataList,plantRadioButton)=>{
+    let returnPlantDateList =[]
+    if(plantRadioButton === "active"){                
+        returnPlantDateList = plantDataList.filter(plant=>{
+            return (plant.archived === 0)
+        })            
+    }
+    else if(plantRadioButton === "archive"){
+        returnPlantDateList = plantDataList.filter(plant=>{
+            return (plant.archived === 1)
+        })       
+    }
+    else{
+        returnPlantDateList=plantDataList          
+    }
+    return returnPlantDateList
+}
+
 // eslint-disable-next-line import/no-anonymous-default-export
 export default function(state = initialSatate, action){
     switch(action.type){
         // plant page redirects
         case CHECK_BOX:
             let plantData1 = state.plantData
-   
-
-            // if(action.typetoshow!=="in_production" && action.obj[action.typetoshow]===1)
             plantData1[action.index] = {...plantData1[action.index],...action.obj}
-            // else  plantData1[action.index]["status"] = 1
-
+            let UpdatedPlantList = []
+            UpdatedPlantList = getFilteredPlantList(plantData1,state.plantRadioButton)           
             return{
                 ...state,
-                plantData:plantData1
+                plantData:UpdatedPlantList
             }
             case CHECK_BOX_SKU:
                 let plantSku = state.plantSkuDataList
@@ -188,10 +204,20 @@ export default function(state = initialSatate, action){
                 }
         case UPDATE_CHECK_BOX:
             let plantData = state.plantData
+            if(plantData.length>0){
             plantData[action.index][action.typetoshow]= action.obj[action.typetoshow]
+            let UpdatedPlantListCheckBox = []
+            UpdatedPlantListCheckBox = getFilteredPlantList(plantData,state.plantRadioButton)
             return{
                 ...state,
-                plantData:plantData,
+                plantData:UpdatedPlantListCheckBox,
+            }
+            }
+            else{
+                return{
+                    ...state,
+                    plantData:[],
+                }
             }
             case UPDATE_CHECK_BOX_SKU:
                 let plantSkuData = state.plantSkuDataList
@@ -205,6 +231,7 @@ export default function(state = initialSatate, action){
                 ...state,
                 plantPageToOpen:action.page,
                 actionType:action.actionType,
+                plantRadioButton:"active",
                 plantDataById     :   {
                     genus: "",
                     alternate_genus: "",
@@ -249,7 +276,8 @@ export default function(state = initialSatate, action){
                 ae_plant_id:"",
                 dynamicName:"",
                 displayCancel:false,
-                plantNameWithFormat:{firstName:"",secondName:""}
+                plantNameWithFormat:{firstName:"",secondName:""},
+               
 
 
             }
@@ -264,14 +292,16 @@ export default function(state = initialSatate, action){
 
 
         case GET_ALL_PLANT_ACTION:
+            let returnPlantList = []               
+                returnPlantList = action.payload.filter(plant=>{
+                    return (plant.archived === 0)
+                })              
             return{
                 ...state,
-                plantData:action.payload,
+                plantRadioButton:"active",
+                plantData:returnPlantList,
                 backupData:action.payload
-
             }
-
-
             case CREATE_PLANT_ACTION:
                 let createdPlantNameWithFormat = {}    
                  createdPlantNameWithFormat = nameFormaterFunction(action.createdPlantData)
@@ -436,6 +466,7 @@ export default function(state = initialSatate, action){
                 ...state,
                 needAction:false,
                 actionType:"add",
+                plantRadioButton:"active",
                 plantDataById     :   {
                     genus: "",
                     alternate_genus: "",
@@ -550,12 +581,14 @@ export default function(state = initialSatate, action){
                 if(action.payload.plant.trim() ==="" && optionVal === -1 && categoryVal === "0"){
                     return{
                         ...state,
+                        plantRadioButton:action.payload.option,
                         plantData:state.backupData
                     }
                 }
                 if(action.payload.plant.trim() ==="" &&  categoryVal !== "0"){
                     return{
                         ...state,
+                        plantRadioButton:action.payload.option,
                         plantData:state.backupData.filter(
                             filterData=>( action.payload.plant==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&
@@ -567,6 +600,7 @@ export default function(state = initialSatate, action){
                 else{
                     return{
                         ...state,
+                        plantRadioButton:action.payload.option,
                         plantData:state.backupData.filter(
                             filterData=>((filterData.genus?filterData.genus.toLowerCase().indexOf(action.payload.plant.trim().toLowerCase()) > -1:false) || action.payload.plant==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&
@@ -669,3 +703,4 @@ export default function(state = initialSatate, action){
     }
 
 }
+
