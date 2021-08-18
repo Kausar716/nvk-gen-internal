@@ -1,7 +1,7 @@
 import React from 'react'
 import AddCustomer from './EditCustomer'
 import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
-
+import { confirmAlert } from 'react-confirm-alert'; 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
 import Autosuggest from 'react-autosuggest';
@@ -22,7 +22,10 @@ export class CustomerSettings extends React.Component {
             searchValue:"",
             radioFilter:"active",
             value:"",
-            suggestions:[]
+            suggestions:[],
+            isOpen2:false,
+           message2:[],
+
         }
     }
     componentDidMount(){
@@ -30,6 +33,7 @@ export class CustomerSettings extends React.Component {
         this.props.getAllCustomer(this.state.radioFilter)
         this.props.getAllCustomerType()
     }
+    toggle2 = () => this.setState({isOpen2:!this.state.isOpen2});
         //const {categoryData,subCategoryData} = props.categoryData
         // const [value,setValue] = useState("")
         // const [suggestions,setSuggestions] = useState([])
@@ -101,9 +105,27 @@ export class CustomerSettings extends React.Component {
     }
     deleteCustomerData =(id)=>{
         // alert(id)
-       this.props.deleteCustomer(id).then(data=>{
-           this.props.getAllCustomer()
-       })
+
+        confirmAlert({
+            title: 'Delete Location Type',
+            message: 'Are you sure want to delete the Customer?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {this.props.deleteCustomer(id).then(data=>{
+                    // setMessage2(["Customer Successfully"])
+                    // setIsOpen2(true)
+                    // this.props.resetCustomerFilds()
+                    this.props.getAllCustomer().then(data=>{
+            
+                    })
+                   })}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
 
     }
     handleSearch = (e)=>{
