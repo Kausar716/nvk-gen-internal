@@ -136,7 +136,7 @@ export class SupplierManagemnet extends React.Component {
         value:this.state.value,
             // className:"searchInput",
             className:" form-control  btn btn-search ",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"13%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"9%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.onChange
         };
         // if(this.props.customerData) {
@@ -149,7 +149,7 @@ export class SupplierManagemnet extends React.Component {
             if(this.props.supplierData.supplierList){
                 pageNumber = this.props.supplierData.pageNumber
                 // console.log()
-                customerData = [...this.props.supplierData.supplierList]
+                customerData = [...this.props.supplierData.supplierList.sort((a, b) => parseInt(b.id) - parseInt(a.id))]
                 totalLength = this.props.supplierData.supplierList.length
                 plantPerPage = this.state.pageSize;
                 pagesVisited =  this.props.supplierData.pageNumber*this.state.pageSize;
@@ -304,7 +304,7 @@ export class SupplierManagemnet extends React.Component {
                                         <tbody>
                                         {displayCustomerList.map(customerData=>{
                                             return <tr>
-                                                         <td>{customerData.status === 1?"Active":"Inactive" }</td>
+                                                         <td style={{color:customerData.status === 1?"":"red"}}>{customerData.status === 1?"Active":"Inactive" }</td>
                                                         <td>{customerData.id}</td>
                                                         <td>{customerData.supplier_name}</td>
                                                         <td>{"--"}</td>
