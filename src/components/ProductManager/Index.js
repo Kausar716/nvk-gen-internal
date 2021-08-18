@@ -420,7 +420,7 @@ const  ProductManagement = (props) =>{
                                                 <div class="col-md-6">
                                                     <h2 >Product ID &nbsp;&nbsp;
                                                         {/* //{product_idFromGeneral||productDataById.product_id} */}
-                                                        <snap className="text-green">{props.temp.productData.ae_product_id ==="" ? productDataById.product_id: product_idFromGeneral}</snap>
+                                                        <snap className="text-green">{props.temp.productData.ae_product_id ==="" ? productDataById.product_id?productDataById.product_id:"HG": product_idFromGeneral}</snap>
                                                     </h2>
                                                 </div>
                                                 
