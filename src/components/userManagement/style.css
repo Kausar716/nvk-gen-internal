@@ -256,3 +256,7 @@
 
 .hoverOFF {
 }
+
+.custom-control :hover {
+  /* pointer-events: none; */
+}

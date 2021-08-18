@@ -5,9 +5,9 @@ export const CheckBox = props => {
    <div>
 
   
-   <ul class="list-unstyled">
+   <ul class="list-unstyled" style={{pointerEvents:"none", marginTop:"1em"}}>
    <li>
-    <div class="custom-control custom-checkbox">
+    <div class="custom-control custom-checkbox" style={{marginTop:"-17px", pointerEvents:"none"}}>
       <input
         key={props.id}
         onClick={props.handleCheckChieldElement}

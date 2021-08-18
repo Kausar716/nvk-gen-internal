@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-} from "react-router-dom";
+  Prompt,
+} from 'react-router-dom';
 import React, { useState } from 'react';
 //import "semantic-ui-css/semantic.min.css";
 import {Provider} from 'react-redux';
@@ -47,30 +48,30 @@ import OrderList from "./components/QuoteAndOrdersManagement/OrderList";
 import QuoteList from "./components/QuoteAndOrdersManagement/QuoteList";
 import Quote from "./components/QuoteAndOrdersManagement/Quotes";
 
-import UserLeaveConfirmation from "./components/toolsAndSetting/UserLeaveConfirmation";
+//import UserLeaveConfirmation from "./components/toolsAndSetting/UserLeaveConfirmation";
 
 export const history = createBrowserHistory({forceRefresh: true})
 
 
-function App(props) {
-  const [confirmOpen, setConfirmOpen]= useState(true);
+const  App =(props)=> {
+ // const [confirmOpen, setConfirmOpen]= useState(true);
   const authKey = props.authKey;
   
   
   console.log("authKey", authKey)
   console.log("loggedIn", authKey.loggedIn)
   return (
-    <div >
+    < >
     
-    <Router
-          // getUserConfirmation={(message, callback) => {
-          //   return UserLeaveConfirmation(
-          //     message,
-          //     callback,
-          //     confirmOpen,
-          //     setConfirmOpen
-          //   );
-          // }}
+    <Router  
+            //  getUserConfirmation={(message, callback) => {
+            //   return UserLeaveConfirmation(
+            //     message,
+            //     callback,
+            //     confirmOpen,
+            //     setConfirmOpen
+            //   );
+            // }}
     >
     <Provider store={store}>
 
@@ -121,7 +122,7 @@ function App(props) {
                   <Route path="/usermanagement">
                   <Nav />
                   <Left />
-                    <UserManagement/>
+                    <UserManagement route={props.route} />
                   </Route>
 
                   <Route path="/customerlisting">
@@ -269,7 +270,7 @@ function App(props) {
     </Router>
    
 
-    </div>
+    </>
   );
 }
 
