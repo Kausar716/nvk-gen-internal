@@ -16,6 +16,9 @@ function QuoteOrderPermission(props) {
     const [isChecked, setIsChecked]=useState(false)
     //const [isCheckedPO, setIsCheckedPO]=useState(false)
 
+    const [apCount, setApCount]=useState(0);
+    const [submitCount, setSubmitCount] = useState(0)
+
     const [quotePermissionListHere, setquotePermissionListHere] =useState([]);
     const [purchasePermissionListHere, setPurchasePermissionListHere] =useState([]);
     const [toolsAnsSettingsPermission, setToolsAnsSettingsPermission] =useState([]);
@@ -67,10 +70,19 @@ function QuoteOrderPermission(props) {
     console.log("quotePermissionListHere", quotePermissionListHere)
     // if(permissionList){
      let finalQOPermissions  = quotePermissionListHere.filter(x=>
-         x.id===99 || x.id===100 || x.id===101 
-        || x.id===102 || x.id===103 || x.id===104 || x.id===105 || x.id===106
-        || x.id===107 || x.id===108 || x.id===109  || x.id===110 || x.id===111 
-        || x.id===112 || x.id===120 || x.id===121)
+         x.id===164 || x.id===165 || x.id===166 
+        || x.id===167 || x.id===168 || x.id===169 || x.id===170 || x.id===171
+        || x.id===172 || x.id===173 || x.id===174  || x.id===175 || x.id===176 
+        || x.id===177 || x.id===178 || x.id===179
+
+
+        // x.id===99 || x.id===100 || x.id===101 
+        // || x.id===102 || x.id===103 || x.id===104 || x.id===105 || x.id===106
+        // || x.id===107 || x.id===108 || x.id===109  || x.id===110 || x.id===111 
+        // || x.id===112 || x.id===120 || x.id===121
+        
+        
+        )
     //     setquotePermissionListHere(permissionList)|| 100||101||102||103||104||105||106||107||108||109
     // }121
 //x.id===128 ||
@@ -116,10 +128,18 @@ function QuoteOrderPermission(props) {
     
 
     
-     let finalAllCheckBox = allPermisssions.filter(x=>  x.id===99 || x.id===100 || x.id===101 
-        || x.id===102 || x.id===103 || x.id===104 || x.id===105 || x.id===106
-        || x.id===107 || x.id===108 || x.id===109  || x.id===110 || x.id===111 
-        || x.id===112 || x.id===120 || x.id===121 || x.id===128 || x.id===129 || x.id===130 || x.id===131 
+     let finalAllCheckBox = allPermisssions.filter(x=>  
+        // x.id===99 || x.id===100 || x.id===101 
+        // || x.id===102 || x.id===103 || x.id===104 || x.id===105 || x.id===106
+        // || x.id===107 || x.id===108 || x.id===109  || x.id===110 || x.id===111 
+        // || x.id===112 || x.id===120 || x.id===121 
+
+        x.id===164 || x.id===165 || x.id===166 
+        || x.id===167 || x.id===168 || x.id===169 || x.id===170 || x.id===171
+        || x.id===172 || x.id===173 || x.id===174  || x.id===175 || x.id===176 
+        || x.id===177 || x.id===178 || x.id===179
+        
+        || x.id===128 || x.id===129 || x.id===130 || x.id===131 
         || x.id===132 || x.id===133 || x.id===134 || x.id===135 || x.id===136 || x.id===137 || x.id===138 
         || x.id===139 || x.id===140 || x.id===141 ||  x.id===142 || x.id===143 || x.id===144 || x.id===145
         || x.id===146 || x.id===147 || x.id===148 || x.id===149 || x.id===122 || x.id===123 || x.id===124 
@@ -132,6 +152,7 @@ function QuoteOrderPermission(props) {
 
     const handleChange=(e)=>{
 //debugger;
+            var allCount =0;
          const {name, checked, id } = e.target;
 
          if(name === "SelectAllQuote"){
@@ -226,7 +247,7 @@ function QuoteOrderPermission(props) {
             //let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
            
             setCustomerManagementPermission(tempUserALL)
-            setToolsAnsSettingsPermission(tempUserALL)
+             setToolsAnsSettingsPermission(tempUserALL)
             setUserManagementPermission(tempUserALL)
             setSupplierManagementPermission(tempUserALL)
             setInventoryManagementPermission(tempUserALL)
@@ -241,66 +262,95 @@ function QuoteOrderPermission(props) {
           //debugger;
             let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
 
+            setToolsAnsSettingsPermission(tempUserTS)
 
-            // if(id==="toolsSettingsIntoolsSettingsPermissions" && id==="customerManagementInCustomerManagementPermissions" && id==="userManagementInUserManagementPermissions" && id==="userManagementInUserManagementPermissions"){ 
+            let trueCount = 0, falseCount = 0;
+
+            
+
+
+            if(checked){
+
+                tempUserTS.forEach(function(object) {
+                    object.isChecked === true ? trueCount++ : falseCount++;
+                    });
+
+
+                if(trueCount === 4){
+                    setSubmitCount(submitCount+1)
+                 }
+            }
+           
+
+            console.log("trueCount",finalTSettingspermissions, trueCount , falseCount, submitCount)
+
+            // if(!checked){
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+            //     setAdditionalPermissions(tempUserALL)
             // }
-
-            //let tempUserALL1 = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
-
-            if(!checked){
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
-                setAdditionalPermissions(tempUserALL)
-            }
-            else{
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
-                setAdditionalPermissions(tempUserALL)
-            }
+            // else{
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
            // let tempUserTS2 =[...tempUser2, ...tempUserTS]
-           setToolsAnsSettingsPermission(tempUserTS)
+          
+           console.log("toolsAnsSettingsPermission123", toolsAnsSettingsPermission, submitCount)
          }
 
          else  if(name === "customerManagementInCustomerManagementPermissions"){
        
             let tempUserCMS = finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
 
-            if(!checked){
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
-                setAdditionalPermissions(tempUserALL)
-            }
-            else{
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
-                setAdditionalPermissions(tempUserALL)
-            }
-            //let finalCS = [...tempCS, ...tempUserCMS]
+            // if(!checked){
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
+            // else{
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
+           
             setCustomerManagementPermission(tempUserCMS)
+
+            let trueCount = 0, falseCount = 0;
+            tempUserCMS.forEach(function(object) {
+                object.isChecked === true ? trueCount++ : falseCount++;
+                });
+    
+                if(trueCount === 3){
+                    allCount++;
+                }
+    
+                console.log("trueCount",tempUserCMS, trueCount , falseCount, submitCount)
+    
          }
 
          else  if(name === "userManagementInUserManagementPermissions"){
             let tempUserUMP = finalUserManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
 
 
-            if(!checked){
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
-                setAdditionalPermissions(tempUserALL)
-            }
-            else{
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
-                setAdditionalPermissions(tempUserALL)
-            }
+            // if(!checked){
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
+            // else{
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
             setUserManagementPermission(tempUserUMP)
          }
 
          else  if(name === "InventoyManagementInInventoyManagementPermissions"){
             let tempUserINV = finalInventoryManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
 
-            if(!checked){
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
-                setAdditionalPermissions(tempUserALL)
-            }
-            else{
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
-                setAdditionalPermissions(tempUserALL)
-            }
+            // if(!checked){
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
+            // else{
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
             setInventoryManagementPermission(tempUserINV)
          }
 
@@ -312,14 +362,14 @@ function QuoteOrderPermission(props) {
          else  if(name === "SupplierManagementInSupplierManagementPermissions" ){
             let tempUserSMP = finalSupplierManagemnetPermission.map(user=>{return {...user, isChecked:checked}});
 
-            if(!checked){
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
-                setAdditionalPermissions(tempUserALL)
-            }
-            else{
-                let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
-                setAdditionalPermissions(tempUserALL)
-            }
+            // if(!checked){
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:false}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
+            // else{
+            //     let tempUserALL = additionalPermissionAll.map(user=>{return {...user, isChecked:true}});
+            //     setAdditionalPermissions(tempUserALL)
+            // }
             setSupplierManagementPermission(tempUserSMP)
          }
 
@@ -438,7 +488,7 @@ function QuoteOrderPermission(props) {
     };
 
 
-
+console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission)
     return (
         <>
            <div style={{padding:"0.5em"}}>

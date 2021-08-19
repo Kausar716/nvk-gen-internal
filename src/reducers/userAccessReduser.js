@@ -9,7 +9,8 @@ import {
     HANDLE_USER_ACCESS_INPUT_DATA,
     SHOW_SELECTED_USER,
     UPDATE_USER_PERMISSION,
-    RESET_USERDATA
+    RESET_USERDATA,
+    TAB_CHANGE_VALUE,
    } from '../actions/types';
 
 const initialSatate = {
@@ -24,7 +25,8 @@ const initialSatate = {
     tools:[],
     customer:[],
     user:[],
-    selectedUser:{}
+    selectedUser:{},
+    tabChangeValue:0
 }
 
 
@@ -63,7 +65,14 @@ const initialSatate = {
                 selectedUser:{}
                 
             }
+        }
 
+        case TAB_CHANGE_VALUE:{
+            return{
+                ...state,
+                tabChangeValue:action.tabChangeValue
+                
+            }
         }
 
         case GET_PERMISSION_LIST:{

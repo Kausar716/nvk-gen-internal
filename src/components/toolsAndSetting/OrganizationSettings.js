@@ -288,7 +288,8 @@ class OrganizationSettings extends React.Component {
        
        // let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         let nameReg = /^[a-zA-Z0-9!@#$&()\\-`.+,/\"]*$/;
-        let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
+        let emailReg =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //let emailReg = /^(("[\w-\s]+")|([\w-]+(?:\.[\w-]+)*)|("[\w-\s]+")([\w-]+(?:\.[\w-]+)*))(@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][0-9]\.|1[0-9]{2}\.|[0-9]{1,2}\.))((25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\.){2}(25[0-5]|2[0-4][0-9]|1[0-9]{2}|[0-9]{1,2})\]?$)/i;
        // let emailReg =/\S+@\S+\.\S+/
         let organizationData = this.props.organizationData.organizationData
         console.log("eMAIL123",emailReg.test(organizationData.sending_email_address))
@@ -823,7 +824,7 @@ saveDisable =()=>{
       when={this.state.disabled===false ? organizationDataById.name && organizationDataById.phone && organizationDataById.name && organizationDataById.sending_email_address :" " }
        message={this.state.hadModified.main_body || this.state.hadModified.main_title ||this.state.hadModified.secondary_title || this.state.hadModified.secondary_body
          || this.state.hadModified.name || this.state.hadModified.sending_email_address 
-         || this.state.hadModified.phone ? 'You have unsaved changes. Are you sure you want to leave ?' : ' Are you sure you want to leave ?'}
+         || this.state.hadModified.phone ? 'You have unsaved changes. Are you sure you want save and leave ?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
     /> : false}
@@ -964,7 +965,20 @@ saveDisable =()=>{
                                                              // style={{height:"250px",width:"255px", borderRadius:"50%"}}
                                             />
 
+
+                                        <div className="loaderCenter">
+                                                {this.state.imgLoader===true ? 
+                                                    <p >
+                                                         <Loader /> 
+                                                         </p> 
+                                                    :
+                                                    <p > </p> 
+                                            }
+                                           
+                                            </div>
                                         </div>
+
+                                       
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
                                             
 
@@ -985,26 +999,28 @@ saveDisable =()=>{
 
 
                                             
-                                            <div className="loaderCenter">
+                                            {/* <div className="loaderCenter">
                                                 {this.state.imgLoader===true ? 
                                                     <p >
-                                                         {/* {this.state.imgLoader===false ? <Loader /> : ""}  */}
                                                          <Loader /> 
                                                          </p> 
                                                     :
                                                     <p > </p> 
                                             }
                                            
-                                            </div>
+                                            </div> */}
                                         </div>
 
 
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
-                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}} disabled={this.props.organizationData.organizationData.logo===null || this.props.organizationData.organizationData.logo===undefined ? this.state.disableImageUpload ===true : this.state.disableImageUpload===false}>
+                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}} 
+                                        //disabled={this.props.organizationData.organizationData.logo===null || this.props.organizationData.organizationData.logo===undefined ? this.state.disableImageUpload ===true : this.state.disableImageUpload===false}
+                                        >
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg" 
-                                              onChange={this.handlImageUpload}  disabled={ this.props.organizationData.organizationData.logo===null ||  this.props.organizationData.organizationData.logo===undefined? this.state.disableImageUpload ===true : this.state.disableImageUpload===false }
+                                              onChange={this.handlImageUpload}  
+                                              //disabled={ this.props.organizationData.organizationData.logo===null ||  this.props.organizationData.organizationData.logo===undefined? this.state.disableImageUpload ===true : this.state.disableImageUpload===false }
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0,  cursor:"pointer"}}  />
