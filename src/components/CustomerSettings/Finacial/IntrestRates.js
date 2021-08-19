@@ -135,7 +135,7 @@ const confirmAction = (type)=>{
   const dataTochange =(e)=>{
     setCheckedData(false);setYear(false);setTax(false)
     // let intValue = e.target.value
-    setMonth(true);
+    setMonth(false);
     if(e.target.value!=="" && e.target.id !== "taxrate_label" && e.target.id !=="taxrate_number"){
       if(Number.isInteger(parseFloat(e.target.value))) {
         let intValue = e.target.value*1.000
@@ -153,7 +153,7 @@ const confirmAction = (type)=>{
         var charCode = (e.which) ? e.which : e.keyCode;
           
         let id = e.target.id
-        let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+        let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,3})?$/);
 
         if(characterCheck === null){
           if(id === "monthly"){
