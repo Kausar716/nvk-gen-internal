@@ -9,7 +9,7 @@ import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
-import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
+import {getRolesList,tabChangeValues} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
 
 class UserManagement extends Component {  
