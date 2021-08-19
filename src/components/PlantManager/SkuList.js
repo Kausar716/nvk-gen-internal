@@ -70,6 +70,8 @@ const SkuList = (props)=>{
 
     }
     const handleInput =(e)=>{
+        console.log(e.target.id)
+        console.group(e.target.value)
         let errorcount =errorCount
         let errorobj =errorObj
         if(e.target.id  === "each_cost" ){
@@ -222,12 +224,13 @@ const SkuList = (props)=>{
        }
        })[0] 
         let selectedHeight =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
-        if(attributeObj.attribute_id === 4){
+            console.log(attributeObj)
+        if(attributeObj.attribute_id === 3){
         return attributeObj.subattribute_id
         }
         })[0]  
         let selectedPackaging =plantSkuDataById.attributes_subattributes.filter(attributeObj=>{
-            if(attributeObj.attribute_id === 3){
+            if(attributeObj.attribute_id === 4){
             return attributeObj.subattribute_id
         }
         })[0]
@@ -424,7 +427,7 @@ const SkuList = (props)=>{
                                         </div>
                                         <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                             <label>Packaging <span class="text-danger">*</span></label>
-                                            <select class="form-control" style={{cursor:"pointer"}} id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.id === 3)[0]["id"]:"packaging"} onChange={handleInput}
+                                            <select class="form-control" style={{cursor:"pointer"}} id="packaging" id={allAttributes.length>0?allAttributes.filter(formData=>formData.name === "Packaging")[0]["id"]:"packaging"} onChange={handleInput}
                                             value={selectedPackaging?selectedPackaging.subattribute_id:""} disabled={(actionType === "sku")}>
                                             <option value="">None</option>
                                             {allAttributes.length>0?allAttributes.filter(formData=>formData.name ==="Packaging").map(filterData=>{
