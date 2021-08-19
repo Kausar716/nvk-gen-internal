@@ -418,7 +418,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         {/* <div class="col-md-4 ml-0">
                                             <p></p>
                                         </div> */}
-                                        <div class="col-md-3 d-flex justify-content-end">
+                                        <div class="col-md-6 d-flex justify-content-end">
                                         
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
@@ -432,8 +432,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             
                                         </div>
                                         <div class="col-md-3 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
-                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
+                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button> */}
                                         </div>
                                     </div>
                                     <div class="row mt-3">
