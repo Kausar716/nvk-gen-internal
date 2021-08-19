@@ -263,9 +263,10 @@ const ProductTable  = (props) => {
                                             
                                         </tbody>
                                     </table>
-
                                     <div className="centerItem">
-                                    <p > {productData.length===0?props.loaderMessage :""}  <Loader /></p>
+                                    <p >{productData.length===0?props.loaderMessage:""}
+                                    {(productData.length===0 && props.loaderMessage === "Loading Data...")?<Loader />:""}
+                                    {(productData.length===0 && props.loaderMessage === "No Records Found.")?<Loader />:""}</p>
                                     </div>
 
                                     {/* <p style={{textAlign:"center",color:"red", display:"flex", marginLeft:"20em"}}>

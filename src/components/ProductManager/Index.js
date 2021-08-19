@@ -152,6 +152,7 @@ const  ProductManagement = (props) =>{
         }
         const handleManufactureData =(e)=>{
             console.log(e.target.value)
+            setLoaderMessage("No Records Found.")
             let selectedId = parseInt(e.target.value)
             props.handleManufactureData(selectedId)
             props.serachProduct({product: inputValue, option: selectedRadio, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
@@ -204,7 +205,7 @@ const  ProductManagement = (props) =>{
    
            }else{
                setType(type)
-               setMessage("Are you sure you want to duplicate this product and all its related SKU and plant information?")
+               setMessage("Are you sure you want to duplicate this product and all its related SKU and product information?")
    
            }
            setOpen(true)
