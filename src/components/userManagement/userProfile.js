@@ -27,7 +27,7 @@ class UserProfile extends React.Component {
       
         this.state={
             unsaved: true,
-
+            isWindowInFocus: true,
             disableImageRemove:true,
             disableImageUpload:false,
         
@@ -116,7 +116,8 @@ class UserProfile extends React.Component {
                deleted_at:selectedUser.deleted_at
             });
 
-           
+
+            // window.addEventListener("focus", this.onFocus)
     }
 
 
@@ -124,12 +125,14 @@ class UserProfile extends React.Component {
 
     componentWillUnmount=()=>{
       
-        if (this.state.hadModified && this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
+        if (this.state.isWindowInFocus===false && this.state.hadModified && this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
             window.onbeforeunload = () => true
             this.handleSubmit();
           } else {
             window.onbeforeunload = undefined
           }
+
+          //window.addEventListener("focus", this.onFocus)
 
     }
 
@@ -371,10 +374,10 @@ class UserProfile extends React.Component {
         
        })
 
-       this.setState({
-        //disableImageRemove: false,
-        disableImageUpload: true
-    })
+    //    this.setState({
+    //     //disableImageRemove: false,
+    //     disableImageUpload: true
+    // })
  
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
@@ -383,9 +386,9 @@ class UserProfile extends React.Component {
         }
 
         
-        setTimeout(function() {
-            window.location.reload();
-         }, 1000);
+        // setTimeout(function() {
+        //     window.location.reload();
+        //  }, 1000);
 
        
 
@@ -480,7 +483,42 @@ class UserProfile extends React.Component {
     confirm = ()=>{
         this.setState({open:false})
     }
+
+
+    //  onFocus = () => {
+    //     console.log('Tab is in focus');
+    //     this.setState({
+    //         isWindowInFocus:false
+    //     })
+
+    //     console.log("isWindowInFocus222", this.state.isWindowInFocus)
+    //   }
+
+
+    handleChange = (event, newValue) => {
+        debugger;
+       if (newValue !== 0 && this.state.tabValues === 0) {
+         const res = window.confirm("Leaving?");
+         if (res === true) {
+             this.setState({
+               tabValues:newValue
+             })
+           //setValue(newValue);
+         }
+       } else {
+       //   setValue(newValue);
+       this.setState({
+           tabValues:newValue
+         })
+       }
+     }
+      
+
+
+
     render() {
+
+        console.log("123456789", this.props.tabValues)
         console.log("roles123", this.props.roles)
         console.log("usersUSER", this.props.data,  this.props.users.payload.active)
         const { actionType } = this.state;
@@ -602,13 +640,13 @@ class UserProfile extends React.Component {
         <>
 
         
-         {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
+         {  this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
          <Prompt
          //when={shouldBlockNavigation}
          //key='block-nav'
         //when={this.state.shouldBlockNavigation}
        // when={this.saveChanges()}
-        when={this.state.disableButton===true ? this.state.firstName:" " }
+        when={this.state.disableButton===true ? this.state.firstName:" " && this.props.tabValues !==1}
         message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone 
             || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
@@ -753,12 +791,12 @@ class UserProfile extends React.Component {
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                 <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}}
-                                                disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                //disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
                                                  >
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id={new Date().getTime()}  ref={fileInput => (this.fileInput = fileInput)}
                                                     onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg"
-                                                    disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                    //disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
                                                       />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>

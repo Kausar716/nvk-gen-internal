@@ -13,13 +13,14 @@ import {getRolesList} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
 
 class UserManagement extends Component {  
-constructor(){
-    super()
+constructor(props){
+    super(props)
     this.state={
         firstName:"",
         lastName:"",
         phone:"",
         email:"",
+        tabValues:0,
         locationAccess:false,
         displayDeletedRecords:false,
         visbleTrue:false,
@@ -78,6 +79,12 @@ handleCancle = () => {
 componentDidMount(){
     this.props.getUsersList()
     this.props.getRolesList()
+
+   // this.handleSelect()
+
+
+
+    
 }
  hanleCheckBox = (e) => {
 if( e.target.value === "off"){
@@ -104,6 +111,56 @@ chengeFunction =(e)=>{
 console.log("eeeABCD", e)
 }
 
+
+// handleSelect(key){
+
+//     if (key === 1){
+//         this.setState({
+//             tabValues:1
+//         })
+//     }
+
+//     else if(key===2){
+//         this.setState({
+//             tabValues:2
+//         })
+
+//     }
+//     else{
+//         this.setState({
+//             tabValues:3
+//         })
+//     }
+//   }
+
+
+ handleChange = (event, newValue) => {
+     debugger;
+    if (newValue !== 0 && this.state.tabValues === 0) {
+      const res = window.confirm("Leaving?");
+      if (res === true) {
+          this.setState({
+            tabValues:newValue
+          })
+        //setValue(newValue);
+      }
+    } else {
+    //   setValue(newValue);
+    this.setState({
+        tabValues:newValue
+      })
+    }
+  }
+
+handleSelect=(e)=>{
+    //debugger;
+
+    console.log("MJR1", e.target.value)
+    this.setState({
+        tabValues: e.target.value
+    });
+    console.log("MJR2", e.target.value, this.state.tabValues)
+  }
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -145,7 +202,7 @@ console.log("eeeABCD", e)
     console.log(this.props.temp.userReduser)
 
 
-
+ console.log("tabValues123", this.state.tabValues)
         
     return (
         <div clas="userManagementSection">
@@ -155,14 +212,22 @@ console.log("eeeABCD", e)
                 </h1>
 			</div>
             <div class="px-md-3 mt-3">
-                <Tabs>
-                    <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}>
-                        <Tab style={{bottom:"0px"}} route={this.props.route} >User Profiles</Tab>
-                        <Tab style={{bottom:"0px"}}>User Access</Tab>
-                        <Tab style={{bottom:"0px"}}>User Positions</Tab>
+                <Tabs
+                // value={this.state.tabValues}  onChange={this.handleChange}
+                 >
+                    <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}  >
+                        <Tab style={{bottom:"0px"}} route={this.props.route} 
+                         value={1} onClick={() => this.setState({tabValues: 1})}
+                          >User Profiles</Tab>
+                        <Tab style={{bottom:"0px"}} 
+                        value={2} onClick={() => this.setState({tabValues: 2})}
+                        > User Access</Tab>
+                        <Tab style={{bottom:"0px"}}  
+                        value={3} onClick={() => this.setState({tabValues: 3})}
+                        >User Positions</Tab>
                     </TabList>
 
-                    <TabPanel>
+                    <TabPanel  value={this.state.tabValues} index={0}>
 
                     <div class="bg-white">
                     {this.state.visbleTrue!==true  ? 
@@ -238,7 +303,7 @@ console.log("eeeABCD", e)
                                             </p>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList} route={this.props.route} />:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  tabValues={this.state.tabValues} />:null}
                                     {displayCreate?<CreateUserProfile  handleSubmitData={this.handleSubmit}  cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>
@@ -248,10 +313,10 @@ console.log("eeeABCD", e)
                     </TabPanel>
                   
 
-                    <TabPanel>
+                    <TabPanel value={this.state.tabValues} index={1} >
                     <UserAccess/>
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel value={this.state.tabValues} index={2} >
                         <UserSettingsIndex/>
 
                     </TabPanel>

@@ -54,6 +54,8 @@ export const Component = withRouter(({ history, location }) =>{
         })
         }
     }
+
+    
     handlecreateRoleModalResult = (e) => {
         console.log(e.target.id)
         let createRole

@@ -1001,10 +1001,13 @@ saveDisable =()=>{
 
                                         <p><small>Image should be print quality (PNG or JPG)</small></p>
                                         <a href="#" class="btn btn-primary btn-block btnGroup">
-                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}} disabled={this.props.organizationData.organizationData.logo===null || this.props.organizationData.organizationData.logo===undefined ? this.state.disableImageUpload ===true : this.state.disableImageUpload===false}>
+                                        <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}} 
+                                        //disabled={this.props.organizationData.organizationData.logo===null || this.props.organizationData.organizationData.logo===undefined ? this.state.disableImageUpload ===true : this.state.disableImageUpload===false}
+                                        >
                                             <span class="d-flex align-items-center justify-content-around">
                                             <input  type="file"  id="imageid" name="logo" accept="image/png, image/jpeg" 
-                                              onChange={this.handlImageUpload}  disabled={ this.props.organizationData.organizationData.logo===null ||  this.props.organizationData.organizationData.logo===undefined? this.state.disableImageUpload ===true : this.state.disableImageUpload===false }
+                                              onChange={this.handlImageUpload}  
+                                              //disabled={ this.props.organizationData.organizationData.logo===null ||  this.props.organizationData.organizationData.logo===undefined? this.state.disableImageUpload ===true : this.state.disableImageUpload===false }
                                               ref={fileInput => (this.fileInput = fileInput)}
                                             // onClick={()=>{confirmAction("upload"); }}
                                              style={{zIndex:1,opacity:0,  cursor:"pointer"}}  />
