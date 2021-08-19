@@ -201,20 +201,26 @@ onMoveData = (evt,ui)=>{
             let result= this.props.handleCategoryDelete(id)
             this.setState({deleteon:true})
             result.then(res=>{
-                this.setState({deleteon:false})
+              
+               
                 this.props.getAllPlantCategories().then(()=>{
                     // alert("ji")
+                    this.setState({deleteon:false})
                     this.getCatgoryData()
                 })
-                // confirmAlert({
-                //     title: 'Delete Successfully',
-                //     message: 'Category Type ',
-                //     buttons: [
-                //       {
-                //         label: 'Ok'
-                //       }
-                //     ]
-                //   });
+             
+            }).catch(data=>{
+                 this.setState({deleteon:false})
+
+                    confirmAlert({
+                    title: 'Alert',
+                    message: 'Please note that this item is associated with Plants.Please reassign before deleting ',
+                    buttons: [
+                      {
+                        label: 'Ok'
+                      }
+                    ]
+                  });
             })
         }
 

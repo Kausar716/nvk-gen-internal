@@ -429,10 +429,10 @@ input[type="radio"]:checked {
 } */
 /* .trashShake { transition: all .2s ease-in-out; } */
 .trashShake {
-  transform: scale(3.1);
-  -webkit-transition: transform 1.09s ease-in-out;
-  -moz-transition:transform 1.09s ease-in-out;
-  -ms-transition:transform 1.09s ease-in-out;
+  transform: scale(1.6);
+  -webkit-transition: transform 1.05s ease-in-out;
+  -moz-transition:transform 1.05s ease-in-out;
+  -ms-transition:transform 1.05s ease-in-out;
 }
 
 /* .trashShake:hover {
