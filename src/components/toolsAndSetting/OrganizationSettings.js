@@ -965,7 +965,20 @@ saveDisable =()=>{
                                                              // style={{height:"250px",width:"255px", borderRadius:"50%"}}
                                             />
 
+
+                                        <div className="loaderCenter">
+                                                {this.state.imgLoader===true ? 
+                                                    <p >
+                                                         <Loader /> 
+                                                         </p> 
+                                                    :
+                                                    <p > </p> 
+                                            }
+                                           
+                                            </div>
                                         </div>
+
+                                       
                                             {/* <img src="assets/img/nvk-circle-logo.png" /> */}
                                             
 
@@ -986,17 +999,16 @@ saveDisable =()=>{
 
 
                                             
-                                            <div className="loaderCenter">
+                                            {/* <div className="loaderCenter">
                                                 {this.state.imgLoader===true ? 
                                                     <p >
-                                                         {/* {this.state.imgLoader===false ? <Loader /> : ""}  */}
                                                          <Loader /> 
                                                          </p> 
                                                     :
                                                     <p > </p> 
                                             }
                                            
-                                            </div>
+                                            </div> */}
                                         </div>
 
 

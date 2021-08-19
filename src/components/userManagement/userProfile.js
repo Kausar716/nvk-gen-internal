@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Loader from '../Modal/LoaderModal';
 import 'react-tabs/style/react-tabs.css';
 //import { confirmAlert } from 'react-confirm-alert'; // Import
 //import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -31,6 +32,7 @@ class UserProfile extends React.Component {
             isWindowInFocus: true,
             disableImageRemove:true,
             disableImageUpload:false,
+            imgLoader:false,
         
             shouldBlockNavigation:true,
         
@@ -203,6 +205,11 @@ class UserProfile extends React.Component {
             shouldBlockNavigation:false
         })
 
+
+        this.setState({
+            imgLoader: false
+        })
+              
         
     }
 
@@ -391,6 +398,10 @@ class UserProfile extends React.Component {
             this.fileInput.value = ""
         }
 
+
+        this.setState({
+            imgLoader: true
+        })
         
         // setTimeout(function() {
         //     window.location.reload();
@@ -426,6 +437,11 @@ class UserProfile extends React.Component {
             disableImageUpload: false,
             disableImageRemove:true
         })
+
+        this.setState({
+            imgLoader: true
+        })
+
         
     }
     handleDelete =()=> {
@@ -795,6 +811,25 @@ class UserProfile extends React.Component {
                                                     style={{objectFit:"contain"}}
                                                     class="resposiveImageParent"
                                                       />
+
+
+
+                                        <div className="loaderCenter">
+                                                {this.state.imgLoader===true ? 
+                                                    <p >
+                                                         <Loader /> 
+                                                         </p> 
+                                                    :
+                                                    <p > </p> 
+                                            }
+                                           
+                                            </div>
+                                       
+
+
+
+
+                                                      
                                                     </div>
                                                 
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
