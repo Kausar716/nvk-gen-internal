@@ -411,17 +411,18 @@ console.log("PRODUCT.ID", productDataById.product_id)
                             <div class="bg-white px-3 py-3 mt-3" style={{marginLeft:"1em", marginRight:"0.5em",paddingRight:"1em"}}>
                                 <form>
                                     <div class="row">
-                                        <div class="col-md-2">
-                                            <h3>GENERATED SKU </h3>
+                                        <div class="col-md-6">
+                                            <h3>GENERATED SKU <span className="greenText">{skuDataById.sku_code?skuDataById.sku_code:
+                                            `${props.productData.ae_product_id?props.productData.ae_product_id:props.productData.productDataById.product_id?props.productData.productDataById.product_id:""}-${skuDataById.sku_item_name?skuDataById.sku_item_name:""}`}</span></h3>
                                         </div>
-                                        <div class="col-md-4 ml-0">
-                                            <p>{skuDataById.sku_code}</p>
-                                        </div>
-                                        <div class="col-md-3 d-flex justify-content-end">
+                                        {/* <div class="col-md-4 ml-0">
+                                            <p></p>
+                                        </div> */}
+                                        <div class="col-md-6 d-flex justify-content-end">
                                         
                                             <div class=" d-flex align-items-center my-md-2 mt-3 mt-md-0">
                                                 Archive
-                                                <div class="switcher ml-2">
+                                                <div class="switcher ml-3">
                                                     <input type="checkbox" name="archived" id="archived" onChange={handleInput} value={skuDataById.archived} 
                                                     checked={skuDataById.archived==="1"?true:false}
                                                     />
@@ -431,8 +432,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             
                                         </div>
                                         <div class="col-md-3 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
-                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>
+                                            {/* <button type="button" class="btn btn-outline-secondary btn-lg ml-3"   
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button> */}
                                         </div>
                                     </div>
                                     <div class="row mt-3">
@@ -522,7 +523,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
 
                                     <div class="row mt-3">
                                         <div class="col-md-6 col-lg-3">
-                                            <label>Volume Quantity <span class="text-danger">*</span></label>
+                                            <label>Volume Quantity </label>
                                             <select class="form-control" style={{cursor:"pointer"}} id={"volume_quantity"} onChange={handleInput} value={skuDataById.volume_quantity} >
                                               
                                              {/* value={selectedVolumeQuality?selectedVolumeQuality.subattribute_id:""}> */}

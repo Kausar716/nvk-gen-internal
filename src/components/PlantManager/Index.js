@@ -347,9 +347,10 @@ const productFormAction = ()=>{
                                     <div class="px-md-3 mt-3">
                                         <div class="px-3 py-3 mb-3 bg-white">
                                             <div class="row align-items-center">
-                                                <div class="col-md-6">
-                                                    <h2>Plant ID
-                                                    <span className="text-green" >{ae_plant_id}</span> 
+                                                <div class = "col-md-1"> <h2>Plant ID</h2></div>
+                                                <div class="col-md-5">
+                                                    <h2>
+                                                    <span className="text-green" > {ae_plant_id}</span> 
                                                     <span className="text-green" style={{fontStyle:"italic"}}>{' '+plantNameWithFormat.firstName}</span>
                                                     <span className="text-green">{' '+plantNameWithFormat.secondName}</span> </h2>
                                                     

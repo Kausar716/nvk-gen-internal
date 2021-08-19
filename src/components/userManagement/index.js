@@ -12,7 +12,7 @@ import {getUsersList} from "../../actions/userAction";
 import {getRolesList} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
 
-export class UserManagement extends Component {  
+class UserManagement extends Component {  
 constructor(){
     super()
     this.state={
@@ -157,7 +157,7 @@ console.log("eeeABCD", e)
             <div class="px-md-3 mt-3">
                 <Tabs>
                     <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}>
-                        <Tab style={{bottom:"0px"}}>User Profiles</Tab>
+                        <Tab style={{bottom:"0px"}} route={this.props.route} >User Profiles</Tab>
                         <Tab style={{bottom:"0px"}}>User Access</Tab>
                         <Tab style={{bottom:"0px"}}>User Positions</Tab>
                     </TabList>
@@ -238,7 +238,7 @@ console.log("eeeABCD", e)
                                             </p>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  />:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList} route={this.props.route} />:null}
                                     {displayCreate?<CreateUserProfile  handleSubmitData={this.handleSubmit}  cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>

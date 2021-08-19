@@ -1,29 +1,38 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
-import React, {Component} from 'react'
+import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
-import { confirmAlert } from 'react-confirm-alert'; // Import
-import 'react-confirm-alert/src/react-confirm-alert.css';
+//import { confirmAlert } from 'react-confirm-alert'; // Import
+//import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
-import {getRolesList} from "../../actions/userAccessAction";
+//import getRolesList from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
-import * as BsIcons from "react-icons/io";
-import { Prompt , BrowserRouter, withRouter} from 'react-router';
+//import * as BsIcons from "react-icons/io";
+import { Prompt , BrowserRouter, withRouter, Lifecycle} from 'react-router';
 import './style.css';
 
 
+// export const Component = withRouter(({ history, location }) =>{
 
-  
+// })
 
-
-export class UserProfile extends Component {  
+class UserProfile extends React.Component { 
+    
     constructor(){
-        super()
+        super();
+      
         this.state={
+            unsaved: true,
+
+            disableImageRemove:true,
+            disableImageUpload:false,
+        
+            shouldBlockNavigation:true,
+        
             disabled:true,
             disableButton:true,
             firstName:"",
@@ -86,9 +95,13 @@ export class UserProfile extends Component {
                 { id: 4, value: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
               ]
         }
+
+   
+
+       
     }
     componentDidMount(){
-        //debugger;
+
            let selectedUser = this.props.selectedUser 
           console.log(selectedUser)
            this.setState({
@@ -101,53 +114,24 @@ export class UserProfile extends Component {
                id:selectedUser.id,
                logo:selectedUser.avatar?selectedUser.avatar:"",
                deleted_at:selectedUser.deleted_at
-            })
+            });
 
- 
-            // this.props.router.setRouteLeaveHook(this.props.route,this.routerWillLeave, () => {
-            //     if (this.state.unsaved)
-            //       return 'You have unsaved information, are you sure you want to leave this page?'
-            //   })
-
-
-            if ( this.state.disableButton===true ? this.state.firstName && selectedUser.lastName && selectedUser.position && selectedUser.name && selectedUser.email:" "   )  {
-                //debugger;
-               
-                window.onbeforeunload = () => true
-                this.handleSubmit();
-            
-            } else {
-                window.onbeforeunload = undefined
-            
-            }
-
-
-            // this.props.router.setRouteLeaveHook(this.props.route, () => {
-            //     if (this.state.hadModified.firstName===true ||this.state.hadModified.lastName===true || this.state.hadModified.email===true || this.state.hadModified.phone===true   )
-            //       return 'You have unsaved information, are you sure you want to leave this page?'
-            //   })
-            
-        
-
+           
     }
 
 
     
 
-    // componentDidUpdate=()=>{
+    componentWillUnmount=()=>{
       
-    //     if (this.state.hadModified && this.state.hadModified.firstName===true ||this.state.hadModified.lastName===true || this.state.hadModified.email===true || this.state.hadModified.phone===true   )  {
-    //         //debugger;
-           
-    //        // window.onbeforeunload = () => true
-    //         this.handleSubmit();
-        
-    //     } else {
-    //        // window.onbeforeunload = undefined
-        
-    //     }
+        if (this.state.hadModified && this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
+            window.onbeforeunload = () => true
+            this.handleSubmit();
+          } else {
+            window.onbeforeunload = undefined
+          }
 
-    // }
+    }
 
 
     handleAllChecked = event => {
@@ -189,10 +173,7 @@ export class UserProfile extends Component {
         }
         else if(name === "phone" ){
             hadModified.phone=true
-            // if(errorObj.phoneError>0){
-            //     errorObj.phoneError=0
-            //     errorCount--
-            // }            
+                    
         }
         else if(name === "email" ){
             hadModified.email=true
@@ -212,8 +193,11 @@ export class UserProfile extends Component {
 
 
         this.setState({
-            disableButton:false
+            disableButton:false,
+            shouldBlockNavigation:false
         })
+
+        
     }
 
     validate = () =>{
@@ -224,7 +208,9 @@ export class UserProfile extends Component {
         let nameReg = /^[a-zA-Z]+$/
         let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
         console.log(emailReg.test(this.state.email))
-        let enteredNumber = this.state.phone.trim().match(/\d/g)
+        let enteredNumber2 = JSON.stringify(this.state.phone)
+        //let enteredNumber = enteredNumber2
+        let enteredNumber = enteredNumber2.trim().match(/\d/g)
        // let errorObj = this.state.errorObj
         if(this.state.firstName.length === 0){
             errorObj.firstNameError=1
@@ -234,17 +220,7 @@ export class UserProfile extends Component {
         }
        
        
-        // if(this.state.firstName.length === 0){
-        //    errorObj.firstNameError=1
-        //    errorCount++
-        // }
-        // if(!nameReg.test(this.state.firstName)){
-        //     errorObj.firstNameError=1
-        //    errorCount++
-        // }
-        // else{
-        //     errorObj.firstNameError=0
-        // }
+      
         else if(this.state.lastName.length === 0){
             // errorObj.lastNameError=1
            
@@ -252,13 +228,7 @@ export class UserProfile extends Component {
             this.setState({errorObj})
             errorCount++
         }
-        // else{
-        //     errorObj.lastNameError=0
-        // }
-        // if(!phoneReg.test(this.state.phone)){
-        //     errorObj.phoneError=1
-        //     errorCount++
-        // }
+      
 
          if(this.state.position === "Select.."){
             //debugger
@@ -268,11 +238,7 @@ export class UserProfile extends Component {
             //return false
         }
 
-        // else{
-        //     errorObj.positionError=0;  
-        //     this.setState({errorObj})
-        //     errorCount--
-        // }
+       
 
          if(! emailReg.test(this.state.email)){
             errorObj.emailError=1
@@ -289,26 +255,6 @@ export class UserProfile extends Component {
             document.getElementById("contactPhone-validtor").innerText = ""
         }
 
-       
-        // if(this.state.phone.length>14){
-        //     errorObj.phoneError=1
-        //     errorCount++
-        // }
-        // if(this.state.position.length === 0){
-        //     console.log(this.state.position)
-        //     errorObj.positionError=1
-        //     errorCount++
-        // }
-
-
-      
-
-
-    
-
-
-
-
         this.setState({errorObj,errorCount})
         return errorCount
 
@@ -316,18 +262,32 @@ export class UserProfile extends Component {
         
     }
 
+      stringHasTheWhiteSpaceOrNot=(value)=>{
+        return value.indexOf(' ') >= 0;
+     }
 
     handleSubmit = (e) => {
 
+  
         this.setState({
             disableButton:true
         })
         let finalNumber = this.state.phone
-        finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
-        let removedNumber = finalNumber.split(" ").join("");
-        removedNumber = parseInt(removedNumber)
 
-        //debugger;
+        let whiteSpace = this.stringHasTheWhiteSpaceOrNot(JSON.stringify(finalNumber));
+
+        if(whiteSpace===true){
+            finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+            var removedNumber = finalNumber.split(" ").join("");
+            removedNumber = parseInt(removedNumber)
+        }
+
+        else{
+            removedNumber = finalNumber;
+         
+        }
+
+
         let count= this.validate()
         console.log(count)
          if(count === 0){
@@ -349,7 +309,7 @@ export class UserProfile extends Component {
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
-                  alert("updated")
+                 // alert("updated")
                   //this.props.cancle() 
                     console.log(this.props.users)
                     if(this.props.users.payload.status === "Success"){
@@ -411,15 +371,23 @@ export class UserProfile extends Component {
         
        })
 
+       this.setState({
+        //disableImageRemove: false,
+        disableImageUpload: true
+    })
  
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
         if( e.target.files[0]){
             this.fileInput.value = ""
         }
-        // setTimeout(function() {
-        //     window.location.reload();
-        //  }, 2000);
+
+        
+        setTimeout(function() {
+            window.location.reload();
+         }, 1000);
+
+       
 
     }
 
@@ -443,6 +411,11 @@ export class UserProfile extends Component {
              logo:updatedData.avatar?updatedData.avatar:"",
              deleted_at:updatedData.deleted_at
           })
+        })
+
+        this.setState({
+            disableImageUpload: false,
+            disableImageRemove:true
         })
         
     }
@@ -497,7 +470,7 @@ export class UserProfile extends Component {
                  deleted_at:updatedData.deleted_at
                  
               })
-              alert("deleted")
+              alert("restored successfully")
             })
         }
     }
@@ -547,10 +520,11 @@ export class UserProfile extends Component {
             else if(actionType==="deleteImage"){
 
                 this.handleRemoveImage();
+                this.setState({
+                    disableImageRemove: true
+                })
             }
-            else{
-                //
-            }
+          
 
             this.setState({
                 actionOpen:false,
@@ -620,25 +594,32 @@ export class UserProfile extends Component {
      const checkedCount = Object.keys(checked).filter(key => checked[key]).length;
      const disabled = checkedCount > 1;
 
-     let selectedUser = this.props.selectedUser 
-
+     //let selectedUser = this.props.selectedUser 
      
+     let selectedUser = this.props.selectedUser 
+     console.log("thislogolength ", this.state.logo.length )
     return (
         <>
 
-
+        
          {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
          <Prompt
          //when={shouldBlockNavigation}
          //key='block-nav'
         //when={this.state.shouldBlockNavigation}
        // when={this.saveChanges()}
-        when={this.state.disableButton===true ? this.state.firstName && selectedUser.lastName && selectedUser.position && selectedUser.name && selectedUser.email:" " }
-        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to save and leave ?" : "Are you sure you want to leave ?" } 
+        when={this.state.disableButton===true ? this.state.firstName:" " }
+        message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone 
+            || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
     />: false}
+
+            {/* <Prompt
+                when={this.state.hadModified}
+                message='You have unsaved changes, are you sure you want to leave?'
+                /> */}
          <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
    
                     <Tabs>
@@ -752,28 +733,7 @@ export class UserProfile extends Component {
 
                         <div class="pb-4">
                             <div class="bg-white">
-                                {/* <div class="row mb-3 mb-md-0">
-                                    <div class="col-md-6 col-lg-6">
-                                        <h4 class="p-15 mb-0">Add, Edit or Remove User</h4>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 pl-4 pl-md-0 d-flex align-items-center justify-content-md-end">
-                                        Active
-                                        <div class="switcher ml-2 pr-md-3 ml-3">
-                                            <input type="checkbox" name="switcher_checkbox_1" id="switcher_checkbox_1" value="1"/>
-                                            <label for="switcher_checkbox_1"></label>
-                                        </div>
-                                    </div>
-                                </div> */}
-                                {/* <hr class="m-0"/> */}
-                                {/* <div class="ContentSection p-15"> */}
-                                    {/* <div class="row">
-                                        <div class="col-md-12 col-lg-12">
-                                            <div class="bg-grey-transparent-2 text-center px-2 py-2">
-                                                <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                                <p class="m-0">Inactive users will not have access to this system. User permissions can be sent via <a href="">User Access</a>.</p>
-                                            </div>
-                                        </div>
-                                    </div> */}
+                             
 
                                     <div class="row mt-3">
                                         <div class="col-md-4 col-lg-3">
@@ -792,22 +752,33 @@ export class UserProfile extends Component {
 
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
+                                                <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}}
+                                                disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                 >
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id={new Date().getTime()}  ref={fileInput => (this.fileInput = fileInput)}
-                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg" />
+                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg"
+                                                    disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                      />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
                                                     <img src="assets/img/upload-ic-white.svg"  alt="" style={{borderRadius:"7em"}}/>
+                                                    </button>
                                                 </a>
-                                                <a href="#" class="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{height:"41px"}}>
-                                                    <span class="d-flex align-items-center justify-content-around" 
-                                                      onClick={()=>{confirmAction("deleteImage"); }}
-                                                    // onClick={this.handleRemoveImage}
-                                                    >
-                                                        <span class="f-s-20 text-danger" style={{marginTop:"-3px"}}>Remove</span>
-                                                    </span>
-                                                    <img src="assets/img/bin-ic-red.svg" alt="" style={{marginRight:"3px"}}/>
-                                                </a>
+
+
+                                                <div>
+                                                <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
+                                                    disabled={this.state.logo.length >0 ? this.state.disableImageRemove ===false : this.state.disableImageRemove===true}
+                                                    // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
+                                                    onClick={()=>{confirmAction("deleteImage")}}>
+                                                    <span class="f-s-20 text-danger" style={{marginTop:"-3px", fontWeight:"bold", backgroundColor:"transparent"}}>Remove</span>
+                                                    <img src="assets/img/bin-ic-red.svg" alt=""  style={{marginRight:"15px"}}/>
+                                                    </button>
+                                                </div>
+                                         
+
+
                                                 <div class="text-left mt-2">
                                                     <span><small>Last signed in 23/05/2021</small></span>
                                                     <span class="ml-2"><a href="#">History</a></span>
@@ -846,19 +817,11 @@ export class UserProfile extends Component {
                                                         }) : null} 
 
 
-                                                            {/* <option>{supplierData.supplierLocation.country}</option>
-                                                                {allCountry.map((country, i)=>{
-                                                                    return <option id={allCountry[i]}>{allCountry[i]}</option>
-                                                                })} */}
                                                     </select>
                                                     {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
                                                     <label>Phone<span class="text-danger">*</span></label>
-                                                    {/* <InputMask type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
-                                                     mask="(999) 999-9999" maskChar={" "} 
-                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
-                                                     /> */}
 
                                                     <InputMask
                                                     class="form-control"  
@@ -874,11 +837,6 @@ export class UserProfile extends Component {
                                               
                                               <span style={{fontSize:"small",color:"red"}} id="contactPhone-validtor"></span>
 
-                                                    {/* <input type="text" placeholder="(XXX)XXX-XXXX" class="form-control"
-                                                     value={this.state.phone} onChange={this.handleInput} name="phone"
-                                                     /> */}
-                                                    
-                                                    {/* {this.state.errorObj.phoneError!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Phone Number</span>:""} */}
                                                 </div>
                                             </div>
                                             <div class="row form-group">
@@ -905,38 +863,7 @@ export class UserProfile extends Component {
                                                     })}
 
                                                    
-                                                        {/* <ul class="list-unstyled">
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck1"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm A <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li class="active">
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck2">Farm B <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck3"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck3">Farm C <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck4"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck4">Farm D <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                            <li>
-                                                                <div class="custom-control custom-checkbox">
-                                                                    <input type="checkbox" class="custom-control-input" id="customCheck5"/>
-                                                                    <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label>
-                                                                </div> 
-                                                            </li>
-                                                        </ul> */}
+                                                   
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="custom-control custom-checkbox">
@@ -975,30 +902,7 @@ export class UserProfile extends Component {
                                 </div>
                             </div>
                                 }
-                                {/* <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
-                                    <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3"
-                                     onClick={()=>{confirmAction("save"); }}
-                                    //  onClick={this.handleSubmit}
-                                    
-                                     >Update</button>
-                                </div> */}
-
-
-
-
                             </div>
-
-                            {/* <div style={{float:"left", marginLeft:"2em"}}>
-
-                                    <span style={{float:"right", marginRight:"3em", marginLeft:"-5em"}}>Active</span>
-                                        <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"8px"}}>
-                                            <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value={this.state.checkedActive} checked={(this.state.checkedActive === true ? true : false)}  onChange={this.handleActive}
-                                            />
-                                            <label for="switcher_checkbox_date"></label>
-                                        </div> 
-                            </div> */}
-
 
 
 
@@ -1029,4 +933,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default withRouter(connect(mapStateToProps,{updateUser,removeImage,getRolesList,showUser,uploadImage,deleteUser})(UserProfile));
+export default withRouter(connect(mapStateToProps,{updateUser,removeImage,
+    showUser,uploadImage,deleteUser}) (UserProfile));

@@ -75,9 +75,6 @@ const validate = values => {
       {/* <label>{label}</label> */}
       <div>
         <input {...input} class="form-control" placeholder={label} 
-        
-    
-        
           type={type} onchange={changingValue}/>
         <Row>
         {touched && ((error && <span style={{color:"red", marginLeft:"1em"}}>{error}</span>) || (warning && <span>{warning}</span>))}
@@ -152,7 +149,7 @@ const SignInPage = (props) => {
                         
                     
 
-                    <div class="col-md-6" style={{marginTop:"2em"}}>
+                    <div class="col-md-6" style={{marginTop:"0.8em"}}>
                         <div class="bg-white px-3 py-3 signInContent" style={{borderRadius:"5px"}}>
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
@@ -248,7 +245,7 @@ const SignInPage = (props) => {
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.7.3 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.7.4 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
                             {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                            
                         </div>
