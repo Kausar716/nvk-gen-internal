@@ -485,28 +485,43 @@ const dataTochange =(e)=>{
                                         <span class="ml-2"><b>Contact PDF</b></span>
                                     </span>
                                 </a>} */}
-                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
+                                {/* <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
+                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}> */}
+                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
+                                        {/* <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
+                                    </span>
+                                </button> */}
+                                {/* "btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3" */}
+                                {/* <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
+                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
+                                        {/* <i className="fa fa-save" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save</span>
+                                    </span>
+                                </button>  */}
+                                {/* <button   onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <span class="d-flex align-items-center text-left">
+                                        {/* <img src="assets/img/saveDone-ic.svg" alt="" /> */}
+                                        {/* <i className="fa fa-save" style={{fontSize:"20px"}}></i>
+                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
+                                    </span>
+                                </button> */}
+                                <button    className={"btn btn-primary btn-md ml-3"}>
                                     <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
                                         {/* <img src="assets/img/save-ic.svg" alt=""/> */}
                                         <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
                                         <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
                                     </span>
                                 </button>
-                                {/* "btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3" */}
-                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
-                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
-                                        <i className="fa fa-save" style={{fontSize:"20px"}}></i>
-                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save</span>
-                                    </span>
-                                </button>
-                                <button   onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <span class="d-flex align-items-center text-left">
-                                        {/* <img src="assets/img/saveDone-ic.svg" alt="" /> */}
-                                        <i className="fa fa-save" style={{fontSize:"20px"}}></i>
-                                        <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
-                                    </span>
-                                </button>
+                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <img src="assets/img/save.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
+                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save </span>
+                                    </button>
+                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
+                                    <img src="assets/img/savedone.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
+                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save &amp; Done</span>
+                                    </button>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                     <img src="assets/img/close-ic.svg" alt="" onClick={handleClose}/>
                                 </a>
