@@ -9,7 +9,7 @@ import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
-import {getRolesList} from "../../actions/userAccessAction";
+import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
 
 class UserManagement extends Component {  
@@ -134,33 +134,79 @@ console.log("eeeABCD", e)
 //   }
 
 
- handleChange = (event, newValue) => {
-     debugger;
-    if (newValue !== 0 && this.state.tabValues === 0) {
-      const res = window.confirm("Leaving?");
-      if (res === true) {
-          this.setState({
-            tabValues:newValue
-          })
-        //setValue(newValue);
-      }
-    } else {
-    //   setValue(newValue);
-    this.setState({
-        tabValues:newValue
-      })
-    }
-  }
+//  handleChange = (event, newValue) => {
+//      debugger;
+//     if (newValue !== 0 && this.state.tabValues === 0) {
+//       const res = window.confirm("Leaving?");
+//       if (res === true) {
+//           this.setState({
+//             tabValues:event
+//           })
+//         //setValue(newValue);
+//       }
+//     } else {
+//     //   setValue(newValue);
+//     this.setState({
+//         tabValues:event
+//       })
+//     }
 
-handleSelect=(e)=>{
-    //debugger;
 
-    console.log("MJR1", e.target.value)
+
+//       console.log("tabValues555523", this.state.tabValues)
+
+//   }
+
+// handleSelect=(e)=>{
+//     //debugger;
+
+//     console.log("MJR1", e.target.value)
+//     this.setState({
+//         tabValues: e.target.value
+//     });
+//     console.log("MJR2", e.target.value, this.state.tabValues)
+//   }
+
+// handleSelect(index,e){
+//    // if (newValue !== 0 && this.state.tabValues === 0) {
+
+
+//     this.setState({
+//         tabValues: e.target.value
+//     });
+
+//     console.log("tabValues5555", this.state.tabValues)
+//   }
+
+
+handleChange=(index)=>{
+
+    // if (index !== 0 && this.props.tabChangeValueUP === 0) {
+    //           const res = window.confirm("Leaving?");
+    //           if (res === true) {
+    //             //   this.setState({
+    //             //     tabValues:index
+    //             //   })
+    //                 this.props.tabChangeValues(index)
+    //             //setValue(newValue);
+    //           }
+
+    //           else{
+    //             // this.setState({
+    //             //     tabValues:index
+    //             // })
+    //             this.props.tabChangeValues(index)
+    //           }
+
+             
+//}
+    this.props.tabChangeValues(index)  
+   
     this.setState({
-        tabValues: e.target.value
-    });
-    console.log("MJR2", e.target.value, this.state.tabValues)
-  }
+        tabValues:this.props.tabChangeValueUP
+    })
+    //this.props.tabChangeValueUP=index;
+}
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -202,7 +248,9 @@ handleSelect=(e)=>{
     console.log(this.props.temp.userReduser)
 
 
- console.log("tabValues123", this.state.tabValues)
+ //console.log("tabValues1235", this.state.tabValues)
+
+ console.log("tabChangeValueUP", this.props.tabChangeValueUP)
         
     return (
         <div clas="userManagementSection">
@@ -212,22 +260,33 @@ handleSelect=(e)=>{
                 </h1>
 			</div>
             <div class="px-md-3 mt-3">
-                <Tabs
-                // value={this.state.tabValues}  onChange={this.handleChange}
+                <Tabs 
+                selectedIndex={this.props.tabChangeValueUP} 
+                //selectedIndex={this.state.tabValues} 
+               onSelect={this.handleChange}
+               // onSelect={index => this.setState({tabValues:index}) }
+               // defaultIndex={1} onSelect={index => this.props.tabChangeValues(index) }
+                 //value={this.state.tabValues}  onSelect={this.handleChange}
                  >
                     <TabList class="d-inline-block bg-white pl-0" style={{bottom:"0px"}}  >
                         <Tab style={{bottom:"0px"}} route={this.props.route} 
-                         value={1} onClick={() => this.setState({tabValues: 1})}
+                        //value={this.state.tabValues} index={0}
+                        //  value={this.state.tabValues} index={0}
+                         //value={1} onSelect={this.handleSelect}
                           >User Profiles</Tab>
                         <Tab style={{bottom:"0px"}} 
-                        value={2} onClick={() => this.setState({tabValues: 2})}
+                         //value={this.state.tabValues} index={1}
+                        //value={2} onSelect={this.handleSelect}
                         > User Access</Tab>
                         <Tab style={{bottom:"0px"}}  
-                        value={3} onClick={() => this.setState({tabValues: 3})}
+                        // value={this.state.tabValues} index={2}
+                        //value={3} onSelect={this.handleSelect}
                         >User Positions</Tab>
                     </TabList>
 
-                    <TabPanel  value={this.state.tabValues} index={0}>
+                    <TabPanel 
+                   // value={this.state.tabValues} index={0} 
+                    >
 
                     <div class="bg-white">
                     {this.state.visbleTrue!==true  ? 
@@ -303,7 +362,7 @@ handleSelect=(e)=>{
                                             </p>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  tabValues={this.state.tabValues} />:null}
+                                    {displayUpdateProfile?<UserProfile cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  tabValues1={this.state.tabValues} />:null}
                                     {displayCreate?<CreateUserProfile  handleSubmitData={this.handleSubmit}  cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>
@@ -313,10 +372,14 @@ handleSelect=(e)=>{
                     </TabPanel>
                   
 
-                    <TabPanel value={this.state.tabValues} index={1} >
+                    <TabPanel
+                   // value={this.state.tabValues} index={1} 
+                    >
                     <UserAccess/>
                     </TabPanel>
-                    <TabPanel value={this.state.tabValues} index={2} >
+                    <TabPanel
+                    // value={this.state.tabValues} index={2}
+                     >
                         <UserSettingsIndex/>
 
                     </TabPanel>
@@ -334,10 +397,11 @@ const mapStateToProps = (state)=> (
     
     users:state.userReduser.users.type==="GET_USERS_LIST"? state.userReduser.users.payload :[],
     roles:state.userAccessReduser.roles,
-    temp:state
+    temp:state,
+    tabChangeValueUP: state.userAccessReduser.tabChangeValue
 
 }
 
 )
 
-export default connect(mapStateToProps,{getUsersList,getRolesList})(UserManagement)
+export default connect(mapStateToProps,{getUsersList,getRolesList, tabChangeValues})(UserManagement)

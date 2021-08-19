@@ -10,7 +10,8 @@ import {
     GET_PERMISSION_LIST,
     SHOW_SELECTED_USER,
     UPDATE_USER_PERMISSION ,
-    RESET_USERDATA
+    RESET_USERDATA,
+    TAB_CHANGE_VALUE
    } from './types';
 
 
@@ -20,6 +21,20 @@ import {
         
     })
    }
+
+
+   export const tabChangeValues=(tabChangeValue)=>dispatch=>{
+
+    dispatch({
+        type:TAB_CHANGE_VALUE,
+        tabChangeValue:tabChangeValue,
+
+        
+    })
+   }
+
+
+
    
 //    export const getUsersList = (dispatch) => {
     export const getRolesList = () => dispatch => {

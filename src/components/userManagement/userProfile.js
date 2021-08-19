@@ -8,6 +8,7 @@ import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 //import getRolesList from "../../actions/userAccessAction";
+import {tabChangeValues} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
@@ -22,8 +23,8 @@ import './style.css';
 
 class UserProfile extends React.Component { 
     
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
       
         this.state={
             unsaved: true,
@@ -101,6 +102,8 @@ class UserProfile extends React.Component {
        
     }
     componentDidMount(){
+
+        //this.props.tabChangeValues();
 
            let selectedUser = this.props.selectedUser 
           console.log(selectedUser)
@@ -204,12 +207,14 @@ class UserProfile extends React.Component {
     }
 
     validate = () =>{
-
+        debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
-        let nameReg = /^[a-zA-Z]+$/
-        let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        let nameReg = /^[a-zA-Z]+$/;
+        let emailReg =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        //let emailReg =/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/;
         console.log(emailReg.test(this.state.email))
         let enteredNumber2 = JSON.stringify(this.state.phone)
         //let enteredNumber = enteredNumber2
@@ -243,13 +248,13 @@ class UserProfile extends React.Component {
 
        
 
-         if(! emailReg.test(this.state.email)){
+         if(!emailReg.test(this.state.email)){
             errorObj.emailError=1
             errorCount++
         }
 
            
-       else if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+       else if(!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
             document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
             errorCount++;
@@ -271,6 +276,7 @@ class UserProfile extends React.Component {
 
     handleSubmit = (e) => {
 
+        //debugger;
   
         this.setState({
             disableButton:true
@@ -495,30 +501,28 @@ class UserProfile extends React.Component {
     //   }
 
 
-    handleChange = (event, newValue) => {
-        debugger;
-       if (newValue !== 0 && this.state.tabValues === 0) {
-         const res = window.confirm("Leaving?");
-         if (res === true) {
-             this.setState({
-               tabValues:newValue
-             })
-           //setValue(newValue);
-         }
-       } else {
-       //   setValue(newValue);
-       this.setState({
-           tabValues:newValue
-         })
-       }
-     }
+    // handleChange = (event, newValue) => {
+    //     debugger;
+    //    if (newValue !== 0 && this.state.tabValues === 0) {
+    //      const res = window.confirm("Leaving?");
+    //      if (res === true) {
+    //          this.setState({
+    //            tabValues:newValue
+    //          })
+    //        //setValue(newValue);
+    //      }
+    //    } else {
+    //    //   setValue(newValue);
+    //    this.setState({
+    //        tabValues:newValue
+    //      })
+    //    }
+    //  }
       
-
-
 
     render() {
 
-        console.log("123456789", this.props.tabValues)
+        console.log("ABCD123", this.props.tabChangeValueUP22, this.props.tabValues1)
         console.log("roles123", this.props.roles)
         console.log("usersUSER", this.props.data,  this.props.users.payload.active)
         const { actionType } = this.state;
@@ -547,8 +551,16 @@ class UserProfile extends React.Component {
             }
 
             else if(actionType==="save"){
-                this.handleSubmit();
-                this.props.cancle();
+               debugger;
+                let count= this.validate()
+                if(count===0){
+                    this.handleSubmit();
+                    this.props.cancle();
+                }
+                else{
+                    alert("You have entered wrong details")
+                }
+               
             }
 
             else if(actionType==="upload"){
@@ -648,7 +660,7 @@ class UserProfile extends React.Component {
        // when={this.saveChanges()}
         when={this.state.disableButton===true ? this.state.firstName:" " && this.props.tabValues !==1}
         message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone 
-            || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to leave ?" : "Are you sure you want to leave ?" } 
+            || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want save and leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
@@ -966,10 +978,12 @@ const mapStateToProps = (state)=> (
     {
     users:state.userReduser.users,
     data:state.userReduser,
-    roles:state.userAccessReduser.roles
+    roles:state.userAccessReduser.roles,
+   // tabChangeValueUP2: state.userAccessReduser.tabChangeValue,
+    tabChangeValueUP22: state.userAccessReduser.tabChangeValue
 }
 
 )
 
 export default withRouter(connect(mapStateToProps,{updateUser,removeImage,
-    showUser,uploadImage,deleteUser}) (UserProfile));
+    showUser,uploadImage,deleteUser,tabChangeValues}) (UserProfile));
