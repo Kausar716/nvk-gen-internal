@@ -428,7 +428,21 @@ input[type="radio"]:checked {
   
 } */
 /* .trashShake { transition: all .2s ease-in-out; } */
-.trashShake{ transform: scale(1.7);}
+.trashShake {
+  transform: scale(1.6);
+  -webkit-transition: transform 1.05s ease-in-out;
+  -moz-transition:transform 1.05s ease-in-out;
+  -ms-transition:transform 1.05s ease-in-out;
+}
+
+/* .trashShake:hover {
+   -webkit-transform: scale(1.25);
+   -moz-transform: scale(1.25);
+   -o-transform: scale(1.25);
+   -ms-transform: scale(1.25);
+   transform: scale(1.25);
+} */
+/* .trashShake{transform: translateZ(4) scale(1.8, 1.8);} */
 /* .trashShake.clicked { background: orange; } */
 
 /* button.clicked:hover { background: black; } */

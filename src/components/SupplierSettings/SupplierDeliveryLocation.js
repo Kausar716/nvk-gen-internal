@@ -580,8 +580,9 @@ render() {
                                             {/* <p>Location</p> */}
                                             <label for="Category">Location</label>
                                             <div>
-                                                <input type="text" className="form-control"  id="location" name="location"
+                                                <input type="text"   id="location" name="location"
                                                  value={supplierData.supplierLocation.location}  
+                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                   placeholder="Location" onChange={this.handleCategoryInputAction}/>
                                                   {this.state.errorObj.location!==0?<span style={{fontSize:"small",color:"red"}}>Enter location</span>:""}
                                             </div>
@@ -591,8 +592,8 @@ render() {
                                         <div className="col-md-4">
                                             <label for="Category">Address</label>
                                             <div>
-                                            <input type="text" className="form-control"  id="address" name="address"
-                                            value={supplierData.supplierLocation.address}  
+                                            <input type="text"   id="address" name="address"
+                                            value={supplierData.supplierLocation.address} className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  
                                              placeholder="Address" onChange={this.handleCategoryInputAction}/>
                                              {this.state.errorObj.address!==0?<span style={{fontSize:"small",color:"red"}}>Enter Address</span>:""}
 
@@ -603,8 +604,8 @@ render() {
                                             {/* <p>City</p> */}
                                             <label for="Category">City</label>
                                             <div>
-                                                <input type="text" className="form-control" name="city"
-                                                 id="city" value={supplierData.supplierLocation.city}  
+                                                <input type="text"  name="city"
+                                                 id="city" value={supplierData.supplierLocation.city}  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                   placeholder="City" onChange={this.handleCategoryInputAction}/>
                                                   {this.state.errorObj.city!==0?<span style={{fontSize:"small",color:"red"}}>Enter City</span>:""}
                                             </div>
@@ -616,7 +617,7 @@ render() {
                                     <div className="row" style={{marginTop:"0.7em"}}>
                                             <div className="col-md-3">
                                                         <label for="Category">Prov/State</label>
-                                                            <select className="form-control"  id="state"  name="state" value={supplierData.supplierLocation.state}  onChange={this.handleCategoryInputAction}>
+                                                            <select  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  id="state"  name="state" value={supplierData.supplierLocation.state}  onChange={this.handleCategoryInputAction}>
                                                             <option>{supplierData.supplierLocation.state}</option>
                                                             {allStates && allStates.map((c, i)=>{
                                                                     return <option id={allStates[i]}>{allStates[i]}</option>
@@ -628,7 +629,7 @@ render() {
 
                                             <div className="col-md-3">
                                                         <label for="Category">Country</label>
-                                                            <select className="form-control"  id="country" name="country" value={supplierData.supplierLocation.country}   placeholder="Country" onChange={this.handleCategoryInputAction}>
+                                                            <select  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  id="country" name="country" value={supplierData.supplierLocation.country}   placeholder="Country" onChange={this.handleCategoryInputAction}>
                                                                 <option>{supplierData.supplierLocation.country}</option>
                                                                 {allCountry.map((country, i)=>{
                                                                     return <option id={allCountry[i]}>{allCountry[i]}</option>
@@ -642,8 +643,8 @@ render() {
                                             {/* <p></p> */}
                                             <label for="Category">Postal/ZIP</label>
                                             <div>
-                                                <input type="text" className="form-control" id="zip"  name="zip"
-                                                value={supplierData.supplierLocation.zip}  
+                                                <input type="text"  id="zip"  name="zip"
+                                                value={supplierData.supplierLocation.zip}  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                  placeholder="Zip" 
                                                  onChange={this.handleCategoryInputAction}/>
                                                  {this.state.errorObj.zip!==0?<span style={{fontSize:"small",color:"red"}}>Enter zip</span>:""}
@@ -657,8 +658,8 @@ render() {
                                             {/* <p></p> */}
                                             <label for="Category">Lat/Long</label>
                                             <div>
-                                                <input type="text" className="form-control"  id="lat"  name="lat"
-                                                value={supplierData.supplierLocation.lat}   placeholder="Lat" 
+                                                <input type="text"   id="lat"  name="lat"
+                                                value={supplierData.supplierLocation.lat}   placeholder="Lat"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                 onChange={this.handleCategoryInputAction}/>
                                                 {this.state.errorObj.lat!==0?<span style={{fontSize:"small",color:"red"}}>Enter lat</span>:""}
                                             </div>
@@ -740,15 +741,15 @@ render() {
                                                                  <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:1,paddingTop:2}}>
                                                                       <div id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground1" : ""}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:0,margin:0,color:"#348fe2"}}>{t.location}</p>
+                                                                      <p style={{padding:0,margin:0,color:"#348fe2",fontWeight:"bold"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
                                                                       <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
                                                                       </div>
                                                                    
-                                                                      <p style={{color:"gray",padding:2,margin:2}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:2,margin:2}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-8px"}}><MdIcons.MdEdit  
                                                                             onClick={() =>this.handleEditClick2(t)}
-                                                                /></span><p style={{marginTop:"27px",cursor:"pointer"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"32px",cursor:"pointer"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
                                                     })}
@@ -790,15 +791,15 @@ render() {
                                                                  <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:1,paddingTop:2}}>
                                                                       <div id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground1" : ""}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:0,margin:0,color:"#348fe2"}}>{t.location}</p>
+                                                                      <p style={{padding:0,margin:0,color:"#348fe2",fontWeight:"bold"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
                                                                       <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
                                                                       </div>
                                                                       </div>
                                                                    
-                                                                      <p style={{color:"gray",padding:2,margin:2}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-10px"}}><MdIcons.MdEdit  
+                                                                      <p style={{color:"gray",padding:2,margin:2}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-8px"}}><MdIcons.MdEdit  
                                                                             onClick={() =>this.handleEditClick2(t)}
-                                                                /></span><p style={{marginTop:"27px",cursor:"pointer"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
+                                                                /></span><p style={{marginTop:"32px",cursor:"pointer"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p></p>
                                                                  </a>
                                                             </li>
 

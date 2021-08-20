@@ -56,6 +56,8 @@ const CS_ExcahangeDetails = (props) => {
   const [open,setOpen] = useState(false)
   const [message,setMessage] = useState("")
   const [type, setType] = useState("")
+  const [exchange_customer,setexchangeCustomer] = useState(false)
+  const [exchange_supplier, setexchangeSupplier] = useState(false)   
   // const [customerExchange,setCustomerExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
   // const [supplierExchange,setSupplierExchange] = useState({from_currency:"CAD",to_currency:"US",exchange_rate:"",exchange_date:""})
 
@@ -89,17 +91,23 @@ const datePickerData1 =(e)=>{
 
 }
 const saveExchangeData = ()=>{
-  setCheckedData(false)
-  setSuccessMessage(["Customer Exchange Rates Saved successfully"])
-  // toggle1(true)
-  setIsOpen1(true)
-  props.saveFinanceExchangeData(customerExchange)
-  props.saveSupplierData(supplierExchange)
+  if(!exchange_customer && !exchange_supplier ){
+    setCheckedData(false)
+    setSuccessMessage(["Customer Exchange Rates Saved successfully"])
+    // toggle1(true)
+    setIsOpen1(true)
+    props.saveFinanceExchangeData(customerExchange)
+    props.saveSupplierData(supplierExchange)
+
+  }
+
 
 }
 const resetData = ()=>{
   props.getAllCustomerExchange()
   props.getAllSupplierExchange()
+  setexchangeCustomer(false)
+  setexchangeSupplier(false)
 
 }
 useEffect(()=>{
@@ -170,17 +178,21 @@ useEffect(()=>{
     setMessage("")
 }
 const confirmAction = (type)=>{
+  if(exchange_customer==false && exchange_supplier==false ){
   if(type=="save"){
       setType(type)
       setMessage("Are you sure you want to Save?")
 
   }
   setOpen(true)
+}
   // setId(id)
 }
 const dataTochange = (e)=>{
   setCheckedData(true)
+ 
   if(e.target.value!=="" && e.target.id =="exchange_rate"){
+    setexchangeCustomer(false)
     if(Number.isInteger(parseFloat(e.target.value))){
       let intValue = e.target.value*1.00
       props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerExchange")
@@ -191,6 +203,17 @@ const dataTochange = (e)=>{
       props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerExchange")
 
      }else{
+      var charCode = (e.which) ? e.which : e.keyCode;
+          
+      let id = e.target.id
+      let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+     if(characterCheck === null){
+         if(id === "exchange_rate"){
+          setexchangeCustomer(true)
+         }
+         else setexchangeCustomer(false)
+      
+     }
       props.handleExchangeData(e.target.value,e.target.id,"customerExchange")
      }
     }
@@ -200,6 +223,7 @@ const dataTochange = (e)=>{
 const dataTochange1 =(e)=>{
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate1"){
+    setexchangeSupplier(false)
     if(Number.isInteger(parseFloat(e.target.value))){
       let intValue = e.target.value*1.00
       props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
@@ -210,6 +234,17 @@ const dataTochange1 =(e)=>{
       props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
 
      }else{
+      var charCode = (e.which) ? e.which : e.keyCode;
+          
+      let id = e.target.id
+      let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
+     if(characterCheck === null){
+         if(id === "exchange_rate1"){
+          setexchangeSupplier(true)
+         }
+  
+      
+     }else   setexchangeSupplier(false)
       props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")
      }
     }
@@ -269,6 +304,7 @@ const dataTochange1 =(e)=>{
                           
                             <div>
                                 <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onBlur={dataTochange}/> 
+                                <p>{exchange_customer?<span style={{fontSize:"small",color:"red"}}>Enter Valid Exchange(Fixed 2 Decimals)</span>:""}</p>
                             </div>
                            
                             
@@ -321,6 +357,7 @@ const dataTochange1 =(e)=>{
                                 
                             <div>
                                 <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onBlur={dataTochange1}/> 
+                                <p>{exchange_supplier?<span style={{fontSize:"small",color:"red"}}>Enter Valid Exchange(Fixed 2 Decimals)</span>:""}</p>
                             </div>
                            
                            

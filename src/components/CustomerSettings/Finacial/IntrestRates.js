@@ -63,6 +63,9 @@ const InrestRates = (props) => {
   const [successMessage,setSuccessMessage] = useState([])
   const [open,setOpen] = useState(false)
   const [message,setMessage] = useState("")
+  const [month,setMonth] = useState(false)
+  const [year,setYear]= useState(false)
+  const [tax,setTax]= useState(false)
   const [type, setType] = useState("")
   const toggle1  = ()=>setIsOpen1(!isOpen);
   const handleChangeData = (e) =>{
@@ -130,8 +133,9 @@ const confirmAction = (type)=>{
   
   }
   const dataTochange =(e)=>{
-    setCheckedData(true)
+    setCheckedData(false);setYear(false);setTax(false)
     // let intValue = e.target.value
+    setMonth(false);
     if(e.target.value!=="" && e.target.id !== "taxrate_label" && e.target.id !=="taxrate_number"){
       if(Number.isInteger(parseFloat(e.target.value))) {
         let intValue = e.target.value*1.000
@@ -146,6 +150,21 @@ const confirmAction = (type)=>{
         let intValue = e.target.value*1.0000
         props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerIntrest")
        }else{
+        var charCode = (e.which) ? e.which : e.keyCode;
+          
+        let id = e.target.id
+        let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,3})?$/);
+
+        if(characterCheck === null){
+          if(id === "monthly"){
+           setMonth(true)
+          }
+          if(id === "yearly"){
+           setYear(true)
+          }
+          if(id === "taxrate"){
+           setTax(true)
+          }
         props.handleExchangeData(e.target.value,e.target.id,"customerIntrest")
 
        }
@@ -153,6 +172,7 @@ const confirmAction = (type)=>{
        
       }
     }
+  }
       return
     }
   const { handleSubmit, pristine, reset, submitting,customerIntrest} = props.customerData;
@@ -181,18 +201,21 @@ const confirmAction = (type)=>{
                     <div className="intrestRate_label">
                           <label>Monthly</label>
                           <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData} onBlur={dataTochange}/><span style={{padding:"4px"}}>%</span>
+                          <p>{month?<span style={{fontSize:"small",color:"red"}}>Enter Valid Month(Fixed 3 Decimals)</span>:""}</p>
                     </div>
 
 
                     <div className="intrestRate_label"  style={{marginLeft:"-19em"}}>
                           <label>Yearly</label>
                           <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData} onBlur={dataTochange}/><span style={{padding:"4px"}}>%</span>
+                          <p>{year?<span style={{fontSize:"small",color:"red"}}>Enter Valid Year(Fixed 3 Decimals)</span>:""}</p>
                     </div>
 
 
                     <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                           <label>Tax Rate</label>
                           <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}onBlur={dataTochange}/><span style={{padding:"4px"}}>%</span>
+                          <p>{tax?<span style={{fontSize:"small",color:"red"}}>Enter Valid Tax Rate(Fixed 3 Decimals)</span>:""}</p>
                     </div>
 
 
