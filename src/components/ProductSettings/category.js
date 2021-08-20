@@ -4,9 +4,9 @@
 import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
+import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import Sortable from 'sortablejs'
 import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,
     updatePlantSettingCategory, showSpecificPlantSettingAttribute, handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import 
