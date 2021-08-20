@@ -149,7 +149,7 @@ const SignInPage = (props) => {
                         
                     
 
-                    <div class="col-md-6" style={{marginTop:"0.8em"}}>
+                    <div class="col-md-6" style={{marginTop:"-1em"}}>
                         <div class="bg-white px-3 py-3 signInContent" style={{borderRadius:"5px"}}>
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">

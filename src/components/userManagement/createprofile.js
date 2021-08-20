@@ -8,6 +8,7 @@ import {getUsersList,showUser,updateUser,addUser,uploadImage} from "../../action
 import {handleOrganizationSettingsInputAction} from "../../actions/organizationSettingAction"
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal';
+import SuccessInUM from '../Modal/SuccessInUserProfile';
 import InputMask from 'react-input-mask';
 
 
@@ -369,7 +370,7 @@ export class CreateUserProfile extends Component {
      console.log("userListBackup", this.props.userListBackup.payload.active)
     return (
         <>
-         <ActionModal cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
+         <SuccessInUM cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
 
                     <Tabs>
                       

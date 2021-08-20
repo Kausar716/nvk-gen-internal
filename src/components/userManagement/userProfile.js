@@ -11,6 +11,7 @@ import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} fro
 //import getRolesList from "../../actions/userAccessAction";
 import {tabChangeValues} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
+//import SuccessModal from '../Modal/SuccessModal';
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
 //import * as BsIcons from "react-icons/io";
@@ -686,8 +687,7 @@ class UserProfile extends React.Component {
                 when={this.state.hadModified}
                 message='You have unsaved changes, are you sure you want to leave?'
                 /> */}
-         <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
-   
+                 <ActionModal confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                     <Tabs>
               
                         <TabPanel>

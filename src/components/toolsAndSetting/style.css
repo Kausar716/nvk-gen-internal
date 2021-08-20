@@ -76,12 +76,13 @@ img .ml-2 .btn {
   margin: auto;
   width: 100%;
   height: auto;
+  margin-top: 11px;
   /* margin: 20% 20%; */
   /* margin-right: 50%; */
   /* margin-left: 50%; */
   /* margin-top: 27%; */
-  height: 220px;
-  width: 220px;
+  height: 200px;
+  width: 200px;
   overflow: hidden;
 
   border-top-left-radius: 50% 50%;

@@ -336,7 +336,7 @@ class OrganizationSettings extends React.Component {
 
 
     handleChange=({ target: { value, name } })=> {  
-
+        debugger;
        // const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state  
 
