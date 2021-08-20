@@ -30,6 +30,7 @@ export class CreateUserProfile extends Component {
             value: '',
             email:"",
             position:"",
+            createButton:true,
             locationAccess:false,
             displayDeletedRecords:false,
             profileImage:"",
@@ -141,6 +142,13 @@ export class CreateUserProfile extends Component {
 
         this.setState({errorObj,errorCount,hadModified})
         this.props.handleOrganizationSettingsInputAction(name,value)
+
+
+        if(hadModified.name===true && hadModified.last_name===true && hadModified.position===true && hadModified.email===true )
+                this.setState({
+                    createButton:false
+                })
+
     }
 
 
@@ -554,7 +562,7 @@ export class CreateUserProfile extends Component {
                                 </div>
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Create</button>
+                                    <button type="button" class="btn btn-primary btn-lg ml-3" disabled={this.state.createButton} onClick={this.handleSubmit}>Create</button>
                                 </div>
                             </div>
                         </div>
