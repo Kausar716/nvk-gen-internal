@@ -68,21 +68,21 @@ img .ml-2 .btn {
 
 .resposiveImageParent {
   display: block;
-  max-width: 230px;
-  max-height: 230px;
+  max-width: 220px;
+  max-height: 220px;
   /* width: 220px; */
 
   /* height: 234px; */
   margin: auto;
   width: 100%;
   height: auto;
-  margin-top: 11px;
+  /* margin-top: 11px; */
   /* margin: 20% 20%; */
   /* margin-right: 50%; */
   /* margin-left: 50%; */
   /* margin-top: 27%; */
-  height: 200px;
-  width: 200px;
+  height: 220px;
+  width: 220px;
   overflow: hidden;
 
   border-top-left-radius: 50% 50%;

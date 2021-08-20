@@ -336,7 +336,7 @@ class OrganizationSettings extends React.Component {
 
 
     handleChange=({ target: { value, name } })=> {  
-        debugger;
+        //debugger;
        // const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state  
 
@@ -349,8 +349,14 @@ class OrganizationSettings extends React.Component {
 
 
         if(name === "phone"){
-            hadModified.phone=true
+            hadModified.phone=true;
         }
+
+        
+        this.setState({
+            disabled:false,
+            disabledCancel:false
+        })
       }
 
 
