@@ -346,7 +346,7 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
     if(data.sale_price === ""||data.sale_price==null) error.push("Add Sale Price") 
     if(data.attributes_subattributes){
          packagedata = data.attributes_subattributes.filter(obj=>{
-            return(obj.attribute_id === 3)
+            return(obj.attribute_id === 4)
         })
     }
     if(packagedata.length===0)error.push(" Select Packaging ")
@@ -363,7 +363,7 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
     }
     if(data.attributes_subattributes){
         heightdata = data.attributes_subattributes.filter(obj=>{
-           return(obj.attribute_id === 4)
+           return(obj.attribute_id === 3)
        })
     }
     if(caliperdata.length===0 && heightdata.length===0)error.push(" Select Caliper / Height ")
@@ -404,6 +404,7 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
     // ]
     copyData.id=id
     copyData.type = "plant"
+    console.log(copyData)
     if(error.length===0){
         axios.post(`/api/add-sku`,copyData,config).then(res=>{ 
             // dispatch(getAllProductAction())
@@ -455,6 +456,8 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
     if(error.length===0){
         // delete data["id"]
         data.type = "plant"
+        console.log(data)
+        debugger;
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
             
@@ -594,6 +597,7 @@ export const handlePlantInputAction = (id, value) =>dispatch=>{
 
 }
 export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
+    debugger;
     dispatch({ 
         type:HANDLE_PLANT_SKU_INPUT_DATA,
         itemId:id,
@@ -671,18 +675,18 @@ export const serachPlant = (data) =>dispatch=>{
      if(selectedName.id === "1"){
         requestData.form_id = selectedName.value
      }
-     else if(selectedName.id === "5"){
+     else if(selectedName.id === "3"){
        
         if(requestData.height_id)
         delete requestData.height_id
         requestData.caliper_id = selectedName.value
      }
-     else if(selectedName.id === "4"){
+     else if(selectedName.id === "5"){
          if(requestData.caliper_id)
          delete requestData.caliper_id
         requestData.height_id = selectedName.value
     }
-    else if(selectedName.id === "3"){
+    else if(selectedName.id === "4"){
          requestData.packaging_id = selectedName.value
     }
      axios.post(`/api/generate-sku/${plantId}`,requestData,config).then(res=>{ 

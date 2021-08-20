@@ -138,9 +138,9 @@ const nameFormaterFunctionForHandler = (currentAction,plantData)=>{
     let commonNmae =""
     if(copiedPlantData.common_name){
         if(typeof(copiedPlantData.common_name) === "string")
-    commonNmae = JSON.parse(copiedPlantData.common_name).join()
+    commonNmae = JSON.parse(copiedPlantData.common_name).join(", ")
     else
-    commonNmae = copiedPlantData.common_name.join()    
+    commonNmae = copiedPlantData.common_name.join(", ")    
     }
     nameWithFormat.firstName=copiedPlantData.genus+' '+copiedPlantData.species
     if(!copiedPlantData.cultivar2 || copiedPlantData.cultivar2.length === 0){
@@ -357,6 +357,7 @@ export default function(state = initialSatate, action){
             }
         }
         case HANDLE_PLANT_SKU_INPUT_DATA:{
+            console.log(action)
             if(action.itemValue === "None"){
                 let attributeValue = state.plantSkuDataById.attributes_subattributes
                 let filteredAttribute = attributeValue.filter(filterData=>filterData.attribute_id !== action.itemId)
@@ -369,8 +370,13 @@ export default function(state = initialSatate, action){
             }
           
             if(!isNaN(action.itemId)){
+                let plantSkuDataById = state.plantSkuDataById
                 if(action.itemId === 6 || action.itemId === "6" ){
-                    let plantSkuDataById = state.plantSkuDataById
+                    if(action.itemValue === "0"){
+                        plantSkuDataById.volume_quantity = action.itemValue
+                        plantSkuDataById.volume_price_per_unit = "0.00"
+                    }
+                    
                     plantSkuDataById.volume_quantity = action.itemValue
                     return{
                         ...state,
@@ -380,7 +386,7 @@ export default function(state = initialSatate, action){
                     }
                 }
                 let attributeValue = state.plantSkuDataById.attributes_subattributes             
-                if(action.itemId === 4 || action.itemId === "4" ){
+                if(action.itemId === 3 || action.itemId === "3" ){
                     let idTobeDeleted=-1
                     attributeValue.map((att,index)=>{
                         if(att.attribute_id === 5) idTobeDeleted = index
@@ -391,7 +397,7 @@ export default function(state = initialSatate, action){
                 if(action.itemId === 5 || action.itemId === "5" ){
                     let idTobeDeleted=-1
                     attributeValue.map((att,index)=>{
-                        if(att.attribute_id === 4)
+                        if(att.attribute_id === 3)
                          idTobeDeleted = index
                     })
                     if(idTobeDeleted>=0)

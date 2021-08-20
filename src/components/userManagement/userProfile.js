@@ -2,12 +2,14 @@
 /* eslint-disable jsx-a11y/alt-text */
 import React from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import Loader from '../Modal/LoaderModal';
 import 'react-tabs/style/react-tabs.css';
 //import { confirmAlert } from 'react-confirm-alert'; // Import
 //import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 //import getRolesList from "../../actions/userAccessAction";
+import {tabChangeValues} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
@@ -22,14 +24,15 @@ import './style.css';
 
 class UserProfile extends React.Component { 
     
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
       
         this.state={
             unsaved: true,
-
+            isWindowInFocus: true,
             disableImageRemove:true,
             disableImageUpload:false,
+            imgLoader:false,
         
             shouldBlockNavigation:true,
         
@@ -102,6 +105,8 @@ class UserProfile extends React.Component {
     }
     componentDidMount(){
 
+        //this.props.tabChangeValues();
+
            let selectedUser = this.props.selectedUser 
           console.log(selectedUser)
            this.setState({
@@ -116,7 +121,8 @@ class UserProfile extends React.Component {
                deleted_at:selectedUser.deleted_at
             });
 
-           
+
+            // window.addEventListener("focus", this.onFocus)
     }
 
 
@@ -124,12 +130,14 @@ class UserProfile extends React.Component {
 
     componentWillUnmount=()=>{
       
-        if (this.state.hadModified && this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
+        if (this.state.isWindowInFocus===false && this.state.hadModified && this.state.firstName && this.state.lastName && this.state.phone && this.state.email) {
             window.onbeforeunload = () => true
             this.handleSubmit();
           } else {
             window.onbeforeunload = undefined
           }
+
+          //window.addEventListener("focus", this.onFocus)
 
     }
 
@@ -197,16 +205,23 @@ class UserProfile extends React.Component {
             shouldBlockNavigation:false
         })
 
+
+        this.setState({
+            imgLoader: false
+        })
+              
         
     }
 
     validate = () =>{
-
+        debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
-        let nameReg = /^[a-zA-Z]+$/
-        let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+        let nameReg = /^[a-zA-Z]+$/;
+        let emailReg =/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        //let emailReg =/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        //let emailReg =/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/;
         console.log(emailReg.test(this.state.email))
         let enteredNumber2 = JSON.stringify(this.state.phone)
         //let enteredNumber = enteredNumber2
@@ -240,13 +255,13 @@ class UserProfile extends React.Component {
 
        
 
-         if(! emailReg.test(this.state.email)){
+         if(!emailReg.test(this.state.email)){
             errorObj.emailError=1
             errorCount++
         }
 
            
-       else if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+       else if(!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
             document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
             errorCount++;
@@ -268,6 +283,7 @@ class UserProfile extends React.Component {
 
     handleSubmit = (e) => {
 
+        //debugger;
   
         this.setState({
             disableButton:true
@@ -371,10 +387,10 @@ class UserProfile extends React.Component {
         
        })
 
-       this.setState({
-        //disableImageRemove: false,
-        disableImageUpload: true
-    })
+    //    this.setState({
+    //     //disableImageRemove: false,
+    //     disableImageUpload: true
+    // })
  
         this.setState({logo: URL.createObjectURL(e.target.files[0])})
 
@@ -382,10 +398,14 @@ class UserProfile extends React.Component {
             this.fileInput.value = ""
         }
 
+
+        this.setState({
+            imgLoader: true
+        })
         
-        setTimeout(function() {
-            window.location.reload();
-         }, 1000);
+        // setTimeout(function() {
+        //     window.location.reload();
+        //  }, 1000);
 
        
 
@@ -417,6 +437,11 @@ class UserProfile extends React.Component {
             disableImageUpload: false,
             disableImageRemove:true
         })
+
+        this.setState({
+            imgLoader: true
+        })
+
         
     }
     handleDelete =()=> {
@@ -480,7 +505,40 @@ class UserProfile extends React.Component {
     confirm = ()=>{
         this.setState({open:false})
     }
+
+
+    //  onFocus = () => {
+    //     console.log('Tab is in focus');
+    //     this.setState({
+    //         isWindowInFocus:false
+    //     })
+
+    //     console.log("isWindowInFocus222", this.state.isWindowInFocus)
+    //   }
+
+
+    // handleChange = (event, newValue) => {
+    //     debugger;
+    //    if (newValue !== 0 && this.state.tabValues === 0) {
+    //      const res = window.confirm("Leaving?");
+    //      if (res === true) {
+    //          this.setState({
+    //            tabValues:newValue
+    //          })
+    //        //setValue(newValue);
+    //      }
+    //    } else {
+    //    //   setValue(newValue);
+    //    this.setState({
+    //        tabValues:newValue
+    //      })
+    //    }
+    //  }
+      
+
     render() {
+
+        console.log("ABCD123", this.props.tabChangeValueUP22, this.props.tabValues1)
         console.log("roles123", this.props.roles)
         console.log("usersUSER", this.props.data,  this.props.users.payload.active)
         const { actionType } = this.state;
@@ -509,8 +567,16 @@ class UserProfile extends React.Component {
             }
 
             else if(actionType==="save"){
-                this.handleSubmit();
-                this.props.cancle();
+               debugger;
+                let count= this.validate()
+                if(count===0){
+                    this.handleSubmit();
+                    this.props.cancle();
+                }
+                else{
+                    alert("You have entered wrong details")
+                }
+               
             }
 
             else if(actionType==="upload"){
@@ -602,15 +668,15 @@ class UserProfile extends React.Component {
         <>
 
         
-         {this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
+         {  this.state.hadModified.firstName ===true || this.state.hadModified.lastName ===true ||this.state.hadModified.phone ||this.state.hadModified.email===true ? 
          <Prompt
          //when={shouldBlockNavigation}
          //key='block-nav'
         //when={this.state.shouldBlockNavigation}
        // when={this.saveChanges()}
-        when={this.state.disableButton===true ? this.state.firstName:" " }
+        when={this.state.disableButton===true ? this.state.firstName:" " && this.props.tabValues !==1}
         message={this.state.hadModified.firstName || this.state.hadModified.lastName || this.state.hadModified.phone 
-            || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want to leave ?" : "Are you sure you want to leave ?" } 
+            || this.state.hadModified.email  ? "You have unsaved changes. Are you sure you want save and leave ?" : "Are you sure you want to leave ?" } 
       // message={ this.state.hadModified.name || this.state.hadModified.lastName || this.state.hadModified.sending_email_address || this.state.hadModified.phone ? 'Are you sure you want to save and leave?' : ' Are you sure you want to leave ?'}
        //onCancel="ignore &amp; Proced"
        //cancelText ="1123"
@@ -745,6 +811,25 @@ class UserProfile extends React.Component {
                                                     style={{objectFit:"contain"}}
                                                     class="resposiveImageParent"
                                                       />
+
+
+
+                                        <div className="loaderCenter">
+                                                {this.state.imgLoader===true ? 
+                                                    <p >
+                                                         <Loader /> 
+                                                         </p> 
+                                                    :
+                                                    <p > </p> 
+                                            }
+                                           
+                                            </div>
+                                       
+
+
+
+
+                                                      
                                                     </div>
                                                 
                                                     {/* <img src={this.state.logo.length>0?"https://zvky.flamingotech.ml/"+this.state.logo:""} alt="" /> */}
@@ -753,12 +838,12 @@ class UserProfile extends React.Component {
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
                                                 <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
                                                 <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}}
-                                                disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                //disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
                                                  >
                                                     <span class="d-flex align-items-center justify-content-around">
                                                     <input  type="file"  id={new Date().getTime()}  ref={fileInput => (this.fileInput = fileInput)}
                                                     onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg"
-                                                    disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
+                                                    //disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
                                                       />
                                                         <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
                                                     </span>
@@ -928,10 +1013,12 @@ const mapStateToProps = (state)=> (
     {
     users:state.userReduser.users,
     data:state.userReduser,
-    roles:state.userAccessReduser.roles
+    roles:state.userAccessReduser.roles,
+   // tabChangeValueUP2: state.userAccessReduser.tabChangeValue,
+    tabChangeValueUP22: state.userAccessReduser.tabChangeValue
 }
 
 )
 
 export default withRouter(connect(mapStateToProps,{updateUser,removeImage,
-    showUser,uploadImage,deleteUser}) (UserProfile));
+    showUser,uploadImage,deleteUser,tabChangeValues}) (UserProfile));
