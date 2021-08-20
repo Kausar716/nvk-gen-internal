@@ -161,6 +161,7 @@ class UserProfile extends React.Component {
 
 
     handleInput = (e) => {
+        debugger;
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state
         console.log(name)
@@ -215,7 +216,7 @@ class UserProfile extends React.Component {
     }
 
     validate = () =>{
-        debugger;
+        //debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
@@ -572,7 +573,7 @@ class UserProfile extends React.Component {
             }
 
             else if(actionType==="save"){
-               debugger;
+              // debugger;
                 let count= this.validate()
                 if(count===0){
                     this.handleSubmit();
@@ -691,7 +692,8 @@ class UserProfile extends React.Component {
                 when={this.state.hadModified}
                 message='You have unsaved changes, are you sure you want to leave?'
                 /> */}
-                 <ActionModal  confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
+                 {/* <ActionModal  confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/> */}
+                 <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                     <Tabs>
               
                         <TabPanel>

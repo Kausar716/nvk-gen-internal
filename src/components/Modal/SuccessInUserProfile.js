@@ -16,9 +16,6 @@ import {} from "../../actions/productAction";
 //console.log(IconAssets)
 
  const SuccessInUserProfile = (props) => {
-  
-
- 
   // const toggle = () => {
     
   // }

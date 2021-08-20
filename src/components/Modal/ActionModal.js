@@ -31,7 +31,7 @@ import {} from "../../actions/productAction";
         <ModalBody>
         {/* <img  src={IconAssets["Quote-&-Order-Management"]} alt=""/> */}
       
-        <p style={{textAlign:"justify",marginTop:"10px",marginLeft:"-2em"}}>{props.message}</p>
+        <p style={{textAlign:"justify",marginTop:"10px",marginLeft:"4em"}}>{props.message}</p>
         </ModalBody>
         <ModalFooter style={{borderTop:"1px solid white"}}>
           {/* <Button color="primary" onClick={toggle}>Do Something</Button>{' '} */}
