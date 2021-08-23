@@ -219,7 +219,7 @@ class UserProfile extends React.Component {
     }
 
     validate = () =>{
-        debugger;
+        //debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
@@ -250,7 +250,7 @@ class UserProfile extends React.Component {
         }
       
 
-         if(this.state.position === "Select.."){
+        else if(this.state.position === "Select.."){
             //debugger
             errorObj.positionError=1
             this.setState({errorObj})
@@ -260,15 +260,22 @@ class UserProfile extends React.Component {
 
        
 
-         if(!emailReg.test(this.state.email)){
+        else if(!emailReg.test(this.state.email)){
             errorObj.emailError=1
+            this.setState({errorObj})
             errorCount++
         }
+
+            // else{
+            //     errorObj.emailError=0
+            //     errorCount--
+            // }
 
            
        else if(!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
             document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
+            this.setState({errorObj})
             errorCount++;
         }
         else {
@@ -285,13 +292,15 @@ class UserProfile extends React.Component {
         
     }
 
+
+
       stringHasTheWhiteSpaceOrNot=(value)=>{
         return value.indexOf(' ') >= 0;
      }
 
     handleSubmit = (e) => {
 
-        debugger;
+        //debugger;
   
         this.setState({
             disableButton:true
