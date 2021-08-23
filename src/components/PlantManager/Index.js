@@ -342,6 +342,11 @@ const productFormAction = ()=>{
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                                     <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Plant</h1>
+                                    <span>
+                                                    <button type="button" class="btn btn-primary  btn-lg" 
+                                                    onClick={()=>props.plantPageReDirectAction("all","plant")}
+                                                    >Return to Plant Manager</button>
+                                                    </span>
                         
                                 </div>
                                     <div class="px-md-3 mt-3">
@@ -368,11 +373,7 @@ const productFormAction = ()=>{
                                                     { actionType !== "add"?<a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt=""  onClick={()=>confirmAction(ae_plant_id,"delete")} />
                                                     </a>:""}
-                                                    <span>
-                                                    <button type="button" class="btn btn-primary  btn-lg" 
-                                                    onClick={()=>props.plantPageReDirectAction("all","plant")}
-                                                    >Return to Plant Manager</button>
-                                                    </span>
+                                                    
                                                     {/* <a href="" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
                                                     </a> */}

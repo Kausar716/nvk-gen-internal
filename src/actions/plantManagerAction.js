@@ -457,7 +457,6 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
         // delete data["id"]
         data.type = "plant"
         console.log(data)
-        debugger;
         axios.post(`/api/update-sku/${id}`,data,config).then(res=>{ 
             // dispatch(getAllProductAction())
             
@@ -597,7 +596,6 @@ export const handlePlantInputAction = (id, value) =>dispatch=>{
 
 }
 export const handlePlantSkuInputAction =(id,value) =>dispatch=>{
-    debugger;
     dispatch({ 
         type:HANDLE_PLANT_SKU_INPUT_DATA,
         itemId:id,
@@ -692,7 +690,7 @@ export const serachPlant = (data) =>dispatch=>{
      axios.post(`/api/generate-sku/${plantId}`,requestData,config).then(res=>{ 
         dispatch({
             type:DYNAMIC_DISPLAY_PLANT_SKU,
-            dynamicName:res.data.data
+            dynamicName:res.data.data.sku
      
          })
        })

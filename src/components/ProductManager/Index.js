@@ -413,7 +413,10 @@ const  ProductManagement = (props) =>{
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                                     <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Product</h1>
-                        
+                                    <span>
+                                                    <button type="button" class="btn btn-primary  btn-lg"    
+                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>                                                    
+                                                    </span>
                                 </div>
                                     <div class="px-md-3 mt-3">
                                         <div class="px-3 py-3 mb-3 bg-white">
@@ -437,10 +440,7 @@ const  ProductManagement = (props) =>{
                                                     {actionType !== "add" ? <a href="#" class="mx-2">
                                                         <img src="assets/img/trash-ic.svg" alt="" onClick={()=>confirmAction(productDataById.product_id,"delete")}/>
                                                     </a>:""}
-                                                    <span>
-                                                    <button type="button" class="btn btn-primary  btn-lg"    
-                                            onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>                                                    
-                                                    </span>
+                                                   
                                                     {/* <a href="#" class="mx-2">
                                                         <img src="assets/img/left-double-arrow.svg" alt=""/>
                                                     </a> */}

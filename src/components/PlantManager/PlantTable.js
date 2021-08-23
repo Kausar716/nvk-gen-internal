@@ -211,7 +211,7 @@ const handleCheckBox =(id,index,type)=>{
                                                 <td>
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}
-                                                    </td>
+                                                </td>
                                                 <td className="text-center"><a href="#" onClick={()=>{handleSkuClick(plant_id)}}>{sku_count}</a></td>
                                                 <td className="text-center">
                                                 <div className="custom-control custom-checkbox mb-1">
