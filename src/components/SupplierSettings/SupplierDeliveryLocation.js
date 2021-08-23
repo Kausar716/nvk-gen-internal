@@ -273,6 +273,7 @@ onMoveData = (evt,ui)=>{
                 this.setState({errorObj})}
 
             if(e.target.name === "country"){
+                this.props.handleSupplierExchnageData("Select State","state","supplierLocation")
                 errorObj.country=0
                 this.setState({errorObj})}
             
@@ -630,9 +631,9 @@ render() {
                                             <div className="col-md-3">
                                                         <label for="Category">Country</label>
                                                             <select  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  id="country" name="country" value={supplierData.supplierLocation.country}   placeholder="Country" onChange={this.handleCategoryInputAction}>
-                                                                <option>{supplierData.supplierLocation.country}</option>
+                                                                <option>Select Country</option>
                                                                 {allCountry.map((country, i)=>{
-                                                                    return <option id={allCountry[i]}>{allCountry[i]}</option>
+                                                                    return <option id={allCountry[i]} selected={supplierData.supplierLocation.country ==allCountry[i]?"selected":""}>{allCountry[i]}</option>
                                                                 })}
                                                                 
                                                             </select>
@@ -645,7 +646,7 @@ render() {
                                             <div>
                                                 <input type="text"  id="zip"  name="zip"
                                                 value={supplierData.supplierLocation.zip}  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                                 placeholder="Zip" 
+                                                 placeholder="Postal/ZIP" 
                                                  onChange={this.handleCategoryInputAction}/>
                                                  {this.state.errorObj.zip!==0?<span style={{fontSize:"small",color:"red"}}>Enter zip</span>:""}
                                             </div>
@@ -659,7 +660,7 @@ render() {
                                             <label for="Category">Lat/Long</label>
                                             <div>
                                                 <input type="text"   id="lat"  name="lat"
-                                                value={supplierData.supplierLocation.lat}   placeholder="Lat"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                value={supplierData.supplierLocation.lat}   placeholder="Lat/Long"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                 onChange={this.handleCategoryInputAction}/>
                                                 {this.state.errorObj.lat!==0?<span style={{fontSize:"small",color:"red"}}>Enter lat</span>:""}
                                             </div>
@@ -793,7 +794,7 @@ render() {
                                                                       <div style={{display:"block",float:"left"}}>
                                                                       <p style={{padding:0,margin:0,color:"#348fe2",fontWeight:"bold"}}>{t.location}</p>
                                                                       <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.address}</p>
-                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city} {t.state}  {t.country}</p>
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{t.city}, {t.state},  {t.country}</p>
                                                                       </div>
                                                                       </div>
                                                                    

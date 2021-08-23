@@ -587,7 +587,7 @@ console.log(props.supplierData.supplierReasonList)
                         <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
                             {action=="edit"?
-                                    <p   style={{paddingRight:"10%",color:"red",fontSize:"18px",paddingTop:"2%",cursor:"pointer"}} onClick={()=>deleteCustomerData(supplierDataById.id)}> Delete Customer</p>
+                                    <p   style={{paddingRight:"10%",color:"red",fontSize:"18px",paddingTop:"2%",cursor:"pointer"}} onClick={()=>deleteCustomerData(supplierDataById.id)}> Delete Supplier</p>
                            :""}
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                                     <p style={{marginLeft:"14%",marginTop:"16px"}}>Active</p>

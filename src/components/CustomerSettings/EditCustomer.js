@@ -38,6 +38,7 @@ function AddCustomer(props) {
     const[actionTypeAddress,setactionTypeAddress] = useState("add")
 	const toggle1 = () => setIsOpen1(!isOpen1);
     const [enableUrl,setEnableUrl] = useState(false)
+    const [expanded,setexpanded] = useState(false)
 
     const [isOpen2, setIsOpen2] = useState(false);
 	const [message2,setMessage2] = useState([]);
@@ -82,9 +83,10 @@ function AddCustomer(props) {
             })
             if(indexValue !== null) type.splice(indexValue,1)
             else type.push(e.target.value)
-            var checkboxes = document.getElementById("checkboxes");
-            checkboxes.style.display = "none";
-            expanded = false;
+            // var checkboxes = document.getElementById("checkboxes");
+            // checkboxes.style.display = "none";
+            // expanded = false;
+            // setexpanded(false)
 
             props.handleExchangeData(type,e.target.id,"customerDataById")
         }else if(e.target.id ==="alert"){
@@ -380,25 +382,28 @@ function AddCustomer(props) {
         window.open(url, '_blank');
         // window.location.href = url
     }
-    var expanded = false;
+    // var expanded = false;
 
 const showCheckboxes=()=>{
   var checkboxes = document.getElementById("checkboxes");
   if (!expanded) {
     checkboxes.style.display = "block";
-    expanded = true;
-  } else {
-    checkboxes.style.display = "none";
-    expanded = false;
+    // expanded = true;
+    // setexpanded(true)
   }
 }
 const showCheckboxesClose = ()=>{
     var checkboxes = document.getElementById("checkboxes");
 
       checkboxes.style.display = "none";
-      expanded = false;
+    //   expanded = false;
     // }
 
+}
+const showClose  = (e)=>{
+    // alert(e.target.id)
+    if(e.target.id=="" && expanded ==false)
+    setexpanded(true)
 }
 const dataTochange =(e)=>{
     setCheckedData(true)
@@ -437,7 +442,7 @@ const dataTochange =(e)=>{
 
     console.log(customerDataById)
     return (
-        <div style={{position: 'relative'}} >
+        <div style={{position: 'relative'}} onClickCapture={showClose} id="fullbody">
             	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
                 <SuccessModal status={isOpen2} message={message2} modalAction={toggle2}/>
                 <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
@@ -621,16 +626,16 @@ const dataTochange =(e)=>{
                                             })}
                                         </select>
                                     </div> */}
-                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes}>
+                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes} id="setBox">
                                     <label>Type<span class="text-danger">*</span></label>
                                         {/* <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}> */}
                                             {/* <select> */}
                                             {/* <div class=" col-md-8 col-lg-8 mt-2 mt-md-0"> */}
-                                            <div class="selectBox" >
-                                            <select class="form-control">
+                                            <div class="selectBox" id="setBox">
+                                            <select class="form-control" id="setBox">
                                                 <option>Select Type</option>
                                             </select>
-                                            <div class="overSelect"></div>
+                                            <div class="overSelect" id="setBox"></div>
                                             </div>
                                             <div id="checkboxes" style={{position: 'absolute'}}>
 
