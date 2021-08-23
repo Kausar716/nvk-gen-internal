@@ -10,7 +10,10 @@ import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
 import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
-import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
+import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 class UserManagement extends Component {  
 constructor(props){
@@ -20,6 +23,7 @@ constructor(props){
         lastName:"",
         phone:"",
         email:"",
+        tags: [],
         tabValues:0,
         locationAccess:false,
         displayDeletedRecords:false,
@@ -51,6 +55,7 @@ constructor(props){
 
    
  handleProfileChange = (e) => {
+     debugger;
      console.log(e)
      console.log(e.target.value)
      let userList = this.props.users.active
@@ -64,6 +69,29 @@ constructor(props){
      this.setState({displayUpdateProfile:true})
      this.setState({visbleTrue:true})
 }
+
+onTagsChange = (event, values) => {
+    //debugger;
+
+     let userList = this.props.users.active
+     let id = values.id
+     console.log(id)
+       let selectedUser  =  userList.filter(obj=>{
+         return (parseInt(obj.id) === parseInt(id))
+     })
+     console.log(selectedUser)
+     this.setState({selectedUser:selectedUser[0]})
+     this.setState({displayUpdateProfile:true})
+     this.setState({visbleTrue:true})
+
+
+  }
+
+
+
+
+
+
 handleCreate = (e) => {
     this.setState({displayCreate:true})
 }
@@ -211,7 +239,7 @@ handleChange=(index)=>{
 
 
 goToUserAccess=()=>{
-    alert("going user access ?")
+   // alert("going user access ?")
     // this.setState({
     //     tabValues:1
     // })
@@ -262,7 +290,7 @@ goToUserAccess=()=>{
 
  //console.log("tabValues1235", this.state.tabValues)
 
- console.log("tabChangeValueUP", this.props.tabChangeValueUP)
+ console.log("tabChangeValueUP", this.props.tabChangeValueUP, userProfiles)
         
     return (
         <div clas="userManagementSection">
@@ -352,15 +380,38 @@ goToUserAccess=()=>{
                                 <div class="col-md-12 col-lg-12">
                                    {(!displayUpdateProfile && !displayCreate)?<h4>Select user profile to edit or choose Create New User</h4>:null}
                                    {(!displayUpdateProfile && !displayCreate)?<div class="row d-flex align-items-center mt-4 mt-md-0">
-                                        <div class="col-md-4 col-lg-4">  
+
+
+                                        {/* <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option >Select...</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                return  <option value={userObj.id}>{userObj.name} {userObj.last_name}</option>
+                                                return  <option value={userObj.id}> {userObj.name} {userObj.last_name}</option>
                                             }):null}
                                             </select>
+                                        </div> */}
+
+
+
+                                        <div class="col-md-3 col-lg-3 ">  
+                                            <h5>Select User Profile</h5>
+                                        <Autocomplete 
+                                             
+                                                onChange={this.onTagsChange} 
+                                                options={userProfiles}
+                                                id={userProfiles.map(id=>id.id)}
+                                               // value={(option)=>option.id}
+                                                getOptionLabel={(option) => option.name +"  "+ option.last_name}
+                                                style={{ width: 300 }}
+                                                autoHighlight
+                                                renderInput={(params) => <TextField {...params} label="Select..." variant="outlined" />}
+                                        />
                                         </div>
+
+
+
+
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0" style={{cursor:"default"}}>  
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck1" value={this.state.displatDeletedRecord} checked={(this.state.displatDeletedRecord === "on")? true:false} onChange={this.hanleCheckBox}/>
