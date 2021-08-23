@@ -149,7 +149,7 @@ const SignInPage = (props) => {
                         
                     
 
-                    <div class="col-md-6" style={{marginTop:"0.8em"}}>
+                    <div class="col-md-6" style={{marginTop:"-1em"}}>
                         <div class="bg-white px-3 py-3 signInContent" style={{borderRadius:"5px"}}>
                             <form action="/" method="POST">
                                 <div class="form-group row my-4">
@@ -245,7 +245,7 @@ const SignInPage = (props) => {
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.7.5 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.8.0 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
                             {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                            
                         </div>
