@@ -692,9 +692,12 @@ export const serachPlant = (data) =>dispatch=>{
      axios.post(`/api/generate-sku/${plantId}`,requestData,config).then(res=>{ 
         dispatch({
             type:DYNAMIC_DISPLAY_PLANT_SKU,
-            dynamicName:res.data.data
+            dynamicName:res.data.data.sku
      
          })
+       })
+       .catch(err=>{
+           console.log(err)
        })
 
     
