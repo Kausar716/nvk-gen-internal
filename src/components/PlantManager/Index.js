@@ -390,7 +390,7 @@ const productFormAction = ()=>{
 
                                     <div className="product_add_navigation">
                                         <span style={{ marginRight: "25px"}} id="general" className={plantPageToOpen === "general" ? "selected_link" : "normal_link" }  onClick={()=>props.plantSubPageReDirectAction("general")}>General</span>
-                                        <span  style={{ marginLeft: "-25px"}} id="sku"  className={plantPageToOpen === "sku" ? "selected_link" : "normal_link" }  onClick={()=>props.plantSubPageReDirectAction("sku")}>SKU Lists</span>
+                                        <span  style={{ marginLeft: "-25px"}} id="sku"  className={plantPageToOpen === "sku" ? "selected_link" : "normal_link" }  onClick={()=>{if(actionType !== "add"){props.plantSubPageReDirectAction("sku")}}}>SKU Lists</span>
                                     </div>
                                 </div>
                         </div>

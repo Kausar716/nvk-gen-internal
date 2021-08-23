@@ -465,7 +465,7 @@ const  ProductManagement = (props) =>{
 
                                                 <div className="product_add_navigation">
                                                     <span  style={{ marginRight: "25px"}} id="general" className={pageToOpen === "general" ? "selected_link" : "normal_link" } onClick={()=>props.subPageReDirectAction("general")}>General</span>
-                                                    <span  style={{ marginLeft: "-25px"}} id="skuList" className={pageToOpen === "sku" ? "selected_link" : "normal_link" } onClick={()=>props.subPageReDirectAction("sku")}>SKU Lists</span>
+                                                    <span  style={{ marginLeft: "-25px"}} id="skuList" className={pageToOpen === "sku" ? "selected_link" : "normal_link" } onClick={()=>{if(actionType !== "add"){props.subPageReDirectAction("sku")}}}>SKU Lists</span>
                                                     
                                                 </div>
                                     </div>
