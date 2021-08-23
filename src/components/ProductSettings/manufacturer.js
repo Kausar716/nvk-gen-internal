@@ -338,7 +338,7 @@ handleAddCategoryUpdate=()=>{
                         buttons: [
                           {
                             label: 'Yes',
-                            onClick: () => {this.onDeleteConfirm(2)}
+                            onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
                           },
                           {
                             label: 'No'

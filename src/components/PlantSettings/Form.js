@@ -327,7 +327,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
          let updateObject={}
          updateObject.value=valueName
         //  updateObject.attribute_id=1
-         updateObject.status=1
+        //  updateObject.status=1
 
          updateObject["childrens"] =[
             {
