@@ -659,12 +659,12 @@ export const serachPlant = (data) =>dispatch=>{
                 delete requestData.height_id
                 requestData.caliper_id = JSON.stringify(attribute.subattribute_id)
              }
-             else if(attribute.attribute_id === 4){
+             else if(attribute.attribute_id === 3){
                  if(requestData.caliper_id)
                  delete requestData.caliper_id
                 requestData.height_id = JSON.stringify(attribute.subattribute_id)
             }
-            else if(attribute.attribute_id === 3){
+            else if(attribute.attribute_id === 4){
                  requestData.packaging_id = JSON.stringify(attribute.subattribute_id)
             }
         })
@@ -673,13 +673,13 @@ export const serachPlant = (data) =>dispatch=>{
      if(selectedName.id === "1"){
         requestData.form_id = selectedName.value
      }
-     else if(selectedName.id === "3"){
+     else if(selectedName.id === "5"){
        
         if(requestData.height_id)
         delete requestData.height_id
         requestData.caliper_id = selectedName.value
      }
-     else if(selectedName.id === "5"){
+     else if(selectedName.id === "3"){
          if(requestData.caliper_id)
          delete requestData.caliper_id
         requestData.height_id = selectedName.value
