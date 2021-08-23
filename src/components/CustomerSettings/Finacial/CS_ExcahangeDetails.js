@@ -209,7 +209,7 @@ const dataTochange = (e)=>{
       let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
      if(characterCheck === null){
          if(id === "exchange_rate"){
-          setexchangeCustomer(true)
+          // setexchangeCustomer(true)
          }
          else setexchangeCustomer(false)
       
@@ -223,7 +223,7 @@ const dataTochange = (e)=>{
 const dataTochange1 =(e)=>{
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate1"){
-    setexchangeSupplier(false)
+    // setexchangeSupplier(false)
     if(Number.isInteger(parseFloat(e.target.value))){
       let intValue = e.target.value*1.00
       props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
@@ -240,11 +240,11 @@ const dataTochange1 =(e)=>{
       let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
      if(characterCheck === null){
          if(id === "exchange_rate1"){
-          setexchangeSupplier(true)
+          // setexchangeSupplier(true)
          }
   
       
-     }else   setexchangeSupplier(false)
+     }else  
       props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")
      }
     }
@@ -257,7 +257,7 @@ const dataTochange1 =(e)=>{
      <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      <Label className="subFont">Customer and Supplier Exchange Details</Label>
+      <Label className="subFont">Customer and Supplier Exchange</Label>
         <span className="updownSymbolContainer"> 
         {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -303,7 +303,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onBlur={dataTochange}/> 
+                                <input type="number" placeholder={"0.00"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onBlur={dataTochange}/> 
                                 <p>{exchange_customer?<span style={{fontSize:"small",color:"red"}}>Enter Valid Exchange(Fixed 2 Decimals)</span>:""}</p>
                             </div>
                            
@@ -356,7 +356,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.000"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onBlur={dataTochange1}/> 
+                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.00"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onBlur={dataTochange1}/> 
                                 <p>{exchange_supplier?<span style={{fontSize:"small",color:"red"}}>Enter Valid Exchange(Fixed 2 Decimals)</span>:""}</p>
                             </div>
                            
