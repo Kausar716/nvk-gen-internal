@@ -161,7 +161,7 @@ class UserProfile extends React.Component {
 
 
     handleInput = (e) => {
-        debugger;
+       // debugger;
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state
         console.log(name)
@@ -181,10 +181,13 @@ class UserProfile extends React.Component {
                 errorCount--
             }            
         }
+
+        
         else if(name === "phone" ){
             hadModified.phone=true
-                    
         }
+
+
         else if(name === "email" ){
             hadModified.email=true
             if(errorObj.emailError>0){
@@ -216,7 +219,7 @@ class UserProfile extends React.Component {
     }
 
     validate = () =>{
-        //debugger;
+        debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
@@ -285,7 +288,7 @@ class UserProfile extends React.Component {
 
     handleSubmit = (e) => {
 
-        //debugger;
+        debugger;
   
         this.setState({
             disableButton:true
@@ -327,7 +330,7 @@ class UserProfile extends React.Component {
                console.log(userObject)
                 let res = this.props.updateUser(userObject)
                 res.then(result=>{
-                 // alert("updated")
+                  alert("updated")
                   //this.props.cancle() 
                     console.log(this.props.users)
                     if(this.props.users.payload.status === "Success"){
@@ -580,7 +583,7 @@ class UserProfile extends React.Component {
                     this.props.cancle();
                 }
                 else{
-                    alert("You have entered wrong details")
+                   // alert("You have entered wrong details")
                 }
                
             }
@@ -700,7 +703,7 @@ class UserProfile extends React.Component {
                             
                         <div>
 
-                            <div class="row" style={{display:"flex", justifyContent:"space-between"}}> 
+                            <div class="row" style={{display:"flex", justifyContent:"space-between", marginTop:"-2em", marginBottom:"-1.5em"}}> 
                                 <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"3px"}} >User Profile &nbsp;-<span class="f-s-18 p-15 mb-0" style={{marginLeft:"-10px"}}>Add, Edit or Remove User</span> 
                                 {/* <div style={{marginTop:"1.3em", float:"right"}}>
                                                                 <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
@@ -793,7 +796,7 @@ class UserProfile extends React.Component {
 
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
-                                    <div class="bg-grey-transparent-2 text-center px-2 py-2">
+                                    <div class="bg-grey-transparent-2 text-center px-2 py-2" style={{marginTop:"-0.5em"}}>
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
                                         <p class="m-0">Inactive users will not have access to this system. User permissions can be set via  <span className="linkTag" onClick={this.goToUserAccess}>User Access</span>.</p>
                                     </div>

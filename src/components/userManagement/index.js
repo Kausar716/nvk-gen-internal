@@ -55,7 +55,7 @@ constructor(props){
 
    
  handleProfileChange = (e) => {
-     debugger;
+    // debugger;
      console.log(e)
      console.log(e.target.value)
      let userList = this.props.users.active
@@ -358,12 +358,12 @@ goToUserAccess=()=>{
                          
                         <hr class="m-0"/>
             
-                        <div class="ContentSection p-15">
+                        <div class="ContentSection p-15" >
 
                         {this.state.visbleTrue!==true  ? 
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
-                                    <div class="bg-grey-transparent-2 text-center px-2 py-2">
+                                    <div class="bg-grey-transparent-2 text-center px-2 py-2" >
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
                                         <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <span className="linkTag" onClick={this.goToUserAccess}>User Access</span>.</p>
                                     </div>
