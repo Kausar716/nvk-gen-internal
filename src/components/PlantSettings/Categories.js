@@ -85,10 +85,10 @@ startIDData  =(e)=>{
 }
 onAddData = (evt)=>{
     console.log(evt)
-    evt.preventDefault()
+    // evt.preventDefault()
 
-//     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
-//  evt.from.insertBefore(evt.item, null); 
+    const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+ evt.from.insertBefore(evt.item, null); 
 
 }
 onMoveData = (evt,ui)=>{
@@ -104,6 +104,10 @@ onMoveData = (evt,ui)=>{
           //console.log(task)
           if(task.length > 0){
             this.props.handleDragDrop(task[0]).then(data=>{
+                this.props.getAllPlantCategories().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
             //     this.props.getAllPlantCategories().then(()=>{
             //     confirmAlert({
             //     title: 'Action',
@@ -127,6 +131,10 @@ onMoveData = (evt,ui)=>{
         //console.log(task)
         if(task.length > 0){
             this.props.handleDragDrop(task[0]).then(data=>{
+                this.props.getAllPlantCategories().then(()=>{
+                    // alert("ji")
+                    this.getCatgoryData()
+                })
         //         this.props.getAllPlantCategories().then(()=>{
         //             this.props.getAllPlantCategories().then(()=>{
                         // confirmAlert({
@@ -481,7 +489,7 @@ render() {
                                            >
                                            <React.Fragment>
                                             <ul class="list-unstyled" id="categoryInactive" >
-                                            {/* <li></li> */}
+                                         
                                                    {this.props.plantCategoryList.filter(data=>data.status ==0).map(t=>{
                                                     
                                                     return <li id={t.id}>
@@ -537,7 +545,7 @@ render() {
                                             <div class="card-body cardBg" >
                                             <React.Fragment>
                                             <ul class="list-unstyled" id="categoryActive" >
-                                                {/* <li></li> */}
+                                           
                                                    {this.props.plantCategoryList.filter(data=>data.status ==1).map(t=>{
                                                     return <li id={t.id}>
                                                         <div class="showElipse">

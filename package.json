@@ -40,7 +40,7 @@
     "redux-form": "^8.3.7",
     "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^2.0.3",
-    "sortablejs": "^1.14.0",
+    "sortablejs": "^1.6.1",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

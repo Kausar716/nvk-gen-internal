@@ -48,11 +48,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
             this.setState({selectedID:e.item.id})
         }
         onAddData = (evt)=>{
-            console.log(evt)
-            evt.preventDefault()
+            // console.log(evt)
+            // evt.preventDefault()
         
-        //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
-        //  evt.from.insertBefore(evt.item, null); 
+            const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+         evt.from.insertBefore(evt.item, null); 
         
         }
         onMoveData = (evt,ui)=>{
@@ -68,19 +68,11 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                   //console.log(task)
                   if(task.length > 0){
                     this.props.handleAttributeDragDrop(task[0]).then(data=>{
-                    //     this.props.getAllPlantCategories().then(()=>{
-                    //     confirmAlert({
-                    //     title: 'Action',
-                    //     message: 'Successfully Moved from Active to InActive',
-                    //     buttons: [
-                    //         {
-                    //         label: 'Ok'
-                    //         }
-                    //     ]
-                    // });
-                    // this.getCatgoryData()
+                        this.props.getAllSubAttribute(11).then(()=>{
+             
+                    this.getCatgoryData()
               
-                    // })
+                    })
                 })
         
                 }
@@ -92,25 +84,17 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 if(task.length > 0){
                     this.props.handleAttributeDragDrop(task[0]).then(data=>{
                 //         this.props.getAllPlantCategories().then(()=>{
-                //             this.props.getAllPlantCategories().then(()=>{
-                                // confirmAlert({
-                                //     title: 'Action',
-                                //     message: 'Successfully Moved from InActive to Active',
-                                //     buttons: [
-                                //         {
-                                //         label: 'Ok'
-                                //         }
-                                //     ]
-                                // });
-                //                 this.getCatgoryData()
-                //             })
-                //             // this.getCatgoryData() 
-                //         })
-                //     })
+                    this.props.getAllSubAttribute(11).then(()=>{
+                               
+                                this.getCatgoryData()
+                            })
+                            // this.getCatgoryData() 
+                        })
+                    // })
         
                 // }
                 
-               })
+            //    })
             }
         
            }
@@ -426,6 +410,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             <div class="card-body cardBg"
                                             >
                                                 <ul class="list-unstyled" id="categoryInactive">
+                                         
                                                    {this.state.inactive.map(t=>{
                                                     return <li id={t.id}>
                                                         <div class="showElipse">
