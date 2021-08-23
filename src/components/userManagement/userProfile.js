@@ -273,6 +273,9 @@ class UserProfile extends React.Component {
         }
         else {
             document.getElementById("contactPhone-validtor").innerText = ""
+            errorObj.phoneError=0
+            errorCount--;
+
         }
 
         this.setState({errorObj,errorCount})
