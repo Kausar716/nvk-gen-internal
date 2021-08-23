@@ -15,10 +15,7 @@ import {} from "../../actions/productAction";
 //const IconAssets =  getAllImageAssets();
 //console.log(IconAssets)
 
- const ActionModal = (props) => {
-  
-
- 
+ const SuccessInUserProfile = (props) => {
   // const toggle = () => {
     
   // }
@@ -27,15 +24,17 @@ import {} from "../../actions/productAction";
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={props.open}  >
-        <ModalHeader style={{color:"red",fontSize:20,fontWeight:"bold",borderBottom:"white"}} >   <i className="fa fa-exclamation-triangle" aria-hidden="true" style={{fontSize:40,color:"red"}}></i> WARNING !</ModalHeader>
+      <ModalHeader><p style={{fontSize:25,color:"#629C44"}}>Success</p></ModalHeader>
         <ModalBody>
-        {/* <img  src={IconAssets["Quote-&-Order-Management"]} alt=""/> */}
+        {/* <img  src={IconAssets["Quote-&-Order-Management"]} alt=""/>  text-align: justify;
+    margin-left: 7em;
+    margin-top: 1em;*/}
       
-        <p style={{textAlign:"justify",marginTop:"10px",marginLeft:"4em"}}>{props.message}</p>
+        <p style={{textAlign:"justify",marginTop:"1em",marginLeft:"7em"}}>{props.message}</p>
         </ModalBody>
         <ModalFooter style={{borderTop:"1px solid white"}}>
           {/* <Button color="primary" onClick={toggle}>Do Something</Button>{' '} */}
-          <Button  onClick={()=>props.cancel()} style={{backgroundColor:"white",border:"1px solid lightgray",color:"gray",width:120}}>Cancel</Button>
+          {/* <Button  onClick={()=>props.cancel()} style={{backgroundColor:"white",border:"1px solid lightgray",color:"gray",width:120}}>Cancel</Button> */}
           <Button  onClick={()=>props.confirm()} style={{backgroundColor:"#2296f3",border:"1px solid white",width:120}}>OK</Button>
         </ModalFooter>
       </Modal>
@@ -46,4 +45,4 @@ const mapStateToProps = (state)=> ({
    
 })
 
-export default connect(mapStateToProps,{})(ActionModal)
+export default connect(mapStateToProps,{})(SuccessInUserProfile)

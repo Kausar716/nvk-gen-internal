@@ -11,6 +11,7 @@ import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} fro
 //import getRolesList from "../../actions/userAccessAction";
 import {tabChangeValues} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
+//import SuccessModal from '../Modal/SuccessModal';
 import CheckBox from "./Checkbox";
 import InputMask from 'react-input-mask';
 //import * as BsIcons from "react-icons/io";
@@ -160,6 +161,7 @@ class UserProfile extends React.Component {
 
 
     handleInput = (e) => {
+        debugger;
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state
         console.log(name)
@@ -214,7 +216,7 @@ class UserProfile extends React.Component {
     }
 
     validate = () =>{
-        debugger;
+        //debugger;
         let {errorObj,errorCount}=this.state
         let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
         // let phoneReg = new RegExp('^[0-9]+$');
@@ -534,6 +536,10 @@ class UserProfile extends React.Component {
     //      })
     //    }
     //  }
+    goToUserAccess=()=>{
+        this.props.tabChangeValues(1)  
+    }
+    
       
 
     render() {
@@ -567,7 +573,7 @@ class UserProfile extends React.Component {
             }
 
             else if(actionType==="save"){
-               debugger;
+              // debugger;
                 let count= this.validate()
                 if(count===0){
                     this.handleSubmit();
@@ -686,8 +692,8 @@ class UserProfile extends React.Component {
                 when={this.state.hadModified}
                 message='You have unsaved changes, are you sure you want to leave?'
                 /> */}
-         <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
-   
+                 {/* <ActionModal  confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/> */}
+                 <ActionModal cancel={cancel} confirm={confirm} open={this.state.actionOpen} message={this.state.actionMessage}/>
                     <Tabs>
               
                         <TabPanel>
@@ -695,7 +701,7 @@ class UserProfile extends React.Component {
                         <div>
 
                             <div class="row" style={{display:"flex", justifyContent:"space-between"}}> 
-                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"3px"}} >User Profile-<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span> 
+                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"3px"}} >User Profile &nbsp;-<span class="f-s-18 p-15 mb-0" style={{marginLeft:"-10px"}}>Add, Edit or Remove User</span> 
                                 {/* <div style={{marginTop:"1.3em", float:"right"}}>
                                                                 <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
                                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>
@@ -789,7 +795,7 @@ class UserProfile extends React.Component {
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <a href="">User Access</a>.</p>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via  <span className="linkTag" onClick={this.goToUserAccess}>User Access</span>.</p>
                                     </div>
                                 </div>
                             </div>

@@ -6,8 +6,9 @@ import {connect} from "react-redux";
 import QuoteOrderPermission from './QuoteOrderPermission';
 
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect, resetUserData} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
+//import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import { Link ,withRouter} from "react-router-dom";
 
 export const Component = withRouter(({ history, location }) =>{
@@ -98,6 +99,7 @@ export const Component = withRouter(({ history, location }) =>{
    
 
     handleUserSelect = (e) =>{
+       // debugger;
         console.log(e.target.value)
         let selectedId = e.target.value
         console.log(this.props.users)
@@ -119,17 +121,33 @@ export const Component = withRouter(({ history, location }) =>{
     }
 
     goBackFunction =(e)=>{
-        const { history } = this.props;
-        setTimeout(function() {
-            history.push("/usermanagement")
-            window.location.reload();
-         }, 1000);
+        // const { history } = this.props;
+        // setTimeout(function() {
+        //     history.push("/usermanagement")
+        //     window.location.reload();
+        //  }, 1000);
+       // let id= "Select..."
+        this.props.getUsersList()
+        this.props.getRolesList()
+        this.props.getPermissionList()
+        this.props.resetUserData()
+       let selectedId = "Select..."
+      //  this.props.handleUserSelect(selectedId)
+        this.setState({
+            displayselectedUSer:false,
+           // selectedUser:selectedId,
+        })
        
     }
 
 
-    reseUserData=()=>{
-
+    goToUserAccess=()=>{
+        alert("going user access ?")
+        // this.setState({
+        //     tabValues:1
+        // })
+        this.props.tabChangeValues(0)  
+    
     }
 
 
@@ -171,7 +189,7 @@ export const Component = withRouter(({ history, location }) =>{
 
        console.log("exestingRoles",exestingRoles )
        
-
+   
 
        
     return (
@@ -226,7 +244,7 @@ export const Component = withRouter(({ history, location }) =>{
                                     <div class="col-md-12 col-lg-12">
                                         <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                             <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                            <p class="m-0">Only active users will are visible to set permissions. User profile can be set or modified via <a href="">User Profiles</a>.</p>
+                                            <p class="m-0">Only active users will are visible to set permissions. User profile can be set or modified via <span className="linkTag" onClick={this.goToUserAccess}>User Profiles</span>.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -271,7 +289,8 @@ export const Component = withRouter(({ history, location }) =>{
                                                         <h5>Select User Profile</h5>
                                                         <select class="form-control" name="userList" onChange={this.handleUserSelect}>
                                                         <option>Select...</option>
-                                                        {userProfiles.length>0?userProfiles.map(userObj=>{
+                                                        {userProfiles[0]?userProfiles.map(userObj=>{
+                                                           
                                                             return  <option value={userObj.id}>{userObj.name}</option>
                                                         }):null}
                                                         </select>
@@ -348,7 +367,7 @@ export const Component = withRouter(({ history, location }) =>{
                                     <h4>Quote &amp; Order PermissionsTESTING</h4>
                                     <div > */}
                                         <div >
-                                            <QuoteOrderPermission />
+                                            <QuoteOrderPermission  cancelSelectUser={this.state.displayselectedUSer}/>
                                         </div>
                                     {/* </div>
                                 </div>
@@ -1226,4 +1245,4 @@ export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUse
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction, resetUserData})(UserAccess));
+,handleUserAccessInputAction, resetUserData, tabChangeValues})(UserAccess));
