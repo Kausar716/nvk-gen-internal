@@ -563,7 +563,7 @@ class UserProfile extends React.Component {
         const confirm = ()=>{
             const { history } = this.props;
             if(actionType==="goBack"){
-              //  history.push("/Dashboard")
+               history.push("/Dashboard")
 
                 // setTimeout(function() {
                 //     history.push("/")
