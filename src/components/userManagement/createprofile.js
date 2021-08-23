@@ -90,7 +90,7 @@ export class CreateUserProfile extends Component {
       }
 
     handleInput = (e) => {
-       // debugger;
+       //debugger;
         console.log(e.target.value)
         const {target:{name,value}} =e
         let {errorObj,errorCount,hadModified} = this.state
@@ -103,7 +103,16 @@ export class CreateUserProfile extends Component {
         // }          
 
         if(name === "firstName" ){
-            hadModified.name=true
+            // if(this.state.firstName.length<1){
+            //     hadModified.name=false
+            // }
+            // else{
+                hadModified.name=true
+                // this.setState({
+                //     createButton:true
+                // })
+            // }
+           
             if(errorObj.firstNameError>0){
                 errorObj.firstNameError=0
                 errorCount--
@@ -111,6 +120,19 @@ export class CreateUserProfile extends Component {
         }
         else if(name === "lastName" ){
             hadModified.last_name=true
+
+            // if(this.state.lastName.length<1){
+            //     hadModified.last_name=false
+            // }
+
+            // else{
+            //     hadModified.last_name=true
+            //     // this.setState({
+            //     //     createButton:true
+            //     // })
+            // }
+           
+           // hadModified.last_name=true
             if(errorObj.lastNameError>0){
                 errorObj.lastNameError=0
                 errorCount--
@@ -124,6 +146,18 @@ export class CreateUserProfile extends Component {
         //     }            
         // }
         else if(name === "email" ){
+
+            // if(this.state.email.length<1){
+            //     hadModified.email=false
+            // }
+            // else{
+            //     hadModified.email=true
+            //     // this.setState({
+            //     //     createButton:true
+            //     // })
+            // }
+            
+            
             hadModified.email=true
             if(errorObj.emailError>0){
                 errorObj.emailError=0
@@ -279,7 +313,7 @@ export class CreateUserProfile extends Component {
     handleSubmit = (e) => {
 
         
-        //  debugger;
+       // debugger;
 
          console.log("email already there", this.state.email)
 
@@ -311,7 +345,7 @@ export class CreateUserProfile extends Component {
        console.log(count)
         if(count === 0){
 
-            debugger;
+           // debugger;
 
             console.log(this.state)
             let userStateObject = this.state
@@ -376,6 +410,29 @@ export class CreateUserProfile extends Component {
      if(this.props.roles)roles = this.props.roles
 
      console.log("userListBackup", this.props.userListBackup.payload.active)
+
+
+    //  let flag =0
+    //  if(productDataById){       
+    //      if(!productDataById.name || !productDataById.category_id || !productDataById.manufacturer_id || productDataById.category_id === "0"|| productDataById.manufacturer_id === "0"){
+    //          flag=1
+             
+    //      }
+         
+    //  }
+
+    console.log("this123456", this.state.firstName)
+
+    // if(this.state.createButton===true){
+    //     if(this.state.firstName.length<1 && this.state.lastName.length<1){
+
+    //         this.setState({
+    //           hadModified:{firstName:false}
+    //         })
+    //     }
+    // }
+
+
     return (
         <>
          <SuccessInUM cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
@@ -562,7 +619,7 @@ export class CreateUserProfile extends Component {
                                 </div>
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3" disabled={this.state.createButton} onClick={this.handleSubmit}>Create</button>
+                                    <button type="button" class="btn btn-primary btn-lg ml-3" disabled={!(this.state.firstName && this.state.lastName && this.state.email && this.state.phone && this.state.position>0) } onClick={this.handleSubmit}>Create</button>
                                 </div>
                             </div>
                         </div>
