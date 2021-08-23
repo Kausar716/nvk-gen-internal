@@ -9,8 +9,11 @@ import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
-import {getRolesList,tabChangeValues} from "../../actions/userAccessAction";
-import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
+import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
+import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+
 
 class UserManagement extends Component {  
 constructor(props){
@@ -20,6 +23,7 @@ constructor(props){
         lastName:"",
         phone:"",
         email:"",
+        tags: [],
         tabValues:0,
         locationAccess:false,
         displayDeletedRecords:false,
@@ -51,6 +55,7 @@ constructor(props){
 
    
  handleProfileChange = (e) => {
+     debugger;
      console.log(e)
      console.log(e.target.value)
      let userList = this.props.users.active
@@ -64,6 +69,29 @@ constructor(props){
      this.setState({displayUpdateProfile:true})
      this.setState({visbleTrue:true})
 }
+
+onTagsChange = (event, values) => {
+    //debugger;
+
+     let userList = this.props.users.active
+     let id = values.id
+     console.log(id)
+       let selectedUser  =  userList.filter(obj=>{
+         return (parseInt(obj.id) === parseInt(id))
+     })
+     console.log(selectedUser)
+     this.setState({selectedUser:selectedUser[0]})
+     this.setState({displayUpdateProfile:true})
+     this.setState({visbleTrue:true})
+
+
+  }
+
+
+
+
+
+
 handleCreate = (e) => {
     this.setState({displayCreate:true})
 }
@@ -207,6 +235,17 @@ handleChange=(index)=>{
     })
     //this.props.tabChangeValueUP=index;
 }
+
+
+
+goToUserAccess=()=>{
+   // alert("going user access ?")
+    // this.setState({
+    //     tabValues:1
+    // })
+    this.props.tabChangeValues(1)  
+
+}
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -248,9 +287,10 @@ handleChange=(index)=>{
     console.log(this.props.temp.userReduser)
 
 
+
  //console.log("tabValues1235", this.state.tabValues)
 
- console.log("tabChangeValueUP", this.props.tabChangeValueUP)
+ console.log("tabChangeValueUP", this.props.tabChangeValueUP, userProfiles)
         
     return (
         <div clas="userManagementSection">
@@ -290,7 +330,7 @@ handleChange=(index)=>{
 
                     <div class="bg-white">
                     {this.state.visbleTrue!==true  ? 
-                         <div class="f-s-24 px-3 py-3 f-w-500" >User Profile -<span class="f-s-18 p-15 mb-0">Add, Edit or Remove User</span>  
+                         <div class="f-s-24 px-3 py-3 f-w-500" >User Profile&nbsp;-<span class="f-s-18 p-15 mb-0" style={{marginLeft:"-10px"}}>Add, Edit or Remove User</span>  
                                                        
                          </div>
                          :
@@ -325,7 +365,7 @@ handleChange=(index)=>{
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <a href="">User Access</a>.</p>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <span className="linkTag" onClick={this.goToUserAccess}>User Access</span>.</p>
                                     </div>
                                 </div>
                             </div>
@@ -340,15 +380,38 @@ handleChange=(index)=>{
                                 <div class="col-md-12 col-lg-12">
                                    {(!displayUpdateProfile && !displayCreate)?<h4>Select user profile to edit or choose Create New User</h4>:null}
                                    {(!displayUpdateProfile && !displayCreate)?<div class="row d-flex align-items-center mt-4 mt-md-0">
-                                        <div class="col-md-4 col-lg-4">  
+
+
+                                        {/* <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option >Select...</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                return  <option value={userObj.id}>{userObj.name} {userObj.last_name}</option>
+                                                return  <option value={userObj.id}> {userObj.name} {userObj.last_name}</option>
                                             }):null}
                                             </select>
+                                        </div> */}
+
+
+
+                                        <div class="col-md-3 col-lg-3 ">  
+                                            <h5>Select User Profile</h5>
+                                        <Autocomplete 
+                                             
+                                                onChange={this.onTagsChange} 
+                                                options={userProfiles}
+                                                id={userProfiles.map(id=>id.id)}
+                                               // value={(option)=>option.id}
+                                                getOptionLabel={(option) => option.name +"  "+ option.last_name}
+                                                style={{ width: 300 }}
+                                                autoHighlight
+                                                renderInput={(params) => <TextField {...params} label="Select..." variant="outlined" />}
+                                        />
                                         </div>
+
+
+
+
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0" style={{cursor:"default"}}>  
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck1" value={this.state.displatDeletedRecord} checked={(this.state.displatDeletedRecord === "on")? true:false} onChange={this.hanleCheckBox}/>

@@ -612,9 +612,12 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         else datatoShow1 = state.duplicateData
         
                         if(state.searchFilter ==="" && action.alphaData !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.supplier_name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0))
-                        else if(state.searchFilter !=="" && action.alphaData ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                        else if(state.searchFilter !=="" && action.alphaData ==="All")searchedData1 = datatoShow1.filter(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase()))
                         // else if(action.alphaData ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                        else if(state.searchFilter !=="" && action.alphaData !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0)) &&(filterData=>filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
+                        else if(state.searchFilter !=="" && action.alphaData !=="All"){
+                       
+                            searchedData1 = datatoShow1.filter(filterData=>(filterData.supplier_name.toLowerCase().charAt(0)===action.alphaData.toLowerCase().charAt(0)) &&(filterData.supplier_name.toLowerCase().includes(state.searchFilter.toLowerCase())))
+                        }
                         else if(state.searchFilter ==="" && action.alphaData ==="All")searchedData1 = datatoShow1
                        
         

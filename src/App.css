@@ -419,6 +419,14 @@ input[type="radio"]:checked {
   background-color: #629C44;
   border: 0px solid #629C44;
 }
+.draggable {
+  top: auto !important;
+  left: auto !important;
+}
+.draggable2 {
+  top: auto !important;
+  left: auto !important;
+}
 /* .trashShake:hover {
   font-size: 200px;
   animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
@@ -429,10 +437,10 @@ input[type="radio"]:checked {
 } */
 /* .trashShake { transition: all .2s ease-in-out; } */
 .trashShake {
-  transform: scale(3.1);
-  -webkit-transition: transform 1.09s ease-in-out;
-  -moz-transition:transform 1.09s ease-in-out;
-  -ms-transition:transform 1.09s ease-in-out;
+  transform: scale(1.6);
+  -webkit-transition: transform 1.05s ease-in-out;
+  -moz-transition:transform 1.05s ease-in-out;
+  -ms-transition:transform 1.05s ease-in-out;
 }
 
 /* .trashShake:hover {

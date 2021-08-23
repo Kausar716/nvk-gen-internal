@@ -97,10 +97,10 @@ class Characterstics extends Component {
     }
     onAddData = (evt)=>{
         console.log(evt)
-        evt.preventDefault()
+        // evt.preventDefault()
     
-    //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
-    //  evt.from.insertBefore(evt.item, null); 
+        const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+     evt.from.insertBefore(evt.item, null); 
     
     }
     onMoveData = (evt,ui)=>{
@@ -116,6 +116,10 @@ class Characterstics extends Component {
               //console.log(task)
               if(task.length > 0){
                 this.props.handleAttributeDragDrop(task[0]).then(data=>{
+                    this.props.getAllSubAttribute(12).then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
                 //     this.props.getAllPlantCategories().then(()=>{
                 //     confirmAlert({
                 //     title: 'Action',
@@ -139,6 +143,10 @@ class Characterstics extends Component {
             //console.log(task)
             if(task.length > 0){
                 this.props.handleAttributeDragDrop(task[0]).then(data=>{
+                    this.props.getAllSubAttribute(12).then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
             //         this.props.getAllPlantCategories().then(()=>{
             //             this.props.getAllPlantCategories().then(()=>{
                             // confirmAlert({

@@ -118,17 +118,20 @@ setOpen(true)
     setCheckedData(true)
     // let intValue = e.target.value
     if(e.target.value!==""){
-      setApp(false);setPrice(false); setLogo(false); setBase(false);
+    
       if(Number.isInteger(parseFloat(e.target.value))) {
+        setApp(false);setPrice(false); setLogo(false); setBase(false);
         let intValue = e.target.value*1.00
         // alert(e.target.value)
       props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerTag")
       }
     
       else{
+        setApp(false);setPrice(false); setLogo(false); setBase(false);
         // alert()
         let splitValue = e.target.value.split(".")
        if(splitValue[1].length<2){
+      
         let intValue = e.target.value*1.00
         props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerTag")
        }else{
@@ -153,7 +156,7 @@ setOpen(true)
    
        
       }else {
-        setApp(false);setPrice(false); setLogo(false); setBase(false);
+       
       }
       props.handleExchangeData(e.target.value,e.target.id,"customerTag")
       

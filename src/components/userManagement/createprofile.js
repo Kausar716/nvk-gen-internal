@@ -8,6 +8,7 @@ import {getUsersList,showUser,updateUser,addUser,uploadImage} from "../../action
 import {handleOrganizationSettingsInputAction} from "../../actions/organizationSettingAction"
 import {getRolesList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal';
+import SuccessInUM from '../Modal/SuccessInUserProfile';
 import InputMask from 'react-input-mask';
 
 
@@ -29,6 +30,7 @@ export class CreateUserProfile extends Component {
             value: '',
             email:"",
             position:"",
+            createButton:true,
             locationAccess:false,
             displayDeletedRecords:false,
             profileImage:"",
@@ -140,6 +142,13 @@ export class CreateUserProfile extends Component {
 
         this.setState({errorObj,errorCount,hadModified})
         this.props.handleOrganizationSettingsInputAction(name,value)
+
+
+        if(hadModified.name===true && hadModified.last_name===true && hadModified.position===true && hadModified.email===true )
+                this.setState({
+                    createButton:false
+                })
+
     }
 
 
@@ -369,7 +378,7 @@ export class CreateUserProfile extends Component {
      console.log("userListBackup", this.props.userListBackup.payload.active)
     return (
         <>
-         <ActionModal cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
+         <SuccessInUM cancel={this.handleCancel} confirm={this.handleConfirm} open={this.state.open} message={this.state.message} />
 
                     <Tabs>
                       
@@ -553,7 +562,7 @@ export class CreateUserProfile extends Component {
                                 </div>
                                 <div class="col-md-8 col-lg-8 text-md-right mt-3 mt-md-0">
                                     <button type="button" class="btn btn-outline-secondary btn-lg" onClick={this.props.cancle}>Cancel</button>
-                                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={this.handleSubmit}>Create</button>
+                                    <button type="button" class="btn btn-primary btn-lg ml-3" disabled={this.state.createButton} onClick={this.handleSubmit}>Create</button>
                                 </div>
                             </div>
                         </div>

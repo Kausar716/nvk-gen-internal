@@ -119,7 +119,6 @@ const confirmAction = (type)=>{
   // setId(id)
 }
   const saveExchangeData = ()=>{
-    alert("gggg")
     setCheckedData(true)
     setIsOpen1(true)
     setSuccessMessage(["Tax & Interest Rates Saved Successfully"])
