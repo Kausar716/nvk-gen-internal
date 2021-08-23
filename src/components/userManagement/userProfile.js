@@ -551,7 +551,7 @@ class UserProfile extends React.Component {
         let roles=[]
         console.log(this.props.roles)
         if(this.props.roles)roles = this.props.roles
-        console.log(this.props.selectedUser.deleted_at !== null)
+       // console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
         let noImageURL="./images/noPerson.png";
        // let noImageURL ="./images/user-circle-solid.svg";
@@ -563,7 +563,7 @@ class UserProfile extends React.Component {
         const confirm = ()=>{
             const { history } = this.props;
             if(actionType==="goBack"){
-                history.push("/Dashboard")
+               history.push("/Dashboard")
 
                 // setTimeout(function() {
                 //     history.push("/")

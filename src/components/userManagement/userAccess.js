@@ -142,7 +142,7 @@ export const Component = withRouter(({ history, location }) =>{
 
 
     goToUserAccess=()=>{
-        alert("going user access ?")
+       // alert("going user access ?")
         // this.setState({
         //     tabValues:1
         // })
