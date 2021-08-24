@@ -81,9 +81,9 @@ constructor(props){
 
 onTagsChange = (event, values) => {
 
-    debugger;
+   // debugger;
 
-    this.childValueHereUserAccess()
+  //  this.childValueHereUserAccess()
 
 
 
