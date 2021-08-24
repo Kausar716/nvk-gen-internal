@@ -806,7 +806,7 @@ const dataTochange =(e)=>{
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="number" class="form-control" name={"taxExemptNumber"}  style={{textAlign:"right"}} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
+                                                <input type="text" class="form-control" name={"taxExemptNumber"}  value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="Not set" onBlur={dataTochange}/>
                                                 {/* {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
 
                                             </div>
@@ -831,7 +831,7 @@ const dataTochange =(e)=>{
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Units</label>
-                                                <select class="form-control" disabled={customerDataById.p_o_req ==1?false:true} onChange={handleInput} id="unit_of_measurement">
+                                                <select class="form-control-order" disabled={customerDataById.p_o_req ==1?false:true} onChange={handleInput} id="unit_of_measurement">
                                                     <option selected={customerDataById.unit_of_measurement =="Metric"?"selected":""} value="Metric">Metric</option>
                                                     <option selected={customerDataById.unit_of_measurement =="Imperial"?"selected":""} value="Imperial">Imperial</option>
         
@@ -842,9 +842,9 @@ const dataTochange =(e)=>{
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                <div class="col-md-4 mt-3 mt-md-0">
+                                <div class="col-md-2 mt-3 mt-md-0">
                                                 <label>Payment Terms</label>
-                                                <select class="form-control" onChange={handleInput} id="payment_terms">
+                                                <select class="form-control-order1" onChange={handleInput} id="payment_terms">
                                                     <option value={0}>None</option>
                                                 {/* {customerTermList.active.map()}
                                                     {/* <option>Imperial</option>
@@ -860,9 +860,9 @@ const dataTochange =(e)=>{
                                   })}
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 mt-3 mt-md-0">
+                                            <div class="col-md-2 mt-3 mt-md-0">
                                                 <label>Currency</label>
-                                                <select class="form-control" onChange={handleInput} id="currency">
+                                                <select class="form-control-order1" onChange={handleInput} id="currency">
                                                     <option value={"Canadian Dollar"} selected={customerDataById.currency=="Canadian Dollar"?"selected":""}>Canadian Dollar</option>
                                                     <option  value={"U.S. Dollar"} selected={customerDataById.currency=="U.S. Dollar"?"selected":""}>U.S. Dollar</option>
                                                    
@@ -889,7 +889,7 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                                 <label>Discount</label>
-                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange}/>
                                             </div>
                                        
                                       
@@ -916,7 +916,7 @@ const dataTochange =(e)=>{
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
                                                 <label>Fee%</label>
-                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
                                             </div>
                                             </div>
                                             </div>
