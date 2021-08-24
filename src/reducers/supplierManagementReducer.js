@@ -171,6 +171,7 @@ const defaultState={
     currency: "",
     units: "",
     status: 1,
+    reason:"",
     product_categories:[]
     },
     supplierContact:{
@@ -361,6 +362,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         currency: "",
                         units: "",
                         status: 1,
+                        reason:"",
                         product_categories:[]
                         }
 

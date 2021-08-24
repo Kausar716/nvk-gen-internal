@@ -178,7 +178,7 @@ export class SupplierManagemnet extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/Supplier Management-big-green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Supplier Lists <small class="text-blue" style={{fontWeight:"bold"}}>Active - {this.props.supplierData?this.props.supplierData.activeData.length:0}</small></div>
+                    <div class="d-flex flex-column">Supplier Lists <small class="text-blue" style={{fontWeight:"bold",fontSize:"17px"}}>Active Suppliers - {this.props.supplierData?this.props.supplierData.activeData.length:0}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">

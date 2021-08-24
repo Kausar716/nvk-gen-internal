@@ -96,6 +96,7 @@ function AddCustomer(props) {
         }else if(e.target.id ==="prospect"){
             let prospect = parseInt(customerDataById.prospect)==1?0:1
             props.handleExchangeData(prospect,e.target.id,"customerDataById")
+            
         }
         else if(e.target.id ==="status"){
             let prospect = parseInt(customerDataById.status)==1?0:1
@@ -406,9 +407,13 @@ const showCheckboxesClose = ()=>{
 
 }
 const showClose  = (e)=>{
-    // alert(e.target.id)
-    if(e.target.id=="" && expanded ==false)
-    setexpanded(true)
+    // alert(expanded+" "+e.target.id.length)
+    if(e.target.id.length==0 && expanded ==false){
+        // alert("hh")
+        setexpanded(true)
+
+    }
+    
 }
 const dataTochange =(e)=>{
     setCheckedData(true)
@@ -489,12 +494,12 @@ const dataTochange =(e)=>{
                         </div>
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end">
-                            {/* {addCustomertoggle?"":  <a href="#" class="btn active">
+                             <a  class="btn ml-2">
                                     <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/pdf-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Contact PDF</b></span>
                                     </span>
-                                </a>} */}
+                                </a>
                                 {/* <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
                                     <span class="d-flex align-items-center text-left" onClick={handleSubmit}> */}
                                         {/* <img src="assets/img/save-ic.svg" alt=""/> */}
@@ -517,13 +522,7 @@ const dataTochange =(e)=>{
                                         <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
                                     </span>
                                 </button> */}
-                                <button    className={"btn btn-primary btn-md ml-3"}>
-                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
-                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
-                                        <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
-                                        <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
-                                    </span>
-                                </button>
+                         
                                 <a class="btn ml-2"
                                 onClick={()=>checkedData==true?saveCustomerData1("save"):""}
                                             //onClick={this.handleSubmit}
