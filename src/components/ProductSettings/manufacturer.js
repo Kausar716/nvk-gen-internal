@@ -332,6 +332,7 @@ handleAddCategoryUpdate=()=>{
                 if(destination == null)
                 return
                 if (destination.droppableId=="delete") {
+                    this.setState({deleteon:true})
                     confirmAlert({
                         title: 'Delete Manufacture ',
                         message: 'Are you sure want to delete the Manufacture ?',

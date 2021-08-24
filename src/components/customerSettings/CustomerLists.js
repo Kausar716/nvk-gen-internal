@@ -206,7 +206,7 @@ export class CustomerSettings extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/Customer Management_green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Customer Lists <small class="text-blue"  style={{fontWeight:"bold"}}>Active - {this.props.customerData.activeData.length}</small></div>
+                    <div class="d-flex flex-column">Customer Lists <small class="text-blue"  style={{fontWeight:"bold",fontSize:"17px"}}>Active Customers - {this.props.customerData.activeData.length}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0" onClick={this.handleAddCustomerClick} id="add">
                     <a  class="btn" >

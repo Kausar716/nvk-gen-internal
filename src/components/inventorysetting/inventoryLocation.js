@@ -23,7 +23,27 @@ import
         getAllLocationTypesSubAttribute
     } 
 from '../../actions/attributeAction'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
 
+    return result;
+};
+const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
 class InventoryLocation extends Component {
     constructor(props){
         super()
@@ -74,96 +94,119 @@ class InventoryLocation extends Component {
     //  evt.from.insertBefore(evt.item, null); 
     
     }
-    onMoveData = (evt,ui)=>{
-    
-       if(evt.from.id == evt.to.id){
-           if(evt.willInsertAfter ==true)
-        this.props.handleAttributeDragSort(evt.dragged.id,evt.related.id,"down")
-        else  this.props.handleAttributeDragSort(evt.dragged.id,evt.related.id,"up")
-    
-       }else{
-           if(evt.from.id =="categoryActive"){
-              let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
-              //console.log(task)
-              if(task.length > 0){
-                this.props.handleAttributeDragDrop(task[0]).then(data=>{
-                //     this.props.getAllPlantCategories().then(()=>{
-                //     confirmAlert({
-                //     title: 'Action',
-                //     message: 'Successfully Moved from Active to InActive',
-                //     buttons: [
-                //         {
-                //         label: 'Ok'
-                //         }
-                //     ]
-                // });
-                // this.getCatgoryData()
-          
-                // })
-            })
-    
-            }
-    
-           }else if(evt.from.id =="categoryInactive"){
-               //console.log(evt.dragged.id,evt.related.id)
-            let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
-            //console.log(task)
-            if(task.length > 0){
-                this.props.handleAttributeDragDrop(task[0]).then(data=>{
-            //         this.props.getAllPlantCategories().then(()=>{
-            //             this.props.getAllPlantCategories().then(()=>{
-                            // confirmAlert({
-                            //     title: 'Action',
-                            //     message: 'Successfully Moved from InActive to Active',
-                            //     buttons: [
-                            //         {
-                            //         label: 'Ok'
-                            //         }
-                            //     ]
-                            // });
-            //                 this.getCatgoryData()
-            //             })
-            //             // this.getCatgoryData() 
-            //         })
-            //     })
-    
-            // }
-            
-           })
-        }
-    
-       }
-    }
-    }
+
     componentDidMount(){
         // this.props.getAllSubAttribute(5)
         this.props.getAllLocationTypesSubAttribute()
-        var elData = document.getElementById('categoryActive');
-        var elData1 = document.getElementById('categoryInactive');
         this.props.getAllSubAttribute(18).then(()=>{
             // alert("ji")
             this.getCatgoryData()
         })
         // this.props.getAllSubAttribute(14)
-        new Sortable(elData, {
-            group: 'shared',
-            animation: 150,
-            onAdd:this.onAddData.bind(this),
-            onStart: this.startIDData.bind(this),
-            onMove:this.onMoveData.bind(this)
-        })
-        new Sortable(elData1, {
-            group: 'shared',
-            animation: 150,
-            onAdd:this.onAddData.bind(this),
-            onStart: this.startIDData.bind(this),
-            onMove:this.onMoveData.bind(this),
-         
+
+    }
+    id2List = {
+        droppable: 'active',
+        droppable2: 'inactive'
+    };
+    getList = id => {
+        console.log(this.state[this.id2List[id]])
+        return this.state[this.id2List[id]]
+    }
+    onDragEnd = result => {
+        // alert(result)
+       
+        const { source, destination } = result;
+        console.log(destination)
+        // dropped outside the list
+        console.log(result)
+        if(destination == null)
+        return
+        if (destination.droppableId=="delete") {
+            this.setState({deleteon:true})
+            confirmAlert({
+                title: 'Delete Inventory Location ',
+                message: 'Are you sure want to delete the Inventory Location ?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
+            return;
+        }
     
-            // onFilter:function(){
-            //     alert("hi")
-            // }
-        })
+        if (source.droppableId === destination.droppableId) {
+            const items = reorder(
+                this.getList(source.droppableId),
+                source.index,
+                destination.index
+            );
+    
+            let state = { items };
+    
+            if (source.droppableId === 'droppable2') {
+              
+                if(result.destination.index> result.source.index)
+            this.props.handleAttributeDragSort(this.state.inactive[result.source.index].id,this.state.inactive[result.destination.index].id,"down")
+            else  this.props.handleAttributeDragSort(this.state.inactive[result.source.index].id,this.state.inactive[result.destination.index].id,"up")
+            this.setState({inactive:items});
+            }else{
+              
+                        //        if(evt.willInsertAfter ==true)
+            if(result.destination.index> result.source.index)
+            this.props.handleAttributeDragSort(this.state.active[result.source.index].id,this.state.active[result.destination.index].id,"down")
+            else  this.props.handleAttributeDragSort(this.state.active[result.source.index].id,this.state.active[result.destination.index].id,"up")
+            this.setState({active:items});
+            }
+            
+        } else {
+           
+            if (source.droppableId === 'droppable2') {
+            let task= this.state.inactive.filter(data=>data.id ==this.state.inactive[source.index]["id"])
+                      if(task.length > 0){
+                        this.props.handleAttributeDragDrop(task[0]).then(data=>{
+                                            this.props.getAllSubAttribute(18).then(()=>{
+                                // alert("ji")
+                                this.getCatgoryData()
+                            })
+                    })
+                }
+            }else{
+                console.log(source.droppableId)
+                let task= this.state.active.filter(data=>data.id ==this.state.active[source.index]["id"])
+                console.log(task)
+                if(task.length > 0){
+                    this.props.handleAttributeDragDrop(task[0]).then(data=>{
+                        this.props.getAllSubAttribute(18).then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
+              })
+          }
+    
+            }
+            const result = move(
+                this.getList(source.droppableId),
+                this.getList(destination.droppableId),
+                source,
+                destination
+            );
+    
+            this.setState({
+                active: result.droppable,
+                inactive: result.droppable2
+            });
+        }
+    };
+    onDragStart =(e)=>{
+        // alert("hi")
+        this.setState({selectedID:e.draggableId})
+        console.log(e)
     }
     onDelete =(ev)=>{
         let id= this.state.selectedID
@@ -604,32 +647,51 @@ class InventoryLocation extends Component {
                     </div>
                     <div class="row mt-5 mb-4">
                         <div class="col-md-8">
-                        <div class="row mt-5 mb-4">
-                                    <div class="col">
-                                        <div class="card midCard">
+                        <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart} removeItem={this.removeItem}>
+                        <div style={{display: 'flex',paddingTop:20}}>
+                       
+                            <div style={{flex:2}}>
+                                <div class="card midCard">
                                     <div class="card-header">
                                         Inactive
                                     </div>
-                                    <div class="card-body cardBg">
-                                            <ul class="list-unstyled" id="categoryInactive">
-                                                {this.state.inactive.map(t=>{
-                                                return <>
-                                                
-                                                <li id={t.id} name={t.id} >
+
+
+                                    <div class="card-body cardBg"
+                                   >
+                                   <ul class="list-unstyled" id="categoryActive">
+                                    <Droppable droppableId="droppable2">
+                                        {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                            >
+                                                {this.state.inactive.map((item, index) => (
+                                                    <Draggable
+                                                        key={item.id.toString()}
+                                                        draggableId={item.id.toString()}
+                                                        index={index}>
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                            style={{position:"relative"}}
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                >
+                                                                <li id={item.id} name={item.id} >
                                                 <p style={{float:"left",paddingRight:4,paddingLeft:0}}><img class="arrowIc" src="assets/img/arrow-right-ic.svg" style={{width:21,height:21}}/></p>
                                                <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}> 
 
                                                             {/* <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}> */}
-                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === item.id ? "reasonBackground" : " "}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:0,margin:0,color:"black"}}>{t.value}</p>
+                                                                      <p style={{padding:0,margin:0,color:"black"}}>{item.value}</p>
                                                                       {/* <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.value}</p> */}
-                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")} {(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")} {(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}  {(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</p>
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{(item.sub_attributeschild[5]!==undefined?item.sub_attributeschild[5].value:"")} {(item.sub_attributeschild[4]!==undefined?item.sub_attributeschild[4].value:"")} {(item.sub_attributeschild[3]!==undefined?item.sub_attributeschild[3].value:"")}  {(item.sub_attributeschild[2]!==undefined?item.sub_attributeschild[2].value:"")}</p>
                                                                       </div>
                                                                       </p>
                                                                    
                                                                       <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><p style={{marginTop:"2px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p><MdIcons.MdEdit  
-                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                            onClick={() =>this.handleEditClick2(item)}
                                                                 /></span></p>
                                                                 {/* <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
                                                                 <div className="inventory_loc"> */}
@@ -650,14 +712,27 @@ class InventoryLocation extends Component {
                                                                 /></span>
                                                             {/* </a> */} 
                                                             </a>
-                                                        </li></>
-                                                })}
-                                        </ul>
+                                                        </li>
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ))}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                    </Droppable>
+                                            {/* {this.state.active.map(t=>{
+                                            return (<li></li>)
+                                            })} */}
+                                    </ul>
+                                        
+
+
                                     </div>
                                 </div>
                             </div>
-                            <div className="col-lg-1" style={{width:200,border:"1px solid lightgray"}}>
-                                        <div style={{textAlign: "center"}}>
+                            <div style={{flex:0,paddingLeft:5,paddingRight:5}}>
+                            <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                             <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
@@ -667,42 +742,89 @@ class InventoryLocation extends Component {
                                             <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
                                                 
-                                            </div>
-                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                            </div> 
+                                            <Droppable
+                                                       
+                                            droppableId="delete">
+                                                     
+                                               
+                                             {(provided, snapshot) => (
+                                            <div   style={{width:"110px",height:"110px"}}
+                                                ref={provided.innerRef}
+                                            >
+                                              
+                                                    <Draggable
+                                                        key="delete"
+                                                        draggableId="delete"
+                                                       
+                                                        index={0}>
+                                                        {(provided, snapshot) => (
+                                                            <div   
+                                                            ref={provided.innerRef}>
+                                                        
+                                                                
+                                                                <div className="deleteSpace"  >
                                                 <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
+                                                                
+                                                 
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                             
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                            </Droppable>
+
+                                            
                                         </div>
-                                    </div>
-                                <div class="col">
+                            </div>
+                           
+                                    
+                                    {/* </div> */}
+                            <div style={{flex:2}}>
                                 <div class="card midCard">
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg">
-                                            <ul class="list-unstyled" id="categoryActive">
-                                           
-                                                {this.state.active.map(t=>{
-                                                return <>
-                                     
-                                                <li id={t.id} >
+                                    <div class="card-body cardBg" >
+                                    <ul class="list-unstyled" id="categoryActive">
+                                    <Droppable droppableId="droppable">
+                                        {(provided, snapshot) => (
+                                            <div   style={{height:265}} 
+                                                ref={provided.innerRef}
+                                            >
+                                                {this.state.active.map((item, index) => (
+                                                    <Draggable
+                                                        key={item.id.toString()}
+                                                        draggableId={item.id.toString()}
+                                                        index={index}>
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                            style={{height:100,border:"1px solid red"}}
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                >
+                                                                <li id={item.id} name={item.id} >
                                                 <p style={{float:"left",paddingRight:4,paddingLeft:0}}><img class="arrowIc" src="assets/img/arrow-right-ic.svg" style={{width:21,height:21}}/></p>
-                                                            <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}>
+                                               <a className="d-flex justify-content-between align-items-center" style={{paddingBottom:0}}> 
 
                                                             {/* <a className="d-flex justify-content-between align-items-left" style={{paddingBottom:0}}> */}
-                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>
+                                                                      <p id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === item.id ? "reasonBackground" : " "}>
                                                                       <div style={{display:"block",float:"left"}}>
-                                                                      <p style={{padding:0,margin:0,color:"black"}}>{t.value}</p>
+                                                                      <p style={{padding:0,margin:0,color:"black"}}>{item.value}</p>
                                                                       {/* <p style={{color:"gray",display:"block",width:"100%",padding:0,margin:0,fontSize:"14px"}}>{t.value}</p> */}
-                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{(t.sub_attributeschild[5]!==undefined?t.sub_attributeschild[5].value:"")} {(t.sub_attributeschild[4]!==undefined?t.sub_attributeschild[4].value:"")} {(t.sub_attributeschild[3]!==undefined?t.sub_attributeschild[3].value:"")}  {(t.sub_attributeschild[2]!==undefined?t.sub_attributeschild[2].value:"")}</p>
+                                                                      <p style={{color:"gray",padding:0,margin:0,fontSize:"14px"}}>{(item.sub_attributeschild[5]!==undefined?item.sub_attributeschild[5].value:"")} {(item.sub_attributeschild[4]!==undefined?item.sub_attributeschild[4].value:"")} {(item.sub_attributeschild[3]!==undefined?item.sub_attributeschild[3].value:"")}  {(item.sub_attributeschild[2]!==undefined?item.sub_attributeschild[2].value:"")}</p>
                                                                       </div>
                                                                       </p>
                                                                    
                                                                       <p style={{color:"gray",padding:5,margin:5}}><span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-20px"}}><p style={{marginTop:"2px"}}><img class="mapMarkerIc" src="assets/img/map-marker-blue.svg"/></p><MdIcons.MdEdit  
-                                                                            onClick={() =>this.handleEditClick2(t)}
+                                                                            onClick={() =>this.handleEditClick2(item)}
                                                                 /></span></p>
-                                                                 {/* </a> */}
                                                                 {/* <img class="arrowIc" src="assets/img/arrow-right-ic.svg"/>
                                                                 <div className="inventory_loc"> */}
                                                                     {/* <label><span id="Wheathers" className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground" : " "}>{t.value}</span></label> */}
@@ -722,13 +844,26 @@ class InventoryLocation extends Component {
                                                                 /></span>
                                                             {/* </a> */} 
                                                             </a>
-                                                        </li></>
-                                                })}
-                                        </ul>
+                                                        </li>
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ))}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                    </Droppable>
+                                            {/* {this.state.active.map(t=>{
+                                            return (<li></li>)
+                                            })} */}
+                                    </ul>
                                     </div>
                                 </div>
                             </div>
-                            </div>
+                        </div>
+                        
+                    
+                    </DragDropContext>                             
                         </div>
                         <div class="col-md-4">
                             <div class="row mb-3">
