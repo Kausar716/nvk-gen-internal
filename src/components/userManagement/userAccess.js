@@ -99,7 +99,7 @@ export const Component = withRouter(({ history, location }) =>{
    
 
     handleUserSelect = (e) =>{
-       // debugger;
+       debugger;
         console.log(e.target.value)
         let selectedId = e.target.value
         console.log(this.props.users)
@@ -110,9 +110,17 @@ export const Component = withRouter(({ history, location }) =>{
 
         this.props.handleUserSelect(selectedId)
   
-        this.setState({selectedUser:e.target.value,displayselectedUSer:true})
+        this.setState({
+            selectedUser:e.target.value,
+            displayselectedUSer:true})
+
+
+           // this.props.parentCallback(this.handleUserSelect)
+        
 
     }
+
+
 
 
     toggleChecked=(e)=>{
@@ -142,13 +150,41 @@ export const Component = withRouter(({ history, location }) =>{
 
 
     goToUserAccess=()=>{
-        alert("going user access ?")
+       // alert("going user access ?")
         // this.setState({
         //     tabValues:1
         // })
         this.props.tabChangeValues(0)  
     
     }
+
+    userProfileOpen=(e)=>{
+
+        //debugger
+
+
+        this.props.tabChangeValues(0)  
+        console.log("abcdefghijk", e)
+        let userList = this.props.users.active
+        let id = e
+        console.log(id)
+          let selectedUser  =  userList.filter(obj=>{
+            return (parseInt(obj.id) === parseInt(id))
+        })
+
+        this.props.onTagsChange(e, selectedUser[0])
+        // this.props.selectedUserP=selectedUser[0];
+        // this.props.displayUpdateProfileP=true;
+       // this.setState({this.props.selectedUserP:selectedUser[0]})
+        // this.setState({displayUpdateProfile:true})
+
+
+
+        
+    }
+
+
+
 
 
     render(){
@@ -190,7 +226,7 @@ export const Component = withRouter(({ history, location }) =>{
        console.log("exestingRoles",exestingRoles )
        
    
-
+     console.log("prospsssHERE", this.props)
        
     return (
         <>
@@ -277,7 +313,7 @@ export const Component = withRouter(({ history, location }) =>{
                                                     <div class="col-md-9 col-lg-9">
                                                         <p class="mb-0" style={{fontWeight:"bold"}}>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.name:"":""}</p>
                                                         <div>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.email:"":""}</div>
-                                                        <a href="#" class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg" /></a>
+                                                        <a href="#"  onClick={()=>this.userProfileOpen(this.props.reduxSelectedUser.selectedUser.data.id)} class="mt-3 d-block">View Profile <img src="assets/img/edit-blue-ic.svg"  /></a>
                                                     </div>:null}
                                                 </div>
                                             </div>

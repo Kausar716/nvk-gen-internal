@@ -627,9 +627,10 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <th class="text-nowrap" style={{textAlign:"right"}}>Each Price</th>
                                             <th class="text-nowrap" style={{textAlign:"right"}}>Sale Price</th>
                                             <th class="text-nowrap">Sale Active</th>
-                                            <th class="text-nowrap">Volume Per Unit</th>
-                                            <th class="text-nowrap">Volume QTY</th>
+                                            <th class="text-nowrap text-right">Volume Price Per Unit</th>
+                                            <th class="text-nowrap text-right">Volume QTY</th>
                                             <th class="text-nowrap text-center">Actions</th>
+                                            
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -665,8 +666,8 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                     </div>
                                                 <i className={sku.status===1?'bx bx-check':'bx bx-x'}></i>
                                             </td>
-                                            <td style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_price_per_unit}</td>
-                                            <td style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_quantity==="0"?"None":sku.volume_quantity}</td>
+                                            <td class="text-right"  style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_price_per_unit}</td>
+                                            <td class="text-right"  style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_quantity==="0"?"None":sku.volume_quantity}</td>
                                             <td class="text-center">
                                                 <span>
                                                    

@@ -178,10 +178,11 @@ import {
 
 
     let currentYear =  new Date().getFullYear()
+    let initialYear = 1900
     let countOfYear = 20;
     var indents = [];
-    for (var i = 0; i < countOfYear; i++) {
-        indents.push(currentYear+i);
+    for (var i = 1900; i <= currentYear; i++) {
+        indents.push(i);
     }
     const {plantData,plantDataById, actionType,needAction} = props.plantData
     const {plantCategoryData} =  props.categoryData

@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
 import React, {Component} from 'react'
+
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import UserProfile from './userProfile'
 import 'react-tabs/style/react-tabs.css';
@@ -9,8 +10,11 @@ import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
-import {getRolesList,tabChangeValues} from "../../actions/userAccessAction";
-import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex"
+import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
+import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex";
+import TextField from '@material-ui/core/TextField';
+import Autocomplete from '@material-ui/lab/Autocomplete';
+//const { render } = ReactDOM;
 
 class UserManagement extends Component {  
 constructor(props){
@@ -20,6 +24,7 @@ constructor(props){
         lastName:"",
         phone:"",
         email:"",
+        tags: [],
         tabValues:0,
         locationAccess:false,
         displayDeletedRecords:false,
@@ -47,10 +52,19 @@ constructor(props){
         selectedUser:{},
         displatDeletedRecord:"off"
     }
+
+    //this.child = React.createRef();
 }
+
+
+// childValueHereUserAccess=()=>{
+//     debugger
+//     this.child.current.handleUserSelect();
+// }
 
    
  handleProfileChange = (e) => {
+    // debugger;
      console.log(e)
      console.log(e.target.value)
      let userList = this.props.users.active
@@ -64,6 +78,37 @@ constructor(props){
      this.setState({displayUpdateProfile:true})
      this.setState({visbleTrue:true})
 }
+
+onTagsChange = (event, values) => {
+
+   // debugger;
+
+  //  this.childValueHereUserAccess()
+
+
+
+
+
+
+     let userList = this.props.users.active
+     let id = values.id
+     console.log(id)
+       let selectedUser  =  userList.filter(obj=>{
+         return (parseInt(obj.id) === parseInt(id))
+     })
+     console.log(selectedUser)
+     this.setState({selectedUser:selectedUser[0]})
+     this.setState({displayUpdateProfile:true})
+     this.setState({visbleTrue:true})
+
+
+  }
+
+
+
+
+
+
 handleCreate = (e) => {
     this.setState({displayCreate:true})
 }
@@ -211,13 +256,16 @@ handleChange=(index)=>{
 
 
 goToUserAccess=()=>{
-    alert("going user access ?")
+   // alert("going user access ?")
     // this.setState({
     //     tabValues:1
     // })
     this.props.tabChangeValues(1)  
 
 }
+
+
+
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -262,7 +310,7 @@ goToUserAccess=()=>{
 
  //console.log("tabValues1235", this.state.tabValues)
 
- console.log("tabChangeValueUP", this.props.tabChangeValueUP)
+ console.log("tabChangeValueUP", this.props.tabChangeValueUP, userProfiles)
         
     return (
         <div clas="userManagementSection">
@@ -270,6 +318,8 @@ goToUserAccess=()=>{
 				<h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/settings-primary.svg" class="mr-2"/>User Management
                 </h1>
+
+                {/* <button onClick={() => { this.child.handleUserSelect() }}>Click</button> */}
 			</div>
             <div class="px-md-3 mt-3">
                 <Tabs 
@@ -330,12 +380,12 @@ goToUserAccess=()=>{
                          
                         <hr class="m-0"/>
             
-                        <div class="ContentSection p-15">
+                        <div class="ContentSection p-15" >
 
                         {this.state.visbleTrue!==true  ? 
                             <div class="row">
                                 <div class="col-md-12 col-lg-12">
-                                    <div class="bg-grey-transparent-2 text-center px-2 py-2">
+                                    <div class="bg-grey-transparent-2 text-center px-2 py-2" >
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
                                         <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <span className="linkTag" onClick={this.goToUserAccess}>User Access</span>.</p>
                                     </div>
@@ -352,15 +402,38 @@ goToUserAccess=()=>{
                                 <div class="col-md-12 col-lg-12">
                                    {(!displayUpdateProfile && !displayCreate)?<h4>Select user profile to edit or choose Create New User</h4>:null}
                                    {(!displayUpdateProfile && !displayCreate)?<div class="row d-flex align-items-center mt-4 mt-md-0">
-                                        <div class="col-md-4 col-lg-4">  
+
+
+                                        {/* <div class="col-md-4 col-lg-4">  
                                             <h5>Select User Profile</h5>
                                             <select class="form-control" onChange={this.handleProfileChange} >
                                             <option >Select...</option>
                                             {userProfiles[0]?userProfiles.map(userObj=>{
-                                                return  <option value={userObj.id}>{userObj.name} {userObj.last_name}</option>
+                                                return  <option value={userObj.id}> {userObj.name} {userObj.last_name}</option>
                                             }):null}
                                             </select>
+                                        </div> */}
+
+
+
+                                        <div class="col-md-3 col-lg-3 ">  
+                                            <h5>Select User Profile</h5>
+                                        <Autocomplete 
+                                             
+                                                onChange={this.onTagsChange} 
+                                                options={userProfiles}
+                                                id={userProfiles.map(id=>id.id)}
+                                               // value={(option)=>option.id}
+                                                getOptionLabel={(option) => option.name +"  "+ option.last_name}
+                                                style={{ width: 300 }}
+                                                autoHighlight
+                                                renderInput={(params) => <TextField {...params} label="Select..." variant="outlined" />}
+                                        />
                                         </div>
+
+
+
+
                                         <div class="col-md-4 col-lg-4 pt-md-4 mt-3 mt-md-0" style={{cursor:"default"}}>  
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck1" value={this.state.displatDeletedRecord} checked={(this.state.displatDeletedRecord === "on")? true:false} onChange={this.hanleCheckBox}/>
@@ -386,8 +459,11 @@ goToUserAccess=()=>{
 
                     <TabPanel
                    // value={this.state.tabValues} index={1} 
+                //    this.setState({selectedUser:selectedUser[0]})
+                //    this.setState({displayUpdateProfile:true})
+                //    this.setState({visbleTrue:true})
                     >
-                    <UserAccess/>
+                    <UserAccess  onTagsChange={this.onTagsChange} visbleTrueP={this.state.visbleTrue} selectedUserP = {this.state.selectedUser} displayUpdateProfileP={this.state.displayUpdateProfile} />
                     </TabPanel>
                     <TabPanel
                     // value={this.state.tabValues} index={2}
