@@ -25,8 +25,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                     subName:'',
                     subName2:'',
                     selectedID:'',
-                    btnLabelAdd:'Add New Color Name ',
-                    btnLabelUpdate: 'Update Color Name ',
+                    btnLabelAdd:'Add New Colour Name ',
+                    btnLabelUpdate: 'Update Colour Name ',
                     btnLabelCancel:'Cancel',
                     deleteon:false,
                     active:[],
@@ -251,8 +251,8 @@ onMoveData = (evt,ui)=>{
         onDelete =(ev)=>{
             let id= this.state.selectedID
             confirmAlert({
-                title: 'Delete Bloom Color ',
-                message: 'Are you sure want to delete the Bloom Color?',
+                title: 'Delete Bloom Colour ',
+                message: 'Are you sure want to delete the Bloom Colour?',
                 buttons: [
                   {
                     label: 'Yes',
@@ -445,12 +445,12 @@ onMoveData = (evt,ui)=>{
            
                <div>
                <div className="bg-white">
-                            <h4 className="p-15 mb-0">Bloom & Foilage Colors</h4>
+                            <h4 className="p-15 mb-0">Bloom & Foilage Colours</h4>
                             <hr className="m-0"/>
                             <div className="ContentSection p-15">
                                 <div className="row">
                                     <div className="col-md-12 col-lg-12">
-                                        <p>Color Name</p>
+                                        <p>Colour Name</p>
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                                 <input type="text" 
@@ -459,7 +459,7 @@ onMoveData = (evt,ui)=>{
                                                  value={this.state.name}
                                                   placeholder="Colour"
                                                  onChange={this.handleZoneInputAction}/>
-                                                  {this.state.errorObj.bloomColor!==0?<span style={{fontSize:"small",color:"red"}}>Enter Color Name</span>:""}
+                                                  {this.state.errorObj.bloomColor!==0?<span style={{fontSize:"small",color:"red"}}>Enter Colour Name</span>:""}
                                             </div>
 
 
