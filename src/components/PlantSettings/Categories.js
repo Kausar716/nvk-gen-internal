@@ -426,7 +426,7 @@ render() {
                                                 name="Category" 
                                                 value={this.state.name}
                                                  placeholder="Category" onChange={this.handlePositionInputAction}/>
-                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category</span>:""}
+                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category Name</span>:""}
                                             </div>
 
 
