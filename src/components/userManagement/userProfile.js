@@ -9,7 +9,7 @@ import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 //import getRolesList from "../../actions/userAccessAction";
-import {tabChangeValues} from "../../actions/userAccessAction";
+import {tabChangeValues, displaySelectedUSERS,handleUserSelect} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 //import SuccessModal from '../Modal/SuccessModal';
 import CheckBox from "./Checkbox";
@@ -107,6 +107,10 @@ class UserProfile extends React.Component {
     componentDidMount(){
 
         //this.props.tabChangeValues();
+
+        // if(this.props.tabChangeValues(1)){
+        //     this.props.resetUserData()
+        // }
 
            let selectedUser = this.props.selectedUser 
           console.log(selectedUser)
@@ -556,10 +560,13 @@ class UserProfile extends React.Component {
 
         //debugger
 
-        this.props.tabChangeValues(1)  
+        this.props.tabChangeValues(1)
+
 
         let selID = JSON.stringify(e)
         this.props.handleUserSelect(selID)
+
+        this.props.displaySelectedUSERS(true)
         // console.log("abcdefghijk", e)
         // let userList = this.props.users.active
         // let id = e
@@ -1059,4 +1066,4 @@ const mapStateToProps = (state)=> (
 )
 
 export default withRouter(connect(mapStateToProps,{updateUser,removeImage,
-    showUser,uploadImage,deleteUser,tabChangeValues}) (UserProfile));
+    showUser,uploadImage,deleteUser,tabChangeValues,displaySelectedUSERS,handleUserSelect}) (UserProfile));
