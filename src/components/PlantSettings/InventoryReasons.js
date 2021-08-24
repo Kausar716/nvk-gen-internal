@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert'; 
 import Sortable from 'sortablejs'
+import Loader from '../ProductManager/Loader'
 // import './style.css';
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handleZoneInputAction,handleAddZone,   handleSubAttributeUpdate, showSubSubAttribute     } from '../../actions/attributeAction'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
@@ -50,6 +51,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                     btnLabelCancel:'Cancel',
                     deleteon:false,
                     active:[],
+                    loading:false,
                     inactive:[],
                 }
             
@@ -58,7 +60,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
             let data = {};
             let active= this.props.zoneCategoryList.filter(data=>data.status ==1)
            let inactive=this.props.zoneCategoryList.filter(data=>data.status ==0)
-            this.setState({active:active,inactive:inactive})
+            this.setState({active:active,inactive:inactive,loading:true})
         }
         onDragOver = (ev)=>{
             ev.preventDefault();
@@ -557,8 +559,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
@@ -610,7 +611,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -672,7 +673,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -721,7 +722,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>

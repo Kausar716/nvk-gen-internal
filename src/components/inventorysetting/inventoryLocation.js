@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Loader from '../ProductManager/Loader'
 import Sortable from 'sortablejs';
 
 import 
@@ -64,6 +65,7 @@ class InventoryLocation extends Component {
             locationCountry: 0,
             locationzip: "",
             locationlatlong: "",
+            loading:false,
             allStates:{},
             btnLabelAdd:'Add New Location Type',
             btnLabelUpdate: 'Update Location Type',
@@ -78,7 +80,7 @@ class InventoryLocation extends Component {
         let data = {};
         let active= this.props.zoneCategoryList.filter(data=>data.status ==1)
        let inactive=this.props.zoneCategoryList.filter(data=>data.status ==0)
-        this.setState({active:active,inactive:inactive})
+        this.setState({active:active,inactive:inactive,loading:true})
     }
     onDragOver = (ev)=>{
         ev.preventDefault();
@@ -657,8 +659,7 @@ class InventoryLocation extends Component {
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
@@ -728,7 +729,7 @@ class InventoryLocation extends Component {
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:0,paddingLeft:5,paddingRight:5}}>
@@ -790,7 +791,7 @@ class InventoryLocation extends Component {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -857,7 +858,7 @@ class InventoryLocation extends Component {
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>

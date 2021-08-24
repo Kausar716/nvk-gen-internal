@@ -9,6 +9,7 @@ import InfoModal from "../Modal/InfoModal";
 import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Loader from '../ProductManager/Loader'
 import {getAllPlantCategories,handleCategoryInputAction,handleAddCategory,handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import {customerTypeSort,handleCustomerTypeDelete,saveNoticationData,getNotificationData,handleExchangeData,saveCustomerType,
     getAllCustomerType,handleDragDropCustomer,updateCustomerTypeSettings, showSpecificCustomerSettingType,handleExchangeData2} from "../../actions/customerSettingAction";
@@ -48,6 +49,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
             btnLabelUpdate: 'Update Category Type',
             btnLabelCancel:'Cancel',
              deleteon:false,
+             loading:false,
 
 
              errorObj:{
@@ -62,7 +64,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
         let data = {};
         let active= this.props.customerData.customerTypeList.active
        let inactive=this.props.customerData.customerTypeList.inactive
-        this.setState({active:active,inactive:inactive})
+        this.setState({active:active,inactive:inactive,loading:true})
     }
 componentDidMount(){
     
@@ -596,6 +598,7 @@ render() {
 
                                         </div>
                                     </div>
+                                  
                                     <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart} removeItem={this.removeItem}>
                         <div style={{display: 'flex',paddingTop:20}}>
                        
@@ -606,7 +609,7 @@ render() {
                                     </div>
 
 
-                                    <div class="card-body cardBg"
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg"
                                    >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
@@ -659,7 +662,7 @@ render() {
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -721,7 +724,7 @@ render() {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -770,7 +773,7 @@ render() {
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>

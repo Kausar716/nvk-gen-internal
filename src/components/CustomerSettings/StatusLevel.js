@@ -15,6 +15,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import Sortable from 'sortablejs'
 // import './style.css';
 import InfoModal from "../Modal/InfoModal"
+import Loader from '../ProductManager/Loader'
 
 import {customerStatusSort,saveStatusMethod,saveReasonMethod,getAllReasonMethods,getAllStatusMethods,handleCustomerTypeDelete,
     handleDragDropCustomer,handleChangeFilter,saveDeliveryMethod,saveNoticationData,getNotificationData,
@@ -54,6 +55,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
        name:'',
        subName:'',
        subName2:'',
+       loading:false,
       
        btnLabelAdd:'Add New Status Level',
        btnLabelUpdate: 'Update Status Level',
@@ -72,7 +74,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
             let data = {};
             let active= this.props.customerData.customerStatusList.active
            let inactive=this.props.customerData.customerStatusList.inactive
-            this.setState({active:active,inactive:inactive})
+            this.setState({active:active,inactive:inactive,loading:true})
         }
     componentDidMount(){
         
@@ -543,8 +545,8 @@ render() {
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?   <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
+                                   
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
@@ -596,7 +598,7 @@ render() {
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -658,7 +660,7 @@ render() {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -707,7 +709,7 @@ render() {
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>
