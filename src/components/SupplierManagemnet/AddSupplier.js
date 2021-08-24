@@ -514,14 +514,23 @@ console.log(props.supplierData.supplierReasonList)
                                         <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
                                     </span>
                                 </button> */}
-                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <img src="assets/img/save.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save </span>
-                                    </button>
-                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <img src="assets/img/savedone.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save &amp; Done</span>
-                                    </button>
+                                <a class="btn ml-2"
+                                onClick={()=>checkedData==true?saveCustomerData1("save"):""}
+                                            //onClick={this.handleSubmit}
+                                        
+                                            >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+                                {/* <button type="button"   className={"btn  btn-md ml-3"} disabled={checkedData==true?false:true}> */}
+                                <a  class="btn ml-2 mt-3 mt-md-0" onClick={()=>checkedData==true?saveCustomerData1("done"):""}>
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                    </span>
+                                </a>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                     <img src="assets/img/close-ic.svg" alt="" onClick={closeAddSupplier}/>
                                 </a>
