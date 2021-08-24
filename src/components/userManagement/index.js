@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable jsx-a11y/alt-text */
 import React, {Component} from 'react'
+
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import UserProfile from './userProfile'
 import 'react-tabs/style/react-tabs.css';
@@ -13,7 +14,7 @@ import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex";
 import TextField from '@material-ui/core/TextField';
 import Autocomplete from '@material-ui/lab/Autocomplete';
-
+//const { render } = ReactDOM;
 
 class UserManagement extends Component {  
 constructor(props){
@@ -51,7 +52,15 @@ constructor(props){
         selectedUser:{},
         displatDeletedRecord:"off"
     }
+
+    //this.child = React.createRef();
 }
+
+
+// childValueHereUserAccess=()=>{
+//     debugger
+//     this.child.current.handleUserSelect();
+// }
 
    
  handleProfileChange = (e) => {
@@ -71,7 +80,15 @@ constructor(props){
 }
 
 onTagsChange = (event, values) => {
-    //debugger;
+
+    debugger;
+
+    this.childValueHereUserAccess()
+
+
+
+
+
 
      let userList = this.props.users.active
      let id = values.id
@@ -246,6 +263,9 @@ goToUserAccess=()=>{
     this.props.tabChangeValues(1)  
 
 }
+
+
+
     
     render() {
         let {displayUpdateProfile,displayCreate} = this.state
@@ -298,6 +318,8 @@ goToUserAccess=()=>{
 				<h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/settings-primary.svg" class="mr-2"/>User Management
                 </h1>
+
+                {/* <button onClick={() => { this.child.handleUserSelect() }}>Click</button> */}
 			</div>
             <div class="px-md-3 mt-3">
                 <Tabs 
@@ -437,8 +459,11 @@ goToUserAccess=()=>{
 
                     <TabPanel
                    // value={this.state.tabValues} index={1} 
+                //    this.setState({selectedUser:selectedUser[0]})
+                //    this.setState({displayUpdateProfile:true})
+                //    this.setState({visbleTrue:true})
                     >
-                    <UserAccess/>
+                    <UserAccess  onTagsChange={this.onTagsChange} visbleTrueP={this.state.visbleTrue} selectedUserP = {this.state.selectedUser} displayUpdateProfileP={this.state.displayUpdateProfile} />
                     </TabPanel>
                     <TabPanel
                     // value={this.state.tabValues} index={2}
