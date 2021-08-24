@@ -36,8 +36,8 @@ import SupplierSettingIndex from "./components/SupplierSettings/SupplierSettingI
 import CustomerLists from './components/CustomerSettings/CustomerLists'
 import InventoryLists from "./components/inventoryManagement/InventoryLists";
 import SupplierManagemnet from "./components/SupplierManagemnet";
-import PurchaseOrderList from "./components/PurchaseOrder/PurchaseOrders";
-import PurchaseOrder from "./components/PurchaseOrder/PurchaseOrderDetails";
+import PurchaseOrderList from "./components/PurchaseOrderManagement/index";
+import PurchaseOrder from "./components/PurchaseOrderManagement/PurchaseOrderDetails";
 import InventorySettings from "./components/inventorysetting/InventorySettings";
 import QuoteAndOrdersManagement from "./components/QuoteAndOrdersManagement/QuoteAndOrdersManagement";
 import OrderReady from "./components/QuoteAndOrdersManagement/OrderReady";

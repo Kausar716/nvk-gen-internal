@@ -5,9 +5,10 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
-import initialDetails from './initialDetails';
+// import initialDetails from './initialDetails';
 import './style.css'
 import { Link } from "react-router-dom";
+import PurchaseOrderTable from "./purchaseOrderTable"
 export class PurchaseOrders extends React.Component {
 
     constructor(){
@@ -82,9 +83,9 @@ export class PurchaseOrders extends React.Component {
 
       handleClickCheckBox = (e)=>{
 
-        let newCheckedData = initialDetails.filter(newCheck => newCheck.status===e.target.name)
-        //this.setState({alphabet: newCheckedData})
-        this.setState({checkedData: newCheckedData})
+        // let newCheckedData = initialDetails.filter(newCheck => newCheck.status===e.target.name)
+        // //this.setState({alphabet: newCheckedData})
+        // this.setState({checkedData: newCheckedData})
         // console.log("e1",checkedData);
       }
 
@@ -136,34 +137,34 @@ export class PurchaseOrders extends React.Component {
       elementContainsSearchString = (searchInput, element) => (searchInput ? element.suppliearName.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) || element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
 
 
-      filterItems = (initialDetails) => {
-        let result = [];
-        const { searchInput,alphabet , checkedData} = this.state;
-        if(initialDetails &&  (searchInput || alphabet)) {
-            result = initialDetails.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
-            this.elementContainsSearchString(searchInput, element) 
-            //  || this.checkOperation(checkedData,element)
-            );
-          }
+    //   filterItems = (initialDetails) => {
+    //     let result = [];
+    //     const { searchInput,alphabet , checkedData} = this.state;
+    //     if(initialDetails &&  (searchInput || alphabet)) {
+    //         result = initialDetails.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
+    //         this.elementContainsSearchString(searchInput, element) 
+    //         //  || this.checkOperation(checkedData,element)
+    //         );
+    //       }
 
-        else if( initialDetails && checkedData){
+    //     else if( initialDetails && checkedData){
 
-            result = initialDetails.filter((item)=>item.status)
+    //         result = initialDetails.filter((item)=>item.status)
 
-        }
-        else {
-          result = initialDetails  || [];
-        }
+    //     }
+    //     else {
+    //       result = initialDetails  || [];
+    //     }
 
-        result = result.map((item)=>(
-                 item
+    //     result = result.map((item)=>(
+    //              item
                  
         
-        ))
+    //     ))
        
 
-        return result;
-      }
+    //     return result;
+    //   }
 
 //END
      handleAlphabetFilter = (e)=>{
@@ -188,29 +189,29 @@ export class PurchaseOrders extends React.Component {
 
 
       
-      let initialDetails1 = initialDetails || this.state.checkedData
-        console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
+    //   let initialDetails1 = initialDetails || this.state.checkedData
+    //     console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
 
-      if(initialDetails1){
-        pageNumber = this.props.purchaseOrderData.pageNumber
-        // console.log()
-        initialDetails1 = [...initialDetails1]
+    //   if(initialDetails1){
+    //     pageNumber = this.props.purchaseOrderData.pageNumber
+    //     // console.log()
+    //     initialDetails1 = [...initialDetails1]
 
 
-         totalLength = initialDetails1.length
-         plantPerPage = this.state.pageSize;
-         pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
-         displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
-         pageCount = Math.ceil(initialDetails1.length/plantPerPage)
+    //      totalLength = initialDetails1.length
+    //      plantPerPage = this.state.pageSize;
+    //      pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
+    //      displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
+    //      pageCount = Math.ceil(initialDetails1.length/plantPerPage)
 
-    }
+    // }
 
-            console.log("displayPOList",displayPOList)
+            // console.log("displayPOList",displayPOList)
 
-              const filteredList = this.filterItems(displayPOList);
+            //   const filteredList = this.filterItems(displayPOList);
 
-              console.log("filteredList", filteredList)
+            //   console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
     return (
 
@@ -451,101 +452,7 @@ export class PurchaseOrders extends React.Component {
 
                                 <div class="form-group row">
                                     <div class="col-md-12 table-responsive">
-                                        <table id="plantDetails" class="table table-striped w-100">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-nowrap">Status</th>
-                                                    <th class="text-nowrap">PO#</th>
-                                                    <th class="text-nowrap">Supplier Name</th>
-                                                    <th class="text-nowrap">Supplier Order</th>
-                                                    <th class="text-nowrap">Created By</th>
-                                                    <th class="text-nowrap">Order Date</th>
-                                                    <th class="text-nowrap">Expected Date</th>
-                                                    <th class="text-nowrap">Dispatch</th>
-                                                    <th class="text-nowrap">Amount</th>
-                                                    <th class="text-nowrap text-center">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {filteredList.map(pOrderList=>{
-                                                    return <tr key={pOrderList.suppliearName}>
-                                                    <td><span  class={pOrderList.status==='closed'?'stsBadge stsClosed':pOrderList.status==='Draft'?'stsBadge stsDraft':pOrderList.status==='open'?'stsBadge stsOpen':""}>{pOrderList.status}</span></td>
-                                                    <td><a href="">{pOrderList.poNumber}</a></td>
-                                                    <td>{pOrderList.suppliearName}</td>
-                                                    <td>{pOrderList.supplierOrder}</td>
-                                                    <td>{pOrderList.createdBy}</td>
-                                                    <td>{pOrderList.orderDate}</td>
-                                                    <td>{pOrderList.expectedDate}</td>
-                                                    <td>{pOrderList.dispatch}</td>
-                                                    <td>{pOrderList.amount}</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr>
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsClosed'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>Windham Gardens</td>
-                                                    <td>1024275</td>
-                                                    <td>Brendan Weirs</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Delivery</td>
-                                                    <td>8,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsDraft'>Draft</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-                                                {/* <tr>
-                                                    <td><span class='stsBadge stsOpen'>Closed</span></td>
-                                                    <td><a href="">JSMITH-0023555-02</a></td>
-                                                    <td>John Smith landscaping</td>
-                                                    <td>1024275</td>
-                                                    <td>John Smith</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>20/05/12021</td>
-                                                    <td>Pickup</td>
-                                                    <td> 6,085.00</td>
-                                                    <td class="text-center">
-                                                        <span>
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/edit.svg" alt=""/>
-                                                            </a>
-                                                        </span>
-                                                    </td>
-                                                </tr> */}
-
-
-                                            })}
-
-                                            </tbody>
-                                        </table>
+                                       <PurchaseOrderTable/>
                                     </div>
                                 </div>
                             </div>
