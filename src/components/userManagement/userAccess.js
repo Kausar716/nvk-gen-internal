@@ -115,7 +115,7 @@ export const Component = withRouter(({ history, location }) =>{
             displayselectedUSer:true})
 
 
-            this.props.parentCallback(this.handleUserSelect)
+           // this.props.parentCallback(this.handleUserSelect)
         
 
     }
