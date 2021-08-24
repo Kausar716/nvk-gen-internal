@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import QuoteOrderPermission from './QuoteOrderPermission';
 
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues, displaySelectedUSERS} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
 //import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import { Link ,withRouter} from "react-router-dom";
@@ -21,7 +21,7 @@ export const Component = withRouter(({ history, location }) =>{
         super(props)
         this.state={    
             displayselectedUSer:false,
-    selectedUser:{}
+            selectedUser:{}
         }
     }
         
@@ -40,6 +40,7 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.getRolesList()
         this.props.getPermissionList()
         this.props.resetUserData()
+        //this.props.displaySelectedUSERS()
        
     }
    
@@ -99,7 +100,7 @@ export const Component = withRouter(({ history, location }) =>{
    
 
     handleUserSelect = (e) =>{
-       debugger;
+      // debugger;
         console.log(e.target.value)
         let selectedId = e.target.value
         console.log(this.props.users)
@@ -112,12 +113,10 @@ export const Component = withRouter(({ history, location }) =>{
   
         this.setState({
             selectedUser:e.target.value,
-            displayselectedUSer:true})
-
-
+            //displayselectedUSer:true
+        })
+        this.props.displaySelectedUSERS(true)
            // this.props.parentCallback(this.handleUserSelect)
-        
-
     }
 
 
@@ -226,7 +225,7 @@ export const Component = withRouter(({ history, location }) =>{
        console.log("exestingRoles",exestingRoles )
        
    
-     console.log("prospsssHERE", this.props)
+     console.log("prospsssHERE", this.props.displaySelectedUSER1)
        
     return (
         <>
@@ -1270,7 +1269,8 @@ const mapStateToProps = (state)=> (
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,
     temp:state.userAccessReduser,
-    reduxSelectedUser:state.userAccessReduser.selectedUser
+    reduxSelectedUser:state.userAccessReduser.selectedUser,
+    displaySelectedUSER1 : state.userAccessReduser.displaySelectedUSER
     // permissionList:state.permissionList
 }
 
@@ -1281,4 +1281,4 @@ export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUse
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction, resetUserData, tabChangeValues})(UserAccess));
+,handleUserAccessInputAction, resetUserData,displaySelectedUSERS, tabChangeValues})(UserAccess));
