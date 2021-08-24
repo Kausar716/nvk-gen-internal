@@ -95,6 +95,12 @@ const ProductTable  = (props) => {
     props.getSpecifiedProductAction(productId,actionType,pageToOpen) 
 }
 
+const handleShowPage = (e)=>{
+    if(props.productData.pageNumber*Number(e.target.value)>props.productData.pageNumber){
+        props.setPageNumber(0)
+    }   
+        setPageSize(Number(e.target.value))
+}
   const getSpecifiedProduct1 =async(id) =>{
     // debugger
       window.scrollTo(100, -100)
@@ -148,9 +154,8 @@ const ProductTable  = (props) => {
                         <label className="greenText">Show</label>
                                     <select 
                                         value={pageSize}
-                                        onChange={e => {
-                                            setPageSize(Number(e.target.value))
-                                        }}
+                                       
+                                        onChange={handleShowPage}
                                         style={{cursor:"pointer"}}
                                         >
                                         {[15, 25, 50, 100, 250,500].map(pageSize => (
@@ -192,7 +197,7 @@ const ProductTable  = (props) => {
 
                                         {
                                         displayProductList.map(product=>{
-                                            console.log(product.manufacturer_id)
+                                            // console.log(product.manufacturer_id)
                                             // skuData.map(sku=>{
                                             //console.log("cacategoryData",categoryData)
                                             //console.log("categoryDatacategoryDataLENGTH", categoryData.length)
