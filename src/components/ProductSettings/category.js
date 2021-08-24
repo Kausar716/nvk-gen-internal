@@ -7,6 +7,7 @@ import * as MdIcons from "react-icons/md";
 import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Loader from '../ProductManager/Loader'
 import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,
     updatePlantSettingCategory, showSpecificPlantSettingAttribute, handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import 
@@ -61,6 +62,7 @@ class Category extends Component {
             subName:'',
             subName2:'',
             selectedID:'',
+            loading:false,
             selectedSubID:'',
             btnLabelAdd:'Add New Category',
             btnLabelUpdate: 'Update Category',
@@ -97,7 +99,7 @@ class Category extends Component {
 
        })
      
-        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive})
+        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive,loading:true})
     }
 
     id2List = {
@@ -645,8 +647,7 @@ componentDidMount(){
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
@@ -726,7 +727,7 @@ componentDidMount(){
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -788,7 +789,7 @@ componentDidMount(){
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -866,7 +867,7 @@ componentDidMount(){
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>

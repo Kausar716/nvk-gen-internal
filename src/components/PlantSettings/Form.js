@@ -5,6 +5,7 @@ import React, { Component } from 'react'
 import {connect} from "react-redux";
 import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert'; 
+import Loader from '../ProductManager/Loader'
 // import './style.css';
 import Sortable from 'sortablejs'
 import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,
@@ -45,6 +46,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         subName:'',
                         subName2:'',
                         selectedID:'',
+                        loading:false,
                         btnLabelAdd:'Add New Form ',
                         btnLabelUpdate: 'Update Form ',
                         btnLabelCancel:'Cancel',
@@ -61,7 +63,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 let data = {};
                 let active= this.props.zoneCategoryList.filter(data=>data.status ==1)
                let inactive=this.props.zoneCategoryList.filter(data=>data.status ==0)
-                this.setState({active:active,inactive:inactive})
+                this.setState({active:active,inactive:inactive,loading:true})
             }
 
         componentDidMount(){
@@ -522,8 +524,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
@@ -575,7 +576,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -637,7 +638,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -686,7 +687,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>

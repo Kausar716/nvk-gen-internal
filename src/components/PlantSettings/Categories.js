@@ -8,6 +8,7 @@ import Sortable from 'sortablejs'
 import 'react-confirm-alert/src/react-confirm-alert.css';
 import { confirmAlert } from 'react-confirm-alert'; 
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+import Loader from '../ProductManager/Loader'
 // import './style.css';
 //import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handleAttributeDelete,handlePositionInputAction,handleAddPosition,handleSubAttributeUpdate, showSubSubAttribute} from '../../actions/attributeAction'
 import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,handleAddCategory,
@@ -49,8 +50,10 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                     subName:'',
                     subName2:'',
                     selectedID:'',
-                    btnLabelAdd:'Add New Category',
-                    btnLabelUpdate: 'Update Category',
+                    loading:false,
+
+                    btnLabelAdd:'Add New Category Type',
+                    btnLabelUpdate: 'Update Category Type',
                     btnLabelCancel:'Cancel',
                     deleteon:false,
                     startID:0,
@@ -65,7 +68,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
         let data = {};
         let active= this.props.plantCategoryList.filter(data=>data.status ==1)
        let inactive=this.props.plantCategoryList.filter(data=>data.status ==0)
-        this.setState({active:active,inactive:inactive})
+        this.setState({active:active,inactive:inactive,loading:true})
     }
 componentDidMount(){
     
@@ -292,8 +295,8 @@ onDragStart =(e)=>{
             let id= this.state.selectedID
             // alert(id)
             confirmAlert({
-                title: 'Delete Category',
-                message: 'Are you sure want to delete the Category?',
+                title: 'Delete Category Type',
+                message: 'Are you sure want to delete the Category Type?',
                 buttons: [
                   {
                     label: 'Yes',
@@ -528,7 +531,7 @@ render() {
                                                 name="Category" 
                                                 value={this.state.name}
                                                  placeholder="Category" onChange={this.handlePositionInputAction}/>
-                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category Name</span>:""}
+                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category Type</span>:""}
                                             </div>
 
 
@@ -589,8 +592,7 @@ render() {
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
@@ -642,7 +644,7 @@ render() {
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -704,7 +706,7 @@ render() {
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -753,7 +755,7 @@ render() {
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>
