@@ -481,7 +481,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             <div>
                                                 <input type="text" 
                                                  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                                 placeholder=""  name="heightImperial" 
+                                                 placeholder="Value"  name="heightImperial" 
                                                 value={this.state.subName}   
                                                  onChange={this.handleZoneInputAction2}/>
                                                 {this.state.errorObj.heightImperial!==0?<span style={{fontSize:"small",color:"red"}}>Enter Imperial Value</span>:""}
