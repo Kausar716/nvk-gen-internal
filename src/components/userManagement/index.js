@@ -248,13 +248,21 @@ handleChange=(index)=>{
         tabValues:this.props.tabChangeValueUP
     })
 
-    if(this.props.tabChangeValueUP===1){
+    if(this.props.tabChangeValueUP===1 || this.props.tabChangeValueUP===2 ){
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
         this.props.resetUserData()
         this.props.displaySelectedUSERS(false)
+
+        this.setState({visbleTrue:false, displayUpdateProfile:false})
+
     }
+
+
+    // if(this.props.tabChangeValueUP===0){
+
+    // }
     //this.props.tabChangeValueUP=index;
 }
 

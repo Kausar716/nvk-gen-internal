@@ -567,6 +567,7 @@ class UserProfile extends React.Component {
         this.props.handleUserSelect(selID)
 
         this.props.displaySelectedUSERS(true)
+
         // console.log("abcdefghijk", e)
         // let userList = this.props.users.active
         // let id = e

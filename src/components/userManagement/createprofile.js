@@ -300,15 +300,6 @@ export class CreateUserProfile extends Component {
         }
 
 
-
-
-     
-
-
-
-
-
-
         this.setState({errorObj,errorCount})
         return errorCount
     }

@@ -126,7 +126,6 @@ export const Component = withRouter(({ history, location }) =>{
 
     toggleChecked=(e)=>{
         this.setState({displayselectedUSer: !this.state.displayselectedUSer})
-            
     }
 
     goBackFunction =(e)=>{
