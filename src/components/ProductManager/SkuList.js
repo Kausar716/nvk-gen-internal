@@ -629,7 +629,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             <th class="text-nowrap" style={{textAlign:"right"}}>Sale Price</th>
                                             <th class="text-nowrap"style={{textAlign:"center"}}>Sale Active</th>
                                             <th class="text-nowrap text-right">Volume Price Per Unit</th>
-                                            <th class="text-nowrap text-right">Volume QTY</th>
+                                            <th class="text-nowrap text-center">Volume QTY</th>
                                             <th class="text-nowrap text-center">Actions</th>
                                             
                                         </tr>
@@ -671,7 +671,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                                 <i className={sku.status===1?'bx bx-check':'bx bx-x'}></i>
                                             </td>
                                             <td class="text-right"  style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_price_per_unit}</td>
-                                            <td class="text-right"  style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_quantity==="0"?"None":sku.volume_quantity}</td>
+                                            <td class="text-center"  style={{color:sku.volume_quantity==="0"?"lightgray":""}} >{sku.volume_quantity==="0"?"None":sku.volume_quantity}</td>
                                             <td class="text-center">
                                                 <span>
                                                    
