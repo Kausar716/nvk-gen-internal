@@ -586,7 +586,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             <div>
                                                 <input type="text" 
                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
-                                                placeholder=""
+                                                placeholder="Value"
                                                   name="caliperImperial"
                                                    value={this.state.subName}
                                                       onChange={this.handleZoneInputAction2}/>

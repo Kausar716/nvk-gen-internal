@@ -468,7 +468,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
                                                  name="bloomColor" 
                                                  value={this.state.name}
-                                                  placeholder="Colour"
+                                                  placeholder="Color"
                                                  onChange={this.handleZoneInputAction}/>
                                                   {this.state.errorObj.bloomColor!==0?<span style={{fontSize:"small",color:"red"}}>Enter Color Name</span>:""}
                                             </div>

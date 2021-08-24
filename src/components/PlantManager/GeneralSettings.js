@@ -328,7 +328,7 @@ import {
                                     </div>
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">
                                         <label>Royalty</label>
-                                        <input type="text" class="form-control" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
+                                        <input type="text" class="form-control text-right" placeholder="" id="royality" value={plantDataById.royality} onChange={handleInput}/>
                                     </div>
                                     {/* future requirement  10 id */}
                                     <div class="col-md-6 col-lg-3 mt-2 mt-md-0">

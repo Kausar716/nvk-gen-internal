@@ -231,7 +231,7 @@ const handleShowPage = (e)=>{
                                                 </td>
 
 
-                                                <td className="te xt-center">
+                                                <td className="text-center">
                                                     <div className="custom-control custom-checkbox mb-1">
                                                             <input type="checkbox"  className="custom-control-input" checked={parseInt(archived)===1?"checked":""} id={id3+"_"+plant_id} onChange={()=>handleCheckBox(plant_id,index,id3)}/>
                                                             <label className="custom-control-label" style={{cursor:"pointer"}} for={id3+"_"+plant_id}></label>

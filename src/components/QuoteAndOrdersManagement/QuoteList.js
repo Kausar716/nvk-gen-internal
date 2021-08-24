@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
 import initialDetails from './initialDetails';
-import '../PurchaseOrder/style.css';
+import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
 
 export class QuoteList extends React.Component {
