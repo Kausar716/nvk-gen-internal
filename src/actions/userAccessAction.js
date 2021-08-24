@@ -11,7 +11,8 @@ import {
     SHOW_SELECTED_USER,
     UPDATE_USER_PERMISSION ,
     RESET_USERDATA,
-    TAB_CHANGE_VALUE
+    TAB_CHANGE_VALUE,
+    DISPLAY_SELECTED_USER
    } from './types';
 
 
@@ -33,6 +34,17 @@ import {
     })
    }
 
+
+   //displayselectedUSer
+   export const displaySelectedUSERS=(displaySelectedUSER)=>dispatch=>{
+
+    dispatch({
+        type:DISPLAY_SELECTED_USER,
+        displaySelectedUSER:displaySelectedUSER,
+
+        
+    })
+   }
 
 
    

@@ -11,6 +11,7 @@ import {
     UPDATE_USER_PERMISSION,
     RESET_USERDATA,
     TAB_CHANGE_VALUE,
+    DISPLAY_SELECTED_USER,
    } from '../actions/types';
 
 const initialSatate = {
@@ -26,7 +27,8 @@ const initialSatate = {
     customer:[],
     user:[],
     selectedUser:{},
-    tabChangeValue:0
+    tabChangeValue:0,
+    displaySelectedUSER:false,
 }
 
 
@@ -74,6 +76,18 @@ const initialSatate = {
                 
             }
         }
+
+
+        case DISPLAY_SELECTED_USER:{
+            return{
+                ...state,
+                displaySelectedUSER:action.displaySelectedUSER
+                
+            }
+        }
+
+
+        
 
         case GET_PERMISSION_LIST:{
             console.log(action)          

@@ -199,7 +199,7 @@ export class CreateUserProfile extends Component {
 
     }
     validate = () =>{
-        // debugger;
+         debugger;
         let {errorObj,errorCount}=this.state
         //let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
          // let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
@@ -258,6 +258,8 @@ export class CreateUserProfile extends Component {
         }
         else {
             document.getElementById("contactPhone-validtor").innerText = ""
+            errorObj.phoneError=0
+            errorCount--;
         }
 
         // else if(this.state.phone === ""){
@@ -298,15 +300,6 @@ export class CreateUserProfile extends Component {
         }
 
 
-
-
-     
-
-
-
-
-
-
         this.setState({errorObj,errorCount})
         return errorCount
     }
@@ -314,6 +307,16 @@ export class CreateUserProfile extends Component {
 
         
        // debugger;
+    //    this.setState({
+    //     errorObj:{
+    //         firstNameError:0,
+    //         lastNameError:0,
+    //         phoneError:0,
+    //         emailError:0,     
+    //         positionError:0           
+    //     },
+    //     errorCount:0
+    //    })
 
          console.log("email already there", this.state.email)
 
