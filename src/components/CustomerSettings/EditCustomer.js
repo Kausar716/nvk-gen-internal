@@ -415,6 +415,12 @@ const showClose  = (e)=>{
     }
     
 }
+const thirdMethod=(e)=> {
+    const re = /[0-9a-zA-Z]+/g;
+    if (!re.test(e.key)) {
+      e.preventDefault();
+    }
+  }
 const dataTochange =(e)=>{
     setCheckedData(true)
     // let intValue = e.target.value
@@ -806,7 +812,7 @@ const dataTochange =(e)=>{
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="text" class="form-control" name={"taxExemptNumber"}  value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="Not set" onBlur={dataTochange}/>
+                                                <input type="text" class="form-control" name={"taxExemptNumber"}  value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="Not set" onKeyPress={thirdMethod} />
                                                 {/* {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
 
                                             </div>
