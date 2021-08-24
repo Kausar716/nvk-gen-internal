@@ -28,8 +28,8 @@ import {showSubSubAttribute} from '../../actions/attributeAction'
                     subName:'',
                     subName2:'',
                     selectedID:'',
-                    btnLabelAdd:'Add New Category Type',
-                    btnLabelUpdate: 'Update Category Type',
+                    btnLabelAdd:'Add New Category',
+                    btnLabelUpdate: 'Update Category',
                     btnLabelCancel:'Cancel',
                     deleteon:false,
                     startID:0,
@@ -190,8 +190,8 @@ onMoveData = (evt,ui)=>{
             let id= this.state.selectedID
             // alert(id)
             confirmAlert({
-                title: 'Delete Category Type',
-                message: 'Are you sure want to delete the Category Type?',
+                title: 'Delete Category',
+                message: 'Are you sure want to delete the Category?',
                 buttons: [
                   {
                     label: 'Yes',
@@ -426,7 +426,7 @@ render() {
                                                 name="Category" 
                                                 value={this.state.name}
                                                  placeholder="Category" onChange={this.handlePositionInputAction}/>
-                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category Type</span>:""}
+                                                  {this.state.errorObj.Category!==0?<span style={{fontSize:"small",color:"red"}}>Enter Category Name</span>:""}
                                             </div>
 
 

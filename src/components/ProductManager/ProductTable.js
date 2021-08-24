@@ -185,7 +185,7 @@ const handleShowPage = (e)=>{
 
                                                 {/* <th className="text-nowrap">Location</th> */}
                                                 <th className="text-nowrap">Category</th>
-                                                <th className="text-nowrap">SKU Count</th>
+                                                <th className="text-nowrap text-center">SKU Count</th>
                                                 {/* <th className="text-nowrap">Sub Category</th> */}
                                                 <th className="text-nowrap">Manufacturer</th>
 

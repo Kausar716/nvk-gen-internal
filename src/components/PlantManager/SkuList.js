@@ -563,7 +563,7 @@ const SkuList = (props)=>{
                                                 <th class="text-nowrap text-right">Sale Price</th>
                                                 <th class="text-center">Sale Active</th>
                                                 <th class="text-nowrap text-right">Volume Price Per Unit</th>
-                                                <th class="text-nowrap text-right">Volume QTY</th>
+                                                <th class="text-nowrap text-center">Volume QTY</th>
                                                 <th class="text-nowrap text-center">Actions</th>
                                             </tr>
                                         </thead>
@@ -586,7 +586,7 @@ const SkuList = (props)=>{
                                                 </td>
 
                                                 <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00" ||skuData.volume_price_per_unit === null?"lightgray":""}} >{skuData.volume_price_per_unit===null?"0.00":skuData.volume_price_per_unit}</td>
-                                                <td class="text-right" style={{color:skuData.volume_price_per_unit==="0.00"||skuData.volume_price_per_unit === null?"lightgray":""}} >{skuData.volume_price_per_unit===null || skuData.volume_price_per_unit === "0.00"?"None":skuData.volume_quantity_name}</td>
+                                                <td class="text-center" style={{color:skuData.volume_price_per_unit==="0.00"||skuData.volume_price_per_unit === null?"lightgray":""}} >{skuData.volume_price_per_unit===null || skuData.volume_price_per_unit === "0.00"?"None":skuData.volume_quantity_name}</td>
                                                 <td class="text-center" >
                                                     <span>
                                                         {/* <a href="javascript:;"> */}
