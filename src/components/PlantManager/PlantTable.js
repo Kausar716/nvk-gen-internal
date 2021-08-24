@@ -146,6 +146,12 @@ const handleCheckBox =(id,index,type)=>{
     props.updateCheckBox(id,index,type,obj)
 
 }
+const handleShowPage = (e)=>{
+    if(props.plantData.plantPageNumber*Number(e.target.value)>props.plantData.plantPageNumber){
+        props.setPlantPageNumber(0)
+    }   
+        setPageSize(Number(e.target.value))
+}
 
     return (
 
@@ -163,9 +169,7 @@ const handleCheckBox =(id,index,type)=>{
                                 <label className="greenText">Show</label>
                                 <select
                                         value={pageSize}
-                                        onChange={e => {
-                                            setPageSize(Number(e.target.value))
-                                        }}
+                                        onChange={handleShowPage}
                                         style={{cursor:"pointer"}}
                                         >
                                         {[15, 25, 50, 100, 250,500].map(pageSize => (
