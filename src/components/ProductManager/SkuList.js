@@ -623,10 +623,11 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr>
                                             <th class="text-nowrap">Status</th>
                                             <th class="text-nowrap">SKU</th>
+                                            <th class="text-nowrap">Sub-Category</th>
                                             <th class="text-nowrap" style={{textAlign:"right"}}>Each Cost</th>
                                             <th class="text-nowrap" style={{textAlign:"right"}}>Each Price</th>
                                             <th class="text-nowrap" style={{textAlign:"right"}}>Sale Price</th>
-                                            <th class="text-nowrap">Sale Active</th>
+                                            <th class="text-nowrap"style={{textAlign:"center"}}>Sale Active</th>
                                             <th class="text-nowrap text-right">Volume Price Per Unit</th>
                                             <th class="text-nowrap text-right">Volume QTY</th>
                                             <th class="text-nowrap text-center">Actions</th>
@@ -648,7 +649,9 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                             //  if(sku.product_id=== (product_idFromGeneral ? product_idFromGeneral  : productDataById.product_id)){
 
 
-
+                                     
+                                       let categoryToBeDisplayed =  subCategoryData.filter(categoty=>sku.sub_category_id === categoty.id)
+                                       console.log(categoryToBeDisplayed)
 
                                             
                         return(
@@ -656,6 +659,7 @@ console.log("PRODUCT.ID", productDataById.product_id)
                                         <tr key={sku.id} style={{background:(selectedRow === sku.id)? "#e1e3e4":""}}>
                                             <td style={{color:sku.archived==="0"?"":"red"}} >{sku.archived==="0"?"Active":"Archived"}</td>
                                             <td>{sku.sku_code}</td>
+                                            <td>{categoryToBeDisplayed[0]?categoryToBeDisplayed[0].name:""}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_cost}</td>
                                             <td style={{textAlign:"right"}}>{sku.each_price}</td>
                                             <td style={{textAlign:"right"}}>{sku.sale_price}</td>
