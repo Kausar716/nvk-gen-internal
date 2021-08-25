@@ -57,18 +57,16 @@ const CustomerPrintRates = (props) => {
   const handleInputData =(e)=>{
     setCheckedData(true)
     let intValue = e.target.value
-    // console.log(e.target.value,e.target.id)
+ 
     if(e.target.value !=="")
     props.handleExchangeData(intValue,e.target.id,"customerTag")
     else props.handleExchangeData(e.target.value,e.target.id,"customerTag")
-    // props.handleExchangeData(e.target.value,"base_price","customerTag")
 
   }
   useEffect(()=>{
     props.getPrintData()
   },[data])
 const resetData = ()=> {
-  setApp(false);setPrice(false); setLogo(false); setBase(false);
   setCheckedData(false)
   props.getPrintData()
 }
@@ -92,7 +90,7 @@ const confirm = ()=>{
   setMessage("")
 }
 const confirmAction = (type)=>{
-  if(base==false && logo==false && price ==false&& app==false ){
+  if(checkedData ){
 if(type=="save"){
     setType(type)
     setMessage("Are you sure you want to Save?")
@@ -140,24 +138,7 @@ setOpen(true)
         let id = e.target.id
         let characterCheck = e.target.value.match(/^[0-9]*(\.[0-9]{0,2})?$/);
 
-        if(characterCheck === null){
-          if(id === "base_price"){
-           setBase(true)
-          }
-          if(id === "custom_logo"){
-           setLogo(true)
-          }
-          if(id === "custom_pricing"){
-           setPrice(true)
-          }
-          if(id === "custom_application"){
-           setApp(true)
-          }
-   
-       
-      }else {
-       
-      }
+  
       props.handleExchangeData(e.target.value,e.target.id,"customerTag")
       
 
@@ -167,11 +148,25 @@ setOpen(true)
 
        
       }
+    }else{
+      props.handleExchangeData("0.00",e.target.id,"customerTag")
+
     }
       return
     }
   
+    const thirdMethod2=(e)=> {
+      console.log(e.target)
+    const re = /^\d*(\.\d{0,1})?$/g;
+    console.log(re)
+    if (!re.test(e.target.value)) {
+        e.preventDefault();
+    }else{
+       
   
+    }
+  
+  }
 
   const { handleSubmit, pristine, reset, submitting,customerTag } = props.customerData;
   return (
@@ -197,84 +192,78 @@ setOpen(true)
 
         <div >
         
-          <Row className="containerBox">
-              <Col>
-                    <Label className="subHeadingLabels" style={{marginLeft:"1.2em"}}>Base Price</Label>
-                        <Row className="spacebelow">
-                            <Col sm="0"><p className="moveRight">$</p></Col>
-                            <Col sm="5">
-                            <input type="number" className="textRight"  placeholder={"0.00"}  step=".001" style={{width:"115%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}/>
+          <Row className="containerBox" >
+            <Row style={{width:"100%",paddingLeft:20}}>
+              <Col className="col-2">
+                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Base Price</Label>
+                    <Row>
+                            {/* <Col sm="0"><p className="moveRight"></p></Col> */}
+                            {/* <Col sm="4"> */}
+
                            
-                              </Col>
-                            
-
-                            <Col sm="0">
-                            <Label className="moveLittleInCPR">per tag/label </Label>
-                            </Col>
-                            <p style={{paddingLeft:28}}>{base?<span style={{fontSize:"small",color:"red"}}>Enter Valid Base Price(Fixed 2 Decimals)</span>:""}</p>
-                        </Row>
-              </Col>
-
-              <Col>
-                    <Label className="subHeadingLabels" style={{marginLeft:"1.2em"}}>Custom Logo</Label>
-                        <Row>
-                            <Col sm="0"><p className="moveRight">$</p></Col>
-                            <Col sm="4">
-                            <input type="number" className="textRight" style={{textAlign:"left"}} placeholder={"0.00"}  step=".001" style={{width:"115%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}/>
-                         
-                            </Col>
-                           
-                            <Col sm="0">
-                            <Label className="moveLittleInCPR">per tag/label </Label>
-                            </Col>
-                            <p  style={{paddingLeft:28}}>{logo?<span style={{fontSize:"small",color:"red"}}>Enter Valid Custom Logo(Fixed 2 Decimals)</span>:""}</p>
-                        </Row>
-              </Col>
-
-
-              <Col>
-                    <Label className="subHeadingLabels" style={{marginLeft:"1.2em"}}>Custom Pricing</Label>
-                        <Row>
-                            <Col sm="0"><p className="moveRight">$</p></Col>
-                            <Col sm="4">
-
-                            <input type="number" className="textRight" placeholder={"0.00"} style={{textAlign:"left"}} step=".001" style={{width:"115%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData} onBlur={dataTochange}/>
+                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"40%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
                           
-                            </Col>
-                            <Col sm="0">
-                            <Label className="moveLittleInCPR">per tag/label </Label>
-                            </Col>
-                            <p  style={{paddingLeft:28}}>{price?<span style={{fontSize:"small",color:"red"}}>Enter Valid Custom Pricing(Fixed 2 Decimals)</span>:""}</p>
+                            {/* </Col> */}
+                          
+                           
+                           
                         </Row>
               </Col>
 
-
-              <Col>
-                    <Label className="subHeadingLabels" style={{marginLeft:"1.2em"}}>Custom Application</Label>
-                        <Row>
-                            <Col sm="0"><p className="moveRight">$</p></Col>
-                            <Col sm="4">
+              <Col className="col-2">
+                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Custom Logo</Label>
+                    <Row>
+                            {/* <Col sm="0"><p className="moveRight"></p></Col> */}
+                            {/* <Col sm="4"> */}
 
                            
-                            <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"115%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}/>
+                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"40%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
                           
-                            </Col>
-                            <Col sm="0">
-                            <Label className="moveLittleInCPR">per tag/label </Label>
-                            </Col>
-                            <p  style={{paddingLeft:28}}>{app?<span style={{fontSize:"small",color:"red"}}>Enter Valid Custom Application(Fixed 2 Decimals)</span>:""}</p>
+                            {/* </Col> */}
+                          
+                           
+                           
                         </Row>
               </Col>
-              <Col xs="12">
+
+
+              <Col className="col-2">
+                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Custom Pricing</Label>
+                        <Row>
+                   
+                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"} style={{textAlign:"left"}} step=".001" style={{width:"40%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
+                           
+                          
+                        </Row>
+              </Col>
+
+
+              <Col className="col-2">
+                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Custom Application</Label>
+                        <Row>
+                            {/* <Col sm="0"><p className="moveRight"></p></Col> */}
+                            {/* <Col sm="4"> */}
+
+                           
+                            <p style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"40%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
+                          
+                            {/* </Col> */}
+                          
+                           
+                           
+                        </Row>
+              </Col>
+            
+
+
+</Row>
+<Col xs="12">
               <div align="right" className="action_area_left">
                               <button  class="btn btn-outline-secondary btn-md" style={{height:40,width:75,fontSize:14}}  disabled={checkedData==true?false:true} onClick={resetData}>Reset</button>
                               <button className="button_style_Tools_Setting_Save" disabled={checkedData==true?false:true} onClick={()=>confirmAction("save")}>Save</button>
                         </div> 
             
               </Col>
-
-
-
           </Row>
 
        
