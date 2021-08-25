@@ -4,15 +4,16 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
-import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
-import initialDetails from './initialDetails';
+import {setPageNumberQo,handleSearchFilterByAlpha,getQuoteOrderList, 
+      handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
+import initialDetailsQL from './initialDetails';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
 
 export class QuoteList extends React.Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             addCustomerToggle:false,
             customerListStatus:"active",
@@ -31,30 +32,30 @@ export class QuoteList extends React.Component {
             alphabetSelect:'',
             TotalPurchaseOder:39,
 
-            purchaseOrderTable:[
-                {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
-        supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
-         dispatch:"Pickup", amount:"6,085.00"},
-
-         {status:"closed", poNumber:"WILLSMITH-012301-1", suppliearName:"WILL Smith landscaping", 
-         supplierOrder:"2024275", createdBy:"Will Smith", orderDate:"20/06/2021", expectedDate:"20/08/2021",
-          dispatch:"Pickup", amount:"6,085.00" },
-
-          {status:"open", poNumber:"Scena-012301-1", suppliearName:"John Scena landscaping", 
-          supplierOrder:"1024275", createdBy:"John Scena", orderDate:"20/05/12021", expectedDate:"20/05/12021",
-           dispatch:"Delivery", amount:"6,085.00" },
-
-           {status:"Draft", poNumber:"Jason-012301-1", suppliearName:"Jason Smith landscaping", 
-           supplierOrder:"24275", createdBy:"Jason Smith", orderDate:"20/05/2021", expectedDate:"20/09/2021",
-            dispatch:"Pickup", amount:"6,085.00" },
-
-            {status:"closed", poNumber:"Dweny-012301-1", suppliearName:"Dweny Smith landscaping", 
-            supplierOrder:"1024275", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
-             dispatch:"Pickup", amount:"6,085.00" },
-
-             {status:"closed", poNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
-             supplierOrder:"1024275", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
-              dispatch:"Delivery", amount:"6,085.00" }
+            quoteOrderList:[
+                {status:"OPEN", orderNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
+                supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
+                 dispatch:"Pickup", amount:"6,085.00"},
+            
+                 {status:"CLOSED", orderNumber:"WILLSMITH-012301-1", suppliearName:"WILL Smith landscaping", 
+                 supplierOrder:"2134386", createdBy:"Will Smith", orderDate:"20/06/2021", expectedDate:"20/08/2021",
+                  dispatch:"Pickup", amount:"7,085.00" },
+            
+                  {status:"READY", orderNumber:"Scena-012301-1", suppliearName:"John Scena landscaping", 
+                  supplierOrder:"3235386", createdBy:"John Scena", orderDate:"20/05/12021", expectedDate:"20/05/12021",
+                   dispatch:"Delivery", amount:"4,685.00" },
+            
+                   {status:"RESERVE", orderNumber:"Jason-012301-1", suppliearName:"Jason Smith landscaping", 
+                   supplierOrder:"3525", createdBy:"Jason Smith", orderDate:"20/05/2021", expectedDate:"20/09/2021",
+                    dispatch:"Pickup", amount:"7,123.00" },
+            
+                    {status:"PICKING", orderNumber:"Dweny-012301-1", suppliearName:"Dweny Smith landscaping", 
+                    supplierOrder:"1249", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
+                     dispatch:"Pickup", amount:"9,089.00" },
+            
+                     {status:"QUOTE", orderNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
+                     supplierOrder:"57901", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
+                      dispatch:"Delivery", amount:"12,012.00" }
             ]
         }
     }
@@ -65,6 +66,7 @@ export class QuoteList extends React.Component {
     //   }
 
     onSearchInputChange2 = (e) => {
+        //debugger;
         this.setState({searchInput: e.target.value})
       }
 
@@ -83,7 +85,7 @@ export class QuoteList extends React.Component {
 
       handleClickCheckBox = (e)=>{
 
-        let newCheckedData = initialDetails.filter(newCheck => newCheck.status===e.target.name)
+        let newCheckedData = initialDetailsQL.filter(newCheck => newCheck.status===e.target.name)
         //this.setState({alphabet: newCheckedData})
         this.setState({checkedData: newCheckedData})
         // console.log("e1",checkedData);
@@ -93,7 +95,7 @@ export class QuoteList extends React.Component {
 
       paginationChange =(event, page)=>{
         // alert("hg")
-        this.props.setPageNumberPo(page-1)
+        this.props.setPageNumberQo(page-1)
     }
  // <div class="form-group row mt-4">
         //     <div class="col-md-12 col-lg-12">
@@ -137,23 +139,23 @@ export class QuoteList extends React.Component {
       elementContainsSearchString = (searchInput, element) => (searchInput ? element.suppliearName.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) || element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
 
 
-      filterItems = (initialDetails) => {
+      filterItems = (initialDetailsQL) => {
         let result = [];
         const { searchInput,alphabet , checkedData} = this.state;
-        if(initialDetails &&  (searchInput || alphabet)) {
-            result = initialDetails.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
+        if(initialDetailsQL &&  (searchInput || alphabet)) {
+            result = initialDetailsQL.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
             this.elementContainsSearchString(searchInput, element) 
             //  || this.checkOperation(checkedData,element)
             );
           }
 
-        else if( initialDetails && checkedData){
+        else if( initialDetailsQL && checkedData){
 
-            result = initialDetails.filter((item)=>item.status)
+            result = initialDetailsQL.filter((item)=>item.status)
 
         }
         else {
-          result = initialDetails  || [];
+          result = initialDetailsQL  || [];
         }
 
         result = result.map((item)=>(
@@ -171,45 +173,45 @@ export class QuoteList extends React.Component {
 
         this.setState({selectedAlpha:e.target.id})
        // this.setState({selectedAlpha:e.target.id})
-        this.props.handleSearchFilterByAlpha(e.target.id, this.state.purchaseOrderTable)
+        this.props.handleSearchFilterByAlpha(e.target.id, this.state.quoteOrderList)
 
     }
 
-    //console.log("purchaseOrderTable", purchaseOrderTable)
+
+
+   // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
         //let purchaseOrderData = [];
-
+        console.log("quoteOrderList", this.props.quoteOrderData)
         console.log("abcd", this.state.checkedData)
-        let pageCount =0;
-        let pageNumber = 0;
-        let totalLength = 0;
-        let plantPerPage =0;
-        let pagesVisited = 0;
-        let displayPOList = []
+        let pageCount1 =0;
+        let pageNumber1 = 0;
+        let totalLength1 = 0;
+        let plantPerPage1 =0;
+        let pagesVisited1 = 0;
+        let displayPOList1 = []
 
 
       
-      let initialDetails1 = initialDetails || this.state.checkedData
+      let initialDetails1 = initialDetailsQL || this.state.checkedData
        // console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
 
       if(initialDetails1){
-        pageNumber = this.props.quoteOrderData.pageNumber
-        // console.log()
-        initialDetails1 = [...initialDetails1]
 
-
-         totalLength = initialDetails1.length
-         plantPerPage = this.state.pageSize;
-         pagesVisited =  this.props.quoteOrderData.pageNumber*this.state.pageSize;
-         displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
-         pageCount = Math.ceil(initialDetails1.length/plantPerPage)
+        pageNumber1 = this.props.quoteOrderData.pageNumber1;
+        initialDetails1 = [...initialDetails1];
+         totalLength1 = initialDetails1.length;
+         plantPerPage1 = this.state.pageSize;
+         pagesVisited1 =  this.props.quoteOrderData.pageNumber1 * this.state.pageSize;
+         displayPOList1 = initialDetails1.slice(pagesVisited1,pagesVisited1+plantPerPage1)
+         pageCount1 = Math.ceil(initialDetails1.length/plantPerPage1)
 
     }
 
-            console.log("displayPOList",displayPOList)
+            console.log("displayPOList",displayPOList1)
 
-              const filteredList = this.filterItems(displayPOList);
+              const filteredList = this.filterItems(initialDetails1);
 
               console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
@@ -219,7 +221,7 @@ export class QuoteList extends React.Component {
         
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote & Order List</h1>
+				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote &amp; Order List</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                    
                     <Link to="/Quote">
@@ -494,7 +496,7 @@ export class QuoteList extends React.Component {
                             <div className="row_1 mt-4">
                                         <div style={{float:"left",marginBottom:15}}>
                                             {/* <div> */}
-                                                <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                                <label className="greenText">{"Showing " + (pageNumber1>0 ? (this.state.pageSize*((pageNumber1)))+1 : ((pageNumber1)+1))+  "  to  " +  (pageNumber1>0 ? (((this.state.pageSize*((pageNumber1)))+this.state.pageSize)>totalLength1 ? totalLength1 : ((this.state.pageSize*((pageNumber1)))+this.state.pageSize)) : ((((pageNumber1)+1)*this.state.pageSize)>totalLength1?totalLength1:(((pageNumber1)+1)*this.state.pageSize)))   + "  of   "  +   totalLength1 }</label>
                                             {/* </div> */}
                                         </div>
                                         <div style={{float:"left",marginBottom:15}}>
@@ -517,7 +519,7 @@ export class QuoteList extends React.Component {
                                                 <label class="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
                                         </div>
                                         <div style={{float:"right",marginBottom:15}}>
-                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber1={pageNumber1+1}/>
                                         </div>
                                
                             </div>
@@ -593,10 +595,10 @@ export class QuoteList extends React.Component {
 const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
-        quoteOrderData:state.customerReducer
+        quoteOrderData:state.quoteOrderReducer
     }
 
 )
 
 
-export default connect(mapStateToProps,{handleSearchFilterByAlpha, setPageNumberPo})(QuoteList)
+export default connect(mapStateToProps,{handleSearchFilterByAlpha, getQuoteOrderList,setPageNumberQo,handleAplhabetFilterBySN })(QuoteList)
