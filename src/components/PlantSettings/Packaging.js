@@ -212,7 +212,19 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                       }
                     ]
                   });
-            })
+            }).catch(data=>{
+                this.setState({deleteon:false})
+
+                   confirmAlert({
+                   title: 'Alert',
+                   message: 'Please note that this item is associated with Plants.Please reassign before deleting ',
+                   buttons: [
+                     {
+                       label: 'Ok'
+                     }
+                   ]
+                 });
+           })
         }
 
     
