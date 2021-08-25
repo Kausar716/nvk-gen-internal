@@ -1,19 +1,12 @@
 
-
 import {
     FILTER_DATA_BY_ALPHABETIC_PO,
     FILTER_DATA_BY_SEARCH_SN_PO,
     SET_PAGE_NUMBER_PO,
     
-   
+    // FILTER_DATA_BY_SEARCH,
+    // FILTER_DATA_BY_ALPHA,
     HANDLE_INPUT,
-
-
-
-    FILTER_DATA_BY_ALPHABETIC_QL,
-    FILTER_DATA_BY_SEARCH_SN_QL,
-    SET_PAGE_NUMBER_QL,
-    GET_QUOTE_ORDER_LIST,
    
 
     
@@ -25,7 +18,7 @@ import {
    
 
 const initialSatate = {
-   quoteOrderList:[
+   purchaseOrderList:[
     {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
     supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
      dispatch:"Pickup", amount:"6,085.00"},
@@ -50,7 +43,7 @@ const initialSatate = {
          supplierOrder:"1024275", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
           dispatch:"Delivery", amount:"6,085.00" }
    ],
-   pageNumber1:0,
+   pageNumber:0,
    duplicateData:[],
    //activeData:[],
    //inactiveData:[],
@@ -60,7 +53,7 @@ const initialSatate = {
 
   }
 
- const quoteOrderReducer = (state = initialSatate, action)=>{
+ const customerReducer2 = (state = initialSatate, action)=>{
     console.log(action.payload)
     console.log(state)
     // alert(action.type)x
@@ -73,50 +66,50 @@ const initialSatate = {
 
             }
      
-            case SET_PAGE_NUMBER_QL:
+            case SET_PAGE_NUMBER_PO:
                 return{
                     ...state,
-                    pageNumber1:action.pageNumber1
+                    pageNumber:action.pageNumber
                 }
 
-            case FILTER_DATA_BY_SEARCH_SN_QL:
+            case FILTER_DATA_BY_SEARCH_SN_PO:
                 let datatoShow = []
                 let searchedData = []
                 // if(state.radioFilter === "active") datatoShow = state.activeData
                 // else if(state.radioFilter === "inactive") datatoShow = state.inactiveData
                 // else datatoShow = state.duplicateData
 
-                if(state.alphabetSearch ==="All" && action.searchDataQO !=="")searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchDataQO.toLowerCase()))
-                else if(action.searchDataQO !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchDataQO.toLowerCase().charAt(0)))
-                else if(action.searchDataQO  ==="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
-                else if(action.searchDataQO  ==="" && state.alphabetSearch  ==="All") searchedData = datatoShow
+                if(state.alphabetSearch ==="All" && action.searchDataPO !=="")searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchDataPO.toLowerCase()))
+                else if(action.searchDataPO !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchDataPO.toLowerCase().charAt(0)))
+                else if(action.searchDataPO  ==="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
+                else if(action.searchDataPO  ==="" && state.alphabetSearch  ==="All") searchedData = datatoShow
 
                 
 
                 return{
                     ...state,
-                    quoteOrderList:searchedData,
-                    searchFilter:action.searchDataQO
+                    purchaseOrderList:searchedData,
+                    searchFilter:action.searchDataPO
                 }
           
-            case FILTER_DATA_BY_ALPHABETIC_QL:
+            case FILTER_DATA_BY_ALPHABETIC_PO:
                 let datatoShow1 = []
                 let searchedData1 = []
                 if(state.radioFilter === "active") datatoShow1 = state.activeData
                 else if(state.radioFilter === "inactive") datatoShow1 = state.inactiveData
                 else datatoShow1 = state.duplicateData
 
-                if(state.searchFilter ==="" && action.alphaDataQO !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.name.toLowerCase().charAt(0)===action.alphaDataQO.toLowerCase().charAt(0))
-                else if(state.searchFilter !=="" && action.alphaDataQO ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                // else if(action.alphaDataQO ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                else if(state.searchFilter !=="" && action.alphaDataQO !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===action.alphaDataQO.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                else if(state.searchFilter ==="" && action.alphaDataQO ==="All")searchedData1 = datatoShow1
+                if(state.searchFilter ==="" && action.alphaDataPO !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.name.toLowerCase().charAt(0)===action.alphaDataPO.toLowerCase().charAt(0))
+                else if(state.searchFilter !=="" && action.alphaDataPO ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                // else if(action.alphaDataPO ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                else if(state.searchFilter !=="" && action.alphaDataPO !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===action.alphaDataPO.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                else if(state.searchFilter ==="" && action.alphaDataPO ==="All")searchedData1 = datatoShow1
                
 
                 return{
                     ...state,
-                    quoteOrderList:searchedData1,
-                    alphabetSearch:action.alphaDataQO
+                    purchaseOrderList:searchedData1,
+                    alphabetSearch:action.alphaDataPO
                 }
     
         default:
@@ -124,5 +117,4 @@ const initialSatate = {
     }
 
 }
-export default quoteOrderReducer
-
+export default customerReducer2
