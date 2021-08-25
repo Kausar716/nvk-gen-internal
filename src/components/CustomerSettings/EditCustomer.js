@@ -391,22 +391,13 @@ function AddCustomer(props) {
     // var expanded = false;
 
 const showCheckboxes=(e)=>{
-    // alert(e.target.id+"inside")
   if (e.target.id =="setBox") {
     setexpanded(!expanded)
   }
 
 }
-const showCheckboxesClose = ()=>{
-    var checkboxes = document.getElementById("checkboxes");
 
-      checkboxes.style.display = "none";
-    //   expanded = false;
-    // }
-
-}
 const showClose  = (e)=>{
-    // alert(e.target.id+"whole")
     if((e.target.id.length==0)&& expanded ==true){
           setexpanded(false)
     }
