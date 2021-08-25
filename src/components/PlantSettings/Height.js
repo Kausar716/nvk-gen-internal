@@ -665,7 +665,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"110px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               
