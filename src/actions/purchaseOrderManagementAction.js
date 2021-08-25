@@ -5,6 +5,7 @@ import {
     PO_PAGE_REDIRECT_ACTION,
     PO_SUB_PAGE_REDIRECT_ACTION,
     PO_SET_PAGE_NUMBER,
+    PO_SET_ALPHABET_SELECTED
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
         axios.get(`/api/purchase-order-list`,config).then(res=>{
@@ -39,3 +40,10 @@ import {
           }
       
       }
+      export const setAlphabetSelected = (alphabet)=>{
+        return{
+            type:PO_SET_ALPHABET_SELECTED,
+            selectedAlphabet:alphabet,
+        }
+      }
+      
