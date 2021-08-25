@@ -194,16 +194,16 @@ export class QuoteList extends React.Component {
 
 
       if(initialDetails1){
-        pageNumber = this.props.purchaseOrderData.pageNumber
-        // console.log()
-        initialDetails1 = [...initialDetails1]
+        // pageNumber = this.props.purchaseOrderData.pageNumber
+        // // console.log()
+        // initialDetails1 = [...initialDetails1]
 
 
-         totalLength = initialDetails1.length
-         plantPerPage = this.state.pageSize;
-         pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
-         displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
-         pageCount = Math.ceil(initialDetails1.length/plantPerPage)
+        //  totalLength = initialDetails1.length
+        //  plantPerPage = this.state.pageSize;
+        //  pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
+        //  displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
+        //  pageCount = Math.ceil(initialDetails1.length/plantPerPage)
 
     }
 
