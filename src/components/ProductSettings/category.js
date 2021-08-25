@@ -7,6 +7,7 @@ import * as MdIcons from "react-icons/md";
 import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import Loader from '../ProductManager/Loader'
 import {getAllPlantCategories,handleCategoryInputAction,handleCategoryDragSort,
     updatePlantSettingCategory, showSpecificPlantSettingAttribute, handleDragDrop,handleCategoryDelete} from '../../actions/categoryAction'
 import 
@@ -25,7 +26,27 @@ import
         handleZoneInputAction2
     } 
 from '../../actions/attributeAction'
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
+const reorder = (list, startIndex, endIndex) => {
+    const result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    result.splice(endIndex, 0, removed);
 
+    return result;
+};
+const move = (source, destination, droppableSource, droppableDestination) => {
+    const sourceClone = Array.from(source);
+    const destClone = Array.from(destination);
+    const [removed] = sourceClone.splice(droppableSource.index, 1);
+
+    destClone.splice(droppableDestination.index, 0, removed);
+
+    const result = {};
+    result[droppableSource.droppableId] = sourceClone;
+    result[droppableDestination.droppableId] = destClone;
+
+    return result;
+};
 class Category extends Component {
     constructor(props){
         super()
@@ -41,6 +62,7 @@ class Category extends Component {
             subName:'',
             subName2:'',
             selectedID:'',
+            loading:false,
             selectedSubID:'',
             btnLabelAdd:'Add New Category',
             btnLabelUpdate: 'Update Category',
@@ -77,117 +99,204 @@ class Category extends Component {
 
        })
      
-        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive})
+        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive,loading:true})
     }
-    onDragOver = (ev)=>{
-        ev.preventDefault();
-    }
-    startIDData  =(e)=>{
-        this.setState({selectedID:e.item.id})
-    }
-    onAddData = (evt)=>{
-        console.log(evt)
-        evt.preventDefault()
-    
-    //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
-    //  evt.from.insertBefore(evt.item, null); 
-    
-    }
-    onMoveData = (evt,ui)=>{
-    
-       if(evt.from.id == evt.to.id){
-           if(evt.willInsertAfter ==true)
-        this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"down")
-        else  this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"up")
-    
-       }else{
-           if(evt.from.id =="categoryActive"){
-              let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
-              //console.log(task)
 
-              if(task.length > 0){
-                let taskData = task[0]
-                taskData.status =parseInt(taskData.status)==1? 0:1
-                this.props.handleUpdateCategory(taskData.id,taskData).then(data=>{
-   
-                //     this.props.getAllPlantCategories().then(()=>{
-                //     confirmAlert({
-                //     title: 'Action',
-                //     message: 'Successfully Moved from Active to InActive',
-                //     buttons: [
-                //         {
-                //         label: 'Ok'
-                //         }
-                //     ]
-                // });
-                // this.getCatgoryData()
-          
-                // })
-            })
-    
-            }
-    
-           }else if(evt.from.id =="categoryInactive"){
-               //console.log(evt.dragged.id,evt.related.id)
-            let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
-            //console.log(task)
-            if(task.length > 0){
-                let taskData = task[0]
-                taskData.status =parseInt(taskData.status)==1? 0:1
-                this.props.handleUpdateCategory(taskData.id,taskData).then(data=>{
-            //         this.props.getAllPlantCategories().then(()=>{
-            //             this.props.getAllPlantCategories().then(()=>{
-                            // confirmAlert({
-                            //     title: 'Action',
-                            //     message: 'Successfully Moved from InActive to Active',
-                            //     buttons: [
-                            //         {
-                            //         label: 'Ok'
-                            //         }
-                            //     ]
-                            // });
-            //                 this.getCatgoryData()
-            //             })
-            //             // this.getCatgoryData() 
-            //         })
-            //     })
-    
-            // }
-            
-           })
+    id2List = {
+        droppable: 'active',
+        droppable2: 'inactive'
+    };
+    getList = id => {
+        console.log(this.state[this.id2List[id]])
+        return this.state[this.id2List[id]]
+    }
+    onDragEnd = result => {
+        // alert(result)
+       
+        const { source, destination } = result;
+        console.log(destination)
+        // dropped outside the list
+        console.log(result)
+        if(destination == null)
+        return
+        if (destination.droppableId=="delete") {
+            this.setState({deleteon:true})
+            confirmAlert({
+                title: 'Delete Category ',
+                message: 'Are you sure want to delete the Category ?',
+                buttons: [
+                  {
+                    label: 'Yes',
+                    onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
+                  },
+                  {
+                    label: 'No'
+                  }
+                ]
+              });
+            return;
         }
     
-       }
+        if (source.droppableId === destination.droppableId) {
+            const items = reorder(
+                this.getList(source.droppableId),
+                source.index,
+                destination.index
+            );
+    
+            let state = { items };
+    
+            if (source.droppableId === 'droppable2') {
+              
+                if(result.destination.index> result.source.index)
+            this.props.handleCategoryDragSort(this.state.inactive[result.source.index].id,this.state.inactive[result.destination.index].id,"down")
+            else  this.props.handleCategoryDragSort(this.state.inactive[result.source.index].id,this.state.inactive[result.destination.index].id,"up")
+            this.setState({inactive:items});
+            }else{
+              
+                        //        if(evt.willInsertAfter ==true)
+            if(result.destination.index> result.source.index)
+            this.props.handleCategoryDragSort(this.state.active[result.source.index].id,this.state.active[result.destination.index].id,"down")
+            else  this.props.handleCategoryDragSort(this.state.active[result.source.index].id,this.state.active[result.destination.index].id,"up")
+            this.setState({active:items});
+            }
+            
+        } else {
+           
+            if (source.droppableId === 'droppable2') {
+            let task= this.state.inactive.filter(data=>data.id ==this.state.inactive[source.index]["id"])
+                      if(task.length > 0){
+                        task.status =parseInt(task.status)==1? 0:1
+                        this.props.handleUpdateCategory(task.id,task).then(data=>{
+   
+                            this.props.getAllPlantCategories().then(()=>{
+                                // alert("ji")
+                                this.getCatgoryData()
+                            })
+                    })
+                }
+            }else{
+                console.log(source.droppableId)
+                let task= this.state.active.filter(data=>data.id ==this.state.active[source.index]["id"])
+                console.log(task)
+                if(task.length > 0){
+                    task.status =parseInt(task.status)==1? 0:1
+                        this.props.handleUpdateCategory(task.id,task).then(data=>{
+   
+                    this.props.getAllPlantCategories().then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
+              })
+          }
+    
+            }
+            const result = move(
+                this.getList(source.droppableId),
+                this.getList(destination.droppableId),
+                source,
+                destination
+            );
+    
+            this.setState({
+                active: result.droppable,
+                inactive: result.droppable2
+            });
+        }
+    };
+    onDragStart =(e)=>{
+        // alert("hi")
+        this.setState({selectedID:e.draggableId})
+        console.log(e)
     }
-    }
+    // onDragOver = (ev)=>{
+    //     ev.preventDefault();
+    // }
+    // startIDData  =(e)=>{
+    //     this.setState({selectedID:e.item.id})
+    // }
+    // onAddData = (evt)=>{
+    //     console.log(evt)
+    //     evt.preventDefault()
+    
+    // //     const referenceNode = (evt.nextSibling && evt.nextSibling.parentNode !== null) ? evt.nextSibling : null; 
+    // //  evt.from.insertBefore(evt.item, null); 
+    
+    // }
+    // onMoveData = (evt,ui)=>{
+    
+    //    if(evt.from.id == evt.to.id){
+    //        if(evt.willInsertAfter ==true)
+    //     this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"down")
+    //     else  this.props.handleCategoryDragSort(evt.dragged.id,evt.related.id,"up")
+    
+    //    }else{
+    //        if(evt.from.id =="categoryActive"){
+    //           let task= this.state.active.filter(data=>data.id ==evt.dragged.id)
+    //           //console.log(task)
+
+    //           if(task.length > 0){
+    //             let taskData = task[0]
+    //             taskData.status =parseInt(taskData.status)==1? 0:1
+    //             this.props.handleUpdateCategory(taskData.id,taskData).then(data=>{
+   
+    //             //     this.props.getAllPlantCategories().then(()=>{
+    //             //     confirmAlert({
+    //             //     title: 'Action',
+    //             //     message: 'Successfully Moved from Active to InActive',
+    //             //     buttons: [
+    //             //         {
+    //             //         label: 'Ok'
+    //             //         }
+    //             //     ]
+    //             // });
+    //             // this.getCatgoryData()
+          
+    //             // })
+    //         })
+    
+    //         }
+    
+    //        }else if(evt.from.id =="categoryInactive"){
+    //            //console.log(evt.dragged.id,evt.related.id)
+    //         let task= this.state.inactive.filter(data=>data.id ==evt.dragged.id)
+    //         //console.log(task)
+    //         if(task.length > 0){
+    //             let taskData = task[0]
+    //             taskData.status =parseInt(taskData.status)==1? 0:1
+    //             this.props.handleUpdateCategory(taskData.id,taskData).then(data=>{
+    //         //         this.props.getAllPlantCategories().then(()=>{
+    //         //             this.props.getAllPlantCategories().then(()=>{
+    //                         // confirmAlert({
+    //                         //     title: 'Action',
+    //                         //     message: 'Successfully Moved from InActive to Active',
+    //                         //     buttons: [
+    //                         //         {
+    //                         //         label: 'Ok'
+    //                         //         }
+    //                         //     ]
+    //                         // });
+    //         //                 this.getCatgoryData()
+    //         //             })
+    //         //             // this.getCatgoryData() 
+    //         //         })
+    //         //     })
+    
+    //         // }
+            
+    //        })
+    //     }
+    
+    //    }
+    // }
+    // }
 componentDidMount(){
     // this.props.getAllSubAttribute(1)
-    var elData = document.getElementById('categoryActive');
-    var elData1 = document.getElementById('categoryInactive');
     this.props.getAllCategories().then(()=>{
         // alert("ji")
         this.getCatgoryData()
     })
     // this.props.getAllSubAttribute(14)
-    new Sortable(elData, {
-        group: 'shared',
-        animation: 150,
-        onAdd:this.onAddData.bind(this),
-        onStart: this.startIDData.bind(this),
-        onMove:this.onMoveData.bind(this)
-    })
-    new Sortable(elData1, {
-        group: 'shared',
-        animation: 150,
-        onAdd:this.onAddData.bind(this),
-        onStart: this.startIDData.bind(this),
-        onMove:this.onMoveData.bind(this),
-     
-
-        // onFilter:function(){
-        //     alert("hi")
-        // }
-    })
 }
 
 
@@ -217,7 +326,19 @@ componentDidMount(){
             })
             this.setState({deleteon:false})
     
-        })
+        }).catch(data=>{
+            this.setState({deleteon:false})
+
+               confirmAlert({
+               title: 'Alert',
+               message: 'Please note that this item is associated with Products.Please reassign before deleting ',
+               buttons: [
+                 {
+                   label: 'Ok'
+                 }
+               ]
+             });
+       })
     }
     handleZoneInputAction = (e)=>{
         // debugger;
@@ -372,6 +493,9 @@ componentDidMount(){
             name: t.name,
             isEditing:true,
             selectedID:t.id,
+            subName:"",
+            isEditingSubCategory:false,
+            selectedSubID:"",
         })
         this.props.handleZoneInputAction2("categoryName",this.state.name)
         this.props.showSubSubAttribute(t.id)
@@ -405,7 +529,7 @@ componentDidMount(){
          let updateID = parseInt(this.state.selectedID)
          let updateObject={}
          updateObject.name=valueName
-         updateObject.status=1
+        //  updateObject.status=1
             
         if(this.validate()){
             let res=   this.props.handleUpdateCategory(updateID, updateObject)
@@ -416,15 +540,15 @@ componentDidMount(){
                     })
                 })
                 if (this.state.isEditing) {
-                    confirmAlert({
-                        title: 'Updated Successfully',
-                        message: 'Category',
-                        buttons: [
-                          {
-                            label: 'Ok'
-                          }
-                        ]
-                    });
+                    // confirmAlert({
+                    //     title: 'Updated Successfully',
+                    //     message: 'Category',
+                    //     buttons: [
+                    //       {
+                    //         label: 'Ok'
+                    //       }
+                    //     ]
+                    // });
                 }
                 this.setState({
                     isEditing:false,
@@ -525,36 +649,63 @@ componentDidMount(){
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-5 mb-4">
-                        <div class="col">
-                            <div class="card midCard">
-                                <div class="card-header">
-                                    Inactive
-                                </div>
-                                <div class="card-body cardBg"
-                             >
-                                    <ul class="list-unstyled" id="categoryInactive" >
-                                        {this.state.inactive.map((t,index)=>{
-                                        return <li id={t.id}>
+                <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart} removeItem={this.removeItem}>
+                        <div style={{display: 'flex',paddingTop:20}}>
+                       
+                            <div style={{flex:5}}>
+                                <div class="card midCard">
+                                    <div class="card-header">
+                                        Inactive
+                                    </div>
+
+
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
+                                   <ul class="list-unstyled" id="categoryActive">
+                                    <Droppable droppableId="droppable2">
+                                        {(provided, snapshot) => (
+                                            <div style={{height:265}} 
+                                                ref={provided.innerRef}
+                                            >
+                                                {this.state.inactive.map((item, index) => (
+                                                    <Draggable
+                                                        key={item.id.toString()}
+                                                        draggableId={item.id.toString()}
+                                                        index={index}>
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                            style={{position:"relative"}}
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                >
+                                                                <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.name}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.name}</span>
                                                         
                                                         </div>
-                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t,"active")}
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(item,"inactive")}
                                                                 />   <i class="fa fa-th" onClick={()=>this.openLinkData(index,"inactive")}></i></span>
                                                         </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
 
-                                                        <div class={parseInt(this.state.openInactive[index])==1?"openChildData":"closeChildData"}>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
+                                                            </li>
+                                                            <div class={parseInt(this.state.openInactive[index])==1?"openChildData":"closeChildData"}>
                                                         <ul class={"list-unstyled childUl"}>
-                                                            {t.sub_category.map((t1,index)=>{
-                                                                return <li id={t.id}>
+                                                            {item.sub_category.map((t1,index)=>{
+                                                                return <li id={t1.id}>
                                                         <div class="showElipse">
                                                         <div className={this.state.isEditingSubCategory===false  ? "ab" :this.state.selectedSubID === t1.id ? "reasonBackground ab" : "ab"}><span id={t1.id}    >{t1.name}</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick3(t, t1,"active")}
+                                                                onClick={() =>this.handleEditClick3(item, t1,"inactive")}
                                                                 /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
                                                         </div>
                                                    
@@ -573,15 +724,26 @@ componentDidMount(){
                                                         </ul>
 
                                                         </div>
-                                                   
-                                                 </li>
-                                        })}
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ))}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                    </Droppable>
+                                            {/* {this.state.active.map(t=>{
+                                            return (<li></li>)
+                                            })} */}
                                     </ul>
+                                        
+
+
+                                    </div>}
                                 </div>
                             </div>
-                        </div>
-                        <div className="col-lg-1" >
-                                        <div className="midControls d-flex flex-column justify-content-around">
+                            <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
+                            <div className="midControls d-flex flex-column justify-content-around">
                                             <div>
                                             <i class="fas fa-angle-double-right" style={{fontSize:40,color:"gray"}}></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop to Place</p>
@@ -591,42 +753,102 @@ componentDidMount(){
                                             <i class="fas fa-arrows-alt" style={{fontSize:40,color:"gray"}}></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag To Sort</p>
                                                 
-                                            </div>
-                                            <div className="deleteSpace" onDragOver={(e)=>{this.onDragOver(e)}} onDrop={(e)=>this.onDelete(e)}>
+                                            </div> 
+                                            <Droppable
+                                                       
+                                            droppableId="delete">
+                                                     
+                                               
+                                             {(provided, snapshot) => (
+                                            <div   style={{width:"120px",height:"110px"}}
+                                                ref={provided.innerRef}
+                                            >
+                                              
+                                                    <Draggable
+                                                        key="delete"
+                                                        draggableId="delete"
+                                                       
+                                                        index={0}>
+                                                        {(provided, snapshot) => (
+                                                            <div   
+                                                            ref={provided.innerRef}>
+                                                        
+                                                                
+                                                                <div className="deleteSpace"  >
                                                 <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
+                                                                
+                                                 
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                             
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                            </Droppable>
+
+                                            
                                         </div>
+                            </div>
+                           
+                                    
+                                    {/* </div> */}
+                            <div style={{flex:5}}>
+                                <div class="card midCard">
+                                    <div class="card-header">
+                                        Active
                                     </div>
-                        <div class="col">
-                            <div class="card midCard" >
-                                <div class="card-header"  >
-                                    Active
-                                </div>
-                                <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
-                                            {this.state.active.map((t,index1)=>{
-                                            return <li id={t.id}>
+                                    <Droppable droppableId="droppable">
+                                        {(provided, snapshot) => (
+                                            <div   style={{height:265}} 
+                                                ref={provided.innerRef}
+                                            >
+                                                {this.state.active.map((item, index) => (
+                                                    <Draggable
+                                                        key={item.id.toString()}
+                                                        draggableId={item.id.toString()}
+                                                        index={index}>
+                                                        {(provided, snapshot) => (
+                                                            <div
+                                                            style={{height:100,border:"1px solid red"}}
+                                                                ref={provided.innerRef}
+                                                                {...provided.draggableProps}
+                                                                {...provided.dragHandleProps}
+                                                                >
+                                                                <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === t.id ? "reasonBackground a" : "a"}><span id={t.id}    >{t.name}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.name}</span>
                                                         
                                                         </div>
-                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t.id}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t,"active")}
-                                                                />   <i class="fa fa-th" onClick={()=>this.openLinkData(index1,"active")}></i></span>
+                                                        <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(item,"active")}
+                                                                />   <i class="fa fa-th" onClick={()=>this.openLinkData(index,"active")}></i></span>
                                                         </div>
+                                                   
+                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
+                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
 
-                                                        <div class={parseInt(this.state.openActive[index1])==1?"openChildData":"closeChildData"}>
+                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
+                                                                onClick={() =>this.handleEditClick2(t)}
+                                                                /></span>
+                                                                 </a> */}
+                                                                 {/* */}
+                                                            </li>
+                                                            <div class={parseInt(this.state.openActive[index])==1?"openChildData":"closeChildData"}>
                                                         <ul class={"list-unstyled childUl"}>
-                                                            {t.sub_category.map((t1,index)=>{
-                                                                return <li id={t.id}>
+                                                            {item.sub_category.map((t1,index)=>{
+                                                                return <li id={t1.id}>
                                                         <div class="showElipse">
                                                         <div className={this.state.isEditingSubCategory===false  ? "ab" :this.state.selectedSubID === t1.id ? "reasonBackground ab" : "ab"}><span id={t1.id}    >{t1.name}</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick3(t, t1,"active")}
+                                                                onClick={() =>this.handleEditClick3(item, t1,"active")}
                                                                 /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
                                                         </div>
                                                    
@@ -645,14 +867,25 @@ componentDidMount(){
                                                         </ul>
 
                                                         </div>
-                                                   
-                                                 </li>
-                                            })}
+                                                            </div>
+                                                        )}
+                                                    </Draggable>
+                                                ))}
+                                                {provided.placeholder}
+                                            </div>
+                                        )}
+                                    </Droppable>
+                                            {/* {this.state.active.map(t=>{
+                                            return (<li></li>)
+                                            })} */}
                                     </ul>
+                                    </div>}
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        
+                    
+                    </DragDropContext>
                 </div>
             </div>
         </>

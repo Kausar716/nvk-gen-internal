@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import QuoteOrderPermission from './QuoteOrderPermission';
 
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues, displaySelectedUSERS} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
 //import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import { Link ,withRouter} from "react-router-dom";
@@ -21,7 +21,7 @@ export const Component = withRouter(({ history, location }) =>{
         super(props)
         this.state={    
             displayselectedUSer:false,
-    selectedUser:{}
+            selectedUser:{}
         }
     }
         
@@ -40,6 +40,9 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.getRolesList()
         this.props.getPermissionList()
         this.props.resetUserData()
+
+        
+        //this.props.displaySelectedUSERS()
        
     }
    
@@ -99,7 +102,7 @@ export const Component = withRouter(({ history, location }) =>{
    
 
     handleUserSelect = (e) =>{
-       debugger;
+      // debugger;
         console.log(e.target.value)
         let selectedId = e.target.value
         console.log(this.props.users)
@@ -112,12 +115,10 @@ export const Component = withRouter(({ history, location }) =>{
   
         this.setState({
             selectedUser:e.target.value,
-            displayselectedUSer:true})
-
-
+            //displayselectedUSer:true
+        })
+        this.props.displaySelectedUSERS(true)
            // this.props.parentCallback(this.handleUserSelect)
-        
-
     }
 
 
@@ -125,7 +126,6 @@ export const Component = withRouter(({ history, location }) =>{
 
     toggleChecked=(e)=>{
         this.setState({displayselectedUSer: !this.state.displayselectedUSer})
-            
     }
 
     goBackFunction =(e)=>{
@@ -139,22 +139,43 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.getRolesList()
         this.props.getPermissionList()
         this.props.resetUserData()
+        this.props.displaySelectedUSERS(false)
        let selectedId = "Select..."
       //  this.props.handleUserSelect(selectedId)
-        this.setState({
-            displayselectedUSer:false,
-           // selectedUser:selectedId,
-        })
+
+        // this.setState({
+        //     displayselectedUSer:false,
+        //    // selectedUser:selectedId,
+        // })
+
+      
        
     }
 
 
-    goToUserAccess=()=>{
+    goToUserProfile=(e)=>{
+        //debugger
        // alert("going user access ?")
         // this.setState({
         //     tabValues:1
         // })
-        this.props.tabChangeValues(0)  
+        this.props.tabChangeValues(0) 
+       console.log(this.props.reduxSelectedUser )
+       //this.props.reduxSelectedUser.selectedUser.data.id.toString().length
+        if(this.props.reduxSelectedUser.selectedUser){
+
+            let userList = this.props.users.active
+            let id = this.props.reduxSelectedUser.selectedUser.data.id
+            console.log(id)
+              let selectedUser  =  userList.filter(obj=>{
+                return (parseInt(obj.id) === parseInt(id))
+            })
+
+            this.props.onTagsChange(e, selectedUser[0])
+
+        }
+        
+
     
     }
 
@@ -177,9 +198,6 @@ export const Component = withRouter(({ history, location }) =>{
         // this.props.displayUpdateProfileP=true;
        // this.setState({this.props.selectedUserP:selectedUser[0]})
         // this.setState({displayUpdateProfile:true})
-
-
-
         
     }
 
@@ -244,7 +262,8 @@ export const Component = withRouter(({ history, location }) =>{
                                 </div>
 
                                 <div class="col-md-6 col-lg-6" style={{marginTop:"1em"}}>
-                                {this.state.displayselectedUSer? 
+                                {this.props.displaySelectedUSER1 ?
+                                //this.state.displayselectedUSer? 
                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 
                                             <a class="btn ml-2"
@@ -280,7 +299,10 @@ export const Component = withRouter(({ history, location }) =>{
                                     <div class="col-md-12 col-lg-12">
                                         <div class="bg-grey-transparent-2 text-center px-2 py-2">
                                             <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                            <p class="m-0">Only active users will are visible to set permissions. User profile can be set or modified via <span className="linkTag" onClick={this.goToUserAccess}>User Profiles</span>.</p>
+                                            <p class="m-0">Only active users will are visible to set permissions. User profile can be set or modified via <span className="linkTag" 
+                                            //onClick={this.props.reduxSelectedUser.selectedUser.data.id.length>1 ? ()=>this.userProfileOpen(this.props.reduxSelectedUser.selectedUser.data.id) : this.goToUserProfile} 
+                                            onClick={this.goToUserProfile}
+                                            >User Profiles</span>.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -309,7 +331,8 @@ export const Component = withRouter(({ history, location }) =>{
                                                         {/* </div> */}
                                                        
                                                     </div>
-                                                    {this.state.displayselectedUSer?
+                                                    {this.props.displaySelectedUSER1 ?
+                                                    //this.state.displayselectedUSer?
                                                     <div class="col-md-9 col-lg-9">
                                                         <p class="mb-0" style={{fontWeight:"bold"}}>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.name:"":""}</p>
                                                         <div>{this.props.reduxSelectedUser?this.props.reduxSelectedUser.selectedUser?this.props.reduxSelectedUser.selectedUser.data.email:"":""}</div>
@@ -368,7 +391,10 @@ export const Component = withRouter(({ history, location }) =>{
                                 </div>
                             </div>
                         </div>
-                     {this.state.displayselectedUSer?   <div class="mt-4">
+                     {
+                    // this.state.displayselectedUSer? 
+                     this.props.displaySelectedUSER1 ?
+                       <div class="mt-4">
                             {/* <div class="row">
                                 <div class="col-md-12 d-flex justify-content-md-end">
                                 <span style={{float:"right"}}>Turn All Permissions On</span>
@@ -1197,7 +1223,9 @@ export const Component = withRouter(({ history, location }) =>{
 
 
                         <div class="row mt-3" style={{position:"absolute", paddingTop:"2em"}}>
-                            {this.state.displayselectedUSer? 
+                            {
+                                this.props.displaySelectedUSER1 ?
+                            //this.state.displayselectedUSer? 
                                 <div class="col-md-12">
                                     <a href="#">Update Current Role</a>
                                     <a href="#" class="ml-4">Create Role From Current Values</a>
@@ -1270,7 +1298,8 @@ const mapStateToProps = (state)=> (
     user:state.userReduser,
     permissionList:state.userAccessReduser.permissionList,
     temp:state.userAccessReduser,
-    reduxSelectedUser:state.userAccessReduser.selectedUser
+    reduxSelectedUser:state.userAccessReduser.selectedUser,
+    displaySelectedUSER1 : state.userAccessReduser.displaySelectedUSER
     // permissionList:state.permissionList
 }
 
@@ -1281,4 +1310,4 @@ export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUse
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction, resetUserData, tabChangeValues})(UserAccess));
+,handleUserAccessInputAction, resetUserData,displaySelectedUSERS, tabChangeValues})(UserAccess));

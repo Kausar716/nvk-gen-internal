@@ -96,6 +96,7 @@ function AddCustomer(props) {
         }else if(e.target.id ==="prospect"){
             let prospect = parseInt(customerDataById.prospect)==1?0:1
             props.handleExchangeData(prospect,e.target.id,"customerDataById")
+            
         }
         else if(e.target.id ==="status"){
             let prospect = parseInt(customerDataById.status)==1?0:1
@@ -116,7 +117,12 @@ function AddCustomer(props) {
             let tax_exempt = customerDataById.p_o_req ==0?1:0
             props.handleExchangeData(tax_exempt,"p_o_req","customerDataById")
 
-        }else if(e.target.id =="restockNo1" || e.target.id =="restockNo"){
+        }else if(e.target.id =="print" || e.target.id =="print1"){
+            let print = customerDataById.print ==0?1:0
+            props.handleExchangeData(print,"print","customerDataById")
+
+        }
+        else if(e.target.id =="restockNo1" || e.target.id =="restockNo"){
             let restock_fee = customerDataById.restock_fee ==0?1:0
             props.handleExchangeData(restock_fee,"restock_fee","customerDataById")
 
@@ -166,7 +172,7 @@ function AddCustomer(props) {
         errosList.push("Please Add Name")
         if(customerDataById.type.length ===0)
         errosList.push("Please Select Type")
-        if(customerDataById.status==0 && (customerDataById.notes ===null || customerDataById.notes ==="")){
+        if(customerDataById.status==0 && (customerDataById.reason ===null || customerDataById.reason ==="")){
             errosList.push("Please add reason")
             return errosList
 
@@ -384,13 +390,12 @@ function AddCustomer(props) {
     }
     // var expanded = false;
 
-const showCheckboxes=()=>{
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    // expanded = true;
-    // setexpanded(true)
+const showCheckboxes=(e)=>{
+    // alert(e.target.id+"inside")
+  if (e.target.id =="setBox") {
+    setexpanded(!expanded)
   }
+
 }
 const showCheckboxesClose = ()=>{
     var checkboxes = document.getElementById("checkboxes");
@@ -401,14 +406,47 @@ const showCheckboxesClose = ()=>{
 
 }
 const showClose  = (e)=>{
-    // alert(e.target.id)
-    if(e.target.id=="" && expanded ==false)
-    setexpanded(true)
+    // alert(e.target.id+"whole")
+    if((e.target.id.length==0)&& expanded ==true){
+          setexpanded(false)
+    }
+    
+}
+const thirdMethod=(e)=> {
+    const re = /[0-9a-zA-Z]+/g;
+    if (!re.test(e.key)) {
+      e.preventDefault();
+    }
+  }
+  const thirdMethod1=(e)=> {
+      console.log(e.target)
+    const re =  /^(\d+)?(?:\.\d{1,2})?$/g;
+    console.log(re)
+    if (!re.test(e.target.value)) {
+        e.preventDefault();
+    }else{
+       
+
+    }
+
+  }
+  const thirdMethod2=(e)=> {
+    console.log(e.target)
+  const re = /^\d*(\.\d{0,1})?$/g;
+  console.log(re)
+  if (!re.test(e.target.value)) {
+      e.preventDefault();
+  }else{
+     
+
+  }
+
 }
 const dataTochange =(e)=>{
+    // alert("hi")
     setCheckedData(true)
     // let intValue = e.target.value
-    if(e.target.value!==""){
+    if(e.target.value!=="" && e.target.id=="discount"){
       if(Number.isInteger(parseFloat(e.target.value))) {
         let intValue = e.target.value*1.0
         // alert(e.target.value)
@@ -430,9 +468,32 @@ const dataTochange =(e)=>{
        
       }
     }
+    if(e.target.value!=="" && e.target.id!=="discount"){
+        if(Number.isInteger(parseFloat(e.target.value))) {
+          let intValue = e.target.value*1.00
+          // alert(e.target.value)
+          // props.handleExchangeData(val,e.target.id,"customerDataById")
+        props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerDataById")
+        }
+      
+        else{
+          // alert()
+          let splitValue = e.target.value.split(".")
+         if(splitValue[1].length<3){
+          let intValue = e.target.value*1.00
+          props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerDataById")
+         }else{
+          props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
+  
+         }
+  
+         
+        }
+      }
       return
     }
     const handleSelect=(key)=> {
+        setexpanded(false)
         // alert("hh")
         // if (key === 1)
         //     this.setState({ heading: "Log in" })
@@ -484,12 +545,12 @@ const dataTochange =(e)=>{
                         </div>
                         <div class="col-md-12 col-lg-6 mt-3 mt-lg-0 text-lg-right">
                             <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end">
-                            {/* {addCustomertoggle?"":  <a href="#" class="btn active">
+                             <a  class="btn ml-2">
                                     <span class="d-flex align-items-center text-left">
                                         <img src="assets/img/pdf-ic.svg" alt=""/>
                                         <span class="ml-2"><b>Contact PDF</b></span>
                                     </span>
-                                </a>} */}
+                                </a>
                                 {/* <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
                                     <span class="d-flex align-items-center text-left" onClick={handleSubmit}> */}
                                         {/* <img src="assets/img/save-ic.svg" alt=""/> */}
@@ -512,21 +573,27 @@ const dataTochange =(e)=>{
                                         <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
                                     </span>
                                 </button> */}
-                                <button    className={"btn btn-primary btn-md ml-3"}>
-                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
-                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
-                                        <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
-                                        <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
-                                    </span>
-                                </button>
-                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <img src="assets/img/save.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save </span>
-                                    </button>
-                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <img src="assets/img/savedone.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save &amp; Done</span>
-                                    </button>
+                         
+                                <a class="btn ml-2"
+                                onClick={()=>checkedData==true?saveCustomerData1("save"):""}
+                                            //onClick={this.handleSubmit}
+                                        
+                                            >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+                                {/* <button type="button"   className={"btn  btn-md ml-3"} disabled={checkedData==true?false:true}> */}
+                                <a  class="btn ml-2 mt-3 mt-md-0" onClick={()=>checkedData==true?saveCustomerData1("done"):""}>
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                    </span>
+                                </a>
+                                
+                     
+                                    {/* </button> */}
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                     <img src="assets/img/close-ic.svg" alt="" onClick={handleClose}/>
                                 </a>
@@ -626,7 +693,7 @@ const dataTochange =(e)=>{
                                             })}
                                         </select>
                                     </div> */}
-                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes} id="setBox">
+                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes} id="setBoxData" >
                                     <label>Type<span class="text-danger">*</span></label>
                                         {/* <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}> */}
                                             {/* <select> */}
@@ -637,15 +704,15 @@ const dataTochange =(e)=>{
                                             </select>
                                             <div class="overSelect" id="setBox"></div>
                                             </div>
-                                            <div id="checkboxes" style={{position: 'absolute'}}>
+                                            <div id="checkboxes" style={{position: 'absolute',display:expanded?"block":""}}>
 
                                             {customerTypeList.active.map(type=>{
                                                 return(
-                                                    <label for="one">
-                                                <p style={{paddingLeft:20}}>
+                                                    <p for="one"  id="typeData">
+                                                <p style={{paddingLeft:20}} id="lineOfCheckbox">
                                                 <input type="checkbox" id="type" style={{paddingLeft:0,cursor:"pointer"}} value={type.id} onChange={handleInput} checked={customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0}/> {type.customer_type}
                                                 </p>
-                                            </label>)
+                                            </p>)
                                                     
                                             })}
                                             </div>
@@ -720,6 +787,12 @@ const dataTochange =(e)=>{
                                         <textarea rows="" cols=""  class="form-control" name="notes" value={customerDataById.notes} onChange={handleInput} id="notes" placeholder="Add Notes..."/>
                                     </div>
                                 </div>
+                                <div class="row mt-3" style={{display:customerDataById.status==0?"block":"none"}}>
+                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
+                                        <label>Reason<small></small></label>
+                                        <textarea rows="" cols=""  class="form-control" name="reason" value={customerDataById.reason} onChange={handleInput} id="reason" placeholder="Add Reason..."/>
+                                    </div>
+                                </div>
 
                                 {/* <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
@@ -784,7 +857,7 @@ const dataTochange =(e)=>{
                                         <div class="d-flex">
                                             <div>
                                                 <label>Tax Exempt Number</label>
-                                                <input type="number" class="form-control" name={"taxExemptNumber"}  style={{textAlign:"right"}} value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
+                                                <input type="text" class="form-control" name={"taxExemptNumber"}  value={customerDataById.tax_exempt_no} id="tax_exempt_no" onChange={handleInput} disabled={customerDataById.tax_exempt==1?false:true} placeholder="Not set" onKeyPress={thirdMethod} />
                                                 {/* {errorObj.taxExemptNumber!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
 
                                             </div>
@@ -809,7 +882,7 @@ const dataTochange =(e)=>{
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Units</label>
-                                                <select class="form-control" disabled={customerDataById.p_o_req ==1?false:true} onChange={handleInput} id="unit_of_measurement">
+                                                <select class="form-control-order" disabled={customerDataById.p_o_req ==1?false:true} onChange={handleInput} id="unit_of_measurement">
                                                     <option selected={customerDataById.unit_of_measurement =="Metric"?"selected":""} value="Metric">Metric</option>
                                                     <option selected={customerDataById.unit_of_measurement =="Imperial"?"selected":""} value="Imperial">Imperial</option>
         
@@ -820,9 +893,9 @@ const dataTochange =(e)=>{
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                <div class="col-md-4 mt-3 mt-md-0">
+                                <div class="col-md-2 mt-3 mt-md-0">
                                                 <label>Payment Terms</label>
-                                                <select class="form-control" onChange={handleInput} id="payment_terms">
+                                                <select class="form-control-order1" onChange={handleInput} id="payment_terms">
                                                     <option value={0}>None</option>
                                                 {/* {customerTermList.active.map()}
                                                     {/* <option>Imperial</option>
@@ -838,9 +911,9 @@ const dataTochange =(e)=>{
                                   })}
                                                 </select>
                                             </div>
-                                            <div class="col-md-4 mt-3 mt-md-0">
+                                            <div class="col-md-2 mt-3 mt-md-0">
                                                 <label>Currency</label>
-                                                <select class="form-control" onChange={handleInput} id="currency">
+                                                <select class="form-control-order1" onChange={handleInput} id="currency">
                                                     <option value={"Canadian Dollar"} selected={customerDataById.currency=="Canadian Dollar"?"selected":""}>Canadian Dollar</option>
                                                     <option  value={"U.S. Dollar"} selected={customerDataById.currency=="U.S. Dollar"?"selected":""}>U.S. Dollar</option>
                                                    
@@ -867,7 +940,7 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                                 <label>Discount</label>
-                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange} onKeyPress={thirdMethod2}/>
                                             </div>
                                        
                                       
@@ -894,7 +967,7 @@ const dataTochange =(e)=>{
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
                                                 <label>Fee%</label>
-                                                <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange} onKeyPress={thirdMethod1}/>
                                             </div>
                                             </div>
                                             </div>
@@ -1035,17 +1108,23 @@ const dataTochange =(e)=>{
                                 <h2>Print Catalog</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    <div class="col-md-4">
+                                    <div class="col-md-2" style={{marginTop:-1}}>
                                         <label>Requires Print Catalog</label>
-                                        <input type="text" class="form-control" value="Yes" />
+                                        <div class="d-flex">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" id="print1" name="print1" value={0} checked = {customerDataById.print ==0?true:false} class="custom-control-input" onClick={handleInput} />
+                                               
+                                                <label class="custom-control-label" for="print1">No</label>
+                                            </div>
+                                            <div class="custom-control custom-radio ml-4">
+                                                <input type="radio" id="print" name="print" value={1}  checked = {customerDataById.print ==1?true:false} onClick={handleInput} class="custom-control-input" />
+                                                <label class="custom-control-label" for="print">Yes</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="col-md-4 mt-3 mt-md-0">
+                                    <div class="col-md-2 mt-2 mt-md-0">
                                         <label>Quantity</label>
-                                        <select class="form-control">
-                                            <option>5</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                        </select>
+                                        <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.quantity} onChange={handleInput} id="quantity" step="0" placeholder={"0"}/>
                                     </div>
                                 </div>
                                 

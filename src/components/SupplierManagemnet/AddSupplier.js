@@ -95,6 +95,10 @@ function AddSupplier(props) {
            errorCountForValidation++
            message.push("Add Supplier Name")
         }
+        if(supplierDataById.status==0 && (supplierDataById.reason ===null || supplierDataById.reason ==="")){
+            errorCountForValidation++
+            message.push("Add Reason")
+        }
         // if(taxExemptNumber.length===0 && taxExemp){
         //     errorObj.taxExemptNumber=1
         //     errorCountForValidation++
@@ -492,13 +496,12 @@ console.log(props.supplierData.supplierReasonList)
                                         <span class="ml-2"><b>Save &amp; Done</b></span>
                                     </span>
                                 </a> */}
-                                <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={"btn btn-primary btn-md ml-3"}>
-                                    <span class="d-flex align-items-center text-left" onClick={handleSubmit}>
-                                        {/* <img src="assets/img/save-ic.svg" alt=""/> */}
-                                        <i class="fas fa-file-pdf" style={{fontSize:"20px"}}></i>
-                                        <span class="ml-2"  style={{fontSize:"17px"}}>Contact PDF</span>
+                                <a  class="btn ml-2">
+                                    <span class="d-flex align-items-center text-left">
+                                        <img src="assets/img/pdf-ic.svg" alt=""/>
+                                        <span class="ml-2"><b>Contact PDF</b></span>
                                     </span>
-                                </button>
+                                </a>
                                 {/* "btn btn-primary btn-lg ml-3":"btn btn-primary btn-lg ml-3" */}
                                 {/* <button   onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
                                     <span class="d-flex align-items-center text-left" onClick={handleSubmit}> */}
@@ -514,14 +517,23 @@ console.log(props.supplierData.supplierReasonList)
                                         <span class="ml-2"  style={{fontSize:"17px"}}>Save &amp; Done</span>
                                     </span>
                                 </button> */}
-                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("save"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <img src="assets/img/save.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save </span>
-                                    </button>
-                                <button type="button"  onClick={()=>checkedData==true?saveCustomerData1("done"):""}  className={checkedData==true? "btn btn-primary btn-md ml-3":"btn btn-secondary btn-md ml-3"} disabled={checkedData==true?false:true}>
-                                    <img src="assets/img/savedone.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save &amp; Done</span>
-                                    </button>
+                                <a class="btn ml-2"
+                                onClick={()=>checkedData==true?saveCustomerData1("save"):""}
+                                            //onClick={this.handleSubmit}
+                                        
+                                            >
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/save-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save  </b></span>
+                                                    </span>
+                                                </a>
+                                {/* <button type="button"   className={"btn  btn-md ml-3"} disabled={checkedData==true?false:true}> */}
+                                <a  class="btn ml-2 mt-3 mt-md-0" onClick={()=>checkedData==true?saveCustomerData1("done"):""}>
+                                                    <span class="d-flex align-items-center text-left">
+                                                        <img src="assets/img/saveDone-ic.svg" alt=""/>
+                                                        <span class="ml-2"><b>Save &amp; Done</b></span>
+                                                    </span>
+                                </a>
                                 <a href="#" class=" ml-2 mt-3 mt-md-0">
                                     <img src="assets/img/close-ic.svg" alt="" onClick={closeAddSupplier}/>
                                 </a>
@@ -696,6 +708,12 @@ console.log(props.supplierData.supplierReasonList)
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Supplier Notes <small>(Internal Only)</small></label>
                                         <textarea rows="" cols=""  class="form-control" name="supplier_notes" value={supplierDataById.supplier_notes} onChange={handleInput} id="supplier_notes" placeholder="Add Notes..."/>
+                                    </div>
+                                </div>
+                                <div class="row mt-3" style={{display:supplierDataById.status==0?"block":"none"}}>
+                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
+                                        <label>Reason <small></small></label>
+                                        <textarea rows="" cols=""  class="form-control" name="reason" value={supplierDataById.reason} onChange={handleInput} id="reason" placeholder="Add Reason..."/>
                                     </div>
                                 </div>
 

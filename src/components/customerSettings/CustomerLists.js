@@ -196,7 +196,7 @@ export class CustomerSettings extends React.Component {
         value:this.state.value,
             // className:"searchInput",
             className:" form-control  btn btn-search ",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"9%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.onChange
         };
         console.log(displayCustomerList)
@@ -206,7 +206,7 @@ export class CustomerSettings extends React.Component {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                 <h1 class="page-header mb-0 d-flex align-items-center">
                     <img src="assets/img/Customer Management_green.svg" class="mr-2"/>
-                    <div class="d-flex flex-column">Customer Lists <small class="text-blue"  style={{fontWeight:"bold"}}>Active - {this.props.customerData.activeData.length}</small></div>
+                    <div class="d-flex flex-column">Customer Lists <small class="text-blue"  style={{fontWeight:"bold",fontSize:"17px"}}>Active Customers - {this.props.customerData.activeData.length}</small></div>
                 </h1>
                 <div class="topbarCtrls mt-3 mt-md-0" onClick={this.handleAddCustomerClick} id="add">
                     <a  class="btn" >
@@ -225,9 +225,7 @@ export class CustomerSettings extends React.Component {
                                         <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="plantSearch">Search Customer</label>
                                     <div className="searchInput" style={{height: "2px",paddingTop:-140}}>
-                                            <button type="submit" className="btn btn-search"  style={{marginTop:"-8%",marginLeft:"2%"}}>
-                                                    <img src="assets/img/search.svg" alt=""/>
-                                                </button>
+                                           
                                             <Autosuggest
                                                     suggestions={this.state.suggestions}
                                                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -239,6 +237,7 @@ export class CustomerSettings extends React.Component {
                                                     suggestionsList:this.state.suggestions.length>5?"yes":"no1"}}
                                                   
                                                 />
+                                                <img src="assets/img/search.svg" alt="" style={{position:"absolute", left:"14px",top:"12px"}}/>
                                                 </div>
                                     {/* <div class="searchInput">
                                         <button type="submit" class="btn btn-search">

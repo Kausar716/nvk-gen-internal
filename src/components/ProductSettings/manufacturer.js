@@ -6,6 +6,7 @@ import * as MdIcons from "react-icons/md";
 import { confirmAlert } from 'react-confirm-alert';
 import {connect} from "react-redux";
 import Sortable from 'sortablejs'
+import Loader from '../ProductManager/Loader'
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 // import './style.css';
@@ -43,6 +44,7 @@ class Manufacturer extends Component {
                 activeId: 0,
                 isEditing:false,
                 name:'',
+                loading:false,
 
                 selectedID:'',
                 btnLabelAdd:'Add New manufacture Type',
@@ -59,7 +61,7 @@ class Manufacturer extends Component {
         let data = {};
         let active= this.props.productManufacturerList.filter(data=>data.status ==1)
        let inactive=this.props.productManufacturerList.filter(data=>data.status ==0)
-        this.setState({active:active,inactive:inactive})
+        this.setState({active:active,inactive:inactive,loading:true})
     }
 componentDidMount(){
     this.props.getAllProductManufacturers().then(()=>{
@@ -161,7 +163,19 @@ componentDidMount(){
                 this.getCatgoryData()
             })
         
-        })
+        }).catch(data=>{
+            this.setState({deleteon:false})
+
+               confirmAlert({
+               title: 'Alert',
+               message: 'Please note that this item is associated with Products.Please reassign before deleting ',
+               buttons: [
+                 {
+                   label: 'Ok'
+                 }
+               ]
+             });
+       })
     }
 
 
@@ -332,6 +346,7 @@ handleAddCategoryUpdate=()=>{
                 if(destination == null)
                 return
                 if (destination.droppableId=="delete") {
+                    this.setState({deleteon:true})
                     confirmAlert({
                         title: 'Delete Manufacture ',
                         message: 'Are you sure want to delete the Manufacture ?',
@@ -492,12 +507,11 @@ render()
                                     </div>
 
 
-                                    <div class="card-body cardBg"
-                                   >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
-                                            <div
+                                            <div style={{height:265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -545,7 +559,7 @@ render()
                                         
 
 
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                             <div style={{flex:1,paddingLeft:5,paddingRight:5}}>
@@ -566,7 +580,7 @@ render()
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"110px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               
@@ -607,7 +621,7 @@ render()
                                     <div class="card-header">
                                         Active
                                     </div>
-                                    <div class="card-body cardBg" >
+                                    {!this.state.loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"#F0F0F0"}}><Loader/></div>:<div class="card-body cardBg" >
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
@@ -656,7 +670,7 @@ render()
                                             return (<li></li>)
                                             })} */}
                                     </ul>
-                                    </div>
+                                    </div>}
                                 </div>
                             </div>
                         </div>

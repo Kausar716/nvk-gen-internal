@@ -33,7 +33,6 @@ const normalizeInput = (value, previousValue) => {
   
   const validateInput22 = value => {
     let error1 = ""
-    
     if (!value) error1 = "Required!"
     else if (value.length !== 14 && value.length > 10) error1 = "Invalid phone format. ex: (555) 555-5555";
     
@@ -382,11 +381,14 @@ saveDisable =()=>{
 
 }
 
+stringHasTheWhiteSpaceOrNot=(value)=>{
+    return value.indexOf(' ') >= 0;
+ }
 
 
 
     handleSubmit = (e) => {
-
+debugger;
         // if (!this.state.hadModified.name) {
         //    this.setState({
         //        hadModified:true
@@ -416,11 +418,47 @@ saveDisable =()=>{
 
     //debugger;
 
+    // let finalNumber = this.state.phone
+
+    // let whiteSpace = this.stringHasTheWhiteSpaceOrNot(JSON.stringify(finalNumber));
+
+    // if(whiteSpace===true){
+    //     finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+    //     var removedNumber = finalNumber.split(" ").join("");
+    //     removedNumber = parseInt(removedNumber)
+    // }
+
+    // else{
+    //     removedNumber = finalNumber;
+     
+    // }
+
+
+
     let finalNumber= phoneNUMBER;
-     finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
-    let removedNumber = finalNumber.split(" ").join("");
-    removedNumber = parseInt(removedNumber)
-        console.log("removedNumber",removedNumber)
+
+    let whiteSpace = this.stringHasTheWhiteSpaceOrNot(JSON.stringify(finalNumber));
+
+
+        if(whiteSpace===true){
+                finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+                var removedNumber = finalNumber.split(" ").join("");
+                removedNumber = parseInt(removedNumber)
+            }
+
+            else{
+                removedNumber = finalNumber;
+            
+            }
+
+
+
+
+
+    //  finalNumber=  finalNumber.replace(/[^\w\s]/g, "")
+    // let removedNumber = finalNumber.split(" ").join("");
+    // removedNumber = parseInt(removedNumber)
+    //     console.log("removedNumber",removedNumber)
 
 
         let count= this.validate()
@@ -608,8 +646,15 @@ saveDisable =()=>{
                  secondary_title:false,
                  main_body:false,
                  secondary_body:false,
-                }
+                },
+
             })
+
+            if (!this.state.disabledCancel) {
+                this.setState({
+                    disabledCancel:true,
+                })
+               }
           
             //window.location.reload();
        
