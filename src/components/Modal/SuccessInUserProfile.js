@@ -7,7 +7,6 @@ import {} from "../../actions/productAction";
 // import quotes from '../Dashboard/quotes.png'
 // import Inventory from '../Dashboard/Inventory.png'
 
-
 // import { Left } from 'react-bootstrap/lib/Media';
 //import * as BsIcons from "react-icons/fa";
 

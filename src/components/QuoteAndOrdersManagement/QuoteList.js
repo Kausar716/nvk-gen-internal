@@ -12,8 +12,8 @@ import { Link } from "react-router-dom";
 
 export class QuoteList extends React.Component {
 
-    constructor(){
-        super()
+    constructor(props){
+        super(props)
         this.state={
             addCustomerToggle:false,
             customerListStatus:"active",
@@ -94,7 +94,7 @@ export class QuoteList extends React.Component {
 
       paginationChange =(event, page)=>{
         // alert("hg")
-        this.props.setPageNumberPo(page-1)
+        this.props.setPageNumberQo(page-1)
     }
  // <div class="form-group row mt-4">
         //     <div class="col-md-12 col-lg-12">
@@ -176,17 +176,19 @@ export class QuoteList extends React.Component {
 
     }
 
-    //console.log("quoteOrderList", quoteOrderList)
+
+
+   // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
         //let purchaseOrderData = [];
-
+        console.log("quoteOrderList", this.props.quoteOrderData)
         console.log("abcd", this.state.checkedData)
-        let pageCount =0;
-        let pageNumber = 0;
-        let totalLength = 0;
-        let plantPerPage =0;
-        let pagesVisited = 0;
-        let displayPOList = []
+        let pageCount1 =0;
+        let pageNumber1 = 0;
+        let totalLength1 = 0;
+        let plantPerPage1 =0;
+        let pagesVisited1 = 0;
+        let displayPOList1 = []
 
 
       
@@ -195,22 +197,20 @@ export class QuoteList extends React.Component {
 
 
       if(initialDetails1){
-        pageNumber = this.props.quoteOrderData.pageNumber
-        // console.log()
-        initialDetails1 = [...initialDetails1]
 
-
-         totalLength = initialDetails1.length
-         plantPerPage = this.state.pageSize;
-         pagesVisited =  this.props.quoteOrderData.pageNumber*this.state.pageSize;
-         displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
-         pageCount = Math.ceil(initialDetails1.length/plantPerPage)
+        pageNumber1 = this.props.quoteOrderData.pageNumber;
+        initialDetails1 = [...initialDetails1];
+         totalLength1 = initialDetails1.length;
+         plantPerPage1 = this.state.pageSize;
+         pagesVisited1 =  this.props.quoteOrderData.pageNumber * this.state.pageSize;
+         displayPOList1 = initialDetails1.slice(pagesVisited1,pagesVisited1+plantPerPage1)
+         pageCount1 = Math.ceil(initialDetails1.length/plantPerPage1)
 
     }
 
-            console.log("displayPOList",displayPOList)
+            console.log("displayPOList",displayPOList1)
 
-              const filteredList = this.filterItems(displayPOList);
+              const filteredList = this.filterItems(displayPOList1);
 
               console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
@@ -495,7 +495,7 @@ export class QuoteList extends React.Component {
                             <div className="row_1 mt-4">
                                         <div style={{float:"left",marginBottom:15}}>
                                             {/* <div> */}
-                                                <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
+                                                <label className="greenText">{"Showing " + (pageNumber1>0 ? (this.state.pageSize*((pageNumber1)))+1 : ((pageNumber1)+1))+  "  to  " +  (pageNumber1>0 ? (((this.state.pageSize*((pageNumber1)))+this.state.pageSize)>totalLength1 ? totalLength1 : ((this.state.pageSize*((pageNumber1)))+this.state.pageSize)) : ((((pageNumber1)+1)*this.state.pageSize)>totalLength1?totalLength1:(((pageNumber1)+1)*this.state.pageSize)))   + "  of   "  +   totalLength1 }</label>
                                             {/* </div> */}
                                         </div>
                                         <div style={{float:"left",marginBottom:15}}>
@@ -518,7 +518,7 @@ export class QuoteList extends React.Component {
                                                 <label class="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
                                         </div>
                                         <div style={{float:"right",marginBottom:15}}>
-                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
+                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber={pageNumber1+1}/>
                                         </div>
                                
                             </div>

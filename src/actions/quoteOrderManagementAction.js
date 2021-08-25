@@ -1,4 +1,3 @@
-
 import {
     // FILTER_DATA_BY_ALPHABETIC_PO,
     // FILTER_DATA_BY_SEARCH_SN_PO,
@@ -40,7 +39,7 @@ import {
         //   if()
           return{
               type:FILTER_DATA_BY_ALPHABETIC_QL,
-              alphaDataPO:data
+              alphaDataQO:data
           }
       }
 

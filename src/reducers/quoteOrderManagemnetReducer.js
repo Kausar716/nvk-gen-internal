@@ -86,17 +86,17 @@ const initialSatate = {
                 // else if(state.radioFilter === "inactive") datatoShow = state.inactiveData
                 // else datatoShow = state.duplicateData
 
-                if(state.alphabetSearch ==="All" && action.searchDataPO !=="")searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchDataPO.toLowerCase()))
-                else if(action.searchDataPO !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchDataPO.toLowerCase().charAt(0)))
-                else if(action.searchDataPO  ==="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
-                else if(action.searchDataPO  ==="" && state.alphabetSearch  ==="All") searchedData = datatoShow
+                if(state.alphabetSearch ==="All" && action.searchDataQO !=="")searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().includes(action.searchDataQO.toLowerCase()))
+                else if(action.searchDataQO !=="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===action.searchDataQO.toLowerCase().charAt(0)))
+                else if(action.searchDataQO  ==="" && state.alphabetSearch !=="All") searchedData = datatoShow.filter(filterData=>filterData.name.toLowerCase().charAt(0)===state.alphabetSearch.toLowerCase().charAt(0))
+                else if(action.searchDataQO  ==="" && state.alphabetSearch  ==="All") searchedData = datatoShow
 
                 
 
                 return{
                     ...state,
                     quoteOrderList:searchedData,
-                    searchFilter:action.searchDataPO
+                    searchFilter:action.searchDataQO
                 }
           
             case FILTER_DATA_BY_ALPHABETIC_QL:
@@ -106,17 +106,17 @@ const initialSatate = {
                 else if(state.radioFilter === "inactive") datatoShow1 = state.inactiveData
                 else datatoShow1 = state.duplicateData
 
-                if(state.searchFilter ==="" && action.alphaDataPO !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.name.toLowerCase().charAt(0)===action.alphaDataPO.toLowerCase().charAt(0))
-                else if(state.searchFilter !=="" && action.alphaDataPO ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                // else if(action.alphaDataPO ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                else if(state.searchFilter !=="" && action.alphaDataPO !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===action.alphaDataPO.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
-                else if(state.searchFilter ==="" && action.alphaDataPO ==="All")searchedData1 = datatoShow1
+                if(state.searchFilter ==="" && action.alphaDataQO !=="All") searchedData1 = datatoShow1.filter(filterData=>filterData.name.toLowerCase().charAt(0)===action.alphaDataQO.toLowerCase().charAt(0))
+                else if(state.searchFilter !=="" && action.alphaDataQO ==="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                // else if(action.alphaDataQO ==="All" && state.searchFilter !=="")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                else if(state.searchFilter !=="" && action.alphaDataQO !=="All")searchedData1 = datatoShow1.filter(filterData=>(filterData.name.toLowerCase().charAt(0)===action.alphaDataQO.toLowerCase().charAt(0)) &&(filterData.name.toLowerCase().charAt(0)===state.searchFilter.toLowerCase().charAt(0)))
+                else if(state.searchFilter ==="" && action.alphaDataQO ==="All")searchedData1 = datatoShow1
                
 
                 return{
                     ...state,
                     quoteOrderList:searchedData1,
-                    alphabetSearch:action.alphaDataPO
+                    alphabetSearch:action.alphaDataQO
                 }
     
         default:
