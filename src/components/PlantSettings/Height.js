@@ -235,19 +235,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 //       }
                 //     ]
                 //   });
-            }).catch(data=>{
-                this.setState({deleteon:false})
-
-                   confirmAlert({
-                   title: 'Alert',
-                   message: 'Please note that this item is associated with Plants.Please reassign before deleting ',
-                   buttons: [
-                     {
-                       label: 'Ok'
-                     }
-                   ]
-                 });
-           })
+            })
         }
 
 
@@ -596,7 +584,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
-                                            <div style={{height:265}} 
+                                            <div
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -613,7 +601,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}{item.sub_attributeschild[1]!==undefined ?("("+item.sub_attributeschild[1].value+")"):""}</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
@@ -665,7 +653,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"110px"}}
+                                            <div   style={{width:"110px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               
@@ -727,7 +715,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}{item.sub_attributeschild[1]!==undefined ?("("+item.sub_attributeschild[1].value+")"):""}</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
