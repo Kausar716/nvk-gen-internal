@@ -23,7 +23,8 @@ import customerReducer from './customerReduser'
 import plantSettingAttributeReducer from './plantSettingAttributeReducer';
 import inventoryManagementReducer from './inventorymanagementReducer';
 import productManufacturerReducer from './productManufacturerReducer';
-import purchaseOrderManagement from'./purchaseOrderManagementReducer'
+import purchaseOrderManagement from'./purchaseOrderManagementReducer';
+import quoteOrderManagement from'./quoteOrderManagemnetReducer';
 // import supplierManagementReducer from './supplierManagementReducer';
 
 
@@ -47,5 +48,6 @@ export default combineReducers({
     plantSettingAttribute: plantSettingAttributeReducer,
     inventoryManagementReducer:inventoryManagementReducer,
     productManufacturerData:productManufacturerReducer,
-    purchaseOrderManagementData:purchaseOrderManagement
+    purchaseOrderManagementData:purchaseOrderManagement,
+    quoteOrderData:quoteOrderManagement,
 })
