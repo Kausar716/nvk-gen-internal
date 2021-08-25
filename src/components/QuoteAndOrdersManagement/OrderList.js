@@ -190,7 +190,7 @@ export class QuoteList extends React.Component {
 
       
       let initialDetails1 = initialDetails || this.state.checkedData
-        console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
+       // console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
 
       if(initialDetails1){
