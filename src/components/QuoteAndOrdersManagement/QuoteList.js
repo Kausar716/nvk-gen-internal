@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
-import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
+import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
 import initialDetails from './initialDetails';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
@@ -190,18 +190,18 @@ export class QuoteList extends React.Component {
 
       
       let initialDetails1 = initialDetails || this.state.checkedData
-        console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
+       // console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
 
       if(initialDetails1){
-        pageNumber = this.props.purchaseOrderData.pageNumber
+        pageNumber = this.props.quoteOrderData.pageNumber
         // console.log()
         initialDetails1 = [...initialDetails1]
 
 
          totalLength = initialDetails1.length
          plantPerPage = this.state.pageSize;
-         pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
+         pagesVisited =  this.props.quoteOrderData.pageNumber*this.state.pageSize;
          displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
          pageCount = Math.ceil(initialDetails1.length/plantPerPage)
 
@@ -593,7 +593,7 @@ export class QuoteList extends React.Component {
 const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
-        purchaseOrderData:state.PurchaseOrderReducer
+        quoteOrderData:state.customerReducer
     }
 
 )
