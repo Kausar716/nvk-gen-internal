@@ -19,7 +19,7 @@
 
 } 
 .suggestionsContainer{
-  background-color:yellow;
+  /* background-color:yellow; */
 
 
 }
@@ -277,17 +277,10 @@ div.ab {
 .data li:hover{
   background-color:#629C44;
 }
-.react-autosuggest__suggestions-container{
-  background-color:gray;
-  margin-top:7%;
-  height: auto;
-  overflow: scroll;
-  overflow-x: hidden;
-
-  /* text-decoration: none; */
-  /* width:600px; */
-  /* width: auto; */
-  /* border:1px solid red; */
+.react-autosuggest__suggestions-container {
+  position: absolute;
+  top: 51px;
+  width: 100%;
 }
 .react-autosuggest__suggestions-container ul{
   background-color:lightgray;
@@ -408,10 +401,17 @@ input[type="radio"] {
 }
 
 .react-autosuggest__suggestions-container--open .yes{
-  position:relative;
-  background-color:yellow;
+  /* position:relative; */
+  /* background-color:yellow; */
   height:100px;
   z-index: 10;
+  /* background-color:green; */
+}
+.react-autosuggest__suggestions-container--open{
+  /* position:relative; */
+  /* background-color:yellow; */
+  height:100px;
+  z-index: -10;
   /* background-color:green; */
 }
 /* appearance for checked radiobutton */

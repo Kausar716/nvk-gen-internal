@@ -130,7 +130,7 @@ const initialSatate = {
    customerExchange:{
     from_currency:"CAD",
     to_currency:"US",
-    exchange_rate:0,
+    exchange_rate:1.000,
     exchange_date:new Date().getFullYear()+"-"+(new Date().getMonth().toString().length===1?"0"+(new Date().getMonth()+1):new Date().getMonth())+"-"
     +(new Date().getDate().toString().length===1?"0"+(new Date().getDate()):new Date().getDate())
 

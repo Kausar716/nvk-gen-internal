@@ -1,13 +1,64 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import DatePicker from 'react-date-picker';
 import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
 import { Link } from "react-router-dom";
 import TablePagination from '../Pagination/index';
+import Autosuggest from 'react-autosuggest';
+import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 
-export default function InvoiceList() {
-    const [value, onChange] = useState(new Date());
+ function InvoiceList(props) {
+    const [reStock, setReStock] = useState();
+    const [suggestions, setSuggestions] = useState([]);
+    const [value, setValue] = useState("");
+    const [searchValue, setSearchValue] = useState("");
+    useEffect (()=>{
+        props.getAllCustomer()
+
+    },[reStock])
+
+    const onSuggestionsFetchRequested = ({ value }) => {
+        // this.setState({suggestions:getSuggestions(value)});
+        setSuggestions(getSuggestions(value))
+       // setSuggestions(getSuggestions(value));
+   };
+   const renderSuggestion = suggestion => (
+    <span>
+      {suggestion.name}
+    </span>
+    );
+   const getSuggestions = value => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+      
+        return inputLength === 0 ? [] : props.customerData.customerList.filter(lang =>
+          lang.name.toLowerCase().includes(inputValue)
+        );
+    };
+   const onChange = (event, { newValue }) => {
+        setValue(newValue)
+        setSearchValue(newValue)
+        props.handleSearchFilter(newValue,"none")
+    };
+   const getSuggestionValue = suggestion =>suggestion.name;
+   // Autosuggest will call this function every time you need to clear suggestions.
+   const onSuggestionsClearRequested = () => {
+   //   setSuggestions([]);
+   setSuggestions([])
+   };
+   const inputProps = {
+    placeholder: 'Customer Name',
+//    [this.state.value],
+    value:value,
+    // className:"searchInput",
+    className:" form-control ",
+    style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-7%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+    onChange: onChange,
+    dataId: 'my-data-id',
+};
+
     return (
-        <div>
+        <div >
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/>Invoice List</h1>
 			</div>
@@ -69,17 +120,72 @@ export default function InvoiceList() {
                                     </div>
                                 </div>
                             </div>
-                            <div class="form-group row align-items-end q">
-                                <div class="col-md-4 col-lg-4">
+                            <div class="row">
+                                    <div class="col-md-4 col-lg-4">
                                     <label for="plantSearch">Search Customer</label>
-                                    <div class="searchInput">
-                                        <button type="submit" class="btn btn-search">
-                                            <img src="assets/img/search.svg" alt=""/>
-                                        </button>
-                                        <input type="text" class="form-control" placeholder="Search Supplier Name/Number"/>
+                                    <div className="searchInput" style={{marginTop:25}}>
+                                    <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                            getSuggestionValue={getSuggestionValue}
+                                            renderSuggestion={renderSuggestion}
+                                            inputProps={inputProps}
+                                            
+                                        
+
+                                            />
+                                        </div>
+
                                     </div>
-                                </div>
-                                <div class="col-md-4 col-lg-4">
+                                    <div class="col-md-4 col-lg-4">
+                                    <label for="plantSearch">Search Order</label>
+                                    <div className="searchInput" >
+                                    <div className="searchInput" style={{marginTop:25}}>
+                                    <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                            getSuggestionValue={getSuggestionValue}
+                                            renderSuggestion={renderSuggestion}
+                                            inputProps={inputProps}
+                                            
+
+                                            />
+                                        </div>
+
+                                    </div>
+                                    </div>
+                                    <div class="col-md-4 col-lg-4">
+                                    <label for="plantSearch">Search Invoice</label>
+                                    <div className="searchInput" >
+                                    <div className="searchInput" style={{marginTop:25}}>
+                                    <Autosuggest
+                                            suggestions={suggestions}
+                                            onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                            onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                            getSuggestionValue={getSuggestionValue}
+                                            renderSuggestion={renderSuggestion}
+                                            inputProps={inputProps}
+                                            
+
+                                            />
+                                        </div>
+
+                                    </div>
+                            </div>
+                            </div>
+                            <div style={{clear: 'both'}}></div>
+                            {/* <div class="form-group row align-items-end q">
+                                <div class="col-md-4 col-lg-4" style={{display:"inline-block"}}>
+                                    <label for="plantSearch">Search Customer</label>
+                                    <div className="searchInput" >
+                                           
+                                       
+                                               {/* <img src="assets/img/search.svg" alt="" style={{position:"absolute", left:"14px",top:"12px"}}/> */}
+                                               {/* </div> */}
+                                {/* </div>
+                                <div class="col-md-4 col-lg-4" style={{display:"inline-block"}}>
                                     <label for="plantSearch">Search Order</label>
                                     <div class="searchInput">
                                         <button type="submit" class="btn btn-search">
@@ -88,7 +194,7 @@ export default function InvoiceList() {
                                         <input type="text" class="form-control" placeholder="Search Order"/>
                                     </div>
                                 </div>
-                                <div class="col-md-4 col-lg-4">
+                                <div class="col-md-4 col-lg-4" style={{display:"inline-block"}}>
                                     <label for="plantSearch">Search Invoice</label>
                                     <div class="searchInput">
                                         <button type="submit" class="btn btn-search">
@@ -97,7 +203,7 @@ export default function InvoiceList() {
                                         <input type="text" class="form-control" placeholder="Search Invoice Number"/>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */} 
                             <div class="form-group row align-items-end">
                                 <div class="col-md-12 text-right">
                                     <a href="">Reset</a>
@@ -344,5 +450,19 @@ export default function InvoiceList() {
 				</div>
             </div>
         </div>
+      
     )
 }
+const mapStateToProps = (state)=>(
+    {
+        customerData:state.customerReducer
+    }
+)
+export default connect(mapStateToProps,{getAllCustomer,handleSearchFilter
+     
+
+
+
+
+
+})(InvoiceList)
