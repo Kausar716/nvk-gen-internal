@@ -50,7 +50,7 @@ const initialSatate = {
          supplierOrder:"1024275", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
           dispatch:"Delivery", amount:"6,085.00" }
    ],
-   pageNumber:0,
+   pageNumber1:0,
    duplicateData:[],
    //activeData:[],
    //inactiveData:[],
@@ -76,7 +76,7 @@ const initialSatate = {
             case SET_PAGE_NUMBER_QL:
                 return{
                     ...state,
-                    pageNumber:action.pageNumber
+                    pageNumber1:action.pageNumber1
                 }
 
             case FILTER_DATA_BY_SEARCH_SN_QL:

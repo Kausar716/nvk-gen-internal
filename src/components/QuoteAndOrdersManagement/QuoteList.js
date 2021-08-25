@@ -66,6 +66,7 @@ export class QuoteList extends React.Component {
     //   }
 
     onSearchInputChange2 = (e) => {
+        debugger;
         this.setState({searchInput: e.target.value})
       }
 
@@ -198,19 +199,19 @@ export class QuoteList extends React.Component {
 
       if(initialDetails1){
 
-        pageNumber1 = this.props.quoteOrderData.pageNumber;
-        initialDetails1 = [...initialDetails1];
-         totalLength1 = initialDetails1.length;
-         plantPerPage1 = this.state.pageSize;
-         pagesVisited1 =  this.props.quoteOrderData.pageNumber * this.state.pageSize;
-         displayPOList1 = initialDetails1.slice(pagesVisited1,pagesVisited1+plantPerPage1)
-         pageCount1 = Math.ceil(initialDetails1.length/plantPerPage1)
+        //pageNumber1 = this.props.quoteOrderData.pageNumber1;
+        // initialDetails1 = [...initialDetails1];
+        //  totalLength1 = initialDetails1.length;
+        //  plantPerPage1 = this.state.pageSize;
+        //  pagesVisited1 =  this.props.quoteOrderData.pageNumber1 * this.state.pageSize;
+        //  displayPOList1 = initialDetails1.slice(pagesVisited1,pagesVisited1+plantPerPage1)
+        //  pageCount1 = Math.ceil(initialDetails1.length/plantPerPage1)
 
     }
 
             console.log("displayPOList",displayPOList1)
 
-              const filteredList = this.filterItems(displayPOList1);
+              const filteredList = this.filterItems(initialDetails1);
 
               console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
@@ -518,7 +519,7 @@ export class QuoteList extends React.Component {
                                                 <label class="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
                                         </div>
                                         <div style={{float:"right",marginBottom:15}}>
-                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber={pageNumber1+1}/>
+                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber1={pageNumber1+1}/>
                                         </div>
                                
                             </div>

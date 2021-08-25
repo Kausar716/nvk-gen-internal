@@ -44,10 +44,10 @@ import {
       }
 
 
-      export const setPageNumberQo = (pageNumber) => {
+      export const setPageNumberQo = (pageNumber1) => {
         return{
               type:SET_PAGE_NUMBER_QL,
-              pageNumber:pageNumber,
+              pageNumber1:pageNumber1,
           }
       
       }
