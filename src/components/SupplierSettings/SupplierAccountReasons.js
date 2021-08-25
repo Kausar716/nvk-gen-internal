@@ -314,7 +314,19 @@ onDragStart =(e)=>{
                 //       }
                 //     ]
                 //   });
-            })
+            }).catch(data=>{
+                this.setState({deleteon:false})
+
+                   confirmAlert({
+                   title: 'Alert',
+                   message: 'Please note that this Account Reason  is associated with Customer.Please reassign before deleting ',
+                   buttons: [
+                     {
+                       label: 'Ok'
+                     }
+                   ]
+                 });
+           })
         }
 
 
@@ -575,7 +587,7 @@ render() {
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
-                                            <div
+                                            <div style={{height:265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -644,7 +656,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"110px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               

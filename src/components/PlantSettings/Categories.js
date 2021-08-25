@@ -583,7 +583,7 @@ render() {
                                     </div>
                                 </div>
                                 <DragDropContext onDragEnd={this.onDragEnd} onDragStart={this.onDragStart} removeItem={this.removeItem}>
-                        <div style={{display: 'flex',paddingTop:20}}>
+                        <div style={{display: 'flex',paddingTop:20, flexDirection: "row"}}>
                        
                             <div style={{flex:5}}>
                                 <div class="card midCard">
@@ -597,6 +597,7 @@ render() {
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
                                             <div
+                                            style={{height:265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -665,7 +666,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"110px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               
@@ -675,18 +676,17 @@ render() {
                                                        
                                                         index={0}>
                                                         {(provided, snapshot) => (
-                                                            <div   
-                                                            ref={provided.innerRef}>
+                                                           
                                                         
                                                                 
-                                                                <div className="deleteSpace"  >
+                                                                <div className="deleteSpace"  ref={provided.innerRef}>
                                                 <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
                                             </div>
                                                                 
                                                  
-                                                            </div>
+                                                            
                                                         )}
                                                     </Draggable>
                                              

@@ -196,7 +196,7 @@ export class CustomerSettings extends React.Component {
         value:this.state.value,
             // className:"searchInput",
             className:" form-control  btn btn-search ",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"9%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.onChange
         };
         console.log(displayCustomerList)
@@ -225,9 +225,7 @@ export class CustomerSettings extends React.Component {
                                         <div className="col-md-5 col-lg-5 mt-2 mt-md-0">
                                     <label for="plantSearch">Search Customer</label>
                                     <div className="searchInput" style={{height: "2px",paddingTop:-140}}>
-                                            <button type="submit" className="btn btn-search"  style={{marginTop:"-8%",marginLeft:"2%"}}>
-                                                    <img src="assets/img/search.svg" alt=""/>
-                                                </button>
+                                           
                                             <Autosuggest
                                                     suggestions={this.state.suggestions}
                                                     onSuggestionsFetchRequested={this.onSuggestionsFetchRequested}
@@ -239,6 +237,7 @@ export class CustomerSettings extends React.Component {
                                                     suggestionsList:this.state.suggestions.length>5?"yes":"no1"}}
                                                   
                                                 />
+                                                <img src="assets/img/search.svg" alt="" style={{position:"absolute", left:"14px",top:"12px"}}/>
                                                 </div>
                                     {/* <div class="searchInput">
                                         <button type="submit" class="btn btn-search">
