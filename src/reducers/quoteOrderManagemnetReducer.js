@@ -5,9 +5,15 @@ import {
     FILTER_DATA_BY_SEARCH_SN_PO,
     SET_PAGE_NUMBER_PO,
     
-    // FILTER_DATA_BY_SEARCH,
-    // FILTER_DATA_BY_ALPHA,
+   
     HANDLE_INPUT,
+
+
+
+    FILTER_DATA_BY_ALPHABETIC_QL,
+    FILTER_DATA_BY_SEARCH_SN_QL,
+    SET_PAGE_NUMBER_QL,
+    GET_QUOTE_ORDER_LIST,
    
 
     
@@ -19,7 +25,7 @@ import {
    
 
 const initialSatate = {
-   purchaseOrderList:[
+   quoteOrderList:[
     {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
     supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
      dispatch:"Pickup", amount:"6,085.00"},
@@ -54,7 +60,7 @@ const initialSatate = {
 
   }
 
- const customerReducer = (state = initialSatate, action)=>{
+ const quoteOrderReducer = (state = initialSatate, action)=>{
     console.log(action.payload)
     console.log(state)
     // alert(action.type)x
@@ -67,13 +73,13 @@ const initialSatate = {
 
             }
      
-            case SET_PAGE_NUMBER_PO:
+            case SET_PAGE_NUMBER_QL:
                 return{
                     ...state,
                     pageNumber:action.pageNumber
                 }
 
-            case FILTER_DATA_BY_SEARCH_SN_PO:
+            case FILTER_DATA_BY_SEARCH_SN_QL:
                 let datatoShow = []
                 let searchedData = []
                 // if(state.radioFilter === "active") datatoShow = state.activeData
@@ -89,11 +95,11 @@ const initialSatate = {
 
                 return{
                     ...state,
-                    purchaseOrderList:searchedData,
+                    quoteOrderList:searchedData,
                     searchFilter:action.searchDataPO
                 }
           
-            case FILTER_DATA_BY_ALPHABETIC_PO:
+            case FILTER_DATA_BY_ALPHABETIC_QL:
                 let datatoShow1 = []
                 let searchedData1 = []
                 if(state.radioFilter === "active") datatoShow1 = state.activeData
@@ -109,7 +115,7 @@ const initialSatate = {
 
                 return{
                     ...state,
-                    purchaseOrderList:searchedData1,
+                    quoteOrderList:searchedData1,
                     alphabetSearch:action.alphaDataPO
                 }
     
@@ -118,5 +124,5 @@ const initialSatate = {
     }
 
 }
-export default customerReducer
+export default quoteOrderReducer
 

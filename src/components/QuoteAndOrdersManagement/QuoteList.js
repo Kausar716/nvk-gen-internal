@@ -4,7 +4,8 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
-import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
+import {setPageNumberQo,handleSearchFilterByAlpha,getQuoteOrderList, 
+      handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
 import initialDetails from './initialDetails';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
@@ -31,7 +32,7 @@ export class QuoteList extends React.Component {
             alphabetSelect:'',
             TotalPurchaseOder:39,
 
-            purchaseOrderTable:[
+            quoteOrderList:[
                 {status:"closed", poNumber:"JSMITH-012301-1", suppliearName:"John Smith landscaping", 
         supplierOrder:"1024275", createdBy:"John Smith", orderDate:"20/05/2021", expectedDate:"20/05/12021",
          dispatch:"Pickup", amount:"6,085.00"},
@@ -171,11 +172,11 @@ export class QuoteList extends React.Component {
 
         this.setState({selectedAlpha:e.target.id})
        // this.setState({selectedAlpha:e.target.id})
-        this.props.handleSearchFilterByAlpha(e.target.id, this.state.purchaseOrderTable)
+        this.props.handleSearchFilterByAlpha(e.target.id, this.state.quoteOrderList)
 
     }
 
-    //console.log("purchaseOrderTable", purchaseOrderTable)
+    //console.log("quoteOrderList", quoteOrderList)
     render(){
         //let purchaseOrderData = [];
 
@@ -219,7 +220,7 @@ export class QuoteList extends React.Component {
         
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote & Order List</h1>
+				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote &amp; Order List</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                    
                     <Link to="/Quote">
@@ -593,10 +594,10 @@ export class QuoteList extends React.Component {
 const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
-        quoteOrderData:state.customerReducer
+        quoteOrderData:state.quoteOrderReducer
     }
 
 )
 
 
-export default connect(mapStateToProps,{handleSearchFilterByAlpha, setPageNumberPo})(QuoteList)
+export default connect(mapStateToProps,{handleSearchFilterByAlpha, getQuoteOrderList,setPageNumberQo,handleAplhabetFilterBySN })(QuoteList)
