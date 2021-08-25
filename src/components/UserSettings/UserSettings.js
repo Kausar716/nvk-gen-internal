@@ -563,7 +563,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
-                                            <div
+                                            <div style={{height:265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -632,7 +632,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"110px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               

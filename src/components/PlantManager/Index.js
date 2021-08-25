@@ -201,9 +201,11 @@ const productFormAction = ()=>{
     const inputProps = {
         placeholder: 'Plant Name',
         value,
+        
         // className:"searchInput",
-        className:" form-control  btn btn-search",
-        style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-6.8%",paddingTop:3.5,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+        className:" form-control btn btn-search",
+        id:"add-icon-search",
+        style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
         onChange: onChange
     };
  
@@ -266,9 +268,9 @@ const productFormAction = ()=>{
                                                         onChange={getValue} id="search"/>
                                             {/* </div> */} 
                                             <div className="searchInput" style={{height: "40px"}}>
-                                            <button type="submit" className="btn btn-search" style={{marginTop:"-13.4%",marginLeft:"2%"}}>
+                                            {/* <button type="submit" className="btn btn-search" style={{marginTop:"-13.4%",marginLeft:"2%"}}>
                                                     <img src="assets/img/search.svg" alt=""/>
-                                                </button>
+                                                </button> */}
                                             <Autosuggest
                                                     suggestions={suggestions}
                                                     onSuggestionsFetchRequested={onSuggestionsFetchRequested}
@@ -279,6 +281,8 @@ const productFormAction = ()=>{
                                                     theme={{suggestionsContainerOpen:suggestions.length>5?"yes":"no",suggestionsContainer:suggestions.length>5?"yes1":"no1",
                                                     suggestionsList:suggestions.length>5?"yes":"no1"}}
                                                 />
+                                                <img src="assets/img/search.svg" alt="" style={{position:"absolute", left:"14px",top:"12px"}}/>
+                                                {/* <span  class="fa fa-search "></span> */}
                                                 </div>
                                         </div>
                                         <div className="col-md-5 col-lg-5 mt-2 mt-md-0">

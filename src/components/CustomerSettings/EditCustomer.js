@@ -390,13 +390,12 @@ function AddCustomer(props) {
     }
     // var expanded = false;
 
-const showCheckboxes=()=>{
-  var checkboxes = document.getElementById("checkboxes");
-  if (!expanded) {
-    checkboxes.style.display = "block";
-    // expanded = true;
-    // setexpanded(true)
+const showCheckboxes=(e)=>{
+    // alert(e.target.id+"inside")
+  if (e.target.id =="setBox") {
+    setexpanded(!expanded)
   }
+
 }
 const showCheckboxesClose = ()=>{
     var checkboxes = document.getElementById("checkboxes");
@@ -407,11 +406,9 @@ const showCheckboxesClose = ()=>{
 
 }
 const showClose  = (e)=>{
-    // alert(expanded+" "+e.target.id.length)
-    if(e.target.id.length==0 && expanded ==false){
-        // alert("hh")
-        setexpanded(true)
-
+    // alert(e.target.id+"whole")
+    if((e.target.id.length==0)&& expanded ==true){
+          setexpanded(false)
     }
     
 }
@@ -421,10 +418,35 @@ const thirdMethod=(e)=> {
       e.preventDefault();
     }
   }
+  const thirdMethod1=(e)=> {
+      console.log(e.target)
+    const re =  /^(\d+)?(?:\.\d{1,2})?$/g;
+    console.log(re)
+    if (!re.test(e.target.value)) {
+        e.preventDefault();
+    }else{
+       
+
+    }
+
+  }
+  const thirdMethod2=(e)=> {
+    console.log(e.target)
+  const re = /^\d*(\.\d{0,1})?$/g;
+  console.log(re)
+  if (!re.test(e.target.value)) {
+      e.preventDefault();
+  }else{
+     
+
+  }
+
+}
 const dataTochange =(e)=>{
+    // alert("hi")
     setCheckedData(true)
     // let intValue = e.target.value
-    if(e.target.value!==""){
+    if(e.target.value!=="" && e.target.id=="discount"){
       if(Number.isInteger(parseFloat(e.target.value))) {
         let intValue = e.target.value*1.0
         // alert(e.target.value)
@@ -446,9 +468,32 @@ const dataTochange =(e)=>{
        
       }
     }
+    if(e.target.value!=="" && e.target.id!=="discount"){
+        if(Number.isInteger(parseFloat(e.target.value))) {
+          let intValue = e.target.value*1.00
+          // alert(e.target.value)
+          // props.handleExchangeData(val,e.target.id,"customerDataById")
+        props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerDataById")
+        }
+      
+        else{
+          // alert()
+          let splitValue = e.target.value.split(".")
+         if(splitValue[1].length<3){
+          let intValue = e.target.value*1.00
+          props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerDataById")
+         }else{
+          props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
+  
+         }
+  
+         
+        }
+      }
       return
     }
     const handleSelect=(key)=> {
+        setexpanded(false)
         // alert("hh")
         // if (key === 1)
         //     this.setState({ heading: "Log in" })
@@ -648,7 +693,7 @@ const dataTochange =(e)=>{
                                             })}
                                         </select>
                                     </div> */}
-                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes} id="setBox">
+                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes} id="setBoxData" >
                                     <label>Type<span class="text-danger">*</span></label>
                                         {/* <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}> */}
                                             {/* <select> */}
@@ -659,15 +704,15 @@ const dataTochange =(e)=>{
                                             </select>
                                             <div class="overSelect" id="setBox"></div>
                                             </div>
-                                            <div id="checkboxes" style={{position: 'absolute'}}>
+                                            <div id="checkboxes" style={{position: 'absolute',display:expanded?"block":""}}>
 
                                             {customerTypeList.active.map(type=>{
                                                 return(
-                                                    <label for="one">
-                                                <p style={{paddingLeft:20}}>
+                                                    <p for="one"  id="typeData">
+                                                <p style={{paddingLeft:20}} id="lineOfCheckbox">
                                                 <input type="checkbox" id="type" style={{paddingLeft:0,cursor:"pointer"}} value={type.id} onChange={handleInput} checked={customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0}/> {type.customer_type}
                                                 </p>
-                                            </label>)
+                                            </p>)
                                                     
                                             })}
                                             </div>
@@ -895,7 +940,7 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                                 <label>Discount</label>
-                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange} onKeyPress={thirdMethod2}/>
                                             </div>
                                        
                                       
@@ -922,7 +967,7 @@ const dataTochange =(e)=>{
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
                                                 <label>Fee%</label>
-                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange} onKeyPress={thirdMethod1}/>
                                             </div>
                                             </div>
                                             </div>

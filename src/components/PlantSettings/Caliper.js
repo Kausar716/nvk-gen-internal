@@ -316,7 +316,19 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                 //       }
                 //     ]
                 //   });
-            })
+            }).catch(data=>{
+                this.setState({deleteon:false})
+
+                   confirmAlert({
+                   title: 'Alert',
+                   message: 'Please note that this item is associated with Plants.Please reassign before deleting ',
+                   buttons: [
+                     {
+                       label: 'Ok'
+                     }
+                   ]
+                 });
+           })
         }
 
 
@@ -664,7 +676,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
-                                            <div
+                                            <div style={{height:265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -733,7 +745,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"110px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"110px"}}
                                                 ref={provided.innerRef}
                                             >
                                               
