@@ -217,7 +217,7 @@ export class ProductInventory extends Component {
             // className:"searchInput",
             className:" form-control  btn btn-search ",
             id:"name",
-            style: {border:"1px solid gray",fontWeight:"2px",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {border:"1px solid gray",fontWeight:"2px",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.onChange1
         };
         const inputProps1 = {
@@ -227,7 +227,7 @@ export class ProductInventory extends Component {
             // className:"searchInput",
             className:" form-control  btn btn-search ",
             id:"sku_code",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-8%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.onChange2
         };
         const inputProps2 = {
@@ -237,7 +237,7 @@ export class ProductInventory extends Component {
             // className:"searchInput",
             className:" form-control  btn btn-search ",
             id:"batch_code",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-12.2%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-5%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
             onChange: this.onChange3
         };
         // const inputProps1 = {

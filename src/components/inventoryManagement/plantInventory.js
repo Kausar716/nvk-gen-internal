@@ -193,7 +193,7 @@ export class PlantInventory extends Component {
             value:this.state.plantNameValue,
             className:" form-control  btn btn-search ",
             id:"genus",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-7%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
             onChange: this.onChange,
             dataId: 'my-data-id',
         };
@@ -202,7 +202,7 @@ export class PlantInventory extends Component {
             value:this.state.plantSkuValue,
             className:" form-control  btn btn-search ",
             id:"sku_code",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",marginTop:"-7%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
             onChange: this.onChangesku,
             dataId: 'my-data-id',
         };
@@ -211,7 +211,7 @@ export class PlantInventory extends Component {
             value:this.state.plantbatchValue,
             className:" form-control  btn btn-search ",
             id:"batch_code",
-            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-12.2%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"17%",border:"1px solid lightgray",marginTop:"-5%",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
             onChange: this.onChangebatchcode,
             dataId: 'my-data-id',
         };

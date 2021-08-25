@@ -78,7 +78,7 @@ const CS_ExcahangeDetails = (props) => {
     if(e.target.value!==""){
      props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")
  
-    }
+    }else props.handleSupplierExchnageData(e.target.value,"exchange_rate","supplierExchange")
   }
   const datePickerData =(e)=>{
     setCheckedData(true)
@@ -90,8 +90,18 @@ const datePickerData1 =(e)=>{
   props.handleSupplierExchnageData(e.target.value,"exchange_date","supplierExchange")
 
 }
+const thirdMethod2=(e)=> {
+  console.log(e.target)
+  const re =  /^(\d+)?(?:\.\d{1,2})?$/g;
+  console.log(re)
+  if (!re.test(e.target.value)) {
+      e.preventDefault();
+  }else{
+    
+  }
+}
 const saveExchangeData = ()=>{
-  if(!exchange_customer && !exchange_supplier ){
+  if(checkedData){
     setCheckedData(false)
     setSuccessMessage(["Customer Exchange Rates Saved successfully"])
     // toggle1(true)
@@ -194,13 +204,13 @@ const dataTochange = (e)=>{
   if(e.target.value!=="" && e.target.id =="exchange_rate"){
     setexchangeCustomer(false)
     if(Number.isInteger(parseFloat(e.target.value))){
-      let intValue = e.target.value*1.00
-      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerExchange")
+      let intValue = e.target.value*1.000
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
     }else{
       let splitValue = e.target.value.split(".")
      if(splitValue[1].length<3){
-      let intValue = e.target.value*1.00
-      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerExchange")
+      let intValue = e.target.value*1.000
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerExchange")
 
      }else{
       var charCode = (e.which) ? e.which : e.keyCode;
@@ -218,20 +228,23 @@ const dataTochange = (e)=>{
      }
     }
     return
+  }else{
+    props.handleExchangeData("1.000",e.target.id,"customerExchange")
+
   }
 }
 const dataTochange1 =(e)=>{
   setCheckedData(true)
   if(e.target.value!=="" && e.target.id =="exchange_rate1"){
-    // setexchangeSupplier(false)
+    setexchangeSupplier(false)
     if(Number.isInteger(parseFloat(e.target.value))){
-      let intValue = e.target.value*1.00
-      props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
+      let intValue = e.target.value*1.000
+      props.handleSupplierExchnageData(intValue.toFixed(3),"exchange_rate","supplierExchange")
     }else{
       let splitValue = e.target.value.split(".")
      if(splitValue[1].length<3){
-      let intValue = e.target.value*1.00
-      props.handleSupplierExchnageData(intValue.toFixed(2),"exchange_rate","supplierExchange")
+      let intValue = e.target.value*1.000
+      props.handleSupplierExchnageData(intValue.toFixed(3),"exchange_rate","supplierExchange")
 
      }else{
       var charCode = (e.which) ? e.which : e.keyCode;
@@ -249,6 +262,9 @@ const dataTochange1 =(e)=>{
      }
     }
     return
+  }else{
+    props.handleSupplierExchnageData("1.000","exchange_rate","supplierExchange")
+
   }
 
 }
@@ -269,7 +285,7 @@ const dataTochange1 =(e)=>{
                   {/* <Label className="secondHeader">
                   Customer Exchange Details
                   </Label> */}
-                   <p className="sub_menu_nameD"> Customer Exchange Rates</p>
+                   <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}> Customer Exchange Rates</p>
           </div>
 
 
@@ -280,7 +296,7 @@ const dataTochange1 =(e)=>{
 
 
           <Row className="containerBox">
-              <Col>
+              <Col className="col-2">
                     <Label className="subHeadingLabels">From Currency</Label>
                         <Row>
                             <Col><p className="topSpace">{customerExchange.from_currency}</p>
@@ -289,7 +305,7 @@ const dataTochange1 =(e)=>{
               </Col>
 
 
-              <Col>
+              <Col className="col-2">
                   <Label className="subHeadingLabels">To Currency</Label>
                         <Row>
                             <Col><p className="topSpace">{customerExchange.to_currency}</p>
@@ -297,14 +313,13 @@ const dataTochange1 =(e)=>{
                         </Row>
               </Col>
 
-              <Col className="spacebelow">
+              <Col className="col-3">
                   <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Rate</Label>
                         <Row>
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"0.00"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate" step=".001" onBlur={dataTochange}/> 
-                                <p>{exchange_customer?<span style={{fontSize:"small",color:"red"}}>Enter Valid Exchange(Fixed 2 Decimals)</span>:""}</p>
+                                <input type="number" placeholder={"1.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate"  onBlur={dataTochange} onKeyPress={thirdMethod2}/> 
                             </div>
                            
                             
@@ -312,7 +327,7 @@ const dataTochange1 =(e)=>{
                         </Row>
               </Col>
 
-              <Col>
+              <Col className="col-2">
                   <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
                         <Row>
                             <Col>
@@ -327,13 +342,13 @@ const dataTochange1 =(e)=>{
 
   
           <div className="docDetails" style={{marginTop:"-16px"}}>
-          <p className="sub_menu_nameD">  Supplier Exchange</p>
+          <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}>  Supplier Exchange Rates</p>
                   {/* <Label className="secondHeader">
                   Suppliear Exchange Details
                   </Label> */}
           </div>
           <Row className="containerBox">
-              <Col>
+              <Col className="col-2">
                     <Label className="subHeadingLabels">From Currency</Label>
                         <Row>
                             <Col><p className="topSpace">CAD</p>
@@ -342,7 +357,7 @@ const dataTochange1 =(e)=>{
               </Col>
 
 
-              <Col>
+              <Col className="col-2">
                   <Label className="subHeadingLabels">To Currency</Label>
                         <Row>
                             <Col><p className="topSpace">US</p>
@@ -350,14 +365,14 @@ const dataTochange1 =(e)=>{
                         </Row>
               </Col>
 
-              <Col  className="spacebelow">
+              <Col className="col-3">
                   <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Rate</Label>
                         <Row>
                             <Col> 
                                 
                             <div>
-                                <input type="number" step=".001" style={{textAlign:"right"}} className="inputBoxDesign2" placeholder={"0.00"} value={supplierExchange.exchange_rate}    onChange={handleInputData1} id="exchange_rate1" onBlur={dataTochange1}/> 
-                                <p>{exchange_supplier?<span style={{fontSize:"small",color:"red"}}>Enter Valid Exchange(Fixed 2 Decimals)</span>:""}</p>
+                    
+                                <input type="number" placeholder={"1.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={supplierExchange.exchange_rate} onChange={handleInputData1} id="exchange_rate1"  onBlur={dataTochange1} onKeyPress={thirdMethod2}/> 
                             </div>
                            
                            
@@ -366,7 +381,7 @@ const dataTochange1 =(e)=>{
                         </Row>
               </Col>
 
-              <Col>
+              <Col className="col-2">
                   <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
                         <Row>
                             <Col>
