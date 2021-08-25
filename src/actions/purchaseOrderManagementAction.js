@@ -1,7 +1,10 @@
 import {
     GET_PURCHASE_ORDER_LIST,
     axios,
-    config
+    config,
+    PO_PAGE_REDIRECT_ACTION,
+    PO_SUB_PAGE_REDIRECT_ACTION,
+    PO_SET_PAGE_NUMBER,
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
         axios.get(`/api/purchase-order-list`,config).then(res=>{
@@ -13,3 +16,26 @@ import {
             })
         })
     }
+    export const poPageReDirectAction = (page,actionType) => {
+        return{
+            type:PO_PAGE_REDIRECT_ACTION,
+            page:page,
+            actionType:actionType
+        }
+    
+    }
+    export const poSubPageReDirectAction = (page, productID) => {
+      return{
+            type:PO_SUB_PAGE_REDIRECT_ACTION,
+            page:page,
+           // productID:productID
+        }
+    
+    }
+    export const poSetPageNumber = (pageNumber) => {
+        return{
+              type:PO_SET_PAGE_NUMBER,
+              pageNumber:pageNumber,
+          }
+      
+      }

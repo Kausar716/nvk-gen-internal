@@ -451,9 +451,9 @@ export class PurchaseOrders extends React.Component {
 
 
                                 <div class="form-group row">
-                                    <div class="col-md-12 table-responsive">
+                                    {/* <div class="col-md-12 table-responsive"> */}
                                        <PurchaseOrderTable/>
-                                    </div>
+                                    {/* </div> */}
                                 </div>
                             </div>
                         </div>
