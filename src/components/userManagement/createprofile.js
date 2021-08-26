@@ -201,7 +201,7 @@ export class CreateUserProfile extends Component {
 
     }
     validate = () =>{
-         debugger;
+         //debugger;
         let {errorObj,errorCount}=this.state
         //let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
          // let phoneReg=/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
