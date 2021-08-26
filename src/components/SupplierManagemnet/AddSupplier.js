@@ -692,7 +692,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8 mt- mt-md-0">
                                     <label>Website</label>
-                                    <div class="d-flex">
+                                    {/* <div class="d-flex">
                                     <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
                                         {enableUrl== true?
                                       
@@ -702,6 +702,21 @@ console.log(props.supplierData.supplierReasonList)
                                         :
                                        
                                             <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true} style={{border:"2px solid #629C44"}}>
+                                         
+                                            Visit
+                                            </button>
+                                       }
+                                        </div> */}
+                                        <div class="d-flex">
+                                    <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
+                                        {enableUrl== true || (supplierDataById.website&&action=="edit")?
+                                      
+                                          
+                                            <a href={supplierDataById.website} target="_blank" class="btn  btn-lg ml-2" style={{display:"inline",border:"2px solid #629C44",color:"white",backgroundColor:"#629C44"}}>Visit</a>
+                                       
+                                        :
+                                       
+                                            <button class="btn btn-outline-secondary btn-lg ml-2 hoverVisit" disabled={true} style={{display:"inline",border:"3px solid #629C44",color:"#629C44"}}>
                                          
                                             Visit
                                             </button>

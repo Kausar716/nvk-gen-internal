@@ -69,6 +69,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
             let active= this.props.customerData.customerReturnReasonList.active
            let inactive=this.props.customerData.customerReturnReasonList.inactive
             this.setState({active:active,inactive:inactive,loading:true})
+            console.log(active,inactive)
         }
     componentDidMount(){
         
@@ -371,13 +372,13 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                 obj.return_to_inventory = this.state.selectedOption
                 //this.props.customerData.customerReturnReason.return_to_inventory
                 obj.status = 1
-                let result = this.props.saveReturnReasonMethod(obj)
-                result.then(data=>{
-                    this.props.getAllReturnReasonMethods().then(()=>{
-                        // alert("ji")
-                        this.getCatgoryData()
-                    })
-                })
+                // let result = this.props.saveReturnReasonMethod(obj)
+                // result.then(data=>{
+                //     this.props.getAllReturnReasonMethods().then(()=>{
+                //         // alert("ji")
+                //         this.getCatgoryData()
+                //     })
+                // })
             // }
 
             // this.setState({
