@@ -178,6 +178,11 @@ function AddCustomer(props) {
             return errosList
 
         }
+        if(customerDataById.alert==1 && (customerDataById.customer_details ===null || customerDataById.customer_details ==="")){
+            errosList.push("Please add Alert Details")
+            return errosList
+
+        }
         if(customerDataById.website_url){
             // alert("fds")
             var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
@@ -443,7 +448,7 @@ const dataTochange =(e)=>{
         let intValue = e.target.value*1.0
         // alert(e.target.value)
         // props.handleExchangeData(val,e.target.id,"customerDataById")
-      props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerDataById")
+      props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerDataById")
       }
     
       else{
@@ -451,7 +456,7 @@ const dataTochange =(e)=>{
         let splitValue = e.target.value.split(".")
        if(splitValue[1].length<3){
         let intValue = e.target.value*1.0
-        props.handleExchangeData(intValue.toFixed(2),e.target.id,"customerDataById")
+        props.handleExchangeData(intValue.toFixed(3),e.target.id,"customerDataById")
        }else{
         props.handleExchangeData(e.target.value,e.target.id,"customerDataById")
 
@@ -636,14 +641,22 @@ const dataTochange =(e)=>{
                                 </div>
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <span class="mr-2 f-s-18"><strong>Level</strong></span>
-                                    <select class="form-control" onChange={handleInput} id="level">
+                                    <select class="form-control" onChange={handleInput} id="level" disabled={customerDataById.status==1?false:true}>
                                         <option value={0}>Normal</option>
                                             {customerStatusList.active.map(type=>{
                                                 return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(customerDataById.level)?"selected":""}>{type.status_level}</option>)
                                             })}
                                         </select>
                                 </div>
-
+                                <div class=" d-flex align-items-center mr-3 my-md-2 mt-2 mt-md-0">
+                                <span class="mr-2 f-s-18"><strong>Reason</strong></span>
+                                        <select class="form-control" onChange={handleInput} id="reason" disabled={customerDataById.status==0?false:true} style={{width:150}}>
+                                            <option value="">Select Reason</option>
+                                            {customerReasonList.active.map(reason=>{
+                                                return(<option value={reason.id} selected={parseInt(reason.id)==parseInt(customerDataById.reason)?"selected":""}>{reason.reason}</option>)
+                                            })}
+                                        </select>
+                                    </div>
                             </div>
                         </div>
                     </div>
@@ -664,20 +677,20 @@ const dataTochange =(e)=>{
                                 <h2>Customer Information</h2>
                                 <hr/>
                                 <div class="row mt-3" style={{display:customerDataById.alert ==1?"block":"none"}}>
-                                    <div  class="col-md-8 col-lg-8">
+                                    <div  class="col-md-12 col-lg-12">
                                     <label>Alert Details<span class="text-danger">*</span></label>
-                                        <input type="text" className="form-control" placeholder="ADD DETAILS HERE" id="alert_data" onChange={handleInput}/>
+                                        <input type="text" className="form-control" placeholder="Add Alert Details..." id="customer_details" onChange={handleInput} value={customerDataById.customer_details}/>
                                     </div>
                                 </div>
                   
                     
                                 <div class="row mt-3">
-                                  <div class="col-md-4 col-lg-4">
+                                  <div class="col-md-6 col-lg-6">
                                         <label>Customer Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" value={customerDataById.name} onChange={handleInput} placeholder="Customer Name"/>
                                         {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                                     </div>
-                                    <div class="col-md-4 col-lg-4"  onClick={showCheckboxes} id="setBoxData" >
+                                    <div class="col-md-6 col-lg-6"  onClick={showCheckboxes} id="setBoxData" >
                                     <label>Type<span class="text-danger">*</span></label>
                                         {/* <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}> */}
                                             {/* <select> */}
@@ -719,15 +732,7 @@ const dataTochange =(e)=>{
 
                                     
                                     </div>
-                                    <div class="col-md-4 col-lg-4">
-                                        <label>Reason<span class="text-danger"></span></label>
-                                        <select class="form-control" onChange={handleInput} id="reason" disabled={customerDataById.status==0?false:true}>
-                                            <option value="">Select Reason</option>
-                                            {customerReasonList.active.map(reason=>{
-                                                return(<option value={reason.id} selected={parseInt(reason.id)==parseInt(customerDataById.reason)?"selected":""}>{reason.reason}</option>)
-                                            })}
-                                        </select>
-                                    </div>
+                               
                                     {/* <div class="col-md-2 col-lg-2 mt-2 mt-md-0">
                                         <label>Type<span class="text-danger">*</span></label>
                                       
