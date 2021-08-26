@@ -5,7 +5,7 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, setPageNumberPo,handleSearchFilterByAlpha, handleAplhabetFilterBySN} from "../../actions/purchaseOrderActions";
-import initialDetails from './initialDetails';
+import initialDetails from './initialDetailsQL';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
 
@@ -194,16 +194,16 @@ export class QuoteList extends React.Component {
 
 
       if(initialDetails1){
-        pageNumber = this.props.purchaseOrderData.pageNumber
-        // console.log()
-        initialDetails1 = [...initialDetails1]
+        // pageNumber = this.props.purchaseOrderData.pageNumber
+        // // console.log()
+        // initialDetails1 = [...initialDetails1]
 
 
-         totalLength = initialDetails1.length
-         plantPerPage = this.state.pageSize;
-         pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
-         displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
-         pageCount = Math.ceil(initialDetails1.length/plantPerPage)
+        //  totalLength = initialDetails1.length
+        //  plantPerPage = this.state.pageSize;
+        //  pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
+        //  displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
+        //  pageCount = Math.ceil(initialDetails1.length/plantPerPage)
 
     }
 

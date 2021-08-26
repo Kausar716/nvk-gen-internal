@@ -64,37 +64,8 @@ export class PurchaseOrders extends React.Component {
     //     this.setState({searchInput: e.target.value})
     //   }
 
-    onSearchInputChange2 = (e) => {
-        this.setState({searchInput: e.target.value})
-      }
+ 
 
-      onSearchInputChange3 = (e) => {
-        this.setState({searchInput: e.target.value})
-      }
-
-
-    onSearchInputChange = (e) => {
-        this.setState({alphabet: e.target.value,alphabetSelect:''})
-        this.setState({
-          button:!this.state.button
-        })
-      }
-
-
-      handleClickCheckBox = (e)=>{
-
-        // let newCheckedData = initialDetails.filter(newCheck => newCheck.status===e.target.name)
-        // //this.setState({alphabet: newCheckedData})
-        // this.setState({checkedData: newCheckedData})
-        // console.log("e1",checkedData);
-      }
-
-
-
-      paginationChange =(event, page)=>{
-        // alert("hg")
-        this.props.setPageNumberPo(page-1)
-    }
  // <div class="form-group row mt-4">
         //     <div class="col-md-12 col-lg-12">
         //     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
@@ -107,23 +78,7 @@ export class PurchaseOrders extends React.Component {
         //     </div>
 
 
-      onAlphabetClick = (e) => {
-         // e.preventdefault();
-        // this.setState({alphabet: e.target.value})
-        this.setState({alphabet: e.target.value,alphabetSelect:e.target.value,button:false})
-      }
-      prepareAlphabets = () => {
-        let result = [];
-        for(let i=65; i<91; i++) {
-          result.push(
-
-            // <button type="button" key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)} >{String.fromCharCode(i)}</button>
-            <button type="button" className={ this.state.alphabetSelect===String.fromCharCode(i)?" buttonStyles selected_alphabet":"unselected_aplphabet buttonStyles"}  key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)}>{String.fromCharCode(i)}</button>
-           
-          )
-        }
-        return result;
-      }
+   
 
 
      // checkOperation=(checkedData, element)=>(checkedData ? checkedData.filter(newCheck => newCheck.status==="open") : "");
@@ -186,35 +141,10 @@ export class PurchaseOrders extends React.Component {
         let plantPerPage =0;
         let pagesVisited = 0;
         let displayPOList = []
+        let {openPoCount}= this.props.purchaseOrderListData
 
 
-      
-    //   let initialDetails1 = initialDetails || this.state.checkedData
-    //     console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
-
-
-    //   if(initialDetails1){
-    //     pageNumber = this.props.purchaseOrderData.pageNumber
-    //     // console.log()
-    //     initialDetails1 = [...initialDetails1]
-
-
-    //      totalLength = initialDetails1.length
-    //      plantPerPage = this.state.pageSize;
-    //      pagesVisited =  this.props.purchaseOrderData.pageNumber*this.state.pageSize;
-    //      displayPOList = initialDetails1.slice(pagesVisited,pagesVisited+plantPerPage)
-    //      pageCount = Math.ceil(initialDetails1.length/plantPerPage)
-
-    // }
-
-            // console.log("displayPOList",displayPOList)
-
-            //   const filteredList = this.filterItems(displayPOList);
-
-            //   console.log("filteredList", filteredList)
-       // console.log(this.props.purchaseOrderData)
     return (
-
 
         
         <div>
@@ -237,7 +167,7 @@ export class PurchaseOrders extends React.Component {
                     <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
                         <div>
                             <label>Open P.O.'s</label>
-                            <h1>{this.state.TotalPurchaseOder}</h1>
+                            <h1>{openPoCount}</h1>
                             <div><a href="">View All</a></div>
                         </div>
                     </div>
@@ -357,104 +287,8 @@ export class PurchaseOrders extends React.Component {
                                     </div>
                                 </div>
 
-                                {/* <div class="form-group row mt-3">
-                                    <div class="col-md-12 col-lg-12">
-                                        <ul class="list-unstyled searchAlpha d-flex flex-wrap mb-0">
-                                            <li><a href="#" class="active">All</a></li>
-                                            <li><a href="#">A</a></li>
-                                            <li><a href="#">B</a></li>
-                                            <li><a href="#">C</a></li>
-                                            <li><a href="#">D</a></li>
-                                            <li><a href="#">E</a></li>
-                                            <li><a href="#">F</a></li>
-                                            <li><a href="#">G</a></li>
-                                            <li><a href="#">H</a></li>
-                                            <li><a href="#">I</a></li>
-                                            <li><a href="#">J</a></li>
-                                            <li><a href="#">K</a></li>
-                                            <li><a href="#">L</a></li>
-                                            <li><a href="#">M</a></li>
-                                            <li><a href="#">N</a></li>
-                                            <li><a href="#">O</a></li>
-                                            <li><a href="#">P</a></li>
-                                            <li><a href="#">Q</a></li>
-                                            <li><a href="#">R</a></li>
-                                            <li><a href="#">S</a></li>
-                                            <li><a href="#">T</a></li>
-                                            <li><a href="#">U</a></li>
-                                            <li><a href="#">V</a></li>
-                                            <li><a href="#">W</a></li>
-                                            <li><a href="#">X</a></li>
-                                            <li><a href="#">Y</a></li>
-                                            <li><a href="#">Z</a></li>
-                                        </ul>
-                                    </div>
-                                </div> */}
-
-
-                        {/* <input type="search" onChange={this.onSearchInputChange} /> */}
-
-
-
-                       
-
-
-                    
-                            
-                            <div className="row_1">
-                                <div style={{float:"left",marginBottom:15}}>
-                                {/* <div> */}
-                                    <label className="greenText">{"Showing " + (pageNumber>0 ? (this.state.pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((this.state.pageSize*((pageNumber)))+this.state.pageSize)>totalLength ? totalLength : ((this.state.pageSize*((pageNumber)))+this.state.pageSize)) : ((((pageNumber)+1)*this.state.pageSize)>totalLength?totalLength:(((pageNumber)+1)*this.state.pageSize)))   + "  of   "  +   totalLength }</label>
-                                {/* </div> */}
-                                </div>
-
-
-                                    <div >
-                                    <label className="greenText">Purchase Orders&nbsp;</label>
-                                    <label className="greenText"> Show</label>
-                                                <select 
-                                                    value={this.state.pageSize}
-                                                    onChange={e => {
-                                                        this.setState({
-                                                            pageSize:  Number(e.target.value)
-                                                        })
-                                                    }}
-                                                    >
-                                                    {[5,15, 25, 50, 100, 250].map(pageSize => (
-                                                        <option key={pageSize} value={pageSize}>
-                                                        {pageSize}
-                                                        </option>
-                                                    ))}
-                                                </select>
-                                        </div>
-
-                
-
-
-
-                                <div style={{float:"right",marginBottom:15}}>
-                                    <TablePagination pageChange={this.paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
-                                </div>
-                               
-                            </div>
-                            <div class="form-group row mt-0">
-                                <div class="col-md-12 col-lg-12">
-                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        {/* <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li> */}
-
-                                        <button type="button" className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
-                                            {this.prepareAlphabets()}
-                                    </ul>
-                                </div>
-                            </div>
-                            
-
-
-                                <div class="form-group row">
-                                    <div class="col-md-12 table-responsive">
+                                
                                        <PurchaseOrderTable/>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </form>
@@ -469,7 +303,7 @@ export class PurchaseOrders extends React.Component {
 const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
-        purchaseOrderData:state.PurchaseOrderReducer
+        purchaseOrderListData:state.purchaseOrderManagementData,
     }
 
 )

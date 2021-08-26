@@ -1,6 +1,6 @@
 {
     "hosting": {
-      "site": "nvk-internal",
+      "site": "nvk-genesys",
       "public": "public",
       "ignore": [
         "firebase.json",

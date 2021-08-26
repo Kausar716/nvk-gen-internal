@@ -49,5 +49,5 @@ export default combineReducers({
     inventoryManagementReducer:inventoryManagementReducer,
     productManufacturerData:productManufacturerReducer,
     purchaseOrderManagementData:purchaseOrderManagement,
-    quoteOrderData:quoteOrderManagement,
+    quoteOrderReducer:quoteOrderManagement,
 })
