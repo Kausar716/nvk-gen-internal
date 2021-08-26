@@ -103,7 +103,8 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                         onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
                       },
                       {
-                        label: 'No'
+                        label: 'No',
+                        onClick: () => { this.setState({deleteon:false})}
                       }
                     ]
                   });
@@ -540,7 +541,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                    <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable2">
                                         {(provided, snapshot) => (
-                                            <div  style={{height:265}} 
+                                            <div   style={{height:this.state.inactive.length>5?"auto":265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.inactive.map((item, index) => (
@@ -557,7 +558,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}({item.sub_attributeschild[0].value})</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}  ({item.sub_attributeschild[0].value})</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
@@ -609,7 +610,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"110px"}}
+                                            <div   style={{width:"120px",height:"70px"}}
                                                 ref={provided.innerRef}
                                             >
                                               
@@ -623,7 +624,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                             ref={provided.innerRef}>
                                                         
                                                                 
-                                                                <div className="deleteSpace"  >
+                                                                <div className="deleteSpace"  style={{height:"70px"}} >
                                                 <i className ={`fa fa-trash ${this.state.deleteon===true?"trashShake":""}`}style={{fontSize:35,color:"red"}} ></i>
                                                 <p style={{fontSize:"14px",fontWeight:"bold",color:"gray",textAlign:"center"}}>Drag & Drop Here to Remove</p>
                                                 {/* <img style={{width:"5em"}} src="./assets/img/Genral_Icons/Drag _Drop_remove_red.png" alt="Settings" className="trashShake"/> */}
@@ -654,7 +655,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                     <ul class="list-unstyled" id="categoryActive">
                                     <Droppable droppableId="droppable">
                                         {(provided, snapshot) => (
-                                            <div   style={{height:265}} 
+                                            <div    style={{height:this.state.active.length>5?"auto":265}} 
                                                 ref={provided.innerRef}
                                             >
                                                 {this.state.active.map((item, index) => (
@@ -671,7 +672,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}({item.sub_attributeschild[0].value})</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value} ({item.sub_attributeschild[0].value})</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  

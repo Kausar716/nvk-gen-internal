@@ -9,6 +9,7 @@ import {setPageNumberQo,handleSearchFilterByAlpha,getQuoteOrderList,
 import initialDetailsQL from './initialDetailsQL';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 
 class QuoteList extends React.Component {
 
@@ -20,7 +21,7 @@ class QuoteList extends React.Component {
             editCustmerToggle:false,
             customerObject:{},
             pageSize:5,
-            alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
+           // alphabets:["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"],
             selectedAlpha:"All",
             searchValue:"",
             radioFilter:"active",
@@ -56,7 +57,10 @@ class QuoteList extends React.Component {
                      {status:"QUOTE", orderNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
                      supplierOrder:"57901", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",
                       dispatch:"Delivery", amount:"12,012.00" }
-            ]
+            ],
+            initialDetailsQL:[],
+            searchString: "",
+            orderSearch:""
         }
     }
     //const [value, onChange] = useState(new Date());
@@ -64,6 +68,35 @@ class QuoteList extends React.Component {
     // onSearchInputChange = (e) => {
     //     this.setState({searchInput: e.target.value})
     //   }
+
+    componentDidMount=()=> {
+        this.setState({
+            initialDetailsQL: initialDetailsQL
+        });
+        this.refs.search.focus();
+        this.refs.ordSearch.focus();
+      }
+
+
+      handleChange=()=> {
+        this.setState({
+          searchString: this.refs.search.value,
+        });
+      }
+
+      handleOrdChange=()=>{
+        this.setState({
+            orderSearch:this.refs.ordSearch.value
+          });
+      }
+
+    //   handleChange=()=> {
+    //     this.setState({
+    //       searchString: this.refs.search.value
+    //     });
+    //   }
+
+
 
     onSearchInputChange2 = (e) => {
        // debugger;
@@ -110,21 +143,28 @@ class QuoteList extends React.Component {
 
 
       onAlphabetClick = (e) => {
+         // debugger;
          // e.preventdefault();
-        // this.setState({alphabet: e.target.value})
-        this.setState({alphabet: e.target.value,alphabetSelect:e.target.value,button:false})
+        // this.setState({alphabet: e.target.value})  this.refs.buttonClik.value
+        this.setState({alphabet:e.target.value, alphabetSelect:e.target.value, button:false})
+        console.log("alphabet", this.state.alphabet, this.state.alphabetSelect)
       }
       prepareAlphabets = () => {
+         
         let result = [];
+       
         for(let i=65; i<91; i++) {
-          result.push(
-
-            // <button type="button" key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)} >{String.fromCharCode(i)}</button>
-            <button type="button" className={ this.state.alphabetSelect===String.fromCharCode(i)?" buttonStyles selected_alphabet":"unselected_aplphabet buttonStyles"}  key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)}>{String.fromCharCode(i)}</button>
            
+          result.push(
+            // <button type="button" key={i} onClick={this.onAlphabetClick} value={String.fromCharCode(i)} >{String.fromCharCode(i)}</button>
+            <button type="button" className={ this.state.alphabetSelect===String.fromCharCode(i)?" buttonStyles selected_alphabet":"unselected_aplphabet buttonStyles"}  key={i} onClick={this.onAlphabetClick}  ref="buttonClik" value={String.fromCharCode(i)}>{String.fromCharCode(i)}</button>
           )
         }
+       
+
         return result;
+
+       
       }
 
 
@@ -165,7 +205,6 @@ class QuoteList extends React.Component {
 
 //END
      handleAlphabetFilter = (e)=>{
-
         this.setState({selectedAlpha:e.target.id})
        // this.setState({selectedAlpha:e.target.id})
         this.props.handleSearchFilterByAlpha(e.target.id, this.state.quoteOrderList)
@@ -176,6 +215,37 @@ class QuoteList extends React.Component {
 
    // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
+
+        console.log("alphabetInrender", this.state.alphabet, this.state.alphabetSelect)
+        let _users = this.state.initialDetailsQL;
+        let search = this.state.searchString.trim().toLowerCase();
+        let orderSearch = this.state.orderSearch.trim().toLowerCase();
+        let alphaVal = this.state.alphabetSelect.trim().toLowerCase();
+    
+        if (search.length > 0 ) {
+          _users = _users.filter(function(user) {
+            return user.suppliearName.toLowerCase().match(search);
+          });
+        }
+
+        if (orderSearch.length > 0 ) {
+            _users = _users.filter(function(user) {
+              return user.orderNumber.toLowerCase().match(orderSearch);
+            });
+          }
+
+        if (alphaVal.length>0 ) {
+            _users = _users.filter(function(user) {
+              return user.orderNumber.toLowerCase().match(alphaVal);
+            });
+          }
+
+
+
+
+
+
+        console.log("_users", _users)
       //  debugger
         //let purchaseOrderData = [];
         console.log("quoteOrderList", this.props.quoteOrderData)
@@ -441,7 +511,12 @@ class QuoteList extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control"  onChange={this.onSearchInputChange2}  placeholder="Search Customer Name/Number"/>
+                                            <input type="text" class="form-control" 
+                                             //onChange={this.onSearchInputChange2} 
+                                             ref="search"
+                                             value={this.state.searchString} 
+                                             onChange={this.handleChange}
+                                             placeholder="Search Customer Name/Number"/>
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
@@ -459,7 +534,25 @@ class QuoteList extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" onChange={this.onSearchInputChange3} placeholder="Search Order"/>
+
+                                            <input type="text" class="form-control" 
+                                             ref="ordSearch"
+                                             value={this.state.orderSearch} 
+                                             onChange={this.handleOrdChange}
+                                            // onChange={this.onSearchInputChange3} 
+                                            placeholder="Search Order"/>
+
+
+                                            {/* <Autocomplete
+                                                id="custom-input-demo"
+                                                options={initialDetailsQL}
+                                                getOptionLabel={(option) => option.orderNumber}
+                                                renderInput={(params) => (
+                                                    <div ref={params.InputProps.ref}>
+                                                    <input class="form-control"  style={{ width: 200 }} ref="ordSearch" type="text" {...params.inputProps} />
+                                                    </div>
+                                                )}
+                                                /> */}
                                         </div>
                                     </div>
                                 </div>
@@ -553,7 +646,7 @@ class QuoteList extends React.Component {
                                             </thead>
 
                                             <tbody>
-                                                {filteredList.map(pQuoteList=>{
+                                                {_users.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
                                                     <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
                                                     <td><a href="">{pQuoteList.orderNumber}</a></td>

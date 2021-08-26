@@ -546,24 +546,9 @@ console.log(props.supplierData.supplierReasonList)
                         <div class="col-md-6">
                             <h2>Supplier Details</h2>
                             <div class="col-md-8 text-md-left">
-                            <div class="d-flex flex-wrap align-items-center justify-content-md-start">
+                            {/* <div class="d-flex flex-wrap align-items-center justify-content-md-start"> */}
                          
-                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
-                           
-                                                    {/* <p style={{marginLeft:"2%",marginTop:"16px"}}>Active</p>
-                                    <div class="switcher ml-2 pr-2">
-                                                <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(supplierDataById.status) ===1?true:false}/>
-                                                <label for="status"></label>
-                                            </div> */}
-                                            <span class="mr-2 f-s-18"><strong>Reason</strong></span>
-                                    <select class="form-control" onChange={handleInput} id="reason">
-                                        <option value={0}>Normal</option>
-                                            {props.supplierData.supplierReasonList.active.map(type=>{
-                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.reason)?"selected":""}>{type.reason}</option>)
-                                            })}
-                                        </select>
-                                   
-                                </div>
+                        
                                 {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                    
                                 </div> */}
@@ -577,7 +562,7 @@ console.log(props.supplierData.supplierReasonList)
                                         </select>
                                 </div> */}
 
-                            </div>
+                            {/* </div> */}
                         </div>
                             {/* <div class="d-flex align-items-center">
                                 <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
@@ -610,6 +595,15 @@ console.log(props.supplierData.supplierReasonList)
 
                                    
                                 </div>
+                                <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
+                                <span class="mr-2 f-s-18"><strong>Reason</strong></span>
+           <select class="form-control" onChange={handleInput} id="reason" disabled={supplierDataById.status==0?false:true}>
+               <option value={0}>Normal</option>
+                   {props.supplierData.supplierReasonList.active.map(type=>{
+                       return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.reason)?"selected":""}>{type.reason}</option>)
+                   })}
+               </select>
+               </div>
                                 {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0">
                                     <span class="mr-2 f-s-18"><strong>Level</strong></span>
                                     <select class="form-control" onChange={handleInput} id="level">
@@ -621,6 +615,17 @@ console.log(props.supplierData.supplierReasonList)
                                 </div> */}
 
                             </div>
+                            {/* <div class=" d-flex align-items-center mr-4 my-md-2 mt-3 mt-md-0"> */}
+                           
+                           {/* <p style={{marginLeft:"2%",marginTop:"16px"}}>Active</p>
+           <div class="switcher ml-2 pr-2">
+                       <input type="checkbox" id="status"  onChange={handleInput}  name="status"  checked={parseInt(supplierDataById.status) ===1?true:false}/>
+                       <label for="status"></label>
+                   </div> */}
+       
+          
+       {/* </div> */}
+      
                         </div>
                         {/* <div class="col-md-6 text-md-right">
                             <div class="d-flex flex-wrap align-items-center justify-content-md-end">
@@ -710,12 +715,12 @@ console.log(props.supplierData.supplierReasonList)
                                         <textarea rows="" cols=""  class="form-control" name="supplier_notes" value={supplierDataById.supplier_notes} onChange={handleInput} id="supplier_notes" placeholder="Add Notes..."/>
                                     </div>
                                 </div>
-                                <div class="row mt-3" style={{display:supplierDataById.status==0?"block":"none"}}>
+                                {/* <div class="row mt-3" style={{display:supplierDataById.status==0?"block":"none"}}>
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Reason <small></small></label>
                                         <textarea rows="" cols=""  class="form-control" name="reason" value={supplierDataById.reason} onChange={handleInput} id="reason" placeholder="Add Reason..."/>
                                     </div>
-                                </div>
+                                </div> */}
 
 
 
@@ -763,7 +768,7 @@ console.log(props.supplierData.supplierReasonList)
                                     <select class="form-control" onChange={handleInput} id="term">
                                         <option value={0}>None</option>
                                             {props.customerData.customerTermList.active.map(type=>{
-                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.reason)?"selected":""}>{type.term}</option>)
+                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.term)?"selected":""}>{type.term}</option>)
                                             })}
                                         </select>
                                     {/* <select class="form-control" onChange={handleInput} id="units">
