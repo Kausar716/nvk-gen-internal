@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
-import {deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -59,12 +59,13 @@ function AddCustomer(props) {
         setisOpenAddress(!isOpenAddress)
         // alert("hi")
     }
-    const {deleteCustomer,customerDataById,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
+    const {deleteCustomer,customerReasonList,customerDataById,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
     console.log()
     useEffect (()=>{
         props.getAllCustomerType()
         props.getAllStatusMethods()
         props.getAllTermsMethods()
+        props.getAllReasonMethods()
         props.getCustomerContacts(customerContact.customer_id)
         props.getcustomerAddress(customerAddress.customer_id)
     },[reStock])
@@ -668,23 +669,15 @@ const dataTochange =(e)=>{
                                         <input type="text" className="form-control" placeholder="ADD DETAILS HERE" id="alert_data" onChange={handleInput}/>
                                     </div>
                                 </div>
-                
+                  
                     
                                 <div class="row mt-3">
-                                  <div class="col-md-6 col-lg-6">
+                                  <div class="col-md-4 col-lg-4">
                                         <label>Customer Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" id="name" value={customerDataById.name} onChange={handleInput} placeholder="Customer Name"/>
                                         {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                                     </div>
-                                    {/* <div class="col-md-2 col-lg-2 mt-2 mt-md-0">
-                                        <label>Type<span class="text-danger">*</span></label>
-                                        <select class="form-control" onChange={handleInput} id="type">
-                                            {customerTypeList.active.map(type=>{
-                                                return(<option value={type.id}></option>)
-                                            })}
-                                        </select>
-                                    </div> */}
-                                    <div class="col-md-6 col-lg-6 mt-4 mt-md-0"  onClick={showCheckboxes} id="setBoxData" >
+                                    <div class="col-md-4 col-lg-4"  onClick={showCheckboxes} id="setBoxData" >
                                     <label>Type<span class="text-danger">*</span></label>
                                         {/* <div style={{border:"1px solid lightgray",height:"40px",borderRadius:3,paddingLeft:10,paddingTop:7}}> */}
                                             {/* <select> */}
@@ -726,6 +719,20 @@ const dataTochange =(e)=>{
 
                                     
                                     </div>
+                                    <div class="col-md-4 col-lg-4">
+                                        <label>Reason<span class="text-danger"></span></label>
+                                        <select class="form-control" onChange={handleInput} id="reason" disabled={customerDataById.status==0?false:true}>
+                                            <option value="">Select Reason</option>
+                                            {customerReasonList.active.map(reason=>{
+                                                return(<option value={reason.id} selected={parseInt(reason.id)==parseInt(customerDataById.reason)?"selected":""}>{reason.reason}</option>)
+                                            })}
+                                        </select>
+                                    </div>
+                                    {/* <div class="col-md-2 col-lg-2 mt-2 mt-md-0">
+                                        <label>Type<span class="text-danger">*</span></label>
+                                      
+                                    </div> */}
+                 
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
@@ -753,14 +760,14 @@ const dataTochange =(e)=>{
                                         </div> */} 
                                         <div class="d-flex">
                                     <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
-                                        {enableUrl== true?
+                                        {enableUrl== true || (customerDataById.website_url&&action=="edit")?
                                       
                                           
-                                            <a href={customerDataById.website_url} target="_blank" class="btn btn-outline-secondary btn-lg ml-2" style={{display:"inline",border:"2px solid #629C44",color:"#629C44"}}>Visit</a>
+                                            <a href={customerDataById.website_url} target="_blank" class="btn  btn-lg ml-2" style={{display:"inline",border:"2px solid #629C44",color:"white",backgroundColor:"#629C44"}}>Visit</a>
                                        
                                         :
                                        
-                                            <button class="btn btn-outline-secondary btn-lg ml-2" disabled={true} style={{display:"inline",border:"3px solid #629C44"}}>
+                                            <button class="btn btn-outline-secondary btn-lg ml-2 hoverVisit" disabled={true} style={{display:"inline",border:"3px solid #629C44",color:"#629C44"}}>
                                          
                                             Visit
                                             </button>
@@ -778,12 +785,7 @@ const dataTochange =(e)=>{
                                         <textarea rows="" cols=""  class="form-control" name="notes" value={customerDataById.notes} onChange={handleInput} id="notes" placeholder="Add Notes..."/>
                                     </div>
                                 </div>
-                                <div class="row mt-3" style={{display:customerDataById.status==0?"block":"none"}}>
-                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
-                                        <label>Reason<small></small></label>
-                                        <textarea rows="" cols=""  class="form-control" name="reason" value={customerDataById.reason} onChange={handleInput} id="reason" placeholder="Add Reason..."/>
-                                    </div>
-                                </div>
+
 
                                 {/* <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
@@ -1134,7 +1136,7 @@ const mapStateToProps = (state)=>(
     }
 )
 export default connect(mapStateToProps,{deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
-    typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,
+    typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,getAllReasonMethods,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      
 

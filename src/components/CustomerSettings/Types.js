@@ -106,7 +106,8 @@ onDragEnd = result => {
                 onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
               },
               {
-                label: 'No'
+                label: 'No',
+                onClick: () => { this.setState({deleteon:false})}
               }
             ]
           });
@@ -650,7 +651,7 @@ render() {
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type} ({item.short_code})</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
@@ -764,7 +765,7 @@ render() {
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type}  ({item.short_code})</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  

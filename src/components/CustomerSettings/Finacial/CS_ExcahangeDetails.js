@@ -273,7 +273,7 @@ const dataTochange1 =(e)=>{
      <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
       <div color="primary" onClick={toggle}  className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      <Label className="subFont">Customer and Supplier Exchange</Label>
+      <Label className="subFont">Customer and Supplier Exchange Rates</Label>
         <span className="updownSymbolContainer"> 
         {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
@@ -285,7 +285,7 @@ const dataTochange1 =(e)=>{
                   {/* <Label className="secondHeader">
                   Customer Exchange Details
                   </Label> */}
-                   <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}> Customer Exchange Rates</p>
+                   <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}> Customer Exchange Rate</p>
           </div>
 
 
@@ -342,7 +342,7 @@ const dataTochange1 =(e)=>{
 
   
           <div className="docDetails" style={{marginTop:"-16px"}}>
-          <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}>  Supplier Exchange Rates</p>
+          <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}>  Supplier Exchange Rate</p>
                   {/* <Label className="secondHeader">
                   Suppliear Exchange Details
                   </Label> */}
