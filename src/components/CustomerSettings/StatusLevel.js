@@ -75,6 +75,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
             let active= this.props.customerData.customerStatusList.active
            let inactive=this.props.customerData.customerStatusList.inactive
             this.setState({active:active,inactive:inactive,loading:true})
+            console.log(active,inactive)
         }
     componentDidMount(){
         

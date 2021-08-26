@@ -527,15 +527,7 @@ onDragStart =(e)=>{
                     this.getCatgoryData()
                 })
             })
-            confirmAlert({
-                title: 'Added Successfully',
-                message: 'Supplier Delivery Location',
-                buttons: [
-                  {
-                    label: 'Ok'
-                  }
-                ]
-            });
+    
             this.setState({
                 name: "",
                 subName:"",
