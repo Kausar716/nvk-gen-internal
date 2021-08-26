@@ -933,7 +933,7 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                                 <label>Discount</label>
-                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange} onKeyPress={thirdMethod2}/>
+                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.discount} onChange={handleInput} id="discount" step="0.001" disabled={customerDataById.discount_by_line_item==1?false:true}  placeholder={"0.00"} onBlur={dataTochange} onKeyPress={thirdMethod1}/>
                                             </div>
                                        
                                       

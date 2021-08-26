@@ -168,7 +168,7 @@ const initialSatate = {
 
    customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
-   tax_exempt_no: "Not set",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.000"},
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:"",discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
 
     action:"",
     customerContact:{
@@ -414,7 +414,7 @@ case ADD_NEW_CUSTOMER:
 
               customerDataById:{name:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
               tax_exempt: 0,fax:"",website_url:"",
-              tax_exempt_no: "Not set",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.000"},
+              tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
         }
     case UPDATE_CUSTOMER:
         return {
