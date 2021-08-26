@@ -388,7 +388,7 @@ stringHasTheWhiteSpaceOrNot=(value)=>{
 
 
     handleSubmit = (e) => {
-debugger;
+        //debugger;
         // if (!this.state.hadModified.name) {
         //    this.setState({
         //        hadModified:true

@@ -6,14 +6,14 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {setPageNumberQo,handleSearchFilterByAlpha,getQuoteOrderList, 
       handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
-import initialDetailsQL from './initialDetails';
+import initialDetailsQL from './initialDetailsQL';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
 
-export class QuoteList extends React.Component {
+class QuoteList extends React.Component {
 
-    constructor(props){
-        super(props)
+    constructor(){
+        super()
         this.state={
             addCustomerToggle:false,
             customerListStatus:"active",
@@ -24,9 +24,9 @@ export class QuoteList extends React.Component {
             selectedAlpha:"All",
             searchValue:"",
             radioFilter:"active",
-            searchInput: '', 
+            searchInput:'', 
             checkedData:[],
-            alphabet: '',
+            alphabet:'',
             button: true,
            
             alphabetSelect:'',
@@ -66,12 +66,12 @@ export class QuoteList extends React.Component {
     //   }
 
     onSearchInputChange2 = (e) => {
-        //debugger;
-        this.setState({searchInput: e.target.value})
+       // debugger;
+        this.setState({searchInput: e.target.value});
       }
 
       onSearchInputChange3 = (e) => {
-        this.setState({searchInput: e.target.value})
+        this.setState({searchInput: e.target.value});
       }
 
 
@@ -140,31 +140,26 @@ export class QuoteList extends React.Component {
 
 
       filterItems = (initialDetailsQL) => {
+         // debugger;
         let result = [];
         const { searchInput,alphabet , checkedData} = this.state;
         if(initialDetailsQL &&  (searchInput || alphabet)) {
-            result = initialDetailsQL.filter((element) => (element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
-            this.elementContainsSearchString(searchInput, element) 
-            //  || this.checkOperation(checkedData,element)
-            );
+            result = initialDetailsQL.filter((element) => ( element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
+            this.elementContainsSearchString(searchInput, element) );
+           // result = initialDetailsQL.filter((el) => (el.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || this.elementContainsSearchString(searchInput, el) );
           }
 
-        else if( initialDetailsQL && checkedData){
+        // else if( initialDetailsQL && checkedData){
 
-            result = initialDetailsQL.filter((item)=>item.status)
+        //     result = initialDetailsQL.filter((item)=>item.status)
 
-        }
+        // }
         else {
-          result = initialDetailsQL  || [];
+          result = initialDetailsQL || [];
         }
 
-        result = result.map((item)=>(
-                 item
-                 
-        
-        ))
+        result = result.map((item)=>(item))
        
-
         return result;
       }
 
@@ -181,6 +176,7 @@ export class QuoteList extends React.Component {
 
    // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
+      //  debugger
         //let purchaseOrderData = [];
         console.log("quoteOrderList", this.props.quoteOrderData)
         console.log("abcd", this.state.checkedData)
@@ -211,7 +207,7 @@ export class QuoteList extends React.Component {
 
             console.log("displayPOList",displayPOList1)
 
-              const filteredList = this.filterItems(initialDetails1);
+        const filteredList = this.filterItems(initialDetails1);
 
               console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
@@ -463,7 +459,7 @@ export class QuoteList extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" placeholder="Search Order"/>
+                                            <input type="text" class="form-control" onChange={this.onSearchInputChange3} placeholder="Search Order"/>
                                         </div>
                                     </div>
                                 </div>
@@ -514,12 +510,15 @@ export class QuoteList extends React.Component {
                                                         {pageSize}
                                                         </option>
                                                     ))}
-                                                </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                </select>
+                                                
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                 <input type="checkbox" class="custom-control-input customer-checkbox" id="dispquote" />
                                                 <label class="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
                                         </div>
                                         <div style={{float:"right",marginBottom:15}}>
-                                            <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber1={pageNumber1+1}/>
+                                        <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber={pageCount1+1}/>
+                                            
                                         </div>
                                
                             </div>
@@ -552,9 +551,10 @@ export class QuoteList extends React.Component {
                                                     <th class="text-nowrap text-center">Actions</th>
                                                 </tr>
                                             </thead>
+
                                             <tbody>
                                                 {filteredList.map(pQuoteList=>{
-                                                    return <tr key={pQuoteList.suppliearName}>
+                                                    return <tr key={pQuoteList.orderNumber}>
                                                     <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
                                                     <td><a href="">{pQuoteList.orderNumber}</a></td>
                                                     <td class="text-nowrap text-center">4</td>

@@ -189,6 +189,10 @@ class UserProfile extends React.Component {
         
         else if(name === "phone" ){
             hadModified.phone=true
+            if(errorObj.phoneError>0){
+                errorObj.phoneError=0
+                errorCount--
+            }            
         }
 
 
@@ -285,7 +289,7 @@ class UserProfile extends React.Component {
         else {
             document.getElementById("contactPhone-validtor").innerText = ""
             errorObj.phoneError=0
-            errorCount--;
+            //errorCount--;
 
         }
 
@@ -1020,7 +1024,7 @@ class UserProfile extends React.Component {
                                 <div class="col-md-4 col-lg-4 d-flex align-items-center">
                                     Restore User
                                     <div class="switcher ml-2 pr-md-3">
-                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" value="2" onChange={this.handleRestore}/>
+                                        <input type="checkbox" name="switcher_checkbox_2" id="switcher_checkbox_2" autocomplete="off" checked value="2"  onChange={this.handleRestore}/>
                                         <label for="switcher_checkbox_2"></label>
                                     </div>
                                 </div>:
