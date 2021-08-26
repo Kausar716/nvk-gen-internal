@@ -106,7 +106,8 @@ onDragEnd = result => {
                 onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
               },
               {
-                label: 'No'
+                label: 'No',
+                onClick: () => { this.setState({deleteon:false})}
               }
             ]
           });
@@ -349,12 +350,18 @@ onDragStart =(e)=>{
                 obj.short_code = this.state.subName
                 //this.props.customerData.customerTypes.short_code
                 obj.status = 1
-              this.props.saveCustomerType(obj).result.then(data=>{
-                    this.props.getAllCustomerType().then(data=>{
-                        this.getCatgoryData()
-                    })
-                })
-            // }
+            //   this.props.saveCustomerType(obj).result.then(data=>{
+            //         this.props.getAllCustomerType().then(data=>{
+            //             this.getCatgoryData()
+            //             this.setState({
+            //                 name: "",
+            //                 subName:"",
+            //                 isEditing:false,
+            //                 selectedID:'',
+            //             })
+            //         })
+            //     })
+            // // }
 
 
             if(this.validate()){
@@ -373,6 +380,7 @@ onDragStart =(e)=>{
         
              
             } 
+        // }
             // this.props.saveCustomerType()
         
         }
@@ -643,7 +651,7 @@ render() {
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type} ({item.short_code})</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
@@ -757,7 +765,7 @@ render() {
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.customer_type}  ({item.short_code})</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  

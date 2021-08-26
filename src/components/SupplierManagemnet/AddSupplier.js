@@ -710,12 +710,12 @@ console.log(props.supplierData.supplierReasonList)
                                         <textarea rows="" cols=""  class="form-control" name="supplier_notes" value={supplierDataById.supplier_notes} onChange={handleInput} id="supplier_notes" placeholder="Add Notes..."/>
                                     </div>
                                 </div>
-                                <div class="row mt-3" style={{display:supplierDataById.status==0?"block":"none"}}>
+                                {/* <div class="row mt-3" style={{display:supplierDataById.status==0?"block":"none"}}>
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Reason <small></small></label>
                                         <textarea rows="" cols=""  class="form-control" name="reason" value={supplierDataById.reason} onChange={handleInput} id="reason" placeholder="Add Reason..."/>
                                     </div>
-                                </div>
+                                </div> */}
 
 
 
@@ -763,7 +763,7 @@ console.log(props.supplierData.supplierReasonList)
                                     <select class="form-control" onChange={handleInput} id="term">
                                         <option value={0}>None</option>
                                             {props.customerData.customerTermList.active.map(type=>{
-                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.reason)?"selected":""}>{type.term}</option>)
+                                                return(<option value={parseInt(type.id)} selected={parseInt(type.id) == parseInt(supplierDataById.term)?"selected":""}>{type.term}</option>)
                                             })}
                                         </select>
                                     {/* <select class="form-control" onChange={handleInput} id="units">

@@ -107,7 +107,8 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                     onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
                   },
                   {
-                    label: 'No'
+                    label: 'No',
+                    onClick: () => { this.setState({deleteon:false})}
                   }
                 ]
               });
@@ -352,15 +353,15 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                         this.getCatgoryData()
                     })
                 })
-                confirmAlert({
-                    title: 'Added Successfully',
-                    message: 'Delivery Method Type',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
+                // confirmAlert({
+                //     title: 'Added Successfully',
+                //     message: 'Delivery Method Type',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                // });
                 this.setState({
                     name: "",
                     subName:"",

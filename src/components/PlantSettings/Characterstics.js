@@ -223,7 +223,8 @@ class Characterstics extends Component {
                     onClick: () => {this.onDeleteConfirm(this.state.selectedID)}
                   },
                   {
-                    label: 'No'
+                    label: 'No',
+                    onClick: () => { this.setState({deleteon:false})}
                   }
                 ]
               });
