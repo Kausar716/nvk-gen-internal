@@ -349,12 +349,18 @@ onDragStart =(e)=>{
                 obj.short_code = this.state.subName
                 //this.props.customerData.customerTypes.short_code
                 obj.status = 1
-              this.props.saveCustomerType(obj).result.then(data=>{
-                    this.props.getAllCustomerType().then(data=>{
-                        this.getCatgoryData()
-                    })
-                })
-            // }
+            //   this.props.saveCustomerType(obj).result.then(data=>{
+            //         this.props.getAllCustomerType().then(data=>{
+            //             this.getCatgoryData()
+            //             this.setState({
+            //                 name: "",
+            //                 subName:"",
+            //                 isEditing:false,
+            //                 selectedID:'',
+            //             })
+            //         })
+            //     })
+            // // }
 
 
             if(this.validate()){
@@ -373,6 +379,7 @@ onDragStart =(e)=>{
         
              
             } 
+        // }
             // this.props.saveCustomerType()
         
         }

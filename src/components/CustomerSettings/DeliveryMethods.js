@@ -352,15 +352,15 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                         this.getCatgoryData()
                     })
                 })
-                confirmAlert({
-                    title: 'Added Successfully',
-                    message: 'Delivery Method Type',
-                    buttons: [
-                      {
-                        label: 'Ok'
-                      }
-                    ]
-                });
+                // confirmAlert({
+                //     title: 'Added Successfully',
+                //     message: 'Delivery Method Type',
+                //     buttons: [
+                //       {
+                //         label: 'Ok'
+                //       }
+                //     ]
+                // });
                 this.setState({
                     name: "",
                     subName:"",

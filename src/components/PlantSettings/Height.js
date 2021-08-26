@@ -613,7 +613,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}{item.sub_attributeschild[1]!==undefined ?("("+item.sub_attributeschild[1].value+")"):""}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}{item.sub_attributeschild[1]!==undefined ?(" ("+item.sub_attributeschild[1].value+")"):""}</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
@@ -727,7 +727,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                                 >
                                                                 <li id={item.id.toString()}>
                                                         <div class="showElipse">
-                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}{item.sub_attributeschild[1]!==undefined ?("("+item.sub_attributeschild[1].value+")"):""}</span>
+                                                        <div className={this.state.isEditing===false  ? "a" :this.state.selectedID === item.id ? "reasonBackground a" : "a"}><span id={item.id}    >{item.value}{item.sub_attributeschild[1]!==undefined ?(" ("+item.sub_attributeschild[1].value+")"):""}</span>
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
