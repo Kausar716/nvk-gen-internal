@@ -138,13 +138,15 @@ export class CreateUserProfile extends Component {
                 errorCount--
             }            
         }
-        // else if(name === "phone" ){
-        //     hadModified.phone=true
-        //     if(errorObj.phoneError>0){
-        //         errorObj.phoneError=0
-        //         errorCount--
-        //     }            
-        // }
+        else if(name === "phone" ){
+            hadModified.phone=true
+            if(errorObj.phoneError>0){
+                errorObj.phoneError=0
+                errorCount--
+            }            
+        }
+
+        
         else if(name === "email" ){
 
             // if(this.state.email.length<1){
@@ -254,12 +256,12 @@ export class CreateUserProfile extends Component {
         if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
             document.getElementById("contactPhone-validtor").innerText = "Phone Number is not valid"
             errorObj.phoneError=1
-            errorCount++;
+            errorCount++
         }
         else {
             document.getElementById("contactPhone-validtor").innerText = ""
             errorObj.phoneError=0
-            errorCount--;
+            //errorCount--;
         }
 
         // else if(this.state.phone === ""){
