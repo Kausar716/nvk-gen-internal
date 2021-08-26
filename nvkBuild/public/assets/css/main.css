@@ -15700,6 +15700,39 @@ pre code {
     border-radius: 4px;
     transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
 }
+.form-control-order {
+    display: block;
+    width: 55%;
+    /* height: calc(2em + .875rem + 2px); */
+    height: calc(1.75em + .875rem);
+    padding: .4375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #2d353c;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d5dbe0;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
+
+.form-control-order1 {
+    display: block;
+    width: 95%;
+    /* height: calc(2em + .875rem + 2px); */
+    height: calc(1.75em + .875rem);
+    padding: .4375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #2d353c;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #d5dbe0;
+    border-radius: 4px;
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out
+}
 .react-date-picker__wrapper {
     height: calc(1.75em + .875rem);
     padding: 4px 8px;
@@ -15744,6 +15777,16 @@ pre code {
 
 .form-control:disabled,
 .form-control[readonly] {
+    background-color: #e9ecef;
+    opacity: 1
+}
+.form-control-order:disabled,
+.form-control-order[readonly] {
+    background-color: #e9ecef;
+    opacity: 1
+}
+.form-control-order1:disabled,
+.form-control-order1[readonly] {
     background-color: #e9ecef;
     opacity: 1
 }
