@@ -314,7 +314,7 @@ export const Component = withRouter(({ history, location }) =>{
                                 <div class="ContentSection p-15">
                                     <div class="row">
                                         <div class="col-md-6 col-lg-5">
-                                            <div class="bg-grey-transparent-2 px-3 py-3">
+                                            <div class="bg-grey-transparent-2 px-3 py-3" style={{marginTop:"12px"}}>
                                                 <div class="row align-items-center">
                                                     <div class="col-md-3 col-lg-3">
                                                         {/* <div className="profImg" style={{width:"60%", height:"60%"}}> */}

@@ -491,7 +491,7 @@ function QuoteOrderPermission(props) {
 console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission)
     return (
         <>
-           <div style={{padding:"0.5em"}}>
+           <div style={{padding:"11px", paddingTop:"1px"}}>
                 <span style={{float:"right", marginTop:"-1em",fontWeight:"bold"}}>Turn On All / Turn Off All</span>
                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"4px", marginTop:"-15px"}}>
                                         <input type="checkbox"  name="SelectAllPermissionOn" id="SelectAllPermissionOn"   onChange={handleChange} 
