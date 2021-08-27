@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "nvk-genesys"
+    "default": "nvk-internal"
   }
 }
 

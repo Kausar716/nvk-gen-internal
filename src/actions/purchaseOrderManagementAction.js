@@ -46,11 +46,48 @@ import {
               pageNumber:pageNumber,
           }
       
-      }
+      } 
       export const setAlphabetSelected = (alphabet)=>{
         return{
             type:PO_SET_ALPHABET_SELECTED,
             selectedAlphabet:alphabet,
         }
       }
+      export const getPoSupplierFilter = (name)=>{
+        return{
+            type:PO_GET_SUPPLIER_FILTER,
+            supplierName:name
+        }
+      }
+      export const getPoJobDescription = (name)=>{
+        return{
+            type:PO_GET_JOBDESCRIPTION_FILTER,
+            supplierName:name
+        }
+      }
+      export const getPoOrderFilter = (name)=>{
+        return{
+            type:PO_GET_ORDER_FILTER,
+            supplierName:name
+        }
+      }
+      export const getPoPlantProductFilter = (name)=>{
+        return{
+            type:PO_GET_PLANT_PRODUCT_FILTER,
+            supplierName:name
+        }
+      }
+      export const getPoSkuFilter = (name)=>{
+        return{
+            type:PO_GET_SKU_PLANT_PRODUCT_FILTER,
+            supplierName:name
+        }
+      }
+      export const getSupplierOrderFilter = (name)=>{
+        return{
+            type:PO_GET_SUPPLIER_ORDER_FILTER,
+            supplierName:name
+        }
+      }
+ 
       
