@@ -7,6 +7,7 @@ import {connect} from "react-redux";
 import { Tab, Tabs, TabList } from 'react-tabs';
 // import React from 'react';
 import Autosuggest from 'react-autosuggest';
+import { Link } from "react-router-dom";
 
 //import {Button,Badge,Form,Input,FormGroup,CustomInput,Label,Pagination,PaginationItem,PaginationLink,Table, Row,Col} from 'reactstrap'
 //import {getAllImageAssets} from "../Utility/Utility";
@@ -346,11 +347,19 @@ const productFormAction = ()=>{
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                                     <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Plant</h1>
-                                    <span>
+                                    {/* <span>
                                                     <button type="button" class="btn btn-primary  btn-lg" 
                                                     onClick={()=>props.plantPageReDirectAction("all","plant")}
                                                     >Return to Plant Manager</button>
-                                                    </span>
+                                                    </span> */}
+                                <div class="topbarCtrls mt-3 mt-md-0"onClick={()=>props.plantPageReDirectAction("all","plant")} >
+                                    <a href="#" class="btn" >
+                                    <span class="d-flex align-items-center text-left">
+                                    {/* <img src="assets/img/Quoteblue_small-Icon.svg" alt=""/> */}
+                                        <span class="ml-2"><b>Return to Plant Manager</b></span>
+                                    </span>
+                                    </a>                        
+                                </div>
                         
                                 </div>
                                     <div class="px-md-3 mt-3">

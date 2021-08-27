@@ -10,6 +10,7 @@ import ProductTable from './ProductTable'
 import ActionModal from '../Modal/ActionModal'
 import Loader from '../ProductManager/Loader'
 import Autosuggest from 'react-autosuggest';
+import { Link } from "react-router-dom";
 
 import './style.css';
 import {
@@ -412,10 +413,17 @@ const  ProductManagement = (props) =>{
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
                                     <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Product</h1>
-                                    <span>
+                                    {/* <span>
                                                     <button type="button" class="btn btn-primary  btn-lg"    
                                             onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>                                                    
-                                                    </span>
+                                                    </span> */}
+                                    <div class="topbarCtrls mt-3 mt-md-0" onClick={()=>props.pageReDirectAction("product","add")}>
+                                        <a href="#" class="btn" >
+                                        <span class="d-flex align-items-center text-left">
+                                        <span class="ml-2"><b>Return To Product Manager</b></span>
+                                        </span>
+                                        </a>
+                                    </div>
                                 </div>
                                     <div class="px-md-3 mt-3">
                                         <div class="px-3 py-3 mb-3 bg-white">
