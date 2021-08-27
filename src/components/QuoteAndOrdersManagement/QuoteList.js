@@ -9,7 +9,8 @@ import {setPageNumberQo,handleSearchFilterByAlpha,getQuoteOrderList,
 import initialDetailsQL from './initialDetailsQL';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
-import Autocomplete from '@material-ui/lab/Autocomplete';
+import './styles.css';
+//import Autocomplete from '@material-ui/lab/Autocomplete';
 
 class QuoteList extends React.Component {
 
@@ -60,7 +61,11 @@ class QuoteList extends React.Component {
             ],
             initialDetailsQL:[],
             searchString: "",
-            orderSearch:""
+            orderSearch:"",
+            isChecked:false,
+
+            suggestions: [],
+            text: ""
         }
     }
     //const [value, onChange] = useState(new Date());
@@ -83,6 +88,43 @@ class QuoteList extends React.Component {
           searchString: this.refs.search.value,
         });
       }
+
+      onTextChange = e => {
+          //debugger
+        let items = this.state.initialDetailsQL;
+        let supName = items.map((e)=>e.suppliearName)
+        console.log("supName", supName)
+        const val = e.target.value;
+        let suggestions = [];
+        if (val.length > 0) {
+          const regex = new RegExp(`^${val}`, "i");
+          suggestions = supName.sort().filter(v => regex.test(v));
+        }
+        this.setState({ suggestions, searchString: val });
+      };
+
+      suggestionSelected=(value)=> {
+        this.setState({
+            searchString: value,
+          suggestions: []
+        });
+      }
+
+      renderSuggestions() {
+        const { suggestions } = this.state;
+        if (suggestions.length === 0) {
+          return null;
+        }
+        return (
+          <ul>
+            {suggestions.map(item => (
+              <li onClick={() => this.suggestionSelected(item)}>{item}</li>
+            ))}
+          </ul>
+        );
+      }
+
+
 
       handleOrdChange=()=>{
         this.setState({
@@ -118,9 +160,48 @@ class QuoteList extends React.Component {
 
       handleClickCheckBox = (e)=>{
 
-        let newCheckedData = initialDetailsQL.filter(newCheck => newCheck.status===e.target.name)
+
+        if(e.target.id==="OPEN"){
+            debugger
+            this.setState({
+                isChecked: !this.state.isChecked,
+              });
+
+
+              if(!this.state.isChecked){
+                let initialDetailsQl = this.state.initialDetailsQL
+                let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
+    
+                this.setState({checkedData: newCheckedData})
+              }
+              
+             
+  
+
+            // let checked = e.target.name
+            // let initialDetailsQl = this.state.initialDetailsQL
+            // let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
+            //finalCMSettingsPermissions.map(user=>{return {...user, isChecked:checked}});
+            //let newCheckedData = initialDetailsQl.filter(newCheck =>{return{ ...newCheck.status===e.target.name, isChecked:checked}})
+
+           // this.setState({checkedData: newCheckedData})
+        }
+
+
+        else if(e.target.id==="CLOSED"){
+            let initialDetailsQl = this.state.initialDetailsQL
+            let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
+
+            this.setState({checkedData: newCheckedData})
+
+        }
+
+
+        console.log("iddddddd", e.target.id, e.target.value)
+
+       
         //this.setState({alphabet: newCheckedData})
-        this.setState({checkedData: newCheckedData})
+        
         // console.log("e1",checkedData);
       }
 
@@ -215,8 +296,7 @@ class QuoteList extends React.Component {
 
    // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
-
-        console.log("alphabetInrender", this.state.alphabet, this.state.alphabetSelect)
+        console.log("alphabetInrender", this.state.checkedData, this.state.isChecked)
         let _users = this.state.initialDetailsQL;
         let search = this.state.searchString.trim().toLowerCase();
         let orderSearch = this.state.orderSearch.trim().toLowerCase();
@@ -259,14 +339,14 @@ class QuoteList extends React.Component {
 
 
       
-      let initialDetails1 = initialDetailsQL || this.state.checkedData
+      //let initialDetails1 = initialDetailsQL || this.state.checkedData
        // console.log("pageNumber", this.props.purchaseOrderData.pageNumber)
 
 
-      if(initialDetails1){
+      if(_users){
 
         pageNumber1 = this.props.quoteOrderData.pageNumber1;
-        initialDetails1 = [...initialDetails1];
+       let initialDetails1 = [..._users];
          totalLength1 = initialDetails1.length;
          plantPerPage1 = this.state.pageSize;
          pagesVisited1 =  this.props.quoteOrderData.pageNumber1 * this.state.pageSize;
@@ -277,7 +357,7 @@ class QuoteList extends React.Component {
 
             console.log("displayPOList",displayPOList1)
 
-        const filteredList = this.filterItems(initialDetails1);
+        const filteredList = this.filterItems(displayPOList1);
 
               console.log("filteredList", filteredList)
        // console.log(this.props.purchaseOrderData)
@@ -407,7 +487,7 @@ class QuoteList extends React.Component {
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Search Quotes & Orders</h2>
+                        <h2>Search Quotes &amp; Orders</h2>
                         
                         <div class="row mt-3 align-items-center">
                             <div class="col-md-12">
@@ -416,10 +496,10 @@ class QuoteList extends React.Component {
                                         <label><b>Orders</b></label>
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="open" 
-                                                name="open"
+                                                <input type="checkbox" class="custom-control-input" id="OPEN" 
+                                                name="OPEN"
                                                 onChange={this.handleClickCheckBox} />
-                                                <label class="custom-control-label" for="open" >Open</label>
+                                                <label class="custom-control-label" for="OPEN" >Open</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck2" />
@@ -438,8 +518,9 @@ class QuoteList extends React.Component {
                                                 <label class="custom-control-label" for="customCheck5">Invoiced</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck6" />
-                                                <label class="custom-control-label" for="customCheck6">Closed</label>
+                                                <input type="checkbox"  onChange={this.handleClickCheckBox} name="CLOSED"
+                                                 class="custom-control-input" id="CLOSED" />
+                                                <label class="custom-control-label" for="CLOSED">Closed</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck7" />
@@ -507,16 +588,23 @@ class QuoteList extends React.Component {
                                 <div class="row form-group">
                                     <div class="col-md-4 col-lg-4">
                                         <label><b>Customer</b></label>
-                                        <div class="searchInput">
+                                        <div class="searchInput SearchBar">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
+                                            <div>
                                             <input type="text" class="form-control" 
                                              //onChange={this.onSearchInputChange2} 
                                              ref="search"
+                                             //value={this.state.text}
                                              value={this.state.searchString} 
-                                             onChange={this.handleChange}
+                                             onChange={this.onTextChange}
+                                             //onChange={this.handleChange}
                                              placeholder="Search Customer Name/Number"/>
+
+                                              <span>{this.renderSuggestions()}</span>
+                                            </div>
+                                            
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
@@ -549,10 +637,12 @@ class QuoteList extends React.Component {
                                                 getOptionLabel={(option) => option.orderNumber}
                                                 renderInput={(params) => (
                                                     <div ref={params.InputProps.ref}>
-                                                    <input class="form-control"  style={{ width: 200 }} ref="ordSearch" type="text" {...params.inputProps} />
+                                                    <input class="form-control"  style={{ width: 200 }} ref="ordSearch" type="text"
+                                                     {...params.inputProps} />
                                                     </div>
                                                 )}
-                                                /> */}
+                                            /> */}
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -646,7 +736,7 @@ class QuoteList extends React.Component {
                                             </thead>
 
                                             <tbody>
-                                                {_users.map(pQuoteList=>{
+                                                {displayPOList1.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
                                                     <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
                                                     <td><a href="">{pQuoteList.orderNumber}</a></td>
