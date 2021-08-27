@@ -12,6 +12,9 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
     const [suggestions, setSuggestions] = useState([]);
     const [value, setValue] = useState("");
     const [searchValue, setSearchValue] = useState("");
+    const [pageSize,setPageSize] = useState(15)
+    const [selectedAlpha,setSelectedAlphabets] = useState("All")
+    const[alphabets,setAlphabetSelected]=useState(["A", "B", "C", "D", "E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]);
     useEffect (()=>{
         props.getAllCustomer()
 
@@ -56,6 +59,37 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
     onChange: onChange,
     dataId: 'my-data-id',
 };
+const paginationChange =(event, page)=>{
+    props.setPageNumber(page-1)
+}
+const handleAlphabetFilter = (e)=>{
+    // this.setState({selectedAlpha:e.target.id})
+    setSelectedAlphabets(e.target.id)
+    props.handleAplhabetFilter(e.target.id)
+
+}
+// if(props.customerData.customerList){
+    const pageNumber = props.customerData.pageNumber
+    // console.log()
+    const customerData = [props.customerData.customerList.sort((a, b) => parseInt(b.id) - parseInt(a.id))]
+    const totalLength = props.customerData.customerList.length
+    const plantPerPage = pageSize;
+    const pagesVisited =  props.customerData.pageNumber*pageSize;
+    const displayCustomerList = props.customerData.customerList.slice(pagesVisited,pagesVisited+plantPerPage)
+    const pageCount = Math.ceil(props.customerData.customerList.length/plantPerPage)
+    console.log(pageCount)
+
+// }
+
+// const {plantData,plantPageNumber} = props.plantData
+// const totalLength = plantData.length
+// const plantPerPage = pageSize;
+// const pagesVisited = plantPageNumber*pageSize;
+// const displayPlantList = plantData.slice(pagesVisited,pagesVisited+plantPerPage)
+// const pageCount = Math.ceil(plantData.length/plantPerPage)
+// console.log("plantData.length",plantData.length)
+// console.log("pageCountpageCount", pageCount)
+// const {plantCategoryData} =  props.categoryData
 
     return (
         <div >
@@ -212,53 +246,44 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
                             <div className="row_1 mt-4">
                                         <div style={{float:"left",marginBottom:15}}>
                                             {/* <div> */}
-                                                <label className="greenText">{"Showing 1 to 5 of 6"  }</label>
+                                            <label className="greenText">{"Showing " + (pageNumber>0 ? (pageSize*((pageNumber)))+1 : ((pageNumber)+1))+  "  to  " +  (pageNumber>0 ? (((pageSize*((pageNumber)))+pageSize)>totalLength ? totalLength : ((pageSize*((pageNumber)))+pageSize)) : ((((pageNumber)+1)*pageSize)>totalLength?totalLength:(((pageNumber)+1)*pageSize)))   + "  of   "  +   totalLength  }</label>
                                             {/* </div> */}
                                         </div>
-                                        <div style={{float:"left",marginBottom:15}}>
-                                            <label className="greenText">Show</label>
-                                                <select >
-                                                    <option>5</option>
-                                                    <option>10</option>
-                                                    <option>15</option>
-                                                </select>
-                                                
-                                        </div>
+                                        <div style={{float:"left",marginBottom:"-15px",marginLeft:30}}>
+                                <label className="greenText" style={{color:"black",fontWeight:"normal",paddingTop:"-10px"}}>Rows per page</label>
+                                <div className="select_box" style={{display:"inline"}}>
+                                <select 
+                                        value={pageSize}
+                                        onChange={e => {
+                                            setPageSize(e.target.value)
+                                            {/* this.setState({pageSize:}) */}
+                                        }}
+                                        >
+                                        {[15, 25, 50, 100, 250,500].map(pageSize => (
+                                            (<option key={pageSize} value={pageSize}>
+                                            {pageSize} 
+                                            </option>)
+                                        ))}
+                                    </select>
+
+                                </div>
+                           
+                                </div>
                                         <div style={{float:"right",marginBottom:15}}>
-                                            <TablePagination  pageCount={5} pageNumber={0+1}/>
+                                        <TablePagination pageChange={paginationChange} pageCount={pageCount} pageNumber={pageNumber+1}/>
                                         </div>
                                
                             </div>
-                            <div class="form-group row mt-0">
-                                <div class="col-md-12 col-lg-12">
+                            <div class="form-group row mt-4">
+                                <div class="col-md-12 col-lg-12"  style={{marginTop:"-2%",marginBottom:"-23px"}}>
                                     <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        <li><a href="#" class="active">All</a></li>
-                                        <li><a href="#">A</a></li>
-                                        <li><a href="#">B</a></li>
-                                        <li><a href="#">C</a></li>
-                                        <li><a href="#">D</a></li>
-                                        <li><a href="#">E</a></li>
-                                        <li><a href="#">F</a></li>
-                                        <li><a href="#">G</a></li>
-                                        <li><a href="#">H</a></li>
-                                        <li><a href="#">I</a></li>
-                                        <li><a href="#">J</a></li>
-                                        <li><a href="#">K</a></li>
-                                        <li><a href="#">L</a></li>
-                                        <li><a href="#">M</a></li>
-                                        <li><a href="#">N</a></li>
-                                        <li><a href="#">O</a></li>
-                                        <li><a href="#">P</a></li>
-                                        <li><a href="#">Q</a></li>
-                                        <li><a href="#">R</a></li>
-                                        <li><a href="#">S</a></li>
-                                        <li><a href="#">T</a></li>
-                                        <li><a href="#">U</a></li>
-                                        <li><a href="#">V</a></li>
-                                        <li><a href="#">W</a></li>
-                                        <li><a href="#">X</a></li>
-                                        <li><a href="#">Y</a></li>
-                                        <li><a href="#">Z</a></li>
+                                        <li><a style={{cursor:"pointer"}}  class={selectedAlpha =="All"?"active":""} onClick={handleAlphabetFilter} id="All">All</a></li>
+                                        {
+                                            alphabets.map(alphabet=>{
+                                                return(<li><a  style={{cursor:"pointer"}} class={selectedAlpha ==alphabet?"active":""} onClick={handleAlphabetFilter} id={alphabet} >{alphabet}</a></li>)
+
+                                            })
+                                        }
                                     </ul>
                                 </div>
                             </div>
@@ -284,8 +309,11 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>
+                              
+                                            
+                                            {displayCustomerList.map(customerData=>{
+                                            return <tr>
+                                            <td>
                                                     <div class="custom-control custom-checkbox">
                                                         <input type="checkbox" class="custom-control-input" id="chk1" />
                                                         <label class="custom-control-label" for="chk1"></label>
@@ -294,7 +322,7 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
                                                 <td><a href="#">0023555</a></td>
                                                 <td>-</td>
                                                 <td>00234-2000485</td>
-                                                <td>John Smith Landscaping</td>
+                                                <td>{customerData.name}</td>
                                                 <td>20/08/2020</td>
                                                 <td>Delivery</td>
                                                 <td class="text-right">85.00</td>
@@ -322,124 +350,12 @@ import {deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getC
                                                         </a>
                                                     </span>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="chk1" />
-                                                        <label class="custom-control-label" for="chk1"></label>
-                                                    </div>
-                                                </td>
-                                                <td><a href="#">0023555</a></td>
-                                                <td>-</td>
-                                                <td>00234-2000485</td>
-                                                <td>John Smith Landscaping</td>
-                                                <td>20/08/2020</td>
-                                                <td>Delivery</td>
-                                                <td class="text-right">85.00</td>
-                                                <td class="text-center">
-                                                    <span class="mx-1">
-                                                        <Link to="/OrderAdjusted">
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                            </a>
-                                                        </Link>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/csv-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/copy-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/search-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="chk1" />
-                                                        <label class="custom-control-label" for="chk1"></label>
-                                                    </div>
-                                                </td>
-                                                <td><a href="#">0023555</a></td>
-                                                <td>-</td>
-                                                <td>00234-2000485</td>
-                                                <td>John Smith Landscaping</td>
-                                                <td>20/08/2020</td>
-                                                <td>Delivery</td>
-                                                <td class="text-right">85.00</td>
-                                                <td class="text-center">
-                                                    <span class="mx-1">
-                                                        <Link to="/OrderAdjusted">
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                            </a>
-                                                        </Link>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/csv-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/copy-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/search-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>
-                                                    <div class="custom-control custom-checkbox">
-                                                        <input type="checkbox" class="custom-control-input" id="chk2" />
-                                                        <label class="custom-control-label" for="chk2"></label>
-                                                    </div>
-                                                </td>
-                                                <td><a href="#">0023555</a></td>
-                                                <td><a href="#">0023963</a></td>
-                                                <td>00234-2000409</td>
-                                                <td>John Smith Landscaping</td>
-                                                <td>19/08/2020</td>
-                                                <td>Delivery</td>
-                                                <td class="text-right">125.02</td>
-                                                <td class="text-center">
-                                                <span class="mx-1">
-                                                        <Link to="/OrderAdjusted">
-                                                            <a href="javascript:;">
-                                                                <img src="assets/img/setting-ic-sm-green.svg" alt=""/>
-                                                            </a>
-                                                        </Link>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/csv-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/copy-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                    <span class="mx-1">
-                                                        <a href="javascript:;">
-                                                            <img src="assets/img/search-ic-sm-blue.svg" alt=""/>
-                                                        </a>
-                                                    </span>
-                                                </td>
-                                            </tr>
+                                                      
+                                                   </tr>
+                                        })}
+                                            
+                                            
+                          
                                             
                                         </tbody>
                                     </table>
@@ -458,11 +374,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{getAllCustomer,handleSearchFilter
-     
 
-
-
-
-
-})(InvoiceList)
+export default connect(mapStateToProps,{  //plant actions
+    deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow
+    })(InvoiceList)
