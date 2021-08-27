@@ -97,15 +97,14 @@ export const createProductAction = (product) => dispatch => {
         })
 
         .catch(error=>{
-            errorArray.push("Please select mandate fileds")
+            errorArray.push(error.response.data.message)
             dispatch({
                 type:ERROR_HANDLE,
                 message:errorArray,
                 status:true
             })
             
-        })  
-
+        })         
     }else{
         dispatch({
             type:ERROR_HANDLE,
@@ -153,10 +152,11 @@ export const updateProductAction = (data,id,tag) => dispatch => {
         else 
         updateObj.common_name = []
     }
+    let error = []
     axios.post(`/api/update-product/${id}`,data,config).then(res=>{ 
         dispatch(getAllProductAction())
         //dispatch(createSkuAction(res.data.data.product.product_id,data,"add"))
-        let error = []
+        
         error.push("Product Updated successfully")
         dispatch({
             type:UPDATE_PRODUCT_ACTION
@@ -170,6 +170,16 @@ export const updateProductAction = (data,id,tag) => dispatch => {
         dispatch(subPageReDirectAction("sku"))
         )
     })
+    .catch(error1=>{
+        error.push(error1.response.data.message)
+        dispatch({
+            type:ERROR_HANDLE,
+            message:error,
+            status:true
+        })
+        
+    })
+    
 
 }
 export const deleteProductAction = (id) => dispatch => {
@@ -189,6 +199,16 @@ export const deleteProductAction = (id) => dispatch => {
             status:true
         })
         })
+        .catch(error1=>{
+            error.push(error1.response.data.message)
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+            
+        })
+
 
 }
 
@@ -307,7 +327,7 @@ export const createSkuAction = (id, skuData,skuFieldClear, actionType="add") =>a
             })
             
             }).catch(error1=>{
-                error.push("Please add Product first")
+                error.push(error1.response.data.message)
                 dispatch({
                     type:ERROR_HANDLE,
                     message:error,
@@ -361,7 +381,7 @@ export const updateSkuAction = (id, data) =>async dispatch => {
             })
 
             }).catch(error1=>{
-                error.push("Please add Product first")
+                error.push(error1.response.data.message)
                 dispatch({
                     type:ERROR_HANDLE,
                     message:error,
@@ -412,7 +432,7 @@ export const updateSkuActionClear = (id,data) => async dispatch=>{
 
        
         .catch(error1=>{
-            error.push("Please add Product first")
+            error.push(error1.response.data.message)
             dispatch({
                 type:ERROR_HANDLE,
                 message:error,
