@@ -38,9 +38,16 @@ export class PurchaseOrders extends React.Component {
             TotalPurchaseOder:39,
             plantSuggestions:[],
             supplierSuggestions:[],
+            jobSuggestions:[],
             inputValue:"",
             plantValue:"",
-            supplierValue:""
+            supplierValue:"",
+            jobValue:"",
+            orderSuggestions:[],
+            supplierOrder:[],
+            orderValue:'',
+            supplierOrderValue:''
+
         }
     }
     componentDidMount(){
@@ -82,9 +89,78 @@ export class PurchaseOrders extends React.Component {
         // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
         this.setState({newValue});
         }
+        if(event.target.name==="jobSearch"){
+            this.setState({jobValue:newValue})
+        // setLoaderMessage("No Records Found.")
+        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.setState({newValue});
+        }
+        if(event.target.name==="orderSearch"){
+            this.setState({orderValue:newValue})
+        // setLoaderMessage("No Records Found.")
+        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.setState({newValue});
+        }
+        if(event.target.name==="supplierOrderSearch"){
+            this.setState({supplierOrderValue:newValue})
+        // setLoaderMessage("No Records Found.")
+        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.setState({newValue});
+        }
+        
        
         
     };
+    getOrderSuggestions = value => {
+        console.log(value)
+        let orderData = this.props.plantData.plantData
+       const inputValue = value.trim().toLowerCase();
+       const inputLength = inputValue.length;
+         console.log(orderData)
+           return inputLength === 0 ? [] : orderData.filter(lang =>
+             lang.genus.toLowerCase().includes(inputValue)
+           );
+       };
+    onOrderSuggestionsFetchRequested = ({value}) => {  
+          
+       let orderSuggestions = this.getOrderSuggestions(value)
+       console.log(orderSuggestions)   
+       this.setState({orderSuggestions})
+   };
+   onOrderSuggestionsClearRequested = () => {
+       this.setState({orderSuggestions:[]});
+     };
+      renderOrderSuggestion = (orderSuggestions) => (
+       <span>
+         {orderSuggestions.genus}
+       </span>
+   );
+   getSupplierOrderSuggestions = value => {
+    console.log(value)
+    let supplierOrderData = this.props.plantData.plantData
+   const inputValue = value.trim().toLowerCase();
+   const inputLength = inputValue.length;
+     console.log(supplierOrderData)
+       return inputLength === 0 ? [] : supplierOrderData.filter(lang =>
+         lang.genus.toLowerCase().includes(inputValue)
+       );
+   };
+onSupplierOrderSuggestionsFetchRequested = ({value}) => {  
+      
+   let supplierOrderSuggestions = this.getSupplierOrderSuggestions(value)
+   console.log(supplierOrderSuggestions)   
+   this.setState({supplierOrderSuggestions})
+};
+onSupplierOrderSuggestionsClearRequested = () => {
+   this.setState({supplierOrderSuggestions:[]});
+ };
+  renderSupplierOrderSuggestion = (supplierOrderSuggestions) => (
+   <span>
+     {supplierOrderSuggestions.genus}
+   </span>
+);
+
+
 
    
      getPlantSuggestions = value => {
@@ -135,6 +211,31 @@ export class PurchaseOrders extends React.Component {
             {supplierSuggestions.supplier_name}
         </span>
         );
+
+    getJobSuggestions = value => {
+        console.log(value)
+        let jobData = this.props.poBackup
+        const inputValue = value.trim().toLowerCase();
+        const inputLength = inputValue.length;
+            return inputLength === 0 ? [] : jobData.filter(lang =>
+                lang.job_description?lang.job_description.toLowerCase().includes(inputValue):null
+            );
+        };
+    onJobSuggestionsFetchRequested = ({value}) => {  
+            
+        let jobSuggestions = this.getJobSuggestions(value)
+        console.log(jobSuggestions)   
+        this.setState({jobSuggestions})
+    };
+    onJobSuggestionsClearRequested = () => {
+        this.setState({jobSuggestions:[]});
+        };
+    
+    renderJobSuggestion = (jobSuggestions) => (
+        <span>
+            {jobSuggestions.supplier_name}
+        </span>
+        );
       
 
     render(){
@@ -146,10 +247,33 @@ export class PurchaseOrders extends React.Component {
         let displayPOList = []
         const getPlantSuggestionValue = ""
         const getSupplierSuggestionValue = ""
-
-        let {plantValue,supplierValue} = this.state
+        const getJobSuggestionValue = ""
+        const getOrderSuggestionValue = ""
+        const getSupplierOrderSuggestionValue = ""
+        console.log(this.props.purchaseOrderListData)
+        let {plantValue,supplierValue,jobValue,orderValue,supplierOrderValue} = this.state
         // suggestion => suggestion.genus;
         let {openPoCount}= this.props.purchaseOrderListData
+        const inputOrderProps = {
+            placeholder: 'Order',
+            value:orderValue,
+            name:"orderSearch",
+            // className:"searchInput",
+            className:" form-control btn btn-search",
+            id:"add-icon-search",
+            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            onChange: this.handleChange
+        };
+        const inputSupplierOrderProps = {
+            placeholder: 'Supplier Order',
+            value:supplierOrderValue,
+            name:"supplierOrderSearch",
+            // className:"searchInput",
+            className:" form-control btn btn-search",
+            id:"add-icon-search",
+            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            onChange: this.handleChange
+        };
         const inputPlantProps = {
             placeholder: 'Plant Name',
             value:plantValue,
@@ -164,6 +288,16 @@ export class PurchaseOrders extends React.Component {
             placeholder: 'Supplier Name',
             value:supplierValue,
             name:"supplierSearch",
+            // className:"searchInput",
+            className:" form-control btn btn-search",
+            id:"add-icon-search",
+            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            onChange: this.handleChange
+        };
+        const inputJobProps = {
+            placeholder: 'Job Description',
+            value:jobValue,
+            name:"jobSearch",
             // className:"searchInput",
             className:" form-control btn btn-search",
             id:"add-icon-search",
@@ -275,7 +409,18 @@ export class PurchaseOrders extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" id="jobDescription" onChange={this.handleFilert}  placeholder="Search Job Description"/>
+                                            <Autosuggest
+                                                    suggestions={this.state.jobSuggestions}
+                                                    onSuggestionsFetchRequested={this.onJobSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onJobSuggestionsClearRequested}
+                                                    getSuggestionValue={getJobSuggestionValue}
+                                                    renderSuggestion={this.renderJobSuggestion}
+                                                    inputProps={inputJobProps}
+                                                    theme={{suggestionsContainerOpen:this.state.jobSuggestions.length>5?"yes":"no",suggestionsContainer:this.state.jobSuggestions.length>5?"yes1":"no1",
+                                                    suggestionsList:this.state.jobSuggestions.length>5?"yes":"no1"}}
+                                                    className="form-control"
+                                                />
+                                            {/* <input type="text" class="form-control" id="jobDescription" onChange={this.handleFilert}  placeholder="Search Job Description"/> */}
                                         </div>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
@@ -284,6 +429,17 @@ export class PurchaseOrders extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
+                                            {/* <Autosuggest
+                                                    suggestions={this.state.orderSuggestions}
+                                                    onSuggestionsFetchRequested={this.onOrderSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onOrderSuggestionsClearRequested}
+                                                    getSuggestionValue={getOrderSuggestionValue}
+                                                    renderSuggestion={this.renderOrderSuggestion}
+                                                    inputProps={inputOrderProps}
+                                                    theme={{suggestionsContainerOpen:this.state.orderSuggestions.length>5?"yes":"no",suggestionsContainer:this.state.orderSuggestions.length>5?"yes1":"no1",
+                                                    suggestionsList:this.state.orderSuggestions.length>5?"yes":"no1"}}
+                                                    className="form-control"
+                                                /> */}
                                             <input type="text" class="form-control" id="order" onChange={this.handleFilert}  placeholder="Search Order"/>
                                         </div>
                                     </div>
@@ -324,6 +480,17 @@ export class PurchaseOrders extends React.Component {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
+                                            {/* <Autosuggest
+                                                    suggestions={this.state.supplierOrderSuggestions}
+                                                    onSuggestionsFetchRequested={this.onSupplierOrderSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={this.onSupplierOrderSuggestionsClearRequested}
+                                                    getSuggestionValue={getSupplierOrderSuggestionValue}
+                                                    renderSuggestion={this.renderSupplierOrderSuggestion}
+                                                    inputProps={inputSupplierOrderProps}
+                                                    theme={{suggestionsContainerOpen:this.state.supplierOrderSuggestions.length>5?"yes":"no",suggestionsContainer:this.state.supplierOrderSuggestions.length>5?"yes1":"no1",
+                                                    suggestionsList:this.state.supplierOrderSuggestions.length>5?"yes":"no1"}}
+                                                    className="form-control"
+                                                /> */}
                                             <input type="text" class="form-control" id="supplierOrder"  onChange={this.handleFilert}  placeholder="Search SKU"/>
                                         </div>
                                     </div>
@@ -351,7 +518,8 @@ const mapStateToProps = (state)=> (
     {
         purchaseOrderListData:state.purchaseOrderManagementData,
         plantData:state.plantData,
-        supplierData:state.supplierData.supplierList
+        supplierData:state.supplierData.supplierList,
+        poBackup:state.purchaseOrderManagementData.purchaseOrderListBackup
     }
 )
 
