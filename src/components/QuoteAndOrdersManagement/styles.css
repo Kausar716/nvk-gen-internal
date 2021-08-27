@@ -1,0 +1,35 @@
+.SearchBar {
+  /* width: 50%;
+  border: 1px solid grey; */
+  /* box-shadow: -4px 7px 20px 0px rgba(0, 0, 0, 0.54); */
+  box-shadow: 0px 2px 2px 0px rgb(0 0 0 / 35%);
+}
+
+.SearchBar input {
+  /* width: 50%;
+  border: none; */
+  /* box-sizing: border-box; */
+  padding: 10px 5px;
+  outline: none;
+}
+
+.SearchBar ul {
+  list-style-type: none;
+  text-align: left;
+  margin: 0;
+  box-shadow: 0px 2px 2px 0px rgb(0 0 0 / 35%);
+}
+
+.SearchBar li::before {
+  content: "";
+}
+
+.SearchBar li {
+  padding: 10px 5px;
+  cursor: pointer;
+}
+
+.SearchBar li:hover {
+  background-color: grey;
+  /* text-decoration: underline; */
+}
