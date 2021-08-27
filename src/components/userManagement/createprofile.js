@@ -140,6 +140,7 @@ export class CreateUserProfile extends Component {
         }
         else if(name === "phone" ){
             hadModified.phone=true
+            document.getElementById("contactPhone-validtor").innerText = ""
             if(errorObj.phoneError>0){
                 errorObj.phoneError=0
                 errorCount--
@@ -231,25 +232,6 @@ export class CreateUserProfile extends Component {
             errorObj.lastNameError=0
         }
 
-
-        // if (this.state.phone.length === 0) {
-        //     debugger;
-        //     if(this.state.phone !== ""){
-        //         let enteredNumber = this.state.phone.trim().match(/\d/g)
-                
-        //         if (enteredNumber.join("").length<10 || enteredNumber.value === "") {
-        //             document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
-        //             errorCount++;
-        //         } else {
-        //             document.getElementById("phone1-validtor").innerText = ""
-        //         }
-        //     }
-        //     else if(this.state.phone === ""){
-        //         document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
-        //         errorCount++;
-        //     }
-
-        // }
       
 
         let enteredNumber = this.state.phone.trim().match(/\d/g)
@@ -264,20 +246,7 @@ export class CreateUserProfile extends Component {
             //errorCount--;
         }
 
-        // else if(this.state.phone === ""){
-        //             document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
-        //             errorCount++;
-        //         }
        
-
-        //  if(!phoneReg.test(this.state.phone)){
-        //     errorObj.phoneError=1
-        //     errorCount++
-        // }
-        // if(this.state.phone.length>13){
-        //     errorObj.phoneError=1
-        //     errorCount++
-        // }
 
         if(this.state.position.length === 0){
             console.log(this.state.position)
@@ -305,6 +274,9 @@ export class CreateUserProfile extends Component {
         this.setState({errorObj,errorCount})
         return errorCount
     }
+
+
+
     handleSubmit = (e) => {
 
         
@@ -531,7 +503,7 @@ export class CreateUserProfile extends Component {
                                                        } 
                                                    
                                                 /> */}
-                                                     <InputMask
+                                                    <InputMask
                                                     class="form-control"  
                                                     type="text"
                                                     name="phone"

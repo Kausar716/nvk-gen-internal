@@ -189,6 +189,7 @@ class UserProfile extends React.Component {
         
         else if(name === "phone" ){
             hadModified.phone=true
+            document.getElementById("contactPhone-validtor").innerText = ""
             if(errorObj.phoneError>0){
                 errorObj.phoneError=0
                 errorCount--
@@ -745,7 +746,7 @@ class UserProfile extends React.Component {
                         <div>
 
                             <div class="row" style={{display:"flex", justifyContent:"space-between", marginTop:"-2em", marginBottom:"-1.5em"}}> 
-                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"3px"}} >User Profile &nbsp;-<span class="f-s-18 p-15 mb-0" style={{marginLeft:"-10px"}}>Add, Edit or Remove User</span> 
+                                <div class="f-s-24 px-3 py-3 f-w-500" style={{marginTop:"3px"}} >User Profile -<span class="f-s-18 p-15 mb-0" style={{marginLeft:"-10px"}}>Add, Edit or Remove User</span> 
                                 {/* <div style={{marginTop:"1.3em", float:"right"}}>
                                                                 <span style={{float:"right", marginRight:"3em", marginLeft:"-5em", marginTop:"-33px"}}>Active</span>
                                                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginTop:"-26px"}}>

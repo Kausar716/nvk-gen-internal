@@ -12,13 +12,33 @@ const initialDetailsQL =[
       supplierOrder:"3235386", createdBy:"John Scena", orderDate:"20/05/12021", expectedDate:"20/05/12021",
        dispatch:"Delivery", amount:"4,685.00" },
 
-       {status:"RESERVE", orderNumber:"Jason-012301-1", suppliearName:"Jason Smith landscaping", 
+       {status:"READY", orderNumber:"Scena-02301-1", suppliearName:"John landscaping", 
+       supplierOrder:"3235386", createdBy:"John ", orderDate:"20/05/12021", expectedDate:"20/05/12021",
+        dispatch:"Delivery", amount:"4,685.00" },
+
+       {status:"LATE", orderNumber:"Jason-012301-1", suppliearName:"Jason Smith landscaping", 
        supplierOrder:"3525", createdBy:"Jason Smith", orderDate:"20/05/2021", expectedDate:"20/09/2021",
         dispatch:"Pickup", amount:"7,123.00" },
 
         {status:"PICKING", orderNumber:"Dweny-012301-1", suppliearName:"Dweny Smith landscaping", 
         supplierOrder:"1249", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
          dispatch:"Pickup", amount:"9,089.00" },
+
+         {status:"PICKING", orderNumber:"Dweny-01301-1", suppliearName:"Dweny Smith landscaping", 
+         supplierOrder:"1249", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
+          dispatch:"Pickup", amount:"9,089.00" },
+
+          {status:"PICKING", orderNumber:"Dweny-01231-1", suppliearName:"Dweny Smith ", 
+          supplierOrder:"1249", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
+           dispatch:"Pickup", amount:"9,089.00" },
+
+           {status:"PICKING", orderNumber:"Dweny-0121-1", suppliearName:"Dweny landscaping", 
+           supplierOrder:"1249", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
+            dispatch:"Pickup", amount:"9,089.00" },
+
+            {status:"SHIPPED", orderNumber:"Dweny-0121-1", suppliearName:"Dweny landscaping", 
+            supplierOrder:"1249", createdBy:"Dweny Smith", orderDate:"20/02/12021", expectedDate:"20/05/12021",
+             dispatch:"Pickup", amount:"9,089.00" },
 
     {status:"QUOTE", orderNumber:"Robert Jr-012301-1", suppliearName:"Robert Jr Smith landscaping", 
     supplierOrder:"57901", createdBy:"Robert Jr Smith", orderDate:"20/05/12021", expectedDate:"20/05/12021",

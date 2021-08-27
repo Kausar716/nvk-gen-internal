@@ -63,6 +63,20 @@ class QuoteList extends React.Component {
             searchString: "",
             orderSearch:"",
             isChecked:false,
+            allChecked: false,
+
+            list: [
+                { id: 1, name: "Open",label:"OPEN", isChecked: false },
+                { id: 2, name: "Pick", label:"PICK",isChecked: false },
+                { id: 3, name: "Ready", label:"READY",isChecked: false },
+                { id: 4, name: "Ship", label:"SHIP",isChecked: false },
+                { id: 5, name: "Invoice", label:"INVOICE",isChecked: false },
+                { id: 6, name: "Closed", label:"CLOSED",isChecked: false },
+                { id: 7, name: "Cancel", label:"CANCEL",isChecked: false },
+                { id: 8, name: "Late", label:"LATE",isChecked: false },
+              ],
+
+              allCountList:[],
 
             suggestions: [],
             text: ""
@@ -80,7 +94,24 @@ class QuoteList extends React.Component {
         });
         this.refs.search.focus();
         this.refs.ordSearch.focus();
+
+        this.find_duplicate_in_array(initialDetailsQL);
+
+        let abc= this.state.allCountList
+
+        let finalValue = this.state.allCountList.map(a=>a)
+
+        console.log("abc100", finalValue, this.state.allCountList)
+
+
+
       }
+
+
+      componentDidUpdate=()=>{
+
+      }
+
 
 
       handleChange=()=> {
@@ -175,9 +206,6 @@ class QuoteList extends React.Component {
                 this.setState({checkedData: newCheckedData})
               }
               
-             
-  
-
             // let checked = e.target.name
             // let initialDetailsQl = this.state.initialDetailsQL
             // let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
@@ -293,10 +321,103 @@ class QuoteList extends React.Component {
     }
 
 
+    handleChangeCheckbox = e => {
+        let itemName = e.target.name;
+        let checked = e.target.checked;
+        this.setState(prevState => {
+          let { list, allChecked } = prevState;
+          if (itemName === "checkAll") {
+            allChecked = checked;
+            list = list.map(item => ({ ...item, isChecked: checked }));
+          } else {
+            list = list.map(item =>
+              item.name === itemName ? { ...item, isChecked: checked } : item
+            );
+            allChecked = list.every(item => item.isChecked);
+          }
+          return { list, allChecked };
+        });
+    
+        console.log("items::",itemName , checked)
+      }
+
+
+      checkboxList = () => {
+        return this.state.list.map(item => (
+          
+
+            <div class="custom-control custom-checkbox" style={{marginRight:"3em"}}>
+                <input type="checkbox" class="custom-control-input" id={item.id}
+                    key={item.id}
+                    name={item.name}
+                    value={item.name}
+                    checked={item.isChecked}
+                    onChange={this.handleChangeCheckbox}
+                // onChange={this.handleClickCheckBox} 
+                />
+                <label class="custom-control-label" for={item.id} >{item.name}</label>
+            </div>
+        ));
+      };
+
+
+
+       find_duplicate_in_array=(array)=>{
+        // let statusList =this.state.initialDetailsQL;
+        let totalStatusList =array.map(e=>e.status)
+        const {allCountList}=this.state
+
+       // const count = {}
+        const result = []
+        
+        totalStatusList.forEach(item => {
+            if (allCountList[item]) {
+                allCountList[item] +=1
+               return
+            }
+            allCountList[item] = 1
+        })
+        
+        for (let prop in allCountList){
+            if (allCountList[prop] >=2){
+                result.push(prop)
+            }
+        }
+
+        // this.setState({
+        //     allCountList:count
+        // })
+        
+        console.log("FinalCount",this.state.allCountList)
+        return result;
+        
+        }
+
+
 
    // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
-        console.log("alphabetInrender", this.state.checkedData, this.state.isChecked)
+        // let statusList =this.state.initialDetailsQL;
+        // let totalStatusList =statusList.map(e=>e.status)
+            //console.log("ListofCheckbox", this.state.list)
+         //this.find_duplicate_in_array(totalStatusList)
+
+         let _checkList = this.state.list
+          
+               let chk = _checkList.filter(e=>e.isChecked===true)
+                //  let check =chk.map(e=>e.isChecked)  
+               console.log("aaaaaa", chk)
+          
+
+
+
+
+
+        console.log("allCount", this.state.list)
+            let totalNumbers =this.state.allCountList
+            let totalNumbersList =totalNumbers.filter(e=>e.OPEN);
+        console.log("totalNumbersList",totalNumbers,totalNumbersList, this.state.allCountList)
+        //console.log("alphabetInrender", this.state.checkedData, this.state.isChecked)
         let _users = this.state.initialDetailsQL;
         let search = this.state.searchString.trim().toLowerCase();
         let orderSearch = this.state.orderSearch.trim().toLowerCase();
@@ -318,6 +439,19 @@ class QuoteList extends React.Component {
             _users = _users.filter(function(user) {
               return user.orderNumber.toLowerCase().match(alphaVal);
             });
+          }
+
+
+          if(chk[0]){
+             // debugger;
+             // let labelC = chk.map(e=>e.label)
+              
+              _users=_users.filter(function(user) {
+                return user.status=== chk[0].label
+                //(chk[0].label && chk[1].label  || chk[2].label  || chk[3].label || chk[4].label  || chk[5].label  || chk[6].label)
+                //chk.filter(e=>e.label)
+                //chk[0].label
+              });
           }
 
 
@@ -404,7 +538,7 @@ class QuoteList extends React.Component {
                             <div class="cardBoxwide individualCard totalCard">
                                 <div class="stripe"></div>
                                 <p>Total Orders</p>
-                                <h4>8</h4>
+                                <h4>9</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -413,7 +547,7 @@ class QuoteList extends React.Component {
                             <div class="cardBox individualCard openStsCard">
                                 <div class="stripe"></div>
                                 <p>Open</p>
-                                <h4>8</h4>
+                                <h4>{this.state.allCountList.OPEN}</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -422,7 +556,7 @@ class QuoteList extends React.Component {
                             <div class="cardBox individualCard pickingStsCard">
                                 <div class="stripe"></div>
                                 <p>Picking</p>
-                                <h4>12</h4>
+                                <h4>{this.state.allCountList.PICKING}</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -431,7 +565,7 @@ class QuoteList extends React.Component {
                             <div class="cardBox individualCard readyStsCard">
                                 <div class="stripe"></div>
                                 <p>Ready</p>
-                                <h4>18</h4>
+                                <h4>{this.state.allCountList.READY}</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -440,7 +574,7 @@ class QuoteList extends React.Component {
                             <div class="cardBox individualCard shippedStsCard">
                                 <div class="stripe"></div>
                                 <p>Shipped</p>
-                                <h4>20</h4>
+                                <h4>{this.state.allCountList.SHIPPED}</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -449,7 +583,7 @@ class QuoteList extends React.Component {
                             <div class="cardBox individualCard lateStsCard">
                                 <div class="stripe"></div>
                                 <p>Late</p>
-                                <h4>3</h4>
+                                <h4>{this.state.allCountList.LATE}</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
@@ -495,7 +629,7 @@ class QuoteList extends React.Component {
                                     <div class="col-md-12 col-lg-12">
                                         <label><b>Orders</b></label>
                                         <div class="d-flex flex-wrap mt-2">
-                                            <div class="custom-control custom-checkbox">
+                                            {/* <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="OPEN" 
                                                 name="OPEN"
                                                 onChange={this.handleClickCheckBox} />
@@ -529,17 +663,29 @@ class QuoteList extends React.Component {
                                             <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck8" />
                                                 <label class="custom-control-label" for="customCheck8">Late</label>
-                                            </div>
+                                            </div> */}
+                                            {this.checkboxList()}
                                         </div>
                                     </div>
                                     
                                 </div>
                                 <div class="row form-group">
-                                    <div class="col-md-5 col-lg-5">
+                                    <div class="col-md-5 col-lg-5" style={{marginLeft:"-1em"}}>
                                         <div class="d-flex flex-wrap mt-2">
-                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select All</label></a></div>
-                                            <div><label>&nbsp;&nbsp;&nbsp;</label></div>
-                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select None</label></a></div>
+                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                            <input
+                                                    class="custom-control-input"
+                                                    type="checkbox"
+                                                    name="checkAll"
+                                                    id="checkAll"
+                                                    checked={this.state.allChecked}
+                                                    onChange={this.handleChangeCheckbox}
+                                                    />
+                                                     <label class="custom-control-label" for="checkAll" style={{color:"#348fe2"}}>Select All/Select None</label>
+                                                {/* <a href="" style={{cursor:"pointer"}}><label>Select All/Select None</label></a> */}
+                                            </div>
+                                            {/* <div><label>&nbsp;&nbsp;&nbsp;</label></div>
+                                            <div><a href="javascript:;" style={{cursor:"pointer"}}><label>Select None</label></a></div> */}
                                             
                                         </div>
                                     </div>
@@ -588,7 +734,7 @@ class QuoteList extends React.Component {
                                 <div class="row form-group">
                                     <div class="col-md-4 col-lg-4">
                                         <label><b>Customer</b></label>
-                                        <div class="searchInput SearchBar">
+                                        <div class="searchInput">
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
@@ -601,11 +747,13 @@ class QuoteList extends React.Component {
                                              onChange={this.onTextChange}
                                              //onChange={this.handleChange}
                                              placeholder="Search Customer Name/Number"/>
-
-                                              <span>{this.renderSuggestions()}</span>
                                             </div>
+                                           
                                             
                                         </div>
+                                        <span className="SearchBar">
+                                                  {this.renderSuggestions()}
+                                        </span>
                                     </div>
                                     <div class="col-md-4 col-lg-4 ">
                                         <label><b>Job Description</b></label>
@@ -738,7 +886,7 @@ class QuoteList extends React.Component {
                                             <tbody>
                                                 {displayPOList1.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
-                                                    <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
+                                                    <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='SHIPPED'?'stsBadge stsOpen':pQuoteList.status==='LATE'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
                                                     <td><a href="">{pQuoteList.orderNumber}</a></td>
                                                     <td class="text-nowrap text-center">4</td>
                                                     <td>{pQuoteList.suppliearName}</td>
