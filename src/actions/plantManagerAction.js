@@ -127,17 +127,15 @@ export const createPlantAction = (plantData) => dispatch => {
             })
     
         })
-        .catch(error=>{
-            // errorArray.push("Please select mandate fileds")
-
+        .catch(Error=>{
+            errorArray.push(Error.response.data.message)
             dispatch({
                 type:ERROR_HANDLE,
                 message:errorArray,
                 status:true
             })
-            
-        })  
 
+        })
     }else{
         dispatch({
             type:ERROR_HANDLE,
@@ -210,10 +208,10 @@ export const updatePlantAction = (data,id) => dispatch => {
             else 
             updateObj.common_name = []
         }
-        
+        let error = []
         axios.post(`/api/update-plant/${id}`, data, config).then(res=>{
             dispatch(getAllPlantAction())
-            let error = []
+            
             error.push("Plant Updated successfully")
             
             dispatch(getAllPlantAction())
@@ -234,6 +232,16 @@ export const updatePlantAction = (data,id) => dispatch => {
             })
 
         })
+        .catch(Error=>{
+            error.push(Error.response.data.message)
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+
+        })
+        
 }
 
 
@@ -255,6 +263,15 @@ export const deletePlantAction = (id) => dispatch => {
             status:true
         })
         })
+        .catch(Error=>{
+            error.push(Error.response.data.message)
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+
+        })
 
 
 }
@@ -274,6 +291,15 @@ export const deleteSkuAction = (id) => dispatch => {
                     // dispatch(getAllPlantAction())
                     // dispatch(getAllPlantSkuAction())
         })
+        .catch(Error=>{
+            error.push(Error.response.data.message)
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+
+        })
 
 
 }
@@ -292,7 +318,14 @@ export const duplicatePlant = (id) =>dispatch=>{
                         message:error,
                         status:true
                     })
-        }).catch(err=>{
+        }).catch(Error=>{
+            error.push(Error.response.data.message)
+            dispatch({
+                type:ERROR_HANDLE,
+                message:error,
+                status:true
+            })
+
         })
 
 }
@@ -423,9 +456,8 @@ export const createPlantSkuAction = (id, data, actionType="add") => dispatch => 
                 status:true
             })
             // dispatch(plantPageReDirectAction(actionType = "all"))
-            }).catch(error1=>{
-                console.log(error1)
-                error.push("Please add Plant first")
+            }).catch(Error=>{
+                error.push(Error.response.data.message)
                 dispatch({
                     type:ERROR_HANDLE,
                     message:error,
@@ -477,7 +509,7 @@ export const updatePlantSkuAction = (id, data, actionType="edit") => dispatch =>
             })
             }).catch(error1=>{
                 console.log(error1)
-                error.push("Please add Plant first")
+                error.push(error1.response.data.message)
                 dispatch({
                     type:ERROR_HANDLE,
                     message:error,
