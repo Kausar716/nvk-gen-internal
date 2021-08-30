@@ -33,3 +33,7 @@
   background-color: grey;
   /* text-decoration: underline; */
 }
+
+.checkBoxHide {
+  visibility: hidden;
+}
