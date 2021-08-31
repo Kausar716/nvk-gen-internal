@@ -11,7 +11,8 @@ import {
     PO_GET_ORDER_FILTER,
     PO_GET_PLANT_PRODUCT_FILTER,
     PO_GET_SKU_PLANT_PRODUCT_FILTER,
-    PO_GET_SUPPLIER_ORDER_FILTER
+    PO_GET_SUPPLIER_ORDER_FILTER,
+    HANDLE_PURCHASE_ORDER_FILTER
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -89,5 +90,10 @@ import {
             supplierName:name
         }
       }
- 
+      export const handlePurchaseOrderFilert = (statusLevel)=>{
+        return{
+          type:HANDLE_PURCHASE_ORDER_FILTER,
+          statusLevel:statusLevel,
+        }
+    }
       

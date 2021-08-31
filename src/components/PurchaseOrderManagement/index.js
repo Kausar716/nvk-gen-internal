@@ -6,13 +6,15 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
+     handlePurchaseOrderFilert,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
 import {getAllPlantAction,serachPlant} from '../../actions/plantManagerAction'
 import {getAllSuppliers} from "../../actions/supplierManagementAction"
 // import initialDetails from './initialDetails';
-import './style.css'
+// import './style.css'
+import '../PlantManager/index.css'
 import { Link } from "react-router-dom";
 import Autosuggest from 'react-autosuggest';
 import PurchaseOrderTable from "./purchaseOrderTable"
@@ -54,9 +56,11 @@ export class PurchaseOrders extends React.Component {
         this.props.getAllPlantAction()
         this.props.getAllSuppliers()
     }
-    handleFilert = (e) => {
+    handleFilter = (e) => {
+        let {statusLevel}=this.props.completeStateData
+        console.log(e.target)
         let id = e.target.id
-        let value = e.taret.value
+        let value = e.target.value
         if(id ==="supplierFilter"){
             this.props.getPoSupplierFilter()
         }
@@ -75,8 +79,17 @@ export class PurchaseOrders extends React.Component {
         else if(id === "supplierOrder"){
             this.props.getSupplierOrderFilter()
         }
+        if(id === "open" || id === "draft"|| id === "cancelled" || id==="closed"){
+            console.log(this.props.completeStateData.statusLevel )
+            console.log(e.target.value)
+            console.log(e.target.id)
+             statusLevel[`${id}`] = statusLevel[`${id}`]===0?1:0
+            this.props.handlePurchaseOrderFilert(statusLevel)
+        }
+        
     } 
     handleChange = (event, { newValue }) => {
+        console.log(newValue)
         if(event.target.name==="plantSearch"){
             this.setState({plantValue:newValue})
         // setLoaderMessage("No Records Found.")
@@ -113,13 +126,15 @@ export class PurchaseOrders extends React.Component {
     };
     getOrderSuggestions = value => {
         console.log(value)
-        let orderData = this.props.plantData.plantData
+        let orderData = this.props.poBackup
        const inputValue = value.trim().toLowerCase();
        const inputLength = inputValue.length;
          console.log(orderData)
            return inputLength === 0 ? [] : orderData.filter(lang =>
-             lang.genus.toLowerCase().includes(inputValue)
+            
+            (lang.order_date && lang.order_date.toLowerCase().includes(inputValue))
            );
+           
        };
     onOrderSuggestionsFetchRequested = ({value}) => {  
           
@@ -250,8 +265,9 @@ onSupplierOrderSuggestionsClearRequested = () => {
         const getJobSuggestionValue = ""
         const getOrderSuggestionValue = ""
         const getSupplierOrderSuggestionValue = ""
-        console.log(this.props.purchaseOrderListData)
+        console.log(this.props.completeStateData.statusLevel)
         let {plantValue,supplierValue,jobValue,orderValue,supplierOrderValue} = this.state
+        let {open,closed,draft,cancelled} = this.props.completeStateData.statusLevel
         // suggestion => suggestion.genus;
         let {openPoCount}= this.props.purchaseOrderListData
         const inputOrderProps = {
@@ -304,6 +320,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.handleChange
         };
+        console.log(open)
     return (        
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -343,21 +360,24 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="open" 
-                                                name="open"
-                                                onChange={this.handleClickCheckBox} />
+                                                name="open" value={open} checked ={open===1?true:false}
+                                                onChange={this.handleFilter}  />
                                                 <label class="custom-control-label" for="open" >Open</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                <label class="custom-control-label" for="customCheck2">Draft</label>
+                                                <input type="checkbox" class="custom-control-input" id="draft"
+                                                 onChange={this.handleFilter} value={draft} checked ={draft===1?true:false} />
+                                                <label class="custom-control-label" for="draft">Draft</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-3">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck3" />
-                                                <label class="custom-control-label" for="customCheck3">Closed</label>
+                                                <input type="checkbox" class="custom-control-input" id="closed"
+                                                 onChange={this.handleFilter} value={closed} checked ={closed===1?true:false} />
+                                                <label class="custom-control-label" for="closed">Closed</label>
                                             </div>
                                             <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
-                                                <input type="checkbox" class="custom-control-input" id="customCheck4" />
-                                                <label class="custom-control-label" for="customCheck4">Cancelled</label>
+                                                <input type="checkbox" class="custom-control-input" id="cancelled"
+                                                 onChange={this.handleFilter} value={cancelled} checked ={cancelled===1?true:false} />
+                                                <label class="custom-control-label" for="cancelled">Cancelled</label>
                                             </div>
                                         </div>
                                     </div>
@@ -388,6 +408,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
+                                            <div className="searchInput" style={{height: "40px"}}>
                                             <Autosuggest
                                                     suggestions={this.state.supplierSuggestions}
                                                     onSuggestionsFetchRequested={this.onSupplierSuggestionsFetchRequested}
@@ -398,7 +419,9 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                                     theme={{suggestionsContainerOpen:this.state.supplierSuggestions.length>5?"yes":"no",suggestionsContainer:this.state.supplierSuggestions.length>5?"yes1":"no1",
                                                     suggestionsList:this.state.supplierSuggestions.length>5?"yes":"no1"}}
                                                     className="form-control"
+                                                    style={{border:"1px solid #d5dbe0"}}    
                                                 />
+                                                </div>
                                             {/* <input type="text" class="form-control" id="supplierFilter"  onChange={this.handleFilert}  placeholder="Search Supplier Name/Number"/> */}
                                         </div>
                                     </div>
@@ -409,6 +432,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
+                                            <div className="searchInput" style={{height: "40px"}}>
                                             <Autosuggest
                                                     suggestions={this.state.jobSuggestions}
                                                     onSuggestionsFetchRequested={this.onJobSuggestionsFetchRequested}
@@ -420,6 +444,8 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                                     suggestionsList:this.state.jobSuggestions.length>5?"yes":"no1"}}
                                                     className="form-control"
                                                 />
+                                                
+                                                </div>
                                             {/* <input type="text" class="form-control" id="jobDescription" onChange={this.handleFilert}  placeholder="Search Job Description"/> */}
                                         </div>
                                     </div>
@@ -429,7 +455,8 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            {/* <Autosuggest
+                                            <div className="searchInput" style={{height: "40px"}}>
+                                            <Autosuggest
                                                     suggestions={this.state.orderSuggestions}
                                                     onSuggestionsFetchRequested={this.onOrderSuggestionsFetchRequested}
                                                     onSuggestionsClearRequested={this.onOrderSuggestionsClearRequested}
@@ -439,8 +466,9 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                                     theme={{suggestionsContainerOpen:this.state.orderSuggestions.length>5?"yes":"no",suggestionsContainer:this.state.orderSuggestions.length>5?"yes1":"no1",
                                                     suggestionsList:this.state.orderSuggestions.length>5?"yes":"no1"}}
                                                     className="form-control"
-                                                /> */}
-                                            <input type="text" class="form-control" id="order" onChange={this.handleFilert}  placeholder="Search Order"/>
+                                                />
+                                                </div>
+                                            {/* <input type="text" class="form-control" id="order" onChange={this.handleFilert}  placeholder="Search Order"/> */}
                                         </div>
                                     </div>
                                 </div>
@@ -451,6 +479,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                             <button type="submit" class="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
+                                            <div className="searchInput" style={{height: "40px"}}>
                                             <Autosuggest
                                                     suggestions={this.state.plantSuggestions}
                                                     onSuggestionsFetchRequested={this.onPlantSuggestionsFetchRequested}
@@ -462,6 +491,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
                                                     suggestionsList:this.state.plantSuggestions.length>5?"yes":"no1"}}
                                                     className="form-control"
                                                 />
+                                            </div>
                                             {/* <input type="text" class="form-control" placeholder="Search Plants or Products" id="plantProduct" onChange={this.handleFilert} /> */}
                                         </div>
                                     </div>
@@ -519,12 +549,14 @@ const mapStateToProps = (state)=> (
         purchaseOrderListData:state.purchaseOrderManagementData,
         plantData:state.plantData,
         supplierData:state.supplierData.supplierList,
-        poBackup:state.purchaseOrderManagementData.purchaseOrderListBackup
+        poBackup:state.purchaseOrderManagementData.purchaseOrderListBackup,
+        completeStateData:state.purchaseOrderManagementData
     }
 )
 
 
 export default connect(mapStateToProps,{
     getAllPlantAction,getAllSuppliers,
+    handlePurchaseOrderFilert,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 })(PurchaseOrders)
