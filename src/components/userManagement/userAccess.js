@@ -3,10 +3,11 @@ import React from 'react'
 import {  Tabs,  TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import QuoteOrderPermission from './QuoteOrderPermission';
-
+import TextField from '@material-ui/core/TextField';
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues, displaySelectedUSERS} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues, displaySelectedUSERS, handleUserAccessExchnageData,userAccessList,resetUserSelect} from "../../actions/userAccessAction";
 import {getUsersList,showUser} from "../../actions/userAction";
 //import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import { Link ,withRouter} from "react-router-dom";
@@ -102,17 +103,23 @@ export const Component = withRouter(({ history, location }) =>{
    
 
     handleUserSelect = (e) =>{
-      // debugger;
+       //debugger;
         console.log(e.target.value)
         let selectedId = e.target.value
         console.log(this.props.users)
-        let userProfiles  =  [...this.props.users.active,...this.props.users.inactive]
-        console.log(userProfiles)
+        let userProfiles  =  [...this.props.users.active]
+        console.log("dcscd", userProfiles)
+
+        let finalValue = userProfiles.filter(itemInArray => itemInArray.id === parseInt(selectedId));
         // let result = this.props.showUser(selectedId)
-        // console.log(result)
+        console.log("finalValue",finalValue)
 
         this.props.handleUserSelect(selectedId)
-  
+        this.props.userAccessList(finalValue[0].name)
+        this.props.handleUserAccessExchnageData(e.target.value,e.target.id,e.target.name)
+       // this.props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierLocation")
+        //handleUserAccessExchnageData
+
         this.setState({
             selectedUser:e.target.value,
             //displayselectedUSer:true
@@ -139,6 +146,7 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.getRolesList()
         this.props.getPermissionList()
         this.props.resetUserData()
+        this.props.resetUserSelect()
         this.props.displaySelectedUSERS(false)
        let selectedId = "Select..."
       //  this.props.handleUserSelect(selectedId)
@@ -207,7 +215,9 @@ export const Component = withRouter(({ history, location }) =>{
 
     render(){
 
-        console.log("swithchigTAB", )
+        
+
+        console.log("swithchigTAB",this.props.userAccessSelectList )
         console.log("getRolesList", this.props.roles)
         let userProfiles = []  
         let selectedUser = this.props.user.data
@@ -346,13 +356,30 @@ export const Component = withRouter(({ history, location }) =>{
                                                 <div class="col-md-8">
                                                     <div>
                                                         <h5>Select User Profile</h5>
-                                                        <select class="form-control" name="userList" onChange={this.handleUserSelect}>
-                                                        <option>Select...</option>
+
+
+                                                        <select class="form-control" name="userList" id="userList" value={this.props.userAccessSelectList} onChange={this.handleUserSelect}>
+                                                        <option>{this.props.userAccessSelectList}</option>
                                                         {userProfiles[0]?userProfiles.map(userObj=>{
                                                            
-                                                            return  <option value={userObj.id}>{userObj.name}</option>
-                                                        }):null}
+                                                            return  <option id={userObj.name} value={userObj.id}>{userObj.name}</option>
+                                                        }):""}
                                                         </select>
+
+                                                        {/* <Autocomplete 
+                                             
+                                                                //onChange={this.onTagsChange} 
+                                                                onChange={this.handleUserSelect}
+                                                                options={userProfiles}
+                                                                id={userProfiles.map(id=>id.id)}
+                                                                // value={(option)=>option.id}
+                                                                getOptionLabel={(option) => option.name +"  "+ option.last_name}
+                                                                style={{ width: 300 }}
+                                                                autoHighlight
+                                                                renderInput={(params) => <TextField {...params} label="Select..." variant="outlined" />}
+                                                         /> */}
+
+
                                                     </div>
                                                     <div class="mt-2">
                                                         <h5>Load Existing Role</h5>
@@ -1299,7 +1326,8 @@ const mapStateToProps = (state)=> (
     permissionList:state.userAccessReduser.permissionList,
     temp:state.userAccessReduser,
     reduxSelectedUser:state.userAccessReduser.selectedUser,
-    displaySelectedUSER1 : state.userAccessReduser.displaySelectedUSER
+    displaySelectedUSER1 : state.userAccessReduser.displaySelectedUSER,
+    userAccessSelectList : state.userAccessReduser.userAccessList
     // permissionList:state.permissionList
 }
 
@@ -1310,4 +1338,4 @@ export default withRouter(connect(mapStateToProps,{getRolesList,showRole,showUse
     ,getPermissionList,
     handleUserSelect,
     handleUserUpdateUserPermission
-,handleUserAccessInputAction, resetUserData,displaySelectedUSERS, tabChangeValues})(UserAccess));
+,handleUserAccessInputAction,userAccessList, resetUserData,displaySelectedUSERS,handleUserAccessExchnageData, tabChangeValues, resetUserSelect})(UserAccess));

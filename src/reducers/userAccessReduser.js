@@ -12,6 +12,9 @@ import {
     RESET_USERDATA,
     TAB_CHANGE_VALUE,
     DISPLAY_SELECTED_USER,
+    HANDLE_USERACCESS_INPUT_EXCHANGE,
+    USERACCESS_LIST,
+    RESET_USER_SELECT
    } from '../actions/types';
 
 const initialSatate = {
@@ -29,6 +32,14 @@ const initialSatate = {
     selectedUser:{},
     tabChangeValue:0,
     displaySelectedUSER:false,
+    // userAccessList:{
+       
+    //     userProfileSelect: "Select User",
+       
+    // },
+
+    userAccessList:"Select ..."
+
 }
 
 
@@ -64,10 +75,27 @@ const initialSatate = {
         case RESET_USERDATA:{
             return{
                 ...state,
-                selectedUser:{}
+                selectedUser:{},
+               // userAccessList:"Select ..."
+
                 
             }
         }
+
+
+
+        case RESET_USER_SELECT:{
+            return{
+                ...state,
+                //selectedUser:{},
+                userAccessList:"Select ..."
+
+                
+            }
+        }
+
+
+        
 
         case TAB_CHANGE_VALUE:{
             return{
@@ -76,6 +104,13 @@ const initialSatate = {
                 
             }
         }
+
+        case HANDLE_USERACCESS_INPUT_EXCHANGE:
+            return{
+                ...state,
+                [action.dataType]:{...state[action.dataType],[action.id]:action.data}
+        
+            }
 
 
         case DISPLAY_SELECTED_USER:{
@@ -86,7 +121,13 @@ const initialSatate = {
             }
         }
 
-
+        case USERACCESS_LIST:{
+            return{
+                ...state,
+                userAccessList:action.userAccessList
+                
+            }
+        }
         
 
         case GET_PERMISSION_LIST:{
@@ -115,7 +156,8 @@ const initialSatate = {
                 ...state,
                 selectedUser:action,              
                 currentPermission:selectedPermissionId,
-                currentPermissionNames:selectedPermissionName
+                currentPermissionNames:selectedPermissionName,
+               
             }
         }
         case UPDATE_USER_PERMISSION:{

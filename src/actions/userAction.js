@@ -7,7 +7,8 @@ import {
     UPDATE_USER,
     UPLOAD_USER_IMAGE,
     REMOVE_USER_IMAGE,
-    DELETE_USER 
+    DELETE_USER ,
+    //HANDLE_USERACCESS_INPUT_EXCHANGE
    } from './types';
    
 //    export const getUsersList = (dispatch) => {
@@ -24,6 +25,17 @@ import {
            })
    }
 //    export const showUser = id =>{
+
+    // export const handleUserAccessExchnageData =(data,id,dataType)=>dispatch=>{
+    //     dispatch({
+    //         type:HANDLE_USERACCESS_INPUT_EXCHANGE,
+    //         data:data,
+    //         id:id,
+    //         dataType:dataType
+    
+    //     })
+    
+    // }
     export const showUser = (id) => dispatch => {
        axios.get(`/api/show-user/${id}`,config).then(res=>{     
            dispatch({

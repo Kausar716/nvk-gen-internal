@@ -269,10 +269,7 @@ handleChange=(index)=>{
 
 
 goToUserAccess=()=>{
-   // alert("going user access ?")
-    // this.setState({
-    //     tabValues:1
-    // })
+  
     this.props.tabChangeValues(1)  
 
 }
@@ -400,7 +397,7 @@ goToUserAccess=()=>{
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2" >
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <span className="linkTag" onClick={this.goToUserAccess}>User Access</span>.</p>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via <span className="linkTag" onClick={this.goToUserAccess}>User Access123</span>.</p>
                                     </div>
                                 </div>
                             </div>
