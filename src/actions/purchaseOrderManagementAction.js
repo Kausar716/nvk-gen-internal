@@ -12,7 +12,10 @@ import {
     PO_GET_PLANT_PRODUCT_FILTER,
     PO_GET_SKU_PLANT_PRODUCT_FILTER,
     PO_GET_SUPPLIER_ORDER_FILTER,
-    HANDLE_PURCHASE_ORDER_FILTER
+    HANDLE_PURCHASE_ORDER_FILTER,
+    ADD_PURCHASE_ORDER,
+    SET_SUPPLIER_TO_ADD_PO,
+    HANDLE_ORDERDETAILS_INPUT
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -96,4 +99,29 @@ import {
           statusLevel:statusLevel,
         }
     }
+    export const addPo = (data) => dispatch => {
+      axios.post(`/api/add-purchase-order`,data,config).then(res=>{
+          console.log(res)
+          debugger;
+          dispatch({
+              type:ADD_PURCHASE_ORDER,
+              payload:res.data.data
+  
+          })
+      })
+  }
+  export const setSupplierToAddPo = (supplier)=>{
+    return{
+      type:SET_SUPPLIER_TO_ADD_PO,
+      supplier:supplier,
+    }
+}
+
+export const handleOrderDetailsInput = (id,value)=>{
+  return{
+    type:HANDLE_ORDERDETAILS_INPUT,
+    itemId:id,
+    itemValue:value
+  }
+}
       

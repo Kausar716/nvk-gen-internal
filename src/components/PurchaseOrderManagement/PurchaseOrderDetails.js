@@ -2,15 +2,19 @@ import React, { useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
+import OrderDetails from './newPo'
+import {connect} from "react-redux";
 
-export default function PurchaseOrderDetails() {
+ const PurchaseOrderDetails =(props)=> {
     const [value, onChange] = useState(new Date());
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0 d-flex flex-wrap align-items-center"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt="" class="mr-2"/> Edit Purchase Orders <span class="text-green ml-3">#JSMITH-2000132</span></h1>
-				<div class="topbarCtrls mt-3 mt-md-0">
-                    <a href="#" class="btn">
+				<h1 class="page-header mb-0 d-flex flex-wrap align-items-center">
+                    <img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt="" class="mr-2"/>{props.pageToOpen ==="add"?"Add":"Edit"} Purchase Orders
+                    {props.pageToOpen !=="add"?<span class="text-green ml-3">#JSMITH-2000132</span>:""}</h1>
+				{props.pageToOpen !=="add"?<div class="topbarCtrls mt-3 mt-md-0">
+                    <a href="#" class="btn"> 
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/email-ic-btn.svg" alt=""/>
                             <span class="ml-2"><b>Email</b></span>
@@ -25,7 +29,7 @@ export default function PurchaseOrderDetails() {
                     <a href="#" class="btn ml-2 mt-3 mt-md-0">
                         <span class="d-flex align-items-center text-left"><img src="assets/img/print-ic-btn.svg" alt=""/><span class="ml-2"><b>Print</b></span></span>
                     </a>
-                </div>
+                </div>:""}
 			</div>
           
 
@@ -41,14 +45,14 @@ export default function PurchaseOrderDetails() {
                                 </div>
                                 <div class="ml-5 d-flex align-items-center">
                                     <img src="assets/img/price-ic-sm-green.svg" alt=""/>
-                                    <span class="ml-2">CA <b class="f-s-22 lh22">$615.29</b></span>
+                                    <span class="ml-2">CA <b class="f-s-22 lh22">$0.00</b></span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 d-flex justify-content-md-end">
+                        {props.pageToOpen !=="add"? <div class="col-md-6 d-flex justify-content-md-end">
                             <a href="" class="mx-2"><img src="assets/img/copy-ic.svg" alt=""/></a>
                             <a href="" class="mx-2"><img src="assets/img/trash-ic.svg" alt=""/></a>
-                        </div>
+                        </div>:""}
                     </div>
                 </div>
 
@@ -56,146 +60,13 @@ export default function PurchaseOrderDetails() {
                 <Tabs>
                     <TabList>
                         <Tab>Order Details</Tab>
-                        <Tab>Add Order</Tab>
+                        <Tab>Add to Order</Tab>
                         <Tab>Current P.O. <span class="badge badge-pill badge-success">25</span></Tab>
                         <Tab>Order History</Tab>
                         <Tab>Notes</Tab>    
                     </TabList>
                     <TabPanel>
-                        <div class="bg-white px-3 py-3">
-                            <form>
-                                <h2>Purchase Order Details</h2>
-                                <hr/>
-                                <div class="px-3 py-3 bg-grey-transparent-2">
-                                    <div class="row ">
-                                        <div class="col-md-6 col-lg-6">
-                                            <h4>John Smith Landscaping</h4>
-                                            <div>
-                                                <div>
-                                                    <b class="mr-3">Type:</b>
-                                                    <span class="textGrey">Finished Plants, Liners</span>
-                                                </div>
-                                                <div>
-                                                    <b class="mr-3">Tax Exempt:</b>
-                                                    <span class="textGrey">No</span>
-                                                </div>
-                                                <div>
-                                                    <b class="mr-3">Terms:</b>
-                                                    <span class="textGrey">Net 30</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6 col-lg-6 text-md-right mt-3 mt-md-0">
-                                            <h4>Ordered By</h4>
-                                            <div>
-                                                <div><span class="textGrey">B. Vanderkruk</span></div>
-                                                <div><span class="textGrey">brent@nvknuseries.com</span></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-6 col-xl-8">
-                                        <div class="row mt-3">
-                                            <div class="col-md-12 col-lg-12">
-                                                <label>Discount</label>
-                                                <div class="row align-items-center">
-                                                    <div class="col-md-4 col-lg-2">
-                                                        <input type="text" class="form-control" placeholder=""></input>
-                                                    </div>
-                                                    <div class="col-md-6 col-lg-4 d-flex mt-3 mt-md-0">
-                                                        <div class="custom-control custom-radio">
-                                                            <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="customRadio1">Overall</label>
-                                                        </div>
-                                                        <div class="custom-control custom-radio ml-3">
-                                                            <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
-                                                            <label class="custom-control-label" for="customRadio2">Individual</label>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-6  col-xl-4">
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 col-lg-6">
-                                                <label class="mr-2 mr-md-0">Requested Date</label>
-                                                <DatePicker onChange={onChange} value={value} />
-                                            </div>
-                                            <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
-                                                <label class="mr-2 mr-md-0">Latest Date</label>
-                                                <DatePicker onChange={onChange} value={value} />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-8">
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 col-lg-4">
-                                                <label>Dispatch Type</label>
-                                                <input type="text" class="form-control" placeholder="Pickup"></input>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
-                                                <label>Currency</label>
-                                                <select class="form-control">
-                                                    <option>Canadian Dollars</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
-                                                <label>Units</label>
-                                                <select class="form-control">
-                                                    <option>Metric</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-4">
-                                        <div class="row mt-3">
-                                            <div class="col-md-6 col-lg-6">
-                                                <label>Supplier Order# </label>
-                                                <input type="text" class="form-control" placeholder=""></input>
-                                            </div>
-                                            <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
-                                                <label>Include Royalty</label>
-                                                <div class="d-flex align-items-center flex-wrap ml-2 mt-2">Off
-                                                    <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
-                                                        <label for="switcher_checkbox_date"></label>
-                                                    </div> On
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-3 align-items-center">
-                                    <div class="col-md-6 col-lg-6">
-                                        <label>Deliver To:</label>
-                                        <select class="form-control">
-                                            <option>Farm A [1155 Highway #05, Dundas, On]</option>
-                                            <option>Option 1</option>
-                                            <option>Option 2</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
-                                        <label>Job Description</label>
-                                        <input type="text" class="form-control" placeholder=""></input>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
-                                        <label>Customer Notes <small class="textGrey">(Internal Only)</small></label>
-                                        <textarea cols="4" rows="3" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <OrderDetails/>
                     </TabPanel>
                     <TabPanel>
                         <div class="bg-white px-3 py-3 mt-2">
@@ -1202,3 +1073,17 @@ export default function PurchaseOrderDetails() {
         </div>
     )
 }
+const mapStateToProps = (state)=> ({ 
+    selectedSupplier:state.purchaseOrderManagementData.selectedSupplier,
+    pageToOpen:state.purchaseOrderManagementData.pageToOpen
+    
+
+})
+export default connect(mapStateToProps,{
+
+
+
+
+
+
+})(PurchaseOrderDetails)
