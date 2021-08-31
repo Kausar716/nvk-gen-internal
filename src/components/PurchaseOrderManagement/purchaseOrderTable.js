@@ -100,7 +100,7 @@ import {getPurchaseOrderList,poSetPageNumber,setAlphabetSelected} from '../../ac
     let pageSize = this.state.pageSize
     // this.props.purchaseOrderList
     console.log(purchaseOrderList)
-    let totalLength = purchaseOrderList.length
+    let totalLength = purchaseOrderList?purchaseOrderList.length:0
     
     const productPerPage = pageSize;
     const pagesVisited = pageNumber*pageSize;
