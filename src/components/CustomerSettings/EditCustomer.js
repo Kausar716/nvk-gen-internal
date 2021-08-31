@@ -701,11 +701,11 @@ const dataTochange =(e)=>{
                                             </select>
                                             <div class="overSelect" id="setBox"></div>
                                             </div>
-                                            <div id="checkboxes" style={{position: 'absolute',display:expanded?"block":""}}>
+                                            <div id="checkboxes" style={{position: 'absolute',display:expanded?"block":"",overflowY:"scroll",height:customerTypeList.active.length>5?"200px":"auto"}}>
 
                                             {customerTypeList.active.map(type=>{
                                                 return(
-                                                    <p for="one"  id="typeData">
+                                                    <p for="one"  id="typeData" >
                                                 <p style={{paddingLeft:20}} id="lineOfCheckbox">
                                                 <input type="checkbox" id="type" style={{paddingLeft:0,cursor:"pointer"}} value={type.id} onChange={handleInput} checked={customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0}/> {type.customer_type}
                                                 </p>
