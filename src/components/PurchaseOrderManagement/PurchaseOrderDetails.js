@@ -41,7 +41,8 @@ import {connect} from "react-redux";
                             <div class="d-flex align-items-center ml-3 mb-0 bdrLeft">
                                 <div class="d-flex align-items-center ml-3">
                                     <img src="assets/img/date-ic-sm-green.svg" alt=""/>
-                                    <span class="ml-2">March 25, 2020</span>
+                                    <span class="ml-2">{`${new Date().toLocaleString('default', { month: 'long' })} ${new Date().getDate()}, ${new Date().getFullYear()}`}</span>
+                                    
                                 </div>
                                 <div class="ml-5 d-flex align-items-center">
                                     <img src="assets/img/price-ic-sm-green.svg" alt=""/>
@@ -61,7 +62,9 @@ import {connect} from "react-redux";
                     <TabList>
                         <Tab>Order Details</Tab>
                         <Tab>Add to Order</Tab>
-                        <Tab>Current P.O. <span class="badge badge-pill badge-success">25</span></Tab>
+                        <Tab>Current P.O
+                             {/* <span class="badge badge-pill badge-success">25</span> */}
+                             </Tab>
                         <Tab>Order History</Tab>
                         <Tab>Notes</Tab>    
                     </TabList>

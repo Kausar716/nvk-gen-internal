@@ -4,7 +4,8 @@ import {GET_PURCHASE_ORDER_LIST,
     HANDLE_PURCHASE_ORDER_FILTER,
     ADD_PURCHASE_ORDER,
     SET_SUPPLIER_TO_ADD_PO,
-    HANDLE_ORDERDETAILS_INPUT
+    HANDLE_ORDERDETAILS_INPUT,
+    ERROR_HANDLE
 } from '../actions/types';
 
 
@@ -114,6 +115,12 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         ...state,
                         pO:action
                     }
+                    case ERROR_HANDLE:
+                        return{
+                            ...state,
+                            status:action.status,
+                            message:action.message
+                        }
                default :
             return{
                 ...state

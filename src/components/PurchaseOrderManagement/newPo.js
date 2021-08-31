@@ -19,6 +19,7 @@ import '../PlantManager/index.css'
 import { Link } from "react-router-dom";
 import Autosuggest from 'react-autosuggest';
 import PurchaseOrderTable from "./purchaseOrderTable"
+import ActionModal from '../Modal/ActionModal';
 
 
 
@@ -56,6 +57,9 @@ import PurchaseOrderTable from "./purchaseOrderTable"
             console.log(val)
             props.handleOrderDetailsInput("include_royality",val)
         }
+        else if(id==="dispatch_type"){
+            props.handleOrderDetailsInput("include_royality",e.target.value)
+        }
         else
         props.handleOrderDetailsInput(id,value)
     }
@@ -75,6 +79,7 @@ import PurchaseOrderTable from "./purchaseOrderTable"
 console.log(props.supplierData)
     return (
         <div class="bg-white px-3 py-3">
+             {/* <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/> */}
         <form>
             <h2>Purchase Order Details</h2>
             <hr/>
@@ -116,7 +121,7 @@ console.log(props.supplierData)
                             </select>
                         </div>}
 
-
+                        {props.selectedSupplier?<>                    
             <div class="row mt-3">
                 <div class="col-md-12 col-lg-6 col-xl-8">
                     <div class="row mt-3">
@@ -160,7 +165,7 @@ console.log(props.supplierData)
                             <label>Dispatch Type</label>
                             {/* <input type="text" class="form-control" placeholder="Pickup" id="dispatch_type" value={poData.dispatch_type} onChange={handleInputData}></input> */}
                             
-                            <select class="form-control" value={props.selectedSupplier} onChange={handleSupplierDropDown}>
+                            <select class="form-control" value={props.selectedSupplier} id="dispatch_type" onChange={handleSupplierDropDown} value={poData.dispatch_type}>
                                 <option value={null}>Select</option>
                                 {dispatchTypeList.map(dispatchType=>{
                                     return <option value={dispatchType}>{dispatchType}</option>
@@ -228,6 +233,7 @@ console.log(props.supplierData)
             <button type="button" class="btn btn-primary btn-lg ml-3" style={{cursor:"pointer"}} onClick={handleButtonClick}>Add </button>
                                 </div>
                                 </div>
+                                </>:""}
         </form>
     </div>
     )
