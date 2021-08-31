@@ -1,10 +1,41 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
+import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
+import { Link } from "react-router-dom";
+import TablePagination from '../Pagination/index';
+import Autosuggest from 'react-autosuggest';
+import 'react-date-range/dist/styles.css'; // main style file
+import 'react-date-range/dist/theme/default.css';
+import { DateRangePicker } from 'react-date-range';
+import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 
-export default function QuoteAndOrdersManagement() {
+// import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
+
+
+ function QuoteAndOrdersManagement(props) {
     const [value, onChange] = useState(new Date());
+    useEffect (()=>{
+        props.getAllCustomer()
+        props.getAllCustomerType()
+        
+
+    },[value])
+    const handleCustomerData =(e)=>{
+        // alert(e.target.value)
+        props.getCustomerById(e.target.value)
+        props.getAllCustomerType()
+        props.getAllStatusMethods()
+        props.getcustomerAddress(e.target.value)
+        // props.getAllTermsMethods()
+        // props.getAllReasonMethods()
+ 
+
+    }
+    const {deleteCustomer,customerReasonList,customerDataById,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
+    console.log(customerTypeList)
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -37,11 +68,11 @@ export default function QuoteAndOrdersManagement() {
                             <div class="d-flex ml-3 mb-0 bdrLeft">
                                 <div class="">
                                     <img src="assets/img/date-ic-sm-green.svg" alt=""/>
-                                    <span class="ml-2">March 25, 2020</span>
+                                    <span class="ml-2">{new Date().toDateString()}</span>
                                 </div>
                                 <div class="ml-3">
                                     <img src="assets/img/price-ic-sm-green.svg" alt=""/>
-                                    <span class="ml-2">CA <b>$429.85</b></span>
+                                    <span class="ml-2">CA <b>$0</b></span>
                                 </div>
                             </div>
                         </div>
@@ -66,12 +97,12 @@ export default function QuoteAndOrdersManagement() {
 
                 <div class="">
                 <Tabs>
-                    <TabList>
+                    <TabList >
                         <Tab>Quote Details</Tab>
-                        <Tab>Add to Quote</Tab>
-                        <Tab>Current Quote <span class="badge badge-pill badge-success">02</span></Tab>
-                        <Tab>Order History</Tab>
-                        <Tab>Notes</Tab>    
+                        <Tab disabled={true} style={{backgroundColor:"lightgray"}} >Add to Quote</Tab>
+                        <Tab disabled={true} style={{backgroundColor:"lightgray"}}>Current Quote <span class="badge badge-pill badge-success">02</span></Tab>
+                        <Tab disabled={true} style={{backgroundColor:"lightgray"}}>Order History</Tab>
+                        <Tab disabled={true} style={{backgroundColor:"lightgray"}}>Notes</Tab>    
                     </TabList>
                     <TabPanel>
                         <div class="bg-white px-3 py-3">
@@ -81,7 +112,7 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="px-3 py-3 bg-grey-transparent-2">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h3>John Smith Landscaping</h3>
+                                            <h3>{customerDataById.name}</h3>
                                         </div>
                                     </div>
                                     <div class="row ">
@@ -91,7 +122,16 @@ export default function QuoteAndOrdersManagement() {
                                                     <b>Type:</b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>Finished Plants, Liners</b></span>
+                                                    <span className="textGrey"><b>{
+                                                        customerDataById.type.map(type=>{
+                                                            return customerTypeList.active.map(typeId=>{
+                                                                if(parseInt(typeId.id)==parseInt(type)) 
+                                                                return(<span>{typeId.customer_type}</span>)
+                                                            })
+                                                          
+                                                           
+                                                        })
+                                                        }</b></span>
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -99,13 +139,13 @@ export default function QuoteAndOrdersManagement() {
                                                     <b>Tax Exempt:</b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>No</b></span>
+                                                    <span className="textGrey"><b>{customerDataById.tax_exempt ==1?"Yes":"No"}</b></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-2">
                                             <div>
-                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>Net 20</b></span></div>
+                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>{customerDataById.payment_terms}</b></span></div>
                                                 <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
                                             </div>
                                         </div>
@@ -123,18 +163,27 @@ export default function QuoteAndOrdersManagement() {
                                     <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Ordered By <span class="text-danger">*</span></label>
-                                                <select class="form-control">
-                                                    <option>John Smith</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" onChange={handleCustomerData}>
+                                                    <option value={0}>Select</option>
+                                                    {
+                                                        props.customerData.customerList.map(customer=>{
+                                                            return(<option value={customer.id}>{customer.name}</option>)
+                                                        })
+                                                    }
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                                 <label>Bill To <span class="text-danger">*</span></label>
-                                                <select class="form-control">
-                                                    <option>1234 Main St, Waterdown </option>
+                                                
+                                                <select class="form-control" disabled={customerAddressList.active.length>0?false:true}>
+                                                <option>Select Address</option>
+                                                    {customerAddressList.active.map(address=>{
+                                                      
+                                                        return( <option>{address.city} {address.country} {address.zip}</option>)
+                                                    })}
+                                                    {/* <option>1234 Main St, Waterdown </option>
                                                     <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                    <option>Option 2</option> */}
                                                 </select>
                                             </div>
                                            
@@ -144,7 +193,7 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row">
                                             <div class="col-md-6 col-lg-4">
                                                 <label>PO #</label>
-                                                <input type="text" class="form-control" placeholder=""></input>
+                                                <input type="text" class="form-control" placeholder="" disabled={customerDataById.p_o_req==1?false:true}></input>
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
@@ -1187,3 +1236,9 @@ Rate</th>
         </div>
     )
 }
+const mapStateToProps = (state)=>(
+    {
+        customerData:state.customerReducer
+    }
+)
+export default connect(mapStateToProps,{getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
