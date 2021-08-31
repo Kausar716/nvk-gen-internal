@@ -1,7 +1,11 @@
 import {GET_PURCHASE_ORDER_LIST,
     PO_SET_PAGE_NUMBER,
     PO_SET_ALPHABET_SELECTED,
-    HANDLE_PURCHASE_ORDER_FILTER
+    HANDLE_PURCHASE_ORDER_FILTER,
+    ADD_PURCHASE_ORDER,
+    SET_SUPPLIER_TO_ADD_PO,
+    HANDLE_ORDERDETAILS_INPUT,
+    ERROR_HANDLE
 } from '../actions/types';
 
 
@@ -16,7 +20,21 @@ const initialSatate = {
     needAction          :   false,
     selectedAlphabet: "All",
     openPoCount:0,
-    statusLevel:{open:0,draft:0,closed:0,cancelled:0}
+    statusLevel:{open:0,draft:0,closed:0,cancelled:0},
+    selectedSupplier:null,
+    pageToOpen:"add",
+    poData:{
+        supplier_id:"",
+        order_id:"",
+        discount_type:null,
+        discount_percent:null,
+        job_description:null,
+        include_royality:null,
+        order_notes:null,
+        dispatch_type:null,
+        currency:null,
+        supplier_order:null
+    }
 
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
@@ -60,6 +78,18 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     ...state,
                     pageNumber:action.pageNumber
                 }
+                case SET_SUPPLIER_TO_ADD_PO:
+                    return{
+                        ...state,
+                        selectedSupplier:action.supplier,
+                        poData:{['supplier_id']:action.supplier.id},
+                    }
+                case HANDLE_ORDERDETAILS_INPUT:
+                    return{
+                            ...state,
+                            poData:{...state.poData, [action.itemId]:action.itemValue},
+                        
+                    }
                 case PO_SET_ALPHABET_SELECTED:
 
                     let poListForAlphabetSelected = filterBasedOnAlphabet(state.purchaseOrderListBackup,action.selectedAlphabet)
@@ -80,6 +110,17 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         statusLevel:action.statusLevel,
                         purchaseOrderList:poListForcheckBoxSelected
                     }
+                case ADD_PURCHASE_ORDER:
+                    return{
+                        ...state,
+                        pO:action
+                    }
+                    case ERROR_HANDLE:
+                        return{
+                            ...state,
+                            status:action.status,
+                            message:action.message
+                        }
                default :
             return{
                 ...state

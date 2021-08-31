@@ -12,7 +12,11 @@ import {
     PO_GET_PLANT_PRODUCT_FILTER,
     PO_GET_SKU_PLANT_PRODUCT_FILTER,
     PO_GET_SUPPLIER_ORDER_FILTER,
-    HANDLE_PURCHASE_ORDER_FILTER
+    HANDLE_PURCHASE_ORDER_FILTER,
+    ADD_PURCHASE_ORDER,
+    SET_SUPPLIER_TO_ADD_PO,
+    HANDLE_ORDERDETAILS_INPUT,
+    ERROR_HANDLE
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -96,4 +100,46 @@ import {
           statusLevel:statusLevel,
         }
     }
+    export const addPo = (data) => dispatch => {
+      let errorArray=[];
+      if(data){
+      // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+      axios.post(`/api/add-purchase-order`,data,config).then(res=>{
+          console.log(res)
+          errorArray.push("Order Updated successfully")
+          dispatch({
+              type:ADD_PURCHASE_ORDER,
+              payload:res.data.data
+  
+          })
+          dispatch({
+            type:ERROR_HANDLE,
+            message:errorArray,
+            status:true
+        })
+      })
+    }
+    else{
+      dispatch({
+          type:ERROR_HANDLE,
+          message:errorArray,
+          status:true
+      })
+
+  }
+  }
+  export const setSupplierToAddPo = (supplier)=>{
+    return{
+      type:SET_SUPPLIER_TO_ADD_PO,
+      supplier:supplier,
+    }
+}
+
+export const handleOrderDetailsInput = (id,value)=>{
+  return{
+    type:HANDLE_ORDERDETAILS_INPUT,
+    itemId:id,
+    itemValue:value
+  }
+}
       

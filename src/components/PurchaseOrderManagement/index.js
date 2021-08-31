@@ -48,7 +48,8 @@ export class PurchaseOrders extends React.Component {
             orderSuggestions:[],
             supplierOrder:[],
             orderValue:'',
-            supplierOrderValue:''
+            supplierOrderValue:'',
+            newValue:""
 
         }
     }
@@ -94,31 +95,31 @@ export class PurchaseOrders extends React.Component {
             this.setState({plantValue:newValue})
         // setLoaderMessage("No Records Found.")
         // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
-        this.setState({newValue});
+        // this.setState({newValue});
         }
         if(event.target.name==="supplierSearch"){
             this.setState({supplierValue:newValue})
         // setLoaderMessage("No Records Found.")
         // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
-        this.setState({newValue});
+        // this.setState({newValue});
         }
         if(event.target.name==="jobSearch"){
             this.setState({jobValue:newValue})
         // setLoaderMessage("No Records Found.")
         // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
-        this.setState({newValue});
+        // this.setState({newValue});
         }
         if(event.target.name==="orderSearch"){
             this.setState({orderValue:newValue})
         // setLoaderMessage("No Records Found.")
         // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
-        this.setState({newValue});
+        // this.setState({newValue});
         }
         if(event.target.name==="supplierOrderSearch"){
             this.setState({supplierOrderValue:newValue})
         // setLoaderMessage("No Records Found.")
         // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
-        this.setState({newValue});
+        // this.setState({newValue});
         }
         
        
@@ -260,13 +261,20 @@ onSupplierOrderSuggestionsClearRequested = () => {
         let plantPerPage =0;
         let pagesVisited = 0;
         let displayPOList = []
-        const getPlantSuggestionValue = ""
-        const getSupplierSuggestionValue = ""
-        const getJobSuggestionValue = ""
-        const getOrderSuggestionValue = ""
-        const getSupplierOrderSuggestionValue = ""
+        // const getPlantSuggestionValue = ""
+        // const getSupplierSuggestionValue = ""
+        // const getJobSuggestionValue = ""
+        // const getOrderSuggestionValue = ""
+        // const getSupplierOrderSuggestionValue = ""
+        const getSupplierSuggestionValue = supplierSuggestions => supplierSuggestions.supplier_name
+        const getPlantSuggestionValue = plantSuggestions => plantSuggestions.genus
+        const getJobSuggestionValue = jobSuggestions => jobSuggestions
+        const getOrderSuggestionValue = orderSuggestions => orderSuggestions
+        const getSupplierOrderSuggestionValue = supplierOrderSuggestions => supplierOrderSuggestions
+
         console.log(this.props.completeStateData.statusLevel)
         let {plantValue,supplierValue,jobValue,orderValue,supplierOrderValue} = this.state
+        console.log(plantValue)
         let {open,closed,draft,cancelled} = this.props.completeStateData.statusLevel
         // suggestion => suggestion.genus;
         let {openPoCount}= this.props.purchaseOrderListData
@@ -277,7 +285,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             // className:"searchInput",
             className:" form-control btn btn-search",
             id:"add-icon-search",
-            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid #d5dbe0",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.handleChange
         };
         const inputSupplierOrderProps = {
@@ -287,7 +295,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             // className:"searchInput",
             className:" form-control btn btn-search",
             id:"add-icon-search",
-            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid #d5dbe0",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.handleChange
         };
         const inputPlantProps = {
@@ -297,7 +305,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             // className:"searchInput",
             className:" form-control btn btn-search",
             id:"add-icon-search",
-            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid #d5dbe0",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.handleChange
         };
         const inputSupplierProps = {
@@ -307,7 +315,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             // className:"searchInput",
             className:" form-control btn btn-search",
             id:"add-icon-search",
-            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid #d5dbe0",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.handleChange
         };
         const inputJobProps = {
@@ -317,7 +325,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             // className:"searchInput",
             className:" form-control btn btn-search",
             id:"add-icon-search",
-            style: {position:"relative",border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+            style: {position:"relative",border:"1px solid #d5dbe0",borderRadius:3,textAlign:"left",paddingLeft:"10%",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
             onChange: this.handleChange
         };
         console.log(open)
@@ -550,7 +558,8 @@ const mapStateToProps = (state)=> (
         plantData:state.plantData,
         supplierData:state.supplierData.supplierList,
         poBackup:state.purchaseOrderManagementData.purchaseOrderListBackup,
-        completeStateData:state.purchaseOrderManagementData
+        completeStateData:state.purchaseOrderManagementData,
+        selectedSupplier:state.purchaseOrderManagementData.selectedSupplier
     }
 )
 
