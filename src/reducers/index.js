@@ -25,6 +25,7 @@ import inventoryManagementReducer from './inventorymanagementReducer';
 import productManufacturerReducer from './productManufacturerReducer';
 import purchaseOrderManagement from'./purchaseOrderManagementReducer';
 import quoteOrderManagement from'./quoteOrderManagemnetReducer';
+import invoiceReducer from'./invoiceReducer'
 // import supplierManagementReducer from './supplierManagementReducer';
 
 
@@ -40,6 +41,7 @@ export default combineReducers({
     addressSM: AddressManagementReducerSM,
     attributeData:attributesReducer,
     dlistOfNumber:dlistOfNumberReducer,
+    invoiceData:invoiceReducer,
     sideMenu:sideReducer,
     userReduser:userReduser,
     userAccessReduser:userAccessReduser,
