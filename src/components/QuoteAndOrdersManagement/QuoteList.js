@@ -67,9 +67,9 @@ class QuoteList extends React.Component {
 
             list: [
                 { id: 1, name: "Open",label:"OPEN", isChecked: false },
-                { id: 2, name: "Pick", label:"PICK",isChecked: false },
+                { id: 2, name: "Pick", label:"PICKING",isChecked: false },
                 { id: 3, name: "Ready", label:"READY",isChecked: false },
-                { id: 4, name: "Ship", label:"SHIP",isChecked: false },
+                { id: 4, name: "Ship", label:"SHIPPED",isChecked: false },
                 { id: 5, name: "Invoice", label:"INVOICE",isChecked: false },
                 { id: 6, name: "Closed", label:"CLOSED",isChecked: false },
                 { id: 7, name: "Cancel", label:"CANCEL",isChecked: false },
@@ -79,6 +79,7 @@ class QuoteList extends React.Component {
               allCountList:[],
 
             suggestions: [],
+            suggestionsInOrder: [],
             text: ""
         }
     }
@@ -89,8 +90,14 @@ class QuoteList extends React.Component {
     //   }
 
     componentDidMount=()=> {
+
+
+        //console.log("abcdaaasdCOmp", this.props.getQuoteOrderList())
+        this.props.getQuoteOrderList()
+
         this.setState({
             initialDetailsQL: initialDetailsQL
+            //this.props.quoteOrderListTable
         });
         this.refs.search.focus();
         this.refs.ordSearch.focus();
@@ -123,7 +130,9 @@ class QuoteList extends React.Component {
       onTextChange = e => {
           //debugger
         let items = this.state.initialDetailsQL;
-        let supName = items.map((e)=>e.suppliearName)
+        //this.props.quoteOrderListTable;
+        //this.state.initialDetailsQL;
+        let supName = items.map((e)=>e.customer_name)
         console.log("supName", supName)
         const val = e.target.value;
         let suggestions = [];
@@ -137,9 +146,13 @@ class QuoteList extends React.Component {
       suggestionSelected=(value)=> {
         this.setState({
             searchString: value,
-          suggestions: []
+            suggestions: [],
+            
         });
       }
+
+
+
 
       renderSuggestions() {
         const { suggestions } = this.state;
@@ -156,12 +169,51 @@ class QuoteList extends React.Component {
       }
 
 
+      suggestionSelectedOrder=(value)=> {
+        this.setState({
+            orderSearch: value,
+            suggestionsInOrder: [],
+            
+        });
+      }
+
+      renderSuggestionsOrder() {
+        const { suggestionsInOrder } = this.state;
+        if (suggestionsInOrder.length === 0) {
+          return null;
+        }
+        return (
+          <ul>
+            {suggestionsInOrder.map(item => (
+              <li onClick={() => this.suggestionSelectedOrder(item)}>{item}</li>
+            ))}
+          </ul>
+        );
+      }
+
+
 
       handleOrdChange=()=>{
         this.setState({
             orderSearch:this.refs.ordSearch.value
           });
       }
+
+      onTextChangeOrder = e => {
+        //debugger
+      let items = this.state.initialDetailsQL;
+      //this.props.quoteOrderListTable;
+      //this.state.initialDetailsQL;
+      let supName = items.map((e)=>e.order)
+      console.log("supName", supName)
+      const val = e.target.value;
+      let suggestionsInOrder = [];
+      if (val.length > 0) {
+        const regex = new RegExp(`^${val}`, "i");
+        suggestionsInOrder = supName.sort().filter(v => regex.test(v));
+      }
+      this.setState({ suggestionsInOrder, orderSearch: val });
+    };
 
     //   handleChange=()=> {
     //     this.setState({
@@ -285,7 +337,7 @@ class QuoteList extends React.Component {
 
  elementContainsSearchString2 = (searchInput, element) => (searchInput ? element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
 
-      elementContainsSearchString = (searchInput, element) => (searchInput ? element.suppliearName.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) || element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
+      elementContainsSearchString = (searchInput, element) => (searchInput ? element.customer_name.toLowerCase().includes(searchInput.toLowerCase()) || element.poNumber.toLowerCase().includes(searchInput.toLowerCase()) || element.supplierOrder.toLowerCase().includes(searchInput.toLowerCase()) : false);
 
 
       filterItems = (initialDetailsQL) => {
@@ -293,7 +345,7 @@ class QuoteList extends React.Component {
         let result = [];
         const { searchInput,alphabet , checkedData} = this.state;
         if(initialDetailsQL &&  (searchInput || alphabet)) {
-            result = initialDetailsQL.filter((element) => ( element.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
+            result = initialDetailsQL.filter((element) => ( element.customer_name.charAt(0).toLowerCase() === alphabet.toLowerCase()) || 
             this.elementContainsSearchString(searchInput, element) );
            // result = initialDetailsQL.filter((el) => (el.suppliearName.charAt(0).toLowerCase() === alphabet.toLowerCase()) || this.elementContainsSearchString(searchInput, el) );
           }
@@ -322,6 +374,7 @@ class QuoteList extends React.Component {
 
 
     handleChangeCheckbox = e => {
+            debugger
         let itemName = e.target.name;
         let checked = e.target.checked;
         this.setState(prevState => {
@@ -343,6 +396,7 @@ class QuoteList extends React.Component {
 
 
       checkboxList = () => {
+
         return this.state.list.map(item => (
           
 
@@ -389,6 +443,9 @@ class QuoteList extends React.Component {
         // })
         
         console.log("FinalCount",this.state.allCountList)
+
+
+
         return result;
         
         }
@@ -397,10 +454,25 @@ class QuoteList extends React.Component {
 
    // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
+        console.log("abcdaaasd", this.props.quoteOrderListTable)
         // let statusList =this.state.initialDetailsQL;
         // let totalStatusList =statusList.map(e=>e.status)
             //console.log("ListofCheckbox", this.state.list)
          //this.find_duplicate_in_array(totalStatusList)
+
+         let finalCount = this.state.allCountList
+         console.log("finalCount123",finalCount)
+
+        let totalValueList = Object.values(finalCount)
+
+        let finalTotalValue = totalValueList.reduce((a, b) => a + b, 0)
+
+
+        // let sum = finalCount.map(o => o.CANCEL).reduce((a, c) => { return a + c });
+        //  let totalOrders = finalCount.map(e=>e)
+          console.log("finalCount1234555",finalTotalValue )
+
+
 
          let _checkList = this.state.list
           
@@ -419,39 +491,50 @@ class QuoteList extends React.Component {
         console.log("totalNumbersList",totalNumbers,totalNumbersList, this.state.allCountList)
         //console.log("alphabetInrender", this.state.checkedData, this.state.isChecked)
         let _users = this.state.initialDetailsQL;
+        //this.props.quoteOrderListTable
+        //this.state.initialDetailsQL;
+
         let search = this.state.searchString.trim().toLowerCase();
         let orderSearch = this.state.orderSearch.trim().toLowerCase();
         let alphaVal = this.state.alphabetSelect.trim().toLowerCase();
     
         if (search.length > 0 ) {
           _users = _users.filter(function(user) {
-            return user.suppliearName.toLowerCase().match(search);
+            return user.customer_name.toLowerCase().match(search);
           });
         }
 
         if (orderSearch.length > 0 ) {
             _users = _users.filter(function(user) {
-              return user.orderNumber.toLowerCase().match(orderSearch);
+              return user.order.toLowerCase().match(orderSearch);
             });
           }
 
         if (alphaVal.length>0 ) {
             _users = _users.filter(function(user) {
-              return user.orderNumber.toLowerCase().match(alphaVal);
+              return user.order.toLowerCase().match(alphaVal);
             });
           }
 
 
           if(chk[0]){
-             // debugger;
+
+              debugger;
+              let checkedList=chk.map(a=>a.label)
+                console.log("checkedList",checkedList)
              // let labelC = chk.map(e=>e.label)
+
+             _users = _users.filter(value => checkedList.includes(value.status));
               
-              _users=_users.filter(function(user) {
-                return user.status=== chk[0].label
-                //(chk[0].label && chk[1].label  || chk[2].label  || chk[3].label || chk[4].label  || chk[5].label  || chk[6].label)
-                //chk.filter(e=>e.label)
-                //chk[0].label
-              });
+
+            //   _users=_users.filter(function(user) {
+            //     //  chk.map(function (student) {
+            //     return user.status===  chk[0].label;
+            //     //(chk[0].label && chk[1].label  || chk[2].label  || chk[3].label || chk[4].label  || chk[5].label  || chk[6].label)
+            //     //chk.filter(e=>e.label)
+            //     //chk[0].
+            //     //  })
+            //   });
           }
 
 
@@ -535,24 +618,91 @@ class QuoteList extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div> */}
-                            <div class="cardBoxwide individualCard totalCard">
+                            <div class="cardBoxwide individualCard totalCard" style={{minWidth:"130px"}}>
                                 <div class="stripe"></div>
                                 <p>Total Orders</p>
-                                <h4>9</h4>
+                                <h4>{finalTotalValue}</h4>
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
                             </div>
                             <div class="equalSign">=</div>
-                            <div class="cardBox individualCard openStsCard">
-                                <div class="stripe"></div>
-                                <p>Open</p>
-                                <h4>{this.state.allCountList.OPEN}</h4>
-                                <div>
-                                    <a href="#">View All</a>
-                                </div>
-                            </div>
-                            <div class="equalSign">+</div>
+
+                            {/* <input type="checkbox" class="custom-control-input" id={item.id}
+                    key={item.id}
+                    name={item.name}
+                    value={item.name}
+                    checked={item.isChecked}
+                    onChange={this.handleChangeCheckbox}
+                // onChange={this.handleClickCheckBox} 
+                /> */}
+                            
+                                {this.state.list.map(item=>{
+                                    
+                                    return <div style={{display:"flex"}}>
+                                         
+                                      <div class="cardBox individualCard openStsCard" style={{minWidth:"90px"}}>
+
+                                            <div class="stripe" 
+                                            style={item.label==="OPEN" ? {backgroundColor:"#d2eafc"} : 
+                                                item.label==="CLOSED" ? {backgroundColor:"#c4e9c4"} :
+                                                item.label==="READY" ? {backgroundColor:"#fbe1a7"} :
+
+                                                item.label==="PICKING" ? {backgroundColor:"#cbf4fd"} :
+                                                item.label==="SHIPPED" ? {backgroundColor:"#d2eafc"} :
+                                                item.label==="CANCEL" ? {backgroundColor:"red"} :
+                                                
+                                                
+                                                
+                                                {backgroundColor:"none"}
+                                                    // item.label==="OPEN" ? "red" :##cbf4fd
+                                                    // item.label==="CLOSED" ? "blue":
+                                                    // item.label==="READY" ? "green" :
+                                                    // item.label==="LATE" ? "yellow" :
+
+                                                    // item.label==="SHIPPED" ? "pink" :
+                                                    // item.label==="PICKING" ? "orange" :
+                                                  
+                                                    // item.label==="CANCEL" ? "brown":
+                                            } 
+                                            ></div>
+                                                <p>{item.name}</p>
+                                            <h4>{ item.label==="OPEN" ? this.state.allCountList.OPEN :
+                                                    item.label==="CLOSED" ? this.state.allCountList.CLOSED :
+                                                    item.label==="READY" ? this.state.allCountList.READY :
+                                                    item.label==="LATE" ? this.state.allCountList.LATE :
+
+                                                    item.label==="SHIPPED" ? this.state.allCountList.SHIPPED :
+                                                    item.label==="PICKING" ? this.state.allCountList.PICKING :
+                                                    item.label==="INVOICE" ? this.state.allCountList.INVOICE :
+                                                    item.label==="CANCEL" ? this.state.allCountList.CANCEL :
+                                            0}</h4>
+                                            <div>
+                                           
+                                                <input type="checkbox" name={item.name}
+                                                    key={item.id}
+                                                    value={item.name}
+                                                    checked={item.isChecked}
+                                                     onClick={this.handleChangeCheckbox}
+                                                     className="checkBoxHide"
+                                                     >
+                                                    </input>
+                                                    <label  for={item.id} > <span style={{color:"#5287f5", cursor:"pointer", marginLeft:"-13px"}}>View All</span></label>
+                                                   
+                                            </div>
+                                           
+                                        </div>
+
+                                        <div class="equalSign">+</div>
+                                       
+                                        
+                                    </div>
+
+                                })}
+                               
+                                
+                           
+                            {/* <div class="equalSign">+</div>
                             <div class="cardBox individualCard pickingStsCard">
                                 <div class="stripe"></div>
                                 <p>Picking</p>
@@ -560,8 +710,9 @@ class QuoteList extends React.Component {
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
-                            </div>
-                            <div class="equalSign">+</div>
+                            </div> */}
+
+                            {/* <div class="equalSign">+</div>
                             <div class="cardBox individualCard readyStsCard">
                                 <div class="stripe"></div>
                                 <p>Ready</p>
@@ -578,7 +729,9 @@ class QuoteList extends React.Component {
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
-                            </div>
+                            </div> 
+
+
                             <div class="equalSign">+</div>
                             <div class="cardBox individualCard lateStsCard">
                                 <div class="stripe"></div>
@@ -587,11 +740,13 @@ class QuoteList extends React.Component {
                                 <div>
                                     <a href="#">View All</a>
                                 </div>
-                            </div>
+                            </div>*/}
+
+
                             <div class="equalSign">&nbsp;</div>
                             <div class="verDivider"></div>
                             <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard activeQuotesCard">
+                            <div class="cardBoxwide individualCard activeQuotesCard" style={{minWidth:"90px"}}>
                                 <div class="stripe"></div>
                                 <p>Active Quotes</p>
                                 <h4>12</h4>
@@ -607,7 +762,7 @@ class QuoteList extends React.Component {
                                 </div>
                             </div> */}
                             <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard quotesFlaggedCard">
+                            <div class="cardBoxwide individualCard quotesFlaggedCard" style={{minWidth:"90px"}}>
                                 <div class="stripe"></div>
                                 <p>Quotes Flagged</p>
                                 <h4><font color="red">12</font></h4>
@@ -616,12 +771,17 @@ class QuoteList extends React.Component {
                                 </div>
                             </div>
                         </div>
+
+
+
+                        
                     </div>
                 </div>
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Search Quotes &amp; Orders</h2>
+                        <h2>Search Quotes &amp; Orders1234 {this.state.abcdefg}</h2>
+                        {/* {this.state.abcdefg} */}
                         
                         <div class="row mt-3 align-items-center">
                             <div class="col-md-12">
@@ -774,7 +934,7 @@ class QuoteList extends React.Component {
                                             <input type="text" class="form-control" 
                                              ref="ordSearch"
                                              value={this.state.orderSearch} 
-                                             onChange={this.handleOrdChange}
+                                             onChange={this.onTextChangeOrder}
                                             // onChange={this.onSearchInputChange3} 
                                             placeholder="Search Order"/>
 
@@ -792,6 +952,9 @@ class QuoteList extends React.Component {
                                             /> */}
                                             
                                         </div>
+                                        <span className="SearchBar">
+                                                  {this.renderSuggestionsOrder()}
+                                        </span>
                                     </div>
                                 </div>
                                 <div class="row form-group mb-2">
@@ -887,14 +1050,15 @@ class QuoteList extends React.Component {
                                                 {displayPOList1.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
                                                     <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='SHIPPED'?'stsBadge stsOpen':pQuoteList.status==='LATE'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
-                                                    <td><a href="">{pQuoteList.orderNumber}</a></td>
+                                                    <td><a href="">{pQuoteList.order}</a></td>
                                                     <td class="text-nowrap text-center">4</td>
-                                                    <td>{pQuoteList.suppliearName}</td>
-                                                    <td class="text-center">LARC</td>
+                                                    <td>{pQuoteList.customer_name}</td>
+                                                    <td class="text-center">{pQuoteList.amount}</td>
                                                     <td class="text-center">8458788</td>
-                                                    <td class="text-center">{pQuoteList.orderDate}</td>
-                                                    <td class="text-center">{pQuoteList.expectedDate}</td>
-                                                    <td class="text-nowrap text-right">6,085.00 <br/>32,058.12</td>
+                                                    <td class="text-center">{pQuoteList.order_date}</td>
+                                                    <td class="text-center">{pQuoteList.requested_date}</td>
+                                                    <td class="text-center">{pQuoteList.amount}</td>
+                                                    {/* <td class="text-nowrap text-right">6,085.00 <br/>32,058.12</td> */}
                                                     <td class="text-center">
                                                         <span>
                                                             <a href="javascript;">
@@ -926,7 +1090,8 @@ class QuoteList extends React.Component {
 const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
-        quoteOrderData:state.quoteOrderReducer
+        quoteOrderData:state.quoteOrderReducer,
+        quoteOrderListTable:state.quoteOrderReducer.quoteOrderList
     }
 
 )
