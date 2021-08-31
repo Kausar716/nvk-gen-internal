@@ -245,7 +245,7 @@ class QuoteList extends React.Component {
 
 
         if(e.target.id==="OPEN"){
-            debugger
+           // debugger
             this.setState({
                 isChecked: !this.state.isChecked,
               });
@@ -374,7 +374,7 @@ class QuoteList extends React.Component {
 
 
     handleChangeCheckbox = e => {
-            debugger
+            //debugger
         let itemName = e.target.name;
         let checked = e.target.checked;
         this.setState(prevState => {
@@ -519,7 +519,7 @@ class QuoteList extends React.Component {
 
           if(chk[0]){
 
-              debugger;
+              //debugger;
               let checkedList=chk.map(a=>a.label)
                 console.log("checkedList",checkedList)
              // let labelC = chk.map(e=>e.label)
