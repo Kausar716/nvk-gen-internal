@@ -17,15 +17,31 @@ import {
 
 
     export const getQuoteOrderList = () => dispatch => {
-        axios.get(`/api/purchase-order-list`,config).then(res=>{
+        //debugger;
+        axios.get(`/api/quote-list`,config).then(res=>{
             console.log(res)
             dispatch({
                 type:GET_QUOTE_ORDER_LIST,
-                payload:res.data
-    
+                payload:res.data.data
             })
         })
     }
+
+
+    // export const getAllPlantAction = () => dispatch => {
+    //     axios.get("/api/plants",config).then(res=>{ 
+    //         dispatch({
+    //                 type:GET_ALL_PLANT_ACTION,
+    //                 payload:res.data.data
+        
+    //             })
+    //         })
+    
+    // }
+
+
+
+    
 
 
     export const handleSearchFilterByAlpha = (data, data1)=>{
