@@ -7,6 +7,8 @@ import {
 
     ADD_NEW_QUOTE,
     HANDLE_INPUT_QUOTE,
+    UPDATE_QUOTE,
+    UPDATE_NEW_QUOTE,
 
 
     axios,
@@ -25,12 +27,31 @@ import {
             })
         })
     }
+    export const addToQuoteUpdate = (data) => dispatch => {
+        //debugger;
+
+        return axios.post(`/api/update-quote-details/${data.id}`,data,config).then(res=>{ 
+      
+            console.log(res)
+            dispatch({
+                type:UPDATE_NEW_QUOTE,
+                payload:res.data.data
+            })
+        })
+    }
 
     export const handleInputChange = (id,value) =>dispatch=>{
         dispatch({
             type:HANDLE_INPUT_QUOTE,
             id:id,
             value:value
+        })
+
+    }
+    export const updateQuoteData = (quoteData)=>dispatch=>{
+        dispatch({
+            type:UPDATE_QUOTE,
+            payload:quoteData
         })
 
     }

@@ -2,7 +2,9 @@
 
 import {
     ADD_NEW_QUOTE,
-    HANDLE_INPUT_QUOTE
+    HANDLE_INPUT_QUOTE,
+    UPDATE_QUOTE,
+    UPDATE_NEW_QUOTE
    
 
     
@@ -30,7 +32,7 @@ const initialSatate = {
 
  const QuoteReducer = (state = initialSatate, action)=>{
     console.log(action.payload)
-    console.log(state)
+    console.log(action.payload)
     // alert(action.type)x
     
     switch(action.type){
@@ -41,7 +43,19 @@ const initialSatate = {
                 quoteDetails:action.payload.data
 
             }
+        case UPDATE_QUOTE:
+            return{
+                ...state,
+                quoteDetails:{...state.quoteDetails,...action.payload}
+
+            }
         case HANDLE_INPUT_QUOTE:
+            return{
+                ...state,
+                quoteDetails:{...state.quoteDetails, [action.id]:action.value}
+
+            }
+        case UPDATE_NEW_QUOTE:
             return{
                 ...state,
                 quoteDetails:{...state.quoteDetails, [action.id]:action.value}

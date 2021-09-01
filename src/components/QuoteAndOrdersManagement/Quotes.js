@@ -11,7 +11,7 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
 import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
-import {handleInputChange,addNewQuote} from "../../actions/quoteAction";
+import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
 // import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
 
 
@@ -30,7 +30,11 @@ import {handleInputChange,addNewQuote} from "../../actions/quoteAction";
     const handleCustomerData =(e)=>{
         // alert(e.target.value)
         if(e.target.id =="customer_id"){
-            props.getCustomerById(e.target.value)
+            console.log(customerDataById)
+            props.getCustomerById(e.target.value).then(data=>{
+                console.log(customerDataById)
+                props.updateQuoteData(customerDataById)
+            })
             props.getAllCustomerType()
             props.getAllStatusMethods()
             props.getCustomerContacts(e.target.value)
@@ -56,7 +60,7 @@ import {handleInputChange,addNewQuote} from "../../actions/quoteAction";
     }
     const handleUpdate = ()=>{
 
-        props.addNewQuote()
+        props.addToQuoteUpdate(quoteDetails)
 
     }
     const {deleteCustomer,customerReasonList,customerDataById,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
@@ -1285,4 +1289,4 @@ const mapStateToProps = (state)=>(
         QuoteReducerData:state.QuoteReducerData
     }
 )
-export default connect(mapStateToProps,{handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
+export default connect(mapStateToProps,{addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
