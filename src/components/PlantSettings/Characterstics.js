@@ -59,6 +59,7 @@ class Characterstics extends Component {
             isEditing:false,
             name:'',
             subName:'',
+            subNameTableView:'',
             loading:false,
             subName2:'',
             selectedID:'',
@@ -418,7 +419,8 @@ componentDidMount(){
     handleZoneInputAction = (e)=>{
         // debugger;
         this.setState({
-            subName:e.target.value
+            subName:e.target.value,
+            subNameTableView:e.target.value
         })
         
         let errorObj=this.state.errorObj
@@ -513,6 +515,47 @@ componentDidMount(){
             } 
         }       
     }
+
+
+    handleAddCategoryFeature2 = (e)=>{
+
+        //debugger
+        // if (this.state.selectedID === "" || this.state.selectedID === undefined) {
+        //     confirmAlert({
+        //         title: 'Select Section Name',
+        //         message: 'To Add Feature Name',
+        //         buttons: [
+        //           {
+        //             label: 'Ok'
+        //           }
+        //         ]
+        //     });
+        // } else {
+            let zoneObj={}
+            zoneObj.attribute_id=12 
+            zoneObj.subattribute_id = parseInt(this.props.showSpeciSubA.id) 
+            zoneObj["childrens"] =[{
+                'children_name':'Feature Name',
+                'children_value':this.state.subName
+            }]
+            zoneObj.status=1
+            if(this.validateFeature()){
+                let result = this.props.handleAddZone(zoneObj)
+                result.then(res=>{
+                    this.props.getAllSubAttribute(12).then(()=>{
+                        // alert("ji")
+                        this.getCatgoryData()
+                    })
+                })
+           
+                this.setState({
+                    subName:"",
+                    isEditingFeature:false,
+                })
+            } 
+             
+    }
+
     validateFeature = ()=>{
         let errorObj = this.state.errorObj
         if(this.state.subName.length === 0){
@@ -524,6 +567,9 @@ componentDidMount(){
         
     }
     handleEditClick2 =(t,type)=> { 
+
+       // debugger
+
         this.setState({
             name: t.value,
             isEditing:true,
@@ -611,7 +657,13 @@ componentDidMount(){
 
         }
 
+        this.setState({
+            subChildernAddView:false
+        })
+
     }
+
+
     handleAddCategoryUpdateFeature = ()=>{
         // alert("gg")
         // alert(this.state.selectedFeatureID)
@@ -964,15 +1016,7 @@ componentDidMount(){
                                                                 </span>
                                                         </div>
 
-                                                       
-                                                   
-                                                                 {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
-                                                                      <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
-
-                                                                      <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44"}}  id={t.id}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(t)}
-                                                                /></span>
-                                                                 </a> */}
+ 
                                                             </li>
                                                                 
                                                                 
@@ -983,12 +1027,12 @@ componentDidMount(){
                                                         {this.state.subChildernAddView===true ? 
                                                             <div>
                                                             <label>Add More Future List</label>
-                                                            <input type="text" className="form-control" style={{marginRight:"11.3em"}} id="textInput" value="..." />
+                                                            <input type="text" className="form-control" onChange={this.handleZoneInputAction} value={this.state.subName} style={{marginRight:"11.3em"}} id="textInput" />
                                                             
-                                                        <div style={{display:"flex"}}>
-                                                        <spam style={{marginTop:"10px",color:"#348fe2", cursor:"pointer"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam> 
+                                                        <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
+                                                        <spam style={{color:"#348fe2", cursor:"pointer", marginRight:"3em"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam> 
 
-                                                        <spam style={{ marginTop:"10px",color:"#348fe2", cursor:"pointer"}}  ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>   
+                                                        <spam style={{color:"#348fe2", cursor:"pointer"}} onClick={this.handleAddCategoryFeature2} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>   
 
                                                         </div>
                                                           
