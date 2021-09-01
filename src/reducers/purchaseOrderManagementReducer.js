@@ -5,7 +5,9 @@ import {GET_PURCHASE_ORDER_LIST,
     ADD_PURCHASE_ORDER,
     SET_SUPPLIER_TO_ADD_PO,
     HANDLE_ORDERDETAILS_INPUT,
-    ERROR_HANDLE
+    ERROR_HANDLE,
+    GET_ADD_TO_ORDER_LIST,
+    HANDLE_SEARCH_ORDERED_LIST
 } from '../actions/types';
 
 
@@ -15,8 +17,10 @@ const initialSatate = {
    
     purchaseOrderList:[],
     purchaseOrderListBackup:[],
+    groupedOrderListDate:[],
+    orderListDateForSuggession:[],
     productPageNumber   :   0,
-    pageNumber          :   0,
+    pageNumber          :   0,  
     needAction          :   false,
     selectedAlphabet: "All",
     openPoCount:0,
@@ -54,6 +58,39 @@ const filterBsedOnCheckBox =(filteredData,statusLevel)=>{
       )
   }
     
+}
+const groupArray =(objectToBeReduced)=>{
+    let plantSearchResult={}
+    let deletedObj=objectToBeReduced.shift() 
+ 
+    console.log(objectToBeReduced)
+    if(objectToBeReduced.length>0)
+    plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
+      console.log(obj)
+      if(obj){
+
+        const key = obj["genus"];
+        if (!acc[key]) {
+           acc[key] = [];
+        }
+        // Add object to list for given key's value
+        if(typeof(acc[key])==="object")
+        acc[key].push(obj);
+        return acc;}
+    })
+    let plantList=[]
+    for(let key in plantSearchResult ){
+        if(plantSearchResult[key]){
+        if(plantSearchResult[key][0]){
+            if(typeof(plantSearchResult[key][0]) === "object")
+            plantList.push(plantSearchResult[key])
+        }
+        
+        }
+    }
+    console.log(plantList)
+    return plantList
+
 }
 const getOpenPoCount = (poList)=>{
     if(poList)
@@ -115,12 +152,38 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         ...state,
                         pO:action
                     }
-                    case ERROR_HANDLE:
-                        return{
-                            ...state,
-                            status:action.status,
-                            message:action.message
-                        }
+                case ERROR_HANDLE:
+                    return{
+                        ...state,
+                        status:action.status,
+                        message:action.message
+                    }
+                case GET_ADD_TO_ORDER_LIST:
+                    let groupedArray=groupArray(action.payload)
+                    return{
+                        ...state,
+                        groupedOrderListDate:groupedArray,
+                        orderListDateForSuggession:action.payload
+                    }
+                case HANDLE_SEARCH_ORDERED_LIST:
+                    console.log(action)
+                    let list=[]
+                    state.orderListDateForSuggession.map(order=>
+                        
+                         {
+                            console.log(order.plant_name,"--**--",action.plant)
+                             if(order.plant_name.trim().toLocaleLowerCase().includes(action.plant.trim().toLocaleLowerCase())){
+                                console.log(order.plant_name,"--**--",action.plant)
+                                console.log(order)
+                                list.push(order)
+                         }}
+                    )
+                    console.log(list)
+                    let filteredArray=groupArray(list)
+                    return{
+                        ...state,
+                        groupedOrderListDate:filteredArray,
+                    }
                default :
             return{
                 ...state
