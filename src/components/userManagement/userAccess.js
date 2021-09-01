@@ -60,6 +60,31 @@ export const Component = withRouter(({ history, location }) =>{
         }
     }
 
+    // handleUpdateUserAccess = (id,userObjectList) => {
+    //     // let createRoleToggle = ! this.state.createRoleToggle
+    //     // this.setState({createRoleToggle})
+    //     //console.log("123",this.props.temp.currentPermission,this.state.selectedUser )
+    //     if(this.state.selectedUser){
+    //     let result=this.props.handleUserUpdateUserPermission(this.state.selectedUser,userObjectList)
+    //     result.then(res=>{
+    //         alert("updated")
+    //     })
+    //     }
+    // }
+
+
+    handleUpdateUserAccess = (userObject) => {
+        debugger
+        // let createRoleToggle = ! this.state.createRoleToggle
+        // this.setState({createRoleToggle})
+        //console.log("123",this.props.temp.currentPermission,this.state.selectedUser )
+        if(this.state.selectedUser){
+        let result=this.props.handleUserUpdateUserPermission(this.state.selectedUser, userObject)
+        result.then(res=>{
+            alert("updated")
+        })
+        }
+    }
     
     handlecreateRoleModalResult = (e) => {
         console.log(e.target.id)
@@ -114,7 +139,7 @@ export const Component = withRouter(({ history, location }) =>{
         // let result = this.props.showUser(selectedId)
         console.log("finalValue",finalValue)
 
-        this.props.handleUserSelect(selectedId)
+        this.props.handleUserSelect(parseInt(selectedId))
         this.props.userAccessList(finalValue[0].name)
         this.props.handleUserAccessExchnageData(e.target.value,e.target.id,e.target.name)
        // this.props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierLocation")
@@ -277,8 +302,8 @@ export const Component = withRouter(({ history, location }) =>{
                                     <div class="topbarCtrls mt-3 mt-md-0 d-flex flex-wrap justify-content-md-end" style={{marginBottom:"1em", marginRight:"1em"}}>
 
                                             <a class="btn ml-2"
-                                           onClick={this.handleUpdate}
-                                            //onClick={this.handleSubmit}
+                                           //onClick={this.handleUpdate}
+                                            onClick={this.handleUpdateUserAccess}
                                         
                                             >
                                                     <span class="d-flex align-items-center text-left">
@@ -456,7 +481,7 @@ export const Component = withRouter(({ history, location }) =>{
                                     <h4>Quote &amp; Order PermissionsTESTING</h4>
                                     <div > */}
                                         <div >
-                                            <QuoteOrderPermission  cancelSelectUser={this.state.displayselectedUSer}/>
+                                            <QuoteOrderPermission  handleUpdateUserAccess={this.handleUpdateUserAccess}  cancelSelectUser={this.state.displayselectedUSer}/>
                                         </div>
                                     {/* </div>
                                 </div>
