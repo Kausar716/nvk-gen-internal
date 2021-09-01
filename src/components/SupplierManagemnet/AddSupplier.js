@@ -315,21 +315,27 @@ function AddSupplier(props) {
 
         }else{
             props.updateSupplierData(supplierDataById).then(data=>{
+               
            
           
                 if(type =="done"){
-                    props.resetSupplierFilds()
+                    // alert(type+"DSA")
+                    // 
                    
                     setMessage2(["Supplier Data Updated Successfully"])
                     setIsOpen2(true)
-                    props.resetSupplierFilds()
+                    // props.resetSupplierFilds()
+                    
                     props.getAllSuppliers().then(data=>{
+                        
+                        
                         
     
     
                         setTimeout(
                             function() {
-                                props.typeOfActionShow("")
+                                props.typeOfsupplierActionShow("")
+                                props.resetSupplierFilds()
                             }
                             .bind(this),
                             1000
