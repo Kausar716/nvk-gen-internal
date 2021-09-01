@@ -211,7 +211,7 @@ const handleShowPage = (e)=>{
                                             <tr>
                                                 <td style={{color:parseInt(archived)===0 ? "black" :"red"}}>{parseInt(archived) === 0 ?"Active":"Archived"}</td>
                                                 <td className="text-nowrap text-center">{plant_id}</td>
-                                                <td>{plant_name}</td>
+                                                <td>{plant_name.split("-")[0]}</td>
                                                 <td>
                                                     {/* backgroundColor:product.archived == 0?"#ffffff":"#cccccc"{plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:""} */}
                                                     {plantCategoryData.length>0?plantCategoryData.filter(cat=>cat.id===category_id)[0]?plantCategoryData.filter(cat=>cat.id===category_id)[0]["name"]:"":""}

@@ -73,7 +73,7 @@ const  PlantManger=(props)=> {
       // Use your imagination to render suggestions.
     const renderSuggestion = suggestion => (
         <span>
-          {suggestion.genus}
+          {suggestion.plant_name.split("-")[0]}
         </span>
     );
     const onChange = (event, { newValue }) => {
