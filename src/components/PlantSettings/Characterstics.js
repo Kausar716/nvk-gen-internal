@@ -53,6 +53,7 @@ class Characterstics extends Component {
                 sectionName:0,
                 featureName:0
             },
+            subChildernAddView:false,
             sortId: 0,
             activeId: 0,
             isEditing:false,
@@ -656,6 +657,21 @@ componentDidMount(){
         }
         // this.props.handleSubAttributeUpdateChild()
     }
+
+
+
+    addChildernFutureList =()=>{
+
+        this.setState({
+            subChildernAddView:true
+        })
+
+    }
+
+
+
+
+
     render() {
         // var tasks={
         //     inactive:[],
@@ -911,7 +927,13 @@ componentDidMount(){
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(item,"active")}
-                                                                />   <i class="fa fa-th" onClick={()=>this.openLinkData(index,"active")}></i></span>
+                                                                />  
+                                                                 <i class="fa fa-th" onClick={()=>this.openLinkData(index,"active")}></i>
+                                                                 {/* <i class="fa fa-plus" onClick={()=>this.openLinkData(index,"active")}></i> */}
+                                                                 
+                                                        </span>
+
+
                                                         </div>
                                                    
                                                                  {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
@@ -931,10 +953,18 @@ componentDidMount(){
                                                         <div className={this.state.isEditingFeature===false  ? "ab" :this.state.selectedFeatureID === t1.id ? "reasonBackground ab" : "ab"}><span id={t1.id}    >{t1.value}</span>
                                                         
                                                         </div>
+                                                        
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick3(item, t1,"active")}
-                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
+                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i>
+
+                                                                    <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={this.addChildernFutureList}></i> 
+                                                                        
+                                                                
+                                                                </span>
                                                         </div>
+
+                                                       
                                                    
                                                                  {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
                                                                       <span id={t.id}   className={this.state.isEditing===false  ? "" :this.state.selectedID === t.id ? "reasonBackground eplisData " : "eplisData"} >{t.name}</span>
@@ -948,8 +978,26 @@ componentDidMount(){
                                                                 
             
                                                             })}
-                                                        </ul>
 
+
+                                                        {this.state.subChildernAddView===true ? 
+                                                            <div>
+                                                            <label>Add More Future List</label>
+                                                            <input type="text" className="form-control" style={{marginRight:"11.3em"}} id="textInput" value="..." />
+                                                            
+                                                        <div style={{display:"flex"}}>
+                                                        <spam style={{marginTop:"10px",color:"#348fe2", cursor:"pointer"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam> 
+
+                                                        <spam style={{ marginTop:"10px",color:"#348fe2", cursor:"pointer"}}  ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>   
+
+                                                        </div>
+                                                          
+                                                            </div>
+                                                            :
+                                                            <div></div>
+                                                        }
+                                                        </ul>
+                                                       
                                                         </div>
                                                             </div>
                                                         )}
