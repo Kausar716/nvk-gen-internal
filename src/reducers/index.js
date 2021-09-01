@@ -26,6 +26,7 @@ import productManufacturerReducer from './productManufacturerReducer';
 import purchaseOrderManagement from'./purchaseOrderManagementReducer';
 import quoteOrderManagement from'./quoteOrderManagemnetReducer';
 import invoiceReducer from'./invoiceReducer'
+import QuoteReducer from './QuoteReducer'
 // import supplierManagementReducer from './supplierManagementReducer';
 
 
@@ -38,6 +39,7 @@ export default combineReducers({
     supplierData: supplierManagementReducer,
     dashboardData:dashboardReducer,
     contactsData:contactsSuppliers,
+    QuoteReducerData:QuoteReducer,
     addressSM: AddressManagementReducerSM,
     attributeData:attributesReducer,
     dlistOfNumber:dlistOfNumberReducer,

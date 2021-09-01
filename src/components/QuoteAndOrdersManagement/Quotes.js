@@ -11,12 +11,16 @@ import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
 import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
-
+import {handleInputChange,addNewQuote} from "../../actions/quoteAction";
 // import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
 
 
  function QuoteAndOrdersManagement(props) {
     const [value, onChange] = useState(new Date());
+    const [customerSelected,setCustomerSelected] = useState(false)
+    const [customerDetails,setCustomerDetails] = useState({
+
+    })
     useEffect (()=>{
         props.getAllCustomer()
         props.getAllCustomerType()
@@ -25,21 +29,43 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
     },[value])
     const handleCustomerData =(e)=>{
         // alert(e.target.value)
-        props.getCustomerById(e.target.value)
-        props.getAllCustomerType()
-        props.getAllStatusMethods()
-        props.getcustomerAddress(e.target.value)
+        if(e.target.id =="customer_id"){
+            props.getCustomerById(e.target.value)
+            props.getAllCustomerType()
+            props.getAllStatusMethods()
+            props.getCustomerContacts(e.target.value)
+            props.getcustomerAddress(e.target.value)
+            props.handleInputChange(e.target.id,e.target.value)
+
+        }else{
+            props.handleInputChange(e.target.id,e.target.value)
+        }
+
         // props.getAllTermsMethods()
         // props.getAllReasonMethods()
  
 
     }
+    const handleSave = (e)=>{
+        e.preventDefault();
+
+        props.addNewQuote(quoteDetails).then(data=>{
+            setCustomerSelected(true)
+        })
+
+    }
+    const handleUpdate = ()=>{
+
+        props.addNewQuote()
+
+    }
     const {deleteCustomer,customerReasonList,customerDataById,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
-    console.log(customerTypeList)
+    const {quoteDetails} = props.QuoteReducerData
+    console.log(quoteDetails)
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0 d-flex flex-md-nowrap align-items-center"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/> New Customer Quote <span class="text-green ml-3">#00234-2000132</span></h1>
+				<h1 class="page-header mb-0 d-flex flex-md-nowrap align-items-center"><img src="assets/img/customerQuotesAndOrders-lg-green.svg" alt="" class="mr-2"/> New Customer Quote <span class="text-green ml-3">#{quoteDetails.quote_no}</span></h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn">
                         <span class="d-flex align-items-center text-left">
@@ -96,17 +122,17 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                 </div>
 
                 <div class="">
-                <Tabs>
+                <Tabs >
                     <TabList >
                         <Tab>Quote Details</Tab>
-                        <Tab disabled={true} style={{backgroundColor:"lightgray"}} >Add to Quote</Tab>
-                        <Tab disabled={true} style={{backgroundColor:"lightgray"}}>Current Quote <span class="badge badge-pill badge-success">02</span></Tab>
-                        <Tab disabled={true} style={{backgroundColor:"lightgray"}}>Order History</Tab>
-                        <Tab disabled={true} style={{backgroundColor:"lightgray"}}>Notes</Tab>    
+                        <Tab  disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Add to Quote</Tab>
+                        <Tab disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Current Quote <span class="badge badge-pill badge-success">0</span></Tab>
+                        <Tab disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Order History</Tab>
+                        <Tab disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Notes</Tab>    
                     </TabList>
                     <TabPanel>
                         <div class="bg-white px-3 py-3">
-                            <form>
+                            {/* <form> */}
                                 <h2>Quote Details</h2>
                                 <hr/>
                                 <div class="px-3 py-3 bg-grey-transparent-2">
@@ -157,22 +183,32 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-5 col-xl-5">
-                                    <div class="row ">
-                                            <div class="col-md-6 col-lg-6">
+                                    <div class="col-md-3 col-lg-3">
                                                 <label>Ordered By <span class="text-danger">*</span></label>
-                                                <select class="form-control" onChange={handleCustomerData}>
+                                                <select class="form-control" onChange={handleCustomerData} disabled={customerSelected?true:false} id="customer_id">
                                                     <option value={0}>Select</option>
                                                     {
                                                         props.customerData.customerList.map(customer=>{
-                                                            return(<option value={customer.id}>{customer.name}</option>)
+                                                            return(<option value={customer.id} selected={quoteDetails.customer_id ==customer.customer_id?"selected":""}>{customer.name}</option>)
                                                         })
                                                     }
                                                 </select>
                                             </div>
-                                            <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
+                                            <div class="col-md-3 col-lg-3">
+                                                <label>Pricing Year <span class="text-danger">*</span></label>
+                                                <select class="form-control" onChange={handleCustomerData} disabled={customerSelected?true:false} id="pricing_year">
+                                                    <option selected={quoteDetails.pricing_year ==new Date().getFullYear()?"selected":""} value={new Date().getFullYear()}>{new Date().getFullYear()}</option>
+                                                    <option selected={quoteDetails.pricing_year ==new Date().getFullYear()+1?"selected":""}  value={new Date().getFullYear()+1}>{new Date().getFullYear()+1}</option>
+                                                </select>
+                                            </div>
+                                </div>
+                                <div class="row mt-3">
+                                    {/* <div class="col-md-12 col-lg-5 col-xl-5"> */}
+                                    {/* <div class="row "> */}
+                                     
+                                        
+                                            <div class="col-md-3 col-lg-3">
                                                 <label>Bill To <span class="text-danger">*</span></label>
                                                 
                                                 <select class="form-control" disabled={customerAddressList.active.length>0?false:true}>
@@ -186,36 +222,37 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                                     <option>Option 2</option> */}
                                                 </select>
                                             </div>
-                                           
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-7 col-xl-7">
-                                        <div class="row">
-                                            <div class="col-md-6 col-lg-4">
+                                            <div class="col-md-3 col-lg-3">
                                                 <label>PO #</label>
                                                 <input type="text" class="form-control" placeholder="" disabled={customerDataById.p_o_req==1?false:true}></input>
                                             </div>
-                                            <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
-                                                <label class="mr-2 mr-md-0">Requested Date</label>
-                                                {/* <DatePicker onChange={onChange} value={value} /> */}
-                                                <input type="date" className="dateDesign"  />
-                                            </div>
-                                            <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
-                                                <label class="mr-2 mr-md-0">Requested Time</label>
-                                                <select class="form-control">
+                                            <div class="col-md-3 col-lg-3">
+                                                <label  style={{display: "block"}}>Requested Time</label>
+                                                <select class="form-control" disabled={customerSelected?false:true}>
                                                     <option>AM</option>
                                                     <option>PM</option>
                                                 </select>
                                             </div>
-                                        </div>
-                                    </div>
+                                           
+                                        {/* </div> */}
+                                    {/* </div> */}
+                                    {/* <div class="col-md-12 col-lg-7 col-xl-7"> */}
+                                        {/* <div class="row"> */}
+                                        
+                                            <div class="col-md-3 col-lg-3">
+                                            <label>Requsted Date</label>
+                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true}></input>
+                                            </div>
+                                      
+                                        {/* </div> */}
+                                    {/* </div> */}
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-5 col-xl-5">
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
-                                                <select class="form-control">
+                                                <select class="form-control" disabled={customerSelected?false:true}>
                                                     <option>CAD</option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
@@ -223,13 +260,13 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Email To</label>
-                                                <input type="text" class="form-control" placeholder=""></input>
+                                                <input type="text" class="form-control" placeholder="" value={customerContactList.active.length>0?customerContactList.active[0].email:""} disabled={customerSelected?false:true}></input>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-7 col-xl-7">
                                         <label>Job Description</label>
-                                        <input type="text" class="form-control" placeholder=""></input>
+                                        <input type="text" class="form-control" placeholder="" disabled={customerSelected?false:true}></input>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -237,15 +274,14 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Units</label>
-                                                <select class="form-control">
-                                                    <option>Metric</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" disabled={customerSelected?false:true}>
+                                                    <option value={"Metric"} selected={ customerDataById.unit_of_measurement=="Metric"?"selected":""}>Metric</option>
+                                                    <option value={"Imperial"} selected={customerDataById.unit_of_measurement =="Imperial"?"selected":""}>Imperial</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Discount</label>
-                                                <input type="text" class="form-control text-right" placeholder="" value="0.00" />
+                                                <input type="text" class="form-control text-right" placeholder="" value="0.00" disabled={customerSelected?false:true}/>
                                             </div>
                                         </div>
                                     </div>
@@ -258,7 +294,7 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                                 <label>Discount by Line item</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" />
+                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" disabled={customerSelected?false:true}/>
                                                         <label for="switcher_checkbox_date"></label>
                                                     </div> On
                                                 </div>
@@ -267,7 +303,7 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                                 <label class="mr-2 mr-md-0">Archive Quote Time Frame</label>
                                                 <div class="row">
                                                     <div class="col-md-6 col-lg-4 mr-2 mr-md-0">
-                                                        <input type="text" class="form-control" placeholder="30 Day"></input>
+                                                        <input type="text" class="form-control" placeholder="30 Day" disabled={customerSelected?false:true}></input>
                                                     </div>
                                                     <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                         <span class="textGrey" style={{fontSize: 16}}>23 Days Left</span>
@@ -287,7 +323,7 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                                 <label>Show Pricing on Output</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="showpricing" id="showpricing" value="2" />
+                                                        <input type="checkbox" name="showpricing" id="showpricing" value="2" disabled={customerSelected?false:true}/>
                                                         <label for="showpricing"></label>
                                                     </div> On
                                                 </div>
@@ -296,7 +332,7 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                                 <label>Flag as Reminder</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">No
                                                     <div class="switcher switcher-sm ml-2 pr-2" style={{color:"#ff0000"}} >
-                                                        <input type="checkbox" name="flagreminder" id="flagreminder" style={{color:"#ff0000"}} value="2" />
+                                                        <input type="checkbox" name="flagreminder" id="flagreminder" style={{color:"#ff0000"}} value="2" disabled={customerSelected?false:true}/>
                                                         <label for="flagreminder"></label>
                                                     </div> Yes
                                                 </div>
@@ -307,11 +343,18 @@ import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustome
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Order Notes <small style={{color: "#808080"}}>(Internal Only)</small></label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" disabled={customerSelected?false:true}></textarea>
                                     </div>
+                                    <div style={{float:"left",width:"100%",marginBottom:4,paddingRight:10}}>
+                                    <button className="btn btn-primary btn-lg ml-3"  style={{width:100,float:"right",marginTop:10}} onClick={customerSelected?handleUpdate:handleSave}>{customerSelected?"Update":"Add"}</button>
+                                    </div>
+                                   
                                 </div>
-                            </form>
+                                
+                            {/* </form> */}
+                          
                         </div>
+                       
                     </TabPanel>
                     <TabPanel>
                         <div class="bg-white px-3 py-3 mt-2">
@@ -1238,7 +1281,8 @@ Rate</th>
 }
 const mapStateToProps = (state)=>(
     {
-        customerData:state.customerReducer
+        customerData:state.customerReducer,
+        QuoteReducerData:state.QuoteReducerData
     }
 )
-export default connect(mapStateToProps,{getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
+export default connect(mapStateToProps,{handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
