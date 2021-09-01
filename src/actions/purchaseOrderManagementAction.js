@@ -16,7 +16,9 @@ import {
     ADD_PURCHASE_ORDER,
     SET_SUPPLIER_TO_ADD_PO,
     HANDLE_ORDERDETAILS_INPUT,
-    ERROR_HANDLE
+    ERROR_HANDLE,
+    GET_ADD_TO_ORDER_LIST,
+    HANDLE_SEARCH_ORDERED_LIST
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -142,4 +144,32 @@ export const handleOrderDetailsInput = (id,value)=>{
     itemValue:value
   }
 }
-      
+
+
+export const getAddToOrderList = () => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.get(`/api/add-to-purchase-order-search?type=plant`,config).then(res=>{
+    console.log(res)
+     
+      dispatch({
+          type:GET_ADD_TO_ORDER_LIST,
+          payload:res.data.data
+
+      })
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
+export const serachOrderedList = (plant,sku)=>{
+  return{
+    type:HANDLE_SEARCH_ORDERED_LIST,
+    plant,
+    sku
+  }
+}
+
