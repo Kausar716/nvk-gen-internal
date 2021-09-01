@@ -12,8 +12,16 @@ import {
     UPDATE_USER_PERMISSION ,
     RESET_USERDATA,
     TAB_CHANGE_VALUE,
-    DISPLAY_SELECTED_USER
+    DISPLAY_SELECTED_USER,
+    HANDLE_USERACCESS_INPUT_EXCHANGE,
+    USERACCESS_LIST,
+    RESET_USER_SELECT
    } from './types';
+
+
+
+ 
+
 
 
    export const resetUserData=()=>dispatch=>{
@@ -23,6 +31,12 @@ import {
     })
    }
 
+   export const resetUserSelect=()=>dispatch=>{
+    dispatch({
+        type:RESET_USER_SELECT,
+        
+    })
+   }
 
    export const tabChangeValues=(tabChangeValue)=>dispatch=>{
 
@@ -35,6 +49,18 @@ import {
    }
 
 
+   export const handleUserAccessExchnageData =(data,id,dataType)=>dispatch=>{
+    dispatch({
+        type:HANDLE_USERACCESS_INPUT_EXCHANGE,
+        data:data,
+        id:id,
+        dataType:dataType
+
+    })
+
+}
+
+
    //displayselectedUSer
    export const displaySelectedUSERS=(displaySelectedUSER)=>dispatch=>{
 
@@ -45,6 +71,16 @@ import {
         
     })
    }
+
+
+   export const userAccessList = (userAccessList) =>dispatch=>{
+                console.log(userAccessList)
+            dispatch({
+                type:USERACCESS_LIST,
+                userAccessList:userAccessList,
+                
+            })
+    }
 
 
    
@@ -61,6 +97,8 @@ import {
                })
            })
    }
+
+
 
     export const showRole = (id) => dispatch => {
        axios.get(`/api/show-role/${id}`,config).then(res=>{     
@@ -152,6 +190,10 @@ import {
              checked:checked
          })
         }
+
+       
+
+
         export const handleUserSelect = (id) =>dispatch=>{
           
             axios.get(`/api/show-user/${id}`,config).then(res=>{ 
