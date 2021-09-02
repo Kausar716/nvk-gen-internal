@@ -81,6 +81,28 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
     const {deleteCustomer,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
     const {quoteDetails} = props.QuoteReducerData
     console.log(customerDataById1)
+    // source:"",
+    // ordered_by:"",
+    // bill_to:"",
+    // purchase_order:"",
+    // requested_date:"",
+    // requested_time:"AM",
+    // currency:"",
+    // email_to:"",
+    // job_description:"",
+    // units:"",
+    // discount:"0.00",
+    // discount_by_line_item:1,
+    // archive_quote_timeframe:"",
+    // show_pricing_op:"",
+    // flag_as_reminder:"0",
+    // order_notes:"",
+    // status:"1",
+    // customer_id: "",
+    // quote_no: "",
+    // quote_status: "",
+    // pricing_year: "",
+    // amount: null,
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -209,7 +231,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                     <option value={0}>Select</option>
                                                     {
                                                         props.customerData.customerList.map(customer=>{
-                                                            return(<option value={customer.id} selected={quoteDetails.customer_id ==customer.customer_id?"selected":""}>{customer.name}</option>)
+                                                            return(<option value={customer.id} selected={quoteDetails.ordered_by ==customer.id?"selected":""}>{customer.name}</option>)
                                                         })
                                                     }
                                                 </select>
@@ -234,7 +256,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 <option>Select Address</option>
                                                     {customerAddressList.active.map(address=>{
                                                       
-                                                        return( <option>{address.city} {address.country} {address.zip}</option>)
+                                                        return( <option value={quoteDetails.bill_to} id={address.id} selected={quoteDetails.bill==address.id?"selected":""}>{address.city} {address.country} {address.zip}</option>)
                                                     })}
                                                     {/* <option>1234 Main St, Waterdown </option>
                                                     <option>Option 1</option>
@@ -243,13 +265,13 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <label>PO #</label>
-                                                <input type="text" class="form-control" placeholder="" disabled={customerDataById1.p_o_req==1?false:true}></input>
+                                                <input type="text" class="form-control" placeholder="" disabled={quoteDetails.purchase_order==1?false:true}></input>
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <label  style={{display: "block"}}>Requested Time</label>
-                                                <select class="form-control" disabled={customerSelected?false:true}>
-                                                    <option>AM</option>
-                                                    <option>PM</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} id="requested_time" >
+                                                    <option value="AM" value={quoteDetails.requested_time=="AM"?"selected":""}>AM</option>
+                                                    <option value="PM" value={quoteDetails.requested_time=="PM"?"selected":""}>PM</option>
                                                 </select>
                                             </div>
                                            
@@ -260,7 +282,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                         
                                             <div class="col-md-3 col-lg-3">
                                             <label>Requsted Date</label>
-                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true}></input>
+                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true} value={quoteDetails.requested_date}></input>
                                             </div>
                                       
                                         {/* </div> */}
@@ -272,8 +294,8 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
                                                 <select class="form-control" disabled={customerSelected?false:true} onChange={customerHandle} id="currency">
-                                                    <option value={"Canadian Doller"} selected={customerDataById1.currency=="Canadian Doller"?"selected":""}>Canadian Doller</option>
-                                                    <option value={"U.S Doller"} selected={customerDataById1.currency=="U.S Doller"?"selected":""}>U.S Doller</option>
+                                                    <option value={"Canadian Doller"} selected={quoteDetails.currency=="Canadian Doller"?"selected":""}>Canadian Doller</option>
+                                                    <option value={"U.S Doller"} selected={quoteDetails.currency=="U.S Doller"?"selected":""}>U.S Doller</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
