@@ -517,9 +517,10 @@ componentDidMount(){
     }
 
 
-    handleAddCategoryFeature2 = (e)=>{
+    handleAddCategoryFeature2 = (item)=>{
 
         //debugger
+        console.log("eee12345", item)
         // if (this.state.selectedID === "" || this.state.selectedID === undefined) {
         //     confirmAlert({
         //         title: 'Select Section Name',
@@ -533,7 +534,8 @@ componentDidMount(){
         // } else {
             let zoneObj={}
             zoneObj.attribute_id=12 
-            zoneObj.subattribute_id = parseInt(this.props.showSpeciSubA.id) 
+            zoneObj.subattribute_id = item.id
+            //parseInt(this.props.showSpeciSubA.id) 
             zoneObj["childrens"] =[{
                 'children_name':'Feature Name',
                 'children_value':this.state.subName
@@ -566,9 +568,10 @@ componentDidMount(){
         return true
         
     }
+
     handleEditClick2 =(t,type)=> { 
 
-       // debugger
+       debugger
 
         this.setState({
             name: t.value,
@@ -584,6 +587,7 @@ componentDidMount(){
         this.props.handleZoneInputAction2("sectionName",this.state.name)
         this.props.showSubSubAttribute(t.id)
     }
+
     handleEditClick3 =(t, tchild,type)=> {
         console.log(tchild.id)
         this.handleEditClick2(t,type);
@@ -609,7 +613,8 @@ componentDidMount(){
     }
 
     handleAddCategoryUpdate=(e)=>{
-        // debugger;
+
+        debugger;
          let valueName = this.state.name
          let updateID = parseInt(this.props.showSpeciSubA.id)
          let updateObject={}
@@ -654,6 +659,8 @@ componentDidMount(){
             let data = this.state.openInactive
             data[index] = data[index]==0?1:0
             this.setState({openInactive:data})
+
+            this.props.showSubSubAttribute()
 
         }
 
@@ -836,7 +843,7 @@ componentDidMount(){
                                                         
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
-                                                                onClick={() =>this.handleEditClick2(item,"inactive")}
+                                                                onClick={() =>{this.handleEditClick2(item,"inactive"); }}
                                                                 />   <i class="fa fa-th" onClick={()=>this.openLinkData(index,"inactive")}></i></span>
                                                         </div>
                                                    
@@ -1030,9 +1037,10 @@ componentDidMount(){
                                                             <input type="text" className="form-control" onChange={this.handleZoneInputAction} value={this.state.subName} style={{marginRight:"11.3em"}} id="textInput" />
                                                             
                                                         <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
-                                                        <spam style={{color:"#348fe2", cursor:"pointer", marginRight:"3em"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam> 
+                                                       
 
-                                                        <spam style={{color:"#348fe2", cursor:"pointer"}} onClick={this.handleAddCategoryFeature2} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>   
+                                                        <spam style={{color:"#348fe2", cursor:"pointer", marginRight:"3em"}} onClick={()=>this.handleAddCategoryFeature2(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>  
+                                                        <spam style={{color:"#348fe2", cursor:"pointer" }} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam>  
 
                                                         </div>
                                                           
