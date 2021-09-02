@@ -560,6 +560,9 @@ class UserProfile extends React.Component {
     //      })
     //    }
     //  }
+
+   
+
     goToUserAccess=(e,name)=>{
         //this.props.tabChangeValues(1)  
 
@@ -572,7 +575,13 @@ class UserProfile extends React.Component {
         this.props.handleUserSelect(e)
         this.props.userAccessList(name)
         //this.props.handleUserAccessExchnageData(selID,"userList","userList")
-        this.props.displaySelectedUSERS(true)
+        this.props.displaySelectedUSERS(false)
+
+
+        // this.props.getUsersList()
+        // this.props.getRolesList()
+        // //this.props.getPermissionList()
+        // this.props.resetUserData()
 
         // console.log("abcdefghijk", e)
         // let userList = this.props.users.active
@@ -841,7 +850,9 @@ class UserProfile extends React.Component {
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2" style={{marginTop:"-0.5em"}}>
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via  <span className="linkTag" onClick={()=>this.goToUserAccess(this.props.selectedUser.id, this.props.selectedUser.name)}>User Access</span>.</p>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via  <span className="linkTag" 
+                                        //onClick={()=>this.goToUserAccess(this.props.selectedUser.id, this.props.selectedUser.name)}
+                                        >User Access</span>.</p>
                                     </div>
                                 </div>
                             </div>
