@@ -29,10 +29,11 @@ const initialSatate = {
         job_description:"",
         units:"",
         discount:"0.00",
+        customeraddress:[],
         discount_by_line_item:1,
         archive_quote_timeframe:"",
-        show_pricing_op:"",
-        flag_as_reminder:"0",
+        show_pricing_op:0,
+        flag_as_reminder:0,
         order_notes:"",
         status:"1",
         customer_id: "",
@@ -52,10 +53,16 @@ const initialSatate = {
     
     switch(action.type){
         case ADD_NEW_QUOTE:
+            let customerData = action.payload.data.customer
+            customerData.units = customerData.unit_of_measurement
+            delete customerData.id
+            delete customerData.customer_id
+            delete action.payload.data.customer
+
             return{
 
                 ...state,
-                quoteDetails:action.payload.data
+                quoteDetails:{...state.quoteDetails,...action.payload.data,...customerData}
 
             }
         case UPDATE_QUOTE:
