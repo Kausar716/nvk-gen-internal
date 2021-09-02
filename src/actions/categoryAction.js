@@ -147,6 +147,10 @@ export const handleDragDrop = (data) =>dispatch=>{
 
         })
     })
+    .catch(err=>{
+        console.log(err.response.data.message)
+        alert(err.response.data.message)
+    })
 }
 export const handleCategoryDragSort = (fromId, toId,type) =>dispatch=>{
     let attributeObject={}
