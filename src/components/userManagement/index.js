@@ -18,7 +18,7 @@ import Autocomplete from '@material-ui/lab/Autocomplete';
 
 
 import {getRolesList,showRole,addRoler,updateRole,deleteRole,getPermissionList,handleUserUpdateUserPermission,
-    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues, displaySelectedUSERS} from "../../actions/userAccessAction";
+    handleUserAccessInputAction,handleUserSelect, resetUserData, tabChangeValues, userAccessList,displaySelectedUSERS,resetUserSelect} from "../../actions/userAccessAction";
 //import {showUser} from "../../actions/userAction";
 //const { render } = ReactDOM;
 
@@ -249,12 +249,14 @@ handleChange=(index)=>{
     })
 
     if(this.props.tabChangeValueUP===1 || this.props.tabChangeValueUP===2 ){
+
+        this.props.displaySelectedUSERS(false)
+
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
         this.props.resetUserData()
-        this.props.displaySelectedUSERS(false)
-
+        this.props.resetUserSelect()
         this.setState({visbleTrue:false, displayUpdateProfile:false})
 
     }
@@ -269,11 +271,12 @@ handleChange=(index)=>{
 
 
 goToUserAccess=()=>{
-   // alert("going user access ?")
-    // this.setState({
-    //     tabValues:1
-    // })
+    let select ="Select.."
+  
     this.props.tabChangeValues(1)  
+    this.props.resetUserData()
+        this.props.displaySelectedUSERS(false)
+        this.props.userAccessList(select)
 
 }
 
@@ -460,7 +463,7 @@ goToUserAccess=()=>{
                                             </p>
                                         </div>
                                     </div>:null}
-                                    {displayUpdateProfile?<UserProfile  onTagsChangeInUP={this.onTagsChange} cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  tabValues1={this.state.tabValues} />:null}
+                                    {displayUpdateProfile?<UserProfile onTagsChangeInUP={this.onTagsChange} cancle={this.handleCancle} selectedUser={this.state.selectedUser} displayDeletedRecords={this.state.displatDeletedRecord} roles={roleList}  tabValues1={this.state.tabValues} />:null}
                                     {displayCreate?<CreateUserProfile  handleSubmitData={this.handleSubmit}  cancle={this.handleCancle} handleCreateUpdateFlow={this.handleCreateUpdateFlow}/>:null}
                                 </div>
                             </div>
@@ -505,4 +508,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getUsersList,getRolesList,resetUserData, displaySelectedUSERS,getPermissionList,tabChangeValues})(UserManagement)
+export default connect(mapStateToProps,{getUsersList,getRolesList,resetUserData,userAccessList,resetUserSelect, displaySelectedUSERS,getPermissionList,tabChangeValues})(UserManagement)

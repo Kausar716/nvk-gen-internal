@@ -9,7 +9,7 @@ import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
 //import getRolesList from "../../actions/userAccessAction";
-import {tabChangeValues, displaySelectedUSERS,handleUserSelect} from "../../actions/userAccessAction";
+import {tabChangeValues, displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData, userAccessList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 //import SuccessModal from '../Modal/SuccessModal';
 import CheckBox from "./Checkbox";
@@ -560,18 +560,28 @@ class UserProfile extends React.Component {
     //      })
     //    }
     //  }
-    goToUserAccess=(e)=>{
+
+   
+
+    goToUserAccess=(e,name)=>{
         //this.props.tabChangeValues(1)  
 
-        //debugger
+        debugger
 
         this.props.tabChangeValues(1)
 
 
         let selID = JSON.stringify(e)
-        this.props.handleUserSelect(selID)
+        this.props.handleUserSelect(e)
+        this.props.userAccessList(name)
+        //this.props.handleUserAccessExchnageData(selID,"userList","userList")
+        this.props.displaySelectedUSERS(false)
 
-        this.props.displaySelectedUSERS(true)
+
+        // this.props.getUsersList()
+        // this.props.getRolesList()
+        // //this.props.getPermissionList()
+        // this.props.resetUserData()
 
         // console.log("abcdefghijk", e)
         // let userList = this.props.users.active
@@ -840,7 +850,9 @@ class UserProfile extends React.Component {
                                 <div class="col-md-12 col-lg-12">
                                     <div class="bg-grey-transparent-2 text-center px-2 py-2" style={{marginTop:"-0.5em"}}>
                                         <div class="d-flex align-items-center justify-content-center"><img src="assets/img/bulp-ic.svg" alt=""/><h5 class="ml-2 mb-0">Did you know?</h5></div>
-                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via  <span className="linkTag" onClick={()=>this.goToUserAccess(this.props.selectedUser.id)}>User Access</span>.</p>
+                                        <p class="m-0">Inactive users will not have access to this system. User permissions can be set via  <span className="linkTag" 
+                                        //onClick={()=>this.goToUserAccess(this.props.selectedUser.id, this.props.selectedUser.name)}
+                                        >User Access</span>.</p>
                                     </div>
                                 </div>
                             </div>
@@ -954,6 +966,10 @@ class UserProfile extends React.Component {
 
 
                                                     </select>
+
+
+
+
                                                     {this.state.errorObj.positionError!==0 ? <span style={{fontSize:"small",color:"red"}}>Select Position</span>:" "}
                                                 </div>
                                                 <div class="col-md-6 mt-3 mt-md-0">
@@ -1071,5 +1087,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default withRouter(connect(mapStateToProps,{updateUser,removeImage,
-    showUser,uploadImage,deleteUser,tabChangeValues,displaySelectedUSERS,handleUserSelect}) (UserProfile));
+export default withRouter(connect(mapStateToProps,{updateUser,removeImage,userAccessList,
+    showUser,uploadImage,deleteUser,tabChangeValues,displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData}) (UserProfile));
