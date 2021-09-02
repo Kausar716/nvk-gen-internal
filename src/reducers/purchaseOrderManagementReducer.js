@@ -38,7 +38,9 @@ const initialSatate = {
         dispatch_type:null,
         currency:null,
         supplier_order:null
-    }
+    },
+    searchValuePlant:"",
+    searchValueSku:""
 
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
@@ -183,6 +185,8 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     return{
                         ...state,
                         groupedOrderListDate:filteredArray,
+                        searchValuePlant:action.plant,
+                        searchValueSku:action.sku
                     }
                default :
             return{

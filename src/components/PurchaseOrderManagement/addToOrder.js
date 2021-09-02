@@ -25,13 +25,19 @@ import ActionModal from '../Modal/ActionModal';
  const AddToOrder = (props) =>{
     const [value, onChange] = useState(new Date());
     const [valuePlant,setValuePlant] = useState("")
+    const [valueSku,setValueSku] = useState("")
     const [suggestionsPlant,setPlantSuggestions] = useState([])
+    const [suggestionsSku,setSkuSuggestions] = useState([])
+
     const [inputValuePlant, setInputValuePlant] = useState("");
+    const [inputValueSku, setInputValueSku] = useState("");
+
     useEffect(()=>{
         props.getAddToOrderList()
     },[])
 
     const getSuggestionValuePlant = suggestion => suggestion.plant_name;
+    const getSuggestionValueSku = suggestion => suggestion.sku_code;
     // const getSuggestionsPlant = suggestion => suggestion.plant_name;
     const getSuggestionsPlant = value => {
         const inputValuePlant = value.trim().toLowerCase();
@@ -41,26 +47,52 @@ import ActionModal from '../Modal/ActionModal';
               lang.genus.toLowerCase().includes(inputValuePlant)
             );
         };
+    const getSuggestionsSku = value => {
+        const inputValueSku = value.trim().toLowerCase();
+        const inputLength = inputValueSku.length;
+            
+            return inputLength === 0 ? [] : props.backupOrderListData.filter(lang =>
+                lang.sku_code.toLowerCase().includes(inputValueSku)
+            );
+        };
     const onSuggestionsFetchRequestedPlant = ({ value }) => {
         setPlantSuggestions(getSuggestionsPlant(value));
+    };
+    const onSuggestionsFetchRequestedSku = ({ value }) => {
+        setSkuSuggestions(getSuggestionsSku(value));
     };
     const onChangePlant = (event, { newValue }) => {
         setValuePlant(newValue)
         // setLoaderMessage("No Records Found.")
         // props.serachOrderedList({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
         console.log(newValue)
-        props.serachOrderedList(newValue,"")
+        props.serachOrderedList(newValue,props.searchValueSku)
         setInputValuePlant(newValue);
+    };
+    const onChangeSku = (event, { newValue }) => {
+        setValueSku(newValue)
+        // setLoaderMessage("No Records Found.")
+        // props.serachOrderedList({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        console.log(newValue)
+        props.serachOrderedList(props.searchValuePlant,newValue)
+        setInputValueSku(newValue);
     };
     const  onSuggestionsClearRequestedPlant = () => {
         setPlantSuggestions([]);
+      };
+      const  onSuggestionsClearRequestedSku = () => {
+        setSkuSuggestions([]);
       };
       const renderSuggestionPlant = suggestion => (
         <span>
           {suggestion.plant_name.split("-")[0]}
         </span>
     );
-
+    const renderSuggestionSku= suggestion => (
+        <span>
+          {suggestion.sku_code}
+        </span>
+    );
 
 
 
@@ -77,6 +109,16 @@ const inputPropsPlant = {
     id:"add-icon-search",
     style: {position:"relative",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
     onChange: onChangePlant
+};
+const inputPropsSku = {
+    placeholder: '',
+    value:valueSku,
+    
+    // className:"searchInput",
+    className:" form-control btn btn-search",
+    id:"add-icon-search",
+    style: {position:"relative",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+    onChange: onChangeSku
 };
     return (
 <div class="bg-white px-3 py-3 mt-2">
@@ -124,7 +166,17 @@ const inputPropsPlant = {
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder=""/>
+                                                    {/* <input type="text" class="form-control" placeholder=""/> */}
+                                                    <Autosuggest
+                                                    suggestions={suggestionsSku}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequestedSku}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequestedSku}
+                                                    getSuggestionValue={getSuggestionValueSku}
+                                                    renderSuggestion={renderSuggestionSku}
+                                                    inputProps={inputPropsSku}
+                                                    theme={{suggestionsContainerOpen:suggestionsSku.length>5?"yes":"no",suggestionsContainer:suggestionsSku.length>5?"yes1":"no1",
+                                                    suggestionsList:suggestionsSku.length>5?"yes":"no1"}}
+                                                />
                                                 </div>
                                             </div>
                                         </div>
@@ -364,7 +416,10 @@ const inputPropsPlant = {
 const mapStateToProps = (state)=> ({ 
  
     orderedList:state.purchaseOrderManagementData.groupedOrderListDate,
-    backupOrderListData:state.purchaseOrderManagementData.orderListDateForSuggession
+    backupOrderListData:state.purchaseOrderManagementData.orderListDateForSuggession,
+    searchValuePlant:state.purchaseOrderManagementData.searchValuePlant,
+    searchValueSku:state.purchaseOrderManagementData.searchValueSku,
+
     
 
 })

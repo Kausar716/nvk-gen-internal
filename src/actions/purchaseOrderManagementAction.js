@@ -18,7 +18,8 @@ import {
     HANDLE_ORDERDETAILS_INPUT,
     ERROR_HANDLE,
     GET_ADD_TO_ORDER_LIST,
-    HANDLE_SEARCH_ORDERED_LIST
+    HANDLE_SEARCH_ORDERED_LIST,
+    ADD_ALL_VOLUME_QTY
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
