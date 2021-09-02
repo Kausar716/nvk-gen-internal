@@ -9,13 +9,16 @@ import {
     HANDLE_INPUT_QUOTE,
     UPDATE_QUOTE,
     UPDATE_NEW_QUOTE,
+    SEARCH_PLANT_PRODUCT,
 
 
     axios,
     config
     } from './types'
 
-
+    export const searchPlantProductAPI =(id,value)=>dispatch => {
+        
+    }
     export const addNewQuote = (data) => dispatch => {
         //debugger;
         return axios.post("/api/add-quote",data,config).then(res=>{ 
