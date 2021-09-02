@@ -563,7 +563,7 @@ class UserProfile extends React.Component {
     goToUserAccess=(e,name)=>{
         //this.props.tabChangeValues(1)  
 
-        //debugger
+        debugger
 
         this.props.tabChangeValues(1)
 
