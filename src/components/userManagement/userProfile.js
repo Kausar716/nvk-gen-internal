@@ -563,13 +563,13 @@ class UserProfile extends React.Component {
     goToUserAccess=(e,name)=>{
         //this.props.tabChangeValues(1)  
 
-        //debugger
+        debugger
 
         this.props.tabChangeValues(1)
 
 
         let selID = JSON.stringify(e)
-        this.props.handleUserSelect(selID)
+        this.props.handleUserSelect(e)
         this.props.userAccessList(name)
         //this.props.handleUserAccessExchnageData(selID,"userList","userList")
         this.props.displaySelectedUSERS(true)
