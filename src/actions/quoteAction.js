@@ -49,6 +49,7 @@ import {
 
     }
     export const updateQuoteData = (quoteData)=>dispatch=>{
+        console.log(quoteData)
         dispatch({
             type:UPDATE_QUOTE,
             payload:quoteData

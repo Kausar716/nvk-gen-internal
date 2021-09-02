@@ -10,7 +10,7 @@ import Autosuggest from 'react-autosuggest';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
-import {getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
 // import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
 
@@ -30,10 +30,10 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
     const handleCustomerData =(e)=>{
         // alert(e.target.value)
         if(e.target.id =="customer_id"){
-            console.log(customerDataById)
-            props.getCustomerById(e.target.value).then(data=>{
-                console.log(customerDataById)
-                props.updateQuoteData(customerDataById)
+            // console.log(customerDataById1)
+            props.getCustomerByIdQuote(e.target.value).then(data=>{
+                console.log(customerDataById1)
+                // props.updateQuoteData(customerDataById1)
             })
             props.getAllCustomerType()
             props.getAllStatusMethods()
@@ -59,13 +59,28 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
 
     }
     const handleUpdate = ()=>{
+        console.log(customerDataById1)
+        console.log(quoteDetails)
+        let id = quoteDetails.id
+        let combineData = {...quoteDetails,...customerDataById1,id:id}
+        console.log(combineData)
 
-        props.addToQuoteUpdate(quoteDetails)
+        props.addToQuoteUpdate(combineData)
 
     }
-    const {deleteCustomer,customerReasonList,customerDataById,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
+    const customerHandle  =(e)=>{
+        console.log(e.target.value,e.target.id)
+        if(e.target.id =="discount_by_line_item"){
+            let value = e.target.value ==0?true:false
+            props.handleExchangeData(value,e.target.id,"customerDataById1")
+
+        }else
+        props.handleExchangeData(e.target.value,e.target.id,"customerDataById1")
+        
+    }
+    const {deleteCustomer,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
     const {quoteDetails} = props.QuoteReducerData
-    console.log(quoteDetails)
+    console.log(customerDataById1)
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -142,7 +157,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                 <div class="px-3 py-3 bg-grey-transparent-2">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h3>{customerDataById.name}</h3>
+                                            <h3>{customerDataById1.name}</h3>
                                         </div>
                                     </div>
                                     <div class="row ">
@@ -153,7 +168,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 </div>
                                                 <div class="col-md-10">
                                                     <span className="textGrey"><b>{
-                                                        customerDataById.type.map(type=>{
+                                                        customerDataById1.type.map(type=>{
                                                             return customerTypeList.active.map(typeId=>{
                                                                 if(parseInt(typeId.id)==parseInt(type)) 
                                                                 return(<span>{typeId.customer_type}</span>)
@@ -169,13 +184,13 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                     <b>Tax Exempt:</b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>{customerDataById.tax_exempt ==1?"Yes":"No"}</b></span>
+                                                    <span className="textGrey"><b>{customerDataById1.tax_exempt ==1?"Yes":"No"}</b></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-2">
                                             <div>
-                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>{customerDataById.payment_terms}</b></span></div>
+                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>{customerDataById1.payment_terms}</b></span></div>
                                                 <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
                                             </div>
                                         </div>
@@ -228,7 +243,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <label>PO #</label>
-                                                <input type="text" class="form-control" placeholder="" disabled={customerDataById.p_o_req==1?false:true}></input>
+                                                <input type="text" class="form-control" placeholder="" disabled={customerDataById1.p_o_req==1?false:true}></input>
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <label  style={{display: "block"}}>Requested Time</label>
@@ -256,10 +271,9 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
-                                                <select class="form-control" disabled={customerSelected?false:true}>
-                                                    <option>CAD</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} onChange={customerHandle} id="currency">
+                                                    <option value={"Canadian Doller"} selected={customerDataById1.currency=="Canadian Doller"?"selected":""}>Canadian Doller</option>
+                                                    <option value={"U.S Doller"} selected={customerDataById1.currency=="U.S Doller"?"selected":""}>U.S Doller</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
@@ -278,14 +292,14 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Units</label>
-                                                <select class="form-control" disabled={customerSelected?false:true}>
-                                                    <option value={"Metric"} selected={ customerDataById.unit_of_measurement=="Metric"?"selected":""}>Metric</option>
-                                                    <option value={"Imperial"} selected={customerDataById.unit_of_measurement =="Imperial"?"selected":""}>Imperial</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} onChange={customerHandle} id="units">
+                                                    <option value={"Metric"} selected={ customerDataById1.unit_of_measurement=="Metric"?"selected":""}>Metric</option>
+                                                    <option value={"Imperial"} selected={customerDataById1.unit_of_measurement =="Imperial"?"selected":""}>Imperial</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Discount</label>
-                                                <input type="text" class="form-control text-right" placeholder="" value="0.00" disabled={customerSelected?false:true}/>
+                                                <input type="text" class="form-control text-right" placeholder="0.00" value={customerDataById1.discount} disabled={customerSelected?false:true} onChange={customerHandle} id="discount"/>
                                             </div>
                                         </div>
                                     </div>
@@ -298,8 +312,8 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 <label>Discount by Line item</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="switcher_checkbox_date" id="switcher_checkbox_date" value="2" disabled={customerSelected?false:true}/>
-                                                        <label for="switcher_checkbox_date"></label>
+                                                        <input type="checkbox" name="discount_by_line_item" id="discount_by_line_item"  value={customerDataById1.discount_by_line_item} disabled={customerSelected?false:true} checked={customerDataById1.discount_by_line_item==1?true:false} onChange={customerHandle}/>
+                                                        <label for="discount_by_line_item"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -1289,4 +1303,4 @@ const mapStateToProps = (state)=>(
         QuoteReducerData:state.QuoteReducerData
     }
 )
-export default connect(mapStateToProps,{addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
+export default connect(mapStateToProps,{getCustomerByIdQuote,addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)

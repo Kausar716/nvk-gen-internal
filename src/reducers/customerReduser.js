@@ -8,6 +8,7 @@ import {
     FILTER_DATA_BY_SEARCH,
     FILTER_DATA_BY_ALPHA,
     HANDLE_INPUT,
+    GET_CUSTOMER_BY_ID1,
     ADD_NOTIFICATION,
     ADD_EMAIL,
     GET_CUSTOMER_NOTIFICATION,
@@ -167,6 +168,9 @@ const initialSatate = {
    customerReturnReasonList:{active:[],inactive:[]},
 
    customerDataById:{name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
+   customerDataById1:{name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
 
@@ -363,6 +367,12 @@ case ADD_NEW_CUSTOMER:
             customerDataById:{...action.payload.data,type:JSON.parse(action.payload.data.type)}
 
         }
+        case GET_CUSTOMER_BY_ID1:
+            return{
+                ...state,
+                customerDataById1:{...action.payload.data,type:JSON.parse(action.payload.data.type)}
+    
+            }
     case RESET_CUSTOMER_FILEDS:
         return{
             ...state,
