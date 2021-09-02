@@ -74,16 +74,16 @@ export const Component = withRouter(({ history, location }) =>{
 
 
     handleUpdateUserAccess = (userObject) => {
-        debugger
+       // debugger
         // let createRoleToggle = ! this.state.createRoleToggle
         // this.setState({createRoleToggle})
         //console.log("123",this.props.temp.currentPermission,this.state.selectedUser )
-        if(this.state.selectedUser){
-        let result=this.props.handleUserUpdateUserPermission(this.state.selectedUser, userObject)
-        result.then(res=>{
-            alert("updated")
-        })
-        }
+        // if(this.state.selectedUser){
+        // let result=this.props.handleUserUpdateUserPermission(this.state.selectedUser, userObject)
+        // result.then(res=>{
+        //     alert("updated")
+        // })
+        // }
     }
     
     handlecreateRoleModalResult = (e) => {

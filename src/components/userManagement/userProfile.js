@@ -569,7 +569,7 @@ class UserProfile extends React.Component {
 
 
         let selID = JSON.stringify(e)
-        this.props.handleUserSelect(e)
+        this.props.handleUserSelect(selID)
         this.props.userAccessList(name)
         //this.props.handleUserAccessExchnageData(selID,"userList","userList")
         this.props.displaySelectedUSERS(true)
