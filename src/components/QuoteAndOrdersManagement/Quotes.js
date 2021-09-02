@@ -5,22 +5,24 @@ import DatePicker from 'react-date-picker';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import { Link } from "react-router-dom";
-import TablePagination from '../Pagination/index';
 import Autosuggest from 'react-autosuggest';
+import TablePagination from '../Pagination/index';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
 import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
-import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
+import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
 // import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
 
 
  function QuoteAndOrdersManagement(props) {
     const [value, onChange] = useState(new Date());
+    const [plantNameValue,setPlantNameValue] =useState("")
     const [customerSelected,setCustomerSelected] = useState(false)
     const [customerDetails,setCustomerDetails] = useState({
 
     })
+    const[suggestions,setSuggestions] = useState([])
     useEffect (()=>{
         props.getAllCustomer()
         props.getAllCustomerType()
@@ -30,18 +32,34 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
     const handleCustomerData =(e)=>{
         // alert(e.target.value)
         if(e.target.id =="customer_id"){
-            // console.log(customerDataById1)
+            // // console.log(customerDataById1)
             props.getCustomerByIdQuote(e.target.value).then(data=>{
                 console.log(customerDataById1)
                 // props.updateQuoteData(customerDataById1)
             })
             props.getAllCustomerType()
             props.getAllStatusMethods()
-            props.getCustomerContacts(e.target.value)
-            props.getcustomerAddress(e.target.value)
+            // props.getCustomerContacts(e.target.value)
+            // props.getcustomerAddress(e.target.value)
             props.handleInputChange(e.target.id,e.target.value)
 
-        }else{
+        }else if(e.target.id =="discount_by_line_item"){
+            let val = e.target.value==0?1:0
+            props.handleInputChange(e.target.id,val)
+
+        }else if(e.target.id =="show_pricing_op"){
+            let val = e.target.value==0?1:0
+            props.handleInputChange(e.target.id,val)
+
+            
+        }
+        else if(e.target.id =="flag_as_reminder"){
+            let val = e.target.value==0?1:0
+            props.handleInputChange(e.target.id,val)
+
+            
+        }
+        else{
             props.handleInputChange(e.target.id,e.target.value)
         }
 
@@ -59,15 +77,22 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
 
     }
     const handleUpdate = ()=>{
-        console.log(customerDataById1)
-        console.log(quoteDetails)
-        let id = quoteDetails.id
-        let combineData = {...quoteDetails,...customerDataById1,id:id}
-        console.log(combineData)
+        // console.log(customerDataById1)
+        // console.log(quoteDetails)
+        // let id = quoteDetails.id
+        // let combineData = {...quoteDetails,...customerDataById1,id:id}
+        // console.log(combineData)
 
-        props.addToQuoteUpdate(combineData)
+        props.addToQuoteUpdate(quoteDetails)
 
     }
+    const onSuggestionsFetchRequested = ({ value }) =>{
+        // alert(value.length)
+       setSuggestions(getSuggestions(value))
+        // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+    }
+
+    const onSuggestionsClearRequested = () =>  setSuggestions([])
     const customerHandle  =(e)=>{
         console.log(e.target.value,e.target.id)
         if(e.target.id =="discount_by_line_item"){
@@ -79,8 +104,59 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
         
     }
     const {deleteCustomer,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
-    const {quoteDetails} = props.QuoteReducerData
-    console.log(customerDataById1)
+    const {quoteDetails,searchList} = props.QuoteReducerData
+    console.log(quoteDetails)
+    // source:"",
+    // ordered_by:"",
+    // bill_to:"",
+    // purchase_order:"",
+    // requested_date:"",
+    // requested_time:"AM",
+    // currency:"",
+    // email_to:"",
+    // job_description:"",
+    // units:"",
+    // discount:"0.00",
+    // discount_by_line_item:1,
+    // archive_quote_timeframe:"",
+    // show_pricing_op:"",
+    // flag_as_reminder:"0",
+    // order_notes:"",
+    // status:"1",
+    // customer_id: "",
+    // quote_no: "",
+    // quote_status: "",
+    // pricing_year: "",
+    // amount: null,
+    const getSuggestions = (value,type) => {
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        let result = searchList.reduce((unique, o) => {
+            if(!unique.some(obj => obj.genus === o.genus)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] :  result.filter(lang =>lang.genus.toLowerCase().includes(inputValue))      
+    };
+   const getSuggestionValue = suggestion =>suggestion.genus
+
+   const renderSuggestion = suggestion => (<span>{suggestion.genus}</span>);
+
+   const onChange1 = (e, { newValue }) => {
+        // this.setState({plantNameValue:newValue});
+        setPlantNameValue(newValue)
+        props.searchPlantProductAPI("genus",newValue)    
+    };
+    const inputPropsPlant = {
+        placeholder: 'Plant Name',
+        value:plantNameValue,
+        className:" form-control  btn btn-search ",
+        id:"genus",
+        style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+        onChange: onChange1,
+        dataId: 'my-data-id',
+    };
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -209,7 +285,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                     <option value={0}>Select</option>
                                                     {
                                                         props.customerData.customerList.map(customer=>{
-                                                            return(<option value={customer.id} selected={quoteDetails.customer_id ==customer.customer_id?"selected":""}>{customer.name}</option>)
+                                                            return(<option value={customer.id} selected={quoteDetails.ordered_by ==customer.id?"selected":""}>{customer.name}</option>)
                                                         })
                                                     }
                                                 </select>
@@ -230,11 +306,11 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                             <div class="col-md-3 col-lg-3">
                                                 <label>Bill To <span class="text-danger">*</span></label>
                                                 
-                                                <select class="form-control" disabled={customerAddressList.active.length>0?false:true}>
+                                                <select class="form-control" disabled={customerSelected?false:true} id="bill_to" onChange={handleCustomerData} >
                                                 <option>Select Address</option>
-                                                    {customerAddressList.active.map(address=>{
+                                                    {quoteDetails.customeraddress.map(address=>{
                                                       
-                                                        return( <option>{address.city} {address.country} {address.zip}</option>)
+                                                        return( <option value={address.id} id={address.id} selected={quoteDetails.bill_to==address.id?"selected":""}>{address.city} {address.country} {address.zip}</option>)
                                                     })}
                                                     {/* <option>1234 Main St, Waterdown </option>
                                                     <option>Option 1</option>
@@ -243,13 +319,13 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <label>PO #</label>
-                                                <input type="text" class="form-control" placeholder="" disabled={customerDataById1.p_o_req==1?false:true}></input>
+                                                <input type="text" class="form-control" placeholder="" value={quoteDetails.purchase_order} disabled={quoteDetails.p_o_req==1?false:true} onChange={handleCustomerData} ></input>
                                             </div>
                                             <div class="col-md-3 col-lg-3">
                                                 <label  style={{display: "block"}}>Requested Time</label>
-                                                <select class="form-control" disabled={customerSelected?false:true}>
-                                                    <option>AM</option>
-                                                    <option>PM</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} id="requested_time" onChange={handleCustomerData} >
+                                                    <option value="AM" value={quoteDetails.requested_time=="AM"?"selected":""}>AM</option>
+                                                    <option value="PM" value={quoteDetails.requested_time=="PM"?"selected":""}>PM</option>
                                                 </select>
                                             </div>
                                            
@@ -260,7 +336,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                         
                                             <div class="col-md-3 col-lg-3">
                                             <label>Requsted Date</label>
-                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true}></input>
+                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true} value={quoteDetails.requested_date} onChange={handleCustomerData} id="requested_date"></input>
                                             </div>
                                       
                                         {/* </div> */}
@@ -271,20 +347,20 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
-                                                <select class="form-control" disabled={customerSelected?false:true} onChange={customerHandle} id="currency">
-                                                    <option value={"Canadian Doller"} selected={customerDataById1.currency=="Canadian Doller"?"selected":""}>Canadian Doller</option>
-                                                    <option value={"U.S Doller"} selected={customerDataById1.currency=="U.S Doller"?"selected":""}>U.S Doller</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} onChange={handleCustomerData} id="currency">
+                                                    <option value={"Canadian Doller"} selected={quoteDetails.currency=="Canadian Doller"?"selected":""}>Canadian Doller</option>
+                                                    <option value={"U.S Doller"} selected={quoteDetails.currency=="U.S Doller"?"selected":""}>U.S Doller</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Email To</label>
-                                                <input type="text" class="form-control" placeholder="" value={customerContactList.active.length>0?customerContactList.active[0].email:""} disabled={customerSelected?false:true}></input>
+                                                <input type="text" class="form-control" placeholder="" value={quoteDetails.email_to} disabled={customerSelected?false:true} id="email_to" onChange={handleCustomerData}></input>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-7 col-xl-7">
                                         <label>Job Description</label>
-                                        <input type="text" class="form-control" placeholder="" disabled={customerSelected?false:true}></input>
+                                        <input type="text" class="form-control" placeholder="" disabled={customerSelected?false:true} value={quoteDetails.job_description} id="job_description" onChange={handleCustomerData}></input>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -292,14 +368,14 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Units</label>
-                                                <select class="form-control" disabled={customerSelected?false:true} onChange={customerHandle} id="units">
-                                                    <option value={"Metric"} selected={ customerDataById1.unit_of_measurement=="Metric"?"selected":""}>Metric</option>
-                                                    <option value={"Imperial"} selected={customerDataById1.unit_of_measurement =="Imperial"?"selected":""}>Imperial</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} onChange={handleCustomerData} id="units">
+                                                    <option value={"Metric"} selected={ quoteDetails.units=="Metric"?"selected":""}>Metric</option>
+                                                    <option value={"Imperial"} selected={quoteDetails.units =="Imperial"?"selected":""}>Imperial</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Discount</label>
-                                                <input type="text" class="form-control text-right" placeholder="0.00" value={customerDataById1.discount} disabled={customerSelected?false:true} onChange={customerHandle} id="discount"/>
+                                                <input type="text" class="form-control text-right" placeholder="0.00" value={quoteDetails.discount} disabled={customerSelected?false:true} onChange={handleCustomerData} id="discount"/>
                                             </div>
                                         </div>
                                     </div>
@@ -312,7 +388,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 <label>Discount by Line item</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="discount_by_line_item" id="discount_by_line_item"  value={customerDataById1.discount_by_line_item} disabled={customerSelected?false:true} checked={customerDataById1.discount_by_line_item==1?true:false} onChange={customerHandle}/>
+                                                        <input type="checkbox" name="discount_by_line_item" id="discount_by_line_item"  value={quoteDetails.discount_by_line_item} disabled={customerSelected?false:true} checked={quoteDetails.discount_by_line_item==1?true:false} onChange={handleCustomerData}/>
                                                         <label for="discount_by_line_item"></label>
                                                     </div> On
                                                 </div>
@@ -321,7 +397,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 <label class="mr-2 mr-md-0">Archive Quote Time Frame</label>
                                                 <div class="row">
                                                     <div class="col-md-6 col-lg-4 mr-2 mr-md-0">
-                                                        <input type="text" class="form-control" placeholder="30 Day" disabled={customerSelected?false:true}></input>
+                                                        <input type="number" class="form-control" placeholder="30 Day" id="archive_quote_timeframe" disabled={customerSelected?false:true} value={quoteDetails.archive_quote_timeframe} onChange={handleCustomerData}></input>
                                                     </div>
                                                     <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                         <span class="textGrey" style={{fontSize: 16}}>23 Days Left</span>
@@ -341,8 +417,8 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 <label>Show Pricing on Output</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="showpricing" id="showpricing" value="2" disabled={customerSelected?false:true}/>
-                                                        <label for="showpricing"></label>
+                                                        <input type="checkbox" name="show_pricing_op" id="show_pricing_op" checked={quoteDetails.show_pricing_op==1?"checked":""} value={quoteDetails.show_pricing_op} disabled={customerSelected?false:true} onChange={handleCustomerData}/>
+                                                        <label for="show_pricing_op"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -350,8 +426,8 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                                 <label>Flag as Reminder</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">No
                                                     <div class="switcher switcher-sm ml-2 pr-2" style={{color:"#ff0000"}} >
-                                                        <input type="checkbox" name="flagreminder" id="flagreminder" style={{color:"#ff0000"}} value="2" disabled={customerSelected?false:true}/>
-                                                        <label for="flagreminder"></label>
+                                                        <input type="checkbox" name="flag_as_reminder" id="flag_as_reminder" checked={quoteDetails.flag_as_reminder==1?"checked":""} style={{color:"#ff0000"}} value={quoteDetails.flag_as_reminder} disabled={customerSelected?false:true} onChange={handleCustomerData}/>
+                                                        <label for="flag_as_reminder"></label>
                                                     </div> Yes
                                                 </div>
                                             </div>
@@ -361,7 +437,7 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Order Notes <small style={{color: "#808080"}}>(Internal Only)</small></label>
-                                        <textarea class="form-control" disabled={customerSelected?false:true}></textarea>
+                                        <textarea class="form-control" disabled={customerSelected?false:true} id="order_notes" value={quoteDetails.order_notes} onChange={handleCustomerData}></textarea>
                                     </div>
                                     <div style={{float:"left",width:"100%",marginBottom:4,paddingRight:10}}>
                                     <button className="btn btn-primary btn-lg ml-3"  style={{width:100,float:"right",marginTop:10}} onClick={customerSelected?handleUpdate:handleSave}>{customerSelected?"Update":"Add"}</button>
@@ -385,10 +461,22 @@ import {updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "..
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Plant and Product Search</label>
                                                 <div class="searchInput">
-                                                    <button type="submit" class="btn btn-search">
+                                                <button type="submit" className="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                                <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                                    getSuggestionValue={getSuggestionValue}
+                                                    renderSuggestion={renderSuggestion}
+                                                    inputProps={inputPropsPlant}
+                                                  
+                                                />
+                                                    {/* <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder=""/>
+                                                    <input type="text" class="form-control" placeholder=""/> */}
                                                 </div>
                                                 <div class="row mt-3 align-items-center">
                                                     <div class="col-md-12 d-flex">
@@ -1303,4 +1391,4 @@ const mapStateToProps = (state)=>(
         QuoteReducerData:state.QuoteReducerData
     }
 )
-export default connect(mapStateToProps,{getCustomerByIdQuote,addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
+export default connect(mapStateToProps,{searchPlantProductAPI,getCustomerByIdQuote,addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
