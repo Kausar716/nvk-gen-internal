@@ -396,7 +396,7 @@ componentDidMount(){
 
     handleAddCategoryChild = (item)=>{
     
-       debugger;
+      // debugger;
             // if (this.state.selectedID === "" || this.state.selectedID === undefined) {
             //     confirmAlert({
             //         title: 'Select Category',
