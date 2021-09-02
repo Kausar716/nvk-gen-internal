@@ -38,20 +38,17 @@ function QuoteOrderPermission(props) {
 
 
     const [allPermisssions, setAllPermisssions] =useState([]);
-
-    const  [allCheckList, setallCheckList] =useState([]);
-
   
     let permissionList = props.finalPermissionLists
 
 
     useEffect (()=>{
 
-        setquotePermissionListHere(finalQOPermissions);
+        setquotePermissionListHere(permissionList);
         setPurchasePermissionListHere(permissionList);
         setAllPermisssions(permissionList)
 
-        setToolsAnsSettingsPermission(finalTSettingspermissions)
+        setToolsAnsSettingsPermission(permissionList)
         setAdditionalPermissions(permissionList)
         setCustomerManagementPermission(permissionList)
         setUserManagementPermission(permissionList)
@@ -72,7 +69,7 @@ function QuoteOrderPermission(props) {
     
     console.log("quotePermissionListHere", quotePermissionListHere)
     // if(permissionList){
-     let finalQOPermissions  = permissionList.filter(x=>
+     let finalQOPermissions  = quotePermissionListHere.filter(x=>
          x.id===164 || x.id===165 || x.id===166 
         || x.id===167 || x.id===168 || x.id===169 || x.id===170 || x.id===171
         || x.id===172 || x.id===173 || x.id===174  || x.id===175 || x.id===176 
@@ -89,7 +86,7 @@ function QuoteOrderPermission(props) {
     //     setquotePermissionListHere(permissionList)|| 100||101||102||103||104||105||106||107||108||109
     // }121
 //x.id===128 ||
-    let finalTSettingspermissions = permissionList.filter(x=>   x.id===129 || x.id===130 || x.id===131 || x.id===132 )
+    let finalTSettingspermissions = toolsAnsSettingsPermission.filter(x=>   x.id===129 || x.id===130 || x.id===131 || x.id===132 )
 
     let additionalPermissionAll = additionalPermissions.filter(x=>
          x.id===128 || x.id===129 || x.id===130 || x.id===131   ||x.id===146 || x.id===147 || x.id===148 
@@ -154,21 +151,12 @@ function QuoteOrderPermission(props) {
 
 
     const handleChange=(e)=>{
-
-
-        let allCList = [...quotePermissionListHere,...toolsAnsSettingsPermission]
-        let checkedList = allCList.filter(ch=>ch.isChecked===true)
-        setallCheckList(checkedList)
-
-        props.handleUpdateUserAccess( checkedList)
-        
-        console.log("CheckedList12345", allCheckList)
 //debugger;
             var allCount =0;
          const {name, checked, id } = e.target;
 
          if(name === "SelectAllQuote"){
-                    let tempUserP = quotePermissionListHere.map(user=>{return {...user, isChecked:checked}});
+                    let tempUserP = finalQOPermissions.map(user=>{return {...user, isChecked:checked}});
                     setquotePermissionListHere(tempUserP)
          }
 
@@ -272,7 +260,7 @@ function QuoteOrderPermission(props) {
 
          else  if(name === "toolsSettingsIntoolsSettingsPermissions"){
           //debugger;
-            let tempUserTS = toolsAnsSettingsPermission.map(user=>{return {...user, isChecked:checked}});
+            let tempUserTS = finalTSettingspermissions.map(user=>{return {...user, isChecked:checked}});
 
             setToolsAnsSettingsPermission(tempUserTS)
 
@@ -415,7 +403,7 @@ function QuoteOrderPermission(props) {
 
         
          else{
-        let tempUserP = quotePermissionListHere.map((user) =>
+        let tempUserP = finalQOPermissions.map((user) =>
             user.name === name ? { ...user, isChecked: checked} : user);
             setquotePermissionListHere(tempUserP);
             //setAllPermisssions(tempUserAllCheck)
@@ -425,7 +413,7 @@ function QuoteOrderPermission(props) {
             setPurchasePermissionListHere(tempUserPO);
 
 
-            let tempUserTS = toolsAnsSettingsPermission.map((user) =>
+            let tempUserTS = finalTSettingspermissions.map((user) =>
             user.name === name ? { ...user, isChecked: checked} : user);
             setToolsAnsSettingsPermission(tempUserTS);
             
@@ -500,12 +488,7 @@ function QuoteOrderPermission(props) {
     };
 
 
-    // this.props.handleUpdateUserAccess(){
-
-    // }
-
-
-console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission, quotePermissionListHere)
+console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission)
     return (
         <>
            <div style={{padding:"11px", paddingTop:"1px"}}>
@@ -520,7 +503,7 @@ console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission, quotePermi
                 <div class="ContentSection p-15">
                         <h4>Quote &amp; Order Permissions</h4>
                             <div className="row1Quoate" style={{paddingBottom:"2em"}}>
-                                { quotePermissionListHere.map((userP)=>(
+                                { finalQOPermissions.map((userP)=>(
                                                 <div  class="custom-control custom-checkbox">
                                                             {/* <div class="custom-control custom-checkbox" > */}
                                                     <input type="checkbox" class="custom-control-input" 
@@ -549,7 +532,7 @@ console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission, quotePermi
                                 <span style={{float:"right", marginRight:"1em", marginTop:"-2em",fontWeight:"bold"}}>Select All / Select None</span>
                                 <div class="switcher switcher-sm ml-2 pr-2" style={{float:"right", marginRight:"12.3em", marginTop:"-2em"}}>
                                         <input type="checkbox"  name="SelectAllQuote" id="SelectAllQuote"   onChange={handleChange} 
-                                       checked={quotePermissionListHere.filter((user) => user?.isChecked !== true).length < 1} />
+                                       checked={finalQOPermissions.filter((user) => user?.isChecked !== true).length < 1} />
                                         <label  for="SelectAllQuote"></label>
                                     </div>
                                 </div>
@@ -569,12 +552,12 @@ console.log("toolsAnsSettingsPermission", toolsAnsSettingsPermission, quotePermi
                                                 <div class="custom-control custom-checkbox" >
                                                     <input type="checkbox" class="custom-control-input"  
                                                     onChange={handleChange} 
-                                                    checked={toolsAnsSettingsPermission.filter((user) => user?.isChecked !== true).length < 4}
+                                                    checked={finalTSettingspermissions.filter((user) => user?.isChecked !== true).length < 4}
                                                     name="toolsSettingsIntoolsSettingsPermissions" id="toolsSettingsIntoolsSettingsPermissions" />
                                                     <label class="custom-control-label pl-2" for="toolsSettingsIntoolsSettingsPermissions" >Tools &amp; Settings </label>
                                                 </div>
 
-                                                { toolsAnsSettingsPermission.map((userP)=>(
+                                                { finalTSettingspermissions.map((userP)=>(
                                                                 <div  class="custom-control custom-checkbox">
                                                                             {/* <div class="custom-control custom-checkbox" > */}
                                                                     <input type="checkbox" class="custom-control-input" 
@@ -893,7 +876,7 @@ const mapStateToProps = (state)=> (
         user:state.userReduser,
         finalPermissionLists:state.userAccessReduser.finalPermissionLists,
         temp:state.userAccessReduser,
-        reduxSelectedUser:state.userAccessReduser.selectedUser,
+        reduxSelectedUser:state.userAccessReduser.selectedUser
     }
 
 )
