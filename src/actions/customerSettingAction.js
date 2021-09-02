@@ -58,6 +58,7 @@ SHOW_SPECIFIC_CUSTOMER_TYPE_SETTING,
 HANDLE_CUSTOMER_SETTIING_INPUT_DATA,
 SHOW_SPECIFIC_CUSTOMER_DELIVERY_METHOD_SETTING,
 UPDATE_CUSTOMER_DELIVERY_METHOD_SETTING,
+GET_CUSTOMER_BY_ID1,
 
 
 UPDATE_CUSTOMER_STATUS_LEVEL_SETTING,
@@ -206,7 +207,16 @@ export const deleteCustomerAddress= (id) => dispatch => {
         }) 
      
 }
+export const getCustomerByIdQuote= (id) =>dispatch=>{
+    return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
+        console.log(res.data)
+    dispatch({
+            type:GET_CUSTOMER_BY_ID1,
+            payload:res.data,
 
+        })
+    })
+}
 export const getCustomerById = (id) =>dispatch=>{
     return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
         console.log(res.data)
