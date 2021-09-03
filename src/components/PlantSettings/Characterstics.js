@@ -7,7 +7,10 @@ import * as MdIcons from "react-icons/md";
 import Sortable from 'sortablejs'
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css';
-import Loader from '../ProductManager/Loader'
+import Loader from '../ProductManager/Loader';
+
+import { Tooltip } from 'reactstrap';
+
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import 
@@ -53,6 +56,7 @@ class Characterstics extends Component {
                 sectionName:0,
                 featureName:0
             },
+            tooltipOpen:false,
             subChildernAddView:false,
             sortId: 0,
             activeId: 0,
@@ -719,7 +723,9 @@ componentDidMount(){
 
 
 
-    addChildernFutureList =()=>{
+    addChildernFutureList =(index, type)=>{
+
+        this.openLinkData(index,type);
 
         this.setState({
             subChildernAddView:true
@@ -727,6 +733,17 @@ componentDidMount(){
 
     }
 
+
+    toggle =()=>{
+
+        this.setState((prevState)=>({
+            tooltipOpen:!prevState.tooltipOpen
+        }))
+
+        // this.setState({
+        //     tooltipOpen: !this.state.tooltipOpen
+        // })
+    }
 
 
 
@@ -865,7 +882,9 @@ componentDidMount(){
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick3(item, t1,"inactive")}
-                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
+                                                                /> 
+                                                                {/* <i class="fa fa-th-large" style={{fontSize: 12}} ></i> */}
+                                                                </span>
                                                         </div>
                                                    
                                                                  {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
@@ -987,7 +1006,15 @@ componentDidMount(){
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick2(item,"active")}
                                                                 />  
-                                                                 <i class="fa fa-th" onClick={()=>this.openLinkData(index,"active")}></i>
+                                                                <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={()=>this.addChildernFutureList(index,"active")}></i> 
+                                                                 <i class="fa fa-th" id="DisabledAutoHideExample" style={{marginLeft:"7px"}} onClick={()=>this.openLinkData(index,"active")}></i>
+                                                                 <Tooltip placement="top" isOpen={this.state.tooltipOpen} autohide={false} 
+                                                                 target="DisabledAutoHideExample"
+                                                                 //{item.id.toString()}
+                                                                  toggle={this.toggle}>
+                                                                             Expand to view children
+                                                                </Tooltip>
+                                                                 
                                                                  {/* <i class="fa fa-plus" onClick={()=>this.openLinkData(index,"active")}></i> */}
                                                                  
                                                         </span>
@@ -1015,9 +1042,10 @@ componentDidMount(){
                                                         
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick3(item, t1,"active")}
-                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i>
+                                                                /> 
+                                                                {/* <i class="fa fa-th-large" style={{fontSize: 12}} ></i> */}
 
-                                                                    <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={this.addChildernFutureList}></i> 
+                                                                    {/* <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={this.addChildernFutureList}></i>  */}
                                                                         
                                                                 
                                                                 </span>
@@ -1032,22 +1060,25 @@ componentDidMount(){
 
 
                                                         {this.state.subChildernAddView===true ? 
-                                                            <div>
-                                                            <label>Add More Future List</label>
-                                                            <input type="text" className="form-control" onChange={this.handleZoneInputAction} value={this.state.subName} style={{marginRight:"11.3em"}} id="textInput" />
-                                                            
-                                                        <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
-                                                       
+                                                            <div className="showElipse" style={{marginBottom:"7px"}}>
+                                                                        {/* <label>Add More Future List</label> */}
+                                                                        
+                                                                        
+                                                                    <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
+                                                                    <input type="text" className="form-control" onChange={this.handleZoneInputAction} value={this.state.subName} style={{marginRight:"2em", width:"19em"}} id="textInput" />
 
-                                                        <spam style={{color:"#348fe2", cursor:"pointer", marginRight:"3em"}} onClick={()=>this.handleAddCategoryFeature2(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>  
-                                                        <spam style={{color:"#348fe2", cursor:"pointer" }} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam>  
+                                                                    <spam style={{color:"#348fe2", cursor:"pointer", marginTop:"11px", marginRight:"19px"}} onClick={()=>this.handleAddCategoryFeature2(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> </spam>  
+                                                                    <spam style={{color:"#348fe2", cursor:"pointer" ,marginTop:"11px", marginRight:"0px"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i></spam>  
 
-                                                        </div>
-                                                          
+                                                                    </div>
+                                                                    
                                                             </div>
                                                             :
                                                             <div></div>
                                                         }
+
+
+
                                                         </ul>
                                                        
                                                         </div>
