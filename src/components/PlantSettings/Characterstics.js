@@ -893,12 +893,12 @@ componentDidMount(){
                                                                  
                                                                  <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={()=>this.addChildernFutureList(index,"inactive")}></i> 
                                                                  <i class="fa fa-th" id="DisabledAutoHideExample" style={{marginLeft:"7px"}} onClick={()=>this.openLinkData(index,"inactive")}></i>
-                                                                 <Tooltip placement="top" isOpen={this.state.tooltipOpen} autohide={false} 
+                                                                 {/* <Tooltip placement="top" isOpen={this.state.tooltipOpen} autohide={false} 
                                                                  target="DisabledAutoHideExample"
                                                                  //{item.id.toString()}
                                                                   toggle={this.toggle}>
                                                                              Expand to view children
-                                                                </Tooltip>
+                                                                </Tooltip> */}
                                                                  
                                                                  </span>
 
@@ -1072,12 +1072,12 @@ componentDidMount(){
                                                                 />  
                                                                 <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={()=>this.addChildernFutureList(index,"active")}></i> 
                                                                  <i class="fa fa-th" id="DisabledAutoHideExample" style={{marginLeft:"7px"}} onClick={()=>this.openLinkData(index,"active")}></i>
-                                                                 <Tooltip placement="top" isOpen={this.state.tooltipOpen} autohide={false} 
+                                                                 {/* <Tooltip placement="top" isOpen={this.state.tooltipOpen} autohide={false} 
                                                                  target="DisabledAutoHideExample"
                                                                  //{item.id.toString()}
                                                                   toggle={this.toggle}>
                                                                              Expand to view children
-                                                                </Tooltip>
+                                                                </Tooltip> */}
                                                                  
                                                                  {/* <i class="fa fa-plus" onClick={()=>this.openLinkData(index,"active")}></i> */}
                                                                  
@@ -1156,9 +1156,7 @@ componentDidMount(){
                                             </div>
                                         )}
                                     </Droppable>
-                                            {/* {this.state.active.map(t=>{
-                                            return (<li></li>)
-                                            })} */}
+                                        
                                     </ul>
                                     </div>}
                                 </div>
