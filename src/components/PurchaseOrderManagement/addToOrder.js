@@ -7,7 +7,7 @@ import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
      handlePurchaseOrderFilert,serachOrderedList,
-     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,
+     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,handledmQty,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -130,7 +130,7 @@ const inputPropsSku = {
                                         <div class="row form-group">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Search</label>
-                                                <div class="searchInput">
+                                                <div class="searchInput" style={{height: "40px"}}> 
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
@@ -160,7 +160,7 @@ const inputPropsSku = {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-lg-6">
+                                            <div class="col-md-6 col-lg-6 searchInput" style={{height: "40px"}}> 
                                                 <label>Search SKU</label>
                                                 <div class="searchInput">
                                                     <button type="submit" class="btn btn-search">
@@ -259,10 +259,10 @@ const inputPropsSku = {
                                                                         <td class="text-center" width="8%">{order.open_pos}</td>
                                                                         <td class="text-center" width="7%"><b class="f-s-20">{order.future_available}</b></td>
                                                                         <td class="text-center" width="8%">{order.royality}</td>
-                                                                        <td class="text-center" width="8%">{"-"}</td>
+                                                                        <td class="text-center" width="8%">{order.nvk_price}</td>
                                                                         <td class="text-center" width="7%">
                                                                             <div class="d-flex align-items-center">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" onChange={(e)=>{props.handledmQty(order.sku_code,e.target.value)}} value={order.dumyQty}/>
                                                                                 <a href="" class="ml-2">
                                                                                     <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                                 </a>
@@ -428,7 +428,8 @@ export default connect(mapStateToProps,{
     getAddToOrderList,
     setSupplierToAddPo,
     handleOrderDetailsInput,addPo,
-    serachOrderedList
+    serachOrderedList,
+    handledmQty
 
 
 

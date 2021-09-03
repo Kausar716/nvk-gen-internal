@@ -7,7 +7,8 @@ import {GET_PURCHASE_ORDER_LIST,
     HANDLE_ORDERDETAILS_INPUT,
     ERROR_HANDLE,
     GET_ADD_TO_ORDER_LIST,
-    HANDLE_SEARCH_ORDERED_LIST
+    HANDLE_SEARCH_ORDERED_LIST,
+    HANDLE_DMQTY
 } from '../actions/types';
 
 
@@ -61,6 +62,31 @@ const filterBsedOnCheckBox =(filteredData,statusLevel)=>{
   }
     
 }
+const handledmQty = (action,purchaseOrderListBackup)=>{
+    console.log(action)
+    let id =-1
+    // purchaseOrderListBackup.filter((order,j)=>{
+    //     if(order.sku_code === action.sku_code){
+    //         id=j
+
+    //         console.log(j)
+    //         debugger;
+    //     }
+    // })
+    const elementsIndex = purchaseOrderListBackup.findIndex(element => element.sku_code == action.sku_code )
+    console.log(elementsIndex)
+   
+    
+    let objectCopy=purchaseOrderListBackup[elementsIndex]
+    console.log(objectCopy)
+    objectCopy.dumyQty=action.dmQty
+
+    console.log(objectCopy)
+    debugger;
+    purchaseOrderListBackup.splice(elementsIndex, 1, objectCopy)
+    console.log(purchaseOrderListBackup[elementsIndex])
+    return purchaseOrderListBackup
+}
 const groupArray =(objectToBeReduced)=>{
     let plantSearchResult={}
     let deletedObj=objectToBeReduced.shift() 
@@ -68,7 +94,7 @@ const groupArray =(objectToBeReduced)=>{
     console.log(objectToBeReduced)
     if(objectToBeReduced.length>0)
     plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
-      console.log(obj)
+    //   console.log(obj)
       if(obj){
 
         const key = obj["genus"];
@@ -76,8 +102,11 @@ const groupArray =(objectToBeReduced)=>{
            acc[key] = [];
         }
         // Add object to list for given key's value
-        if(typeof(acc[key])==="object")
-        acc[key].push(obj);
+        if(typeof(acc[key])==="object"){
+            obj["dumyQty"]=""
+            acc[key].push(obj);
+        }
+        
         return acc;}
     })
     let plantList=[]
@@ -101,7 +130,7 @@ const getOpenPoCount = (poList)=>{
 }
 
 export default  function purchaseOrderManagement(state = initialSatate, action){
-
+    console.log(state)
        switch(action.type){
            // page action
            case GET_PURCHASE_ORDER_LIST:
@@ -174,11 +203,28 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         
                          {
                             console.log(order.plant_name,"--**--",action.plant)
+                            if(action.plant.length>0 && action.sku.length===0){
                              if(order.plant_name.trim().toLocaleLowerCase().includes(action.plant.trim().toLocaleLowerCase())){
                                 console.log(order.plant_name,"--**--",action.plant)
                                 console.log(order)
                                 list.push(order)
-                         }}
+                             }
+                            }
+                            else if(action.plant.length===0 && action.sku.length >0){
+                                if(order.sku_code.trim().toLocaleLowerCase().includes(action.sku.trim().toLocaleLowerCase())){
+                                    console.log(order.plant_name,"--**--",action.plant)
+                                    console.log(order)
+                                    list.push(order)
+                                 }
+                            }
+                            else if(action.plant.length>0 && action.sku.length >0){
+                                if(order.plant_name.trim().toLocaleLowerCase().includes(action.plant.trim().toLocaleLowerCase()) && order.sku_code.trim().toLocaleLowerCase().includes(action.sku.trim().toLocaleLowerCase())){
+                                    console.log(order.sku_code,"--**--",action.plant)
+                                    console.log(order)
+                                    list.push(order)
+                                 }
+                            }
+                        }
                     )
                     console.log(list)
                     let filteredArray=groupArray(list)
@@ -188,6 +234,14 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         searchValuePlant:action.plant,
                         searchValueSku:action.sku
                     }
+                    case HANDLE_DMQTY:
+                        console.log(state.orderListDateForSuggession)
+                        let updatedOrderListDateForSuggession = handledmQty(action,state.orderListDateForSuggession)
+                        let filteredArrayForUpdatedList=groupArray(updatedOrderListDateForSuggession)
+                        return{
+                            ...state,
+                            groupedOrderListDate:filteredArrayForUpdatedList
+                        }
                default :
             return{
                 ...state
