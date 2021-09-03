@@ -275,7 +275,8 @@ export const Component = withRouter(({ history, location }) =>{
         }
         console.log(this.props.reduxSelectedUser)
        console.log("exestingPermission", exestingPermission)
-       let tempImage = "./images/noPerson.png";
+       let tempImage = "./images/profile.png";
+       //noPerson.png";
 
 
        console.log("exestingRoles",exestingRoles )
