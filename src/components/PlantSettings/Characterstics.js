@@ -58,6 +58,7 @@ class Characterstics extends Component {
             },
             tooltipOpen:false,
             subChildernAddView:false,
+            subChildernAddInactiveView:false,
             sortId: 0,
             activeId: 0,
             isEditing:false,
@@ -435,6 +436,29 @@ componentDidMount(){
         this.props.handleZoneInputAction("featureName",e.target.value)
     }
 
+
+    handleZoneInputActionInSub = (e)=>{
+        // debugger;
+        this.setState({
+            subName:e.target.value,
+            subNameTableView:e.target.value
+        })
+
+       // console.log("eeeeeeee", e.key, e.target.key)
+
+        // if(e.key === 'Enter'){
+        // }
+
+        let errorObj=this.state.errorObj
+        if(e.target.name === "featureName"){
+        errorObj.featureName=0
+        this.setState({errorObj})}
+
+        this.props.handleZoneInputAction("featureName",e.target.value)
+    }
+
+  
+
     handleZoneInputAction2 = (e)=>{
         // debugger;
         this.setState({
@@ -547,6 +571,7 @@ componentDidMount(){
             zoneObj.status=1
             if(this.validateFeature()){
                 let result = this.props.handleAddZone(zoneObj)
+                //this.props.getAllSubAttribute(12)
                 result.then(res=>{
                     this.props.getAllSubAttribute(12).then(()=>{
                         // alert("ji")
@@ -556,7 +581,7 @@ componentDidMount(){
            
                 this.setState({
                     subName:"",
-                    isEditingFeature:false,
+                    isEditingFeature:true,
                 })
             } 
              
@@ -728,7 +753,8 @@ componentDidMount(){
         this.openLinkData(index,type);
 
         this.setState({
-            subChildernAddView:true
+            subChildernAddView:true,
+            subChildernAddInactiveView:true
         })
 
     }
@@ -861,7 +887,23 @@ componentDidMount(){
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={item.id}><MdIcons.MdEdit  
                                                                 onClick={() =>{this.handleEditClick2(item,"inactive"); }}
-                                                                />   <i class="fa fa-th" onClick={()=>this.openLinkData(index,"inactive")}></i></span>
+                                                                />  
+                                                                
+                                                                 {/* <i class="fa fa-th" onClick={()=>this.openLinkData(index,"inactive")}></i> */}
+                                                                 
+                                                                 <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={()=>this.addChildernFutureList(index,"inactive")}></i> 
+                                                                 <i class="fa fa-th" id="DisabledAutoHideExample" style={{marginLeft:"7px"}} onClick={()=>this.openLinkData(index,"inactive")}></i>
+                                                                 <Tooltip placement="top" isOpen={this.state.tooltipOpen} autohide={false} 
+                                                                 target="DisabledAutoHideExample"
+                                                                 //{item.id.toString()}
+                                                                  toggle={this.toggle}>
+                                                                             Expand to view children
+                                                                </Tooltip>
+                                                                 
+                                                                 </span>
+
+
+                                                               
                                                         </div>
                                                    
                                                                  {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
@@ -895,10 +937,32 @@ componentDidMount(){
                                                                 /></span>
                                                                  </a> */}
                                                             </li>
+
+
                                                                 
                                                                 
             
                                                             })}
+
+                                                                    {this.state.subChildernAddInactiveView===true ? 
+                                                                        <div className="showElipse" style={{marginBottom:"7px"}}>
+                                                                                    {/* <label>Add More Future List</label> */}
+                                                                                    
+                                                                                    
+                                                                                <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
+                                                                                <input type="text" className="form-control" onChange={this.handleZoneInputActionInSub}
+                                                                                onKeyPress={event=>{if(event.key === 'Enter'){this.handleAddCategoryFeature2(item)}}}
+                                                                                value={this.state.subName} style={{marginRight:"2em", width:"22em"}} id="textInput" />
+
+                                                                                <spam style={{color:"#348fe2", cursor:"pointer", marginTop:"7px", marginRight:"-8px"}} onClick={()=>this.handleAddCategoryFeature2(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"30px"}}></i></spam>  
+                                                                                {/* <spam style={{color:"#348fe2", cursor:"pointer" ,marginTop:"11px", marginRight:"0px"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i></spam>   */}
+
+                                                                                </div>
+                                                                                
+                                                                        </div>
+                                                                        :
+                                                                        <div></div>
+                                                                    }
                                                         </ul>
 
                                                         </div>
@@ -1065,10 +1129,12 @@ componentDidMount(){
                                                                         
                                                                         
                                                                     <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
-                                                                    <input type="text" className="form-control" onChange={this.handleZoneInputAction} value={this.state.subName} style={{marginRight:"2em", width:"19em"}} id="textInput" />
+                                                                    <input type="text" className="form-control" onChange={this.handleZoneInputActionInSub}
+                                                                    onKeyPress={event=>{if(event.key === 'Enter'){this.handleAddCategoryFeature2(item)}}}
+                                                                    value={this.state.subName} style={{marginRight:"2em", width:"22em"}} id="textInput" />
 
-                                                                    <spam style={{color:"#348fe2", cursor:"pointer", marginTop:"11px", marginRight:"19px"}} onClick={()=>this.handleAddCategoryFeature2(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> </spam>  
-                                                                    <spam style={{color:"#348fe2", cursor:"pointer" ,marginTop:"11px", marginRight:"0px"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i></spam>  
+                                                                    <spam style={{color:"#348fe2", cursor:"pointer", marginTop:"7px", marginRight:"-8px"}} onClick={()=>this.handleAddCategoryFeature2(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"30px"}}></i></spam>  
+                                                                    {/* <spam style={{color:"#348fe2", cursor:"pointer" ,marginTop:"11px", marginRight:"0px"}} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i></spam>   */}
 
                                                                     </div>
                                                                     
