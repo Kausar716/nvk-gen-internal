@@ -10,13 +10,22 @@ import {
     UPDATE_QUOTE,
     UPDATE_NEW_QUOTE,
     SEARCH_PLANT_PRODUCT,
+    FILTER_PLANT_MANAGER_QUOTE_ACTION,
 
 
     axios,
     config
     } from './types'
 
-    export const searchPlantProductAPI =(id,value)=>dispatch => {
+    export const searchPlantProductAPI =(data)=>dispatch => {
+        return axios.post("/api/quote-plantsearch",null,config).then(res=>{ 
+      
+            console.log(res)
+            dispatch({
+                type:SEARCH_PLANT_PRODUCT,
+                payload:res.data
+            })
+        })
         
     }
     export const addNewQuote = (data) => dispatch => {
@@ -58,4 +67,17 @@ import {
             payload:quoteData
         })
 
+    }
+
+    export const filterHandleData = (id,value)=>dispatch=>{
+
+   return axios.post("/api/quote-plantsearch",null,config).then(res=>{ 
+      
+            console.log(res)
+            dispatch({
+                type:FILTER_PLANT_MANAGER_QUOTE_ACTION,
+                id:id,
+                value:value
+            })
+        })
     }

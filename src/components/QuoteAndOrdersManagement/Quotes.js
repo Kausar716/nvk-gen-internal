@@ -10,14 +10,24 @@ import TablePagination from '../Pagination/index';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
+import {
+    //plant actions
+   
+     getAllPlantAction,
+
+    
+
+}from "../../actions/plantManagerAction";
 import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
-import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
+import {filterHandleData,searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
 // import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
+import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
 
 
  function QuoteAndOrdersManagement(props) {
     const [value, onChange] = useState(new Date());
     const [plantNameValue,setPlantNameValue] =useState("")
+    const [plantSKUValue,setPlantSKUValue] =useState("")
     const [customerSelected,setCustomerSelected] = useState(false)
     const [customerDetails,setCustomerDetails] = useState({
 
@@ -26,6 +36,10 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
     useEffect (()=>{
         props.getAllCustomer()
         props.getAllCustomerType()
+        props.getLocationList()   
+        props.getCategoryList()
+        // this.props.getAllSupplierAction()
+        props.searchPlantProductAPI()
         
 
     },[value])
@@ -86,26 +100,16 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
         props.addToQuoteUpdate(quoteDetails)
 
     }
-    const onSuggestionsFetchRequested = ({ value }) =>{
-        // alert(value.length)
-       setSuggestions(getSuggestions(value))
-        // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
-    }
-
-    const onSuggestionsClearRequested = () =>  setSuggestions([])
-    const customerHandle  =(e)=>{
-        console.log(e.target.value,e.target.id)
-        if(e.target.id =="discount_by_line_item"){
-            let value = e.target.value ==0?true:false
-            props.handleExchangeData(value,e.target.id,"customerDataById1")
-
-        }else
-        props.handleExchangeData(e.target.value,e.target.id,"customerDataById1")
-        
-    }
+ 
     const {deleteCustomer,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
     const {quoteDetails,searchList} = props.QuoteReducerData
-    console.log(quoteDetails)
+    // const {plantData,plantFilterIds,plantPageNumber} =props.plantData
+    let plantIdsAll = searchList.map(plantData=>plantData.plant_id)
+    let plantId = plantIdsAll.filter(function( plant, index, array ) {
+        console.log(array.indexOf(plant) +""+index)
+        return array.indexOf(plant) === index;
+    });
+    console.log(plantId)
     // source:"",
     // ordered_by:"",
     // bill_to:"",
@@ -128,6 +132,67 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
     // quote_status: "",
     // pricing_year: "",
     // amount: null,
+    //sku searchList
+    const onSuggestionsFetchRequested1 = ({ value }) =>{
+        // alert(value.length)
+       setSuggestions(getSuggestions1(value))
+        // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+    }
+
+    const onSuggestionsClearRequested1 = () =>  setSuggestions([])
+    // const customerHandle  =(e)=>{
+    //     console.log(e.target.value,e.target.id)
+    //     if(e.target.id =="discount_by_line_item"){
+    //         let value = e.target.value ==0?true:false
+    //         props.handleExchangeData(value,e.target.id,"customerDataById1")
+
+    //     }else
+    //     props.handleExchangeData(e.target.value,e.target.id,"customerDataById1")
+        
+    // }
+    const getSuggestions1 = (value,type) => {
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        let result = searchList.reduce((unique, o) => {
+            if(!unique.some(obj => obj.sku_code === o.sku_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] :  result.filter(lang =>lang.sku_code.toLowerCase().includes(inputValue))      
+    };
+   const getSuggestionValue1 = suggestion =>suggestion.sku_code
+
+   const renderSuggestion1 = suggestion => (<span>{suggestion.sku_code}</span>);
+
+   const onChange2 = (e, { newValue }) => {
+        // this.setState({plantNameValue:newValue});
+        setPlantNameValue(newValue)
+        props.filterHandleData("sku_code",newValue)  
+        // let plantName = {}
+        // plantName.plant_search =newValue
+        // props.searchPlantProductAPI(plantName)    
+    };
+
+    ///sku end
+
+    const onSuggestionsFetchRequested = ({ value }) =>{
+        // alert(value.length)
+       setSuggestions(getSuggestions(value))
+        // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+    }
+
+    const onSuggestionsClearRequested = () =>  setSuggestions([])
+    const customerHandle  =(e)=>{
+        console.log(e.target.value,e.target.id)
+        if(e.target.id =="discount_by_line_item"){
+            let value = e.target.value ==0?true:false
+            props.handleExchangeData(value,e.target.id,"customerDataById1")
+
+        }else
+        props.handleExchangeData(e.target.value,e.target.id,"customerDataById1")
+        
+    }
     const getSuggestions = (value,type) => {
         const inputValue = value.toLowerCase().trim()
         const inputLength = inputValue.length;
@@ -146,7 +211,10 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
    const onChange1 = (e, { newValue }) => {
         // this.setState({plantNameValue:newValue});
         setPlantNameValue(newValue)
-        props.searchPlantProductAPI("genus",newValue)    
+        props.filterHandleData("genus",newValue)  
+        // let plantName = {}
+        // plantName.plant_search =newValue
+        // props.searchPlantProductAPI(plantName)    
     };
     const inputPropsPlant = {
         placeholder: 'Plant Name',
@@ -155,6 +223,15 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
         id:"genus",
         style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
         onChange: onChange1,
+        dataId: 'my-data-id',
+    };
+    const inputPropsSKU = {
+        placeholder: 'Plant Name',
+        value:plantSKUValue,
+        className:" form-control  btn btn-search ",
+        id:"genus",
+        style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+        onChange: onChange2,
         dataId: 'my-data-id',
     };
     return (
@@ -478,8 +555,8 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
                                                     </button>
                                                     <input type="text" class="form-control" placeholder=""/> */}
                                                 </div>
-                                                <div class="row mt-3 align-items-center">
-                                                    <div class="col-md-12 d-flex">
+                                                <div class="row mt-3 align-items-center" >
+                                                    <div class="col-md-12 d-flex" style={{marginTop:"35px"}}>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
                                                             <label class="custom-control-label" for="customRadio1">Active Only</label>
@@ -494,10 +571,22 @@ import {searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addT
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Search SKU</label>
                                                 <div class="searchInput">
-                                                    <button type="submit" class="btn btn-search">
+                                                <button type="submit" className="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
+                                                    <img src="assets/img/search.svg" alt=""/>
+                                                </button>
+                                                <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested1}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequested1}
+                                                    getSuggestionValue={getSuggestionValue1}
+                                                    renderSuggestion={renderSuggestion1}
+                                                    inputProps={inputPropsSKU}
+                                                  
+                                                />
+                                                    {/* <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder=""/>
+                                                    <input type="text" class="form-control" placeholder=""/> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -548,194 +637,106 @@ Rate</th>
                                                         <tr>
                                                             <td colspan="13" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
-                                                                    <tr class="tblLinks">
-                                                                        <td colspan="13">
-                                                                            <a href="">Abeliophyllum (White Forsythia)</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
-                                                                            <a href="">393-TF-1259-1G</a>
-                                                                        </td>
-                                                                        <td class="text-center" width="15%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="6%">50</td>
-                                                                        <td class="text-center" width="6%">23</td>
-                                                                        <td class="text-center" width="8%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="6%">13</td>
-                                                                        <td class="text-center" width="6%">50</td>
-                                                                        <td class="text-center" width="8%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="6%">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
-                                                                            <div>
-                                                                                <span class="text-green">3.18</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center" width="6%">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
-                                                                            <div>
-                                                                                <span class="text-green">3.07</span>
-                                                                            </div>   
-                                                                            <div>
-                                                                                <span class="text-red">25 Min</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center" width="6%">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
-                                                                        </td>
-                                                                        <td class="text-center" width="6%" >
-                                                                            <div class="d-flex align-items-center">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
-                                                                            </div>
-                                                                            <div>
-                                                                                <span class="text-red">Short 4</span>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-center" width="4%">
-                                                                            <a href="" class="ml-2">
-                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
-                                                                            <a href="">393-TF-1259-1G</a>
-                                                                        </td>
-                                                                        <td class="text-center">150CM 15 gal</td>
-                                                                        <td class="text-center">50</td>
-                                                                        <td class="text-center">23</td>
-                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center">13</td>
-                                                                        <td class="text-center">50</td>
-                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
-                                                                            <div>
-                                                                                <span class="text-green">3.18</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
-                                                                            <div>
-                                                                                <span class="text-green">3.07</span>
-                                                                            </div>   
-                                                                            <div>
-                                                                                <span class="text-red">25 Min</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <div class="">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
-                                                                                 <div>
-                                                                                <span class="text-red">Short 4</span>
-                                                                            </div>   
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <a href="" class="ml-2">
-                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="13" class="p-0">
-                                                                <table class="table table-striped mb-0" border="0" width="100%">
-                                                                    <tr class="tblLinks">
-                                                                        <td colspan="13">
-                                                                            <a href="">Abeliophyllum (White Forsythia)</a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td width="15%">
-                                                                            <a href="">393-TF-1259-1G</a>
-                                                                        </td>
-                                                                        <td class="text-center" width="15%">150CM 15 gal</td>
-                                                                        <td class="text-center" width="6%">50</td>
-                                                                        <td class="text-center" width="6%">23</td>
-                                                                        <td class="text-center" width="8%"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center" width="6%">13</td>
-                                                                        <td class="text-center" width="6%">50</td>
-                                                                        <td class="text-center" width="8%"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center" width="6%">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
-                                                                            <div>
-                                                                                <span class="text-green">3.18</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center" width="6%">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
-                                                                            <div>
-                                                                                <span class="text-green">3.07</span>
-                                                                            </div>   
-                                                                            <div>
-                                                                                <span class="text-red">25 Min</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center" width="6%">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
-                                                                        </td>
-                                                                        <td class="text-center" width="6%" >
-                                                                            <div class="d-flex align-items-center">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
-                                                                            </div>
-                                                                            <div>
-                                                                                <span class="text-red">Short 4</span>
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-center" width="4%">
-                                                                            <a href="" class="ml-2">
-                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td>
-                                                                            <a href="">393-TF-1259-1G</a>
-                                                                        </td>
-                                                                        <td class="text-center">150CM 15 gal</td>
-                                                                        <td class="text-center">50</td>
-                                                                        <td class="text-center">23</td>
-                                                                        <td class="text-center"><b class="f-s-20">27</b></td>
-                                                                        <td class="text-center">13</td>
-                                                                        <td class="text-center">50</td>
-                                                                        <td class="text-center"><b class="f-s-20">125</b></td>
-                                                                        <td class="text-center">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/> 
-                                                                            <div>
-                                                                                <span class="text-green">3.18</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="3.12"/>
-                                                                            <div>
-                                                                                <span class="text-green">3.07</span>
-                                                                            </div>   
-                                                                            <div>
-                                                                                <span class="text-red">25 Min</span>
-                                                                            </div>   
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <input type="text" class="form-control textQtySm" placeholder="" value="2.75"/>
-                                                                        </td>
-                                                                        <td class="text-center" >
-                                                                            <div class="">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="4"/>
-                                                                                 <div>
-                                                                                <span class="text-red">Short 4</span>
-                                                                            </div>   
-                                                                            </div>
-                                                                        </td>
-                                                                        <td class="text-center">
-                                                                            <a href="" class="ml-2">
-                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""/>
-                                                                            </a>
-                                                                        </td>
-                                                                    </tr>
+                                                                {plantId.map(plantId=>{
+                                                        console.log(JSON.parse(plantId))
+                                                       let count =0
+                                                            return searchList.map((plant,index)=>{
+                                                             
+                                                                if(JSON.parse(plantId)===parseInt(plant["plant_id"])){
+                                                                if(count===0){
+                                                                    count++
+                                                                    return(
+                                                                        <><tr style={{backgroundColor:"#EFEFEF"}}>
+                                                        <td colspan="5">
+                                                            <a href="">{plant.plant_name}</a>
+                                                        </td>
+                                                        <td colspan="8">
+                                                            <a href="">View Sales Orders</a>
+                                                        </td>
+                                                        <td>
+                                                            <a href=""> New Batch ID</a>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td class="text-center">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                                <label class="custom-control-label" for="customCheck2"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-nowrap">
+                                                        <span style={{display:"inline-block",width: "150px",whiteSpace: "nowrap",overflow:"hidden",textOverflow: "ellipsis"}}>{plant.sku_code}</span>
+                                                        </td>
+                                                        <td><p style={{marginLeft:"-50px",marginTop:"17px"}}>{plant.supplier_id}</p></td>
+                                                        <td class="text-nowrap">{plant.batch_code}</td>
+                                                        <td class="text-nowrap">{plant.batch_date}</td>
+                                                        <td>-</td>
+                                                        <td><a href="">{plant.location_id}</a></td>
+                                                        <td>{plant.sales_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.sales_not_ready_state}</strong></td>
+                                                        <td class="text-nowrap">25-02-2020</td>
+                                                        <td>{plant.production_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.production_not_ready_state}</strong></td>
+                                                        <td class="text-nowrap">{plant.production_ready_date}</td>
+                                                        <td class="invTblAction">
+                                                            <a href="">
+                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
+                                                            </a>
+                                                            <a href="">
+                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    </>
+
+                                                    )
+
+                                                        }else{
+                                                            count++
+                                                        return(
+                                                        <>
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            <div class="custom-control custom-checkbox">
+                                                                <input type="checkbox" class="custom-control-input" id="customCheck2" />
+                                                                <label class="custom-control-label" for="customCheck2"></label>
+                                                            </div>
+                                                        </td>
+                                                        <td class="text-nowrap">
+                                                        <span   style={{display:"inline-block",width: "150px",whiteSpace: "nowrap",overflow:"hidden",textOverflow: "ellipsis"}}>{plant.sku_code}</span>
+                                                        </td>
+                                                        <td><p style={{marginLeft:"-50px",marginTop:"17px"}}>{plant.supplier_id}</p></td>
+                                                        <td class="text-nowrap">{plant.batch_code}</td>
+                                                        <td class="text-nowrap">{plant.batch_date}</td>
+                                                        <td>-</td>
+                                                        <td><a href="">{plant.location_id}</a></td>
+                                                        <td>{plant.sales_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.sales_not_ready_state}</strong></td>
+                                                        <td class="text-nowrap">25-02-2020</td>
+                                                        <td>{plant.production_ready_state}</td>
+                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.production_not_ready_state}</strong></td>
+                                                        <td class="text-nowrap">{plant.production_ready_date}</td>
+                                                        <td class="invTblAction">
+                                                            <a href="">
+                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
+                                                            </a>
+                                                            <a href="">
+                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                    </>
+                                                                    )
+                                                                }
+                                                               
+                                                            }   
+                                                        })
+
+                                                       
+                                                    
+                                                    })}
+                                                        
+                                              
                                                                 </table>
                                                             </td>
                                                         </tr>
@@ -1388,7 +1389,15 @@ Rate</th>
 const mapStateToProps = (state)=>(
     {
         customerData:state.customerReducer,
-        QuoteReducerData:state.QuoteReducerData
+        QuoteReducerData:state.QuoteReducerData,
+        // plantData:state.plantData,
+        plantCategoryList:state.inventoryManagementReducer.plantCategoryList,
+        locationList:state.inventoryManagementReducer.locationList,
+        supplierList:state.supplierData.supplierInfo,
+        plantInventoryData:state.inventoryManagementReducer.plantInventoryData,
+        plantData:state.inventoryManagementReducer,
+        
     }
 )
-export default connect(mapStateToProps,{searchPlantProductAPI,getCustomerByIdQuote,addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
+export default connect(mapStateToProps,{filterHandleData,getAllPlantAction,filterPlantManagerData,getCategoryList,getAllPlants,getLocationList,setPlantPageNumber,resetFileds,getPlantList,getFilterResult,
+searchPlantProductAPI,getCustomerByIdQuote,addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
