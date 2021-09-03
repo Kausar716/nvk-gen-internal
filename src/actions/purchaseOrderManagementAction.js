@@ -18,7 +18,8 @@ import {
     HANDLE_ORDERDETAILS_INPUT,
     ERROR_HANDLE,
     GET_ADD_TO_ORDER_LIST,
-    HANDLE_SEARCH_ORDERED_LIST
+    HANDLE_SEARCH_ORDERED_LIST,
+    HANDLE_DMQTY
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -172,4 +173,12 @@ export const serachOrderedList = (plant,sku)=>{
     sku
   }
 }
-
+export const handledmQty=(sku_code,dmQty)=>{
+  console.log(sku_code,dmQty)
+  
+  return{
+    type:HANDLE_DMQTY,
+    sku_code,
+    dmQty
+  }
+}

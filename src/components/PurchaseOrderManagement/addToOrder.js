@@ -7,7 +7,7 @@ import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
      handlePurchaseOrderFilert,serachOrderedList,
-     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,
+     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,handledmQty,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -25,13 +25,19 @@ import ActionModal from '../Modal/ActionModal';
  const AddToOrder = (props) =>{
     const [value, onChange] = useState(new Date());
     const [valuePlant,setValuePlant] = useState("")
+    const [valueSku,setValueSku] = useState("")
     const [suggestionsPlant,setPlantSuggestions] = useState([])
+    const [suggestionsSku,setSkuSuggestions] = useState([])
+
     const [inputValuePlant, setInputValuePlant] = useState("");
+    const [inputValueSku, setInputValueSku] = useState("");
+
     useEffect(()=>{
         props.getAddToOrderList()
     },[])
 
     const getSuggestionValuePlant = suggestion => suggestion.plant_name;
+    const getSuggestionValueSku = suggestion => suggestion.sku_code;
     // const getSuggestionsPlant = suggestion => suggestion.plant_name;
     const getSuggestionsPlant = value => {
         const inputValuePlant = value.trim().toLowerCase();
@@ -41,26 +47,52 @@ import ActionModal from '../Modal/ActionModal';
               lang.genus.toLowerCase().includes(inputValuePlant)
             );
         };
+    const getSuggestionsSku = value => {
+        const inputValueSku = value.trim().toLowerCase();
+        const inputLength = inputValueSku.length;
+            
+            return inputLength === 0 ? [] : props.backupOrderListData.filter(lang =>
+                lang.sku_code.toLowerCase().includes(inputValueSku)
+            );
+        };
     const onSuggestionsFetchRequestedPlant = ({ value }) => {
         setPlantSuggestions(getSuggestionsPlant(value));
+    };
+    const onSuggestionsFetchRequestedSku = ({ value }) => {
+        setSkuSuggestions(getSuggestionsSku(value));
     };
     const onChangePlant = (event, { newValue }) => {
         setValuePlant(newValue)
         // setLoaderMessage("No Records Found.")
         // props.serachOrderedList({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
         console.log(newValue)
-        props.serachOrderedList(newValue,"")
+        props.serachOrderedList(newValue,props.searchValueSku)
         setInputValuePlant(newValue);
+    };
+    const onChangeSku = (event, { newValue }) => {
+        setValueSku(newValue)
+        // setLoaderMessage("No Records Found.")
+        // props.serachOrderedList({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        console.log(newValue)
+        props.serachOrderedList(props.searchValuePlant,newValue)
+        setInputValueSku(newValue);
     };
     const  onSuggestionsClearRequestedPlant = () => {
         setPlantSuggestions([]);
+      };
+      const  onSuggestionsClearRequestedSku = () => {
+        setSkuSuggestions([]);
       };
       const renderSuggestionPlant = suggestion => (
         <span>
           {suggestion.plant_name.split("-")[0]}
         </span>
     );
-
+    const renderSuggestionSku= suggestion => (
+        <span>
+          {suggestion.sku_code}
+        </span>
+    );
 
 
 
@@ -78,6 +110,16 @@ const inputPropsPlant = {
     style: {position:"relative",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
     onChange: onChangePlant
 };
+const inputPropsSku = {
+    placeholder: '',
+    value:valueSku,
+    
+    // className:"searchInput",
+    className:" form-control btn btn-search",
+    id:"add-icon-search",
+    style: {position:"relative",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:6,height:"41.5px",fontSize:"15px",textDecoration:"none"},
+    onChange: onChangeSku
+};
     return (
 <div class="bg-white px-3 py-3 mt-2">
                             <form>
@@ -88,7 +130,7 @@ const inputPropsPlant = {
                                         <div class="row form-group">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Search</label>
-                                                <div class="searchInput">
+                                                <div class="searchInput" style={{height: "40px"}}> 
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
@@ -118,13 +160,23 @@ const inputPropsPlant = {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-lg-6">
+                                            <div class="col-md-6 col-lg-6 searchInput" style={{height: "40px"}}> 
                                                 <label>Search SKU</label>
                                                 <div class="searchInput">
                                                     <button type="submit" class="btn btn-search">
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder=""/>
+                                                    {/* <input type="text" class="form-control" placeholder=""/> */}
+                                                    <Autosuggest
+                                                    suggestions={suggestionsSku}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequestedSku}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequestedSku}
+                                                    getSuggestionValue={getSuggestionValueSku}
+                                                    renderSuggestion={renderSuggestionSku}
+                                                    inputProps={inputPropsSku}
+                                                    theme={{suggestionsContainerOpen:suggestionsSku.length>5?"yes":"no",suggestionsContainer:suggestionsSku.length>5?"yes1":"no1",
+                                                    suggestionsList:suggestionsSku.length>5?"yes":"no1"}}
+                                                />
                                                 </div>
                                             </div>
                                         </div>
@@ -207,10 +259,10 @@ const inputPropsPlant = {
                                                                         <td class="text-center" width="8%">{order.open_pos}</td>
                                                                         <td class="text-center" width="7%"><b class="f-s-20">{order.future_available}</b></td>
                                                                         <td class="text-center" width="8%">{order.royality}</td>
-                                                                        <td class="text-center" width="8%">{"-"}</td>
+                                                                        <td class="text-center" width="8%">{order.nvk_price}</td>
                                                                         <td class="text-center" width="7%">
                                                                             <div class="d-flex align-items-center">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" value="20"/>
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" onChange={(e)=>{props.handledmQty(order.sku_code,e.target.value)}} value={order.dumyQty}/>
                                                                                 <a href="" class="ml-2">
                                                                                     <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                                 </a>
@@ -364,7 +416,10 @@ const inputPropsPlant = {
 const mapStateToProps = (state)=> ({ 
  
     orderedList:state.purchaseOrderManagementData.groupedOrderListDate,
-    backupOrderListData:state.purchaseOrderManagementData.orderListDateForSuggession
+    backupOrderListData:state.purchaseOrderManagementData.orderListDateForSuggession,
+    searchValuePlant:state.purchaseOrderManagementData.searchValuePlant,
+    searchValueSku:state.purchaseOrderManagementData.searchValueSku,
+
     
 
 })
@@ -373,7 +428,8 @@ export default connect(mapStateToProps,{
     getAddToOrderList,
     setSupplierToAddPo,
     handleOrderDetailsInput,addPo,
-    serachOrderedList
+    serachOrderedList,
+    handledmQty
 
 
 

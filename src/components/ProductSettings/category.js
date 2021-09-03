@@ -55,6 +55,7 @@ class Category extends Component {
                 categoryName:0,
                 subCategoryName:0
             },
+            subChildernAddView:false,
             sortId: 0, 
             activeId: 0,
             isEditing:false,
@@ -391,6 +392,47 @@ componentDidMount(){
             })
         }        
     }
+
+
+    handleAddCategoryChild = (item)=>{
+    
+      // debugger;
+            // if (this.state.selectedID === "" || this.state.selectedID === undefined) {
+            //     confirmAlert({
+            //         title: 'Select Category',
+            //         message: 'To Add Sub Category Name',
+            //         buttons: [
+            //           {
+            //             label: 'Ok'
+            //           }
+            //         ]
+            //     });
+            // } else {
+                let zoneObj={}
+                zoneObj.category_id = item.id
+                //parseInt(this.state.selectedID) 
+                zoneObj.name=this.state.subName
+                zoneObj.status=1
+                if(this.validateFeature()){
+                    let result = this.props.handleAddSubCategory(zoneObj)
+                    result.then(res=>{
+                        this.props.getAllCategories().then(()=>{
+                            // alert("ji")
+                            this.getCatgoryData()
+                        })
+                    })
+            
+                    this.setState({
+                        subName:"",
+                        isEditingSubCategory:false,
+                    })
+                } 
+            //}       
+        
+        // }        
+    }
+
+
     validate = ()=>{
         let errorObj = this.state.errorObj
         if(this.state.name.length === 0){
@@ -574,6 +616,16 @@ componentDidMount(){
         }
 
     }
+
+    addChildernFutureList =()=>{
+
+        this.setState({
+            subChildernAddView:true
+        })
+
+    }
+
+
     render() {
         // var tasks={
         //     inactive:[],
@@ -850,7 +902,9 @@ componentDidMount(){
                                                         </div>
                                                         <span style={{float:"right",fontSize:20, cursor:"pointer", color:"#629c44",marginTop:"-28px"}}  id={t1.id}><MdIcons.MdEdit  
                                                                 onClick={() =>this.handleEditClick3(item, t1,"active")}
-                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i></span>
+                                                                /> <i class="fa fa-th-large" style={{fontSize: 12}} ></i>
+                                                                  <i class="fa fa-plus" style={{marginLeft:"7px", fontSize:"16px"}} onClick={this.addChildernFutureList}></i> 
+                                                                </span>
                                                         </div>
                                                    
                                                                  {/* <a className="d-flex justify-content-between align-items-center"  id={t.id}>
@@ -865,6 +919,24 @@ componentDidMount(){
                                                                 
             
                                                             })}
+
+                                                    {this.state.subChildernAddView===true ? 
+                                                            <div>
+                                                            <label>Add More Sub Category Name</label>
+                                                            <input type="text" className="form-control" onChange={this.handleZoneInputAction} value={this.state.subName} style={{marginRight:"11.3em"}} id="textInput" />
+                                                            
+                                                        <div style={{display:"flex", marginTop:"10px", marginBottom:"10px"}}>
+                                                       
+
+                                                        <spam style={{color:"#348fe2", cursor:"pointer", marginRight:"3em"}} onClick={()=>this.handleAddCategoryChild(item)} ><i class="fa fa-plus-circle fa-2x mr-2" style={{fontSize:"21px"}}></i>Add </spam>  
+                                                        <spam style={{color:"#348fe2", cursor:"pointer" }} onClick={()=>this.setState({subChildernAddView:false})} ><i className="fa fa-times-circle fa-2x mr-2" style={{fontSize:"21px"}}></i> Cancel</spam>  
+
+                                                        </div>
+                                                          
+                                                            </div>
+                                                            :
+                                                            <div></div>
+                                                        }
                                                         </ul>
 
                                                         </div>
