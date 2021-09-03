@@ -6,8 +6,8 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
-     handlePurchaseOrderFilert,serachOrderedList,
-     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,handledmQty,
+     handlePurchaseOrderFilert,serachOrderedList,handleAddAll,
+     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,handledumyQty,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -94,7 +94,13 @@ import ActionModal from '../Modal/ActionModal';
         </span>
     );
 
-
+    const handleAddAllClick=()=>{
+        if(props.poData.id)
+        props.handleAddAll(props.orderedList,props.poData.id)
+        else{
+            props.handleAddAll(props.orderedList,22)
+        }
+    }
 
 
 
@@ -262,7 +268,7 @@ const inputPropsSku = {
                                                                         <td class="text-center" width="8%">{order.nvk_price}</td>
                                                                         <td class="text-center" width="7%">
                                                                             <div class="d-flex align-items-center">
-                                                                                <input type="text" class="form-control textQtySm" placeholder="" onChange={(e)=>{props.handledmQty(order.sku_code,e.target.value)}} value={order.dumyQty}/>
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" onChange={(e)=>{props.handledumyQty(order.sku_code,e.target.value)}} value={order.dumyQty}/>
                                                                                 <a href="" class="ml-2">
                                                                                     <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                                 </a>
@@ -404,7 +410,7 @@ const inputPropsSku = {
                                 </div>
                                 <div class="row">
                                     <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-primary btn-lg ml-3">Add All</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={handleAddAllClick}>Add All</button>
                                     </div>
                                 </div>
                             </form>
@@ -419,6 +425,7 @@ const mapStateToProps = (state)=> ({
     backupOrderListData:state.purchaseOrderManagementData.orderListDateForSuggession,
     searchValuePlant:state.purchaseOrderManagementData.searchValuePlant,
     searchValueSku:state.purchaseOrderManagementData.searchValueSku,
+    poData:state.purchaseOrderManagementData.poData
 
     
 
@@ -429,7 +436,8 @@ export default connect(mapStateToProps,{
     setSupplierToAddPo,
     handleOrderDetailsInput,addPo,
     serachOrderedList,
-    handledmQty
+    handledumyQty,
+    handleAddAll
 
 
 

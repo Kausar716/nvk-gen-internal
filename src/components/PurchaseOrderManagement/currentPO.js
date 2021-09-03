@@ -7,7 +7,7 @@ import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
      handlePurchaseOrderFilert,
-     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,
+     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,getCurrentOrder,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -26,8 +26,8 @@ import ActionModal from '../Modal/ActionModal';
     const [value, onChange] = useState(new Date());
     useEffect(()=>{
         // props.getAddToOrderList()
+        props.getCurrentOrder(props.poData.id)
     },[])
-
 
 
 
@@ -445,7 +445,7 @@ import ActionModal from '../Modal/ActionModal';
 
 const mapStateToProps = (state)=> ({ 
  
-    state:state
+    poData:state.purchaseOrderManagementData.poData
     
 
 })
@@ -453,7 +453,7 @@ export default connect(mapStateToProps,{
 
     getAddToOrderList,
     setSupplierToAddPo,
-    handleOrderDetailsInput,addPo
+    handleOrderDetailsInput,addPo,getCurrentOrder
 
 
 
