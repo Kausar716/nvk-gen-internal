@@ -657,13 +657,15 @@ class QuoteList extends React.Component {
                                       <div class="cardBox individualCard openStsCard" style={{minWidth:"90px"}}>
 
                                             <div class="stripe" 
-                                            style={item.label==="OPEN" ? {backgroundColor:"#D2EAFF"} : 
+                                            style={
+                                                item.label==="OPEN" ? {backgroundColor:"#D2EAFF"} : 
                                                 item.label==="CLOSED" ? {backgroundColor:"#C4E9C4"} :
                                                 item.label==="READY" ? {backgroundColor:"#FBE1A7", color:"#FF8800"} :
 
                                                 item.label==="PICKING" ? {backgroundColor:"#CBF4FF"} :
                                                 item.label==="SHIPPED" ? {backgroundColor:"#D4BCFF"} :
-                                                item.label==="LATE" ? {backgroundColor:"red"} :
+                                                item.label==="LATE" ? {backgroundColor:"red"
+                                            } :
                                                 
                                                 
                                                 
