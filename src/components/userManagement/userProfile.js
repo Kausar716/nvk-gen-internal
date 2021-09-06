@@ -608,7 +608,8 @@ class UserProfile extends React.Component {
         if(this.props.roles)roles = this.props.roles
        // console.log(this.props.selectedUser.deleted_at !== null)
         console.log(this.state.position)
-        let noImageURL="./images/noPerson.png";
+        let noImageURL="./images/profile.png";
+        //noPerson.png";
        // let noImageURL ="./images/user-circle-solid.svg";
         // "./images/noPerson.png";
 
