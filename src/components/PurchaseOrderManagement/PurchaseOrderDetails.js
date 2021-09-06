@@ -6,6 +6,7 @@ import OrderDetails from './newPo'
 import {connect} from "react-redux";
 import CurrentPo from "./currentPO"
 import AddToOrder from "./addToOrder"
+import OrderHistory from './orderHistory'
 
 
  const PurchaseOrderDetails =(props)=> {
@@ -81,58 +82,8 @@ import AddToOrder from "./addToOrder"
                      <CurrentPo/>
                     </TabPanel>
                     <TabPanel>
-                        <div class="bg-white px-3 py-3 mt-2">
-                            <form>
-                                <h2>Sales Order History</h2>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-12 table-responsive">
-                                        <table class="table table-striped table-td-valign-middle" width="100%">
-                                            <thead>
-                                                <tr>
-                                                    <th class="text-center">Action</th>
-                                                    <th class="text-center">Source</th>
-                                                    <th class="text-center">Item</th>
-                                                    <th class="text-center">Timestamp</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td class="text-center">New</td>
-                                                    <td class="text-center">B.Vanderkruk</td>
-                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
-                                                    <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">New</td>
-                                                    <td class="text-center">B.Vanderkruk</td>
-                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
-                                                    <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">New</td>
-                                                    <td class="text-center">B.Vanderkruk</td>
-                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
-                                                    <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">New</td>
-                                                    <td class="text-center">B.Vanderkruk</td>
-                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
-                                                    <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">New</td>
-                                                    <td class="text-center">B.Vanderkruk</td>
-                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
-                                                    <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                        <OrderHistory/>
+                        
                     </TabPanel>
                     <TabPanel>
                     <div class="bg-white px-3 py-3 mt-2">

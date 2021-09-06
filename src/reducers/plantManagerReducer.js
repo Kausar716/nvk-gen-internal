@@ -292,13 +292,23 @@ export default function(state = initialSatate, action){
 
 
         case GET_ALL_PLANT_ACTION:
-            let returnPlantList = []               
+            let returnPlantList = []   
+            if(state.plantRadioButton === "active")            {
                 returnPlantList = action.payload.filter(plant=>{
                     return (plant.archived === 0)
-                })              
+                })
+            }
+            else if(state.plantRadioButton === "archived"){
+                returnPlantList = action.payload.filter(plant=>{
+                    return (plant.archived !== 0)
+                })
+            }
+            else{
+                returnPlantList = action.payload
+            }
+                              
             return{
                 ...state,
-                plantRadioButton:"active",
                 plantData:returnPlantList,
                 backupData:action.payload
             }
@@ -519,10 +529,13 @@ export default function(state = initialSatate, action){
 
             }
         case DUPLICTE_PLANT:
+            let plantRadioButton = state.plantRadioButton
+            if(state.actionType === "add"){
             return{
                 ...state,
                 needAction:false,
                 actionType:"add",
+                plantRadioButton,
                 plantDataById     :   {
                     genus: "",
                     alternate_genus: "",
@@ -566,6 +579,36 @@ export default function(state = initialSatate, action){
                 dynamicName:"",
                 plantNameWithFormat:{firstName:"",secondName:""}
             }
+            }
+            else {
+                return{
+                    ...state,
+                    plantDataById:action.payload.plant,
+                    plantSkuDataList:action.payload.sku,
+                    ae_plant_id:action.payload.plant.plant_id,
+                    plantRadioButton,
+                    plantSkuDataById:{
+                        sku_code: "",
+                        product_id: null,
+                        plant_id: "",
+                        each_cost: "0.00",
+                        each_price: "0.00",
+                        sale_price: "0.00",
+                        sale_expiry_date:new Date().getFullYear()+"-"+minMonthFormate+"-"+minDateFormate,
+                        volume_quantity: "0",
+                        volume_price_per_unit: "0.00",
+                        sku_item_name: null,
+                        subcategory: null,
+                        archived: "0",
+                        discontinued: 0,
+                        location: null,
+                        status: 1,
+                        attributes_subattributes:[],
+                      }
+                }
+                
+            }
+            
         case DELETE_PLANT_SKU_ACTION:
             return{
                     ...state,

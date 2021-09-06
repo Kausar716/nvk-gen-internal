@@ -251,10 +251,12 @@ export const duplicateProduct = (id) =>dispatch=>{
     let error = []
     let filteredID = id.match(/\d+/g).map(Number);
     axios.get(`/api/duplicate-product/${filteredID[0]}`,config).then(res=>{ 
+        console.log(res)
         dispatch(getAllProductAction())
         dispatch(getAllSkuAction())
         dispatch({
-            type:DUPLICTE_PRODUCT
+            type:DUPLICTE_PRODUCT,
+            payload:res.data.data
         })
         error.push("Product duplicated successfully",)
         dispatch({

@@ -310,7 +310,8 @@ export const duplicatePlant = (id) =>dispatch=>{
         dispatch(getAllPlantSkuAction())
         // dispatch(showSinglePlantSkuAction(res.data.data.product_id))
         dispatch({
-            type:DUPLICTE_PLANT
+            type:DUPLICTE_PLANT,
+            payload:res.data.data
         })
         error.push("Plant duplicated successfully  successfully",)
         dispatch({

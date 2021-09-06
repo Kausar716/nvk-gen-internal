@@ -198,7 +198,7 @@ const productFormAction = ()=>{
        
     const {plantPageToOpen,plantData,actionType,plantDataById,ae_plant_id,plantNameWithFormat,plantRadioButton} = props.plantData
     const {plantCategoryData} =  props.categoryData
-    console.log(plantData)
+    console.log(plantRadioButton)
     const inputProps = {
         placeholder: 'Plant Name',
         value,
@@ -346,7 +346,7 @@ const productFormAction = ()=>{
             {(plantPageToOpen === "general" || plantPageToOpen === "sku") &&
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Plant</h1>
+                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/>{actionType==="add"?"Add":"Edit"} Plant</h1>
                                     {/* <span>
                                                     <button type="button" class="btn btn-primary  btn-lg" 
                                                     onClick={()=>props.plantPageReDirectAction("all","plant")}

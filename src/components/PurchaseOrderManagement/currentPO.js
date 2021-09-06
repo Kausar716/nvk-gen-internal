@@ -5,9 +5,9 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,
-     handlePurchaseOrderFilert,
-     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,
+     handleAplhabetFilterBySN,getplantSku,
+     handlePurchaseOrderFilert,handleCurrentPoOrderUpdate,
+     setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,getCurrentOrder,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -26,15 +26,27 @@ import ActionModal from '../Modal/ActionModal';
     const [value, onChange] = useState(new Date());
     useEffect(()=>{
         // props.getAddToOrderList()
+        // props.poData.id
+        props.getplantSku()
+        props.getCurrentOrder(6)
+       
     },[])
+    const handleCurrentPoUpdate=(e)=>{
+        let {name,value,itemID} = e.target
+        console.log(name,value)
+
+        props.handleCurrentPoOrderUpdate(name,value,itemID)
+    }
+    
+let {currentOrder,plantSku} = props
 
 
 
 
 
 
-
-// console.log(props)
+console.log(props.state.purchaseOrderManagementData)
+console.log(props.plantSku)
     return (
         <div class="bg-white px-3 py-3 mt-2">
         <form>
@@ -102,25 +114,32 @@ import ActionModal from '../Modal/ActionModal';
                                                     </td>
                                                 </tr>
                                                 {/* Main Content Row starts here */}
-                                                <tr class="tblBgWhite">
-                                                    <table class="table table-striped table-no-border" width="100%">
-                                                        <tr class="topTitleRow">
-                                                            <td>1</td>
-                                                            <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
+                                                {props.currentItems.map((item,i)=>{
+                                                    // {console.log(item)}
+                                                    return<tr class={i%2===0?"tblBgWhite":"tblBgGrey"}>
+                                                  
+                                                  <table class="table table-striped table-no-border" width="100%">                                                        
+                                                        <tr class="topTitleRow"> 
+                                                            <td>{i+1}</td>
+                                                            <td  colspan="11">{item.plant_name}</td>
                                                         </tr>
                                                         <tr>
                                                             <td width="4%"></td>
                                                             <td width="20%">
-                                                                <select class="form-control plantNameSel">
-                                                                    <option>43-TF-30-1G</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
+                                                                <select class="form-control plantNameSel" name="SKU" id={item.item_id} onChange={handleCurrentPoUpdate} value={item.SKU}>
+                                                                    {console.log(item.plant_id)}
+                                                                    console.log(props.plantSku)
+
+                                                                    {props.plantSku.length>0?props.plantSku[item.plant_id].map(skuValue=>{
+                                                                        return <option value={skuValue}>{skuValue}</option>
+                                                                    }):""}
+                                                                    
                                                                 </select>
                                                             </td>
-                                                            <td width="10%" class="text-center">150CM 15 gal</td>
-                                                            <td width="10%" class="text-center">19/05/2020</td>
+                                                            <td width="10%" class="text-center">{item.size}</td>
+                                                            <td width="10%" class="text-center">{"-"}</td>
                                                             <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
+                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="disc_percent" onChange={handleCurrentPoUpdate} value={item.disc_percent}/>
                                                             </td>
                                                             <td width="8%" class="text-center">
                                                                 <select class="form-control w-80">
@@ -130,19 +149,19 @@ import ActionModal from '../Modal/ActionModal';
                                                                 </select>
                                                             </td>
                                                             <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
+                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="qty" onChange={handleCurrentPoUpdate} value={item.qty}/>
                                                             </td>
-                                                            <td width="6%" class="text-center">0.75</td>
-                                                            <td width="7%" class="text-center">9.55</td>
+                                                            <td width="6%" class="text-center">{item.royality}</td>
+                                                            <td width="7%" class="text-center">{item.nvk_price}</td>
                                                             <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
+                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.item_id} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
                                                                     <span>8.25</span>
                                                                 </div>
                                                             </td>
                                                             <td width="8%" class="text-center">
-                                                                <span class="text-green controlLabel text-right">90.00</span>
+                                                                <span class="text-green controlLabel text-right">{item.item_total}</span>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
                                                                     <span>8.25</span>
@@ -174,205 +193,7 @@ import ActionModal from '../Modal/ActionModal';
                                                             </td>
                                                         </tr>
                                                     </table>
-                                                </tr>
-                                                <tr class="tblBgGrey">
-                                                    <table class="table table-striped table-no-border" width="100%">
-                                                        <tr class="topTitleRow">
-                                                            <td>2</td>
-                                                            <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="4%"></td>
-                                                            <td width="20%">
-                                                                <select class="form-control plantNameSel">
-                                                                    <option>43-TF-30-1G</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
-                                                                </select>
-                                                            </td>
-                                                            <td width="10%" class="text-center">150CM 15 gal</td>
-                                                            <td width="10%" class="text-center">19/05/2020</td>
-                                                            <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
-                                                            </td>
-                                                            <td width="8%" class="text-center">
-                                                                <select class="form-control w-80">
-                                                                    <option>Sales</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
-                                                                </select>
-                                                            </td>
-                                                            <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
-                                                            </td>
-                                                            <td width="6%" class="text-center">0.75</td>
-                                                            <td width="7%" class="text-center">9.55</td>
-                                                            <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
-                                                                <div class="">
-                                                                    <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
-                                                                </div>
-                                                            </td>
-                                                            <td width="8%" class="text-center">
-                                                                <span class="text-green controlLabel text-right">90.00</span>
-                                                                <div class="">
-                                                                    <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
-                                                                </div>
-                                                            </td>
-                                                            <td width="8%" class="text-center actionTd">
-                                                                <div class="d-flex justify-content-center">
-                                                                    <a href="#" class="">
-                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
-                                                                    </a>
-                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                        </a>
-                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </tr>
-                                                <tr class="tblBgWhite">
-                                                    <table class="table table-striped table-no-border" width="100%">
-                                                        <tr class="topTitleRow">
-                                                            <td>3</td>
-                                                            <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="4%"></td>
-                                                            <td width="20%">
-                                                                <select class="form-contro plantNameSel">
-                                                                    <option>43-TF-30-1G</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
-                                                                </select>
-                                                            </td>
-                                                            <td width="10%" class="text-center">150CM 15 gal</td>
-                                                            <td width="10%" class="text-center">19/05/2020</td>
-                                                            <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
-                                                            </td>
-                                                            <td width="8%" class="text-center">
-                                                                <select class="form-control w-80">
-                                                                    <option>Sales</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
-                                                                </select>
-                                                            </td>
-                                                            <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
-                                                            </td>
-                                                            <td width="6%" class="text-center">0.75</td>
-                                                            <td width="7%" class="text-center">9.55</td>
-                                                            <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
-                                                                <div class="">
-                                                                    <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
-                                                                </div>
-                                                            </td>
-                                                            <td width="8%" class="text-center">
-                                                                <span class="text-green controlLabel text-right">90.00</span>
-                                                                <div class="">
-                                                                    <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
-                                                                </div>
-                                                            </td>
-                                                            <td width="8%" class="text-center actionTd">
-                                                                <div class="d-flex justify-content-center">
-                                                                    <a href="#" class="">
-                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                    </a>
-                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                        </a>
-                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </tr>
-                                                <tr class="tblBgGrey">
-                                                    <table class="table table-striped table-no-border" width="100%">
-                                                        <tr class="topTitleRow">
-                                                            <td>4</td>
-                                                            <td  colspan="11">Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="4%"></td>
-                                                            <td width="20%">
-                                                                <select class="form-control  plantNameSel">
-                                                                    <option>43-TF-30-1G</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
-                                                                </select>
-                                                            </td>
-                                                            <td width="10%" class="text-center">150CM 15 gal</td>
-                                                            <td width="10%" class="text-center">19/05/2020</td>
-                                                            <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="2.0"/>
-                                                            </td>
-                                                            <td width="8%" class="text-center">
-                                                                <select class="form-control w-80">
-                                                                    <option>Sales</option>
-                                                                    <option>Option 1</option>
-                                                                    <option>Option 2</option>
-                                                                </select>
-                                                            </td>
-                                                            <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" value="10"/>
-                                                            </td>
-                                                            <td width="6%" class="text-center">0.75</td>
-                                                            <td width="7%" class="text-center">9.55</td>
-                                                            <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" value="8.25"/>
-                                                                <div class="">
-                                                                    <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
-                                                                </div>
-                                                            </td>
-                                                            <td width="8%" class="text-center">
-                                                                <span class="text-green controlLabel text-right">90.00</span>
-                                                                <div class="">
-                                                                    <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
-                                                                </div>
-                                                            </td>
-                                                            <td width="8%" class="text-center actionTd">
-                                                                <div class="d-flex justify-content-center">
-                                                                    <a href="#" class="">
-                                                                        <img src="assets/img/copy-ic-green.svg" alt=""/>
-                                                                    </a>
-                                                                    <div class="dropdown actionDropdown  ml-2">
-                                                                        <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                            <i class="fas fa-ellipsis-v"></i>
-                                                                        </a>
-                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </tr>
+                                                </tr>})}
                                             </table>
                                         </td>
                                     </tr>
@@ -389,7 +210,7 @@ import ActionModal from '../Modal/ActionModal';
                                         <label >Subtotal <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
-                                        <label >554.30</label>
+                                        <label >{currentOrder.subtotal}</label>
                                     </div>
                                 </div>
                                 <div class="row">
@@ -397,7 +218,7 @@ import ActionModal from '../Modal/ActionModal';
                                         <label >Discounts <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
-                                        <label >-9.80</label>
+                                        <label >{`-${currentOrder.discount}`}</label>
                                     </div>
                                 </div>
                                 <div class="row text-green subTotLbl">
@@ -405,23 +226,23 @@ import ActionModal from '../Modal/ActionModal';
                                         <label >Subtotal after Discounts <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
-                                        <label >544.50</label>
+                                        <label >{currentOrder.total}</label>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-8 d-flex justify-content-end">
-                                        <label class="mb-0 d-flex align-items-center">Adjustments  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes"/> <span>$</span></label>
+                                        <label class="mb-0 d-flex align-items-center">Adjustments  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes" value={"missing"}/> <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
-                                        <input type="text" class="form-control mx-2 text-right" placeholder="" value="0.00"/>
+                                        <input type="text" class="form-control mx-2 text-right" placeholder="" value={currentOrder.adjustment}/>
                                     </div>
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-8 d-flex justify-content-end">
-                                        <label class="mb-0 d-flex align-items-center">Shipping  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes"/> <span>$</span></label>
+                                        <label class="mb-0 d-flex align-items-center">Shipping  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes" value={"missing"}/> <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
-                                        <input type="text" class="form-control mx-2 text-right" placeholder="" value="0.00"/>
+                                        <input type="text" class="form-control mx-2 text-right" placeholder="" value="0.00" value={currentOrder.shipping}/>
                                     </div>
                                 </div>
                                 <div class="row subTotLbl">
@@ -445,15 +266,18 @@ import ActionModal from '../Modal/ActionModal';
 
 const mapStateToProps = (state)=> ({ 
  
+    poData:state.purchaseOrderManagementData.poData,
+    currentItems:state.purchaseOrderManagementData.currentItems,
+    currentOrder:state.purchaseOrderManagementData.currentOrder,
+    plantSku:state.purchaseOrderManagementData.plantSku,
     state:state
-    
 
 })
 export default connect(mapStateToProps,{
 
     getAddToOrderList,
-    setSupplierToAddPo,
-    handleOrderDetailsInput,addPo
+    setSupplierToAddPo,getplantSku,handleCurrentPoOrderUpdate,
+    handleOrderDetailsInput,addPo,getCurrentOrder
 
 
 
