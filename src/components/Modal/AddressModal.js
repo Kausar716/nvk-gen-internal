@@ -21,6 +21,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
   
              
    let allCountry = Object.keys(countryDetails);
+   console.log(countryDetails[0])
         
    let allStates ;
    // let countZipRegix
@@ -32,6 +33,9 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         //    this.countZipRegix=countryDetails[customerAddress.country][1][0]
         //    console.log(this.countZipRegix)
            // console.log(this.state.clientData.country)
+       }else{
+        // allStates = countryDetails[0];
+
        }
 //    }
    const handleInput= (e)=>{
@@ -144,9 +148,9 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
             }
             if (object === "zip") {
-                if(element.value == ""){
+                if(element.value == "" || Number(element.value) !==NaN){
                 // if ( !element.value.trim().match(this.countZipRegix)) {
-                    document.getElementById("zip-validtor").innerText = "Enter Postal/ZIP "
+                    document.getElementById("zip-validtor").innerText = "Enter Valid Postal/ZIP  "
                     errorCount++;
 
                 }else {
@@ -221,7 +225,7 @@ console.log(validErrorList)
             <div class="col-md-3 col-lg-3">
                 <label>Country<span class="text-danger">*</span></label>
                 <select className="form-control"  id="country"  value={customerAddress.country}   placeholder="country" onChange={handleInput} >
-                    <option selected>Select Country</option>
+                    {/* <option selected>Select Country</option> */}
                     {/* <option>{customerAddress.country}</option> */}
                     {allCountry.map((country, i)=>{
                         return <option id={allCountry[i]} selected={customerAddress.country ==allCountry[i]?"selected":""}>{allCountry[i]}</option>
@@ -235,7 +239,7 @@ console.log(validErrorList)
             <div class="col-md-3 col-lg-3">
                 <label>Province/State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={customerAddress.state}  onChange={handleInput}>
-                <option selected>Select State</option>
+                {/* <option selected>Select State</option> */}
                 {/* <option>{customerAddress.state}</option> */}
                 {allStates && allStates.map((c, i)=>{
                         return <option id={allStates[i]} selected={customerAddress.state ==allStates[i]?"selected":""}>{allStates[i]}</option>

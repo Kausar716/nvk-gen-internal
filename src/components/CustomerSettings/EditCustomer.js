@@ -531,12 +531,14 @@ const dataTochange =(e)=>{
     }
     const changeCheckBox =(id,index,type)=>{
         // alert(index)
-        console.log(customerContactList,index)
-        let data  = customerContactList.active[index]
-        console.log( data[type])
-        data[type] =  data[type]==0?1:0
-        console.log( data[type])
-        props.updateContactData(data).then(data=>{
+        // console.log(customerContactList,index)
+        // let data  = customerContactList.active[index]
+        let data =customerContactList.active.filter(data=>data.id == id)
+        
+        // console.log( data[type])
+        data[0][type] =  data[0][type]==0?1:0
+        console.log( data[0][type])
+        props.updateContactData(data[0]).then(data=>{
             props.getCustomerContacts(customerDataById.id)
             console.log(customerContact)
         })
@@ -544,12 +546,17 @@ const dataTochange =(e)=>{
     }
     const changeCheckBoxAddress =(id,index,type)=>{
         // alert(index)
-        console.log(customerAddressList,index)
-        let data  = customerAddressList.active[index]
-        console.log( data[type])
-        data[type] =  data[type]==0?1:0
-        console.log( data[type])
-        props.updatecustomerAddress(data).then(data=>{
+        let data =customerAddressList.active.filter(data=>data.id == id)
+        
+        // console.log( data[type])
+        data[0][type] =  data[0][type]==0?1:0
+        console.log( data[0][type])
+        // console.log(customerAddressList,index)
+        // let data  = customerAddressList.active[index]
+        // console.log( data[type])
+        // data[type] =  data[type]==0?1:0
+        // console.log( data[type])
+        props.updatecustomerAddress(data[0]).then(data=>{
             props.getcustomerAddress(customerDataById.id)
             console.log(customerContact)
         })
