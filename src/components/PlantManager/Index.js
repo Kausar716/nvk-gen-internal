@@ -162,8 +162,10 @@ const productFormAction = ()=>{
         }
         const searchBasedOnCategory = (e) =>{
             setLoaderMessage("No Records Found.")
+            props.setPlantPageNumber(0)
             //console.log(e.target.value)
             //props.searchCategoryApplyAction(e.target.value)
+            
             props.serachPlant({plant: inputValue, option: props.plantData.plantRadioButton, category: e.target.value})
             setCategoryId(e.target.value)
             // searchCategoryApply()
