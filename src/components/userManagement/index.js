@@ -479,7 +479,7 @@ goToUserAccess=()=>{
                 //    this.setState({displayUpdateProfile:true})
                 //    this.setState({visbleTrue:true})
                     >
-                    <UserAccess  onTagsChange={this.onTagsChange} visbleTrueP={this.state.visbleTrue} selectedUserP = {this.state.selectedUser} displayUpdateProfileP={this.state.displayUpdateProfile} />
+                    <UserAccess  cancle={this.handleCancle} onTagsChange={this.onTagsChange} visbleTrueP={this.state.visbleTrue} selectedUserP = {this.state.selectedUser} displayUpdateProfileP={this.state.displayUpdateProfile} />
                     </TabPanel>
                     <TabPanel
                     // value={this.state.tabValues} index={2}

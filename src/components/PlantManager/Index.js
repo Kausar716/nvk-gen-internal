@@ -27,7 +27,7 @@ import {
     deletePlantAction ,
      getAllPlantAction,
      duplicatePlant,
-
+     setPlantPageNumber,
     //page Redirects action
     plantPageReDirectAction,
     plantSubPageReDirectAction,
@@ -79,6 +79,7 @@ const  PlantManger=(props)=> {
     const onChange = (event, { newValue }) => {
         setValue(newValue)
         setLoaderMessage("No Records Found.")
+        props.setPlantPageNumber(0)
         props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
         setInputValue(newValue);
     };
@@ -151,6 +152,7 @@ const productFormAction = ()=>{
             setInputValue(e.target.value);
         }
         const radioSearchAction =(e)=>{
+            props.setPlantPageNumber(0)
             setLoaderMessage("No Records Found.")
             console.log(e.target.id)
             //props.radioSearch(e.target.id)
@@ -439,6 +441,7 @@ export default connect(mapStateToProps,{
 
          radioSearch,
             serachPlant,
-            searchCategoryApplyAction
+            searchCategoryApplyAction,
+            setPlantPageNumber
 })(PlantManger)
 

@@ -638,7 +638,7 @@ class QuoteList extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div>
-                            <div class="equalSign">=</div>
+                            <div class="equalSign" style={{marginTop:"7px",marginRight:"4px"}}>=</div>
 
                             {/* <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
