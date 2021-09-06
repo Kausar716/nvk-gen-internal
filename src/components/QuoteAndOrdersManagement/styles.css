@@ -37,3 +37,26 @@
 .checkBoxHide {
   visibility: hidden;
 }
+
+.boxCreation {
+  display: flex;
+}
+
+/* .ordersCard .boxCreation span:nth-of-type(1n + 0) {
+  background-color: pink;
+  color: pink;
+  border: 2px solid yellow;
+} */
+
+.plusSignInQuote {
+  display: flex;
+  font-size: 40px;
+  font-weight: 800;
+  color: #b2b2b2;
+  padding-top: 26px;
+}
+
+/* .ordersCard .span:last-child {
+  background: #ff0000;
+  border: 2px solid yellow;
+} */

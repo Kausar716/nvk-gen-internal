@@ -652,9 +652,9 @@ class QuoteList extends React.Component {
                             
                                 {deductingFinalValues.map(item=>{
                                     
-                                    return <div style={{display:"flex"}}>
+                                    return <div className="boxCreation">
                                          
-                                      <div class="cardBox individualCard openStsCard" style={{minWidth:"90px"}}>
+                                        <div  class="cardBox individualCard openStsCard">
 
                                             <div class="stripe" 
                                             style={
@@ -681,7 +681,7 @@ class QuoteList extends React.Component {
                                                     // item.label==="CANCEL" ? "brown":
                                             } 
                                             ></div>
-                                                <p>{item.name}</p>
+                                                <p style={{marginTop:"5px"}}>{item.name}</p>
                                             <h4>{ item.label==="OPEN" ? this.state.allCountList.OPEN :
                                                     item.label==="CLOSED" ? this.state.allCountList.CLOSED :
                                                     item.label==="READY" ? this.state.allCountList.READY :
@@ -702,13 +702,13 @@ class QuoteList extends React.Component {
                                                      className="checkBoxHide"
                                                      >
                                                     </input>
-                                                    <label  for={item.id} > <span style={{color:"#5287f5", cursor:"pointer", marginLeft:"-13px"}}>View All</span></label>
+                                                    <label style={{marginTop:"10px"}} for={item.id} > <span style={{color:"#5287f5", cursor:"pointer", marginLeft:"-13px"}}>View All</span></label>
                                                    
                                             </div>
                                            
                                         </div>
 
-                                        <div class="equalSign">+</div>
+                                        <span class="plusSignInQuote">+</span>
                                        
                                         
                                     </div>
@@ -761,7 +761,7 @@ class QuoteList extends React.Component {
                             <div class="equalSign">&nbsp;</div>
                             <div class="verDivider"></div>
                             <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard activeQuotesCard" style={{minWidth:"90px"}}>
+                            <div class="cardBoxwide individualCard activeQuotesCard" >
                                 <div class="stripe"></div>
                                 <p>Active Quotes</p>
                                 <h4>12</h4>
@@ -777,7 +777,7 @@ class QuoteList extends React.Component {
                                 </div>
                             </div> */}
                             <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard quotesFlaggedCard" style={{minWidth:"90px"}}>
+                            <div class="cardBoxwide individualCard quotesFlaggedCard" >
                                 <div class="stripe"></div>
                                 <p>Quotes Flagged</p>
                                 <h4><font color="red">12</font></h4>
@@ -795,7 +795,7 @@ class QuoteList extends React.Component {
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Search Quotes &amp; Orders1234 {this.state.abcdefg}</h2>
+                        <h2>Search Quotes &amp; Orders {this.state.abcdefg}</h2>
                         {/* {this.state.abcdefg} */}
                         
                         <div class="row mt-3 align-items-center">
