@@ -285,6 +285,7 @@ export default function(state = initialSatate, action){
                 productDataBySKUlist:[]
             }
         case DUPLICTE_PRODUCT:
+            if(state.actionType === "add"){
             return{
                 ...state,
                 actionType:"add",
@@ -316,6 +317,30 @@ export default function(state = initialSatate, action){
                 },
                 needAction:false,
                 productDataBySKUlist:[]
+            }
+            }
+            else{
+                return{
+                    ...state,
+                    productDataById:action.payload.product,
+                    productDataBySKUlist:action.payload.sku,
+                    skuDataById         :   {
+                        each_cost:"0.00",
+                        each_price:"0.00",
+                        sale_price:"0.00",
+                        sale_expiry_date:null,
+                        sku_item_name:null,
+                        subcategory:"0",
+                        discontinued:0,
+                        status:1,
+                        archived:0,
+                        supplier_id:1,
+                        volume_price_per_unit:"0.00",
+                        volume_quantity:"0",
+                        location_id:"0"
+                        //id:null
+                    }
+                }
             }
 
             case DELETE_SKU_ACTION:

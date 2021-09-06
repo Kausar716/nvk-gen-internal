@@ -10,7 +10,11 @@ import {GET_PURCHASE_ORDER_LIST,
     HANDLE_SEARCH_ORDERED_LIST,
     HANDLE_DMQTY,
     HANDLE_ADD_ALL,
-    GET_CURRENT_PO_ORDER_HISTORY
+    GET_CURRENT_PO_ORDER_HISTORY,
+    GET_CURRENT_PO_ORDER,
+    GET_PLANT_SKU,
+    HANDE_CURRENT_PO_ORDER_UPDATE
+
 } from '../actions/types';
 
 
@@ -44,7 +48,16 @@ const initialSatate = {
     },
     searchValuePlant:"",
     searchValueSku:"",
-    currentPOHistory:[]
+    currentPOHistory:[],
+    currentItems:[],
+    currentOrder:{
+        adjustment:null,
+        discount:"",
+        shipping:"",
+        subtotal:"",
+        total:""
+    },
+    plantSku:[]
 
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
@@ -127,6 +140,20 @@ const groupArray =(objectToBeReduced)=>{
     }
     console.log(plantList)
     return plantList
+
+}
+const groupSku = (plantList) =>{
+    let skuPlantList = []
+    let skuObject={}
+    skuObject['id']=[]
+    plantList.map(plant=>{
+        if(!skuObject[plant.plant_id]){
+            skuObject[plant.plant_id]=[]
+        }
+        skuObject[plant.plant_id].push(plant.sku_code)
+    })
+    console.log(skuObject)
+    return skuObject
 
 }
 const getOpenPoCount = (poList)=>{
@@ -261,7 +288,40 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         return{
                             ...state,
                             currentPOHistory:action.payload
+                        } 
+                    case GET_CURRENT_PO_ORDER:
+                        return{
+                            ...state,
+                            currentItems:action.payload.items,
+                            currentOrder:action.payload.order
                         }
+                    case GET_PLANT_SKU:
+                        let groupedSku = groupSku(action.payload)
+                        console.log(groupedSku)
+                        debugger;
+                        return{
+                            ...state,
+                            plantSku:groupedSku
+                        }
+                    case HANDE_CURRENT_PO_ORDER_UPDATE:
+                        let selectedId=-1
+                        let updateItem = state.currentItems.filter((item,i)=>{
+                            if(item.item_id === action.currentItemId){
+                                selectedId = i
+                                return
+                            }})
+                            if(selectedId>=0){
+                                updateItem.currentItemName = action.currentItemValue
+                            }
+                            let updateList = state.currentItems
+                            updateList.splice(selectedId,1,updateItem)
+                            
+                        return{
+                            ...state,
+                            currentItems:updateList,
+                            // currentOrder:action.payload.order
+                        }
+                   
                default :
             return{
                 ...state

@@ -412,7 +412,7 @@ const  ProductManagement = (props) =>{
 
                             <div> 
                                 <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> Add/Edit Product</h1>
+                                    <h1 class="page-header mb-0"><img src="assets/img/product-green.svg" alt=""/> {actionType === "add"?"Add":"Edit"} Product</h1>
                                     {/* <span>
                                                     <button type="button" class="btn btn-primary  btn-lg"    
                                             onClick={()=>props.pageReDirectAction("product","add")}>Return To Product Manager</button>                                                    

@@ -23,7 +23,9 @@ import {
     HANDLE_ADD_ALL,
     GET_CURRENT_PO_ORDER,
     HANDLE_SINGLE_ITEM_ADDITION,
-    GET_CURRENT_PO_ORDER_HISTORY
+    GET_CURRENT_PO_ORDER_HISTORY,
+    HANDE_CURRENT_PO_ORDER_UPDATE,
+    GET_PLANT_SKU
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -188,12 +190,45 @@ export const handledumyQty=(sku_code,dumyQty)=>{
   }
 }
 
+export const handleCurrentPoOrderUpdate = (name,value,itemID)=>{
+  console.log(name,value,itemID)
+  
+  return{
+    type:HANDE_CURRENT_PO_ORDER_UPDATE,
+    currentItemName:name,
+    currentItemValue:value,
+    currentItemId:itemID
+  }
+}
+
+export const getplantSku = ()=> dispatch => {
+
+ 
+ let errorArray = []
+  axios.get(`/api/skus/plants`,config).then(res=>{
+   
+      dispatch({
+          type:GET_PLANT_SKU,
+          payload:res.data.data
+
+      })
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+
+}
+
 
 export const getCurrentOrder = (currentPoId)=> dispatch => {
+  console.log(currentPoId)
+ 
  let errorArray = []
   axios.get(`/api/purchase-order-item-list/${currentPoId}`,config).then(res=>{
     console.log(res)
-     debugger;
+    
       dispatch({
           type:GET_CURRENT_PO_ORDER,
           payload:res.data.data
@@ -214,7 +249,7 @@ export const getOrderHistory = (currentPoId)=> dispatch => {
   if(currentPoId){
    axios.get(`/api/po-logs/${currentPoId}`,config).then(res=>{
      console.log(res)
-      debugger;
+     
        dispatch({
            type:GET_CURRENT_PO_ORDER_HISTORY,
            payload:res.data.data
@@ -256,13 +291,13 @@ let orderedListForUpdation = []
   orderedObject['type'] = "plant"
   orderedObject['items']  = orderedListForUpdation
   console.log(orderedObject)
-  debugger;
+ 
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
   if(orderedListForUpdation.length>0){
   axios.post(`/api/add-purchase-order-item/${poId}`,orderedObject,config).then(res=>{
     console.log(res)
-    debugger;
+   
      
       dispatch({
           type:HANDLE_ADD_ALL,

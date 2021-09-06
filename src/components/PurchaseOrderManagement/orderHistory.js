@@ -60,7 +60,16 @@ console.log(props.currentPOHistory)
                                                     <td class="text-center">{po.item}</td>
                                                     <td class="text-center">{time}</td>
                                                 </tr>
-                                                }):""}
+                                                }):
+                                                // let timestamp=new Date(po.updated_at)
+                                                //     let time = `${timestamp.getDate()}-${timestamp.getMonth()}-${timestamp.getFullYear()}-${timestamp.getMinutes().length>1?"0"+timestamp.getMinutes():timestamp.getMinutes()}`
+                                                     <tr>
+                                                    <td class="text-center">{props.currentPOHistory.action}</td>
+                                                    <td class="text-center">{props.currentPOHistory.source}</td>
+                                                    <td class="text-center">{props.currentPOHistory.item}</td>
+                                                    <td class="text-center">{"-"}</td>
+                                                </tr>
+                                                }
                                                 {/* <tr>
                                                     <td class="text-center">New</td>
                                                     <td class="text-center">B.Vanderkruk</td>
