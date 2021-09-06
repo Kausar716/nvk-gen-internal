@@ -54,6 +54,9 @@
   font-weight: 800;
   color: #b2b2b2;
   padding-top: 26px;
+  margin-top: 9px;
+  margin-left: 4px;
+  margin-right: 4px;
 }
 
 /* .ordersCard .span:last-child {
