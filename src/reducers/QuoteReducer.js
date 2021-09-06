@@ -6,7 +6,8 @@ import {
     UPDATE_QUOTE,
     UPDATE_NEW_QUOTE,
     SEARCH_PLANT_PRODUCT,
-    FILTER_PLANT_MANAGER_QUOTE_ACTION
+    FILTER_PLANT_MANAGER_QUOTE_ACTION,
+    QUOTE_LIST,
    
 
     
@@ -20,6 +21,7 @@ import {
 const initialSatate = {
 //    quoteOrderList:[],
 searchList:[],
+quoteList:{items:[],order:[]},
 searchListDuplicate:[],
 plantFilterIds:{sku_code:"",name:""},
     quoteDetails:{
@@ -58,6 +60,11 @@ plantFilterIds:{sku_code:"",name:""},
     // alert(action.type)x
     
     switch(action.type){
+        case QUOTE_LIST:
+            return{
+                ...state,
+                quoteList:action.payload.data
+            }
         case ADD_NEW_QUOTE:
             let customerData = action.payload.data.customer
             customerData.units = customerData.unit_of_measurement

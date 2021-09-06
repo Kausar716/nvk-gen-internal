@@ -74,16 +74,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
                 }
 
             }
-            if (object === "address2") {
-                if (element.value === "") {
-                    document.getElementById("address2-validtor").innerText = "Enter  Address 2"
-                    errorCount++;
-
-                } else {
-                    document.getElementById("address2-validtor").innerText = ""
-                }
-
-            }
+          
             if (object === "notes") {
                 if (element.value === "") {
                     document.getElementById("notes-validtor").innerText = "Enter  Notes"
@@ -231,9 +222,9 @@ console.log(validErrorList)
                 <label>Country<span class="text-danger">*</span></label>
                 <select className="form-control"  id="country"  value={customerAddress.country}   placeholder="country" onChange={handleInput} >
                     <option selected>Select Country</option>
-                    <option>{customerAddress.country}</option>
+                    {/* <option>{customerAddress.country}</option> */}
                     {allCountry.map((country, i)=>{
-                        return <option id={allCountry[i]}>{allCountry[i]}</option>
+                        return <option id={allCountry[i]} selected={customerAddress.country ==allCountry[i]?"selected":""}>{allCountry[i]}</option>
                     })}
                     {/* <option value="Canada" selected={supplierData.supplierLocation.country =="Canada"?"selected":""}>Canada</option>
                     <option value="India" selected={supplierData.supplierLocation.country =="India"?"selected":""}>India</option>
@@ -245,9 +236,9 @@ console.log(validErrorList)
                 <label>State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={customerAddress.state}  onChange={handleInput}>
                 <option selected>Select State</option>
-                <option>{customerAddress.state}</option>
+                {/* <option>{customerAddress.state}</option> */}
                 {allStates && allStates.map((c, i)=>{
-                        return <option id={allStates[i]}>{allStates[i]}</option>
+                        return <option id={allStates[i]} selected={customerAddress.state ==allStates[i]?"selected":""}>{allStates[i]}</option>
                 })}
                     {/* <option value="Ontario" selected={supplierData.supplierLocation.state =="Ontario"?"selected":""}>Ontario</option>
                     <option value="Alberta" selected={supplierData.supplierLocation.state =="Alberta"?"selected":""}>Alberta</option>
@@ -262,16 +253,16 @@ console.log(validErrorList)
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6 col-lg-6">
-                <label>Address 1<span class="text-danger">*</span></label>
+            <div class="col-md-12 col-lg-12">
+                <label>Address<span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="address1" value={""} value={customerAddress.address1}  onChange={handleInput} placeholder="Address1"></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="address1-validtor"></span>}
             </div>
-            <div class="col-md-6 col-lg-6">
+            {/* <div class="col-md-6 col-lg-6">
                 <label>Address 2<span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="address2" value={""} value={customerAddress.address2}  onChange={handleInput} placeholder="Address2"></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="address2-validtor"></span>}
-            </div>
+            </div> */}
         </div>
    
         <div class="row mt-3">

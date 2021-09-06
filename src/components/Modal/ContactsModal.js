@@ -77,35 +77,35 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                 }
 
             }
-            if (object === "phone2") {
-                if(element.value !== ""){
-                    let enteredNumber = element.value.trim().match(/\d/g)
-                    if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
-                        document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-                        errorCount++;
-                    } else {
-                        document.getElementById("phone2-validtor").innerText = ""
-                    }
+            // if (object === "phone2") {
+            //     if(element.value !== ""){
+            //         let enteredNumber = element.value.trim().match(/\d/g)
+            //         if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+            //             document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+            //             errorCount++;
+            //         } else {
+            //             document.getElementById("phone2-validtor").innerText = ""
+            //         }
     
-                }
-                else if(element.value === ""){
-                    document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-                    errorCount++;
-                }
+            //     }
+            //     else if(element.value === ""){
+            //         document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+            //         errorCount++;
+            //     }
 
-            }
+            // }
    
 
-            if (object === "phone2_ext") {
-                if (element.value === "") {
-                    document.getElementById("phone2_ext-validtor").innerText = "Enter  Phone 2"
-                    errorCount++;
+            // if (object === "phone2_ext") {
+            //     if (element.value === "") {
+            //         document.getElementById("phone2_ext-validtor").innerText = "Enter  Phone 2"
+            //         errorCount++;
 
-                } else {
-                    document.getElementById("phone2_ext-validtor").innerText = ""
-                }
+            //     } else {
+            //         document.getElementById("phone2_ext-validtor").innerText = ""
+            //     }
 
-            }
+            // }
             if (object === "phone1_ext") {
                 if (element.value === "") {
                     document.getElementById("phone1_ext-validtor").innerText = "Enter  Phone 2"
@@ -253,14 +253,14 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
    
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
-                <label>Phone 2<span class="text-danger">*</span></label>
+                <label>Phone 2<span class="text-danger"></span></label>
                 {/* <input type="number" class="form-control" id="phone2" value={""} value={customerContact.phone2}  onChange={handleInput}/> */}
                 <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone2"} value={customerContact.phone2} onChange={handleInput} placeholder="Phone 2"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>Phone 2 Ext<span class="text-danger">*</span></label>
+                <label>Phone 2 Ext<span class="text-danger"></span></label>
                 <input type="text" class="form-control" id="phone2_ext" value={""}  value={customerContact.phone2_ext}  onChange={handleInput} placeholder="Phone 2 Ext"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone2_ext-validtor"></span>}
@@ -285,19 +285,19 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         
         </div>
   
-        <div class="row mt-3">
+        {/* <div class="row mt-3"> */}
         {/* <div class="d-flex"> */}
-        <div class="col-md-6 col-lg-6">
+        {/* <div class="col-md-6 col-lg-6">
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"primary_contact"} onChange={handleInput} checked={parseInt(customerContact.primary_contact)==1?true:false}/>
                 <label className="custom-control-label" for={"primary_contact"}>This person is the primary contact</label>
             </div>
-            </div>
-            <div class="col-md-6 col-lg-6">
+            </div> */}
+            {/* <div class="col-md-6 col-lg-6">
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"all_communication"} onChange={handleInput}  checked={parseInt(customerContact.all_communication)==1?true:false}/>
                 <label className="custom-control-label" for={"all_communication"}>This person receives all communication</label>
-            </div>
+            </div> */}
             {/* </div> */}
             {/* <div class="custom-control custom-radio">
                 <input type="checkbox" id="delivery" name="delivery" value={"Delivery"}  class="custom-control-input" onClick={""} />
@@ -308,8 +308,8 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                 <input type="checkbox" id="pickup" name="delivery" value={"Pickup"}  onClick={""} class="custom-control-input" />
                 <label class="custom-control-label" for="delivery">Pick up</label>
             </div> */}
-        </div>
-        </div>
+        {/* </div> */}
+        {/* </div> */}
 
 
         </ModalBody>

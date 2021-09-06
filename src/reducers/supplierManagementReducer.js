@@ -376,10 +376,10 @@ const supplierManagementReducer =(state=defaultState, action)=>{
 
                 }
             case GET_SUPPLIER_BY_ID:
-                let categories = action.payload.data.product_categories==undefined?[]:action.payload.data.product_categories
+                let categories = action.payload.product_categories==undefined?[]:action.payload.product_categories
                 return{
                     ...state,
-                    supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories)}
+                    supplierDataById:{...action.payload,product_categories:JSON.parse(action.payload.product_categories)}
 
                 }
             case TYPE_OF_SUPPLIER_ACTION:

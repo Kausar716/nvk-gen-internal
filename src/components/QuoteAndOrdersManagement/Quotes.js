@@ -10,6 +10,7 @@ import TablePagination from '../Pagination/index';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css';
 import { DateRangePicker } from 'react-date-range';
+import Loader from '../ProductManager/Loader'
 import {
     //plant actions
    
@@ -19,7 +20,7 @@ import {
 
 }from "../../actions/plantManagerAction";
 import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
-import {filterHandleData,searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
+import {getQuoteList,addToquoteAPICall,filterHandleData,searchPlantProductAPI,updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
 // import {resetFileds,filterInvoiceManagerData,deleteCustomer,getAllInvoice,handleExchangeData,getCustomerById,setPageNumber,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/invoiceAction";
 import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
 
@@ -28,27 +29,89 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
     const [value, onChange] = useState(new Date());
     const [plantNameValue,setPlantNameValue] =useState("")
     const [plantSKUValue,setPlantSKUValue] =useState("")
+    const [loading,setLoading] = useState(true)
+    const [plantId,setPlantId] = useState([])
     const [customerSelected,setCustomerSelected] = useState(false)
     const [customerDetails,setCustomerDetails] = useState({
 
     })
+    const [searchData,setSearchData] = useState([])
+    const [searchDataDuplicate,setSearchDataduplcaite] = useState([])
+
+    const [plantFilterIds,setPlantFilterIds] = useState({sku_code:"",genus:""})
     const[suggestions,setSuggestions] = useState([])
+   
     useEffect (()=>{
         props.getAllCustomer()
         props.getAllCustomerType()
         props.getLocationList()   
         props.getCategoryList()
+        // if(loading){
+        props.searchPlantProductAPI().then(data=>{
+            // alert("ff")
+            // //console.log(data.data)
+            getAllData(data.data)
+            // setLoading(false)
+            // alert("Dsa")
+        })
+    // }
+// if(loading){
+
+
+
         // this.props.getAllSupplierAction()
-        props.searchPlantProductAPI()
-        
+   
 
     },[value])
+
+const getAllData = (data)=>{
+    setSearchData(data)
+    setSearchDataduplcaite(data)
+  
+            let plantIdsAll = data.map(plantData=>plantData.plant_id)
+        let plantId = plantIdsAll.filter(function( plant, index, array ) {
+            // alert("FDs")
+            return array.indexOf(plant) === index;
+        });
+        // console.log(plantId, plantId)
+        setPlantId(plantId)
+        setLoading(false)
+    }
+   
+    // setSearchData(searchList)
+
+// }
+
+    const getFilterData = (id,value)=>{
+        let filterIds = plantFilterIds
+        filterIds[id] = value
+        let filterData =  searchDataDuplicate.filter(product =>{
+            let notFoundCount = 0 
+            Object.keys(filterIds).map(id=>{
+                if(filterIds[id] !=="All" && filterIds[id] !==""){
+                    if((id ==="sku_code" || id ==="genus")  && product[id].toLowerCase().includes(filterIds[id].toLowerCase())){
+
+                    }
+                    else if(parseInt(product[id]) === parseInt(filterIds[id])){
+                    }else notFoundCount++
+                }
+            })
+            if(notFoundCount ===0)return product
+
+        })
+        //console.log(filterData)
+        setSearchData(filterData)
+        setPlantFilterIds(filterIds)
+        // searchList:filterData,
+        // plantFilterIds:filterIds
+
+    }
     const handleCustomerData =(e)=>{
         // alert(e.target.value)
         if(e.target.id =="customer_id"){
-            // // console.log(customerDataById1)
+            // // //console.log(customerDataById1)
             props.getCustomerByIdQuote(e.target.value).then(data=>{
-                console.log(customerDataById1)
+                //console.log(customerDataById1)
                 // props.updateQuoteData(customerDataById1)
             })
             props.getAllCustomerType()
@@ -91,25 +154,18 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
 
     }
     const handleUpdate = ()=>{
-        // console.log(customerDataById1)
-        // console.log(quoteDetails)
+        // //console.log(customerDataById1)
+        // //console.log(quoteDetails)
         // let id = quoteDetails.id
         // let combineData = {...quoteDetails,...customerDataById1,id:id}
-        // console.log(combineData)
+        // //console.log(combineData)
 
         props.addToQuoteUpdate(quoteDetails)
 
     }
  
-    const {deleteCustomer,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
-    const {quoteDetails,searchList} = props.QuoteReducerData
-    // const {plantData,plantFilterIds,plantPageNumber} =props.plantData
-    let plantIdsAll = searchList.map(plantData=>plantData.plant_id)
-    let plantId = plantIdsAll.filter(function( plant, index, array ) {
-        console.log(array.indexOf(plant) +""+index)
-        return array.indexOf(plant) === index;
-    });
-    console.log(plantId)
+  
+    //console.log(searchData)
     // source:"",
     // ordered_by:"",
     // bill_to:"",
@@ -141,7 +197,7 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
 
     const onSuggestionsClearRequested1 = () =>  setSuggestions([])
     // const customerHandle  =(e)=>{
-    //     console.log(e.target.value,e.target.id)
+    //     //console.log(e.target.value,e.target.id)
     //     if(e.target.id =="discount_by_line_item"){
     //         let value = e.target.value ==0?true:false
     //         props.handleExchangeData(value,e.target.id,"customerDataById1")
@@ -168,7 +224,7 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
    const onChange2 = (e, { newValue }) => {
         // this.setState({plantNameValue:newValue});
         setPlantNameValue(newValue)
-        props.filterHandleData("sku_code",newValue)  
+        getFilterData("sku_code",newValue)  
         // let plantName = {}
         // plantName.plant_search =newValue
         // props.searchPlantProductAPI(plantName)    
@@ -184,7 +240,7 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
 
     const onSuggestionsClearRequested = () =>  setSuggestions([])
     const customerHandle  =(e)=>{
-        console.log(e.target.value,e.target.id)
+        //console.log(e.target.value,e.target.id)
         if(e.target.id =="discount_by_line_item"){
             let value = e.target.value ==0?true:false
             props.handleExchangeData(value,e.target.id,"customerDataById1")
@@ -211,11 +267,56 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
    const onChange1 = (e, { newValue }) => {
         // this.setState({plantNameValue:newValue});
         setPlantNameValue(newValue)
-        props.filterHandleData("genus",newValue)  
+        getFilterData("genus",newValue)  
         // let plantName = {}
         // plantName.plant_search =newValue
         // props.searchPlantProductAPI(plantName)    
     };
+    const changeData = (id)=>{
+        // alert(id)
+        if(id ==2){
+            // alert("D")
+            props.getQuoteList(quoteDetails.id)
+            // quoteList
+            // alert("FDS")
+     
+
+        }
+
+        
+    }
+    const addToPlant = (e)=>{
+        // alert(e.target.id)
+        // let search = searchData
+        let filterData1 = searchData.filter(data=>data.sku_code===e.target.id)
+        // console.log(filterData1.plant_id)
+        let obj = {}
+        let obj1 = {}
+        let arr  = []
+        obj.type ="plant"
+
+        obj1["plant_id"]=parseInt(filterData1[0].plant_id)
+        obj1.name=filterData1[0].plant_name
+        obj1.size=filterData1[0].plant_size
+        obj1.SKU=filterData1[0].sku_code
+        obj1.price=filterData1[0].sale_price
+        obj1.volume_rate=filterData1[0].volume_price_per_unit
+        obj1.disc_percent=filterData1[0].discount
+        obj1.qty=filterData1[0].volume_quantity
+        // console.log(obj1)
+        arr[0] = obj1
+        obj.items = arr
+
+
+        console.log(filterData1)
+        props.addToquoteAPICall(quoteDetails.id,obj)
+        let filterData = searchData.filter(data=>data.sku_code!==e.target.id)
+        setSearchData(filterData)
+      
+       console.log(filterData1)
+    //     console.log(searchData[e.target.id])
+
+    }
     const inputPropsPlant = {
         placeholder: 'Plant Name',
         value:plantNameValue,
@@ -234,6 +335,30 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
         onChange: onChange2,
         dataId: 'my-data-id',
     };
+    const changeDataValue  = (e)=>{
+        let result = e.target.id
+        // alert(result)
+        let value = result.split("^")
+        // alert(e.target.value)
+        let searchData1 = searchData
+        let data  =searchData1.map((seacrh,index)=>{
+            if(seacrh.sku_code == value[0]){
+                let searchObj = seacrh
+                searchObj[value[1]] = e.target.value
+                searchData1[index] = searchObj
+
+            }
+            return seacrh
+        })
+        console.log(data)
+        setSearchData(data)
+
+    }
+    const {deleteCustomer,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
+    const {quoteDetails,searchList,searchListDuplicate,quoteList} = props.QuoteReducerData
+    console.log(quoteList)
+    // const {plantData,plantFilterIds,plantPageNumber} =props.plantData
+ 
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -294,13 +419,13 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
                 </div>
 
                 <div class="">
-                <Tabs >
+                <Tabs onSelect={changeData} forceRenderTabPanel={true}>
                     <TabList >
-                        <Tab>Quote Details</Tab>
-                        <Tab  disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Add to Quote</Tab>
-                        <Tab disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Current Quote <span class="badge badge-pill badge-success">0</span></Tab>
-                        <Tab disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Order History</Tab>
-                        <Tab disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Notes</Tab>    
+                        <Tab  eventKey="0">Quote Details</Tab>
+                        <Tab  eventKey="1" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Add to Quote</Tab>
+                        <Tab  eventKey="2" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Current Quote <span class="badge badge-pill badge-success">{quoteList.items.length}</span></Tab>
+                        <Tab  eventKey="3" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Order History</Tab>
+                        <Tab  eventKey="4" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Notes</Tab>    
                     </TabList>
                     <TabPanel>
                         <div class="bg-white px-3 py-3">
@@ -420,7 +545,7 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
                                     {/* </div> */}
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
@@ -435,13 +560,13 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
                                         <label>Job Description</label>
                                         <input type="text" class="form-control" placeholder="" disabled={customerSelected?false:true} value={quoteDetails.job_description} id="job_description" onChange={handleCustomerData}></input>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-12 col-lg-5 col-xl-5">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Units</label>
@@ -459,7 +584,7 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
                                     {/* <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
                                         <a href="">Reset</a>
                                     </div> */}
-                                    <div class="col-md-12 col-lg-7 col-xl-7">
+                                    <div class="col-md-12 col-lg-6 col-xl-6">
                                         <div class="row">
                                             <div class="col-md-6 col-lg-4">
                                                 <label>Discount by Line item</label>
@@ -617,8 +742,8 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
                                                 <table class="table table-striped mb-0" border="0" width="100%">
                                                     <thead>
                                                         <tr>
-                                                            <th width="15%" class="">SKU</th>
-                                                            <th width="15%" class="text-center">Size</th>
+                                                            <th  width="6%">SKU</th>
+                                                            <th width="6%" class="text-center">Size</th>
                                                             <th width="6%" class="text-center">On Hand</th>
                                                             <th width="6%" class="text-center">Customer Orders</th>
                                                             <th width="8%" class="text-center">Current <br/>Available</th>
@@ -634,30 +759,74 @@ Rate</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <tr>
+                                                    {loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"white",width:"100%"}}><Loader/></div>:<tr>
+                                                        
                                                             <td colspan="13" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
-                                                                {plantId.map(plantId=>{
-                                                        console.log(JSON.parse(plantId))
+                                                                {plantId.map((plantId,index1)=>{
+                                                        //console.log(JSON.parse(plantId))
                                                        let count =0
-                                                            return searchList.map((plant,index)=>{
+                                                            return searchData.map((plant,index)=>{
+                                                                {/* console.log(index) */}
                                                              
                                                                 if(JSON.parse(plantId)===parseInt(plant["plant_id"])){
-                                                                if(count===0){
-                                                                    count++
+                                                                
+                                                                    let a = count++
                                                                     return(
-                                                                        <><tr style={{backgroundColor:"#EFEFEF"}}>
-                                                        <td colspan="5">
-                                                            <a href="">{plant.plant_name}</a>
-                                                        </td>
-                                                        <td colspan="8">
-                                                            <a href="">View Sales Orders</a>
-                                                        </td>
-                                                        <td>
-                                                            <a href=""> New Batch ID</a>
-                                                        </td>
-                                                    </tr>
-                                                    <tr >
+                                                                        <div>
+                                                    
+                                                   { a ==0?<tr class="tblLinks" style={{backgroundColor:"gray"}}>
+                                                                        <td colspan="13" style={{backgroundColor:"#f2f2f2"}}>
+
+                                                                            <a href="">{plant.plant_name!==null?plant.plant_name:"No Name"}</a>
+                                                                        </td>
+                                                                    </tr>:""}
+                                                                    <tr>
+                                                                        <td width="6%">
+                                                                            <a href="">{plant.sku_code}</a>
+                                                                        </td>
+                                                                       
+                                                                        <td class="text-center" width="6%"><a href="" style={{width:"50px"}}>{plant.size}</a></td>
+                                                                        <td class="text-center" width="6%">{plant.on_hand}</td>
+                                                                        <td class="text-center" width="6%">{plant.customer_orders}</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">{plant.current_available}</b></td>
+                                                                        <td class="text-center" width="6%">{plant.on_quotes}</td>
+                                                                        <td class="text-center" width="6%">{plant.open_pos}</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">{plant.future_availability}</b></td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value={plant.sale_price} id={plant.sku_code+"^sale_price"} onChange={changeDataValue}/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value={plant.volume_price_per_unit} id={plant.sku_code+"^volume_price_per_unit"} onChange={changeDataValue}/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder=""  value={quoteDetails.discount} id={plant.sku_code+"^discount"} onChange={changeDataValue}/>
+                                                                        </td>
+                                                                        <td class="text-center" width="6%" >
+                                                                            <div class="d-flex align-items-center">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value={plant.volume_quantity} id={plant.sku_code+"^volume_quantity"} onChange={changeDataValue}/>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        
+                                                                        <td class="text-center" width="4%">
+                                                                            <a  class="ml-2" onClick={addToPlant} id={plant.sku_code} style={{cursor: 'pointer'}}>
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""  onClick={addToPlant} id={plant.sku_code} />
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                    {/* <tr >
                                                         <td class="text-center">
                                                             <div class="custom-control custom-checkbox">
                                                                 <input type="checkbox" class="custom-control-input" id="customCheck2" />
@@ -686,48 +855,12 @@ Rate</th>
                                                                 <img src="assets/img/tbl-more-ic.svg" alt=""/>
                                                             </a>
                                                         </td>
-                                                    </tr>
-                                                    </>
+                                                    </tr> */}
+                                                    </div>
 
                                                     )
 
-                                                        }else{
-                                                            count++
-                                                        return(
-                                                        <>
-                                                    <tr>
-                                                        <td class="text-center">
-                                                            <div class="custom-control custom-checkbox">
-                                                                <input type="checkbox" class="custom-control-input" id="customCheck2" />
-                                                                <label class="custom-control-label" for="customCheck2"></label>
-                                                            </div>
-                                                        </td>
-                                                        <td class="text-nowrap">
-                                                        <span   style={{display:"inline-block",width: "150px",whiteSpace: "nowrap",overflow:"hidden",textOverflow: "ellipsis"}}>{plant.sku_code}</span>
-                                                        </td>
-                                                        <td><p style={{marginLeft:"-50px",marginTop:"17px"}}>{plant.supplier_id}</p></td>
-                                                        <td class="text-nowrap">{plant.batch_code}</td>
-                                                        <td class="text-nowrap">{plant.batch_date}</td>
-                                                        <td>-</td>
-                                                        <td><a href="">{plant.location_id}</a></td>
-                                                        <td>{plant.sales_ready_state}</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.sales_not_ready_state}</strong></td>
-                                                        <td class="text-nowrap">25-02-2020</td>
-                                                        <td>{plant.production_ready_state}</td>
-                                                        <td><strong class="text-nowrap text-center" style={{marginLeft:"9px"}}>{plant.production_not_ready_state}</strong></td>
-                                                        <td class="text-nowrap">{plant.production_ready_date}</td>
-                                                        <td class="invTblAction">
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-task-ic.svg" alt=""/>
-                                                            </a>
-                                                            <a href="">
-                                                                <img src="assets/img/tbl-more-ic.svg" alt=""/>
-                                                            </a>
-                                                        </td>
-                                                    </tr>
-                                                    </>
-                                                                    )
-                                                                }
+                                                        
                                                                
                                                             }   
                                                         })
@@ -739,7 +872,7 @@ Rate</th>
                                               
                                                                 </table>
                                                             </td>
-                                                        </tr>
+                                                        </tr>}
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -801,14 +934,16 @@ Rate</th>
                                                         <tr>
                                                             <td colspan="12" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
-                                                                    <tr class="movePanel">
+                                                                 
+                                                                       { quoteList.items.map((data,index)=>{
+                                                                           return(<>{index==0?<tr class="movePanel">
                                                                         <td colspan="12">
                                                                             <div class="row">
                                                                                 <div class="col-md-6">
                                                                                     <a href="" class="mr-3">
                                                                                         <i class="fas fa-expand-arrows-alt text-dark"></i>
                                                                                     </a>
-                                                                                    <strong>West Wing Front Gardens</strong>
+                                                                                    <strong>{data.plant_name}</strong>
                                                                                 </div>
                                                                                 <div class="col-md-6 text-right">
                                                                                     
@@ -818,245 +953,13 @@ Rate</th>
                                                                                 </div>
                                                                             </div>
                                                                         </td>
-                                                                    </tr>
-                                                                    {/* Main Content Row starts here */}
-                                                                    <tr class="tblBgWhite">
-                                                                        <table class="table table-striped table-no-border mb-0" border="0" width="100%">
-                                                                            <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">1</td>
-                                                                                <td width="97%" colspan="8" class="pt-2">
-                                                                                    Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td width="3%">
-                                                                                    
-                                                                                </td>
-                                                                                
-                                                                                <td width="35%">
-                                                                                    <select class="form-control plantNameSel">
-                                                                                        <option>43-TF-30-1G</option>
-                                                                                        <option>Option 1</option>
-                                                                                        <option>Option 2</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="2.0"/>
-                                                                                </td>
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="30"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="9%" >
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="8.25"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-red">12min </span>
-                                                                                        <span class="text-green text-right mx-auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;21</span>
-                                                                                    </div>
-                                                                                    
-                                                                                </td>
-                                                                                <td width="8%" class="text-right">
-                                                                                    <span class="text-success controlLabel text-right">90.00</span>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">8.25</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="" class="text-center actionTd">
-                                                                                    <div class="d-flex justify-content-center">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <div class="dropdown actionDropdown  ml-2">
-                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                <i class="fas fa-ellipsis-v"></i>
-                                                                                            </a>
-                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </tr>
-                                                                    <tr class="tblBgGrey">
-                                                                        <table class="table table-striped table-no-border mb-0" border="0" width="100%">
-                                                                            <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">2</td>
-                                                                                <td width="97%" colspan="8" class="pt-2">
-                                                                                    Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td width="3%">
-                                                                                    
-                                                                                </td>
-                                                                                
-                                                                                <td width="35%">
-                                                                                    <select class="form-control plantNameSel">
-                                                                                        <option>43-TF-30-1G</option>
-                                                                                        <option>Option 1</option>
-                                                                                        <option>Option 2</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="2.0"/>
-                                                                                </td>
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="30"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="9%" >
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="8.25"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-red">12min </span>
-                                                                                        <span class="text-green text-right mx-auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;21</span>
-                                                                                    </div>
-                                                                                    
-                                                                                </td>
-                                                                                <td width="8%" class="text-right">
-                                                                                    <span class="text-success controlLabel text-right">90.00</span>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">8.25</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="" class="text-center actionTd">
-                                                                                    <div class="d-flex justify-content-center">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <div class="dropdown actionDropdown  ml-2">
-                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                <i class="fas fa-ellipsis-v"></i>
-                                                                                            </a>
-                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="trBgWhite ">
-                                                                                <td width="3%"></td>
-                                                                                <td width="97%" class="" colspan="12">
-                                                                                    <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                                    <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </tr>
-                                                                    <tr class="tblBgWhite">
-                                                                        <table class="table table-striped table-no-border mb-0" border="0" width="100%">
-                                                                            <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">3</td>
-                                                                                <td width="97%" colspan="8" class="pt-2">
-                                                                                    Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td width="3%">
-                                                                                    
-                                                                                </td>
-                                                                                
-                                                                                <td width="35%">
-                                                                                    <select class="form-control plantNameSel">
-                                                                                        <option>43-TF-30-1G</option>
-                                                                                        <option>Option 1</option>
-                                                                                        <option>Option 2</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="2.0"/>
-                                                                                </td>
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="30"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="9%" >
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="8.25"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-red">12min </span>
-                                                                                        <span class="text-green text-right mx-auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;21</span>
-                                                                                    </div>
-                                                                                    
-                                                                                </td>
-                                                                                <td width="8%" class="text-right">
-                                                                                    <span class="text-success controlLabel text-right">90.00</span>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">8.25</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="" class="text-center actionTd">
-                                                                                    <div class="d-flex justify-content-center">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <div class="dropdown actionDropdown  ml-2">
-                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                <i class="fas fa-ellipsis-v"></i>
-                                                                                            </a>
-                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </tr>
-                                                                    
-                                                                </table>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td colspan="12" class="p-0">
-                                                                <table class="table table-striped mb-0" border="0" width="100%">
-                                                                    <tr class="movePanel">
-                                                                        <td colspan="12">
-                                                                            <div class="row">
-                                                                                <div class="col-md-6">
-                                                                                    <a href="" class="mr-3">
-                                                                                        <i class="fas fa-expand-arrows-alt text-dark"></i>
-                                                                                    </a>
-                                                                                    <strong>West Wing Front Gardens</strong>
-                                                                                </div>
-                                                                                <div class="col-md-6 text-right">
-                                                                                    
-                                                                                    <a href="#" class="">
-                                                                                        <img src="assets/img/close-ic-grey.svg" alt=""/>
-                                                                                    </a>
-                                                                                </div>
-                                                                            </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    {/* Main Content Row starts here */}
+                                                                    </tr>:""}
                                                                     <tr class="tblBgWhite">
                                                                         <table class="table table-striped table-no-border mb-0" border="0" width="100%">
                                                                             <tr class="topTitleRow">
                                                                                 <td width="3%" class="pt-2">4</td>
                                                                                 <td width="97%" colspan="8" class="pt-2">
-                                                                                    Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle
+                                                                                   {data.SKU}
                                                                                 </td>
                                                                             </tr>
                                                                             <tr>
@@ -1071,20 +974,20 @@ Rate</th>
                                                                                         <option>Option 2</option>
                                                                                     </select>
                                                                                 </td>
-                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
+                                                                                <td width="10%" class="text-center">{data.size}</td>
+                                                                                <td width="8%" class="text-center">{new Date().toDateString()}</td>
                                                                                 
                                                                                 <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="2.0"/>
+                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value={data.disc_percent}/>
                                                                                 </td>
                                                                                 <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="30"/>
+                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value={data.qty}/>
                                                                                     <div class="">
                                                                                         <span class="text-green">21</span>
                                                                                     </div>
                                                                                 </td>
                                                                                 <td width="9%" >
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="8.25"/>
+                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value={data.price}/>
                                                                                     <div class="">
                                                                                         <span class="text-red">12min </span>
                                                                                         <span class="text-green text-right mx-auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;21</span>
@@ -1092,7 +995,7 @@ Rate</th>
                                                                                     
                                                                                 </td>
                                                                                 <td width="8%" class="text-right">
-                                                                                    <span class="text-success controlLabel text-right">90.00</span>
+                                                                                    <span class="text-success controlLabel text-right">{data.item_total}</span>
                                                                                     <div class="">
                                                                                         <span class="text-green">8.25</span>
                                                                                     </div>
@@ -1117,149 +1020,16 @@ Rate</th>
                                                                             </tr>
                                                                         </table>
                                                                     </tr>
-                                                                    <tr class="tblBgGrey">
-                                                                        <table class="table table-striped table-no-border mb-0" border="0" width="100%">
-                                                                            <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">5</td>
-                                                                                <td width="97%" colspan="8" class="pt-2">
-                                                                                    Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td width="3%">
-                                                                                    
-                                                                                </td>
-                                                                                
-                                                                                <td width="35%">
-                                                                                    <select class="form-control plantNameSel">
-                                                                                        <option>43-TF-30-1G</option>
-                                                                                        <option>Option 1</option>
-                                                                                        <option>Option 2</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="2.0"/>
-                                                                                </td>
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="30"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="9%" >
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="8.25"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-red">12min </span>
-                                                                                        <span class="text-green text-right mx-auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;21</span>
-                                                                                    </div>
-                                                                                    
-                                                                                </td>
-                                                                                <td width="8%" class="text-right">
-                                                                                    <span class="text-success controlLabel text-right">90.00</span>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">8.25</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="" class="text-center actionTd">
-                                                                                    <div class="d-flex justify-content-center">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <div class="dropdown actionDropdown  ml-2">
-                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                <i class="fas fa-ellipsis-v"></i>
-                                                                                            </a>
-                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="trBgWhite ">
-                                                                                <td width="3%"></td>
-                                                                                <td width="97%" class="" colspan="12">
-                                                                                    <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                                    <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </tr>
-                                                                    <tr class="tblBgWhite">
-                                                                        <table class="table table-striped table-no-border mb-0" border="0" width="100%">
-                                                                            <tr class="topTitleRow">
-                                                                                <td width="3%" class="pt-2">6</td>
-                                                                                <td width="97%" colspan="8" class="pt-2">
-                                                                                    Diervilla x Kodiak® Orange ('G2X88544') - Kodiak® Orange Honeysuckle
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr>
-                                                                                <td width="3%">
-                                                                                    
-                                                                                </td>
-                                                                                
-                                                                                <td width="35%">
-                                                                                    <select class="form-control plantNameSel">
-                                                                                        <option>43-TF-30-1G</option>
-                                                                                        <option>Option 1</option>
-                                                                                        <option>Option 2</option>
-                                                                                    </select>
-                                                                                </td>
-                                                                                <td width="10%" class="text-center">150CM 15 gal</td>
-                                                                                <td width="8%" class="text-center">19/05/2020</td>
-                                                                                
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="2.0"/>
-                                                                                </td>
-                                                                                <td width="9%" class="text-right">
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="30"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">21</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="9%" >
-                                                                                    <input type="text" class="form-control  text-right mx-auto" placeholder="" value="8.25"/>
-                                                                                    <div class="">
-                                                                                        <span class="text-red">12min </span>
-                                                                                        <span class="text-green text-right mx-auto">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;21</span>
-                                                                                    </div>
-                                                                                    
-                                                                                </td>
-                                                                                <td width="8%" class="text-right">
-                                                                                    <span class="text-success controlLabel text-right">90.00</span>
-                                                                                    <div class="">
-                                                                                        <span class="text-green">8.25</span>
-                                                                                    </div>
-                                                                                </td>
-                                                                                <td width="" class="text-center actionTd">
-                                                                                    <div class="d-flex justify-content-center">
-                                                                                        <a href="#" class="">
-                                                                                            <img src="assets/img/copy-ic-blue.svg" alt=""/>
-                                                                                        </a>
-                                                                                        <div class="dropdown actionDropdown  ml-2">
-                                                                                            <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                                                <i class="fas fa-ellipsis-v"></i>
-                                                                                            </a>
-                                                                                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                                                <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                                                <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                                                <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </table>
-                                                                    </tr>
+                                                                   
+                                           </>)
+
+                                                                       })}
+
                                                                     
                                                                 </table>
                                                             </td>
                                                         </tr>
+                                            
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1273,23 +1043,23 @@ Rate</th>
                                                             <label >Item Subtotal <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
-                                                            <label >175.60</label>
+                                                            <label >{quoteList.order["total"]}</label>
                                                         </div>
                                                     </div>
-                                                    <div class="row">
+                                                    {/* <div class="row">
                                                         <div class="col-md-8 text-right">
                                                             <label >Hang Tags and Pot Labels <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
                                                             <label >8.75</label>
                                                         </div>
-                                                    </div>
+                                                    </div> */}
                                                     <div class="row subTotLbl">
                                                         <div class="col-md-8 text-right">
                                                             <label >Discounts <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
-                                                            <label >-27.10</label>
+                                                            <label >{quoteList.order["discount"]}</label>
                                                         </div>
                                                     </div>
                                                     <div class="row subTotLbl text-green">
@@ -1297,7 +1067,7 @@ Rate</th>
                                                             <label class="text-uppercase">Subtotal after Discounts <span>$</span></label>
                                                         </div>
                                                         <div class="col-md-2 text-right">
-                                                            <label class="f-s-24">544.50</label>
+                                                            <label class="f-s-24">{quoteList.order["subtotal"]}</label>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1399,5 +1169,5 @@ const mapStateToProps = (state)=>(
         
     }
 )
-export default connect(mapStateToProps,{filterHandleData,getAllPlantAction,filterPlantManagerData,getCategoryList,getAllPlants,getLocationList,setPlantPageNumber,resetFileds,getPlantList,getFilterResult,
+export default connect(mapStateToProps,{getQuoteList,addToquoteAPICall,filterHandleData,getAllPlantAction,filterPlantManagerData,getCategoryList,getAllPlants,getLocationList,setPlantPageNumber,resetFileds,getPlantList,getFilterResult,
 searchPlantProductAPI,getCustomerByIdQuote,addToQuoteUpdate,updateQuoteData,handleInputChange,addNewQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
