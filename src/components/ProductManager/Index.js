@@ -87,6 +87,7 @@ const  ProductManagement = (props) =>{
     );
     const onChange = (event, { newValue }) => {
         setValue(newValue)
+        setLoaderMessage("No Records Found.")
         props.serachProduct({product: newValue, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
         setInputValue(newValue);
         // setLoaderMessage("No Records Found...")
@@ -114,7 +115,6 @@ const  ProductManagement = (props) =>{
 
         const handleCategoryData =(e)=>{
             let temSub =[];
-
            setLoaderMessage("No Records Found.")
             //console.log("propsSubCategory", props.categoryData.subCategoryData)
             if(e.target.id ==="category"){
