@@ -105,23 +105,23 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
                 }
 
             }
-            if (object === "phone2") {
-                if(element.value !== ""){
-                    let enteredNumber = element.value.trim().match(/\d/g)
-                    if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
-                        document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-                        errorCount++;
-                    } else {
-                        document.getElementById("phone2-validtor").innerText = ""
-                    }
+            // if (object === "phone2") {
+            //     if(element.value !== ""){
+            //         let enteredNumber = element.value.trim().match(/\d/g)
+            //         if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+            //             document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+            //             errorCount++;
+            //         } else {
+            //             document.getElementById("phone2-validtor").innerText = ""
+            //         }
     
-                }
-                else if(element.value === ""){
-                    document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-                    errorCount++;
-                }
+            //     }
+            //     else if(element.value === ""){
+            //         document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+            //         errorCount++;
+            //     }
 
-            }
+            // }
    
 
             // if (object === "phone2_ext") {
@@ -253,10 +253,10 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
    
   
   
-        <div class="row mt-3">
+        {/* <div class="row mt-3"> */}
         {/* <div class="d-flex"> */}
-        <div class="col-md-6 col-lg-6">
-            <div className="custom-control custom-checkbox mb-1">
+        {/* <div class="col-md-6 col-lg-6"> */}
+            {/* <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"primary_contact"} onChange={handleInput} checked={parseInt(supplierContact.primary_contact)==1?true:false}/>
                 <label className="custom-control-label" for={"primary_contact"}>This person is the primary contact</label>
             </div>
@@ -265,7 +265,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"receives_all"} onChange={handleInput}  checked={parseInt(supplierContact.receives_all)==1?true:false}/>
                 <label className="custom-control-label" for={"receives_all"}>This person receives all communication</label>
-            </div>
+            </div> */}
             {/* </div> */}
             {/* <div class="custom-control custom-radio">
                 <input type="checkbox" id="delivery" name="delivery" value={"Delivery"}  class="custom-control-input" onClick={""} />
@@ -276,8 +276,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
                 <input type="checkbox" id="pickup" name="delivery" value={"Pickup"}  onClick={""} class="custom-control-input" />
                 <label class="custom-control-label" for="delivery">Pick up</label>
             </div> */}
-        </div>
-        </div>
+        {/* </div> */}
+        {/* </div> */}
 
 
         </ModalBody>
