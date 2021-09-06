@@ -658,13 +658,13 @@ class QuoteList extends React.Component {
 
                                             <div class="stripe" 
                                             style={
-                                                item.label==="OPEN" ? {backgroundColor:"#D2EAFF"} : 
+                                                item.label==="OPEN" ? {backgroundColor:"#345d99"} : 
                                                 item.label==="CLOSED" ? {backgroundColor:"#C4E9C4"} :
-                                                item.label==="READY" ? {backgroundColor:"#FBE1A7", color:"#FF8800"} :
+                                                item.label==="READY" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
 
-                                                item.label==="PICKING" ? {backgroundColor:"#CBF4FF"} :
-                                                item.label==="SHIPPED" ? {backgroundColor:"#D4BCFF"} :
-                                                item.label==="LATE" ? {backgroundColor:"red"
+                                                item.label==="PICKING" ? {backgroundColor:"#4b9ef7"} :
+                                                item.label==="SHIPPED" ? {backgroundColor:"#e54dcd"} :
+                                                item.label==="LATE" ? {backgroundColor:"#ed3833"
                                             } :
                                                 
                                                 
