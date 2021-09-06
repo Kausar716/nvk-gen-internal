@@ -21,7 +21,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
   
              
    let allCountry = Object.keys(countryDetails);
-   console.log(countryDetails[0])
+   console.log(countryDetails["USA"])
         
    let allStates ;
    // let countZipRegix
@@ -34,7 +34,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         //    console.log(this.countZipRegix)
            // console.log(this.state.clientData.country)
        }else{
-        // allStates = countryDetails[0];
+        allStates = countryDetails["USA"][0];
 
        }
 //    }
@@ -148,7 +148,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
             }
             if (object === "zip") {
-                if(element.value == "" || Number(element.value) !==NaN){
+                if(element.value == "" ||isNaN(element.value) ){
                 // if ( !element.value.trim().match(this.countZipRegix)) {
                     document.getElementById("zip-validtor").innerText = "Enter Valid Postal/ZIP  "
                     errorCount++;
