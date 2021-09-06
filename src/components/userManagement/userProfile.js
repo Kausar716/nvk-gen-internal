@@ -7,9 +7,10 @@ import 'react-tabs/style/react-tabs.css';
 //import { confirmAlert } from 'react-confirm-alert'; // Import
 //import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
-import {getUsersList,showUser,updateUser,uploadImage,removeImage,deleteUser} from "../../actions/userAction";
+import {showUser,updateUser,uploadImage,removeImage,deleteUser,getUsersList} from "../../actions/userAction";
+
 //import getRolesList from "../../actions/userAccessAction";
-import {tabChangeValues, displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData, userAccessList} from "../../actions/userAccessAction";
+import {tabChangeValues, displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData, userAccessList,getRolesList,getPermissionList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
 //import SuccessModal from '../Modal/SuccessModal';
 import CheckBox from "./Checkbox";
@@ -107,6 +108,10 @@ class UserProfile extends React.Component {
     }
     componentDidMount(){
 
+        this.props.getUsersList()
+        this.props.getRolesList()
+        this.props.getPermissionList()
+
         //this.props.tabChangeValues();
 
         // if(this.props.tabChangeValues(1)){
@@ -127,6 +132,8 @@ class UserProfile extends React.Component {
                deleted_at:selectedUser.deleted_at
             });
 
+
+           
 
             // window.addEventListener("focus", this.onFocus)
     }
@@ -1172,5 +1179,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default withRouter(connect(mapStateToProps,{updateUser,removeImage,userAccessList,
+export default withRouter(connect(mapStateToProps,{updateUser,removeImage,userAccessList,getUsersList,getRolesList,getPermissionList,
     showUser,uploadImage,deleteUser,tabChangeValues,displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData}) (UserProfile));
