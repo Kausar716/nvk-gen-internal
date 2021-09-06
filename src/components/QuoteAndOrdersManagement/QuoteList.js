@@ -399,7 +399,6 @@ class QuoteList extends React.Component {
 
         return this.state.list.map(item => (
           
-
             <div class="custom-control custom-checkbox" style={{marginRight:"3em"}}>
                 <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
@@ -459,6 +458,19 @@ class QuoteList extends React.Component {
         // let totalStatusList =statusList.map(e=>e.status)
             //console.log("ListofCheckbox", this.state.list)
          //this.find_duplicate_in_array(totalStatusList)
+
+            let listValue = this.state.list
+            let deductingFinalValues =listValue.filter(e=>e.label==="OPEN" || e.label==="READY"|| e.label==="READY"|| e.label==="PICKING"|| e.label==="SHIPPED"|| e.label==="LATE");
+
+            console.log("deductingFinalValues", deductingFinalValues)
+
+
+
+
+
+
+
+
 
          let finalCount = this.state.allCountList
          console.log("finalCount123",finalCount)
@@ -637,20 +649,22 @@ class QuoteList extends React.Component {
                 // onChange={this.handleClickCheckBox} 
                 /> */}
                             
-                                {this.state.list.map(item=>{
+                                {deductingFinalValues.map(item=>{
                                     
-                                    return <div style={{display:"flex"}}>
+                                    return <div className="boxCreation">
                                          
-                                      <div class="cardBox individualCard openStsCard" style={{minWidth:"90px"}}>
+                                        <div  class="cardBox individualCard openStsCard">
 
                                             <div class="stripe" 
-                                            style={item.label==="OPEN" ? {backgroundColor:"#d2eafc"} : 
-                                                item.label==="CLOSED" ? {backgroundColor:"#c4e9c4"} :
-                                                item.label==="READY" ? {backgroundColor:"#fbe1a7"} :
+                                            style={
+                                                item.label==="OPEN" ? {backgroundColor:"#345d99"} : 
+                                                item.label==="CLOSED" ? {backgroundColor:"#C4E9C4"} :
+                                                item.label==="READY" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
 
-                                                item.label==="PICKING" ? {backgroundColor:"#cbf4fd"} :
-                                                item.label==="SHIPPED" ? {backgroundColor:"#d2eafc"} :
-                                                item.label==="CANCEL" ? {backgroundColor:"red"} :
+                                                item.label==="PICKING" ? {backgroundColor:"#4b9ef7"} :
+                                                item.label==="SHIPPED" ? {backgroundColor:"#e54dcd"} :
+                                                item.label==="LATE" ? {backgroundColor:"#ed3833"
+                                            } :
                                                 
                                                 
                                                 
@@ -666,7 +680,7 @@ class QuoteList extends React.Component {
                                                     // item.label==="CANCEL" ? "brown":
                                             } 
                                             ></div>
-                                                <p>{item.name}</p>
+                                                <p style={{marginTop:"5px"}}>{item.name}</p>
                                             <h4>{ item.label==="OPEN" ? this.state.allCountList.OPEN :
                                                     item.label==="CLOSED" ? this.state.allCountList.CLOSED :
                                                     item.label==="READY" ? this.state.allCountList.READY :
@@ -687,13 +701,13 @@ class QuoteList extends React.Component {
                                                      className="checkBoxHide"
                                                      >
                                                     </input>
-                                                    <label  for={item.id} > <span style={{color:"#5287f5", cursor:"pointer", marginLeft:"-13px"}}>View All</span></label>
+                                                    <label style={{marginTop:"10px"}} for={item.id} > <span style={{color:"#5287f5", cursor:"pointer", marginLeft:"-13px"}}>View All</span></label>
                                                    
                                             </div>
                                            
                                         </div>
 
-                                        <div class="equalSign">+</div>
+                                        <span class="plusSignInQuote">+</span>
                                        
                                         
                                     </div>
@@ -746,7 +760,7 @@ class QuoteList extends React.Component {
                             <div class="equalSign">&nbsp;</div>
                             <div class="verDivider"></div>
                             <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard activeQuotesCard" style={{minWidth:"90px"}}>
+                            <div class="cardBoxwide individualCard activeQuotesCard" >
                                 <div class="stripe"></div>
                                 <p>Active Quotes</p>
                                 <h4>12</h4>
@@ -762,7 +776,7 @@ class QuoteList extends React.Component {
                                 </div>
                             </div> */}
                             <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard quotesFlaggedCard" style={{minWidth:"90px"}}>
+                            <div class="cardBoxwide individualCard quotesFlaggedCard" >
                                 <div class="stripe"></div>
                                 <p>Quotes Flagged</p>
                                 <h4><font color="red">12</font></h4>
@@ -780,7 +794,7 @@ class QuoteList extends React.Component {
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Search Quotes &amp; Orders1234 {this.state.abcdefg}</h2>
+                        <h2>Search Quotes &amp; Orders {this.state.abcdefg}</h2>
                         {/* {this.state.abcdefg} */}
                         
                         <div class="row mt-3 align-items-center">

@@ -1032,6 +1032,9 @@ class QLOrders extends React.Component {
         // let totalStatusList =statusList.map(e=>e.status)
             //console.log("ListofCheckbox", this.state.list)
          //this.find_duplicate_in_array(totalStatusList)
+         let listValue = this.state.list
+            let deductingFinalValues =listValue.filter(e=>e.label==="OPEN" || e.label==="READY"|| e.label==="READY"|| e.label==="PICKING"|| e.label==="SHIPPED"|| e.label==="LATE");
+
 
          let finalCount = this.state.allCountList
          console.log("finalCount123",finalCount)
@@ -1191,7 +1194,7 @@ class QLOrders extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div> */}
-                            <div class="cardBoxwide individualCard totalCard" style={{minWidth:"130px"}}>
+                            <div class="cardBoxwide individualCard totalCard" >
                                 <div class="stripe"></div>
                                 <p>Total Orders</p>
                                 <h4>{finalTotalValue}</h4>
@@ -1210,20 +1213,22 @@ class QLOrders extends React.Component {
                 // onChange={this.handleClickCheckBox} 
                 /> */}
                             
-                                {this.state.list.map(item=>{
+                                {deductingFinalValues.map(item=>{
                                     
                                     return <div style={{display:"flex"}}>
                                          
-                                      <div class="cardBox individualCard openStsCard" style={{minWidth:"90px"}}>
+                                      <div class="cardBox individualCard openStsCard" >
 
                                             <div class="stripe" 
-                                            style={item.label==="OPEN" ? {backgroundColor:"#d2eafc"} : 
-                                                item.label==="CLOSED" ? {backgroundColor:"#c4e9c4"} :
-                                                item.label==="READY" ? {backgroundColor:"#fbe1a7"} :
+                                            style={
+                                                item.label==="OPEN" ? {backgroundColor:"#345d99"} : 
+                                                item.label==="CLOSED" ? {backgroundColor:"#C4E9C4"} :
+                                                item.label==="READY" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
 
-                                                item.label==="PICKING" ? {backgroundColor:"#cbf4fd"} :
-                                                item.label==="SHIPPED" ? {backgroundColor:"#d2eafc"} :
-                                                item.label==="CANCEL" ? {backgroundColor:"red"} :
+                                                item.label==="PICKING" ? {backgroundColor:"#4b9ef7"} :
+                                                item.label==="SHIPPED" ? {backgroundColor:"#e54dcd"} :
+                                                item.label==="LATE" ? {backgroundColor:"#ed3833"
+                                            } :
                                                 
                                                 
                                                 
@@ -1239,7 +1244,7 @@ class QLOrders extends React.Component {
                                                     // item.label==="CANCEL" ? "brown":
                                             } 
                                             ></div>
-                                                <p>{item.name}</p>
+                                                <p style={{marginTop:"5px"}}>{item.name}</p>
                                             <h4>{ item.label==="OPEN" ? this.state.allCountList.OPEN :
                                                     item.label==="CLOSED" ? this.state.allCountList.CLOSED :
                                                     item.label==="READY" ? this.state.allCountList.READY :

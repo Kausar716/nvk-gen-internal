@@ -34,6 +34,7 @@ class UserProfile extends React.Component {
             disableImageRemove:true,
             disableImageUpload:false,
             imgLoader:false,
+            allChecked:false,
         
             shouldBlockNavigation:true,
         
@@ -93,10 +94,10 @@ class UserProfile extends React.Component {
             checkedActive:false,
             deleted_at:null,
             locations: [
-                { id: 1, value: "Form A",address:"1105 HWY5, Dundas, CN", isChecked: false },
-                { id: 2, value: "Form B", address:"1105 HWY5, Dundas, UN", isChecked: false },
-                { id: 3, value: "Form C", address:"11 HWY5, Dundas, Uk",isChecked: false },
-                { id: 4, value: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
+                { id: 1, name: "Form A",address:"1105 HWY5, Dundas, CN", isChecked: false },
+                { id: 2, name: "Form B", address:"1105 HWY5, Dundas, UN", isChecked: false },
+                { id: 3, name: "Form C", address:"11 HWY5, Dundas, Uk",isChecked: false },
+                { id: 4, name: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
               ]
         }
 
@@ -594,6 +595,70 @@ class UserProfile extends React.Component {
         // this.props.onTagsChange(e, selectedUser[0])
 
     }
+
+       handleChangeCheckbox = e => {
+        //debugger
+                    let itemName = e.target.name;
+                    let checked = e.target.checked;
+                    this.setState(prevState => {
+                    let { locations, allChecked } = prevState;
+                    if (itemName === "checkAll") {
+                        allChecked = checked;
+                        locations = locations.map(item => ({ ...item, isChecked: checked }));
+                    } else {
+                        locations = locations.map(item =>
+                        item.name === itemName ? { ...item, isChecked: checked } : item
+                        );
+                        allChecked = locations.every(item => item.isChecked);
+                    }
+                    return { locations, allChecked };
+                    });
+
+    console.log("items::",itemName , checked)
+  }
+
+       checkboxList2 = () => {
+
+        return this.state.locations.map(item => (
+          
+                    <div>
+                    <ul class="list-unstyled" style={{marginTop:"1em"}}>
+                                <li>
+                                <div class="custom-control custom-checkbox" style={{marginTop:"-17px"}}>
+                                <input
+                                
+                                    type="checkbox"
+                                    key={item.id}
+                                            name={item.name}
+                                            value={item.name}
+                                          
+                                            checked={item.isChecked}
+                                            onChange={this.handleChangeCheckbox}
+                                />{" "}
+                                {item.name}
+                                <span>{item.address}</span>
+                                {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
+                                </div>
+                                </li>
+                                </ul>
+                    </div>
+           
+
+
+
+            // <div class="custom-control custom-checkbox" style={{marginRight:"3em"}}>
+            //     <input type="checkbox" class="custom-control-input" id={item.id}
+            //         key={item.id}
+            //         name={item.name}
+            //         value={item.name}
+            //         checked={item.isChecked}
+            //         onChange={this.handleChangeCheckbox}
+            //     // onChange={this.handleClickCheckBox} 
+            //     />
+            //     <label class="custom-control-label" for={item.id} >{item.name}</label>
+            // </div>
+        ));
+      }
     
       
 
@@ -663,6 +728,9 @@ class UserProfile extends React.Component {
       
          
        }
+
+    
+
 
        const confirmAction = (actionType)=>{
        
@@ -900,24 +968,24 @@ class UserProfile extends React.Component {
                                                 </div>
 
                                                 <p><small>Image should be print quality PNG or JPG</small></p>
-                                                <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative"}}>
+                                                <a href="#" class="btn btn-primary btn-block btnGroup" style={{position:"relative",cursor:"pointer"}}>
                                                 <button class="btn btn-primary btn-block btnGroup" style={{backgroundColor:"transparent", border:"none", cursor:"pointer"}}
                                                 //disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
                                                  >
-                                                    <span class="d-flex align-items-center justify-content-around">
+                                                    <span class="d-flex align-items-center justify-content-around" style={{cursor:"pointer"}}>
                                                     <input  type="file"  id={new Date().getTime()}  ref={fileInput => (this.fileInput = fileInput)}
-                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0}} accept="image/png, image/jpeg"
+                                                    onChange={this.handlImageUpload} style={{zIndex:1,opacity:0, cursor:"pointer"}} accept="image/png, image/jpeg" 
                                                     //disabled={this.state.logo.length >0 || null ? this.state.disableImageUpload===false : this.state.disableImageUpload===true }
                                                       />
-                                                        <span class="f-s-20" style={{position:"absolute"}}>Upload</span>                                                        
+                                                        <span class="f-s-20" style={{position:"absolute", cursor:"pointer"}}>Upload</span>                                                        
                                                     </span>
-                                                    <img src="assets/img/upload-ic-white.svg"  alt="" style={{borderRadius:"7em"}}/>
+                                                    <img src="assets/img/upload-ic-white.svg"  alt="" style={{borderRadius:"7em", cursor:"pointer"}}/>
                                                     </button>
                                                 </a>
 
 
                                                 <div>
-                                                <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
+                                                <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{cursor:"pointer"}}
                                                     disabled={this.state.logo.length >0 ? this.state.disableImageRemove ===false : this.state.disableImageRemove===true}
                                                     // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
                                                     onClick={()=>{confirmAction("deleteImage")}}>
@@ -1005,30 +1073,40 @@ class UserProfile extends React.Component {
                                                     <label>Location Assigned</label>
                                                     <div class="locAssignBox">
 
+                                                            {this.checkboxList2()}
 
-                                                    {this.state.locations.map(loc=>{
+                                                    
+                                                    {/* {this.state.locations.map(loc=>{
                                                         return(
                                                             <CheckBox
                                                                             handleCheckChieldElement={this.handleCheckChieldElement}
                                                                             {...loc}
                                                                         />
                                                         )
-                                                    })}
+                                                    })} */}
 
                                                    
                                                    
                                                     </div>
                                                     <div class="mt-3">
                                                         <div class="custom-control custom-checkbox">
-                                                            {/* <input type="checkbox" class="custom-control-input" id="customCheck5"/>
-                                                            <label class="custom-control-label pl-2" for="customCheck5">User has access to all locations </label> */}
-                                                            <input
+                                                           
+                                                            {/* <input
                                                                         disabled={!true}
                                                                         type="checkbox"
                                                                         onClick={this.handleAllChecked}
                                                                         value="checkedall"
                                                                         />{" "}
-                                                                        User has access to all locations
+                                                                        User has access to all locations */}
+                                                <input
+                                                   
+                                                    type="checkbox"
+                                                    name="checkAll"
+                                                    id="checkAll"
+                                                    checked={this.state.allChecked}
+                                                    onChange={this.handleChangeCheckbox}
+                                                    />
+                                                     <label style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
                                                         </div> 
                                                     </div>
                                                 </div>

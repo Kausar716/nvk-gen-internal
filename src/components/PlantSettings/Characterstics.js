@@ -57,7 +57,7 @@ class Characterstics extends Component {
                 featureName:0
             },
             tooltipOpen:false,
-            subChildernAddView:false,
+            subChildernAddView:true,
             subChildernAddInactiveView:false,
             sortId: 0,
             activeId: 0,
@@ -117,7 +117,7 @@ class Characterstics extends Component {
 
        })
      
-        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive,loading:true})
+        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive,loading:true,subChildernAddView:true })
     }
     // onDragOver = (ev)=>{
     //     ev.preventDefault();
@@ -571,18 +571,41 @@ componentDidMount(){
             zoneObj.status=1
             if(this.validateFeature()){
                 let result = this.props.handleAddZone(zoneObj)
-                //this.props.getAllSubAttribute(12)
+
+                this.setState({
+                    subChildernAddView:true
+                })
+                //this.getCatgoryData()
+                this.props.getAllSubAttribute(12)
                 result.then(res=>{
                     this.props.getAllSubAttribute(12).then(()=>{
+
+                        this.setState({
+                            subChildernAddView:true
+                        })
                         // alert("ji")
                         this.getCatgoryData()
+                        this.setState({
+                            subChildernAddView:true
+                        })
                     })
                 })
            
+                // this.getCatgoryData()
                 this.setState({
                     subName:"",
                     isEditingFeature:true,
+                    subChildernAddView:true
+                    
                 })
+
+
+                if(result===true){
+                    this.setState({
+                        subChildernAddView:true
+                    })
+
+                }
             } 
              
     }
@@ -600,7 +623,7 @@ componentDidMount(){
 
     handleEditClick2 =(t,type)=> { 
 
-       debugger
+       //debugger
 
         this.setState({
             name: t.value,
@@ -643,7 +666,7 @@ componentDidMount(){
 
     handleAddCategoryUpdate=(e)=>{
 
-        debugger;
+        //debugger;
          let valueName = this.state.name
          let updateID = parseInt(this.props.showSpeciSubA.id)
          let updateObject={}
@@ -677,24 +700,29 @@ componentDidMount(){
         }
     }
     openLinkData = (index,type)=>{
+        //debugger
         // alert(index)
         if(type=== "active"){
             let data = this.state.openActive
-            data[index] = data[index]==0?1:0
+            data[index] = data[index]===0?1:0
             // alert(data[index]+" "+index)
             console.log(data)
             this.setState({openActive:data})
         }else if(type=== "inactive"){
             let data = this.state.openInactive
-            data[index] = data[index]==0?1:0
+            data[index] = data[index]===0?1:0
             this.setState({openInactive:data})
 
+
+             
             this.props.showSubSubAttribute()
 
+
+           
         }
 
         this.setState({
-            subChildernAddView:false
+            subChildernAddView:true
         })
 
     }
@@ -751,6 +779,21 @@ componentDidMount(){
     addChildernFutureList =(index, type)=>{
 
         this.openLinkData(index,type);
+
+        // if(this.state.subChildernAddInactiveView===false){
+        //         this.setState({
+        //             subChildernAddInactiveView:false,
+        //             subChildernAddView:true,
+        //         })
+
+        // }
+
+        // else{
+        //     this.setState({
+        //         subChildernAddInactiveView:true,
+        //         subChildernAddView:false,
+        //     })
+        // }
 
         this.setState({
             subChildernAddView:true,

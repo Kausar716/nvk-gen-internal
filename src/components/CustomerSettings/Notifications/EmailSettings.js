@@ -179,6 +179,7 @@ const EmailSetting = props => {
                             <Col>
                               	<div>
         							<input type="number" placeholder={"0"} step="0"  className="textRightESetting"  id="first_notice" value={first_notice} onChange={handleDataChange}/>
+                      <span className="smallFont"> days</span>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -186,9 +187,9 @@ const EmailSetting = props => {
       							</div>
                             </Col>
                            
-                            <Col> <p  className="moveLeftESetting">days
+                            {/* <Col> <p  className="moveLeftESetting">days
                               </p>
-                            </Col>
+                            </Col> */}
                         </Row>
                         </Col>
 
@@ -198,7 +199,9 @@ const EmailSetting = props => {
                             <Row>
 							<Col>
                               	<div>
-        							<input type="number" placeholder={"0"}  step="0"  className="textRightESetting" id="second_notice" value={second_notice} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"}  step="0"  className="textRightESetting" id="second_notice"
+                       value={second_notice} onChange={handleDataChange}/>
+                       <span className="smallFont"> days</span>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -206,10 +209,10 @@ const EmailSetting = props => {
       							</div>
                             </Col>
 
-                              <Col>
+                              {/* <Col>
                             <p  className="moveLeftESetting">days
                               </p>
-                            </Col>
+                            </Col> */}
                             </Row>
                         </Col>
 
@@ -219,7 +222,9 @@ const EmailSetting = props => {
                             <Row>
 							<Col>
                               	<div>
-        							<input type="number" placeholder={"0"}   step="0" className="textRightESetting" id="quote_set_to_inactive" value={quote_set_to_inactive} onChange={handleDataChange}/>
+        							<input type="number" placeholder={"0"}   step="0" className="textRightESetting" 
+                      id="quote_set_to_inactive" value={quote_set_to_inactive} onChange={handleDataChange}/>
+                      <span className="smallFont"> days</span>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
         							</Row>
@@ -227,10 +232,10 @@ const EmailSetting = props => {
       							</div>
                             </Col>
 
-                              <Col>
+                              {/* <Col>
                             <p  className="moveLeftESetting">days
                               </p>
-                            </Col>
+                            </Col> */}
                             </Row>
                     </Col>
                     <Col sm="6">

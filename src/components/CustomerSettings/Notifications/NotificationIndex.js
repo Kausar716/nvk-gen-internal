@@ -170,7 +170,7 @@ setOpen(true)
 
                       <div className="notification_label">
                       <div class="ui menu">
-                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> READY to LATE Notice  </span><i class="fa fa-info" id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"4.2%",textAlign:"center",padding:"3.2px",color:"#5287F5",height:"19.2px"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
+                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> READY to LATE Notice  </span><i class="fa fa-info" id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"18px",textAlign:"center",padding:"3.2px",color:"#5287F5",height:"18px"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen} target="TooltipExample" toggle={toggleTool} >
                                 <p>Set the number of days after the requested date for order in READY state waiting for pickup or shipment.</p>
                             </Tooltip></a>
   {/* <a href="" class="item"><i class="large camera retro icon"></i><span class="nav-text"> Créations</span></a>
@@ -179,7 +179,9 @@ setOpen(true)
                       {/* <p style={{marginBottom:"2px",fontWeight:"bold"}}>READY to LATE Notice <i id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5"}} class="fa fa-info"></i>
        
                         </p> */}
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/><span className="smallFont">days (Setting not used if set to 0)</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" 
+                            value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/>
+                            <span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{some_array[0]}</span>}
                                 </div> 
@@ -188,14 +190,16 @@ setOpen(true)
 
                       <div className="notification_label">
                       <div class="ui menu">
-                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> Reserve Expiry Notice  </span><i class="fa fa-info" id="TooltipExample1"  style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"4.1%",textAlign:"center",padding:"3.2px",color:"#5287F5",height:"19.2px"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen1} target="TooltipExample1" toggle={toggleTool1} >
+                          <a class="item" style={{marginLeft:"-6px"}}><span class="nav-text" style={{color: 'black',fontWeight: 'bold'}}> Reserve Expiry Notice  </span><i class="fa fa-info" id="TooltipExample1"  style={{borderRadius:"50%",fontSize:"9px",border:"1.6px solid #5287F5",width:"18px",textAlign:"center",padding:"3.2px",color:"#5287F5",height:"18px"}}></i>    <Tooltip    className="in" id="tooltip-top" placement="right" isOpen={tooltipOpen1} target="TooltipExample1" toggle={toggleTool1} >
                                 <p>Set the number of days remaining on the order reservation date.</p>
                             </Tooltip></a>
                               {/* <a href="" class="item"><i class="large camera retro icon"></i><span class="nav-text"> Créations</span></a>
                             <a class="item"><span class="nav-text">Qui-suis je </span><i class="large help basic icon"></i></a> */}
                       </div>
             
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/><span className="smallFont">days remaining</span>
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" 
+                            value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/>
+                            <span className="smallFont">days remaining</span>
                               <div className="row_1">
                               { <span style={{color:"red"}}>{some_array[1]}</span>}
                                 </div> 
