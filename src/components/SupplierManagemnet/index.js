@@ -1,6 +1,6 @@
 import React from 'react'
 import AddSupplier from './AddSupplier'
-import {deleteSupplier,getAllSuppliers,resetSupplierFilds,getsupplierById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {getAllAddress,getAllSuppliersContact,handleSupplierExchnageData,deleteSupplier,getAllSuppliers,resetSupplierFilds,getsupplierById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 
 // import {getAllCustomer} from "../../actions/customerSettingAction";
 import TablePagination from '../Pagination';
@@ -82,6 +82,11 @@ export class SupplierManagemnet extends React.Component {
     handleEdit = (id) => {
         this.props.typeOfsupplierActionShow("edit")
         this.props.getsupplierById(id)
+        this.props.getAllSuppliersContact(id)
+        this.props.getAllAddress(id)
+        this.props.handleSupplierExchnageData(id,"supplier_id","supplierContact")
+        this.props.handleSupplierExchnageData(id,"supplier_id","supplierAddress")
+        
     }
     paginationChange =(event, page)=>{
         // //alert("hg")
@@ -348,5 +353,5 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{deleteSupplier,resetSupplierFilds,getsupplierById,typeOfsupplierActionShow,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(SupplierManagemnet)
+export default connect(mapStateToProps,{getAllAddress,getAllSuppliersContact,handleSupplierExchnageData,deleteSupplier,resetSupplierFilds,getsupplierById,typeOfsupplierActionShow,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter})(SupplierManagemnet)
 

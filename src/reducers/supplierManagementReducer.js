@@ -172,6 +172,7 @@ const defaultState={
     units: "",
     status: 1,
     term:"",
+    id:0,
     reason:"",
     product_categories:[]
     },
@@ -363,10 +364,41 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         currency: "",
                         units: "",
                         status: 1,
+                        id:0,
                         reason:"",
                         term:"",
                         product_categories:[]
-                        }
+                        },
+                        supplierContact:{
+                            supplier_id: 0,
+                            contact_name: "",
+                            contact_email: "",
+                            phone1: "",
+                            primary_contact: 0,
+                            receives_all: 0,
+                            status: 1,
+                        
+                          },
+                        supplierContactList:{active:[],inactive:[]},
+                        supplierAddress:{
+                            supplier_id: 0,
+                            supplier_address: "",
+                            address2: "",
+                            city: "",
+                            country: "",
+                            state: "",
+                            zip: "",
+                            lat: "",
+                            long: "",
+                            billing_address: 0,
+                            shipping_address: 0,
+                            status:1
+                    
+                        },
+                        supplierAddressList:{
+                            active:[],inactive:[]
+                    
+                        },
 
                 }
             case UPDATE_SUPPLIER:
