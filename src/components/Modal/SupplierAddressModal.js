@@ -219,9 +219,9 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             <div class="col-md-3 col-lg-3">
                 <label>Country<span class="text-danger">*</span></label>
                 <select className="form-control"  id="country"  value={supplierAddress.country}   placeholder="country" onChange={handleInput}>
-                    <option>{supplierAddress.country}</option>
+                    <option id="">Select Country</option>
                     {allCountry.map((country, i)=>{
-                        return <option id={allCountry[i]}>{allCountry[i]}</option>
+                        return <option id={allCountry[i]} selected={supplierAddress.country ==allCountry[i]?"selected":""}>{allCountry[i]}</option>
                     })}
                     {/* <option value="Canada" selected={supplierData.supplierLocation.country =="Canada"?"selected":""}>Canada</option>
                     <option value="India" selected={supplierData.supplierLocation.country =="India"?"selected":""}>India</option>
@@ -233,9 +233,9 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             <div class="col-md-3 col-lg-3">
                 <label>State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={supplierAddress.state}  onChange={handleInput}>
-                <option>{supplierAddress.state}</option>
+                <option id="">Select State</option>
                 {allStates && allStates.map((c, i)=>{
-                        return <option id={allStates[i]}>{allStates[i]}</option>
+                        return <option id={allStates[i]} selected={supplierAddress.state ==allStates[i]?"selected":""}>{allStates[i]}</option>
                 })}
                     {/* <option value="Ontario" selected={supplierData.supplierLocation.state =="Ontario"?"selected":""}>Ontario</option>
                     <option value="Alberta" selected={supplierData.supplierLocation.state =="Alberta"?"selected":""}>Alberta</option>
@@ -289,9 +289,9 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         
         {/* </div>  */}
   
-        <div class="row mt-3">
+        {/* <div class="row mt-3"> */}
         {/* <div class="d-flex"> */}
-        <div class="col-md-6 col-lg-6">
+        {/* <div class="col-md-6 col-lg-6">
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"billing_address"} name="billing_address" onChange={handleInput} checked={parseInt(supplierAddress.billing_address)==1?true:false}/>
                 <label className="custom-control-label" for={"billing_address"}>billing_address</label>
@@ -301,7 +301,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"shipping_address"} name="shipping_address" onChange={handleInput}  checked={parseInt(supplierAddress.shipping_address)==1?true:false}/>
                 <label className="custom-control-label" for={"shipping_address"}>delivery_address</label>
-            </div>
+            </div> */}
             {/* </div> */}
             {/* <div class="custom-control custom-radio">
                 <input type="checkbox" id="delivery" name="delivery" value={"Delivery"}  class="custom-control-input" onClick={""} />
@@ -312,8 +312,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                 <input type="checkbox" id="pickup" name="delivery" value={"Pickup"}  onClick={""} class="custom-control-input" />
                 <label class="custom-control-label" for="delivery">Pick up</label>
             </div> */}
-        </div>
-        </div>
+        {/* </div> */}
+        {/* </div> */}
 
 
         </ModalBody>
