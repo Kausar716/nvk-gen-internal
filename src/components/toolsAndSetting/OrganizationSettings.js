@@ -129,6 +129,8 @@ class OrganizationSettings extends React.Component {
             //disableImageRemove: false,
             disableImageUpload: true
         })
+
+        window.location.reload();
         
          
     }

@@ -161,6 +161,7 @@ export const Component = withRouter(({ history, location }) =>{
     }
 
     goBackFunction =(e)=>{
+        this.props.cancle();
         // const { history } = this.props;
         // setTimeout(function() {
         //     history.push("/usermanagement")
@@ -173,6 +174,7 @@ export const Component = withRouter(({ history, location }) =>{
         this.props.resetUserData()
         this.props.resetUserSelect()
         this.props.displaySelectedUSERS(false)
+     //   this.props.cancel()
        let selectedId = "Select..."
       //  this.props.handleUserSelect(selectedId)
 
