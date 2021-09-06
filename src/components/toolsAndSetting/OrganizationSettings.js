@@ -932,11 +932,11 @@ stringHasTheWhiteSpaceOrNot=(value)=>{
                                     <div className="hoverINOrg">
                                     <a  class="btn ml-2 mt-3 mt-md-0" >
 
-                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em",cursor:"pointer"}}
                                     disabled={this.state.disabled}
                                     onClick={this.handleSubmit}>
-                                    <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px"}}/> 
-                                                        <span class="ml-2" style={{fontSize:"16px", }}>Save</span>
+                                    <img src="assets/img/save-ic.svg" alt="" style={{marginLeft:"-8px", marginTop:"-6px",cursor:"pointer"}}/> 
+                                                        <span class="ml-2" style={{fontSize:"16px", cursor:"pointer"}}>Save</span>
                                     </button>
                                     
                                     </a>
@@ -946,11 +946,11 @@ stringHasTheWhiteSpaceOrNot=(value)=>{
                                     <div className="hoverINOrg">
                                     <a  class="btn ml-2 mt-3 mt-md-0" >
 
-                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em"}}
+                                    <button type="button" class="btn ml-2 mt-3 mt-md-0" style={{padding:"0em", cursor:"pointer"}}
                                     disabled={this.state.disabledCancel}
                                     onClick={this.goDashboard}>
-                                        <span class="d-flex align-items-center text-left" style={{marginLeft:"-16px"}}>
-                                            <span class="ml-2" style={{fontSize:"16px"}}>Cancel</span>
+                                        <span class="d-flex align-items-center text-left" style={{marginLeft:"-16px", cursor:"pointer"}}>
+                                            <span class="ml-2" style={{fontSize:"16px", cursor:"pointer"}}>Cancel</span>
                                         </span>
                                     </button>
                                     
@@ -1115,7 +1115,7 @@ stringHasTheWhiteSpaceOrNot=(value)=>{
                                             </button>
                                     </a> */}
                                             
-                                             <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3"
+                                             <button className="btn bg-red-transparent-3 btn-block btnGroup mt-3" style={{cursor:"pointer"}}
                                              disabled={this.props.organizationData.organizationData.logo===null ? this.state.disableImageRemove ===true : this.state.disableImageRemove===false}
                                             // style={{marginTop:"-3px", paddingRight:"5.1em", border:"none"}}
                                              onClick={()=>{confirmAction("deleteImage")}}>

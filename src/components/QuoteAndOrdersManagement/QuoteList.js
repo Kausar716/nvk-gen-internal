@@ -399,7 +399,6 @@ class QuoteList extends React.Component {
 
         return this.state.list.map(item => (
           
-
             <div class="custom-control custom-checkbox" style={{marginRight:"3em"}}>
                 <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
