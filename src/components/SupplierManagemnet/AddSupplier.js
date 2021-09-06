@@ -44,15 +44,20 @@ function AddSupplier(props) {
     const {supplierDataById,supplierContactList,supplierAddressList} = props.supplierData
     const {categoryData} = props.categoryData
     const [isOpen2, setIsOpen2] = useState(false);
-    console.log(supplierAddressList)
+    console.log(props.customerData)
     const toggle1 = () => setIsOpen1(!isOpen1);
     useEffect (()=>{
         props.getAllCategoriesAction()
-        props.getAllSuppliersContact(supplierDataById.id)
-        props.getAllAddress(supplierDataById.id)
-        props.getAllSupplierCategoryMethods()
-        props.getAllSupplierReasonMethods()
-        props.getAllTermsMethods()
+        // alert(supplierDataById.id)
+        // if(supplierDataById.id!==""){
+            // alert("ds")
+            props.getAllSuppliersContact(supplierDataById.id)
+            props.getAllAddress(supplierDataById.id)
+        // }
+     
+        // props.getAllSupplierCategoryMethods()
+        // props.getAllSupplierReasonMethods()
+        // props.getAllTermsMethods()
  
 
     },[website_url])
@@ -246,6 +251,9 @@ function AddSupplier(props) {
         // ////alert("in")
     }
     const closeAddSupplier = ()=>{
+        props.resetSupplierFilds()
+        props.getAllSuppliers()
+        // props.typeOfActionShow("")
         props.typeOfsupplierActionShow("")
     }
     const saveCustomerData1 = (type)=>{
@@ -947,7 +955,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={supplierDataById.id === undefined?true:false} onClick={toggleForContact}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={supplierDataById.id==""?true:false} onClick={toggleForContact}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -1010,7 +1018,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id === undefined?true:false}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id==""?true:false}>Add</button>
                                     </div>
                                 </div>
                             </form>

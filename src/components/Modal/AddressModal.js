@@ -75,16 +75,16 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
             }
           
-            if (object === "notes") {
-                if (element.value === "") {
-                    document.getElementById("notes-validtor").innerText = "Enter  Notes"
-                    errorCount++;
+            // if (object === "notes") {
+            //     if (element.value === "") {
+            //         document.getElementById("notes-validtor").innerText = "Enter  Notes"
+            //         errorCount++;
 
-                } else {
-                    document.getElementById("notes-validtor").innerText = ""
-                }
+            //     } else {
+            //         document.getElementById("notes-validtor").innerText = ""
+            //     }
 
-            }
+            // }
             // if (object === "contactFN") {
             //     if (element.value === "") {
             //         document.getElementById("contactFN-validtor").innerText = "First Name is not valid"
@@ -233,7 +233,7 @@ console.log(validErrorList)
                 {<span style={{fontSize:"small",color:"red"}} id="country-validtor"></span>}
             </div>
             <div class="col-md-3 col-lg-3">
-                <label>State<span class="text-danger">*</span></label>
+                <label>Province/State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={customerAddress.state}  onChange={handleInput}>
                 <option selected>Select State</option>
                 {/* <option>{customerAddress.state}</option> */}
@@ -247,8 +247,8 @@ console.log(validErrorList)
                 {<span style={{fontSize:"small",color:"red"}} id="state-validtor"></span>}
             </div>
             <div class="col-md-3 col-lg-3">
-                <label>Zip<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="zip" value={""}  value={customerAddress.zip}  onChange={handleInput} placeholder="Zip"/>
+                <label>Postal/Zip<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="zip" value={""}  value={customerAddress.zip}  onChange={handleInput} placeholder="Postal/Zip"/>
                 {<span style={{fontSize:"small",color:"red"}} id="zip-validtor"></span>}
             </div>
         </div>
@@ -277,18 +277,18 @@ console.log(validErrorList)
                 {<span style={{fontSize:"small",color:"red"}} id="lang-validtor"></span>}
             </div>
         </div>
-        <div class="row mt-3">
+        {/* <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Notes <span class="text-danger">*</span></label>
                 <textarea  class="form-control" id="notes" value={""} value={customerAddress.notes}  onChange={handleInput} placeholder="Add Notes..."></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="notes-validtor"></span>}
             </div>
         
-        </div>
-  
-        <div class="row mt-3">
+        </div> */}
+  {/*  */}
+        {/* <div class="row mt-3"> */}
         {/* <div class="d-flex"> */}
-        <div class="col-md-6 col-lg-6">
+        {/* <div class="col-md-6 col-lg-6">
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"billing_address"} name="billing_address" onChange={handleInput} checked={parseInt(customerAddress.billing_address)==1?true:false}/>
                 <label className="custom-control-label" for={"billing_address"}>billing_address</label>
@@ -298,7 +298,7 @@ console.log(validErrorList)
             <div className="custom-control custom-checkbox mb-1">
                 <input type="checkbox" className="custom-control-input" id={"delivery_address"} name="delivery_address" onChange={handleInput}  checked={parseInt(customerAddress.delivery_address)==1?true:false}/>
                 <label className="custom-control-label" for={"delivery_address"}>delivery_address</label>
-            </div>
+            </div> */}
             {/* </div> */}
             {/* <div class="custom-control custom-radio">
                 <input type="checkbox" id="delivery" name="delivery" value={"Delivery"}  class="custom-control-input" onClick={""} />
@@ -309,8 +309,8 @@ console.log(validErrorList)
                 <input type="checkbox" id="pickup" name="delivery" value={"Pickup"}  onClick={""} class="custom-control-input" />
                 <label class="custom-control-label" for="delivery">Pick up</label>
             </div> */}
-        </div>
-        </div>
+        {/* </div>
+        </div> */}
 
 
         </ModalBody>

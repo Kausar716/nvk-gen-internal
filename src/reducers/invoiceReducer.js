@@ -342,10 +342,10 @@ const initialSatate = {
             }
 /////////////customer management add edit delete and show actions/////////////////////////
 case ADD_NEW_CUSTOMER:
-    console.log(action.payload.data.user)
+    console.log(action.payload)
     return{
         ...state,
-        customerDataById:{...action.payload.data.user,type:JSON.parse(action.payload.data.user.type)}
+        customerDataById:{...action.payload,type:JSON.parse(action.payload.type)}
         
     }
     case EDIT_CUSTOMER:
