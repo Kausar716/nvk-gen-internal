@@ -1334,7 +1334,7 @@ class OrderList extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div>
-                            <div class="equalSign">=</div>
+                            <div class="equalSign"  style={{marginTop:"10px",marginRight:"4px", marginLeft:"4px"}}>=</div>
 
                             {/* <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
@@ -1490,7 +1490,7 @@ class OrderList extends React.Component {
             </div>
                 <div class="bg-white px-3 py-3 mt-2">
                     <form>
-                        <h2>Search Quotes &amp; Orders1234 {this.state.abcdefg}</h2>
+                        <h2>Search Quotes &amp; Orders {this.state.abcdefg}</h2>
                         {/* {this.state.abcdefg} */}
                         
                         <div class="row mt-3 align-items-center">
