@@ -192,7 +192,7 @@ export const Component = withRouter(({ history, location }) =>{
         // this.setState({
         //     tabValues:1
         // })
-       
+        this.props.tabChangeValues(0) 
        console.log(this.props.reduxSelectedUser )
        //this.props.reduxSelectedUser.selectedUser.data.id.toString().length
         if(this.props.reduxSelectedUser.selectedUser){
