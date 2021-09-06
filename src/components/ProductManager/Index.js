@@ -23,6 +23,7 @@ import {
     duplicateProduct,
     getAllSpecifiedSkuProductList,
     handleManufactureData,
+    setPageNumber,
 
     //page Redirects action
     pageReDirectAction,
@@ -87,6 +88,8 @@ const  ProductManagement = (props) =>{
     );
     const onChange = (event, { newValue }) => {
         setValue(newValue)
+        props.setPageNumber(0)
+        setLoaderMessage("No Records Found.")
         props.serachProduct({product: newValue, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
         setInputValue(newValue);
         // setLoaderMessage("No Records Found...")
@@ -114,8 +117,8 @@ const  ProductManagement = (props) =>{
 
         const handleCategoryData =(e)=>{
             let temSub =[];
-
            setLoaderMessage("No Records Found.")
+           props.setPageNumber(0)
             //console.log("propsSubCategory", props.categoryData.subCategoryData)
             if(e.target.id ==="category"){
                 // props.handleCategory(e.target.value,"0")
@@ -154,6 +157,7 @@ const  ProductManagement = (props) =>{
         const handleManufactureData =(e)=>{
             console.log(e.target.value)
             setLoaderMessage("No Records Found.")
+            props.setPageNumber(0)
             let selectedId = parseInt(e.target.value)
             props.handleManufactureData(selectedId)
             props.serachProduct({product: inputValue, option: selectedRadio, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
@@ -224,6 +228,7 @@ const  ProductManagement = (props) =>{
     }
        const radioSearchAction =(e)=>{
         console.log(e.target.id)
+        props.setPageNumber(0)
         //props.radioSearch(e.target.id)
         props.serachProduct({product: inputValue, option: e.target.id, category: selectedCategory,manufactureId:props.manufacturer_id})
         setRadio(e.target.id)
@@ -506,6 +511,7 @@ getAllProductAction,
 getSpecifiedProductAction,
 duplicateProduct,
 handleSelectedCategory,
+setPageNumber,
 
 //page Redirects action
 pageReDirectAction,
