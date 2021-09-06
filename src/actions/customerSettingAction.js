@@ -219,10 +219,10 @@ export const getCustomerByIdQuote= (id) =>dispatch=>{
 }
 export const getCustomerById = (id) =>dispatch=>{
     return axios.get(`api/show-customer/${id}`,config).then(res=>{ 
-        console.log(res.data)
+        console.log(res.data.data.user)
     dispatch({
             type:GET_CUSTOMER_BY_ID,
-            payload:res.data,
+            payload:res.data.data.user,
 
         })
     })
@@ -232,7 +232,7 @@ export const addCustomerData = (data)=>dispatch=>{
         console.log(res)
         dispatch({
                 type:ADD_NEW_CUSTOMER,
-                payload:res.data   
+                payload:res.data.data.user   
             })
         }) 
 }

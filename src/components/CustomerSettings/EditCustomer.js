@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
-import {deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -323,7 +323,7 @@ function AddCustomer(props) {
     }
     const deleteCustomerContactData =(id)=>{
         props.deleteCustomerContact(id).then(data=>{
-            props.getCustomerContacts()
+            props.getCustomerContacts(customerDataById.id)
         })
 
     }
@@ -496,6 +496,19 @@ const dataTochange =(e)=>{
         //     this.setState({ heading: "Log in" })
         // else
         //     this.setState({ heading: "Sign up" })
+    }
+    const changeCheckBox =(id,index,type)=>{
+        // alert(index)
+        console.log(customerContactList,index)
+        let data  = customerContactList.active[index]
+        console.log( data[type])
+        data[type] =  data[type]==0?1:0
+        console.log( data[type])
+        props.updateContactData(data).then(data=>{
+            props.getCustomerContacts(customerDataById.id)
+            console.log(customerContact)
+        })
+
     }
 
     console.log(customerDataById)
@@ -981,7 +994,7 @@ const dataTochange =(e)=>{
                                 <div class="row mt-3">
                                     {/* <div class="col-md-6 col-lg-4"> */}
                                         {/* <div class="contactCard"> */}
-                                            {customerContactList.active.map(contactData=>{
+                                            {customerContactList.active.map((contactData,index)=>{
                                                 return(
                                                     <div class="col-md-6 col-lg-4">
                                                     <div class="contactCard">
@@ -998,11 +1011,11 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={contactData.primary_contact==1?true:false} disabled={true}/>
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contactData.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"primary_contact")}/>
                                                     <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={contactData.all_communication==1?true:false} disabled={true}/>
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={parseInt(contactData.all_communication)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"all_communication")}/>
                                                     <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
                                                 </div>
                                             </div>
@@ -1140,7 +1153,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
+export default connect(mapStateToProps,{updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,getAllReasonMethods,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      

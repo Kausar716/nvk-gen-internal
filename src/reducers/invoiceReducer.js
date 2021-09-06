@@ -366,7 +366,7 @@ case ADD_NEW_CUSTOMER:
     case GET_CUSTOMER_BY_ID:
         return{
             ...state,
-            customerDataById:{...action.payload.data,type:JSON.parse(action.payload.data.type)}
+            customerDataById:{...action.payload,type:JSON.parse(action.payload.type)}
 
         }
     case RESET_CUSTOMER_FILEDS:
