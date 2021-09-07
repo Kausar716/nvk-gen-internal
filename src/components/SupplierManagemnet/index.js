@@ -12,6 +12,7 @@ export class SupplierManagemnet extends React.Component {
     constructor(){
         super()
         this.state={
+            selectedId:0,
             addCustomerToggle:false,
             customerListStatus:"active",
             editCustmerToggle:false,
@@ -71,6 +72,7 @@ export class SupplierManagemnet extends React.Component {
 
     handleAddSupplierClick = (e) => {
         // //alert(e.target.id)
+        this.setState({selectedId:0})
         this.props.resetSupplierFilds()
         this.props.typeOfsupplierActionShow("add")
     }
@@ -80,6 +82,7 @@ export class SupplierManagemnet extends React.Component {
         // //alert("hi")
     }    
     handleEdit = (id) => {
+        this.setState({selectedId:id})
         this.props.typeOfsupplierActionShow("edit")
         this.props.getsupplierById(id)
         this.props.getAllSuppliersContact(id)
@@ -339,7 +342,7 @@ export class SupplierManagemnet extends React.Component {
 				</div>
 			</div>
         </div>
-         : <AddSupplier toggle ={this.state.addCustomerToggle?"add":"edit"} customerData={this.state.addCustomerToggle?{}:this.state.customerObject}/>}
+         : <AddSupplier selectedId ={this.state.selectedId} toggle ={this.state.addCustomerToggle?"add":"edit"} customerData={this.state.addCustomerToggle?{}:this.state.customerObject}/>}
         </>
     )
 }
