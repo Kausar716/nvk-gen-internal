@@ -65,6 +65,7 @@ const initialSatate = {
     productData         :   [],
     skuData             :   [],
     poduct_idStoring:'',
+    productRadioButton:"active",
    
     productDataById     :   {
         name:"",

@@ -313,7 +313,7 @@ export const duplicatePlant = (id) =>dispatch=>{
             type:DUPLICTE_PLANT,
             payload:res.data.data
         })
-        error.push("Plant duplicated successfully  successfully",)
+        error.push("Plant duplicated successfully",)
         dispatch({
                         type:ERROR_HANDLE,
                         message:error,
