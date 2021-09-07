@@ -139,7 +139,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
 
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
-                <label>Notes <span class="text-danger">*</span></label>
+                <label>Notes <span class="text-danger"></span></label>
                 <textarea  class="form-control" id="notes" value={""}  value={customerContact.notes}  onChange={handleInput} placeholder=" Add Notes..."></textarea>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="text-validtor"></span>}

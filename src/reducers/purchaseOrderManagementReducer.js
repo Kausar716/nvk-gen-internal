@@ -37,14 +37,14 @@ const initialSatate = {
     poData:{
         supplier_id:"",
         order_id:"",
-        discount_type:null,
-        discount_percent:null,
+        discount_type:"overall",
+        discount_percent:"0.00",
         job_description:null,
         include_royality:null,
         order_notes:null,
         dispatch_type:null,
-        currency:null,
-        supplier_order:null
+        currency:"Merits",
+        supplier_order:""
     },
     searchValuePlant:"",
     searchValueSku:"",
@@ -183,7 +183,7 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     return{
                         ...state,
                         selectedSupplier:action.supplier,
-                        poData:{['supplier_id']:action.supplier.id},
+                        poData:{...state.poData,['supplier_id']:action.supplier.id},
                     }
                 case HANDLE_ORDERDETAILS_INPUT:
                     return{

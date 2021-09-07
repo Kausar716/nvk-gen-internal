@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
 import InputMask from 'react-input-mask';
-import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,addSuppplierContact} from "../../actions/supplierManagementAction";
+import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,addSuppplierContact} from "../../actions/supplierManagementAction";
 
  const SupplierContactModal = (props) => {
      const {status,type} =props
@@ -45,6 +45,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
                  console.log(supplierDataById)
                     // //alert(customerDataById.customer_id)
                     props.getAllSuppliersContact(supplierDataById.id)
+                    props.getsupplierById(supplierDataById.id)
                     // props.getsupplierContacts(customerDataById.customer_id)
                     
                 })
@@ -53,6 +54,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
                 props.updateSupplierContact(supplierContact).then(data=>{
                     props.modalAction()
                     console.log(supplierDataById)
+                    props.getsupplierById(supplierDataById.id)
                     props.getAllSuppliersContact(supplierDataById.id)
                     
                 })
@@ -297,7 +299,7 @@ const mapStateToProps = (state)=>(
         supplierData:state.supplierData,
     }
 )
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps,{getsupplierById,
     handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,addSuppplierContact
 
      
