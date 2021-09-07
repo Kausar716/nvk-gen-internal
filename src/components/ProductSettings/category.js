@@ -633,12 +633,20 @@ componentDidMount(){
 
         }
 
+        this.setState({
+            subChildernAddView:false,
+            subChildernAddInactiveView:false
+        })
+
+
+
     }
 
     addChildernFutureList =()=>{
 
         this.setState({
-            subChildernAddView:true
+            subChildernAddView:true,
+            subChildernAddInactiveView:true
         })
 
     }
