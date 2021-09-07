@@ -167,10 +167,10 @@ const initialSatate = {
    customerReturnReason:{reason: "",return_to_inventory: 2},
    customerReturnReasonList:{active:[],inactive:[]},
 
-   customerDataById:{name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   customerDataById:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
-   customerDataById1:{name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   customerDataById1:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
 
@@ -340,10 +340,10 @@ const initialSatate = {
             }
 /////////////customer management add edit delete and show actions/////////////////////////
 case ADD_NEW_CUSTOMER:
-    console.log(action.payload.data.user)
+    console.log(action.payload)
     return{
         ...state,
-        customerDataById:{...action.payload.data.user,type:JSON.parse(action.payload.data.user.type)}
+        // customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customer}
         
     }
     case EDIT_CUSTOMER:
@@ -422,7 +422,7 @@ case ADD_NEW_CUSTOMER:
               },
               customerAddressList:{active:[],inactive:[]},
 
-              customerDataById:{name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
+              customerDataById:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
               tax_exempt: 0,fax:"",website_url:"",
               tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
         }

@@ -4,11 +4,13 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
-import {addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
 import ContactsModal from "../../components/Modal/ContactsModal"
+import CustomerNotes from "../../components/Modal/CustomerNotes"
+import CustomerAddressNotes from "../../components/Modal/CustomerAddressNotes"
 import InputMask from 'react-input-mask';
 import AddressModal from "../../components/Modal/AddressModal"
 
@@ -45,17 +47,33 @@ function AddCustomer(props) {
 	const toggle2 = () => setIsOpen2(!isOpen2);
 
     const [isOpenContacs, setisOpenContacs] = useState(false);
+    const [isOpenNotes, setisOpenNotes] = useState(false);
+    const [isOpenAddressNotes, setisOpenAddressNotes] = useState(false);
 	// const [message2,setMessage2] = useState([]);
 	const toggleForContact = () => {
         setactionType("add")
         props.resetContact()
         setisOpenContacs(!isOpenContacs)
     }
+    const toggleForNotes = () => {
+        // alert("ds")
+        setactionType("add")
+        props.resetContact()
+        setisOpenNotes(!isOpenNotes)
+    }
+    const toggleForAddressNotes = () => {
+        // alert("ds")
+        setactionType("add")
+        props.resetAddressFileds()
+        setisOpenAddressNotes(!isOpenAddressNotes)
+    }
 
     const [isOpenAddress, setisOpenAddress] = useState(false);
 	// const [message2,setMessage2] = useState([]);
 	const toggleForAddress = () => {
+        // alert("as")
         setactionTypeAddress("add")
+        props.resetAddressFileds()
         setisOpenAddress(!isOpenAddress)
         // alert("hi")
     }
@@ -338,6 +356,20 @@ function AddCustomer(props) {
         props.getDataByContactId(id)
         setactionType("edit")
     }
+    const editNotes=(id)=>{
+        // alert("Gg")
+        setisOpenNotes(true)
+        props.getDataByContactId(id)
+        // setactionType("edit")
+    }
+    const editAddressNotes=(id)=>{
+        // alert("Gg")
+        setisOpenAddressNotes(true)
+        // setisOpenAddress(true)
+        props.getcustomerAddressByaddressId(id)
+        setactionTypeAddress("edit")
+        // setactionType("edit")
+    }
 
     const editAddress =(id)=>{
         setisOpenAddress(true)
@@ -510,6 +542,19 @@ const dataTochange =(e)=>{
         })
 
     }
+    const changeCheckBoxAddress =(id,index,type)=>{
+        // alert(index)
+        console.log(customerAddressList,index)
+        let data  = customerAddressList.active[index]
+        console.log( data[type])
+        data[type] =  data[type]==0?1:0
+        console.log( data[type])
+        props.updatecustomerAddress(data).then(data=>{
+            props.getcustomerAddress(customerDataById.id)
+            console.log(customerContact)
+        })
+
+    }
 
     console.log(customerDataById)
     return (
@@ -517,6 +562,8 @@ const dataTochange =(e)=>{
             	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
                 <SuccessModal status={isOpen2} message={message2} modalAction={toggle2}/>
                 <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
+                <CustomerNotes status={isOpenNotes}  modalAction={toggleForNotes} type={"edit"}/>
+                <CustomerAddressNotes status={isOpenAddressNotes} modalAction={toggleForAddressNotes} type={"edit"}/>
                 <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center"  >
             <h1 class="page-header mb-0"><img src="assets/img/customer-ic-lg.svg" alt=""/>{action =="add"?"Add Customer":"Edit Customer"}  <span>{customerDataById.id?"#"+customerDataById.id:""}</span></h1>
@@ -753,13 +800,51 @@ const dataTochange =(e)=>{
                  
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8">
+                                    <div class="col-md-6 col-lg-6">
                                         <label>Primary Contact</label>
-                                        <input type="text" class="form-control" id="name" value={customerDataById.fax!==null?customerDataById.name+" "+customerDataById.fax:""} onChange={handleInput}  disabled placeholder="Primary Contact"/>
+                                        {customerDataById.customercontact.map(contactData=>{
+                                            if(contactData.primary_contact==1){
+                                                return(<div>
+                                                    {/* <div class="col-md-6 col-lg-4"> */}
+                                                    <div class="contactCard" style={{border:"1px solid lightgray"}}>
+                                                    <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p>
+                                            <label class="text-muted f-w-400">{contactData.email}</label>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1}</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2}</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
+                                                </div>
+                                            </div>
+                                            {/* <div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contactData.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"primary_contact")}/>
+                                                    <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={parseInt(contactData.all_communication)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"all_communication")}/>
+                                                    <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
+                                                </div>
+                                            </div> */}
+                                   
+                                                        </div>
+                                                        {/* </div> */}
+                                                    </div>);
+                                                   
+                                            }
+                                          
+                                        })
+                                           
+
+
+                                        }
+                                        {/* <input type="text" class="form-control" id="name" value={customerDataById.fax!==null?customerDataById.name+" "+customerDataById.fax:""} onChange={handleInput}  disabled placeholder="Primary Contact"/> */}
  
                                            {/* </div> */}
                                     </div>
-                                    <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
+                                    <div class="col-md-6 col-lg-6">
                                         <label>Fax</label>
                                         <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"fax"} value={customerDataById.fax} onChange={handleInput} placeholder="(xxx) xxx-xxxx"/>
                                         {/* <input type="number" id="fax" class="form-control" name="fax" value={customerDataById.fax} onChange={handleInput} /> */}
@@ -767,7 +852,7 @@ const dataTochange =(e)=>{
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8">
+                                    <div class="col-md-6 col-lg-6">
                                         <label>Website</label>
                                         {/* <div class="d-flex">
                                             <input type="url" class="form-control" placeholder="https://www.Example.com" name="website_url" id="website_url" value={customerDataById.website_url}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
@@ -792,7 +877,7 @@ const dataTochange =(e)=>{
                                        }
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
+                                    <div class="col-md-6 col-lg-6">
                                         <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
                                         <input type="text" class="form-control" name="alternativeId" id="alternative_id" value={customerDataById.alternative_id} onChange={handleInput} maxLength={5} placeholder="Alternate ID"/>
                                     </div>
@@ -1021,7 +1106,7 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a href="#" class="">
+                                                    <a  class="" onClick={()=>editNotes(contactData.id)}>
                                                         <img src="assets/img/moreDetails-ic.svg" alt=""/>
                                                     </a>
                                                     <a  class=" ml-2" onClick={()=>editContact(contactData.id)}>
@@ -1059,7 +1144,7 @@ const dataTochange =(e)=>{
                                 <h2>Addresses</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    {customerAddressList.active.map(data=>{
+                                    {customerAddressList.active.map((data,index)=>{
                                         return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
                                             <p class="mb-0 f-s-16 f-w-600">{data.address1}<br/>
@@ -1067,13 +1152,13 @@ const dataTochange =(e)=>{
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(data.billing_address)==1?true:false} disabled={true}/>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(data.billing_address)==1?true:false} onChange={()=>changeCheckBoxAddress(data.id,index,"billing_address")}/>
                                                         <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(data.delivery_address)==1?true:false} disabled={true}/>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(data.delivery_address)==1?true:false}  onChange={()=>changeCheckBoxAddress(data.id,index,"delivery_address")}/>
                                                         <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
                                                     </div>
                                                 </div>
@@ -1087,15 +1172,15 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
+                                                    <a class="">
+                                                        <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>{editAddressNotes(data.id)}}/>
                                                     </a>
-                                                    <a href="#" class=" ml-2">
+                                                    <a  class=" ml-2">
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>{editAddress(data.id)}}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
-                                                    <a href="#" class=" ml-2">
+                                                    <a  class=" ml-2">
                                                         <img src="assets/img/delete.svg" alt="" onClick={()=>{deleteAddress(data.id)}}/>
                                                     </a>
                                                 </div>
@@ -1153,7 +1238,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
+export default connect(mapStateToProps,{updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,getAllReasonMethods,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      

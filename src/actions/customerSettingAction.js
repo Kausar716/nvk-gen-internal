@@ -923,7 +923,7 @@ export const addCustomer = (data) => dispatch => {
        console.log(res)
        dispatch({
                type:ADD_CUSTOMER,
-               payload:res.data.data   
+               payload:res.data.data.user   
            })
        })
 }

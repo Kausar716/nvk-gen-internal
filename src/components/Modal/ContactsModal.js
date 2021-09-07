@@ -17,16 +17,16 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
    console.log(customerContact)
    const handleInput= (e)=>{
     setError("")
-       if(e.target.id =="primary_contact"){
-           let primary = customerContact.primary_contact ==1?0:1
-           props.handleExchangeData(primary,e.target.id,"customerContact")
-       }else if(e.target.id =="all_communication"){
-        let all = customerContact.all_communication ==1?0:1
-        props.handleExchangeData(all,e.target.id,"customerContact")
+    //    if(e.target.id =="primary_contact"){
+    //        let primary = customerContact.primary_contact ==1?0:1
+    //        props.handleExchangeData(primary,e.target.id,"customerContact")
+    //    }else if(e.target.id =="all_communication"){
+    //     let all = customerContact.all_communication ==1?0:1
+    //     props.handleExchangeData(all,e.target.id,"customerContact")
 
-       }else{
+    //    }else{
         props.handleExchangeData(e.target.value,e.target.id,"customerContact")
-       } 
+    //    } 
 
     }
     const onSaveClicked = () => {
@@ -106,16 +106,16 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
             //     }
 
             // }
-            if (object === "phone1_ext") {
-                if (element.value === "") {
-                    document.getElementById("phone1_ext-validtor").innerText = "Enter  Phone 2"
-                    errorCount++;
+            // if (object === "phone1_ext") {
+            //     if (element.value === "") {
+            //         document.getElementById("phone1_ext-validtor").innerText = "Enter  Phone 2"
+            //         errorCount++;
 
-                } else {
-                    document.getElementById("phone1_ext-validtor").innerText = ""
-                }
+            //     } else {
+            //         document.getElementById("phone1_ext-validtor").innerText = ""
+            //     }
 
-            }
+            // }
             if (object === "email") {
                 if (element.value === "") {
                     document.getElementById("email-validtor").innerText = "Enter Email"
@@ -125,15 +125,15 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                     document.getElementById("email-validtor").innerText = ""
                 }
             }
-            if (object === "text") {
-                if (element.value === "") {
-                    document.getElementById("text-validtor").innerText = "Enter Notes"
-                    errorCount++;
+            // if (object === "text") {
+            //     if (element.value === "") {
+            //         document.getElementById("text-validtor").innerText = "Enter Notes"
+            //         errorCount++;
 
-                } else {
-                    document.getElementById("text-validtor").innerText = ""
-                }
-            }
+            //     } else {
+            //         document.getElementById("text-validtor").innerText = ""
+            //     }
+            // }
 
 
             // }
@@ -275,15 +275,15 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
             </div>
         
         </div>
-        <div class="row mt-3">
+        {/* <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
                 <label>Notes <span class="text-danger">*</span></label>
-                <textarea  class="form-control" id="text" value={""}  value={customerContact.Notes}  onChange={handleInput} placeholder=" Add Notes..."></textarea>
+                <textarea  class="form-control" id="text" value={""}  value={customerContact.Notes}  onChange={handleInput} placeholder=" Add Notes..."></textarea> */}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
-                {<span style={{fontSize:"small",color:"red"}} id="text-validtor"></span>}
+                {/* {<span style={{fontSize:"small",color:"red"}} id="text-validtor"></span>}
             </div>
         
-        </div>
+        </div> */}
   
         {/* <div class="row mt-3"> */}
         {/* <div class="d-flex"> */}

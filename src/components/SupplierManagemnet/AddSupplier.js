@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,getAllSuppliersContact,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {UpdateAddress,getAllSuppliersContact,updateSupplierContact,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
 // import {getAllSupplierCategoryMethods}
 
@@ -9,6 +9,7 @@ import {connect} from "react-redux";
 import 'react-tabs/style/react-tabs.css';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
+import SupplierNotes from "../../components/Modal/SupplierNotes"
 import ContactsModal from "../../components/Modal/ContactsModal"
 import AddressModal from "../../components/Modal/AddressModal"
 import SupplierAddressModal from "../../components/Modal/SupplierAddressModal"
@@ -44,15 +45,20 @@ function AddSupplier(props) {
     const {supplierDataById,supplierContactList,supplierAddressList} = props.supplierData
     const {categoryData} = props.categoryData
     const [isOpen2, setIsOpen2] = useState(false);
-    console.log(supplierAddressList)
+    console.log(props.customerData)
     const toggle1 = () => setIsOpen1(!isOpen1);
     useEffect (()=>{
         props.getAllCategoriesAction()
-        props.getAllSuppliersContact(supplierDataById.id)
-        props.getAllAddress(supplierDataById.id)
-        props.getAllSupplierCategoryMethods()
-        props.getAllSupplierReasonMethods()
-        props.getAllTermsMethods()
+        // alert(supplierDataById.id)
+        // if(supplierDataById.id!==""){
+            // alert("ds")
+            props.getAllSuppliersContact(supplierDataById.id)
+            props.getAllAddress(supplierDataById.id)
+        // }
+     
+        // props.getAllSupplierCategoryMethods()
+        // props.getAllSupplierReasonMethods()
+        // props.getAllTermsMethods()
  
 
     },[website_url])
@@ -65,11 +71,17 @@ function AddSupplier(props) {
 	// const toggle2 = () => setIsOpen2(!isOpen2);
 
     const [isOpenContacs, setisOpenContacs] = useState(false);
+    const [isOpenContacsNotes, setisOpenContacsNotes] = useState(false);
 	// const [message2,setMessage2] = useState([]);
 	const toggleForContact = () => {
         setactionType("add")
         props.resetSupplierContact()
         setisOpenContacs(!isOpenContacs)
+    }
+    const toggleForContactNotes = () => {
+        // setactionType("add")
+        props.resetSupplierContact()
+        setisOpenContacsNotes(!isOpenContacsNotes)
     }
 
     const [isOpenAddress, setisOpenAddress] = useState(false);
@@ -246,6 +258,9 @@ function AddSupplier(props) {
         // ////alert("in")
     }
     const closeAddSupplier = ()=>{
+        props.resetSupplierFilds()
+        props.getAllSuppliers()
+        // props.typeOfActionShow("")
         props.typeOfsupplierActionShow("")
     }
     const saveCustomerData1 = (type)=>{
@@ -370,6 +385,11 @@ function AddSupplier(props) {
         props.getSupplierContact(id)
         setactionType("edit")
     }
+    const editContactNotes=(id)=>{
+        setisOpenContacsNotes(true)
+        props.getSupplierContact(id)
+        setactionType("edit")
+    }
     const editAddress =(id)=>{
         setisOpenAddress(true)
         props.getAddressById(id)
@@ -434,6 +454,38 @@ const dataTochange =(e)=>{
     }
       return
     }
+    const changeCheckBox =(id,index,type)=>{
+        // alert(index)
+        console.log(supplierContactList,index)
+        let data  = supplierContactList.active[index]
+        console.log( data[type])
+        data[type] =  data[type]==0?1:0
+        // console.log( data[type])
+        props.updateSupplierContact(data).then(data=>{
+            props.getAllSuppliersContact(supplierDataById.id)
+        //     console.log(supplierContactList)
+        })
+
+
+        // props.updateSupplierContact(supplierContact).then(data=>{
+        //     props.modalAction()
+        //     console.log(supplierDataById)
+        //     props.getAllSuppliersContact(supplierDataById.id)
+
+    }
+    const changeCheckBoxAddress =(id,index,type)=>{
+        // alert(index)
+        console.log(supplierAddressList,index)
+        let data  = supplierAddressList.active[index]
+        console.log( data[type])
+        data[type] =  data[type]==0?1:0
+        console.log( data[type])
+        props.UpdateAddress(data).then(data=>{
+            props.getAllAddress(supplierDataById.id)
+            // console.log(customerContact)
+        })
+
+    }
 console.log(props.supplierData.supplierCategoryList)
 console.log(props.supplierData.supplierReasonList)
     return (
@@ -441,6 +493,7 @@ console.log(props.supplierData.supplierReasonList)
              	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
                 <SuccessModal status={isOpen2} message={message2} modalAction={toggle2}/>
                 <SupplierContactModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
+                <SupplierNotes status={isOpenContacsNotes}  modalAction={toggleForContactNotes} type={"edit"}/>
                 <SupplierAddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/>
                 {/* <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
                 <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/> */}
@@ -898,7 +951,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <h2>Contacts</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    {supplierContactList.active.map(contact=>{
+                                    {supplierContactList.active.map((contact,index)=>{
                                         return(
                                             <div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
@@ -915,20 +968,20 @@ console.log(props.supplierData.supplierReasonList)
                                             </div>
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contact.primary_contact)==1?true:false}/>
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contact.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contact.id,index,"primary_contact")}/>
                                                     <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(contact.receives_all)==1?true:false}/>
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(contact.receives_all)==1?true:false} onChange={()=>changeCheckBox(contact.id,index,"receives_all")}/>
                                                     <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
+                                                    <a  class="">
+                                                        <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>editContactNotes(contact.id)}/>
                                                     </a>
-                                                    <a href="#" class=" ml-2">
+                                                    <a  class=" ml-2">
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>editContact(contact.id)}/>
                                                     </a>
                                                 </div>
@@ -947,7 +1000,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={supplierDataById.id === undefined?true:false} onClick={toggleForContact}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" disabled={supplierDataById.id==""?true:false} onClick={toggleForContact}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -960,7 +1013,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <h2>Addresses</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    {supplierAddressList.active.map(address=>{
+                                    {supplierAddressList.active.map((address,index)=>{
                                         return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
                                             <p class="mb-0 f-s-16 f-w-600">{address.supplier_address}<br/>
@@ -968,13 +1021,13 @@ console.log(props.supplierData.supplierReasonList)
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(address.billing_address)==1?true:false} disabled/>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(address.billing_address)==1?true:false} onChange={()=>changeCheckBoxAddress(address.id,index,"billing_address")}/>
                                                         <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(address.shipping_address)==1?true:false} disabled/>
+                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(address.shipping_address)==1?true:false} onChange={()=>changeCheckBoxAddress(address.id,index,"shipping_address")}/>
                                                         <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
                                                     </div>
                                                 </div>
@@ -1010,7 +1063,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id === undefined?true:false}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id==""?true:false}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -1055,4 +1108,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllTermsMethods,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
+export default connect(mapStateToProps,{UpdateAddress,updateSupplierContact,getAllSuppliersContact,getAllTermsMethods,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)

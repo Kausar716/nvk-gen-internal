@@ -364,7 +364,7 @@ export const getsupplierById = (id) =>dispatch => {
         console.log(res.data)
     dispatch({
             type:GET_SUPPLIER_BY_ID,
-            payload:res.data,
+            payload:res.data.data.supplier,
 
         })
     })
