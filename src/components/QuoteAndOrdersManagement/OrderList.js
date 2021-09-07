@@ -1334,7 +1334,7 @@ class OrderList extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div>
-                            <div class="equalSign"  style={{marginTop:"10px",marginRight:"4px", marginLeft:"4px"}}>=</div>
+                            <div class="equalSign2"  >=</div>
 
                             {/* <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
@@ -1348,6 +1348,7 @@ class OrderList extends React.Component {
                                 {deductingFinalValues.map(item=>{
                                     
                                     return <div style={{display:"flex"}}>
+                                         <span class="plusSignInQuote">+</span>
                                          
                                       <div class="cardBox individualCard openStsCard" >
 
@@ -1403,7 +1404,7 @@ class OrderList extends React.Component {
                                            
                                         </div>
 
-                                        <span class="plusSignInQuote">+</span>
+                                        {/* <span class="plusSignInQuote">+</span> */}
                                        
                                         
                                     </div>

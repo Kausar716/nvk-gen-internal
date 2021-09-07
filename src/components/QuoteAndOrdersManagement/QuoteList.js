@@ -634,11 +634,11 @@ class QuoteList extends React.Component {
                                 <div class="stripe"></div>
                                 <p>Total Orders</p>
                                 <h4>{finalTotalValue}</h4>
-                                <div>
+                                <div style={{marginTop:"24px"}}>
                                     <a href="#">View All</a>
                                 </div>
                             </div>
-                            <div class="equalSign" style={{marginTop:"7px",marginRight:"4px"}}>=</div>
+                            <div class="equalSign2" >=</div>
 
                             {/* <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
@@ -652,6 +652,7 @@ class QuoteList extends React.Component {
                                 {deductingFinalValues.map(item=>{
                                     
                                     return <div className="boxCreation">
+                                          <span class="plusSignInQuote">+</span>
                                          
                                         <div  class="cardBox individualCard openStsCard">
 
@@ -707,7 +708,7 @@ class QuoteList extends React.Component {
                                            
                                         </div>
 
-                                        <span class="plusSignInQuote">+</span>
+                                        {/* <span class="plusSignInQuote">+</span> */}
                                        
                                         
                                     </div>
