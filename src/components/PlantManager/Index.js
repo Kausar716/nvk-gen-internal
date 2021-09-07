@@ -33,6 +33,7 @@ import {
     plantSubPageReDirectAction,
     serachPlant,
     radioSearch,
+    resetPlantRadio,
     searchCategoryApplyAction
     
 
@@ -68,7 +69,7 @@ const  PlantManger=(props)=> {
           lang.genus.toLowerCase().includes(inputValue)
         );
     };
-    const getSuggestionValue = suggestion => suggestion.genus;
+    const getSuggestionValue = suggestion => suggestion.plant_name;
 
       // Use your imagination to render suggestions.
     const renderSuggestion = suggestion => (
@@ -162,8 +163,10 @@ const productFormAction = ()=>{
         }
         const searchBasedOnCategory = (e) =>{
             setLoaderMessage("No Records Found.")
+            props.setPlantPageNumber(0)
             //console.log(e.target.value)
             //props.searchCategoryApplyAction(e.target.value)
+            
             props.serachPlant({plant: inputValue, option: props.plantData.plantRadioButton, category: e.target.value})
             setCategoryId(e.target.value)
             // searchCategoryApply()
@@ -178,6 +181,7 @@ const productFormAction = ()=>{
         const resetData = () =>{
             setLoaderMessage("Loading Data...")
             setLoader(true)
+            props.resetPlantRadio()
             let result = props.getAllPlantAction()
             result.then(res=>{
                 setLoader(false)
@@ -203,7 +207,7 @@ const productFormAction = ()=>{
     console.log(plantRadioButton)
     const inputProps = {
         placeholder: 'Plant Name',
-        value,
+        value:value.split("-")[0],
         
         // className:"searchInput",
         className:" form-control btn btn-search",
@@ -431,7 +435,7 @@ export default connect(mapStateToProps,{
         deletePlantAction ,
          getAllPlantAction,
          duplicatePlant,
-
+         resetPlantRadio,
          //plant page redirect
          plantPageReDirectAction,
          plantSubPageReDirectAction,

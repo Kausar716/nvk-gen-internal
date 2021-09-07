@@ -24,6 +24,7 @@ import {
     getAllSpecifiedSkuProductList,
     handleManufactureData,
     setPageNumber,
+    resetProductRadio,
 
     //page Redirects action
     pageReDirectAction,
@@ -87,10 +88,11 @@ const  ProductManagement = (props) =>{
         </span>
     );
     const onChange = (event, { newValue }) => {
+        let {productRadioButton} = props.productData.productRadioButton
         setValue(newValue)
         props.setPageNumber(0)
         setLoaderMessage("No Records Found.")
-        props.serachProduct({product: newValue, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
+        props.serachProduct({product: newValue, option: productRadioButton, category: selectedCategory,manufactureId:props.manufacturer_id})
         setInputValue(newValue);
         // setLoaderMessage("No Records Found...")
         // props.serachPlant({plant: newValue, option: selectedRadio, category: categoryId})
@@ -117,6 +119,7 @@ const  ProductManagement = (props) =>{
 
         const handleCategoryData =(e)=>{
             let temSub =[];
+            let {productRadioButton} = props.productData.productRadioButton
            setLoaderMessage("No Records Found.")
            props.setPageNumber(0)
             //console.log("propsSubCategory", props.categoryData.subCategoryData)
@@ -136,7 +139,7 @@ const  ProductManagement = (props) =>{
                 }
 
                 props.handleSelectedCategory(e.target.value)
-                props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value,manufactureId:props.manufacturer_id})
+                props.serachProduct({product: inputValue, option: productRadioButton, category: e.target.value,manufactureId:props.manufacturer_id})
                 // temSub = props.categoryData.subCategoryData.filter(cat=>JSON.stringify(cat.category_id)===e.target.value)
                 // console.log("temSub", temSub)
                
@@ -155,12 +158,13 @@ const  ProductManagement = (props) =>{
             }
         }
         const handleManufactureData =(e)=>{
+
             console.log(e.target.value)
             setLoaderMessage("No Records Found.")
             props.setPageNumber(0)
             let selectedId = parseInt(e.target.value)
             props.handleManufactureData(selectedId)
-            props.serachProduct({product: inputValue, option: selectedRadio, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
+            props.serachProduct({product: inputValue, option: productRadioButton, category: props.productData.selectedCategory,manufactureId:e.target.value === "0" ?"None":parseInt(e.target.value)})
            
         }
 
@@ -171,9 +175,9 @@ const  ProductManagement = (props) =>{
             setCategoryId("0")
             setsubCategory("0")
             setInputValue("")
-            setRadio("all")
+            // setRadio("all")
             setValue("")
-
+            props.resetProductRadio()
             let response = props.getAllProductAction()
             response.then(res=>{
                 setLoader(false)
@@ -222,8 +226,8 @@ const  ProductManagement = (props) =>{
         console.log(e.target.value)
         console.log(selectedCategory)
         console.log(props.manufacture_id)
-
-        props.serachProduct({product: e.target.value, option: selectedRadio, category: selectedCategory,manufactureId:props.manufacturer_id})
+        let {productRadioButton} = props.productData.productRadioButton
+        props.serachProduct({product: e.target.value, option: productRadioButton, category: selectedCategory,manufactureId:props.manufacturer_id})
         setInputValue(e.target.value);
     }
        const radioSearchAction =(e)=>{
@@ -235,15 +239,15 @@ const  ProductManagement = (props) =>{
 
     }
     const searchBasedOnCategory = (e) =>{
-     
-        props.serachProduct({product: inputValue, option: selectedRadio, category: e.target.value})
+        let {productRadioButton} = props.productData.productRadioButton
+        props.serachProduct({product: inputValue, option: productRadioButton, category: e.target.value})
         setCategoryId(e.target.value)
         // searchCategoryApply()
     }
 
     
         // eslint-disable-next-line no-unused-vars
-        const {pageToOpen,actionType,productDataById, skuDataById,productData,selectedCategory,} = props.productData
+        const {pageToOpen,actionType,productDataById, skuDataById,productData,selectedCategory,productRadioButton} = props.productData
         const {categoryData,subCategoryData,manufactureData} = props.categoryData
         console.log(props.temp)
         console.log(selectedCategory)
@@ -383,17 +387,17 @@ const  ProductManagement = (props) =>{
                                 <div className="form-group row">
                                     <div className="col-md-12">
                                         <div className="form-check form-check-inline">
-                                        <input className="form-check-input"  type="radio" style={{cursor:"pointer"}} checked={selectedRadio ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
+                                        <input className="form-check-input"  type="radio" style={{cursor:"pointer"}} checked={productRadioButton ==="active"?"checked":""} name="radio1" onClick={radioSearchAction} id="active"/>
                                             {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="activePlants" value=""/> */}
                                             <label className="form-check-label" for="activePlants" >Active</label>
                                         </div>
                                         <div className="form-check form-check-inline">
-                                        <input className="form-check-input" type="radio" style={{cursor:"pointer"}} name="radio1" checked={selectedRadio ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
+                                        <input className="form-check-input" type="radio" style={{cursor:"pointer"}} name="radio1" checked={productRadioButton ==="archive"?"checked":""} onClick={radioSearchAction} id="archive"/>
                                             {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="archivedPlants" value=""/> */}
                                             <label className="form-check-label" for="archivedPlants">Archived</label>
                                         </div>
                                         <div className="form-check form-check-inline">
-                                        <input type="radio" name="radio1"checked={selectedRadio ==="all"?"checked":""}style={{cursor:"pointer"}}  onClick={radioSearchAction} id="all"/>
+                                        <input type="radio" name="radio1"checked={productRadioButton ==="all"?"checked":""}style={{cursor:"pointer"}}  onClick={radioSearchAction} id="all"/>
                                             {/* <input className="form-check-input" type="radio" name="radio_default_inline" id="allPlants" value=""/> */}
                                             <label className="form-check-label" for="allPlants"> &nbsp;All</label>
                                         </div>
@@ -512,7 +516,7 @@ getSpecifiedProductAction,
 duplicateProduct,
 handleSelectedCategory,
 setPageNumber,
-
+resetProductRadio,
 //page Redirects action
 pageReDirectAction,
 subPageReDirectAction,

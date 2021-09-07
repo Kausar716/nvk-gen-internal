@@ -162,7 +162,6 @@ export const handCategoryDelete = (id) =>dispatch=>{
 
 export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
    // debugger;
-    console.log(id, data)
     //let attributeObject={}
 
     return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
@@ -191,11 +190,13 @@ export const handleSubAttributeUpdateChild = (id, data) =>dispatch=>{
  }
 export const handleUpdateCategory = (id, data) =>dispatch=>{
      return axios.post(`/api/product-update-category/${id}`,data,config).then(res=>{ 
-         console.log(res)
      dispatch({
              type:HANDLE_UPDATE_ATTRIBUTE,
              payload:res.data
          })
+     }).catch(err=>{
+         console.log(err.response)
+         alert(err.response.data.message)
      })
  }
  export const handleUpdateSubCategory = (id, data) =>dispatch=>{

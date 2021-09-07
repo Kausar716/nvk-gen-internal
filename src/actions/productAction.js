@@ -36,6 +36,7 @@ import {
     HANDLE_MANUFACTURE_DATA,
     HANDLE_SELECTED_CATEGORY,
     CHECK_BOX_SKU1,
+    HANDLE_PRODUCT_RADIO_RESET,
 
     // axios config
     config,
@@ -509,6 +510,14 @@ export const serachProduct = (data) =>dispatch=>{
     })
 
 }
+export const resetProductRadio = () =>dispatch=>{
+    dispatch({
+        type:HANDLE_PRODUCT_RADIO_RESET,
+        // payload:data,
+    })
+
+}
+
  export const radioSearch = (data) =>dispatch=>{
      dispatch({
          type:HANDLE_PRODUCT_RADIO_TOGGLE,

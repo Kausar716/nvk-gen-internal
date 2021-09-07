@@ -31,6 +31,7 @@ import {
     //HANDLE_PLANT_TAG_INPUT_DATA,
     HANDLE_PLANT_SKU_INPUT_DATA,
     CLEAR_SKU_FIELDS_PLANT,
+    HANDLE_PLANT_RADIO_RESET,
 
     // axios config
     config,
@@ -313,7 +314,7 @@ export const duplicatePlant = (id) =>dispatch=>{
             type:DUPLICTE_PLANT,
             payload:res.data.data
         })
-        error.push("Plant duplicated successfully  successfully",)
+        error.push("Plant duplicated successfully",)
         dispatch({
                         type:ERROR_HANDLE,
                         message:error,
@@ -662,6 +663,14 @@ export const serachPlant = (data) =>dispatch=>{
     dispatch({
         type:HANDLE_SEARCH_INPUT,
         payload:data,
+    })
+
+}
+
+export const resetPlantRadio = () =>dispatch=>{
+    dispatch({
+        type:HANDLE_PLANT_RADIO_RESET,
+        // payload:data,
     })
 
 }

@@ -245,7 +245,7 @@ const SignInPage = (props) => {
                     </div>
                     <div class="row">
                         <div class="col-md-12 text-center">
-                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.10.1 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
+                        <p>Terms of Use | Privacy Policy | Version Number: 0.0.10.2 <br></br>&copy; 2021 NVK Holdings Inc. All rights reserved.</p>
                             {/* <label class="mb-0"><small>© NVK Nurseries Inc. All Rights Reserved</small></label> */}
                            
                         </div>
