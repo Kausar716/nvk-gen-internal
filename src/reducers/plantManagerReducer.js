@@ -294,12 +294,14 @@ export default function(state = initialSatate, action){
 
         case GET_ALL_PLANT_ACTION:
             let returnPlantList = []   
+            console.log(state.plantRadioButton)
+            console.log(action.payload)
             if(state.plantRadioButton === "active")            {
                 returnPlantList = action.payload.filter(plant=>{
                     return (plant.archived === 0)
                 })
             }
-            else if(state.plantRadioButton === "archived"){
+            else if(state.plantRadioButton === "archive"){
                 returnPlantList = action.payload.filter(plant=>{
                     return (plant.archived !== 0)
                 })

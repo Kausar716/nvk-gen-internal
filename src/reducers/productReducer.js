@@ -216,7 +216,7 @@ export default function(state = initialSatate, action){
                     return (product.archived === 0)
                 })
             } 
-            else if(state.productRadioButton === "archived"){
+            else if(state.productRadioButton === "archive"){
                 returnProductList = action.payload.data.filter(product=>{
                     return (product.archived !== 0)
                 })

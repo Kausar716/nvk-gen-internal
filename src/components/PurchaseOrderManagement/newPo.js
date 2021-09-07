@@ -76,7 +76,7 @@ import ActionModal from '../Modal/ActionModal';
 
 
 
-console.log(props.supplierData)
+console.log(poData)
     return (
         <div class="bg-white px-3 py-3">
              {/* <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/> */}
@@ -129,7 +129,7 @@ console.log(props.supplierData)
                             <label>Discount</label>
                             <div class="row align-items-center">
                                 <div class="col-md-4 col-lg-2">
-                                    <input type="text" class="form-control" placeholder="" id="discount_percent" onChange={handleInputData}></input>
+                                    <input type="text" class="form-control text-right" placeholder="" id="discount_percent" value={poData.discount_percent} onChange={handleInputData}></input>
                                 </div>
                                 <div class="col-md-6 col-lg-4 d-flex mt-3 mt-md-0">
                                     <div class="custom-control custom-radio">
