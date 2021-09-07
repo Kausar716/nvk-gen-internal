@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
 import InputMask from 'react-input-mask';
-import {addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
+import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
 
  const ContactsModal = (props) => {
      const {status,type} =props
@@ -189,6 +189,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                  console.log(customerDataById)
                     // alert(customerDataById.customer_id)
                     props.getCustomerContacts(customerDataById.id)
+                    props.getCustomerById(customerDataById.id)
                     // props.getCustomerContacts(customerDataById.customer_id)
                     
                 })
@@ -198,6 +199,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
                     props.modalAction()
                     console.log(customerDataById)
                     props.getCustomerContacts(customerDataById.id)
+                    props.getCustomerById(customerDataById.id)
                     
                 })
     
@@ -329,7 +331,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{
+export default connect(mapStateToProps,{getCustomerById,
 addCustomerContact,handleExchangeData,updateContactData,getCustomerContacts
      
 

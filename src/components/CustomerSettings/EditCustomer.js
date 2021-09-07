@@ -341,20 +341,20 @@ function AddCustomer(props) {
     }
     const deleteCustomerContactData =(id)=>{
         props.deleteCustomerContact(id).then(data=>{
-            props.getCustomerContacts(customerDataById.id)
+            // props.getCustomerContacts(customerDataById.id)
         })
 
     }
     const deleteAddress =(id)=>{
         props.deleteCustomerAddress(id).then(data=>{
-            props.getcustomerAddress()
+            props.getcustomerAddress(customerAddress.customer_id)
         })
 
     }
-    const editContact=(id)=>{
-        alert(id)
+    const editContact=(e)=>{
+        // alert(e.target.id)
         setisOpenContacs(true)
-        props.getDataByContactId(id)
+        props.getDataByContactId(e.target.id)
         setactionType("edit")
     }
     const editNotes=(id)=>{
@@ -546,16 +546,16 @@ const dataTochange =(e)=>{
         // alert(e.target.id)
         let value = e.target.id.split("^")
         // alert(value[1])
-        if(value[0]=="primary_contact"){
-            let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
-            primaryData.map(priamry=>{
-                priamry["primary_contact"] =0
-                props.updateContactData(priamry).then(data=>{
-                })
+        // if(value[0]=="primary_contact"){
+        //     let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
+        //     primaryData.map(priamry=>{
+        //         priamry["primary_contact"] =0
+        //         props.updateContactData(priamry).then(data=>{
+        //         })
     
-            })
+        //     })
 
-        }
+        // }
      
         // alert(index)
         // console.log(customerContactList,index)
@@ -567,26 +567,53 @@ const dataTochange =(e)=>{
         console.log( data[0][value[0]])
         props.updateContactData(data[0]).then(data=>{
             props.getCustomerContacts(customerDataById.id)
+            
             console.log(customerContact)
         })
 
     }
-    const changeCheckBoxAddress =(id,index,type)=>{
+    const changeCheckBoxAddress =(e)=>{
+
+        let value = e.target.id.split("^")
+        // alert(value[1])
+        // if(value[0]=="primary_contact"){
+        //     let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
+        //     primaryData.map(priamry=>{
+        //         priamry["primary_contact"] =0
+        //         props.updateContactData(priamry).then(data=>{
+        //         })
+    
+        //     })
+
+        // }
+     
         // alert(index)
-        let data =customerAddressList.active.filter(data=>data.id == id)
+        // console.log(customerContactList,index)
+        // let data  = customerContactList.active[index]
+        let data =customerAddressList.active.filter(data=>data.id == value[1])
         
         // console.log( data[type])
-        data[0][type] =  data[0][type]==0?1:0
-        console.log( data[0][type])
-        // console.log(customerAddressList,index)
-        // let data  = customerAddressList.active[index]
-        // console.log( data[type])
-        // data[type] =  data[type]==0?1:0
-        // console.log( data[type])
+        data[0][value[0]] =  data[0][value[0]]==0?1:0
+        console.log( data[0][value[0]])
         props.updatecustomerAddress(data[0]).then(data=>{
             props.getcustomerAddress(customerDataById.id)
             console.log(customerContact)
         })
+        // alert(index)
+        // let data =customerAddressList.active.filter(data=>data.id == id)
+        
+        // // console.log( data[type])
+        // data[0][type] =  data[0][type]==0?1:0
+        // console.log( data[0][type])
+        // // console.log(customerAddressList,index)
+        // // let data  = customerAddressList.active[index]
+        // // console.log( data[type])
+        // // data[type] =  data[type]==0?1:0
+        // // console.log( data[type])
+        // props.updatecustomerAddress(data[0]).then(data=>{
+        //     props.getcustomerAddress(customerDataById.id)
+        //     console.log(customerContact)
+        // })
 
     }
 
@@ -843,15 +870,16 @@ const dataTochange =(e)=>{
                                                     <div class="contactCard" style={{border:"1px solid lightgray"}}>
                                                     <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p>
                                             <label class="text-muted f-w-400">{contactData.email}</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1}</label>
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2}</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
-                                                </div>
-                                            </div>
+                                            <table>
+                                                <tr>
+                                                    <td><strong>Phone 1:</strong> {contactData.phone1==null?" Not Available":contactData.phone1}</td>
+                                                     <td style={{paddingLeft:8}}><strong> Xt:</strong>  {contactData.phone1_ext==null?" Not Available":contactData.phone1_ext}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Phone 1:</strong> {contactData.phone2==null?" Not Available":contactData.phone2}</td>
+                                                     <td  style={{paddingLeft:8}}> <strong> Xt:</strong> {contactData.phone2_ext==null?" Not Available":contactData.phone2_ext}</td>
+                                                </tr>
+                                            </table>
                                             {/* <div>
                                                 <div class="custom-control custom-checkbox mt-2">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contactData.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"primary_contact")}/>
@@ -1144,8 +1172,8 @@ const dataTochange =(e)=>{
                                                     {contactData.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                         
                                                     </a>
-                                                    <a  class=" ml-2" onClick={()=>editContact(contactData.id)}>
-                                                        <img src="assets/img/edit.svg" alt="" />
+                                                    <a  class=" ml-2" onClick={editContact} id={contactData.id}>
+                                                        <img src="assets/img/edit.svg" alt=""id={contactData.id}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
@@ -1188,14 +1216,14 @@ const dataTochange =(e)=>{
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(data.billing_address)==1?true:false} onChange={()=>changeCheckBoxAddress(data.id,index,"billing_address")}/>
-                                                        <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
+                                                        <input type="checkbox" class="custom-control-input" id={`billing_address^${data.id}`} checked={parseInt(data.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`billing_address^${data.id}`}>Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(data.delivery_address)==1?true:false}  onChange={()=>changeCheckBoxAddress(data.id,index,"delivery_address")}/>
-                                                        <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
+                                                        <input type="checkbox" class="custom-control-input" id={`delivery_address^${data.id}`} checked={parseInt(data.delivery_address)==1?true:false}  onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`delivery_address^${data.id}`}>Delivery Address</label>
                                                     </div>
                                                 </div>
                                             </div>

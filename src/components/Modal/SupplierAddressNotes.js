@@ -169,7 +169,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
  
         <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
-                <label>Notes <span class="text-danger">*</span></label>
+                <label>Notes <span class="text-danger"></span></label>
                 <textarea  class="form-control" id="notes" value={""} value={supplierAddress.notes}  onChange={handleInput}></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="notes-validtor"></span>}
             </div>
