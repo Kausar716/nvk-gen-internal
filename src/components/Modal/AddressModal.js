@@ -34,7 +34,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         //    console.log(this.countZipRegix)
            // console.log(this.state.clientData.country)
        }else{
-        allStates = countryDetails["USA"][0];
+        allStates = countryDetails["Canada"][0];
 
        }
 //    }
@@ -47,6 +47,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         props.handleExchangeData(all,e.target.id,"customerAddress")
 
        }else{
+           
         props.handleExchangeData(e.target.value,e.target.id,"customerAddress")
        } 
     }
@@ -124,6 +125,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
             // }
             if (object === "country") {
+                // alert(element.value)
                 if (element.value === "") {
                     // clientDetailsData.country="Canada"
                     document.getElementById("country-validtor").innerText = "Select Country"
@@ -148,7 +150,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
             }
             if (object === "zip") {
-                if(element.value == "" ||isNaN(element.value) ){
+                if(element.value == "" ||isNaN(element.value) ||element.value.length <6){
                 // if ( !element.value.trim().match(this.countZipRegix)) {
                     document.getElementById("zip-validtor").innerText = "Enter Valid Postal/ZIP  "
                     errorCount++;

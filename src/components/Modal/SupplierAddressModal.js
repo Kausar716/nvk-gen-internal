@@ -112,7 +112,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
 
         }
         if (object === "zip") {
-            if(element.value == ""){
+            if(element.value == "" ||isNaN(element.value) ||element.value.length <6){
             // if ( !element.value.trim().match(this.countZipRegix)) {
                 document.getElementById("zip-validtor").innerText = "Enter Postal/ZIP "
                 errorCount++;
@@ -147,7 +147,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         //    console.log(this.countZipRegix)
            // console.log(this.state.clientData.country)
        }else{
-        allStates = countryDetails["USA"][0];
+        allStates = countryDetails["Canada"][0];
        }
 //    }
    const handleInput= (e)=>{
