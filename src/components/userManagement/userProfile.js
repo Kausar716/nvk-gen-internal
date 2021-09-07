@@ -9,6 +9,8 @@ import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
 import {showUser,updateUser,uploadImage,removeImage,deleteUser,getUsersList} from "../../actions/userAction";
 
+import {getAllSubAttribute} from "../../actions/attributeAction"
+
 //import getRolesList from "../../actions/userAccessAction";
 import {tabChangeValues, displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData, userAccessList,getRolesList,getPermissionList} from "../../actions/userAccessAction";
 import ActionModal from '../Modal/ActionModal'
@@ -95,10 +97,10 @@ class UserProfile extends React.Component {
             checkedActive:false,
             deleted_at:null,
             locations: [
-                { id: 1, name: "Form A",address:"1105 HWY5, Dundas, CN", isChecked: false },
-                { id: 2, name: "Form B", address:"1105 HWY5, Dundas, UN", isChecked: false },
-                { id: 3, name: "Form C", address:"11 HWY5, Dundas, Uk",isChecked: false },
-                { id: 4, name: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
+                // { id: 1, name: "Form A",address:"1105 HWY5, Dundas, CN", isChecked: false },
+                // { id: 2, name: "Form B", address:"1105 HWY5, Dundas, UN", isChecked: false },
+                // { id: 3, name: "Form C", address:"11 HWY5, Dundas, Uk",isChecked: false },
+                // { id: 4, name: "Form D", address:"1105 HWY5, Hustain, HU",isChecked: false }
               ]
         }
 
@@ -107,10 +109,14 @@ class UserProfile extends React.Component {
        
     }
     componentDidMount(){
-
+        this.props.getAllSubAttribute(18)
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
+
+        this.setState({
+            locations: this.props.locationAddress
+        })
 
         //this.props.tabChangeValues();
 
@@ -606,6 +612,7 @@ class UserProfile extends React.Component {
        handleChangeCheckbox = e => {
         //debugger
                     let itemName = e.target.name;
+                    let itemId = e.target.id;
                     let checked = e.target.checked;
                     this.setState(prevState => {
                     let { locations, allChecked } = prevState;
@@ -614,68 +621,55 @@ class UserProfile extends React.Component {
                         locations = locations.map(item => ({ ...item, isChecked: checked }));
                     } else {
                         locations = locations.map(item =>
-                        item.name === itemName ? { ...item, isChecked: checked } : item
+                        item.itemId === itemId ? { ...item, isChecked: checked } : item
                         );
                         allChecked = locations.every(item => item.isChecked);
                     }
                     return { locations, allChecked };
                     });
 
-    console.log("items::",itemName , checked)
+    console.log("items::",itemName , checked, this.state.allChecked)
   }
 
-       checkboxList2 = () => {
+    //    checkboxList2 = () => {
 
-        return this.state.locations.map(item => (
+    //     return this.state.locations.map(item => (
           
-                    <div>
-                    <ul class="list-unstyled" style={{marginTop:"1em"}}>
-                                <li>
-                                <div class="custom-control custom-checkbox" style={{marginTop:"-17px"}}>
-                                <input
+    //                 <div>
+    //                 <ul class="list-unstyled" style={{marginTop:"1em"}}>
+    //                             <li>
+    //                             <div class="custom-control custom-checkbox" style={{marginTop:"-17px"}}>
+    //                             <input
                                 
-                                    type="checkbox"
-                                    key={item.id}
-                                            name={item.name}
-                                            value={item.name}
+    //                                 type="checkbox"
+    //                                 key={item.id}
+    //                                         name={item.value}
+    //                                         value={item.value}
                                           
-                                            checked={item.isChecked}
-                                            onChange={this.handleChangeCheckbox}
-                                />{" "}
-                                {item.name}
-                                <span>{item.address}</span>
-                                {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
-                                </div>
-                                </li>
-                                </ul>
-                    </div>
-           
-
-
-
-            // <div class="custom-control custom-checkbox" style={{marginRight:"3em"}}>
-            //     <input type="checkbox" class="custom-control-input" id={item.id}
-            //         key={item.id}
-            //         name={item.name}
-            //         value={item.name}
-            //         checked={item.isChecked}
-            //         onChange={this.handleChangeCheckbox}
-            //     // onChange={this.handleClickCheckBox} 
-            //     />
-            //     <label class="custom-control-label" for={item.id} >{item.name}</label>
-            // </div>
-        ));
-      }
+    //                                         checked={item.isChecked}
+    //                                         onChange={this.handleChangeCheckbox}
+    //                             />{" "}
+    //                             {item.value}
+    //                             {/* <span>{item.address}</span> */}
+    //                             {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
+    //                             </div>
+    //                             </li>
+    //                             </ul>
+    //                 </div>
+    //     ));
+    //   }
     
       goBackToMain=()=>{
         this.props.cancle();
         this.props.displaySelectedUSERS(false)
-
         this.props.userAccessList("Select..")
       }
       
 
     render() {
+
+
+        console.log("getAllSubAttribute", this.props.locationAddress,  this.state.locations)
 
         console.log("ABCD123", this.props.tabChangeValueUP22, this.props.tabValues1)
         console.log("roles123", this.props.roles)
@@ -1086,7 +1080,34 @@ class UserProfile extends React.Component {
                                                     <label>Location Assigned</label>
                                                     <div class="locAssignBox">
 
-                                                            {this.checkboxList2()}
+                                                            {/* {this.checkboxList2()} */}
+
+                                                            {
+                                                                this.state.locations.map(item => (
+          
+                                                                    <div>
+                                                                    <ul class="list-unstyled" style={{marginTop:"1em"}}>
+                                                                                <li>
+                                                                                <div class="custom-control custom-checkbox" style={{marginTop:"-17px"}}>
+                                                                                <input
+                                                                                
+                                                                                    type="checkbox"
+                                                                                    key={item.id}
+                                                                                            name={item.value}
+                                                                                            value={item.value}
+                                                                                            id={item.id}
+                                                                                            checked={item.isChecked}
+                                                                                            onChange={this.handleChangeCheckbox}
+                                                                                />{" "}
+                                                                                {item.value}
+                                                                                {/* <span>{item.address}</span> */}
+                                                                                {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
+                                                                                </div>
+                                                                                </li>
+                                                                                </ul>
+                                                                    </div>
+                                                        ))
+                                                            }
 
                                                     
                                                     {/* {this.state.locations.map(loc=>{
@@ -1101,27 +1122,27 @@ class UserProfile extends React.Component {
                                                    
                                                    
                                                     </div>
-                                                    <div class="mt-3">
-                                                        <div class="custom-control custom-checkbox">
-                                                           
-                                                            {/* <input
-                                                                        disabled={!true}
-                                                                        type="checkbox"
-                                                                        onClick={this.handleAllChecked}
-                                                                        value="checkedall"
-                                                                        />{" "}
-                                                                        User has access to all locations */}
-                                                <input
-                                                   
-                                                    type="checkbox"
-                                                    name="checkAll"
-                                                    id="checkAll"
-                                                    checked={this.state.allChecked}
-                                                    onChange={this.handleChangeCheckbox}
-                                                    />
-                                                     <label style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
-                                                        </div> 
-                                                    </div>
+                                                            <div class="mt-3">
+                                                                <div class="custom-control custom-checkbox">
+                                                                
+                                                                    {/* <input
+                                                                                disabled={!true}
+                                                                                type="checkbox"
+                                                                                onClick={this.handleAllChecked}
+                                                                                value="checkedall"
+                                                                                />{" "}
+                                                                                User has access to all locations */}
+                                                        <input
+                                                        
+                                                            type="checkbox"
+                                                            name="checkAll"
+                                                            id="checkAll"
+                                                            checked={this.state.allChecked}
+                                                            onChange={this.handleChangeCheckbox}
+                                                            />
+                                                            <label style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
+                                                                </div> 
+                                                            </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -1174,10 +1195,11 @@ const mapStateToProps = (state)=> (
     data:state.userReduser,
     roles:state.userAccessReduser.roles,
    // tabChangeValueUP2: state.userAccessReduser.tabChangeValue,
-    tabChangeValueUP22: state.userAccessReduser.tabChangeValue
+    tabChangeValueUP22: state.userAccessReduser.tabChangeValue,
+    locationAddress:state.attributeData.subAttribute,
 }
 
 )
 
-export default withRouter(connect(mapStateToProps,{updateUser,removeImage,userAccessList,getUsersList,getRolesList,getPermissionList,
+export default withRouter(connect(mapStateToProps,{updateUser,removeImage,userAccessList,getUsersList,getRolesList,getPermissionList,getAllSubAttribute,
     showUser,uploadImage,deleteUser,tabChangeValues,displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData}) (UserProfile));
