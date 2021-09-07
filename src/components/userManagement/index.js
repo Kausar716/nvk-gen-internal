@@ -10,6 +10,7 @@ import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
 import {getUsersList} from "../../actions/userAction";
+import {getAllSubAttribute} from "../../actions/attributeAction"
 //import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex";
 import TextField from '@material-ui/core/TextField';
@@ -119,6 +120,7 @@ handleCancle = () => {
     this.setState({visbleTrue:false})
 }
 componentDidMount(){
+    this.props.getAllSubAttribute(18)
     this.props.getUsersList()
     this.props.getRolesList()
 
@@ -508,4 +510,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getUsersList,getRolesList,resetUserData,userAccessList,resetUserSelect, displaySelectedUSERS,getPermissionList,tabChangeValues})(UserManagement)
+export default connect(mapStateToProps,{getUsersList,getRolesList,resetUserData,userAccessList,resetUserSelect, displaySelectedUSERS,getPermissionList,tabChangeValues,getAllSubAttribute})(UserManagement)
