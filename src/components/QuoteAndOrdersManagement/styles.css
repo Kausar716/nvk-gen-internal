@@ -42,6 +42,10 @@
   display: flex;
 }
 
+.boxCreation .plusSignInQuote:nth-of-type() {
+  visibility: hidden;
+}
+
 /* .ordersCard .boxCreation span:nth-of-type(1n + 0) {
   background-color: pink;
   color: pink;
@@ -63,3 +67,17 @@
   background: #ff0000;
   border: 2px solid yellow;
 } */
+
+.equalSign2 {
+  position: relative;
+  margin-top: 11px;
+  /* margin-left: 1px; */
+  margin-right: -35px;
+  background-color: white;
+  /* padding-right: 1em; */
+  padding: 15px;
+  font-size: 40px;
+  font-weight: 800;
+  color: #b2b2b2;
+  border: 10px solid white;
+}
