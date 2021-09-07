@@ -41,6 +41,7 @@ import {
     ERROR_HANDLE,
     HANDLE_MANUFACTURE_DATA,
     HANDLE_SELECTED_CATEGORY,
+    HANDLE_PRODUCT_RADIO_RESET,
 
     // filter category Data
     FILTER_CATEGORY_DATA,
@@ -209,9 +210,24 @@ export default function(state = initialSatate, action){
         //product action
         case GET_ALL_PRODUCT_ACTION:
             console.log("actions", action.payload.data)
+            let returnProductList = []   
+            if(state.productRadioButton === "active")            {
+                returnProductList = action.payload.data.filter(product=>{
+                    return (product.archived === 0)
+                })
+            } 
+            else if(state.productRadioButton === "archived"){
+                returnProductList = action.payload.data.filter(product=>{
+                    return (product.archived !== 0)
+                })
+            }
+            else{
+                returnProductList = action.payload.data
+            }
+               
             return{
                  ...state,
-                productData:action.payload.data,
+                productData:returnProductList,
                 backupData:action.payload.data,
                 manufacturer_id:"None",
                 selectedCategory:"All",
@@ -285,11 +301,18 @@ export default function(state = initialSatate, action){
                 displayCancel:false,
                 productDataBySKUlist:[]
             }
+        case HANDLE_PRODUCT_RADIO_RESET:
+        return{
+            ...state,
+            productRadioButton:"active"
+        }
         case DUPLICTE_PRODUCT:
+            let productRadioButton = state.productRadioButton
             if(state.actionType === "add"){
             return{
                 ...state,
                 actionType:"add",
+                productRadioButton,
                 productDataById     :   {
                     name:"",
                     category_id:null,
@@ -325,6 +348,7 @@ export default function(state = initialSatate, action){
                     ...state,
                     productDataById:action.payload.product,
                     productDataBySKUlist:action.payload.sku,
+                    productRadioButton,
                     skuDataById         :   {
                         each_cost:"0.00",
                         each_price:"0.00",
@@ -552,7 +576,7 @@ export default function(state = initialSatate, action){
             }
 
 
-            case HANDLE_PRODUCT_SEARCH_INPUT:
+            case HANDLE_PRODUCT_SEARCH_INPUT: 
                 var optionVal = -1;
                 var categoryVal = "";
                 let filterManufactur=0
@@ -578,13 +602,15 @@ export default function(state = initialSatate, action){
                 if(action.payload.product.trim() ==="" && optionVal === -1 && categoryVal === "0"){
                     return{
                         ...state,
-                        productData:state.backupData
+                        productData:state.backupData,
+                        productRadioButton:action.payload.option
                     }
                 }else{
                     console.log("in",action)
                     console.log(parseInt(categoryVal),"sadfd")
                     return{
                         ...state,
+                        productRadioButton:action.payload.option,
                         productData:state.backupData.filter(
                             filterData=>(filterData.name.trim().toLowerCase().includes(action.payload.product.trim().toLowerCase()) || action.payload.product==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&

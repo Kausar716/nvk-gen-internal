@@ -172,7 +172,7 @@ class Category extends Component {
                         task.status =parseInt(task.status)==1? 0:1
                         this.props.handleUpdateCategory(task.id,task).then(data=>{
    
-                            this.props.getAllPlantCategories().then(()=>{
+                            this.props.getAllCategories().then(()=>{
                                 // alert("ji")
                                 this.getCatgoryData()
                             })
@@ -186,10 +186,14 @@ class Category extends Component {
                     task.status =parseInt(task.status)==1? 0:1
                         this.props.handleUpdateCategory(task.id,task).then(data=>{
    
-                    this.props.getAllPlantCategories().then(()=>{
-                        // alert("ji")
-                        this.getCatgoryData()
-                    })
+                            this.props.getAllCategories().then(()=>{
+                                // alert("ji")
+                                this.getCatgoryData()
+                            })
+                    // this.props.getAllCategoriesAction().then(()=>{
+                    //     // alert("ji")
+                    //     this.getCatgoryData()
+                    // })
               })
           }
     

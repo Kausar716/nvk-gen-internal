@@ -443,7 +443,7 @@ class InventoryLocation extends Component {
          let updateObject={}
          updateObject.value=valueName
         //  updateObject.attribute_id=1
-         updateObject.status=1
+        //  updateObject.status=1
 
          updateObject["childrens"] =[{
                 children_value:vlocationShortCode,

@@ -162,7 +162,6 @@ export const handCategoryDelete = (id) =>dispatch=>{
 
 export const handleSubAttributeUpdate = (id, data) =>dispatch=>{
    // debugger;
-    console.log(id, data)
     //let attributeObject={}
 
     return axios.post(`/api/update-subattribute/${id}`,data,config).then(res=>{ 
