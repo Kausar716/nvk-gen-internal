@@ -343,7 +343,7 @@ case ADD_NEW_CUSTOMER:
     console.log(action.payload)
     return{
         ...state,
-        // customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customer}
+        customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customercontact:[],customeraddress:[]}
         
     }
     case EDIT_CUSTOMER:

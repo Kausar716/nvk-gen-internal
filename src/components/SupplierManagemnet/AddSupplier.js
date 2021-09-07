@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import {UpdateAddress,getAllSuppliersContact,updateSupplierContact,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
+
+import SupplierAddressNotes from "../../components/Modal/SupplierAddressNotes"
 // import {getAllSupplierCategoryMethods}
 
 import {getAllTermsMethods} from "../../actions/customerSettingAction";
@@ -48,12 +50,18 @@ function AddSupplier(props) {
     console.log(props.customerData)
     const toggle1 = () => setIsOpen1(!isOpen1);
     useEffect (()=>{
+        // if(props.selectedId !=0)
+        // alert(props.selectedId)
         props.getAllCategoriesAction()
         // alert(supplierDataById.id)
         // if(supplierDataById.id!==""){
             // alert("ds")
-            props.getAllSuppliersContact(supplierDataById.id)
-            props.getAllAddress(supplierDataById.id)
+            if(props.selectedId !=0){
+                props.getAllSuppliersContact(props.selectedId)
+                props.getAllAddress(props.selectedId)
+
+            }
+          
         // }
      
         // props.getAllSupplierCategoryMethods()
@@ -72,6 +80,7 @@ function AddSupplier(props) {
 
     const [isOpenContacs, setisOpenContacs] = useState(false);
     const [isOpenContacsNotes, setisOpenContacsNotes] = useState(false);
+    const [isOpenAddressNotes, setisOpenAddressNotes] = useState(false);
 	// const [message2,setMessage2] = useState([]);
 	const toggleForContact = () => {
         setactionType("add")
@@ -82,6 +91,11 @@ function AddSupplier(props) {
         // setactionType("add")
         props.resetSupplierContact()
         setisOpenContacsNotes(!isOpenContacsNotes)
+    }
+    const toggleForAddressNotes  = ()=>{
+        props.resetSupplierContact()
+        setisOpenAddressNotes(!isOpenAddressNotes)
+
     }
 
     const [isOpenAddress, setisOpenAddress] = useState(false);
@@ -454,17 +468,42 @@ const dataTochange =(e)=>{
     }
       return
     }
-    const changeCheckBox =(id,index,type)=>{
+    const changeCheckBox =(e)=>{
         // alert(index)
-        console.log(supplierContactList,index)
-        let data  = supplierContactList.active[index]
-        console.log( data[type])
-        data[type] =  data[type]==0?1:0
+        let value = e.target.id.split("^")
+        // alert(value[1])
+        if(value[0]=="primary_contact"){
+            let primaryData = supplierContactList.active.filter(data=>data[value[0]] ==1)
+            primaryData.map(priamry=>{
+                priamry["primary_contact"] =0
+                props.updateSupplierContact(priamry).then(data=>{
+                })
+    
+            })
+
+        }
+     
+        // alert(index)
+        // console.log(customerContactList,index)
+        // let data  = customerContactList.active[index]
+        let data =supplierContactList.active.filter(data=>data.id == value[1])
+        
         // console.log( data[type])
-        props.updateSupplierContact(data).then(data=>{
+        data[0][value[0]] =  data[0][value[0]]==0?1:0
+        console.log( data[0][value[0]])
+        props.updateSupplierContact(data[0]).then(data=>{
             props.getAllSuppliersContact(supplierDataById.id)
-        //     console.log(supplierContactList)
+            console.log(supplierDataById)
         })
+        // console.log(supplierContactList,index)
+        // let data  = supplierContactList.active[index]
+        // console.log( data[type])
+        // data[type] =  data[type]==0?1:0
+        // // console.log( data[type])
+        // props.updateSupplierContact(data).then(data=>{
+        //     props.getAllSuppliersContact(supplierDataById.id)
+        // //     console.log(supplierContactList)
+        // })
 
 
         // props.updateSupplierContact(supplierContact).then(data=>{
@@ -486,6 +525,19 @@ const dataTochange =(e)=>{
         })
 
     }
+    const editAddressNotes=(id)=>{
+       
+        // alert("Gg")
+        setisOpenAddressNotes(true)
+        props.getAddressById(id)
+        // setisOpenAddress(true)
+        // props.getAddressById(id)
+        // setactionTypeAddress("edit")
+        // setisOpenAddress(true)
+        // props.getAllAddress(supplierDataById.id)
+        // setactionTypeAddress("edit")
+        // setactionType("edit")
+    }
 console.log(props.supplierData.supplierCategoryList)
 console.log(props.supplierData.supplierReasonList)
     return (
@@ -494,6 +546,7 @@ console.log(props.supplierData.supplierReasonList)
                 <SuccessModal status={isOpen2} message={message2} modalAction={toggle2}/>
                 <SupplierContactModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
                 <SupplierNotes status={isOpenContacsNotes}  modalAction={toggleForContactNotes} type={"edit"}/>
+                <SupplierAddressNotes  status={isOpenAddressNotes}  modalAction={toggleForAddressNotes} type={"edit"}/>
                 <SupplierAddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/>
                 {/* <ContactsModal status={isOpenContacs}  modalAction={toggleForContact} type={actionType}/>
                 <AddressModal status={isOpenAddress} modalAction={toggleForAddress} type={actionTypeAddress}/> */}
@@ -740,7 +793,10 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-8 col-lg-8">
                                         <label>Primary Contact</label>
-                                     <input type="text" class="form-control" name = "primaryContact" value={supplierDataById.fax !== null?supplierDataById.supplier_name+" "+supplierDataById.fax:""}  disabled placeholder="Primary Contact"/> 
+                                        {/* {supplierDataById.suppliercontact.map(data=>{
+                                            return(<p>Primary DAta</p>)
+                                        })} */}
+                                     {/* <input type="text" class="form-control" name = "primaryContact" value={supplierDataById.fax !== null?supplierDataById.supplier_name+" "+supplierDataById.fax:""}  disabled placeholder="Primary Contact"/>  */}
                                     </div>
                                     <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
                                     <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
@@ -968,12 +1024,12 @@ console.log(props.supplierData.supplierReasonList)
                                             </div>
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contact.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contact.id,index,"primary_contact")}/>
-                                                    <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
+                                                    <input type="checkbox" class="custom-control-input" id={`primary_contact^${contact.id}`} checked={parseInt(contact.primary_contact)==1?true:false} onChange={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${contact.id}`}>This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(contact.receives_all)==1?true:false} onChange={()=>changeCheckBox(contact.id,index,"receives_all")}/>
-                                                    <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
+                                                    <input type="checkbox" class="custom-control-input" id={`receives_all^${contact.id}`} checked={parseInt(contact.receives_all)==1?true:false} onChange={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`receives_all^${contact.id}`}>This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
@@ -1041,8 +1097,8 @@ console.log(props.supplierData.supplierReasonList)
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt="" />
+                                                    <a  class=""  onClick={()=>editAddressNotes(address.id)}>
+                                                    {address.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                     </a>
                                                     <a  class=" ml-2"  onClick={()=>editAddress(address.id)}>
                                                         <img src="assets/img/edit.svg" alt=""/>

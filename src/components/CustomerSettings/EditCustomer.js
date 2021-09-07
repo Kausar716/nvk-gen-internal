@@ -352,6 +352,7 @@ function AddCustomer(props) {
 
     }
     const editContact=(id)=>{
+        alert(id)
         setisOpenContacs(true)
         props.getDataByContactId(id)
         setactionType("edit")
@@ -447,16 +448,28 @@ const thirdMethod=(e)=> {
       e.preventDefault();
     }
   }
-  const thirdMethod1=(e)=> {
-      console.log(e.target)
-    const re =  /^(\d+)?(?:\.\d{1,2})?$/g;
-    console.log(re)
-    if (!re.test(e.target.value)) {
-        e.preventDefault();
-    }else{
-       
+  const thirdMethod1=(evt,element)=> {
+    //   alert("Fdsf")
 
+    var charCode = (evt.which) ? evt.which : evt.keyCode
+  if (charCode > 31 && (charCode < 48 || charCode > 57) && !(charCode == 46 || charCode == 8))
+    return false;
+  else {
+    var len = element.val().length;
+    var index = element.val().indexOf('.');
+    if (index > 0 && charCode == 46) {
+      return false;
     }
+    if (index > 0) {
+      var CharAfterdot = (len + 1) - index;
+      if (CharAfterdot > 3) {
+        return false;
+      }
+    }
+
+  }
+  return true;
+ 
 
   }
   const thirdMethod2=(e)=> {
@@ -529,14 +542,30 @@ const dataTochange =(e)=>{
         // else
         //     this.setState({ heading: "Sign up" })
     }
-    const changeCheckBox =(id,index,type)=>{
+    const changeCheckBox =(e)=>{
+        // alert(e.target.id)
+        let value = e.target.id.split("^")
+        // alert(value[1])
+        if(value[0]=="primary_contact"){
+            let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
+            primaryData.map(priamry=>{
+                priamry["primary_contact"] =0
+                props.updateContactData(priamry).then(data=>{
+                })
+    
+            })
+
+        }
+     
         // alert(index)
-        console.log(customerContactList,index)
-        let data  = customerContactList.active[index]
-        console.log( data[type])
-        data[type] =  data[type]==0?1:0
-        console.log( data[type])
-        props.updateContactData(data).then(data=>{
+        // console.log(customerContactList,index)
+        // let data  = customerContactList.active[index]
+        let data =customerContactList.active.filter(data=>data.id == value[1])
+        
+        // console.log( data[type])
+        data[0][value[0]] =  data[0][value[0]]==0?1:0
+        console.log( data[0][value[0]])
+        props.updateContactData(data[0]).then(data=>{
             props.getCustomerContacts(customerDataById.id)
             console.log(customerContact)
         })
@@ -544,12 +573,17 @@ const dataTochange =(e)=>{
     }
     const changeCheckBoxAddress =(id,index,type)=>{
         // alert(index)
-        console.log(customerAddressList,index)
-        let data  = customerAddressList.active[index]
-        console.log( data[type])
-        data[type] =  data[type]==0?1:0
-        console.log( data[type])
-        props.updatecustomerAddress(data).then(data=>{
+        let data =customerAddressList.active.filter(data=>data.id == id)
+        
+        // console.log( data[type])
+        data[0][type] =  data[0][type]==0?1:0
+        console.log( data[0][type])
+        // console.log(customerAddressList,index)
+        // let data  = customerAddressList.active[index]
+        // console.log( data[type])
+        // data[type] =  data[type]==0?1:0
+        // console.log( data[type])
+        props.updatecustomerAddress(data[0]).then(data=>{
             props.getcustomerAddress(customerDataById.id)
             console.log(customerContact)
         })
@@ -1063,7 +1097,7 @@ const dataTochange =(e)=>{
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
                                                 <label>Fee%</label>
-                                                <input type="number" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange} onKeyPress={thirdMethod1}/>
+                                                <input type="text" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange} onKeyPress={thirdMethod1}/>
                                             </div>
                                             </div>
                                             </div>
@@ -1096,25 +1130,27 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contactData.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"primary_contact")}/>
-                                                    <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
+                                                    <input type="checkbox" class="custom-control-input" id={`primary_contact^${contactData.id}`} checked={parseInt(contactData.primary_contact)==1?true:false} onClick={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${contactData.id}`}>This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={parseInt(contactData.all_communication)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"all_communication")}/>
-                                                    <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
+                                                    <input type="checkbox" class="custom-control-input" id={`all_communication^${contactData.id}`}  checked={parseInt(contactData.all_communication)==1?true:false} onClick={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`all_communication^${contactData.id}`}>This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
                                                     <a  class="" onClick={()=>editNotes(contactData.id)}>
-                                                        <img src="assets/img/moreDetails-ic.svg" alt=""/>
+                                                    {contactData.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
+                                                        
                                                     </a>
                                                     <a  class=" ml-2" onClick={()=>editContact(contactData.id)}>
                                                         <img src="assets/img/edit.svg" alt="" />
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
-                                                    <a href="#" class=" ml-2">
+                                                    <a  class=" ml-2">
+                                                      
                                                         <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(contactData.id)}/>
                                                     </a>
                                                 </div>
@@ -1172,8 +1208,9 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a class="">
-                                                        <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>{editAddressNotes(data.id)}}/>
+                                                    <a class="" onClick={()=>editAddressNotes(data.id)} >
+                                                    {data.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
+                                                        {/* <img src="assets/img/moreDetails-ic.svg" alt=""  */}
                                                     </a>
                                                     <a  class=" ml-2">
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>{editAddress(data.id)}}/>

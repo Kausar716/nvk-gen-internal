@@ -131,7 +131,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
-        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Notes</p> </ModalHeader>
+        <ModalHeader><p style={{textAlign:"center",fontSize:25}}> Notes</p> </ModalHeader>
         <form onSubmit={saveData}>
         <ModalBody >
             <p style={{color:"red"}}>{error}</p>
@@ -176,7 +176,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
 
         </ModalBody>
         <ModalFooter>
-        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>Save</button>
           <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>

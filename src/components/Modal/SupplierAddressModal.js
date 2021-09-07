@@ -146,6 +146,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         //    this.countZipRegix=countryDetails[customerAddress.country][1][0]
         //    console.log(this.countZipRegix)
            // console.log(this.state.clientData.country)
+       }else{
+        allStates = countryDetails["USA"][0];
        }
 //    }
    const handleInput= (e)=>{
@@ -219,7 +221,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             <div class="col-md-3 col-lg-3">
                 <label>Country<span class="text-danger">*</span></label>
                 <select className="form-control"  id="country"  value={supplierAddress.country}   placeholder="country" onChange={handleInput}>
-                    <option id="">Select Country</option>
+                    {/* <option id="">Select Country</option> */}
                     {allCountry.map((country, i)=>{
                         return <option id={allCountry[i]} selected={supplierAddress.country ==allCountry[i]?"selected":""}>{allCountry[i]}</option>
                     })}
@@ -233,7 +235,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             <div class="col-md-3 col-lg-3">
                 <label>State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={supplierAddress.state}  onChange={handleInput}>
-                <option id="">Select State</option>
+                {/* <option id="">Select State</option> */}
                 {allStates && allStates.map((c, i)=>{
                         return <option id={allStates[i]} selected={supplierAddress.state ==allStates[i]?"selected":""}>{allStates[i]}</option>
                 })}

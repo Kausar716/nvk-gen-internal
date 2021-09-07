@@ -5,7 +5,7 @@ import {modalAction} from "../../actions/productAction";
 import { countryDetails } from '../Help/countryList';
 import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSupplierAddress,getAllAddress} from "../../actions/supplierManagementAction";
 
- const SupplierAddressModal = (props) => {
+ const SupplierAddressNotes = (props) => {
      const {status,type} =props
    const {supplierAddress,supplierAddressList,supplierDataById} = props.supplierData
    const [error,setError] = useState("")
@@ -124,9 +124,9 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         return
         // //alert("saving")
        
-        if(supplierDataById.id !== undefined){
-            setError("")
-            supplierAddress.supplier_id  = supplierDataById.id
+        // if(supplierDataById.id !== undefined){
+            // setError("")
+            // supplierAddress.supplier_id  = supplierDataById.id
             // if(supplierAddress.id == undefined){
             //     props.addSupplierAddress(supplierAddress).then(data=>{
             //         props.modalAction()
@@ -148,9 +148,9 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
 
         // }
 
-        }else{
-            setError("Please add Supplier first")
-        }
+        // }else{
+        //     setError("Please add Supplier first")
+        // }
      
       
 
@@ -204,4 +204,4 @@ export default connect(mapStateToProps,{
 
 
 
-})(SupplierAddressModal)
+})(SupplierAddressNotes)
