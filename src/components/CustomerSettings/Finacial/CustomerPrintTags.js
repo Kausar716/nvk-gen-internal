@@ -55,6 +55,15 @@ const CustomerPrintRates = (props) => {
   const [base, setBase] = useState(false)
   const [app, setApp] =  useState(false)
   const handleInputData =(e)=>{
+
+    if(e.target.value!==""){
+      let value = e.target.value.split(".")
+      // console.log(value[0],value[1])
+      if(value[1]!== undefined)
+      if(value[1].length>2 )
+      // if(e.target.value.length>2){
+        return
+      }
     setCheckedData(true)
     let intValue = e.target.value
  
@@ -156,15 +165,15 @@ setOpen(true)
     }
   
     const thirdMethod2=(e)=> {
-      console.log(e.target)
-    const re = /^\d*(\.\d{0,1})?$/g;
-    console.log(re)
-    if (!re.test(e.target.value)) {
-        e.preventDefault();
-    }else{
+    //   console.log(e.target)
+    // const re = /^\d*(\.\d{0,1})?$/g;
+    // console.log(re)
+    // if (!re.test(e.target.value)) {
+    //     e.preventDefault();
+    // }else{
        
   
-    }
+    // }
   
   }
 
@@ -172,18 +181,19 @@ setOpen(true)
   return (
     <>
          <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
-      <div color="primary" onClick={toggle}  className="SubHeader">
+      <div color="primary" onClick={toggle}  className="SubHeader" style={{marginLeft:5}}>
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      
-      <Label className="subFont">Customer Print & Tag Rates</Label>
-      <span className="updownSymbolContainer"> 
-      {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
+
+
+        <span className="updownSymbolContainer"> 
+        {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
+      <h4 className="p-15 mb-0" className="subFont" >Customer Print & Tag Rates</h4>
         
         </div>
       <Collapse isOpen={isOpen}>
         
-                <div className="docDetails" style={{marginTop:"-12px"}}>
+                <div className="docDetails" style={{marginTop:"-15px"}}>
                 <p className="sub_menu_nameD"> Print Tag & Label Pricing</p>
                     {/* <Label className="secondHeader">
                     Print Tag & Label Pricing
@@ -192,16 +202,16 @@ setOpen(true)
 
         <div >
         
-          <Row className="containerBox" >
+          <Row className="containerBox"  style={{marginTop:"-12px"}}>
             <Row style={{width:"100%",paddingLeft:20}}>
               <Col className="col-2">
-                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Base Price</Label>
+                    <Label className="subHeadingLabels" style={{paddingLeft:8}}>Base Price</Label>
                     <Row>
                             {/* <Col sm="0"><p className="moveRight"></p></Col> */}
                             {/* <Col sm="4"> */}
 
                            
-                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"40%"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
+                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}   step="0.01"  style={{textAlign:"left",width:"40%",marginLeft:6,borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} id="base_price" value={props.customerData.customerTag.base_price}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
                           
                             {/* </Col> */}
                           
@@ -211,13 +221,13 @@ setOpen(true)
               </Col>
 
               <Col className="col-2">
-                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Custom Logo</Label>
+                    <Label className="subHeadingLabels" style={{paddingLeft:8}}>Custom Logo</Label>
                     <Row>
                             {/* <Col sm="0"><p className="moveRight"></p></Col> */}
                             {/* <Col sm="4"> */}
 
                            
-                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"40%"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
+                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}   step="0.01" style={{textAlign:"left",width:"40%",marginLeft:6,borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} id="custom_logo" value={props.customerData.customerTag.custom_logo}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
                           
                             {/* </Col> */}
                           
@@ -227,11 +237,11 @@ setOpen(true)
               </Col>
 
 
-              <Col className="col-2">
-                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Custom Pricing</Label>
+              <Col className="col-2" >
+                    <Label className="subHeadingLabels" style={{paddingLeft:8}}>Custom Pricing</Label>
                         <Row>
                    
-                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"} style={{textAlign:"left"}} step=".001" style={{width:"40%"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
+                            <p  style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  step=".001" style={{textAlign:"left",width:"40%",marginLeft:6,borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} id="custom_pricing" value={props.customerData.customerTag.custom_pricing}  onChange={handleInputData}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
                            
                           
                         </Row>
@@ -239,13 +249,13 @@ setOpen(true)
 
 
               <Col className="col-2">
-                    <Label className="subHeadingLabels" style={{paddingLeft:3}}>Custom Application</Label>
+                    <Label className="subHeadingLabels" style={{paddingLeft:8}}>Custom Application</Label>
                         <Row>
                             {/* <Col sm="0"><p className="moveRight"></p></Col> */}
                             {/* <Col sm="4"> */}
 
                            
-                            <p style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{width:"40%"}} id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
+                            <p style={{display:"inline",paddingTop:"-10px",position:"relative"}}>$ <input type="number" className="textRight" placeholder={"0.00"}  style={{textAlign:"left"}} step="0.01" style={{textAlign:"left",width:"40%",marginLeft:6,borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}}  id="custom_application" value={props.customerData.customerTag.custom_application}  onChange={handleInputData} onBlur={dataTochange}  onKeyPress={thirdMethod2}/>{<span style={{marginLeft:"0.3em",marginTop:"-10px",top:15,position:"absolute"}}>{""} per tag/label</span> }</p>
                           
                             {/* </Col> */}
                           

@@ -522,7 +522,7 @@ render() {
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                             <input type="text" 
-                                            className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                             name="customerReason"
                                             placeholder="Reason" id="reason" 
                                             //value={customerData.customerReason.reason} 
@@ -667,7 +667,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{textAlign: 'center'}}
+                                            <div  style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

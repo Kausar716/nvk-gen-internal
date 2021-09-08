@@ -667,7 +667,7 @@ componentDidMount(){
                             <label>Main Category Name</label>
                             <div>
                                 <input type="text"
-                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                     name="categoryName"
                                 value={this.state.name}
                                     placeholder="Main Category Name" onChange={this.handleZoneInputAction2}/>
@@ -693,7 +693,9 @@ componentDidMount(){
                         <label>Sub Category Name</label>
                             <div>
                                 <input type="text"
-                                className={this.state.isEditingSubCategory===false ? "form-control" : "formControl2 abcd" }
+                            
+                             
+                                className={this.state.isEditingSubCategory===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditingSubCategory===false?"white":"#d5ecf5"}}
                                     name="subCategoryName"
                                 value={this.state.subName}
                                     placeholder="Sub Category Name" onChange={this.handleZoneInputAction}/>
@@ -864,7 +866,7 @@ componentDidMount(){
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{textAlign: 'center'}}
+                                            <div   style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

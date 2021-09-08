@@ -464,7 +464,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                                 <input type="text"
-                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                  name="volume"
                                                   value={this.state.name}
                                                   placeholder="Tier" onChange={this.handleZoneInputAction}/>
@@ -598,7 +598,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div    style={{textAlign: 'center'}}
+                                            <div    style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

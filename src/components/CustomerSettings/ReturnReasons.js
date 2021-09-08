@@ -525,7 +525,7 @@ render() {
                                         <h5 className="p-15 mb-0"  style={{marginLeft:"-10px"}}> Reason</h5>
                                         <div>
                                             <input type="text"
-                                             className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                             placeholder="" id="reason" name="customerReturnReason"
                                             value={this.state.name} 
                                             // value={customerData.customerReturnReason.reason}
@@ -713,7 +713,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{textAlign: 'center'}}
+                                            <div  style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               
