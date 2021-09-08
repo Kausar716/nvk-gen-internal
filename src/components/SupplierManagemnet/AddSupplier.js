@@ -469,23 +469,7 @@ const dataTochange =(e)=>{
       return
     }
     const changeCheckBox =(e)=>{
-        // alert(index)
         let value = e.target.id.split("^")
-        // alert(value[1])
-        if(value[0]=="primary_contact"){
-            let primaryData = supplierContactList.active.filter(data=>data[value[0]] ==1)
-            primaryData.map(priamry=>{
-                priamry["primary_contact"] =0
-                props.updateSupplierContact(priamry).then(data=>{
-                })
-    
-            })
-
-        }
-     
-        // alert(index)
-        // console.log(customerContactList,index)
-        // let data  = customerContactList.active[index]
         let data =supplierContactList.active.filter(data=>data.id == value[1])
         
         // console.log( data[type])
@@ -495,6 +479,10 @@ const dataTochange =(e)=>{
             props.getAllSuppliersContact(supplierDataById.id)
             console.log(supplierDataById)
         })
+
+        // }
+        // console.log( data[type])
+
         // console.log(supplierContactList,index)
         // let data  = supplierContactList.active[index]
         // console.log( data[type])
@@ -512,17 +500,29 @@ const dataTochange =(e)=>{
         //     props.getAllSuppliersContact(supplierDataById.id)
 
     }
-    const changeCheckBoxAddress =(id,index,type)=>{
-        // alert(index)
-        console.log(supplierAddressList,index)
-        let data  = supplierAddressList.active[index]
-        console.log( data[type])
-        data[type] =  data[type]==0?1:0
-        console.log( data[type])
-        props.UpdateAddress(data).then(data=>{
+    const changeCheckBoxAddress =(e)=>{
+        let value = e.target.id.split("^")
+        let data =supplierAddressList.active.filter(data=>data.id == value[1])
+        
+        // console.log( data[type])
+        data[0][value[0]] =  data[0][value[0]]==0?1:0
+        console.log( data[0][value[0]])
+        props.UpdateAddress(data[0]).then(data=>{
             props.getAllAddress(supplierDataById.id)
-            // console.log(customerContact)
+            console.log(supplierDataById)
         })
+
+
+        // alert(index)
+        // console.log(supplierAddressList,index)
+        // let data  = supplierAddressList.active[index]
+        // console.log( data[type])
+        // data[type] =  data[type]==0?1:0
+        // console.log( data[type])
+        // props.UpdateAddress(data).then(data=>{
+        //     props.getAllAddress(supplierDataById.id)
+        //     // console.log(customerContact)
+        // })
 
     }
     const editAddressNotes=(id)=>{
@@ -778,12 +778,12 @@ console.log(props.supplierData.supplierReasonList)
                                 <h2>Supplier Information</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8">
+                                    <div class="col-md-6 col-lg-6">
                                         <label>Supplier Name<span class="text-danger">*</span></label>
                                         <input type="text" class="form-control" name="supplier_name" value={supplierDataById.supplier_name} onChange={handleInput} id="supplier_name" placeholder={"Supplier Name"}/>
                                         {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""}
                                     </div>
-                                    <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
+                                    <div class="col-md-6 col-lg-6">
                                     <label>Fax</label>
                                     <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"fax"} value={supplierDataById.fax} onChange={handleInput} placeholder={"(xxx) xxx-xxxx"}/>
                                         {/* <input type="number" class="form-control" name="fax" value={supplierDataById.fax} onChange={handleInput} id="fax"/> */}
@@ -791,21 +791,72 @@ console.log(props.supplierData.supplierReasonList)
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8">
+                                    <div class="col-md-6 col-lg-6">
                                         <label>Primary Contact</label>
+                                        {supplierDataById.supplier_contact.map(contactData=>{
+                                            {/* alert("d") */}
+                                            if(contactData.primary_contact==1){
+                                                return(<div>
+                                                    {/* <div class="col-md-6 col-lg-4"> */}
+                                                    <div class="contactCard" style={{border:"1px solid lightgray"}}>
+                                                    <p class="mb-0 f-w-600">{contactData.contact_name}</p>
+                                            <label class="text-muted f-w-400">{contactData.contact_email}</label>
+                                            <table>
+                                                <tr>
+                                                    <td><strong>Phone 1:</strong> {contactData.phone1==null?" Not Available":contactData.phone1}</td>
+                                                     <td style={{paddingLeft:8}}><strong> Xt:</strong>  {contactData.phone1_ext==null?" Not Available":contactData.phone1_ext}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Phone 1:</strong> {contactData.phone2==null?" Not Available":contactData.phone2}</td>
+                                                     <td  style={{paddingLeft:8}}> <strong> Xt:</strong> {contactData.phone2_ext==null?" Not Available":contactData.phone2_ext}</td>
+                                                </tr>
+                                            </table>
+                                            {/* <div class="row">
+                                                <div class="col-md-12">
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1==null?" Not Available":contactData.phone1}</label>
+                                                    <label class="text-muted f-w-400 mb-0">&nbsp;<strong style={{padding:5}}>Xt: </strong> {contactData.phone1_ext==null?" Not Available":contactData.phone1_ext}</label>
+                                                   
+                                                </div>
+                                                <div class="col-md-12">
+                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2==null?"Not Available":contactData.phone2}</label>
+                                                    <label class="text-muted f-w-400 mb-0">&nbsp;&nbsp;&nbsp;&nbsp;<strong style={{padding:2}}>Xt: </strong> {contactData.phone2_ext==null?"Not Available":contactData.phone2_ext}</label>
+                                                </div>
+                                            </div> */}
+                                            {/* <div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contactData.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"primary_contact")}/>
+                                                    <label class="custom-control-label f-w-400" for="customCheck1">This person is the primary contact</label>
+                                                </div>
+                                                <div class="custom-control custom-checkbox mt-2">
+                                                    <input type="checkbox" class="custom-control-input" id="customCheck2"  checked={parseInt(contactData.all_communication)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"all_communication")}/>
+                                                    <label class="custom-control-label f-w-400" for="customCheck2">This person receives all communication</label>
+                                                </div>
+                                            </div> */}
+                                   
+                                                        </div>
+                                                        {/* </div> */}
+                                                    </div>);
+                                                   
+                                            }
+                                          
+                                        })
+                                           
+
+
+                                        }
                                         {/* {supplierDataById.suppliercontact.map(data=>{
                                             return(<p>Primary DAta</p>)
                                         })} */}
                                      {/* <input type="text" class="form-control" name = "primaryContact" value={supplierDataById.fax !== null?supplierDataById.supplier_name+" "+supplierDataById.fax:""}  disabled placeholder="Primary Contact"/>  */}
                                     </div>
-                                    <div class="col-md-4 col-lg-4 mt-2 mt-md-0">
+                                    <div class="col-md-6 col-lg-6">
                                     <label>Alternative ID <small>(Up tp 5 Char..)</small></label>
                                         <input type="text" class="form-control" name="alternative_id" value={supplierDataById.alternative_id} onChange={handleInput} id="alternative_id" maxlength={5} placeholder={"Alternative Id"}/>
                                      
                                     </div>
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-8 col-lg-8 mt- mt-md-0">
+                                    <div class="col-md-6 col-lg-6">
                                     <label>Website</label>
                                     {/* <div class="d-flex">
                                     <input type="url" placeholder={"https://www.Example.com"} class="form-control" name="website" id="website" value={supplierDataById.website}  onChange={handleInput} pattern="[Hh][Tt][Tt][Pp][Ss]?:\/\/(?:(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)(?:\.(?:[a-zA-Z\u00a1-\uffff0-9]+-?)*[a-zA-Z\u00a1-\uffff0-9]+)*(?:\.(?:[a-zA-Z\u00a1-\uffff]{2,}))(?::\d{2,5})?(?:\/[^\s]*)?"/>
@@ -1077,14 +1128,14 @@ console.log(props.supplierData.supplierReasonList)
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(address.billing_address)==1?true:false} onChange={()=>changeCheckBoxAddress(address.id,index,"billing_address")}/>
-                                                        <label class="custom-control-label f-w-400" for="customCheck1">Billing Address</label>
+                                                        <input type="checkbox" class="custom-control-input" id={`billing_address^${address.id}`} checked={parseInt(address.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`billing_address^${address.id}`}>Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id="customCheck2" checked={parseInt(address.shipping_address)==1?true:false} onChange={()=>changeCheckBoxAddress(address.id,index,"shipping_address")}/>
-                                                        <label class="custom-control-label f-w-400" for="customCheck2">Delivery Address</label>
+                                                        <input type="checkbox" class="custom-control-input" id={`shipping_address^${address.id}`} checked={parseInt(address.shipping_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`shipping_address^${address.id}`}>Delivery Address</label>
                                                     </div>
                                                 </div>
                                             </div>

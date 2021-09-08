@@ -168,6 +168,7 @@ const defaultState={
     supplier_notes: "",
     dispatch_type: 0,
     discount: "0.00",
+    supplier_contact:[],supplier_address:[],
     currency: "",
     units: "",
     status: 1,
@@ -192,8 +193,8 @@ const defaultState={
         supplier_address: "",
         address2: "",
         city: "",
-        country: "",
-        state: "",
+        country: "Canada",
+        state: "Alberta",
         zip: "",
         lat: "",
         long: "",
@@ -314,8 +315,8 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         supplier_address: "",
                         address2: "",
                         city: "",
-                        country: "",
-                        state: "",
+                        country: "Canada",
+                        state: "Alberta",
                         zip: "",
                         lat: "",
                         long: "",
@@ -355,6 +356,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     supplierDataById:{
                         supplier_name: "",
                         fax: "",
+                        supplier_contact:[],supplier_address:[],
                         primary_contact: 0,
                         alternative_id: "",
                         website: "",
@@ -385,8 +387,8 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                             supplier_address: "",
                             address2: "",
                             city: "",
-                            country: "",
-                            state: "",
+                            country: "Canada",
+                            state: "Alberta",
                             zip: "",
                             lat: "",
                             long: "",
@@ -699,7 +701,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
             case ADD_SUPPLIER:
                         return{
                             ...state,
-                            supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories)}
+                            supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories),supplier_contact:[],supplier_address:[]}
                         }
 
             default:

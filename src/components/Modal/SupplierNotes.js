@@ -127,7 +127,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
             <p style={{color:"red"}}>{error}</p>
             <div class="row mt-3">
             <div class="col-md-12 col-lg-12">
-                <label>Notes <span class="text-danger">*</span></label>
+                <label>Notes <span class="text-danger"></span></label>
                 <textarea  class="form-control" id="notes" value={""} value={supplierContact.notes}  onChange={handleInput} placeholder="Add Notes..."></textarea>
                 {<span style={{fontSize:"small",color:"red"}} id="notes-validtor"></span>}
             </div>

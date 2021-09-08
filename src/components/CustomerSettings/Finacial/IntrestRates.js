@@ -171,15 +171,37 @@ const confirmAction = (type)=>{
       return
     }
 
-    const thirdMethod2=(e)=> {
-      console.log(e.target)
-      const re =  /^(\d+)?(?:\.\d{1,2})?$/g;
-      console.log(re)
-      if (!re.test(e.target.value)) {
-          e.preventDefault();
-      }else{
-        
+    const thirdMethod2=(event)=> {
+      var charCode = (event.which) ? event.which : event.keyCode
+      if (charCode == 46) {
+          if (event.target.value.indexOf(".") < 0)
+              return true;
+          else
+              return false;
       }
+
+      if (event.target.value.indexOf(".") > 0) {
+          var txtlen = event.target.value.length;
+          var dotpos = event.target.value.indexOf(".");
+          //Change the number here to allow more decimal points than 2
+          if ((txtlen - dotpos) > 2)
+              return false;
+      }
+
+      if (charCode > 31 && (charCode < 48 || charCode > 57))
+          return false;
+
+      return true;
+      // alert(e.currentTarget.value)
+      // console.log(e.target)
+      // const re =  /^(\d+)?(?:\.\d{1,2})?$/g;
+      // console.log(re)
+      // if (!re.test(e.target.value)) {
+      //     e.preventDefault();
+      // }else{
+      //   // alert(e.target.value)
+        
+      // }
     }
   const { handleSubmit, pristine, reset, submitting,customerIntrest} = props.customerData;
   
