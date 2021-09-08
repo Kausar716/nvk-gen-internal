@@ -705,7 +705,7 @@ class UserProfile extends React.Component {
     render() {
 
 
-        console.log("getAllSubAttribute", this.props.locationAddress,  this.state.locations)
+        console.log("getAllSubAttribute",this.state.locations, this.state.locations.sub_attributeschild)
 
         console.log("ABCD123", this.props.tabChangeValueUP22, this.props.tabValues1)
         console.log("roles123", this.props.roles)
@@ -1158,13 +1158,16 @@ class UserProfile extends React.Component {
                                                                                             name={item.value}
                                                                                             value={item.value}
                                                                                             id={item.id}
-                                                                                            checked={item.isChecked}
+                                                                                            //checked={item.isChecked}
                                                                                             onChange={this.handleToggle(item.id)}
                                                                                             //onChange={this.handleChangeCheckbox}
-                                                                                />{" "}
-                                                                                {item.value}
-                                                                                {/* <span>{item.address}</span> */}
-                                                                                {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
+                                                                                />
+                                                                                <label  for={item.id}> {item.value}
+                                                                                 {/* <span>1105 HWY5, Dundas, CN</span> */}
+                                                                                 <span>{item.sub_attributeschild[0].value}  
+                                                                                  {item.sub_attributeschild[1].value}</span> 
+                                                                                 <span>{item.sub_attributeschild[2].value}</span>
+                                                                                 </label>
                                                                                 </div>
                                                                                 </li>
                                                                                 </ul>
