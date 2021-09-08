@@ -32,6 +32,7 @@ class UserProfile extends React.Component {
         super(props);
       
         this.state={
+            checkList:[],
             unsaved: true,
             isWindowInFocus: true,
             disableImageRemove:true,
@@ -356,6 +357,7 @@ class UserProfile extends React.Component {
                 let userObject={}
                 userObject.id= this.props.selectedUser.id;
                 userObject['phone'] = removedNumber;
+                userObject['location']= this.state.checkList
                 console.log(this.props.selectedUser)
                 if(this.props.selectedUser.name !== userStateObject.firstName)userObject['name'] = userStateObject.firstName
                 if(this.props.selectedUser.last_name !== userStateObject.lastName)userObject['last_name'] = userStateObject.lastName
@@ -610,10 +612,23 @@ class UserProfile extends React.Component {
     }
 
        handleChangeCheckbox = e => {
-        //debugger
+        debugger
+        //let checkList=[];
                     let itemName = e.target.name;
                     let itemId = e.target.id;
                     let checked = e.target.checked;
+
+                    if(checked){
+                        
+                        this.setState({
+                            checkList: e.target.id
+                        })
+                        // checkList = checkList.push(...itemId)
+                        console.log("checkList",this.state.checkList)
+                    }
+
+
+
                     this.setState(prevState => {
                     let { locations, allChecked } = prevState;
                     if (itemName === "checkAll") {
@@ -664,6 +679,27 @@ class UserProfile extends React.Component {
         this.props.displaySelectedUSERS(false)
         this.props.userAccessList("Select..")
       }
+
+
+       handleToggle = c => () => {
+           //debugger
+        // return the first index or -1
+        const clickedCategory = this.state.checkList.indexOf(c)
+        const all = [...this.state.checkList];
+    
+        if (clickedCategory === -1) {
+          all.push(c);
+        } else {
+          all.splice(clickedCategory, 1);
+        }
+        console.log(all);
+        this.setState({
+            checkList:all
+        })
+        console.log("all1313131", all,this.state.checkList,clickedCategory, )
+       // setChecked(all);
+        //formData.set("categories", all);
+      };
       
 
     render() {
@@ -1082,7 +1118,7 @@ class UserProfile extends React.Component {
 
                                                             {/* {this.checkboxList2()} */}
 
-                                                            {
+                                                            {/* {
                                                                 this.state.locations.map(item => (
           
                                                                     <div>
@@ -1100,14 +1136,44 @@ class UserProfile extends React.Component {
                                                                                             onChange={this.handleChangeCheckbox}
                                                                                 />{" "}
                                                                                 {item.value}
+                                                                                
+                                                                                </div>
+                                                                                </li>
+                                                                                </ul>
+                                                                    </div>
+                                                        ))
+                                                            } */}
+
+{
+                                                                this.state.locations.map((item,i) => (
+          
+                                                                    <div key={i}>
+                                                                    <ul class="list-unstyled" style={{marginTop:"1em"}}>
+                                                                                <li key={i}>
+                                                                                <div class="custom-control custom-checkbox" style={{marginTop:"-17px"}}>
+                                                                                <input
+                                                                                
+                                                                                    type="checkbox"
+                                                                                    key={item.id}
+                                                                                            name={item.value}
+                                                                                            value={item.value}
+                                                                                            id={item.id}
+                                                                                            checked={item.isChecked}
+                                                                                            onChange={this.handleToggle(item.id)}
+                                                                                            //onChange={this.handleChangeCheckbox}
+                                                                                />{" "}
+                                                                                {item.value}
                                                                                 {/* <span>{item.address}</span> */}
                                                                                 {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
                                                                                 </div>
                                                                                 </li>
                                                                                 </ul>
                                                                     </div>
-                                                        ))
+                                                                ))
                                                             }
+
+
+                                                            
 
                                                     
                                                     {/* {this.state.locations.map(loc=>{
@@ -1122,6 +1188,15 @@ class UserProfile extends React.Component {
                                                    
                                                    
                                                     </div>
+
+                            
+
+
+
+
+
+
+
                                                             <div class="mt-3">
                                                                 <div class="custom-control custom-checkbox">
                                                                 
