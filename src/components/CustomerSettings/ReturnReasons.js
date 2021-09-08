@@ -713,7 +713,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div   style={{textAlign: 'center'}}
                                                 ref={provided.innerRef}
                                             >
                                               
