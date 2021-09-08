@@ -696,6 +696,7 @@ class UserProfile extends React.Component {
         this.setState({
             checkList:all
         })
+
         console.log("all1313131", all,this.state.checkList,clickedCategory, )
        // setChecked(all);
         //formData.set("categories", all);
@@ -705,7 +706,7 @@ class UserProfile extends React.Component {
     render() {
 
 
-        console.log("getAllSubAttribute", this.props.locationAddress,  this.state.locations)
+        console.log("getAllSubAttribute",this.state.locations,this.state.checkList, this.state.locations.sub_attributeschild)
 
         console.log("ABCD123", this.props.tabChangeValueUP22, this.props.tabValues1)
         console.log("roles123", this.props.roles)
@@ -1114,7 +1115,7 @@ class UserProfile extends React.Component {
                                                 <div class="col-md-12">
               
                                                     <label>Location Assigned</label>
-                                                    <div class="locAssignBox">
+                                                    <div class="locAssignBox2">
 
                                                             {/* {this.checkboxList2()} */}
 
@@ -1148,23 +1149,37 @@ class UserProfile extends React.Component {
                                                                 this.state.locations.map((item,i) => (
           
                                                                     <div key={i}>
-                                                                    <ul class="list-unstyled" style={{marginTop:"1em"}}>
-                                                                                <li key={i}>
-                                                                                <div class="custom-control custom-checkbox" style={{marginTop:"-17px"}}>
+                                                                    <ul class="list-unstyled" style={{marginTop:"-23px"}}>
+                                                                                <li key={i} style={{marginTop:"15px"}}>
+
+                                                                                {/* <div class="custom-control custom-checkbox" >
+                                                        <input type="checkbox" class="custom-control-input"  
+                                                        onChange={handleChange} 
+                                                        checked={finalUserManagemnetPermission.filter((user) => user?.isChecked !== true).length < 4}
+                                                        name="userManagementInUserManagementPermissions" id="userManagementInUserManagementPermissions" />
+                                                        <label class="custom-control-label pl-2" for="userManagementInUserManagementPermissions" >User Management  </label>
+                                                    </div> */}
+
+
+                                                                                <div class="custom-control custom-checkbox" style={{marginTop:"0px"}}>
                                                                                 <input
-                                                                                
+                                                                                class="custom-control-input"
                                                                                     type="checkbox"
                                                                                     key={item.id}
-                                                                                            name={item.value}
+                                                                                            name={item.id}
                                                                                             value={item.value}
                                                                                             id={item.id}
-                                                                                            checked={item.isChecked}
+                                                                                            checked={this.state.checkList.includes(item.id) ? true : false }
+                                                                                            //checked={item.isChecked}
                                                                                             onChange={this.handleToggle(item.id)}
                                                                                             //onChange={this.handleChangeCheckbox}
-                                                                                />{" "}
-                                                                                {item.value}
-                                                                                {/* <span>{item.address}</span> */}
-                                                                                {/* <label class="custom-control-label pl-2" for="customCheck1">Farm E <span>1105 HWY5, Dundas, CN</span></label> */}
+                                                                                />
+                                                                                <label class="custom-control-label pl-2" style={{fontWeight:"500"}} for={item.id}> {item.value}
+                                                                                 {/* <span>1105 HWY5, Dundas, CN</span> */}
+                                                                                 <span style={{fontWeight:"300"}} >{item.sub_attributeschild[0].value}  
+                                                                                  {item.sub_attributeschild[1].value}</span> 
+                                                                                 <span style={{fontWeight:"300"}} >{item.sub_attributeschild[2].value}</span>
+                                                                                 </label>
                                                                                 </div>
                                                                                 </li>
                                                                                 </ul>
@@ -1208,14 +1223,15 @@ class UserProfile extends React.Component {
                                                                                 />{" "}
                                                                                 User has access to all locations */}
                                                         <input
-                                                        
+                                                         class="custom-control-input"
                                                             type="checkbox"
                                                             name="checkAll"
                                                             id="checkAll"
+                                                           
                                                             checked={this.state.allChecked}
                                                             onChange={this.handleChangeCheckbox}
                                                             />
-                                                            <label style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
+                                                            <label  class="custom-control-label pl-2" style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
                                                                 </div> 
                                                             </div>
                                                 </div>
