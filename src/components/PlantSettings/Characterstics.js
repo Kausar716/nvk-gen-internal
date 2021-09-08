@@ -57,7 +57,7 @@ class Characterstics extends Component {
                 featureName:0
             },
             tooltipOpen:false,
-            subChildernAddView:true,
+            subChildernAddView:false,
             subChildernAddInactiveView:false,
             sortId: 0,
             activeId: 0,
@@ -117,7 +117,7 @@ class Characterstics extends Component {
 
        })
      
-        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive,loading:true,subChildernAddView:true })
+        this.setState({active:active,inactive:inactive,openInactive:openInactive,openActive:openActive,loading:true })
     }
     // onDragOver = (ev)=>{
     //     ev.preventDefault();
@@ -722,7 +722,8 @@ componentDidMount(){
         }
 
         this.setState({
-            subChildernAddView:true
+            subChildernAddView:false,
+            subChildernAddInactiveView:false
         })
 
     }
@@ -1139,7 +1140,7 @@ componentDidMount(){
                                                                  </a> */}
                                                                  {/* */}
                                                             </li>
-                                                            <div class={parseInt(this.state.openActive[index])==1?"openChildData":"closeChildData"} >
+                                                            <div class={parseInt(this.state.openActive[index])===1?"openChildData":"closeChildData"} >
                                                         <ul class={"list-unstyled childUl"}>
                                                             {item.sub_attributeschild.map(t1=>{
                                                                 return <li id={item.id}>

@@ -342,7 +342,7 @@ export const Component = withRouter(({ history, location }) =>{
                                             <p class="m-0">Only active users will are visible to set permissions. User profile can be set or modified via<span className="linkTag" 
                                             //onClick={this.props.reduxSelectedUser.selectedUser.data.id.length>1 ? ()=>this.userProfileOpen(this.props.reduxSelectedUser.selectedUser.data.id) : this.goToUserProfile} 
                                              onClick={this.goToUserProfile}
-                                            >User Profiles</span>.</p>
+                                            >&nbsp;User Profiles</span>.</p>
                                         </div>
                                     </div>
                                 </div>

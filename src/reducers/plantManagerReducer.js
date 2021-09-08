@@ -31,6 +31,7 @@ import {
        // HANDLE_PLANT_TAG_INPUT_DATA,
         HANDLE_PLANT_SKU_INPUT_DATA,
         CLEAR_SKU_FIELDS_PLANT,
+        HANDLE_PLANT_RADIO_RESET,
         // pagination
         SET_PLANT_PAGE_NUMBER,
         SET_PLANT_SKU_PAGE_NUMBER,
@@ -293,12 +294,14 @@ export default function(state = initialSatate, action){
 
         case GET_ALL_PLANT_ACTION:
             let returnPlantList = []   
+            console.log(state.plantRadioButton)
+            console.log(action.payload)
             if(state.plantRadioButton === "active")            {
                 returnPlantList = action.payload.filter(plant=>{
                     return (plant.archived === 0)
                 })
             }
-            else if(state.plantRadioButton === "archived"){
+            else if(state.plantRadioButton === "archive"){
                 returnPlantList = action.payload.filter(plant=>{
                     return (plant.archived !== 0)
                 })
@@ -651,7 +654,7 @@ export default function(state = initialSatate, action){
                         ...state,
                         plantRadioButton:action.payload.option,
                         plantData:state.backupData.filter(
-                            filterData=>((filterData.genus?filterData.genus.toLowerCase().indexOf(action.payload.plant.trim().toLowerCase()) > -1:false) || action.payload.plant==="") &&
+                            filterData=>((filterData.plant_name?filterData.plant_name.toLowerCase().indexOf(action.payload.plant.trim().toLowerCase()) > -1:false) || action.payload.plant==="") &&
                             (filterData.archived===optionVal || optionVal===-1) &&
                             (filterData.category_id === Number(categoryVal) || Number(categoryVal) === 0)
                             )
@@ -696,7 +699,11 @@ export default function(state = initialSatate, action){
                 needAction:false,
                 displayCancel:false
                }
-            
+               case HANDLE_PLANT_RADIO_RESET:
+                return{
+                    ...state,
+                    plantRadioButton:"active"
+                }
             case CREATE_PLANT_SKU_ACTION :
                 return{
                     //const skuData = state.
