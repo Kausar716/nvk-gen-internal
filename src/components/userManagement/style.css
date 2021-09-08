@@ -268,3 +268,24 @@
   color: #3b93e3;
   cursor: pointer;
 }
+
+.locAssignBox2 .custom-control span {
+  display: block;
+  font-size: 12px;
+}
+.locAssignBox2 {
+  border: 1px solid #cecece;
+  border-radius: 4px;
+  height: 200px;
+  overflow: auto;
+}
+.locAssignBox2 li {
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+}
+
+.locAssignBox2 li:hover {
+  background-color: #f1f1f1;
+
+  padding: 10px;
+}
