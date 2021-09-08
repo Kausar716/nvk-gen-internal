@@ -158,10 +158,15 @@ const EmailSetting = props => {
        <SuccessModal status={isOpen2} message={successMessage} modalAction={toggle2}/>
 		<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
         <div onClick={toggle}  className="SubHeader">
-        <Label className="subFont">Customer Quote Reminders</Label>
+        {/* <Label className="subFont">Customer Quote Reminders</Label>
+        <span className="updownSymbolContainer"> 
+        {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
+        </span> */}
+        
         <span className="updownSymbolContainer"> 
         {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
+      <h4 className="p-15 mb-0" className="subFont">Customer Quote Reminders</h4>
           
           </div>
         <Collapse isOpen={isOpen}>
@@ -172,13 +177,13 @@ const EmailSetting = props => {
                   Quote Reemainders
                   </Label> */}
                 {/* </div> */}
-                    <Row className="containerBox">
+                    <Row className="containerBox" style={{borderTop:"1px solid rgba(0, 0, 0, .1)",marginTop:"0px",width:"100%",marginLeft:"-1px"}}>
                         <Col sm="2">
                             <Label className="subHeadingLabels" style={{marginLeft:6}}>First Notice</Label>
                         <Row className="spacebelow">
                             <Col>
                               	<div>
-        							<input type="number" placeholder={"0"} step="0"  className="textRightESetting"  id="first_notice" value={first_notice} onChange={handleDataChange}/>
+        							<input type="number" style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)"}}  placeholder={"0"} step="0"  className="textRightESetting"  id="first_notice" value={first_notice} onChange={handleDataChange}/>
                       <span className="smallFont"> days</span>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
@@ -200,7 +205,7 @@ const EmailSetting = props => {
 							<Col>
                               	<div>
         							<input type="number" placeholder={"0"}  step="0"  className="textRightESetting" id="second_notice"
-                       value={second_notice} onChange={handleDataChange}/>
+                       value={second_notice} onChange={handleDataChange} style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)"}}/>
                        <span className="smallFont"> days</span>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
@@ -223,7 +228,7 @@ const EmailSetting = props => {
 							<Col>
                               	<div>
         							<input type="number" placeholder={"0"}   step="0" className="textRightESetting" 
-                      id="quote_set_to_inactive" value={quote_set_to_inactive} onChange={handleDataChange}/>
+                      id="quote_set_to_inactive" style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)"}}  value={quote_set_to_inactive} onChange={handleDataChange}/>
                       <span className="smallFont"> days</span>
         							<Row>
         								{<span style={{color:"red", marginLeft:"1.1em"}}>{""}</span> }
