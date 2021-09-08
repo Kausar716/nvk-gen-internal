@@ -4,7 +4,8 @@ import {connect} from "react-redux";
 // import ReactPaginate from 'react-paginate'
 import ActionModal from '../Modal/ActionModal'
 import TablePagination from '../Pagination/index';
-import {getPurchaseOrderList,poSetPageNumber,setAlphabetSelected} from '../../actions/purchaseOrderManagementAction'
+import {getPurchaseOrderList,poSetPageNumber,setAlphabetSelected,getSpecifiedPurchaseOrder} from '../../actions/purchaseOrderManagementAction'
+import { Link } from "react-router-dom";
 
 // const PurchaseOrderTable=(props)=> {
     export class PurchaseOrderTable extends React.Component {
@@ -111,7 +112,7 @@ import {getPurchaseOrderList,poSetPageNumber,setAlphabetSelected} from '../../ac
     console.log(pagesVisited,pagesVisited+productPerPage)
     const displayProductList = purchaseOrderList.slice(pagesVisited,pagesVisited+productPerPage)
     console.log(displayProductList)
-    console.log(displayProductList.length)
+    console.log(this.props.path)
     
     return (
         <>
@@ -188,9 +189,9 @@ import {getPurchaseOrderList,poSetPageNumber,setAlphabetSelected} from '../../ac
                                 <td className="text-right">{purchaseOrder.amount}</td>
                                 <td class="text-center">
                                     <span>
-                                        <a href="javascript;">
-                                            <img src="assets/img/edit.svg" alt=""/>
-                                        </a>
+                                        <Link to={"/PurchaseOrder"} onClick={()=>{ this.props.getSpecifiedPurchaseOrder(purchaseOrder.id)}}>
+                                            <img src="assets/img/edit.svg" alt="" style={{cursor:"pointer"}} />
+                                        </Link>
                                     </span>
                                 </td>
                             </tr>
@@ -216,11 +217,13 @@ import {getPurchaseOrderList,poSetPageNumber,setAlphabetSelected} from '../../ac
 
 const mapStateToProps = (state)=> ({
     purchaseOrderListData:state.purchaseOrderManagementData,
+    path:state.purchaseOrderManagementData.path,
+    poPageIndex:state.purchaseOrderManagementData.poPageIndex,
     // categoryData: state.categoryData
 
 })
 export default connect(mapStateToProps,{  
     getPurchaseOrderList,
-    poSetPageNumber,
+    poSetPageNumber,getSpecifiedPurchaseOrder,
     setAlphabetSelected
     })(PurchaseOrderTable)

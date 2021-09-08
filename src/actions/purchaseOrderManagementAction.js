@@ -25,7 +25,13 @@ import {
     HANDLE_SINGLE_ITEM_ADDITION,
     GET_CURRENT_PO_ORDER_HISTORY,
     HANDE_CURRENT_PO_ORDER_UPDATE,
-    GET_PLANT_SKU
+    GET_PLANT_SKU,
+    GET_UNIT_LIST,
+    GET_CURRENCY_LIST,
+    GET_SUPPLIER_DELIVERY_LIST,
+    GET_SPECIFIED_PO_ORDER,
+    HANDLE_PO_PAGE_SELECTION,
+    UPDATE_PURCHASE_ORDER
 
     } from './types'
     export const getPurchaseOrderList = () => dispatch => {
@@ -38,6 +44,39 @@ import {
             })
         })
     }
+    export const getCurrencyList = ()=> dispatch =>{
+      return axios.get("/api/currency-list",config).then(res=>{ 
+          console.log(res)
+      dispatch({
+              type:GET_CURRENCY_LIST,
+              payload:res.data.data.active
+  
+          })
+      })
+  
+  }
+  export const getSupplierDeliveryList = (supplierId)=> dispatch =>{
+    return axios.get(`/api/delivery-supplier/${supplierId}`,config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:GET_SUPPLIER_DELIVERY_LIST,
+            payload:res.data.data.active
+
+        })
+    })
+
+}
+    export const getUnitList = ()=> dispatch =>{
+      return axios.get("/api/unit-list",config).then(res=>{ 
+          console.log(res)
+      dispatch({
+              type:GET_UNIT_LIST,
+              payload:res.data.data.active
+  
+          })
+      })
+  
+  }
     export const poPageReDirectAction = (page,actionType) => {
         return{
             type:PO_PAGE_REDIRECT_ACTION,
@@ -112,6 +151,8 @@ import {
     export const addPo = (data) => dispatch => {
       let errorArray=[];
       console.log(data)
+      delete data.order_id
+      debugger;
       if(data){
       // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
       axios.post(`/api/add-purchase-order`,data,config).then(res=>{
@@ -138,6 +179,37 @@ import {
 
   }
   }
+  export const updatePo = (data) => dispatch => {
+    let errorArray=[];
+    console.log(data)
+    delete data.order_id
+    debugger;
+    if(data){
+    // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+    axios.post(`/api/update-purchase-order/${data.id}`,data,config).then(res=>{
+        console.log(res)
+        errorArray.push("Order Updated successfully")
+        dispatch({
+            type:UPDATE_PURCHASE_ORDER,
+            payload:res.data.data
+
+        })
+        dispatch({
+          type:ERROR_HANDLE,
+          message:errorArray,
+          status:true
+      })
+    })
+  }
+  else{
+    dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+
+}
+}
   export const setSupplierToAddPo = (supplier)=>{
     return{
       type:SET_SUPPLIER_TO_ADD_PO,
@@ -172,12 +244,37 @@ export const getAddToOrderList = () => dispatch => {
     })
   })
 }
+export const getSpecifiedPurchaseOrder = (id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.get(`/api/show-purchase-order/${id}`,config).then(res=>{
+    console.log(res)
+     debugger;
+      dispatch({
+          type:GET_SPECIFIED_PO_ORDER,
+          payload:res.data.data
+
+      })
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
 
 export const serachOrderedList = (plant,sku)=>{
   return{
     type:HANDLE_SEARCH_ORDERED_LIST,
     plant,
     sku
+  }
+}
+export const handlePoPageSelection = (path,index)=>{
+  return{
+    type:HANDLE_PO_PAGE_SELECTION,
+    path:path,
+    index:index
   }
 }
 export const handledumyQty=(sku_code,dumyQty)=>{
