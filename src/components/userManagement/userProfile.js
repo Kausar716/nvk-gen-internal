@@ -130,16 +130,17 @@ class UserProfile extends React.Component {
 
          
         // let blist = alist.map(e=>e.id)
+        let aList = this.props.showUserSpecificList && this.props.showUserSpecificList.data.user.location.map(e=>e.id)
 
         this.setState({
             locations: this.props.locationAddress,
             specificUser:this.props.selectedUser.location ,
-            checkList:this.props.selectedUser.location
+            checkList:aList
             //this.props.selectedUser.location
         })
 
         
-console.log("locationAddress",this.props.specificdUser, this.props.locationAddress, this.props.selectedUser.location, this.state.checkList )
+console.log("locationAddress",aList,this.props.specificdUser, this.props.locationAddress, this.props.selectedUser.location, this.state.checkList )
         //this.props.tabChangeValues();
 
         // if(this.props.tabChangeValues(1)){
@@ -703,7 +704,7 @@ console.log("locationAddress",this.props.specificdUser, this.props.locationAddre
 
 
        handleToggle = (c) => () => {
-
+        //debugger;
       
         // return the first index or -1
         const clickedCategory =this.state.checkList.indexOf(c)
