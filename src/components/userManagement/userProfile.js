@@ -702,8 +702,9 @@ console.log("locationAddress",this.props.specificdUser, this.props.locationAddre
       }
 
 
-       handleToggle = c => () => {
-           debugger
+       handleToggle = (c) => () => {
+
+      
         // return the first index or -1
         const clickedCategory =this.state.checkList.indexOf(c)
         const all =[...this.state.checkList]
@@ -1171,22 +1172,12 @@ console.log("locationAddress",this.props.specificdUser, this.props.locationAddre
                                                         ))
                                                             } */}
 
-{
+                                                    {
                                                                 this.state.locations.map((item,i) => (
           
                                                                     <div key={i}>
                                                                     <ul class="list-unstyled" style={{marginTop:"-23px"}}>
                                                                                 <li key={i} style={{marginTop:"15px"}}>
-
-                                                                                {/* <div class="custom-control custom-checkbox" >
-                                                        <input type="checkbox" class="custom-control-input"  
-                                                        onChange={handleChange} 
-                                                        checked={finalUserManagemnetPermission.filter((user) => user?.isChecked !== true).length < 4}
-                                                        name="userManagementInUserManagementPermissions" id="userManagementInUserManagementPermissions" />
-                                                        <label class="custom-control-label pl-2" for="userManagementInUserManagementPermissions" >User Management  </label>
-                                                    </div> */}
-
-
                                                                                 <div class="custom-control custom-checkbox" style={{marginTop:"0px"}}>
                                                                                 <input
                                                                                 class="custom-control-input"
@@ -1196,12 +1187,12 @@ console.log("locationAddress",this.props.specificdUser, this.props.locationAddre
                                                                                             value={item.value}
                                                                                             id={item.id}
                                                                                             checked={this.state.checkList.includes(item.id) ? true : false }
-                                                                                            //checked={item.isChecked}
+                                                                                            
                                                                                             onChange={this.handleToggle(item.id)}
                                                                                             //onChange={this.handleChangeCheckbox}
                                                                                 />
                                                                                 <label class="custom-control-label pl-2" style={{fontWeight:"500"}} for={item.id}> {item.value}
-                                                                                 {/* <span>1105 HWY5, Dundas, CN</span> */}
+                                                                            
                                                                                  <span style={{fontWeight:"300"}} >{item.sub_attributeschild[0].value}  
                                                                                   {item.sub_attributeschild[1].value}</span> 
                                                                                  <span style={{fontWeight:"300"}} >{item.sub_attributeschild[2].value}</span>
@@ -1238,16 +1229,8 @@ console.log("locationAddress",this.props.specificdUser, this.props.locationAddre
 
 
 
-                                                            <div class="mt-3">
+                                                            {/* <div class="mt-3">
                                                                 <div class="custom-control custom-checkbox">
-                                                                
-                                                                    {/* <input
-                                                                                disabled={!true}
-                                                                                type="checkbox"
-                                                                                onClick={this.handleAllChecked}
-                                                                                value="checkedall"
-                                                                                />{" "}
-                                                                                User has access to all locations */}
                                                         <input
                                                          class="custom-control-input"
                                                             type="checkbox"
@@ -1255,11 +1238,12 @@ console.log("locationAddress",this.props.specificdUser, this.props.locationAddre
                                                             id="checkAll"
                                                            
                                                             checked={this.state.allChecked}
+                                                            //onChange={this.handleToggle()}
                                                             onChange={this.handleChangeCheckbox}
                                                             />
                                                             <label  class="custom-control-label pl-2" style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
                                                                 </div> 
-                                                            </div>
+                                                            </div> */}
                                                 </div>
                                             </div>
                                         </div>
