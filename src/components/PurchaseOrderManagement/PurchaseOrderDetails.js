@@ -18,7 +18,7 @@ import OrderHistory from './orderHistory'
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0 d-flex flex-wrap align-items-center">
                     <img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt="" class="mr-2"/>{props.pageToOpen ==="add"?"Add":"Edit"} Purchase Orders
-                    {props.pageToOpen !=="add"?<span class="text-green ml-3">#JSMITH-2000132</span>:""}</h1>
+                    {props.pageToOpen !=="add"?<span class="text-green ml-3">{props.poData.po_number}</span>:""}</h1>
 				{props.pageToOpen !=="add"?<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn"> 
                         <span class="d-flex align-items-center text-left">
@@ -64,7 +64,7 @@ import OrderHistory from './orderHistory'
                 </div>
 
                 <div class="">
-                <Tabs selectedIndex={index}>
+                <Tabs >
                     <TabList>
                         <Tab in>Order Details</Tab>
                         <Tab disabled={props.pageToOpen === "add"} >Add to Order</Tab>
@@ -113,7 +113,8 @@ import OrderHistory from './orderHistory'
 }
 const mapStateToProps = (state)=> ({ 
     selectedSupplier:state.purchaseOrderManagementData.selectedSupplier,
-    pageToOpen:state.purchaseOrderManagementData.pageToOpen
+    pageToOpen:state.purchaseOrderManagementData.pageToOpen,
+    poData:state.purchaseOrderManagementData.poData,
     
 
 })

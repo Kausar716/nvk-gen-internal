@@ -20,7 +20,8 @@ import {GET_PURCHASE_ORDER_LIST,
     GET_SPECIFIED_PO_ORDER,
     HANDLE_PO_PAGE_SELECTION,
     UPDATE_PURCHASE_ORDER,
-    GET_DELIVERY_ADDRESS
+    GET_DELIVERY_ADDRESS,
+    GET_ADD_TO_CATEGORY_LIS
 
 } from '../actions/types';
 
@@ -46,7 +47,7 @@ const initialSatate = {
         order_id:"",
         discount_type:"0",
         discount:"0.00",
-        job_description:null,
+        job_description:"",
         royalty:"0",
         order_notes:null,
         dispatch_type:null,
@@ -74,7 +75,9 @@ const initialSatate = {
     poPageIndex:0,
     supplierDeliveryList:[],
     currencyList:[],
-    deliveryAddress:[]
+    deliveryAddress:[],
+    orderListDateForSuggessionWithFilter:[],
+    categoryList:[]
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
     console.log(selectedAlphabet)
@@ -105,7 +108,7 @@ const handledumyQty= (action,purchaseOrderListBackup)=>{
     //       
     //     }
     // })
-    const elementsIndex = purchaseOrderListBackup.findIndex(element => element.sku_code == action.sku_code )
+    const elementsIndex = purchaseOrderListBackup.findIndex(element => element.sku_code === action.sku_code )
     console.log(elementsIndex)
    
     
@@ -127,10 +130,10 @@ const groupArray =(objectToBeReduced)=>{
     console.log(objectToBeReduced)
     if(objectToBeReduced.length>0)
     plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
-    //   console.log(obj)
+      console.log(obj)
       if(obj){
 
-        const key = obj["genus"];
+        const key = obj["name"];
         if (!acc[key]) {
            acc[key] = [];
         }
@@ -144,8 +147,11 @@ const groupArray =(objectToBeReduced)=>{
         
         return acc;}
     })
+    console.log(plantSearchResult)
+    console.log(Object.keys(plantSearchResult))
     let plantList=[]
     for(let key in plantSearchResult ){
+        console.log(plantSearchResult)
         if(plantSearchResult[key]){
         if(plantSearchResult[key][0]){
             if(typeof(plantSearchResult[key][0]) === "object")
@@ -251,10 +257,18 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     }
                 case GET_ADD_TO_ORDER_LIST:
                     let groupedArray=groupArray(action.payload)
+                    
                     return{
                         ...state,
                         groupedOrderListDate:groupedArray,
-                        orderListDateForSuggession:action.payload
+                        orderListDateForSuggession:action.payload, 
+                        orderListDateForSuggessionWithFilter:action.payload                       
+                    }
+                case GET_ADD_TO_CATEGORY_LIS:
+                    console.log(action.payload)
+                    return{
+                        ...state,
+                        categoryList:action.payload
                     }
                 case HANDLE_SEARCH_ORDERED_LIST:
                     console.log(action)
@@ -292,13 +306,13 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         ...state,
                         groupedOrderListDate:filteredArray,
                         searchValuePlant:action.plant,
-                        searchValueSku:action.sku
+                        searchValueSku:action.sku,
+                        orderListDateForSuggessionWithFilter:list
                     }
                     case HANDLE_DMQTY:
-                        console.log(state.orderListDateForSuggession)
-                        let updatedOrderListDateForSuggession = handledumyQty(action,state.orderListDateForSuggession)
+                        console.log(state.orderListDateForSuggessionWithFilter)
+                        let updatedOrderListDateForSuggession = handledumyQty(action,state.orderListDateForSuggessionWithFilter)
                         console.log(updatedOrderListDateForSuggession)
-                        
                         let filteredArrayForUpdatedList=groupArray(updatedOrderListDateForSuggession)
                         console.log(filteredArrayForUpdatedList)
                         return{
@@ -324,7 +338,6 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     case GET_PLANT_SKU:
                         let groupedSku = groupSku(action.payload)
                         console.log(groupedSku)
-                        debugger;
                         return{
                             ...state,
                             plantSku:groupedSku
@@ -363,7 +376,6 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             supplierDeliveryList:action.payload
                         }
                     case GET_SPECIFIED_PO_ORDER:
-                        debugger;
                         return{
                             ...state,
                             pageToOpen:"editOrderDetails",
