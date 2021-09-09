@@ -1808,7 +1808,14 @@ class OrderList extends React.Component {
                                             <tbody>
                                                 {displayPOList1.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
-                                                    <td class="text-center"><span  class={pQuoteList.order_status==='Closed'?'stsBadge stsClosed':pQuoteList.order_status==='Open'?'stsBadge stsOpen':pQuoteList.order_status==='Ready'?'stsBadge stsReady':pQuoteList.order_status==='Reserve'?'stsBadge stsReserve':pQuoteList.order_status==='Pick'?'stsBadge stsPicking':pQuoteList.order_status==='Ship'?'stsBadge stsOpen':pQuoteList.order_status==='Late'?'stsBadge stsLate':pQuoteList.order_status==='Quote'?'stsBadge stsQuote':""}>{pQuoteList.order_status}</span></td>
+                                                    <td class="text-center"><span  class={pQuoteList.order_status==='Closed'?'stsBadge stsClosed':
+                                                    pQuoteList.order_status==='Open'?'stsBadge stsOpen'
+                                                    :pQuoteList.order_status==='Ready'?'stsBadge stsReady'
+                                                    :pQuoteList.order_status==='Reserve'?'stsBadge stsReserve'
+                                                    :pQuoteList.order_status==='Pick'?'stsBadge stsPicking'
+                                                    :pQuoteList.order_status==='Ship'?'stsBadge stsShip'
+                                                    :pQuoteList.order_status==='Late'?'stsBadge stsLate'
+                                                    :pQuoteList.order_status==='Quote'?'stsBadge stsQuote':""}>{pQuoteList.order_status}</span></td>
                                                     <td><a href="">{pQuoteList.order_id}</a></td>
                                                     <td class="text-nowrap text-center">4</td>
                                                     <td>{pQuoteList.customer_name}</td>

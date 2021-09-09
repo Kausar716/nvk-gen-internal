@@ -59510,7 +59510,7 @@ ul.list-unstyled.searchAlpha li a:hover {
 
 .stsLate {
   background-color: #f83909;
-  color: #ad7a7a;
+  color: #e4dcdc;
 }
 .stsReady {
   background-color: #fbe1a7;
@@ -59523,6 +59523,11 @@ ul.list-unstyled.searchAlpha li a:hover {
 .stsPicking {
   background-color: #cbf4ff;
   color: #00b9eb;
+}
+
+.stsShip {
+  background-color: #e54dcd;
+  color: #dea6e0;
 }
 .stsQuote {
   background-color: #a4a9b5;
