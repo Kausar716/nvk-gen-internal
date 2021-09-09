@@ -30,6 +30,7 @@ import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantL
     const [plantNameValue,setPlantNameValue] =useState("")
     const [plantSKUValue,setPlantSKUValue] =useState("")
     const [loading,setLoading] = useState(true)
+    const [searchPalntId,setSearchPalntId] = useState([])
     const [plantId,setPlantId] = useState([])
     const [customerSelected,setCustomerSelected] = useState(false)
     const [customerDetails,setCustomerDetails] = useState({
@@ -276,7 +277,16 @@ const getAllData = (data)=>{
         // alert(id)
         if(id ==2){
             // alert("D")
-            props.getQuoteList(quoteDetails.id)
+            props.getQuoteList(quoteDetails.id).then(data=>{
+                // alert(JSON.stringify(data))
+                let plantIdsAll = data.data.items.map(plantData=>plantData.plant_id)
+                let plantId4 = plantIdsAll.filter(function( plant, index, array ) {
+                    // alert("FDs")
+                    return array.indexOf(plant) === index;
+                });
+                setSearchPalntId(plantId4)
+            })
+         
             // quoteList
             // alert("FDS")
      
@@ -294,8 +304,8 @@ const getAllData = (data)=>{
         let obj1 = {}
         let arr  = []
         obj.type ="plant"
-
-        obj1["plant_id"]=parseInt(filterData1[0].plant_id)
+        let skuSplit = filterData1[0].sku_code.split("-")
+        obj1["plant_id"]=parseInt(skuSplit[0])
         obj1.name=filterData1[0].plant_name
         obj1.size=filterData1[0].plant_size
         obj1.SKU=filterData1[0].sku_code
@@ -760,7 +770,7 @@ Rate</th>
                                                     </thead>
                                                     <tbody>
                                                     {loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"white",width:"100%"}}><Loader/></div>:<tr>
-                                                        
+                                                    {/* searchPalntId */}
                                                             <td colspan="13" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
                                                                 {plantId.map((plantId,index1)=>{
@@ -934,10 +944,14 @@ Rate</th>
                                                         <tr>
                                                             <td colspan="12" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
+                                                                {searchPalntId.map((plantId,index1)=>{
+                                                        //console.log(JSON.parse(plantId))
+                                                       let count =0
                                                                  
-                                                                       { quoteList.items.map((data,index)=>{
-                                                                           return(<>{index==0?<tr class="movePanel">
-                                                                        <td colspan="12">
+                                                                       return quoteList.items.map((data,index)=>{
+                                                                        if(JSON.parse(plantId)===parseInt(data["plant_id"])){
+                                                                            let a = count++
+                                                                           return(<> { a ==0?        <td colspan="12">
                                                                             <div class="row">
                                                                                 <div class="col-md-6">
                                                                                     <a href="" class="mr-3">
@@ -952,8 +966,7 @@ Rate</th>
                                                                                     </a>
                                                                                 </div>
                                                                             </div>
-                                                                        </td>
-                                                                    </tr>:""}
+                                                                        </td>:""}
                                                                     <tr class="tblBgWhite">
                                                                         <table class="table table-striped table-no-border mb-0" border="0" width="100%">
                                                                             <tr class="topTitleRow">
@@ -1021,9 +1034,10 @@ Rate</th>
                                                                         </table>
                                                                     </tr>
                                                                    
-                                           </>)
+                                           </>)}
 
-                                                                       })}
+                                                                       })
+                                                                })}
 
                                                                     
                                                                 </table>
