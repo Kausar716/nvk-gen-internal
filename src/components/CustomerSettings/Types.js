@@ -536,7 +536,7 @@ render() {
                                             
                                             <div>
                                                 <input type="text"
-                                                  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                   placeholder="" name="customer_type" 
                                                // value={customerData.customerTypes.customer_type}  
                                                value={this.state.name} 
@@ -551,7 +551,7 @@ render() {
                                             <label>Short Code</label> <span style={{fontSize:"10px", marginTop:"0em"}}> (Upto 8 Char)</span>
                                             <div>
                                                 <input type="text"
-                                                  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                  placeholder="" name="short_code"
                                                  value={this.state.subName} 
                                                 //  value={customerData.customerTypes.short_code} 
@@ -703,7 +703,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{textAlign: 'center'}}
+                                            <div style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

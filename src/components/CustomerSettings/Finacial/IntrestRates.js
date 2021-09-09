@@ -69,6 +69,18 @@ const InrestRates = (props) => {
   const [type, setType] = useState("")
   const toggle1  = ()=>setIsOpen1(!isOpen);
   const handleChangeData = (e) =>{
+    // alert(e.target.value)
+    if(e.target.value!==""){
+      let value = e.target.value.split(".")
+      // console.log(value[0],value[1])
+      if(value[1]!== undefined)
+      if(value[1].length>3 )
+      // if(e.target.value.length>2){
+        return
+      }
+      // alert(e.target.value)
+    
+
     setCheckedData(true)
     if(e.target.id!=="taxrate_label" && e.target.id!=="taxrate_number" && e.target.id!==""){
       // let intValue = e.target.value*1.000
@@ -208,54 +220,55 @@ const confirmAction = (type)=>{
   return (
     <>
          <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
-      <div color="primary" onClick={toggle}  className="SubHeader">
+      <div color="primary" onClick={toggle}  className="SubHeader" style={{marginLeft:5}}>
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      <Label className="subFont">Tax & Interest Rates</Label> 
+      {/* <Label className="subFont"></Label>  */}
       <span className="updownSymbolContainer"> 
-      {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
+        {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
+      <h4 className="p-15 mb-0" className="subFont">Tax & Interest Rates</h4>
         </div>
       <Collapse isOpen={isOpen}>
        
-          <div className="docDetails" style={{marginTop:"-12px"}}>
+          <div className="docDetails" style={{marginTop:"-15px"}}>
                    <p className="sub_menu_nameD"> Displayed on Customer Orders & Invoices</p>
           </div>
 
-          <div className="containerBox"> 
+          <div className="containerBox"  style={{marginTop:"-15px"}}> 
 
 
             <div className="row_1_intrestRate">
 
                     <div className="intrestRate_label">
                           <label>Monthly</label>
-                          <input type="number"  placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData} onBlur={dataTochange} onKeyPress={thirdMethod2}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"  style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} placeholder={"0.000"}   step=".001" className="textRightIntrestRate" id="monthly" value={customerIntrest.monthly >"0"?customerIntrest.monthly:""} onChange={handleChangeData} onBlur={dataTochange} onKeyPress={thirdMethod2} /><span style={{padding:"4px"}}>%</span>
                           
                     </div>
 
 
                     <div className="intrestRate_label"  style={{marginLeft:"-19em"}}>
                           <label>Yearly</label>
-                          <input type="number"     placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData} onBlur={dataTochange} onKeyPress={thirdMethod2}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number"     style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} placeholder={"0.000"} step=".001" className="textRightIntrestRate" id="yearly" value={customerIntrest.yearly>"0"?customerIntrest.yearly:""}  onChange={handleChangeData} onBlur={dataTochange} onKeyPress={thirdMethod2}/><span style={{padding:"4px"}}>%</span>
                          
                     </div>
 
 
                     <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                           <label>Tax Rate</label>
-                          <input type="number"  placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}onBlur={dataTochange} onKeyPress={thirdMethod2}/><span style={{padding:"4px"}}>%</span>
+                          <input type="number" style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}}placeholder={"0.000"}  step=".001" className="textRightIntrestRate" id="taxrate" value={customerIntrest.taxrate>"0"?customerIntrest.taxrate:""}  onChange={handleChangeData}onBlur={dataTochange} onKeyPress={thirdMethod2}/><span style={{padding:"4px"}}>%</span>
                          
                     </div>
 
 
                       <div className="intrestRate_label" style={{marginLeft:"-19em"}}>
                             <label>Tax Rate Label</label>
-                            <input type="text"  placeholder={"Sales Tax(HST) @ 13.0%"}     className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label!==""?customerIntrest.taxrate_label:""}  onChange={handleChangeData}/>
+                            <input type="text"  style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} placeholder={"Sales Tax(HST) @ 13.0%"}     className="textRightTax" id="taxrate_label" value={customerIntrest.taxrate_label!==""?customerIntrest.taxrate_label:""}  onChange={handleChangeData}/>
                       </div>
 
 
                       <div className="intrestRate_label" style={{marginLeft:"-11em"}}>
                             <label>Tax Rate Number</label>
-                            <input type="text"  placeholder={"HST:1233333RT0001"}     className="textRightTax" id="taxrate_number" value={customerIntrest.taxrate_number !==""?customerIntrest.taxrate_number:""}  onChange={handleChangeData}/>
+                            <input type="text"  style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} placeholder={"HST:1233333RT0001"}     className="textRightTax" id="taxrate_number" value={customerIntrest.taxrate_number !==""?customerIntrest.taxrate_number:""}  onChange={handleChangeData}/>
                       </div>
             </div>
             

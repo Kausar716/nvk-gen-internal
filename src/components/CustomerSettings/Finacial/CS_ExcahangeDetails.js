@@ -271,21 +271,25 @@ const dataTochange1 =(e)=>{
   return (
     <>
      <CustomerActionModal cancel={cancel} confirm={confirm} open={open} message={message}/>
-      <div color="primary" onClick={toggle}  className="SubHeader">
+      <div color="primary" onClick={toggle}  className="SubHeader" style={{marginLeft:5}}>
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
-      <Label className="subFont">Customer and Supplier Exchange Rates</Label>
-        <span className="updownSymbolContainer"> 
+      {/* <h4 className="p-15 mb-0">Categories</h4> */}
+      <span className="updownSymbolContainer"> 
         {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
+      <h4 className="p-15 mb-0" className="subFont">Customer and Supplier Exchange Rates</h4>
+      
+       
         </div>
       <Collapse isOpen={isOpen}>
        
           
-          <div className="docDetails" style={{marginTop:"-12px"}}>
+          <div className="docDetails" style={{marginTop:"-15px"}}>
                   {/* <Label className="secondHeader">
                   Customer Exchange Details
                   </Label> */}
-                   <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}> Customer Exchange Rate</p>
+                  <p className="sub_menu_nameD" style={{fontWeight:"bold"}}>Customer Exchange Rate</p>
+                   {/* <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}> </p> */}
           </div>
 
 
@@ -319,7 +323,7 @@ const dataTochange1 =(e)=>{
                             <Col> 
                           
                             <div>
-                                <input type="number" placeholder={"1.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate"  onBlur={dataTochange} onKeyPress={thirdMethod2}/> 
+                                <input type="number" placeholder={"1.000"} className="inputBoxDesign2"  style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}} value={customerExchange.exchange_rate} onChange={handleInputData} id="exchange_rate"  onBlur={dataTochange} onKeyPress={thirdMethod2}/> 
                             </div>
                            
                             
@@ -333,7 +337,7 @@ const dataTochange1 =(e)=>{
                             <Col>
                             {/* <DatePicker  className="inputBoxDesign2" selected={customerExchange.exchange_date} onChange={datePickerData} id="exchange_date_customer"/> */}
                             <input type="date" onChange={datePickerData} className="dateDesign"  
-                                                    value={dateToShow} />
+                                                    value={dateToShow} style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}}/>
                             </Col>
                         </Row>
               </Col>
@@ -342,7 +346,8 @@ const dataTochange1 =(e)=>{
 
   
           <div className="docDetails" style={{marginTop:"-16px"}}>
-          <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}>  Supplier Exchange Rate</p>
+          <p className="sub_menu_nameD" style={{fontWeight:"bold"}}> Supplier Exchange Rate</p>
+          {/* <p className="sub_menu_nameD" style={{paddingTop:"10px",paddingLeft:10}}> </p> */}
                   {/* <Label className="secondHeader">
                   Suppliear Exchange Details
                   </Label> */}
@@ -366,13 +371,13 @@ const dataTochange1 =(e)=>{
               </Col>
 
               <Col className="col-3">
-                  <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Rate</Label>
+                  <Label className="subHeadingLabels" style={{marginLeft:10}}>Exchange Rate</Label>
                         <Row>
                             <Col> 
                                 
                             <div>
                     
-                                <input type="number" placeholder={"1.000"} className="inputBoxDesign2"  style={{textAlign:"right"}} value={supplierExchange.exchange_rate} onChange={handleInputData1} id="exchange_rate1"  onBlur={dataTochange1} onKeyPress={thirdMethod2}/> 
+                                <input type="number" placeholder={"1.000"} className="inputBoxDesign2"  style={{marginLeft:6,borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}}value={supplierExchange.exchange_rate} onChange={handleInputData1} id="exchange_rate1"  onBlur={dataTochange1} onKeyPress={thirdMethod2}/> 
                             </div>
                            
                            
@@ -382,13 +387,13 @@ const dataTochange1 =(e)=>{
               </Col>
 
               <Col className="col-2">
-                  <Label className="subHeadingLabels" style={{marginLeft:6}}>Exchange Date</Label>
+                  <Label className="subHeadingLabels" style={{marginLeft:10}}>Exchange Date</Label>
                         <Row>
                             <Col>
                             {/* <DatePicker className="inputBoxDesign2" selected={supplierExchange.exchange_date} onChange={datePickerData1} /> */}
                             {/* dateDesign */}
                             <input type="date" onChange={datePickerData1} className="dateDesign"  
-                                                    value={dateToShow2} />
+                                                    value={dateToShow2} style={{marginLeft:6,borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)",textAlign:"right"}}/>
                             </Col>
                         </Row>
               </Col>

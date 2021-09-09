@@ -445,7 +445,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                         <p>Form Name</p>
                                         <div>
                                             <input type="text"
-                                            className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                              name="formName"
                                               //value={this.props.formName}   
                                             value={this.state.name}
@@ -463,7 +463,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                         <p>SKU Value<span style={{color:"red"}}>*</span></p>
                                         <div>
                                             <input type="text" 
-                                           className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                              placeholder="Value"
                                              name="formSku" 
                                              value={this.state.subName}
@@ -610,7 +610,7 @@ console.log("showSpeciSubA", this.props.showSpeciSubA)
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{textAlign: 'center'}}
+                                            <div   style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

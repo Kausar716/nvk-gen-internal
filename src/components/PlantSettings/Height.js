@@ -501,7 +501,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             <p>Height</p>
                                             <div>
                                                 <input type="text" 
-                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                  placeholder="Height"  name="heightName" value={this.state.name}    onChange={this.handleZoneInputAction}/>
                                                   {this.state.errorObj.heightName!==0?<span style={{fontSize:"small",color:"red"}}>Enter height </span>:""}
                                             </div>
@@ -516,7 +516,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                             <p>Imperial<span style={{color:"red"}}>*</span></p>
                                             <div>
                                                 <input type="text" 
-                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                  placeholder="Value"  name="heightImperial" 
                                                 value={this.state.subName}   
                                                  onChange={this.handleZoneInputAction2}/>
@@ -666,7 +666,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div    style={{textAlign: 'center'}}
+                                            <div   style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               
