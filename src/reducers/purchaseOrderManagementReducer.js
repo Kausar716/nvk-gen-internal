@@ -19,7 +19,8 @@ import {GET_PURCHASE_ORDER_LIST,
     GET_SUPPLIER_DELIVERY_LIST,
     GET_SPECIFIED_PO_ORDER,
     HANDLE_PO_PAGE_SELECTION,
-    UPDATE_PURCHASE_ORDER
+    UPDATE_PURCHASE_ORDER,
+    GET_DELIVERY_ADDRESS
 
 } from '../actions/types';
 
@@ -72,7 +73,8 @@ const initialSatate = {
     path:"",
     poPageIndex:0,
     supplierDeliveryList:[],
-    currencyList:[]
+    currencyList:[],
+    deliveryAddress:[]
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
     console.log(selectedAlphabet)
@@ -204,6 +206,11 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             ...state,
                             poData:{...state.poData, [action.itemId]:action.itemValue},
                         
+                    }
+                case GET_DELIVERY_ADDRESS:
+                    return{
+                        ...state,
+                        deliveryAddress:action.payload
                     }
                 case PO_SET_ALPHABET_SELECTED:
 

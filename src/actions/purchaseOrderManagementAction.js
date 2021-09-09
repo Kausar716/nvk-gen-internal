@@ -31,9 +31,21 @@ import {
     GET_SUPPLIER_DELIVERY_LIST,
     GET_SPECIFIED_PO_ORDER,
     HANDLE_PO_PAGE_SELECTION,
-    UPDATE_PURCHASE_ORDER
+    UPDATE_PURCHASE_ORDER,
+    GET_DELIVERY_ADDRESS
 
     } from './types'
+
+    
+    export const getDeliveryAddress = () => dispatch => {
+      axios.get(`/api/delivery-to-address-supplier`,config).then(res=>{
+          console.log(res)
+          dispatch({
+              type:GET_DELIVERY_ADDRESS,
+              payload:res.data.data  
+          })
+      })
+  }
     export const getPurchaseOrderList = () => dispatch => {
         axios.get(`/api/purchase-order-list`,config).then(res=>{
             console.log(res)
