@@ -5,12 +5,16 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,
+     handleAplhabetFilterBySN,getAddToPOCateries,
      handlePurchaseOrderFilert,serachOrderedList,handleAddAll,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,handledumyQty,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
+import 
+    {
+        getAllSubAttribute,  } 
+        from '../../actions/attributeAction'
 // import {getAddToOrderList} from "../../actions/supplierManagementAction"
 // import initialDetails from './initialDetails';
 // import './style.css'
@@ -34,6 +38,8 @@ import ActionModal from '../Modal/ActionModal';
 
     useEffect(()=>{
         props.getAddToOrderList()
+        props.getAddToPOCateries()
+        props.getAllSubAttribute(18)
     },[])
 
     const getSuggestionValuePlant = suggestion => suggestion.plant_name;
@@ -104,7 +110,7 @@ import ActionModal from '../Modal/ActionModal';
 
 
 
-console.log(props.orderedList)
+console.log(props.categoryList )
 const {orderedList}=props
 const inputPropsPlant = {
     placeholder: '',
@@ -192,16 +198,19 @@ const inputPropsSku = {
                                                 <label>Location:</label>
                                                 <select class="form-control">
                                                     <option>All</option>     
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                    {props.addressList.map(address=>{
+                                                        if(address.status === 1)
+                                                        return<option value={address.id}>{address.value}</option> 
+                                                    })}
                                                 </select>
                                             </div>
                                             <div class="col-md-4 col-lg-4 mt-3 mt-md-0">
-                                                <label>Category</label>
+                                                <label>Categfdgbfdgfory</label>
                                                 <select class="form-control">
-                                                    <option>All</option>     
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                    <option>All</option> 
+                                                    {props.categoryList.map(category=>{
+                                                        return<option value={category.id}>{category.name}</option>
+                                                    })}    
                                                 </select>
                                             </div>
                                             <div class="col-md-2 col-lg-2 pt-md-4">
@@ -225,7 +234,7 @@ const inputPropsSku = {
                                         
                                         <div class="form-group row">
                                             <div class="col-md-12 table-responsive">
-                                                <table class="table table-striped table-td-valign-middle mb-0" width="100%">
+                                                <table class="table table-striped table-td-valign-middle mb-0" width="550%">
                                                     <thead>
                                                         <tr>
                                                             <th width="15%" class="">SKU</th>
@@ -425,7 +434,9 @@ const mapStateToProps = (state)=> ({
     backupOrderListData:state.purchaseOrderManagementData.orderListDateForSuggession,
     searchValuePlant:state.purchaseOrderManagementData.searchValuePlant,
     searchValueSku:state.purchaseOrderManagementData.searchValueSku,
-    poData:state.purchaseOrderManagementData.poData
+    poData:state.purchaseOrderManagementData.poData,
+    categoryList:state.purchaseOrderManagementData.categoryList,
+    addressList:state.attributeData.subAttribute
 
     
 
@@ -437,7 +448,9 @@ export default connect(mapStateToProps,{
     handleOrderDetailsInput,addPo,
     serachOrderedList,
     handledumyQty,
-    handleAddAll
+    handleAddAll,
+    getAddToPOCateries,
+    getAllSubAttribute
 
 
 

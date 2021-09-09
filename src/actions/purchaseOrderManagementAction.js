@@ -32,7 +32,8 @@ import {
     GET_SPECIFIED_PO_ORDER,
     HANDLE_PO_PAGE_SELECTION,
     UPDATE_PURCHASE_ORDER,
-    GET_DELIVERY_ADDRESS
+    GET_DELIVERY_ADDRESS,
+    GET_ADD_TO_CATEGORY_LIS
 
     } from './types'
 
@@ -164,11 +165,11 @@ import {
       let errorArray=[];
       console.log(data)
       delete data.order_id
-      debugger;
       if(data){
       // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
       axios.post(`/api/add-purchase-order`,data,config).then(res=>{
           console.log(res)
+          alert(res.data.message)
           errorArray.push("Order Updated successfully")
           dispatch({
               type:ADD_PURCHASE_ORDER,
@@ -195,11 +196,11 @@ import {
     let errorArray=[];
     console.log(data)
     delete data.order_id
-    debugger;
     if(data){
     // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     axios.post(`/api/update-purchase-order/${data.id}`,data,config).then(res=>{
         console.log(res)
+        alert(res.data.message)
         errorArray.push("Order Updated successfully")
         dispatch({
             type:UPDATE_PURCHASE_ORDER,
@@ -241,11 +242,29 @@ export const handleOrderDetailsInput = (id,value)=>{
 export const getAddToOrderList = () => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
-  axios.get(`/api/add-to-purchase-order-search?type=plant`,config).then(res=>{
+  axios.get(`/api/add-to-purchase-order-search`,config).then(res=>{
+    console.log(res)
+    
+      dispatch({
+          type:GET_ADD_TO_ORDER_LIST,
+          payload:res.data.data
+
+      })
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+export const getAddToPOCateries= () => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.get(`/api/add-to-purchase-order-search-categories`,config).then(res=>{
     console.log(res)
      
       dispatch({
-          type:GET_ADD_TO_ORDER_LIST,
+          type:GET_ADD_TO_CATEGORY_LIS,
           payload:res.data.data
 
       })
@@ -261,7 +280,6 @@ export const getSpecifiedPurchaseOrder = (id) => dispatch => {
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
   axios.get(`/api/show-purchase-order/${id}`,config).then(res=>{
     console.log(res)
-     debugger;
       dispatch({
           type:GET_SPECIFIED_PO_ORDER,
           payload:res.data.data

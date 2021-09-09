@@ -5,7 +5,7 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,
+     handleAplhabetFilterBySN,updatePo,
      handlePurchaseOrderFilert,getUnitList,getDeliveryAddress,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getCurrencyList,getSupplierDeliveryList,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
@@ -287,7 +287,7 @@ export default connect(mapStateToProps,{
 
     getAllSuppliers,getDeliveryAddress,
     setSupplierToAddPo,getUnitList,getSupplierDeliveryList,
-    handleOrderDetailsInput,addPo,getCurrencyList
+    handleOrderDetailsInput,addPo,getCurrencyList,updatePo
 
 
 
