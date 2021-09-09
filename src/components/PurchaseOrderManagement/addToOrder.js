@@ -258,7 +258,7 @@ const inputPropsSku = {
                                                                 <table class="table table-striped tableOuterBdr" width="100%">
                                                                     <tr class="tblLinks">
                                                                         <td colspan="11">
-                                                                            <a href="">{orderByGroup[0].genus}</a>
+                                                                            <a href="">{orderByGroup[0].name}</a>
                                                                         </td>
                                                                     </tr>
                                                                     {orderByGroup.map((order,i)=>{
