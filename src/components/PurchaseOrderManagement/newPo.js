@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
-     handlePurchaseOrderFilert,getUnitList,
+     handlePurchaseOrderFilert,getUnitList,getDeliveryAddress,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getCurrencyList,getSupplierDeliveryList,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
@@ -29,6 +29,7 @@ import ActionModal from '../Modal/ActionModal';
         props.getAllSuppliers()
         props.getUnitList()
         props.getCurrencyList()
+        props.getDeliveryAddress()
     },[])
 
     const handleCalendarChangeLastDate=(timestamp)=>{
@@ -76,7 +77,13 @@ import ActionModal from '../Modal/ActionModal';
     }
     const handleButtonClick = ()=>{
         console.log(props.poData)
-        props.addPo(props.poData)
+        if(props.pageToOpen === "add"){
+            props.addPo(props.poData)
+        }
+        else {
+            props.updatePo(props.poData)
+        }
+       
     }
     const supplierList = props.supplierData
     const{poData,unitList,currencyList,supplierDeliveryList}= props
@@ -277,7 +284,7 @@ const mapStateToProps = (state)=> ({
 })
 export default connect(mapStateToProps,{
 
-    getAllSuppliers,
+    getAllSuppliers,getDeliveryAddress,
     setSupplierToAddPo,getUnitList,getSupplierDeliveryList,
     handleOrderDetailsInput,addPo,getCurrencyList
 

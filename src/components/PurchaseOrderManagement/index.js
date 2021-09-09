@@ -338,7 +338,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Purchase Orders</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
-                <Link to={`/${this.props.path}`}>
+                <Link to={`/PurchaseOrder`}>
                     <a href="#" class="btn ml-2" onClick={()=>{this.handlePOClick("PurchaseOrder",0)}}>
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
