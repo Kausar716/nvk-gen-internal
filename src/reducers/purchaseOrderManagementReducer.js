@@ -13,7 +13,14 @@ import {GET_PURCHASE_ORDER_LIST,
     GET_CURRENT_PO_ORDER_HISTORY,
     GET_CURRENT_PO_ORDER,
     GET_PLANT_SKU,
-    HANDE_CURRENT_PO_ORDER_UPDATE
+    HANDE_CURRENT_PO_ORDER_UPDATE,
+    GET_UNIT_LIST,
+    GET_CURRENCY_LIST,
+    GET_SUPPLIER_DELIVERY_LIST,
+    GET_SPECIFIED_PO_ORDER,
+    HANDLE_PO_PAGE_SELECTION,
+    UPDATE_PURCHASE_ORDER,
+    GET_DELIVERY_ADDRESS
 
 } from '../actions/types';
 
@@ -37,14 +44,18 @@ const initialSatate = {
     poData:{
         supplier_id:"",
         order_id:"",
-        discount_type:"overall",
-        discount_percent:"0.00",
+        discount_type:"0",
+        discount:"0.00",
         job_description:null,
-        include_royality:null,
+        royalty:"0",
         order_notes:null,
         dispatch_type:null,
         currency:"Merits",
-        supplier_order:""
+        supplier_order:"",
+        requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+        latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`
+        
+
     },
     searchValuePlant:"",
     searchValueSku:"",
@@ -57,8 +68,13 @@ const initialSatate = {
         subtotal:"",
         total:""
     },
-    plantSku:[]
-
+    plantSku:[],
+    unitList:[],
+    path:"",
+    poPageIndex:0,
+    supplierDeliveryList:[],
+    currencyList:[],
+    deliveryAddress:[]
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
     console.log(selectedAlphabet)
@@ -191,6 +207,11 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             poData:{...state.poData, [action.itemId]:action.itemValue},
                         
                     }
+                case GET_DELIVERY_ADDRESS:
+                    return{
+                        ...state,
+                        deliveryAddress:action.payload
+                    }
                 case PO_SET_ALPHABET_SELECTED:
 
                     let poListForAlphabetSelected = filterBasedOnAlphabet(state.purchaseOrderListBackup,action.selectedAlphabet)
@@ -213,6 +234,11 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     }
                 case ADD_PURCHASE_ORDER:
                     console.log(action)
+                    return{
+                        ...state,
+                        poData:action.payload
+                    }
+                case UPDATE_PURCHASE_ORDER:
                     return{
                         ...state,
                         poData:action.payload
@@ -321,7 +347,39 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             currentItems:updateList,
                             // currentOrder:action.payload.order
                         }
-                   
+                   case GET_UNIT_LIST:
+                       return{
+                        ...state,
+                        unitList:action.payload
+                       }
+                   case  GET_CURRENCY_LIST:
+                       return{
+                           ...state,
+                           currencyList:action.payload
+                       }
+                    case GET_SUPPLIER_DELIVERY_LIST:
+                        return{
+                            ...state,
+                            supplierDeliveryList:action.payload
+                        }
+                    case GET_SPECIFIED_PO_ORDER:
+                        debugger;
+                        return{
+                            ...state,
+                            pageToOpen:"editOrderDetails",
+                            poData:action.payload,
+                            path:"PurchaseOrder",
+                            poPageIndex:0,
+                            selectedSupplier:action.payload.supplier_name
+
+                        }
+                    case HANDLE_PO_PAGE_SELECTION:
+                        console.log(action)
+                        return{
+                            ...state,
+                            path:action.path,
+                            poPageIndex:action.index
+                        }
                default :
             return{
                 ...state

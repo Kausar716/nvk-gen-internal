@@ -8,6 +8,7 @@ import {
     UPLOAD_USER_IMAGE,
     REMOVE_USER_IMAGE,
     DELETE_USER ,
+    DISPLAY_SELECTED_LISTS,
     //HANDLE_USERACCESS_INPUT_EXCHANGE
    } from './types';
    
@@ -43,6 +44,16 @@ import {
                    payload:res.data    
                })
            })
+   }
+
+   export const displaySelectedList=(displaySelectedList)=>dispatch=>{
+
+    dispatch({
+        type:DISPLAY_SELECTED_LISTS,
+        displaySelectedList:displaySelectedList,
+
+        
+    })
    }
 
    export const addUser = (userData) => dispatch => {

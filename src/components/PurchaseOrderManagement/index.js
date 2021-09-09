@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
-     handlePurchaseOrderFilert,
+     handlePurchaseOrderFilert,handlePoPageSelection,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -252,6 +252,9 @@ onSupplierOrderSuggestionsClearRequested = () => {
             {jobSuggestions.supplier_name}
         </span>
         );
+    handlePOClick =(path,index)=>{
+        this.props.handlePoPageSelection(path,index)
+    }
       
 
     render(){
@@ -271,7 +274,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
         const getJobSuggestionValue = jobSuggestions => jobSuggestions
         const getOrderSuggestionValue = orderSuggestions => orderSuggestions
         const getSupplierOrderSuggestionValue = supplierOrderSuggestions => supplierOrderSuggestions
-
+        console.log(this.props.path,this.props.poPageIndex)
         console.log(this.props.completeStateData.statusLevel)
         let {plantValue,supplierValue,jobValue,orderValue,supplierOrderValue} = this.state
         console.log(plantValue)
@@ -329,13 +332,14 @@ onSupplierOrderSuggestionsClearRequested = () => {
             onChange: this.handleChange
         };
         console.log(open)
+        
     return (        
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0"><img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt=""/> Purchase Orders</h1>
 				<div class="topbarCtrls mt-3 mt-md-0">
-                <Link to="/PurchaseOrder">
-                    <a href="#" class="btn ml-2">
+                <Link to={`/PurchaseOrder`}>
+                    <a href="#" class="btn ml-2" onClick={()=>{this.handlePOClick("PurchaseOrder",0)}}>
                         <span class="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
                             <span class="ml-2"><b>New P.O.</b></span>
@@ -555,6 +559,8 @@ onSupplierOrderSuggestionsClearRequested = () => {
 const mapStateToProps = (state)=> (
     {
         purchaseOrderListData:state.purchaseOrderManagementData,
+        path:state.purchaseOrderManagementData.path,
+        poPageIndex:state.purchaseOrderManagementData.poPageIndex,
         plantData:state.plantData,
         supplierData:state.supplierData.supplierList,
         poBackup:state.purchaseOrderManagementData.purchaseOrderListBackup,
@@ -566,6 +572,6 @@ const mapStateToProps = (state)=> (
 
 export default connect(mapStateToProps,{
     getAllPlantAction,getAllSuppliers,
-    handlePurchaseOrderFilert,
+    handlePurchaseOrderFilert,handlePoPageSelection,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 })(PurchaseOrders)
