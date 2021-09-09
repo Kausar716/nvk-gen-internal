@@ -6,8 +6,8 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
-     handlePurchaseOrderFilert,
-     setSupplierToAddPo,handleOrderDetailsInput,addPo,
+     handlePurchaseOrderFilert,getUnitList,
+     setSupplierToAddPo,handleOrderDetailsInput,addPo,getCurrencyList,getSupplierDeliveryList,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
@@ -27,20 +27,31 @@ import ActionModal from '../Modal/ActionModal';
     const [value, onChange] = useState(new Date());
     useEffect(()=>{
         props.getAllSuppliers()
+        props.getUnitList()
+        props.getCurrencyList()
     },[])
 
-    const handleCalendarChange=(timestamp)=>{
+    const handleCalendarChangeLastDate=(timestamp)=>{
         console.log(timestamp)
         console.log(new Date(timestamp))
-        let latest_date = `${new Date(timestamp).getDay()}-${new Date(timestamp).getMonth()}-${new Date(timestamp).getFullYear()}`
+        let latest_date = `${new Date(timestamp).getDate()}-${new Date(timestamp).getMonth()+1}-${new Date(timestamp).getFullYear()}`
         console.log(latest_date)
         console.log(new Date(latest_date))
         props.handleOrderDetailsInput("latest_date",latest_date)
+    }
+    const handleCalendarChangeRequestDate=(timestamp)=>{
+        console.log(timestamp)
+        console.log(new Date(timestamp))
+        let requested_date = `${new Date(timestamp).getDate()}-${new Date(timestamp).getMonth()+1}-${new Date(timestamp).getFullYear()}`
+        console.log(requested_date)
+        console.log(new Date(requested_date))
+        props.handleOrderDetailsInput("requested_date",requested_date)
     }
     const handleSupplierDropDown = (e)=>{
         console.log(e.target.value)
         let selectedSupplier = supplierList.filter(supplier=>supplier.id===JSON.parse(e.target.value))
         console.log(selectedSupplier)
+        props.getSupplierDeliveryList(selectedSupplier[0].id)
         props.setSupplierToAddPo(selectedSupplier[0])
     }
     const handleInputData = (e) => {
@@ -48,17 +59,17 @@ import ActionModal from '../Modal/ActionModal';
         console.log(e.target.value)
         let {id,value}=e.target
         if(id=== "overall"|| id === "individual"){
-            props.handleOrderDetailsInput("discount_type",id)
+            props.handleOrderDetailsInput("discount_type",id==="overall"?"0":"1" )
         }
-        else if(id==="include_royality"){
+        else if(id==="royalty"){
             let val=0
-            val =(poData.include_royality === 0||poData.include_royality===null)?1:0
+            val =(poData.royalty === "0"||poData.royalty===null)?"1":"0"
             console.log(poData)
             console.log(val)
-            props.handleOrderDetailsInput("include_royality",val)
+            props.handleOrderDetailsInput("royalty",val)
         }
         else if(id==="dispatch_type"){
-            props.handleOrderDetailsInput("include_royality",e.target.value)
+            props.handleOrderDetailsInput("dispatch_type",e.target.value)
         }
         else
         props.handleOrderDetailsInput(id,value)
@@ -68,15 +79,23 @@ import ActionModal from '../Modal/ActionModal';
         props.addPo(props.poData)
     }
     const supplierList = props.supplierData
-    const poData = props.poData
+    const{poData,unitList,currencyList,supplierDeliveryList}= props
     const dispatchTypeList =["Incoming Delivery","Pickup","Delivery & Pickup"]
     // const latest_date_format = new Date(props.poData.latest_date)
 
 
 
 
+console.log(poData.latest_date,poData.requested_date)
+let lastDateForCalendar = new Date()
+let requestDateForCalendar = new Date()
+if(poData.latest_date)
+lastDateForCalendar = new Date(`${poData.latest_date.split("-")[1]}-${poData.latest_date.split("-")[0]}-${poData.latest_date.split("-")[2]}`)
+if(poData.requested_date)
+requestDateForCalendar = new Date(`${poData.requested_date.split("-")[1]}-${poData.requested_date.split("-")[0]}-${poData.requested_date.split("-")[2]}`)
 
-console.log(poData)
+console.log(new Date(poData.latest_date))
+console.log(new Date(poData.requested_date))
     return (
         <div class="bg-white px-3 py-3">
              {/* <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/> */}
@@ -129,15 +148,15 @@ console.log(poData)
                             <label>Discount</label>
                             <div class="row align-items-center">
                                 <div class="col-md-4 col-lg-2">
-                                    <input type="text" class="form-control text-right" placeholder="" id="discount_percent" value={poData.discount_percent} onChange={handleInputData}></input>
+                                    <input type="text" class="form-control text-right" placeholder="" id="discount" value={poData.discount} onChange={handleInputData}></input>
                                 </div>
                                 <div class="col-md-6 col-lg-4 d-flex mt-3 mt-md-0">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="overall" name="overall" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="overall"?true:false} />
+                                        <input type="radio" id="overall" name="overall" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="0"?true:false} />
                                         <label class="custom-control-label" for="overall">Overall</label>
                                     </div>
                                     <div class="custom-control custom-radio ml-3">
-                                        <input type="radio" id="individual" name="individual" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="individual"?true:false} />
+                                        <input type="radio" id="individual" name="individual" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="1"?true:false} />
                                         <label class="custom-control-label" for="individual">Individual</label>
                                     </div>
                                 </div>
@@ -149,11 +168,11 @@ console.log(poData)
                     <div class="row mt-3">
                         <div class="col-md-6 col-lg-6">
                             <label class="mr-2 mr-md-0">Requested Date</label>
-                            <DatePicker onChange={onChange} value={value} id={"latest_date"} />
+                            <DatePicker onChange={handleCalendarChangeRequestDate} format='dd/MM/yyyy' id={"requested_date"} value={requestDateForCalendar}  />
                         </div>
                         <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
                             <label class="mr-2 mr-md-0">Latest Date</label>
-                            <DatePicker onChange={handleCalendarChange} value={poData.latest_date?new Date(poData.latest_date):new Date()} id={"latest_date"}/>
+                            <DatePicker onChange={handleCalendarChangeLastDate} value={lastDateForCalendar} format='dd/MM/yyyy' id={"latest_date"}/>
                         </div>
                     </div>
                 </div>
@@ -165,7 +184,7 @@ console.log(poData)
                             <label>Dispatch Type</label>
                             {/* <input type="text" class="form-control" placeholder="Pickup" id="dispatch_type" value={poData.dispatch_type} onChange={handleInputData}></input> */}
                             
-                            <select class="form-control" value={props.selectedSupplier} id="dispatch_type" onChange={handleSupplierDropDown} value={poData.dispatch_type}>
+                            <select class="form-control" value={props.dispatch_type} id="dispatch_type" onChange={handleInputData} value={poData.dispatch_type}>
                                 <option value={null}>Select</option>
                                 {dispatchTypeList.map(dispatchType=>{
                                     return <option value={dispatchType}>{dispatchType}</option>
@@ -174,18 +193,21 @@ console.log(poData)
                         </div>
                         <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                             <label>Currency</label>
-                            <select class="form-control">
-                                <option>Canadian Dollars</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
+                            <select class="form-control" id="currency" value={poData.currency} onChange={handleInputData}>
+                            <option value={null}>Select</option>
+                                {currencyList.map(currency=>{
+                                    console.log(currency)
+                                    return <option value={currency.currency_code}>{currency.currency_name}</option>
+                                })}
                             </select>
                         </div>
                         <div class="col-md-6 col-lg-4 mt-2 mt-md-0">
                             <label>Units</label>
-                            <select class="form-control">
-                                <option>Metric</option>
-                                <option>Option 1</option>
-                                <option>Option 2</option>
+                            <select class="form-control" id="units" value={poData.units} onChange={handleInputData}>
+                                <option value={null} >Select</option>
+                                {unitList.map(unit=>{
+                                    return <option value={unit.unit_name}>{unit.unit_name}</option>
+                                })}
                             </select>
                         </div>
                     </div>
@@ -200,8 +222,8 @@ console.log(poData)
                             <label>Include Royalty</label>
                             <div class="d-flex align-items-center flex-wrap ml-2 mt-2">Off
                                 <div class="switcher switcher-sm ml-2 pr-2">
-                                    <input type="checkbox" name="switcher_checkbox_date"  checked={props.poData.include_royality===1?true:false} id="include_royality" onClick={handleInputData}/>
-                                    <label for="include_royality"></label>
+                                    <input type="checkbox" name="switcher_checkbox_date"  checked={props.poData.royalty==="1"?true:false} id="royalty" onClick={handleInputData}/>
+                                    <label for="royalty"></label>
                                 </div> On
                             </div>
                         </div>
@@ -211,10 +233,11 @@ console.log(poData)
             <div class="row mt-3 align-items-center">
                 <div class="col-md-6 col-lg-6">
                     <label>Deliver To:</label>
-                    <select class="form-control">
-                        <option>Farm A [1155 Highway #05, Dundas, On]</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
+                    <select class="form-control" id="deliver_to" onChange={handleInputData} value={poData.deliver_to} >
+                        <option value={null}>Select</option>
+                        {/* {supplierDeliveryList.map(deliveryLocation=>{
+                                    return <option value={deliveryLocation.id}>{deliveryLocation.address}</option>
+                                })} */}
                     </select>
                 </div>
                 <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
@@ -230,7 +253,7 @@ console.log(poData)
             </div>
             <div class="row mt-3">
                                     <div class="col-md-12 text-md-right">
-            <button type="button" class="btn btn-primary btn-lg ml-3" style={{cursor:"pointer"}} onClick={handleButtonClick}>Add </button>
+            <button type="button" class="btn btn-primary btn-lg ml-3" style={{cursor:"pointer"}} onClick={handleButtonClick}>{props.pageToOpen=== "add"?"Add":"Update"} </button>
                                 </div>
                                 </div>
                                 </>:""}
@@ -245,6 +268,9 @@ const mapStateToProps = (state)=> ({
     pageToOpen:state.purchaseOrderManagementData.pageToOpen,
     supplierData:state.supplierData.supplierList,
     poData:state.purchaseOrderManagementData.poData,
+    unitList:state.purchaseOrderManagementData.unitList,
+    currencyList:state.purchaseOrderManagementData.currencyList
+
     
     
 
@@ -252,8 +278,8 @@ const mapStateToProps = (state)=> ({
 export default connect(mapStateToProps,{
 
     getAllSuppliers,
-    setSupplierToAddPo,
-    handleOrderDetailsInput,addPo
+    setSupplierToAddPo,getUnitList,getSupplierDeliveryList,
+    handleOrderDetailsInput,addPo,getCurrencyList
 
 
 

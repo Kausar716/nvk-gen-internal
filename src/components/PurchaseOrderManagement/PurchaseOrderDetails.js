@@ -11,6 +11,8 @@ import OrderHistory from './orderHistory'
 
  const PurchaseOrderDetails =(props)=> {
     const [value, onChange] = useState(new Date());
+    console.log(props.pageToOpen)
+    let index=0
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -62,20 +64,20 @@ import OrderHistory from './orderHistory'
                 </div>
 
                 <div class="">
-                <Tabs>
+                <Tabs selectedIndex={index}>
                     <TabList>
-                        <Tab>Order Details</Tab>
-                        <Tab>Add to Order</Tab>
+                        <Tab in>Order Details</Tab>
+                        <Tab disabled={props.pageToOpen === "add"} >Add to Order</Tab>
                         <Tab>Current P.O
                              {/* <span class="badge badge-pill badge-success">25</span> */}
                              </Tab>
                         <Tab>Order History</Tab>
                         <Tab>Notes</Tab>    
                     </TabList>
-                    <TabPanel>
+                    <TabPanel >
                         <OrderDetails/>
                     </TabPanel>
-                    <TabPanel>
+                    <TabPanel >
                         <AddToOrder/>
                     </TabPanel>
                     <TabPanel>
