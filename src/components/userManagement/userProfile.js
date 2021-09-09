@@ -7,7 +7,7 @@ import 'react-tabs/style/react-tabs.css';
 //import { confirmAlert } from 'react-confirm-alert'; // Import
 //import 'react-confirm-alert/src/react-confirm-alert.css';
 import {connect} from "react-redux";
-import {showUser,updateUser,uploadImage,removeImage,deleteUser,getUsersList} from "../../actions/userAction";
+import {showUser,updateUser,uploadImage,removeImage,deleteUser,getUsersList, displaySelectedList} from "../../actions/userAction";
 
 import {getAllSubAttribute} from "../../actions/attributeAction"
 
@@ -26,6 +26,9 @@ import './style.css';
 
 // })
 
+
+
+
 class UserProfile extends React.Component { 
     
     constructor(props){
@@ -39,6 +42,7 @@ class UserProfile extends React.Component {
             disableImageUpload:false,
             imgLoader:false,
             allChecked:false,
+            specificUser:[],
         
             shouldBlockNavigation:true,
         
@@ -106,19 +110,36 @@ class UserProfile extends React.Component {
         }
 
    
-
+        // let alist = this.props.showUserSpecificList;
+        // var blist = alist.map(e=>e.id)
+        // this.setState({
+        //     checkList:blist
+        // })
+        // console.log("alistalistalist", blist)
        
     }
+
+  
+
+
     componentDidMount(){
         this.props.getAllSubAttribute(18)
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
 
+         
+        // let blist = alist.map(e=>e.id)
+
         this.setState({
-            locations: this.props.locationAddress
+            locations: this.props.locationAddress,
+            specificUser:this.props.selectedUser.location ,
+            checkList:this.props.selectedUser.location
+            //this.props.selectedUser.location
         })
 
+        
+console.log("locationAddress",this.props.specificdUser, this.props.locationAddress, this.props.selectedUser.location, this.state.checkList )
         //this.props.tabChangeValues();
 
         // if(this.props.tabChangeValues(1)){
@@ -126,7 +147,7 @@ class UserProfile extends React.Component {
         // }
 
            let selectedUser = this.props.selectedUser 
-          console.log(selectedUser)
+          console.log("1234567890",selectedUser)
            this.setState({
                firstName:selectedUser.name,
                lastName:selectedUser.last_name,
@@ -612,7 +633,7 @@ class UserProfile extends React.Component {
     }
 
        handleChangeCheckbox = e => {
-        debugger
+        //debugger
         //let checkList=[];
                     let itemName = e.target.name;
                     let itemId = e.target.id;
@@ -681,11 +702,13 @@ class UserProfile extends React.Component {
       }
 
 
-       handleToggle = c => () => {
-           //debugger
+       handleToggle = (c) => () => {
+
+      
         // return the first index or -1
-        const clickedCategory = this.state.checkList.indexOf(c)
-        const all = [...this.state.checkList];
+        const clickedCategory =this.state.checkList.indexOf(c)
+        const all =[...this.state.checkList]
+        // [...this.state.checkList];
     
         if (clickedCategory === -1) {
           all.push(c);
@@ -696,16 +719,20 @@ class UserProfile extends React.Component {
         this.setState({
             checkList:all
         })
-
-        console.log("all1313131", all,this.state.checkList,clickedCategory, )
+        this.props.displaySelectedList(all)
+        console.log("all1313131", all,this.state.checkList,clickedCategory,  this.props.displaySelectedListOnly)
        // setChecked(all);
         //formData.set("categories", all);
+
+        
       };
       
 
     render() {
 
-
+        
+        console.log("checkListcheckList", this.state.checkList, this.props.displaySelectedListOnly, this.props.showUserSpecificList)
+        console.log("specificdUser", this.props.specificdUser, this.state.specificUser,this.props.selectedUser,)
         console.log("getAllSubAttribute",this.state.locations,this.state.checkList, this.state.locations.sub_attributeschild)
 
         console.log("ABCD123", this.props.tabChangeValueUP22, this.props.tabValues1)
@@ -1145,22 +1172,12 @@ class UserProfile extends React.Component {
                                                         ))
                                                             } */}
 
-{
+                                                    {
                                                                 this.state.locations.map((item,i) => (
           
                                                                     <div key={i}>
                                                                     <ul class="list-unstyled" style={{marginTop:"-23px"}}>
                                                                                 <li key={i} style={{marginTop:"15px"}}>
-
-                                                                                {/* <div class="custom-control custom-checkbox" >
-                                                        <input type="checkbox" class="custom-control-input"  
-                                                        onChange={handleChange} 
-                                                        checked={finalUserManagemnetPermission.filter((user) => user?.isChecked !== true).length < 4}
-                                                        name="userManagementInUserManagementPermissions" id="userManagementInUserManagementPermissions" />
-                                                        <label class="custom-control-label pl-2" for="userManagementInUserManagementPermissions" >User Management  </label>
-                                                    </div> */}
-
-
                                                                                 <div class="custom-control custom-checkbox" style={{marginTop:"0px"}}>
                                                                                 <input
                                                                                 class="custom-control-input"
@@ -1170,12 +1187,12 @@ class UserProfile extends React.Component {
                                                                                             value={item.value}
                                                                                             id={item.id}
                                                                                             checked={this.state.checkList.includes(item.id) ? true : false }
-                                                                                            //checked={item.isChecked}
+                                                                                            
                                                                                             onChange={this.handleToggle(item.id)}
                                                                                             //onChange={this.handleChangeCheckbox}
                                                                                 />
                                                                                 <label class="custom-control-label pl-2" style={{fontWeight:"500"}} for={item.id}> {item.value}
-                                                                                 {/* <span>1105 HWY5, Dundas, CN</span> */}
+                                                                            
                                                                                  <span style={{fontWeight:"300"}} >{item.sub_attributeschild[0].value}  
                                                                                   {item.sub_attributeschild[1].value}</span> 
                                                                                  <span style={{fontWeight:"300"}} >{item.sub_attributeschild[2].value}</span>
@@ -1212,16 +1229,8 @@ class UserProfile extends React.Component {
 
 
 
-                                                            <div class="mt-3">
+                                                            {/* <div class="mt-3">
                                                                 <div class="custom-control custom-checkbox">
-                                                                
-                                                                    {/* <input
-                                                                                disabled={!true}
-                                                                                type="checkbox"
-                                                                                onClick={this.handleAllChecked}
-                                                                                value="checkedall"
-                                                                                />{" "}
-                                                                                User has access to all locations */}
                                                         <input
                                                          class="custom-control-input"
                                                             type="checkbox"
@@ -1229,11 +1238,12 @@ class UserProfile extends React.Component {
                                                             id="checkAll"
                                                            
                                                             checked={this.state.allChecked}
+                                                            //onChange={this.handleToggle()}
                                                             onChange={this.handleChangeCheckbox}
                                                             />
                                                             <label  class="custom-control-label pl-2" style={{marginLeft:"10px"}} for="checkAll"> User has access to all locations</label>
                                                                 </div> 
-                                                            </div>
+                                                            </div> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -1288,9 +1298,13 @@ const mapStateToProps = (state)=> (
    // tabChangeValueUP2: state.userAccessReduser.tabChangeValue,
     tabChangeValueUP22: state.userAccessReduser.tabChangeValue,
     locationAddress:state.attributeData.subAttribute,
-}
+    specificdUser : state.userReduser.user, 
+    displaySelectedListOnly:state.userReduser.displaySelectedList,
+    showUserSpecificList:state.userReduser.showUserSpecific
+
+    }
 
 )
 
-export default withRouter(connect(mapStateToProps,{updateUser,removeImage,userAccessList,getUsersList,getRolesList,getPermissionList,getAllSubAttribute,
+export default withRouter(connect(mapStateToProps,{updateUser,displaySelectedList,removeImage,userAccessList,getUsersList,getRolesList,getPermissionList,getAllSubAttribute,
     showUser,uploadImage,deleteUser,tabChangeValues,displaySelectedUSERS,handleUserSelect,handleUserAccessExchnageData}) (UserProfile));
