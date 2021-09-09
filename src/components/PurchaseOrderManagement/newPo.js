@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,
-     handlePurchaseOrderFilert,getUnitList,
+     handlePurchaseOrderFilert,getUnitList,getDeliveryAddress,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getCurrencyList,getSupplierDeliveryList,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
@@ -29,6 +29,7 @@ import ActionModal from '../Modal/ActionModal';
         props.getAllSuppliers()
         props.getUnitList()
         props.getCurrencyList()
+        props.getDeliveryAddress()
     },[])
 
     const handleCalendarChangeLastDate=(timestamp)=>{
@@ -76,10 +77,16 @@ import ActionModal from '../Modal/ActionModal';
     }
     const handleButtonClick = ()=>{
         console.log(props.poData)
-        props.addPo(props.poData)
+        if(props.pageToOpen === "add"){
+            props.addPo(props.poData)
+        }
+        else {
+            props.updatePo(props.poData)
+        }
+       
     }
     const supplierList = props.supplierData
-    const{poData,unitList,currencyList,supplierDeliveryList}= props
+    const{poData,unitList,currencyList,supplierDeliveryList,deliveryAddress}= props
     const dispatchTypeList =["Incoming Delivery","Pickup","Delivery & Pickup"]
     // const latest_date_format = new Date(props.poData.latest_date)
 
@@ -235,9 +242,9 @@ console.log(new Date(poData.requested_date))
                     <label>Deliver To:</label>
                     <select class="form-control" id="deliver_to" onChange={handleInputData} value={poData.deliver_to} >
                         <option value={null}>Select</option>
-                        {/* {supplierDeliveryList.map(deliveryLocation=>{
-                                    return <option value={deliveryLocation.id}>{deliveryLocation.address}</option>
-                                })} */}
+                        {deliveryAddress.map(deliveryLocation=>{
+                                    return <option value={deliveryLocation.id}>{deliveryLocation.delivery_to}</option>
+                                })}
                     </select>
                 </div>
                 <div class="col-md-6 col-lg-6 mt-3 mt-md-0">
@@ -269,7 +276,8 @@ const mapStateToProps = (state)=> ({
     supplierData:state.supplierData.supplierList,
     poData:state.purchaseOrderManagementData.poData,
     unitList:state.purchaseOrderManagementData.unitList,
-    currencyList:state.purchaseOrderManagementData.currencyList
+    currencyList:state.purchaseOrderManagementData.currencyList,    
+    deliveryAddress:state.purchaseOrderManagementData.deliveryAddress
 
     
     
@@ -277,7 +285,7 @@ const mapStateToProps = (state)=> ({
 })
 export default connect(mapStateToProps,{
 
-    getAllSuppliers,
+    getAllSuppliers,getDeliveryAddress,
     setSupplierToAddPo,getUnitList,getSupplierDeliveryList,
     handleOrderDetailsInput,addPo,getCurrencyList
 
