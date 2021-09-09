@@ -130,7 +130,7 @@ class UserProfile extends React.Component {
 
          
         // let blist = alist.map(e=>e.id)
-        let aList = this.props.showUserSpecificList && this.props.showUserSpecificList.data.user.location.map(e=>e.id)
+        let aList = (this.props.showUserSpecificList) && (this.props.showUserSpecificList.data.user===undefined || this.props.showUserSpecificList.data.user.location.map(e=>e.id))
 
         this.setState({
             locations: this.props.locationAddress,
