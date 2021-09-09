@@ -48,11 +48,13 @@ import {
 
         return  axios.get(`/api/quote-item-list/${quoteId}`,config).then(res=>{ 
             console.log(res)
+
         dispatch({
                 type:QUOTE_LIST,
                 payload:res.data
     
             })
+            return res.data
         })
 
 
