@@ -461,7 +461,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <p>Packaging Name</p>
                                         <div>
                                             <input type="text" 
-                                           className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                              name="packagingName"
                                               value={this.state.name}
                                             //  value={this.props.packagingName}  
@@ -479,7 +479,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                         <div>
 
                                             <input type="text" 
-                                           className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                            className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                              placeholder="Value" name="packagingSku"
                                               value={this.state.subName}
                                             //  value={this.props.packagingSku}   
@@ -624,7 +624,7 @@ import {getAllSubAttribute,handleAttributeDragDrop,handleAttributeDragSort,handl
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div   style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

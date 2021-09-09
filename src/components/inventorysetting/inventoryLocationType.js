@@ -450,7 +450,7 @@ class InventoryLocationTypes extends Component {
                             <label>Location Type</label>
                             <div>
                                 <input type="text"
-                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                     name="locationType"
                                 value={this.state.name}
                                     placeholder="Type" onChange={this.handleZoneInputAction2}/>
@@ -464,7 +464,7 @@ class InventoryLocationTypes extends Component {
                             <label>Short Code (6 Char)</label>
                             <div>
                                 <input type="text" 
-                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                     placeholder="Code"
                                     maxLength="6"
                                     name="locationTypeShortCode" 
@@ -569,7 +569,7 @@ class InventoryLocationTypes extends Component {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div  style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

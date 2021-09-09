@@ -431,7 +431,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                         <div className="row d-flex align-items-center">
                                             <div className="col-md-6 col-lg-6">  
                                                 <input type="text" 
-                                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                  name="zone" 
                                                  value={this.state.name}
                                                   placeholder="Zone"
@@ -572,7 +572,7 @@ const move = (source, destination, droppableSource, droppableDestination) => {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div  style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

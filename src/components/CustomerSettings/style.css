@@ -114,7 +114,7 @@
   /* font-size: 17px; */
   /* font-weight: lighter; */
   padding-top: 5px;
-  font-size: 17px;
+  font-size: 18.4px;
 }
 
 .ddcard {
@@ -431,6 +431,7 @@
   margin-left: 0.3em;
   margin-right: -0em;
   padding-left: 2vh;
+  font-size:16.6px;
 }
 .sub_menu_nameuser {
   background-color: rgb(240, 240, 240);

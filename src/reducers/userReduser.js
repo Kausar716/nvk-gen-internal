@@ -5,13 +5,17 @@ import {
     UPDATE_USER,
     UPLOAD_USER_IMAGE,
     REMOVE_USER_IMAGE,
-    DELETE_USER 
+    DELETE_USER ,
+    DISPLAY_SELECTED_LISTS
    } from '../actions/types';
 
    
 const initialSatate = {
     users:[],
-    userBackup:[]
+    userBackup:[],
+    displaySelectedList:[],
+    showUserSpecific:[]
+
 }
  const userReduser = (state = initialSatate, action)=> {
      console.log(action)
@@ -25,11 +29,25 @@ const initialSatate = {
                 userBackup:action              
             }
         case SHOW_USER:
-            
+           
             return{
+                
                 ...state,
-                user:action.payload
+                user:action.payload,
+                showUserSpecific:action.payload
+
             }
+
+
+            case DISPLAY_SELECTED_LISTS:{
+                return{
+                    ...state,
+                    displaySelectedList:action.displaySelectedList
+                    
+                }
+            }
+
+
         case UPDATE_USER:{
             return {
                 ...state,

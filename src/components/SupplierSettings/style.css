@@ -18,7 +18,16 @@
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.abcd {
+/* .abcd {
   background-color: #d5ecf5;
+  border:3px solid #d5ecf5
   /* height: 200px; */
-}
+
+
+/* .abcd:focus {
+  color: #2d353c;
+  background-color: #fff;
+  border-color: #5db0ff;
+  outline: 0;
+  box-shadow: 0 0 0 .2rem rgba(52, 143, 226, .25)
+} */

@@ -691,7 +691,7 @@ render() {
                                             <div>
                                                 <input type="text"   id="location" name="location"
                                                  value={supplierData.supplierLocation.location}  
-                                                 className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                   placeholder="Location" onChange={this.handleCategoryInputAction}/>
                                                   {this.state.errorObj.location!==0?<span style={{fontSize:"small",color:"red"}}>Enter location</span>:""}
                                             </div>
@@ -702,7 +702,7 @@ render() {
                                             <label for="Category">Address</label>
                                             <div>
                                             <input type="text"   id="address" name="address"
-                                            value={supplierData.supplierLocation.address} className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  
+                                            value={supplierData.supplierLocation.address} className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}} 
                                              placeholder="Address" onChange={this.handleCategoryInputAction}/>
                                              {this.state.errorObj.address!==0?<span style={{fontSize:"small",color:"red"}}>Enter Address</span>:""}
 
@@ -714,7 +714,7 @@ render() {
                                             <label for="Category">City</label>
                                             <div>
                                                 <input type="text"  name="city"
-                                                 id="city" value={supplierData.supplierLocation.city}  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                 id="city" value={supplierData.supplierLocation.city}  className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                   placeholder="City" onChange={this.handleCategoryInputAction}/>
                                                   {this.state.errorObj.city!==0?<span style={{fontSize:"small",color:"red"}}>Enter City</span>:""}
                                             </div>
@@ -726,7 +726,7 @@ render() {
                                     <div className="row" style={{marginTop:"0.7em"}}>
                                             <div className="col-md-3">
                                                         <label for="Category">Prov/State</label>
-                                                            <select  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  id="state"  name="state" value={supplierData.supplierLocation.state}  onChange={this.handleCategoryInputAction}>
+                                                            <select className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}} id="state"  name="state" value={supplierData.supplierLocation.state}  onChange={this.handleCategoryInputAction}>
                                                             <option>{supplierData.supplierLocation.state}</option>
                                                             {allStates && allStates.map((c, i)=>{
                                                                     return <option id={allStates[i]}>{allStates[i]}</option>
@@ -738,7 +738,7 @@ render() {
 
                                             <div className="col-md-3">
                                                         <label for="Category">Country</label>
-                                                            <select  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }  id="country" name="country" value={supplierData.supplierLocation.country}   placeholder="Country" onChange={this.handleCategoryInputAction}>
+                                                            <select className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}  id="country" name="country" value={supplierData.supplierLocation.country}   placeholder="Country" onChange={this.handleCategoryInputAction}>
                                                                 <option>Select Country</option>
                                                                 {allCountry.map((country, i)=>{
                                                                     return <option id={allCountry[i]} selected={supplierData.supplierLocation.country ==allCountry[i]?"selected":""}>{allCountry[i]}</option>
@@ -753,7 +753,7 @@ render() {
                                             <label for="Category">Postal/ZIP</label>
                                             <div>
                                                 <input type="text"  id="zip"  name="zip"
-                                                value={supplierData.supplierLocation.zip}  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                value={supplierData.supplierLocation.zip} className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                  placeholder="Postal/ZIP" 
                                                  onChange={this.handleCategoryInputAction}/>
                                                  {this.state.errorObj.zip!==0?<span style={{fontSize:"small",color:"red"}}>Enter zip</span>:""}
@@ -768,7 +768,7 @@ render() {
                                             <label for="Category">Lat/Long</label>
                                             <div>
                                                 <input type="text"   id="lat"  name="lat"
-                                                value={supplierData.supplierLocation.lat}   placeholder="Lat/Long"  className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                                value={supplierData.supplierLocation.lat}   placeholder="Lat/Long"  className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                                 onChange={this.handleCategoryInputAction}/>
                                                 {this.state.errorObj.lat!==0?<span style={{fontSize:"small",color:"red"}}>Enter lat</span>:""}
                                             </div>
@@ -914,7 +914,7 @@ render() {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div    style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

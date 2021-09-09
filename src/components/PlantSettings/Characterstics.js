@@ -846,7 +846,7 @@ componentDidMount(){
                             <label>Section Name</label>
                             <div>
                                 <input type="text"
-                                className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                     name="sectionName"
                                 value={this.state.name}
                                     placeholder="Section Name" onChange={this.handleZoneInputAction2}/>
@@ -872,7 +872,8 @@ componentDidMount(){
                         <label>Feature Name</label>
                             <div>
                                 <input type="text"
-                                className={this.state.isEditingFeature===false ? "form-control" : "formControl2 abcd" }
+                               
+                                className={this.state.isEditingFeature===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditingFeature===false?"white":"#d5ecf5"}}
                                     name="featureName"
                                 value={this.state.subName}
                                     placeholder="Feature Name" onChange={this.handleZoneInputAction}/>
@@ -1046,7 +1047,7 @@ componentDidMount(){
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div   style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

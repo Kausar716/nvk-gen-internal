@@ -142,10 +142,15 @@ setOpen(true)
       <div color="primary" onClick={toggle} className="SubHeader">
       <SuccessModal status={isOpen1} message={successMessage} modalAction={toggle1}/>
       
-      <Label className="subFont">Customer Notifications</Label>
+      {/* <Label className="subFont"></Label>
       <span className="updownSymbolContainer"  style={{paddingTop:4}}> 
       {isOpen ?   <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
+        </span> */}
+
+        <span className="updownSymbolContainer"> 
+        {isOpen ?  <img src="assets/img/arrow-icon2.svg" alt=""/> :  <img src="assets/img/arrow-icon.svg" alt=""/> } 
         </span>
+      <h4 className="p-15 mb-0" className="subFont">Customer Notifications</h4>
         
         </div>
       <Collapse isOpen={isOpen}>
@@ -157,7 +162,7 @@ setOpen(true)
                   </Label> */}
           {/* </div> */}
            
-          <div className="containerBox">
+          <div className="containerBox" style={{borderTop:"1px solid rgba(0, 0, 0, .1)",marginTop:"0px",width:"100%",marginLeft:"-1px"}}>
 
                     <div className="row_1_Notification">
                     {/* <div>
@@ -179,7 +184,7 @@ setOpen(true)
                       {/* <p style={{marginBottom:"2px",fontWeight:"bold"}}>READY to LATE Notice <i id="TooltipExample" style={{borderRadius:"50%",fontSize:"9px",border:"1px solid #5287F5",width:"4%",textAlign:"center",padding:"3.3px",color:"#5287F5"}} class="fa fa-info"></i>
        
                         </p> */}
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" 
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)"}}
                             value={ready_to_late_notice} onChange={handleDataChange} id="ready_to_late_notice"/>
                             <span className="smallFont">days (Setting not used if set to 0)</span>
                               <div className="row_1">
@@ -197,7 +202,7 @@ setOpen(true)
                             <a class="item"><span class="nav-text">Qui-suis je </span><i class="large help basic icon"></i></a> */}
                       </div>
             
-                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" 
+                            <input placeholder={"0"}  type="number" className="textRight_OrderSettings" style={{borderRadius:4,border:"2px solid  rgba(0, 0, 0, .1)"}}
                             value={reserve_expiry_notice} onChange={handleDataChange} id="reserve_expiry_notice"/>
                             <span className="smallFont">days remaining</span>
                               <div className="row_1">

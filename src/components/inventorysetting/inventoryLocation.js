@@ -536,7 +536,7 @@ class InventoryLocation extends Component {
                                     <label>Location Name</label>
                                     <div>
                                         <input type="text"
-                                        className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                        className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                             name="locationName"
                                         value={this.state.locationName}
                                             placeholder="Name" onChange={this.handleZoneInputAction2}/>
@@ -547,7 +547,7 @@ class InventoryLocation extends Component {
                                     <label>Short Code (6 Char)</label>
                                     <div>
                                         <input type="text" 
-                                        className={this.state.isEditing===false ? "form-control" : "formControl2 abcd" }
+                                        className={this.state.isEditing===false ? "form-control" : "form-control" } style={{backgroundColor:this.state.isEditing===false?"white":"#d5ecf5"}}
                                             placeholder="Code"
                                             maxLength="6"
                                             name="locationShortCode" 
@@ -751,7 +751,7 @@ class InventoryLocation extends Component {
                                                      
                                                
                                              {(provided, snapshot) => (
-                                            <div   style={{width:"120px",height:"70px"}}
+                                            <div    style={{maxWidth:165,height:100,width:165}}
                                                 ref={provided.innerRef}
                                             >
                                               

@@ -9,7 +9,7 @@ import 'react-tabs/style/react-tabs.css';
 import CreateUserProfile from './createprofile'
 import UserAccess from './userAccess'
 import {connect} from "react-redux";
-import {getUsersList} from "../../actions/userAction";
+import {getUsersList,showUser,displaySelectedList} from "../../actions/userAction";
 import {getAllSubAttribute} from "../../actions/attributeAction"
 //import {getRolesList, tabChangeValues} from "../../actions/userAccessAction";
 import UserSettingsIndex from "../../components/UserSettings/UserSettingsIndex";
@@ -57,6 +57,7 @@ constructor(props){
         displayUpdateProfile:false,
         displayCreate:false,
         selectedUser:{},
+        selectedLists:[],
         displatDeletedRecord:"off"
     }
 
@@ -80,7 +81,9 @@ constructor(props){
        let selectedUser  =  userList.filter(obj=>{
          return (parseInt(obj.id) === parseInt(id))
      })
-     console.log(selectedUser)
+
+     //let listA = selectedUser
+     console.log("selectedUserselectedUser", selectedUser)
      this.setState({selectedUser:selectedUser[0]})
      this.setState({displayUpdateProfile:true})
      this.setState({visbleTrue:true})
@@ -94,11 +97,16 @@ onTagsChange = (event, values) => {
        let selectedUser  =  userList.filter(obj=>{
          return (parseInt(obj.id) === parseInt(id))
      })
-     console.log(selectedUser)
+     //console.log(selectedUser)
+     let listA = selectedUser[0].location
+     this.props.displaySelectedList(listA)
+     console.log("selectedUserselectedUser", listA)
      this.setState({selectedUser:selectedUser[0]})
      this.setState({displayUpdateProfile:true})
      this.setState({visbleTrue:true})
+     this.props.showUser(id)
 
+     
 
   }
 
@@ -123,13 +131,22 @@ componentDidMount(){
     this.props.getAllSubAttribute(18)
     this.props.getUsersList()
     this.props.getRolesList()
+    
 
    // this.handleSelect()
 
 
 
+
+
     
 }
+
+
+
+
+
+
  hanleCheckBox = (e) => {
 if( e.target.value === "off"){
     this.setState({displatDeletedRecord:"on"})
@@ -504,10 +521,11 @@ const mapStateToProps = (state)=> (
     users:state.userReduser.users.type==="GET_USERS_LIST"? state.userReduser.users.payload :[],
     roles:state.userAccessReduser.roles,
     temp:state,
-    tabChangeValueUP: state.userAccessReduser.tabChangeValue
+    tabChangeValueUP: state.userAccessReduser.tabChangeValue,
+    specificdUser : state.userReduser.user
 
 }
 
 )
 
-export default connect(mapStateToProps,{getUsersList,getRolesList,resetUserData,userAccessList,resetUserSelect, displaySelectedUSERS,getPermissionList,tabChangeValues,getAllSubAttribute})(UserManagement)
+export default connect(mapStateToProps,{getUsersList,displaySelectedList,getRolesList,resetUserData,userAccessList,resetUserSelect, displaySelectedUSERS,getPermissionList,tabChangeValues,getAllSubAttribute, showUser})(UserManagement)
