@@ -512,6 +512,12 @@ export const QUOTE_LIST  ="QUOTE_LIST"
 
 
 
+//Order List Management
+export const FILTER_DATA_BY_ALPHABETIC_OL  ="FILTER_DATA_BY_ALPHABETIC_OL"
+export const FILTER_DATA_BY_SEARCH_SN_OL  ="FILTER_DATA_BY_SEARCH_SN_OL"
+export const SET_PAGE_NUMBER_OL  ="SET_PAGE_NUMBER_OL"
+export const GET_ORDER_LIST  ="GET_ORDER_LIST"
+
 
 
 

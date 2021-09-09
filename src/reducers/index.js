@@ -26,7 +26,8 @@ import productManufacturerReducer from './productManufacturerReducer';
 import purchaseOrderManagement from'./purchaseOrderManagementReducer';
 import quoteOrderManagement from'./quoteOrderManagemnetReducer';
 import invoiceReducer from'./invoiceReducer'
-import QuoteReducer from './QuoteReducer'
+import QuoteReducer from './QuoteReducer';
+import OrderListMangementReducer from './OrderListManagementReducer'
 // import supplierManagementReducer from './supplierManagementReducer';
 
 
@@ -54,4 +55,5 @@ export default combineReducers({
     productManufacturerData:productManufacturerReducer,
     purchaseOrderManagementData:purchaseOrderManagement,
     quoteOrderReducer:quoteOrderManagement,
+    OrderListMangementReducer:OrderListMangementReducer,
 })

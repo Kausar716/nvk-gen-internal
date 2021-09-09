@@ -585,7 +585,7 @@ componentDidMount(){
     }
 
     handleAddCategoryUpdate=(e)=>{
-        // debugger;
+        debugger;
          let valueName = this.state.name
          let updateID = parseInt(this.state.selectedID)
          let updateObject={}
