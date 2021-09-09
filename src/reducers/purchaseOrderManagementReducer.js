@@ -73,7 +73,8 @@ const initialSatate = {
     path:"",
     poPageIndex:0,
     supplierDeliveryList:[],
-    currencyList:[]
+    currencyList:[],
+    deliveryAddress:[]
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
     console.log(selectedAlphabet)
