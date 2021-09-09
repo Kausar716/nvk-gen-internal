@@ -608,8 +608,8 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
-import {setPageNumberQo,handleSearchFilterByAlpha,getQuoteOrderList, 
-      handleAplhabetFilterBySN} from "../../actions/quoteOrderManagementAction";
+import { setPageNumberOl,handleSearchFilterByAlpha,
+    getOrderList,handleAplhabetFilterBySN} from "../../actions/orderListManagement";
 import initialDetailsQL from './initialDetailsQL';
 import '../PurchaseOrderManagement/style.css';
 import { Link } from "react-router-dom";
@@ -691,18 +691,20 @@ class OrderList extends React.Component {
             initialDetailsQL:[],
             searchString: "",
             orderSearch:"",
+            suggestionsInJOBD:[],
+            jobDSearch:"",
             isChecked:false,
             allChecked: false,
 
             list: [
-                { id: 1, name: "Open",label:"OPEN", isChecked: false },
-                { id: 2, name: "Pick", label:"PICKING",isChecked: false },
-                { id: 3, name: "Ready", label:"READY",isChecked: false },
-                { id: 4, name: "Ship", label:"SHIPPED",isChecked: false },
-                { id: 5, name: "Invoice", label:"INVOICE",isChecked: false },
-                { id: 6, name: "Closed", label:"CLOSED",isChecked: false },
-                { id: 7, name: "Cancel", label:"CANCEL",isChecked: false },
-                { id: 8, name: "Late", label:"LATE",isChecked: false },
+                { id: 1, name: "Open",label:"Open", isChecked: false },
+                { id: 2, name: "Pick", label:"Pick",isChecked: false },
+                { id: 3, name: "Ready", label:"Ready",isChecked: false },
+                { id: 4, name: "Ship", label:"Ship",isChecked: false },
+                { id: 5, name: "Invoice", label:"Invoice",isChecked: false },
+                { id: 6, name: "Closed", label:"Closed",isChecked: false },
+                { id: 7, name: "Cancel", label:"Cancel",isChecked: false },
+                { id: 8, name: "Late", label:"Late",isChecked: false },
               ],
 
               allCountList:[],
@@ -723,18 +725,19 @@ class OrderList extends React.Component {
 
     componentDidMount=()=> {
 
-
+        this.props.getOrderList();
         //console.log("abcdaaasdCOmp", this.props.getQuoteOrderList())
-        this.props.getQuoteOrderList()
+        //this.props.getQuoteOrderList()
 
         this.setState({
-            initialDetailsQL: initialDetailsQL
+            initialDetailsQL: this.props.getOrderListTable
+            //initialDetailsQL
             //this.props.quoteOrderListTable
         });
         this.refs.search.focus();
         this.refs.ordSearch.focus();
 
-        this.find_duplicate_in_array(initialDetailsQL);
+        this.find_duplicate_in_array(this.props.getOrderListTable);
 
         let abc= this.state.allCountList
 
@@ -761,7 +764,8 @@ class OrderList extends React.Component {
 
       onTextChange = e => {
           //debugger
-        let items = this.state.initialDetailsQL;
+        let items = this.props.getOrderListTable
+        //this.state.initialDetailsQL;
         //this.props.quoteOrderListTable;
         //this.state.initialDetailsQL;
         let supName = items.map((e)=>e.customer_name)
@@ -809,6 +813,14 @@ class OrderList extends React.Component {
         });
       }
 
+      suggestionSelectedJOBD=(value)=> {
+        this.setState({
+            jobDSearch : value,
+            suggestionsInJOBD: [],
+            
+        });
+      }
+
       renderSuggestionsOrder() {
         const { suggestionsInOrder } = this.state;
         if (suggestionsInOrder.length === 0) {
@@ -831,9 +843,16 @@ class OrderList extends React.Component {
           });
       }
 
+      handleJobDChange=()=>{
+        this.setState({
+            jobDSearch:this.refs.jobDSearch.value
+          });
+      }
+
       onTextChangeOrder = e => {
         //debugger
-      let items = this.state.initialDetailsQL;
+      let items = this.props.getOrderListTable
+      //this.state.initialDetailsQL;
       //this.props.quoteOrderListTable;
       //this.state.initialDetailsQL;
       let supName = items.map((e)=>e.order)
@@ -876,7 +895,7 @@ class OrderList extends React.Component {
       handleClickCheckBox = (e)=>{
 
 
-        if(e.target.id==="OPEN"){
+        if(e.target.id==="Open"){
            // debugger
             this.setState({
                 isChecked: !this.state.isChecked,
@@ -884,7 +903,8 @@ class OrderList extends React.Component {
 
 
               if(!this.state.isChecked){
-                let initialDetailsQl = this.state.initialDetailsQL
+                let initialDetailsQl = this.props.getOrderListTable
+                //this.state.initialDetailsQL
                 let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
     
                 this.setState({checkedData: newCheckedData})
@@ -900,8 +920,9 @@ class OrderList extends React.Component {
         }
 
 
-        else if(e.target.id==="CLOSED"){
-            let initialDetailsQl = this.state.initialDetailsQL
+        else if(e.target.id==="Closed"){
+            let initialDetailsQl = this.props.getOrderListTable
+            //this.state.initialDetailsQL
             let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
 
             this.setState({checkedData: newCheckedData})
@@ -921,7 +942,7 @@ class OrderList extends React.Component {
 
       paginationChange =(event, page)=>{
         // alert("hg")
-        this.props.setPageNumberQo(page-1)
+        this.props.setPageNumberOl(page-1)
     }
  // <div class="form-group row mt-4">
         //     <div class="col-md-12 col-lg-12">
@@ -1049,8 +1070,9 @@ class OrderList extends React.Component {
 
 
        find_duplicate_in_array=(array)=>{
+           //debugger
         // let statusList =this.state.initialDetailsQL;
-        let totalStatusList =array.map(e=>e.status)
+        let totalStatusList =array.map(e=>e.order_status)
         const {allCountList}=this.state
 
        // const count = {}
@@ -1158,11 +1180,11 @@ class OrderList extends React.Component {
 
    // console.log("quoteOrderList", this.props.quoteOrderData)
     render(){
-        console.log("abcdaaasd", this.props.quoteOrderListTable)
+        console.log("abcdaaasd", this.props.getOrderListTable)
 
         let listValue = this.state.list
-        let deductingFinalValues =listValue.filter(e=>e.label==="OPEN" || e.label==="READY"|| e.label==="READY"|| e.label==="PICKING"|| e.label==="SHIPPED"|| e.label==="LATE");
-
+        let deductingFinalValues =listValue.filter(e=>e.label==="Open" || e.label==="Ready"|| e.label==="Ship"|| e.label==="Closed"|| e.label==="Pick"|| e.label==="Late");
+            console.log("deductingFinalValues",deductingFinalValues)
         // let statusList =this.state.initialDetailsQL;
         // let totalStatusList =statusList.map(e=>e.status)
             //console.log("ListofCheckbox", this.state.list)
@@ -1195,17 +1217,19 @@ class OrderList extends React.Component {
 
         console.log("allCount", this.state.list)
             let totalNumbers =this.state.allCountList
-            let totalNumbersList =totalNumbers.filter(e=>e.OPEN);
+            let totalNumbersList =totalNumbers.filter(e=>e.Open);
         console.log("totalNumbersList",totalNumbers,totalNumbersList, this.state.allCountList)
         //console.log("alphabetInrender", this.state.checkedData, this.state.isChecked)
-        let _users = this.state.initialDetailsQL;
+        let _users = this.props.getOrderListTable
+        //this.state.initialDetailsQL;
         //this.props.quoteOrderListTable
         //this.state.initialDetailsQL;
 
         let search = this.state.searchString.trim().toLowerCase();
         let orderSearch = this.state.orderSearch.trim().toLowerCase();
+        let jobDSearch = this.state.jobDSearch.trim().toLowerCase();
         let alphaVal = this.state.alphabetSelect.trim().toLowerCase();
-    
+        //debugger;
         if (search.length > 0 ) {
           _users = _users.filter(function(user) {
             return user.customer_name.toLowerCase().match(search);
@@ -1214,13 +1238,13 @@ class OrderList extends React.Component {
 
         if (orderSearch.length > 0 ) {
             _users = _users.filter(function(user) {
-              return user.order.toLowerCase().match(orderSearch);
+              return user.order_id.toLowerCase().match(orderSearch);
             });
           }
 
         if (alphaVal.length>0 ) {
             _users = _users.filter(function(user) {
-              return user.order.toLowerCase().match(alphaVal);
+              return user.customer_name.toLowerCase().match(alphaVal);
             });
           }
 
@@ -1232,7 +1256,7 @@ class OrderList extends React.Component {
                 console.log("checkedList",checkedList)
              // let labelC = chk.map(e=>e.label)
 
-             _users = _users.filter(value => checkedList.includes(value.status));
+             _users = _users.filter(value => checkedList.includes(value.order_status));
               
 
             //   _users=_users.filter(function(user) {
@@ -1253,7 +1277,7 @@ class OrderList extends React.Component {
         console.log("_users", _users)
       //  debugger
         //let purchaseOrderData = [];
-        console.log("quoteOrderList", this.props.quoteOrderData)
+        console.log("quoteOrderList", this.props.OrderData)
         console.log("abcd", this.state.checkedData)
         let pageCount1 =0;
         let pageNumber1 = 0;
@@ -1270,11 +1294,11 @@ class OrderList extends React.Component {
 
       if(_users){
 
-        pageNumber1 = this.props.quoteOrderData.pageNumber1;
+        pageNumber1 = this.props.OrderData.pageNumber1;
        let initialDetails1 = [..._users];
          totalLength1 = initialDetails1.length;
          plantPerPage1 = this.state.pageSize;
-         pagesVisited1 =  this.props.quoteOrderData.pageNumber1 * this.state.pageSize;
+         pagesVisited1 =  this.props.OrderData.pageNumber1 * this.state.pageSize;
          displayPOList1 = initialDetails1.slice(pagesVisited1,pagesVisited1+plantPerPage1)
          pageCount1 = Math.ceil(initialDetails1.length/plantPerPage1)
 
@@ -1354,13 +1378,13 @@ class OrderList extends React.Component {
 
                                             <div class="stripe" 
                                             style={
-                                                item.label==="OPEN" ? {backgroundColor:"#345d99"} : 
-                                                item.label==="CLOSED" ? {backgroundColor:"#C4E9C4"} :
-                                                item.label==="READY" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
+                                                item.label==="Open" ? {backgroundColor:"#345d99"} : 
+                                                item.label==="Closed" ? {backgroundColor:"#C4E9C4"} :
+                                                item.label==="Ready" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
 
-                                                item.label==="PICKING" ? {backgroundColor:"#4b9ef7"} :
-                                                item.label==="SHIPPED" ? {backgroundColor:"#e54dcd"} :
-                                                item.label==="LATE" ? {backgroundColor:"#ed3833"
+                                                item.label==="Pick" ? {backgroundColor:"#4b9ef7"} :
+                                                item.label==="Ship" ? {backgroundColor:"#e54dcd"} :
+                                                item.label==="Late" ? {backgroundColor:"#ed3833"
                                             } :
                                                 
                                                 
@@ -1378,15 +1402,15 @@ class OrderList extends React.Component {
                                             } 
                                             ></div>
                                                 <p style={{marginTop:"5px"}}>{item.name}</p>
-                                            <h4>{ item.label==="OPEN" ? this.state.allCountList.OPEN :
-                                                    item.label==="CLOSED" ? this.state.allCountList.CLOSED :
-                                                    item.label==="READY" ? this.state.allCountList.READY :
-                                                    item.label==="LATE" ? this.state.allCountList.LATE :
+                                            <h4>{ item.label==="Open" ? this.state.allCountList.Open :
+                                                    item.label==="Closed" ? this.state.allCountList.Closed :
+                                                    item.label==="Ready" ? this.state.allCountList.Ready :
+                                                    item.label==="Late" ? this.state.allCountList.Late :
 
-                                                    item.label==="SHIPPED" ? this.state.allCountList.SHIPPED :
-                                                    item.label==="PICKING" ? this.state.allCountList.PICKING :
-                                                    item.label==="INVOICE" ? this.state.allCountList.INVOICE :
-                                                    item.label==="CANCEL" ? this.state.allCountList.CANCEL :
+                                                    item.label==="Ship" ? this.state.allCountList.Ship :
+                                                    item.label==="Pick" ? this.state.allCountList.Pick :
+                                                    item.label==="Invoice" ? this.state.allCountList.Invoice :
+                                                    item.label==="Cancel" ? this.state.allCountList.Cancel :
                                             0}</h4>
                                             <div>
                                            
@@ -1567,7 +1591,7 @@ class OrderList extends React.Component {
                                         <label><b>Quotes</b></label>
                                         <div class="d-flex flex-wrap mt-2">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="active" checked="checked"
+                                                <input type="checkbox" class="custom-control-input" id="active" 
                                                 name="active"
                                                 onChange={this.handleClickCheckBox} />
                                                 <label class="custom-control-label" for="active" >Active</label>
@@ -1784,8 +1808,8 @@ class OrderList extends React.Component {
                                             <tbody>
                                                 {displayPOList1.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
-                                                    <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='SHIPPED'?'stsBadge stsOpen':pQuoteList.status==='LATE'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
-                                                    <td><a href="">{pQuoteList.order}</a></td>
+                                                    <td class="text-center"><span  class={pQuoteList.order_status==='Closed'?'stsBadge stsClosed':pQuoteList.order_status==='Open'?'stsBadge stsOpen':pQuoteList.order_status==='Ready'?'stsBadge stsReady':pQuoteList.order_status==='Reserve'?'stsBadge stsReserve':pQuoteList.order_status==='Pick'?'stsBadge stsPicking':pQuoteList.order_status==='Ship'?'stsBadge stsOpen':pQuoteList.order_status==='Late'?'stsBadge stsLate':pQuoteList.order_status==='Quote'?'stsBadge stsQuote':""}>{pQuoteList.order_status}</span></td>
+                                                    <td><a href="">{pQuoteList.order_id}</a></td>
                                                     <td class="text-nowrap text-center">4</td>
                                                     <td>{pQuoteList.customer_name}</td>
                                                     <td class="text-center">{pQuoteList.amount}</td>
@@ -1825,11 +1849,16 @@ class OrderList extends React.Component {
 const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
-        quoteOrderData:state.quoteOrderReducer,
-        quoteOrderListTable:state.quoteOrderReducer.quoteOrderList
+       // quoteOrderData:state.quoteOrderReducer,
+       // quoteOrderListTable:state.quoteOrderReducer.quoteOrderList,
+        OrderData:state.OrderListMangementReducer,
+        getOrderListTable:state.OrderListMangementReducer.getOrderList
     }
 
 )
 
 
-export default connect(mapStateToProps,{handleSearchFilterByAlpha, getQuoteOrderList,setPageNumberQo,handleAplhabetFilterBySN })(OrderList)
+export default connect(mapStateToProps,{
+    setPageNumberOl,handleSearchFilterByAlpha,
+    getOrderList,handleAplhabetFilterBySN
+})(OrderList)
