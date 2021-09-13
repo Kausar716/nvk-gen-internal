@@ -18,7 +18,7 @@ import {
 
     export const getQuoteOrderList = () => dispatch => {
         //debugger;
-        axios.get(`/api/quote-list`,config).then(res=>{
+        axios.get(`/api/order-list`,config).then(res=>{
             console.log(res)
             dispatch({
                 type:GET_QUOTE_ORDER_LIST,
