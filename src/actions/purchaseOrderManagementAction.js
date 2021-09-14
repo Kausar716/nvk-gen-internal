@@ -99,7 +99,7 @@ import {
   export const deletePo = (po_Id)=> dispatch =>{
     return axios.post(`/api/delete-purchase-order/${po_Id}`,{},config).then(res=>{ 
         console.log(res)
-        
+        alert("PO Deleted")
     dispatch({
             type:DELETE_PO,
             payload:res.data.data.active
@@ -112,6 +112,7 @@ import {
 export const duplicatePo = (po_Id)=> dispatch =>{
   return axios.post(`/api/duplicate-purchase-order/${po_Id}`,{},config).then(res=>{ 
       console.log(res)
+      alert("PO Duplicated")
   dispatch({
           type:DUPLICATE_PO,
           payload:res.data.data

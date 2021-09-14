@@ -32,7 +32,7 @@ import ActionModal from '../Modal/ActionModal';
         let {name,value,itemID} = e.target
         console.log(name,value)
 
-        props.handleCurrentPoOrderUpdate(name,value,itemID)
+        // props.handleCurrentPoOrderUpdate(name,value,itemID)
     }
     
 let {currentOrder,plantSku} = props
@@ -50,6 +50,19 @@ const handleSplitClick = (item)=>{
     }
     
 }
+// const handleSubistutionClick = (item)=>{
+//     // let result = prompt("Enter split qty")
+//     console.log(result)
+
+//     if(result ){
+//         let splitObj = {}
+//         splitObj.split_qty = result
+//         splitObj.purpose = "sales-ready"
+
+//         props.slpitPo(result,item.po_item_id)
+//     }
+    
+// }
 
 
 
