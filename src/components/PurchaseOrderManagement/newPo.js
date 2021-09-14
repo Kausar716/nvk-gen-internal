@@ -93,7 +93,7 @@ import ActionModal from '../Modal/ActionModal';
 
 
 
-console.log(poData.latest_date,poData.requested_date)
+
 let lastDateForCalendar = new Date()
 let requestDateForCalendar = new Date()
 if(poData.latest_date)
@@ -103,6 +103,8 @@ requestDateForCalendar = new Date(`${poData.requested_date.split("-")[1]}-${poDa
 
 console.log(new Date(poData.latest_date))
 console.log(new Date(poData.requested_date))
+console.log(poData)
+    console.log(props.selectedSupplier)
     return (
         <div class="bg-white px-3 py-3">
              {/* <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/> */}
@@ -112,7 +114,7 @@ console.log(new Date(poData.requested_date))
            {props.selectedSupplier? <div class="px-3 py-3 bg-grey-transparent-2">
                 <div class="row ">
                     <div class="col-md-6 col-lg-6">
-                        <h4>John Smith Landscaping</h4>
+                        <h4>{props.selectedSupplier.supplier_name?props.selectedSupplier.supplier_name:props.selectedSupplier}</h4>
                         <div>
                             <div>
                                 <b class="mr-3">Type:</b>
