@@ -90,7 +90,7 @@ constructor(props){
 }
 
 onTagsChange = (event, values) => {
-
+//debugger
      let userList = this.props.users.active
      let id = values.id
      console.log(id)
@@ -104,7 +104,20 @@ onTagsChange = (event, values) => {
      this.setState({selectedUser:selectedUser[0]})
      this.setState({displayUpdateProfile:true})
      this.setState({visbleTrue:true})
+
+
      this.props.showUser(id)
+//      .then(res=>{
+              
+               
+//         let alist = this.props.specificdUser.data.location
+//             console.log("alistalistalist",alist)
+//         this.props.displaySelectedList()
+     
+//     }).catch(data=>{
+//             alert("somethingwent wrong")
+//    })
+
 
      
 
@@ -131,7 +144,7 @@ componentDidMount(){
     this.props.getAllSubAttribute(18)
     this.props.getUsersList()
     this.props.getRolesList()
-    
+     
 
    // this.handleSelect()
 
@@ -303,6 +316,8 @@ goToUserAccess=()=>{
 
     
     render() {
+        //console.log("thisselectedUser",this.state.selectedUser)
+        //this.props.showUser(this.state.selectedUser==='' ? '' : this.state.selectedUser.id)
         let {displayUpdateProfile,displayCreate} = this.state
            
         let userProfiles = []  

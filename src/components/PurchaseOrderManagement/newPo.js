@@ -5,7 +5,7 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,
+     handleAplhabetFilterBySN,updatePo,
      handlePurchaseOrderFilert,getUnitList,getDeliveryAddress,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getCurrencyList,getSupplierDeliveryList,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
@@ -93,7 +93,7 @@ import ActionModal from '../Modal/ActionModal';
 
 
 
-console.log(poData.latest_date,poData.requested_date)
+
 let lastDateForCalendar = new Date()
 let requestDateForCalendar = new Date()
 if(poData.latest_date)
@@ -103,6 +103,8 @@ requestDateForCalendar = new Date(`${poData.requested_date.split("-")[1]}-${poDa
 
 console.log(new Date(poData.latest_date))
 console.log(new Date(poData.requested_date))
+console.log(poData)
+    console.log(props.selectedSupplier)
     return (
         <div class="bg-white px-3 py-3">
              {/* <ActionModal cancel={cancel} confirm={confirm} open={open} message={message}/> */}
@@ -112,7 +114,7 @@ console.log(new Date(poData.requested_date))
            {props.selectedSupplier? <div class="px-3 py-3 bg-grey-transparent-2">
                 <div class="row ">
                     <div class="col-md-6 col-lg-6">
-                        <h4>John Smith Landscaping</h4>
+                        <h4>{props.selectedSupplier.supplier_name?props.selectedSupplier.supplier_name:props.selectedSupplier}</h4>
                         <div>
                             <div>
                                 <b class="mr-3">Type:</b>
@@ -159,11 +161,11 @@ console.log(new Date(poData.requested_date))
                                 </div>
                                 <div class="col-md-6 col-lg-4 d-flex mt-3 mt-md-0">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="overall" name="overall" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="0"?true:false} />
+                                        <input type="radio" id="overall" name="overall" class="custom-control-input" onClick={handleInputData} checked={(poData.discount_type==="0"||poData.discount_type===0)?true:false} />
                                         <label class="custom-control-label" for="overall">Overall</label>
                                     </div>
                                     <div class="custom-control custom-radio ml-3">
-                                        <input type="radio" id="individual" name="individual" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="1"?true:false} />
+                                        <input type="radio" id="individual" name="individual" class="custom-control-input" onClick={handleInputData} checked={(poData.discount_type==="1"||poData.discount_type===1)?true:false} />
                                         <label class="custom-control-label" for="individual">Individual</label>
                                     </div>
                                 </div>
@@ -229,7 +231,7 @@ console.log(new Date(poData.requested_date))
                             <label>Include Royalty</label>
                             <div class="d-flex align-items-center flex-wrap ml-2 mt-2">Off
                                 <div class="switcher switcher-sm ml-2 pr-2">
-                                    <input type="checkbox" name="switcher_checkbox_date"  checked={props.poData.royalty==="1"?true:false} id="royalty" onClick={handleInputData}/>
+                                    <input type="checkbox" name="switcher_checkbox_date"  checked={(props.poData.royalty==="1"||props.poData.royalty===1)?true:false} id="royalty" onClick={handleInputData}/>
                                     <label for="royalty"></label>
                                 </div> On
                             </div>
@@ -287,7 +289,7 @@ export default connect(mapStateToProps,{
 
     getAllSuppliers,getDeliveryAddress,
     setSupplierToAddPo,getUnitList,getSupplierDeliveryList,
-    handleOrderDetailsInput,addPo,getCurrencyList
+    handleOrderDetailsInput,addPo,getCurrencyList,updatePo
 
 
 

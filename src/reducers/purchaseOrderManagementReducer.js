@@ -20,7 +20,13 @@ import {GET_PURCHASE_ORDER_LIST,
     GET_SPECIFIED_PO_ORDER,
     HANDLE_PO_PAGE_SELECTION,
     UPDATE_PURCHASE_ORDER,
-    GET_DELIVERY_ADDRESS
+    GET_DELIVERY_ADDRESS,
+    GET_ADD_TO_CATEGORY_LIS,
+    HANDLE_PO_FILTER,
+    UPDATE_PURCHASE_ORDER_NOTES,
+    DELETE_PO,
+    DUPLICATE_PO,
+    SPLIT_PO_ORDER
 
 } from '../actions/types';
 
@@ -46,15 +52,15 @@ const initialSatate = {
         order_id:"",
         discount_type:"0",
         discount:"0.00",
-        job_description:null,
+        job_description:"",
         royalty:"0",
         order_notes:null,
         dispatch_type:null,
         currency:"Merits",
         supplier_order:"",
         requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
-        latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`
-        
+        latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+        internal_notes:""
 
     },
     searchValuePlant:"",
@@ -74,13 +80,15 @@ const initialSatate = {
     poPageIndex:0,
     supplierDeliveryList:[],
     currencyList:[],
-    deliveryAddress:[]
+    deliveryAddress:[],
+    orderListDateForSuggessionWithFilter:[],
+    categoryList:[]
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
-    console.log(selectedAlphabet)
+    console.log(poList)
     if(selectedAlphabet !== "All"&& selectedAlphabet !="")
-    return poList.filter(po=>po.supplier_name.charAt(0).toLocaleLowerCase() === selectedAlphabet.toLocaleLowerCase())
-    else
+    return poList.filter(po=>(po.supplier_name !== null && po.supplier_name.charAt(0).toLocaleLowerCase() === selectedAlphabet.toLocaleLowerCase()))
+    else 
     return poList
 }
 const filterBsedOnCheckBox =(filteredData,statusLevel)=>{
@@ -94,6 +102,17 @@ const filterBsedOnCheckBox =(filteredData,statusLevel)=>{
   }
     
 }
+const handleFilterBasedOnTextBox = (filteredData,name,value,alphabet,statusLevel) => {
+    if(name === "plantSearch"){
+        filteredData.filter(data=>{
+            
+        })
+    }
+
+    // if()
+    // state.purchaseOrderListBackup,action.name,action.value,
+    // state.selectedAlphabet,state.statusLevel
+}
 const handledumyQty= (action,purchaseOrderListBackup)=>{
     console.log(action)
     let id =-1
@@ -105,7 +124,7 @@ const handledumyQty= (action,purchaseOrderListBackup)=>{
     //       
     //     }
     // })
-    const elementsIndex = purchaseOrderListBackup.findIndex(element => element.sku_code == action.sku_code )
+    const elementsIndex = purchaseOrderListBackup.findIndex(element => element.sku_code === action.sku_code )
     console.log(elementsIndex)
    
     
@@ -120,43 +139,77 @@ const handledumyQty= (action,purchaseOrderListBackup)=>{
 
     return purchaseOrderListBackup
 }
+// const groupArray =(objectToBeReduced)=>{
+//     let plantSearchResult={}
+//     if(objectToBeReduced.length>0)
+//     plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
+//       if(obj){
+//         const key = obj["name"];        
+//         if (!acc[key]) {
+//            acc[key] = [];
+//         }
+//         // Add object to list for given key's value
+//         if(typeof(acc[key])==="object"){
+//             if(!obj["dumyQty"]){
+//                 obj["dumyQty"]=""
+//             }           
+//             acc[key].push(obj);
+//         }
+//         return acc;}
+//     })
+//     let plantList=[]
+//     for(let key in plantSearchResult ){
+//         console.log(plantSearchResult)
+//         if(plantSearchResult[key]){
+//         if(plantSearchResult[key][0]){
+//             if(typeof(plantSearchResult[key][0]) === "object")
+//             plantList.push(plantSearchResult[key])
+//         }        
+//         }
+//     }
+//     return plantList
+// }
 const groupArray =(objectToBeReduced)=>{
+    const key = "name"; 
     let plantSearchResult={}
-    let deletedObj=objectToBeReduced.shift() 
- 
-    console.log(objectToBeReduced)
     if(objectToBeReduced.length>0)
     plantSearchResult=objectToBeReduced.reduce((acc, obj) => {
-    //   console.log(obj)
-      if(obj){
+        if(!obj["dumyQty"]){
+                    obj["dumyQty"]=""
+                } 
+    //   if(obj){
+               
+        // if (!acc[key]) {
+        //    acc[key] = [];
+        // }
 
-        const key = obj["genus"];
-        if (!acc[key]) {
-           acc[key] = [];
-        }
+        (acc[obj[key]] = acc[obj[key]] || []).push(
+            obj
+          );
         // Add object to list for given key's value
-        if(typeof(acc[key])==="object"){
-            if(!obj["dumyQty"]){
-                obj["dumyQty"]=""
-            }            
-            acc[key].push(obj);
-        }
-        
-        return acc;}
-    })
+        // if(typeof(acc[key])==="object"){
+        //     if(!obj["dumyQty"]){
+        //         obj["dumyQty"]=""
+        //     }     
+            // console.log(acc[key],obj)
+            // console.log(obj.length)      
+            // acc[key].push(obj);
+        // }
+        console.log(acc)
+        return acc;
+    // }
+    },{})
     let plantList=[]
     for(let key in plantSearchResult ){
+        console.log(plantSearchResult)
         if(plantSearchResult[key]){
         if(plantSearchResult[key][0]){
             if(typeof(plantSearchResult[key][0]) === "object")
             plantList.push(plantSearchResult[key])
-        }
-        
+        }        
         }
     }
-    console.log(plantList)
     return plantList
-
 }
 const groupSku = (plantList) =>{
     let skuPlantList = []
@@ -222,6 +275,13 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         purchaseOrderList:poListForAlphabetSelected,
                         openPoCount:getOpenPoCount(poListForAlphabetSelected)
                     }
+                case HANDLE_PO_FILTER :
+                    console.log(action)
+                    let searchResult = handleFilterBasedOnTextBox(state.purchaseOrderListBackup,action.name,action.value,
+                        state.selectedAlphabet,state.statusLevel)
+                    return{
+                        
+                    }
                 case HANDLE_PURCHASE_ORDER_FILTER:
                     console.log(action)
                     let poListForAlphabetFilter = filterBasedOnAlphabet(state.purchaseOrderListBackup,state.selectedAlphabet,state.statusLevel)
@@ -236,9 +296,15 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     console.log(action)
                     return{
                         ...state,
-                        poData:action.payload
+                        poData:action.payload,
+                        pageToOpen:"addToOrder"
                     }
                 case UPDATE_PURCHASE_ORDER:
+                    return{
+                        ...state,
+                        poData:action.payload
+                    }
+                case UPDATE_PURCHASE_ORDER_NOTES:
                     return{
                         ...state,
                         poData:action.payload
@@ -254,8 +320,16 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     return{
                         ...state,
                         groupedOrderListDate:groupedArray,
-                        orderListDateForSuggession:action.payload
+                        orderListDateForSuggession:action.payload, 
+                        orderListDateForSuggessionWithFilter:action.payload                       
                     }
+                case GET_ADD_TO_CATEGORY_LIS:
+                    console.log(action.payload)
+                    return{
+                        ...state,
+                        categoryList:action.payload
+                    }
+               
                 case HANDLE_SEARCH_ORDERED_LIST:
                     console.log(action)
                     let list=[]
@@ -292,13 +366,13 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         ...state,
                         groupedOrderListDate:filteredArray,
                         searchValuePlant:action.plant,
-                        searchValueSku:action.sku
+                        searchValueSku:action.sku,
+                        orderListDateForSuggessionWithFilter:list
                     }
                     case HANDLE_DMQTY:
-                        console.log(state.orderListDateForSuggession)
-                        let updatedOrderListDateForSuggession = handledumyQty(action,state.orderListDateForSuggession)
+                        console.log(state.orderListDateForSuggessionWithFilter)
+                        let updatedOrderListDateForSuggession = handledumyQty(action,state.orderListDateForSuggessionWithFilter)
                         console.log(updatedOrderListDateForSuggession)
-                        
                         let filteredArrayForUpdatedList=groupArray(updatedOrderListDateForSuggession)
                         console.log(filteredArrayForUpdatedList)
                         return{
@@ -316,6 +390,14 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             currentPOHistory:action.payload
                         } 
                     case GET_CURRENT_PO_ORDER:
+                        console.log(action)
+                        return{
+                            ...state,
+                            currentItems:action.payload.items,
+                            currentOrder:action.payload.order
+                        }
+                    case SPLIT_PO_ORDER:
+                        console.log(action)
                         return{
                             ...state,
                             currentItems:action.payload.items,
@@ -324,7 +406,6 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                     case GET_PLANT_SKU:
                         let groupedSku = groupSku(action.payload)
                         console.log(groupedSku)
-                        debugger;
                         return{
                             ...state,
                             plantSku:groupedSku
@@ -363,15 +444,57 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             supplierDeliveryList:action.payload
                         }
                     case GET_SPECIFIED_PO_ORDER:
-                        debugger;
                         return{
                             ...state,
                             pageToOpen:"editOrderDetails",
                             poData:action.payload,
                             path:"PurchaseOrder",
                             poPageIndex:0,
-                            selectedSupplier:action.payload.supplier_name
+                            selectedSupplier:action.payload
 
+                        }
+                    case DELETE_PO:
+                        return{
+                            ...state,
+                            pageToOpen:"add",
+                            poData:{
+                                supplier_id:"",
+                                order_id:"",
+                                discount_type:"0",
+                                discount:"0.00",
+                                job_description:"",
+                                royalty:"0",
+                                order_notes:null,
+                                dispatch_type:null,
+                                currency:"Merits",
+                                supplier_order:"",
+                                requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                internal_notes:""
+                            },
+                            selectedSupplier:null
+                        }
+                    case DUPLICATE_PO:
+                    console.log(action.payload)    
+                    return{
+                        ...state,
+                        pageToOpen:"add",
+                        poData:{
+                            supplier_id:"",
+                            order_id:"",
+                            discount_type:"0",
+                            discount:"0.00",
+                            job_description:"",
+                            royalty:"0",
+                            order_notes:null,
+                            dispatch_type:null,
+                            currency:"Merits",
+                            supplier_order:"",
+                            requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                            latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                            internal_notes:""
+                        },
+                        selectedSupplier:null
                         }
                     case HANDLE_PO_PAGE_SELECTION:
                         console.log(action)

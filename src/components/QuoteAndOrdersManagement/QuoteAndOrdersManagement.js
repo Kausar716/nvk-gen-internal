@@ -1,10 +1,375 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
+import Autosuggest from 'react-autosuggest';
 import DatePicker from 'react-date-picker';
+import Loader from '../ProductManager/Loader'
 
-export default function QuoteAndOrdersManagement() {
+import {
+    updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall
+} from "../../actions/quoteOrderManagementAction"
+
+// import {getQuoteList,addToquoteAPICall,filterHandleData,searchPlantProductAPI,
+//     updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
+import {searchPlantProductAPI,addToquoteAPICall} from "../../actions/quoteAction";
+
+import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,
+    getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,
+    handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+
+
+import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,
+    getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
+
+
+
+
+import {
+    //plant actions
+    getAllPlantAction}from "../../actions/plantManagerAction";
+
+
+
+
+ function QuoteAndOrdersManagement(props) {
+   
+
     const [value, onChange] = useState(new Date());
+    const [plantNameValue,setPlantNameValue] =useState("")
+    const [plantSKUValue,setPlantSKUValue] =useState("")
+    const [loading,setLoading] = useState(true)
+    const [searchPalntId,setSearchPalntId] = useState([])
+    const [plantId,setPlantId] = useState([])
+    const [customerSelected,setCustomerSelected] = useState(false)
+
+    const [searchData,setSearchData] = useState([])
+    const [searchDataDuplicate,setSearchDataduplcaite] = useState([])
+    const [plantFilterIds,setPlantFilterIds] = useState({sku_code:"",genus:""})
+    const[suggestions,setSuggestions] = useState([])
+
+   
+
+    useEffect (()=>{
+        props.getAllCustomer()
+        props.getAllCustomerType()
+        props.getLocationList()   
+        props.getCategoryList()
+       
+        props.searchPlantProductAPI().then(data=>{
+           
+            getAllData(data.data)
+        
+        })
+
+        
+
+    },[value])
+
+    const getAllData = (data)=>{
+        setSearchData(data)
+        setSearchDataduplcaite(data)
+      
+                let plantIdsAll = data.map(plantData=>plantData.plant_id)
+            let plantId = plantIdsAll.filter(function( plant, index, array ) {
+                // alert("FDs")
+                return array.indexOf(plant) === index;
+            });
+            // console.log(plantId, plantId)
+            setPlantId(plantId)
+            setLoading(false)
+        }
+
+
+        const handleSave = (e)=>{
+           // debugger
+            e.preventDefault();
+    
+            props.addNewOrder(orderDetails).then(data=>{
+                setCustomerSelected(true)
+            })
+    
+        }
+
+
+        const getFilterData = (id,value)=>{
+            let filterIds = plantFilterIds
+            filterIds[id] = value
+            let filterData =  searchDataDuplicate.filter(product =>{
+                let notFoundCount = 0 
+                Object.keys(filterIds).map(id=>{
+                    if(filterIds[id] !=="All" && filterIds[id] !==""){
+                        if((id ==="sku_code" || id ==="genus")  && product[id].toLowerCase().includes(filterIds[id].toLowerCase())){
+    
+                        }
+                        else if(parseInt(product[id]) === parseInt(filterIds[id])){
+                        }else notFoundCount++
+                    }
+                })
+                if(notFoundCount ===0)return product
+    
+            })
+            //console.log(filterData)
+            setSearchData(filterData)
+            setPlantFilterIds(filterIds)
+            // searchList:filterData,
+            // plantFilterIds:filterIds
+    
+        }
+
+
+
+
+
+        const onChange2 = (e, { newValue }) => {
+            // this.setState({plantNameValue:newValue});
+            setPlantSKUValue(newValue)
+            getFilterData("sku_code",newValue)  
+            // let plantName = {}
+            // plantName.plant_search =newValue
+            // props.searchPlantProductAPI(plantName)    
+        };
+
+
+        const onChange1 = (e, { newValue }) => {
+            // this.setState({plantNameValue:newValue});
+            setPlantNameValue(newValue)
+            getFilterData("genus",newValue)  
+            // let plantName = {}
+            // plantName.plant_search =newValue
+            // props.searchPlantProductAPI(plantName)    
+        };
+        const changeData = (id)=>{
+            // alert(id)
+            if(id ===2){
+                // alert("D")
+                props.getQuoteList(quoteDetails.id).then(data=>{
+                    // alert(JSON.stringify(data))
+                    let plantIdsAll = data.data.items.map(plantData=>plantData.plant_id)
+                    let plantId4 = plantIdsAll.filter(function( plant, index, array ) {
+                        // alert("FDs")
+                        return array.indexOf(plant) === index;
+                    });
+                    setSearchPalntId(plantId4)
+                })
+             
+                // quoteList
+                // alert("FDS")
+            }
+        }
+
+
+
+
+
+        const addToPlant = (e)=>{
+            // alert(e.target.id)
+            // let search = searchData
+            let filterData1 = searchData.filter(data=>data.sku_code===e.target.id)
+            // console.log(filterData1.plant_id)
+            let obj = {}
+            let obj1 = {}
+            let arr  = []
+            obj.type ="plant"
+            let skuSplit = filterData1[0].sku_code.split("-")
+            obj1["plant_id"]=parseInt(skuSplit[0])
+            obj1.name=filterData1[0].plant_name
+            obj1.size=filterData1[0].plant_size
+            obj1.SKU=filterData1[0].sku_code
+            obj1.price=filterData1[0].sale_price
+            obj1.volume_rate=filterData1[0].volume_price_per_unit
+            obj1.disc_percent=filterData1[0].discount
+            obj1.qty=filterData1[0].volume_quantity
+            // console.log(obj1)
+            arr[0] = obj1
+            obj.items = arr
+    
+    
+            console.log(filterData1)
+            props.addToquoteAPICall(quoteDetails.id,obj)
+            let filterData = searchData.filter(data=>data.sku_code!==e.target.id)
+            setSearchData(filterData)
+          
+           console.log(filterData1)
+        //     console.log(searchData[e.target.id])
+    
+        }
+
+
+        const changeDataValue  = (e)=>{
+            let result = e.target.id
+            // alert(result)
+            let value = result.split("^")
+            // alert(e.target.value)
+            let searchData1 = searchData
+            let data  =searchData1.map((seacrh,index)=>{
+                if(seacrh.sku_code == value[0]){
+                    let searchObj = seacrh
+                    searchObj[value[1]] = e.target.value
+                    searchData1[index] = searchObj
+    
+                }
+                return seacrh
+            })
+            console.log(data)
+            setSearchData(data)
+    
+        }
+
+
+        const inputPropsPlant = {
+            placeholder: 'Plant Name',
+            value:plantNameValue,
+            className:" form-control  btn btn-search ",
+            id:"genus",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: onChange1,
+            dataId: 'my-data-id',
+        };
+        const inputPropsSKU = {
+            placeholder: 'Plant Name',
+            value:plantSKUValue,
+            className:" form-control  btn btn-search ",
+            id:"sku_code",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: onChange2,
+            dataId: 'my-data-id',
+        };
+
+        const handleUpdate = (e)=>{
+            e.preventDefault();
+            // //console.log(customerDataById1)
+            // //console.log(quoteDetails)
+            // let id = quoteDetails.id
+            // let combineData = {...quoteDetails,...customerDataById1,id:id}
+            // //console.log(combineData)
+    
+            props.addToOrderUpdate(orderDetails)
+    
+        }
+
+        const handleCustomerData =(e)=>{
+           // debugger;
+            let idNum = parseInt(e.target.value) 
+            let updateObject={}
+            updateObject.customer_id=idNum
+
+            // alert(e.target.value)
+            if(e.target.id ==="customer_id"){
+                // // //console.log(customerDataById1)
+                props.getCustomerByIdQuote(idNum).then(data=>{
+
+                    console.log(data)
+                    //console.log(customerDataById1)
+                    // props.updateQuoteData(customerDataById1)
+                })
+
+                props.addNewOrder(updateObject).then(data=>{
+
+                    console.log("123456789",data)
+                })
+
+                props.getAllCustomerType()
+                props.getAllStatusMethods()
+                // props.getCustomerContacts(e.target.value)
+                // props.getcustomerAddress(e.target.value)
+                props.handleInputChange(e.target.id,e.target.value)
+    
+            }else if(e.target.id ==="discount_by_line_item"){
+                let val = e.target.value===0?1:0
+                props.handleInputChange(e.target.id,val)
+    
+            }else if(e.target.id ==="show_pricing_op"){
+                let val = e.target.value===0?1:0
+                props.handleInputChange(e.target.id,val)
+    
+                
+            }
+            else if(e.target.id ==="flag_as_reminder"){
+                let val = e.target.value===0?1:0
+                props.handleInputChange(e.target.id,val)
+    
+                
+            }
+            else{
+                props.handleInputChange(e.target.id,e.target.value)
+            }
+    
+            // props.getAllTermsMethods()
+            // props.getAllReasonMethods()
+     
+    
+        }
+
+
+
+        const onSuggestionsFetchRequested = ({ value }) =>{
+            // alert(value.length)
+           setSuggestions(getSuggestions(value))
+            // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+        }
+    
+        const onSuggestionsClearRequested = () =>  setSuggestions([])
+
+        const getSuggestions = (value,type) => {
+            const inputValue = value.toLowerCase().trim()
+            const inputLength = inputValue.length;
+            let result = searchList.reduce((unique, o) => {
+                if(!unique.some(obj => obj.genus === o.genus)) {
+                  unique.push(o);
+                }
+                return unique;
+            },[]);
+            return inputLength === 0 ? [] :  result.filter(lang =>lang.genus.toLowerCase().includes(inputValue))      
+        }
+
+
+       const getSuggestionValue = suggestion =>suggestion.genus
+    
+       const renderSuggestion = suggestion => (<span>{suggestion.genus}</span>);
+    
+       const onSuggestionsFetchRequested1 = ({ value }) =>{
+        // alert(value.length)
+       setSuggestions(getSuggestions1(value))
+        // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+    }
+
+    const onSuggestionsClearRequested1 = () =>  setSuggestions([])
+    // const customerHandle  =(e)=>{
+    //     //console.log(e.target.value,e.target.id)
+    //     if(e.target.id =="discount_by_line_item"){
+    //         let value = e.target.value ==0?true:false
+    //         props.handleExchangeData(value,e.target.id,"customerDataById1")
+
+    //     }else
+    //     props.handleExchangeData(e.target.value,e.target.id,"customerDataById1")
+        
+    // }
+    const getSuggestions1 = (value,type) => {
+       // debugger
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        let result = searchList.reduce((unique, o) => {
+            if(!unique.some(obj => obj.sku_code === o.sku_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] :  result.filter(lang =>lang.sku_code.toLowerCase().includes(inputValue))      
+    };
+   const getSuggestionValue1 = suggestion =>suggestion.sku_code
+
+   const renderSuggestion1 = suggestion => (<span>{suggestion.sku_code}</span>);
+
+
+
+
+
+        const {quoteDetails,searchList,searchListDuplicate,quoteList} = props.QuoteReducerData
+        const {orderList, orderDetails } =props.quoteOrderReducer
+        const {deleteCustomer,customerDataByIdForOrder,customerTypeListForOrder,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
+        console.log("customerData",props.quoteOrderReducer, props.quoteOrderReducer)
+
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -66,11 +431,16 @@ export default function QuoteAndOrdersManagement() {
                 <div class="">
                 <Tabs>
                     <TabList>
-                        <Tab>Order Details</Tab>
-                        <Tab>Add to Order</Tab>
+                        <Tab  eventKey="0">Order Details</Tab>
+                        {/* <Tab>Add to Order</Tab>
                         <Tab>Current Order <span class="badge badge-pill badge-success">02</span></Tab>
                         <Tab>Order History</Tab>
-                        <Tab>Notes</Tab>    
+                        <Tab>Notes</Tab>     */}
+
+                        <Tab  eventKey="1" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Add to Order</Tab>
+                        <Tab  eventKey="2" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Current Order<span class="badge badge-pill badge-success">{orderList.items.length}</span></Tab>
+                        <Tab  eventKey="3" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Order History</Tab>
+                        <Tab  eventKey="4" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Notes</Tab>    
                     </TabList>
                     <TabPanel>
                         <div class="bg-white px-3 py-3">
@@ -80,17 +450,31 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="px-3 py-3 bg-grey-transparent-2">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h3>John Smith Landscaping</h3>
+                                            <h3>{customerDataByIdForOrder.name}</h3>
                                         </div>
                                     </div>
                                     <div class="row ">
                                         <div class="col-md-4 col-lg-6">
                                             <div class="row ">
                                                 <div class="col-md-1 col-lg-2 text-md-right">
-                                                    <b>Type:</b>
+                                                    <b>Type:
+                                                    </b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>Finished Plants, Liners</b></span>
+                                                    <span className="textGrey"><b>
+                                                        {/* Finished Plants, Liners */}
+                                                        <b>{
+                                                        customerDataByIdForOrder.type.map(type=>{
+                                                            return customerTypeListForOrder.active.map(typeId=>{
+                                                                if(parseInt(typeId.id)===parseInt(type)) 
+                                                                return(<span>{typeId.customer_type}</span>)
+                                                            })
+                                                          
+                                                           
+                                                        })
+                                                        }
+                                                        </b>
+                                                        </b></span>
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -98,20 +482,23 @@ export default function QuoteAndOrdersManagement() {
                                                     <b>Tax Exempt:</b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>No</b></span>
+                                                    <span className="textGrey"><b>{customerDataByIdForOrder.tax_exempt ===1?"Yes":"No"}</b></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-2">
                                             <div>
-                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>Net 20</b></span></div>
+                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>{customerDataByIdForOrder.payment_terms}</b></span></div>
                                                 <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 text-md-right mt-3 mt-md-0">
                                             <div>
                                                 <div><b class="mr-3">Source:</b><span className="textGrey"><b>Internal</b></span></div>
-                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span className="textGrey"><b>2020</b></span></div>
+                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span className="textGrey"><b>2020</b></span>
+                                                
+                                                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -122,18 +509,31 @@ export default function QuoteAndOrdersManagement() {
                                     <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Ordered By<span class="text-danger">*</span></label>
-                                                <select class="form-control">
+                                                {/* <select class="form-control">
                                                     <option>John Smith</option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
+                                                </select> */}
+                                                    <select class="form-control" onChange={handleCustomerData} disabled={customerSelected?true:false} id="customer_id">
+                                                    <option value={0}>Select</option>
+                                                    {
+                                                        props.customerData.customerList.map(customer=>{
+                                                            return(<option value={customer.id} selected={orderDetails.ordered_by === customer.id?"selected":""}>{customer.name}</option>)
+                                                        })
+                                                    }
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                                 <label>Bill To<span class="text-danger">*</span></label>
-                                                <select class="form-control">
-                                                    <option>1234 Main St, Waterdown </option>
+                                                <select class="form-control" disabled={customerSelected?false:true} id="bill_to" onChange={handleCustomerData} >
+                                                <option>Select Address</option>
+                                                    {orderDetails.customeraddress.map(address=>{
+                                                      
+                                                        return( <option value={address.id} id={address.id} selected={orderDetails.bill_to===address.id?"selected":""}>{address.city} {address.country} {address.zip}</option>)
+                                                    })}
+                                                    {/* <option>1234 Main St, Waterdown </option>
                                                     <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                    <option>Option 2</option> */}
                                                 </select>
                                             </div>
                                            
@@ -143,18 +543,24 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row">
                                             <div class="col-md-6 col-lg-4">
                                                 <label>PO #</label>
-                                                <input type="text" class="form-control" placeholder=""></input>
+                                                {/* <input type="text" class="form-control" placeholder=""></input> */}
+                                                <input type="text" class="form-control" placeholder="" value={orderDetails.purchase_order} disabled={orderDetails.p_o_req===1?false:true} onChange={handleCustomerData} ></input>
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
                                                 {/* <DatePicker onChange={onChange} value={value} /> */}
-                                                <input type="date" className="dateDesign"  />
+                                                {/* <input type="date" className="dateDesign"  /> */}
+                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true} value={orderDetails.requested_date} onChange={handleCustomerData} id="requested_date"></input>
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Time</label>
-                                                <select class="form-control">
+                                                {/* <select class="form-control">
                                                     <option>AM</option>
                                                     <option>PM</option>
+                                                </select> */}
+                                                 <select class="form-control" disabled={customerSelected?false:true} id="requested_time" onChange={handleCustomerData} >
+                                                    <option value="AM" value={orderDetails.requested_time==="AM"?"selected":""}>AM</option>
+                                                    <option value="PM" value={orderDetails.requested_time==="PM"?"selected":""}>PM</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -165,25 +571,30 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
-                                                <select class="form-control">
+                                                {/* <select class="form-control">
                                                     <option>CAD</option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
+                                                </select> */}
+                                                 <select class="form-control" disabled={customerSelected?false:true} onChange={handleCustomerData} id="currency">
+                                                    <option value={"Canadian Doller"} selected={orderDetails.currency==="Canadian Doller"?"selected":""}>Canadian Doller</option>
+                                                    <option value={"U.S Doller"} selected={orderDetails.currency==="U.S Doller"?"selected":""}>U.S Doller</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Email To</label>
-                                                <select class="form-control">
+                                                <input type="text" class="form-control" placeholder="" value={orderDetails.email_to} disabled={customerSelected?false:true} id="email_to" onChange={handleCustomerData}></input>
+                                                {/* <select class="form-control">
                                                     <option>Select </option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
-                                                </select>
+                                                </select> */}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-7 col-xl-7">
                                         <label>Job Description</label>
-                                        <input type="text" class="form-control" placeholder=""></input>
+                                        <input type="text" class="form-control" placeholder="" disabled={customerSelected?false:true} value={orderDetails.job_description} id="job_description" onChange={handleCustomerData}></input>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -191,21 +602,20 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Units</label>
-                                                <select class="form-control">
-                                                    <option>Metric</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} onChange={handleCustomerData} id="units">
+                                                    <option value={"Metric"} selected={ orderDetails.units==="Metric"?"selected":""}>Metric</option>
+                                                    <option value={"Imperial"} selected={orderDetails.units ==="Imperial"?"selected":""}>Imperial</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Discount</label>
-                                                <input type="text" class="form-control text-right" placeholder="" value="0.00" />
+                                                <input type="text" class="form-control text-right" placeholder="0.00" value={orderDetails.discount} disabled={customerSelected?false:true} onChange={handleCustomerData} id="discount"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
+                                    {/* <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
                                         <a href="">Reset</a>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-5 col-xl-5">
@@ -214,7 +624,10 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Discount by Line Item</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="dislineitem" id="dislineitem" value="2" />
+                                                    <input type="checkbox" name="discount_by_line_item" id="discount_by_line_item" 
+                                                     value={orderDetails.discount_by_line_item} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.discount_by_line_item===1?true:false} onChange={handleCustomerData}/>
+                                                        {/* <input type="checkbox" name="dislineitem" id="dislineitem" value="2" /> */}
                                                         <label for="dislineitem"></label>
                                                     </div> On
                                                 </div>
@@ -223,8 +636,11 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Display Discount Column</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="dispdisccol" id="dispdisccol" value="2" />
-                                                        <label for="dispdisccol"></label>
+                                                        {/* <input type="checkbox" name="dispdisccol" id="dispdisccol" value="2" /> */}
+                                                        <input type="checkbox" name="display_discount_column" id="display_discount_column" 
+                                                     value={orderDetails.display_discount_column} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.display_discount_column===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="display_discount_column"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -236,8 +652,10 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Display Substitution Line</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="dispsubline" id="dispsubline" value="2" />
-                                                        <label for="dispsubline"></label>
+                                                    <input type="checkbox" name="display_substitution_line" id="display_substitution_line" 
+                                                     value={orderDetails.display_substitution_line} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.display_substitution_line===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="display_substitution_line"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -245,8 +663,10 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Show Pricing on Output</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="showpricout" id="showpricout" value="2" />
-                                                        <label for="showpricout"></label>
+                                                    <input type="checkbox" name="show_pricing_op" id="show_pricing_op" 
+                                                     value={orderDetails.show_pricing_op} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.show_pricing_op===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="show_pricing_op"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -256,7 +676,13 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Order Notes <small class="textGrey">(Internal Only)</small></label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" disabled={customerSelected?false:true} id="order_notes" 
+                                        value={orderDetails.order_notes} onChange={handleCustomerData}></textarea>
+                                        {/* <textarea class="form-control"></textarea> */}
+                                    </div>
+
+                                    <div style={{float:"left",width:"100%",marginBottom:4,paddingRight:10}}>
+                                    <button className="btn btn-primary btn-lg ml-3"  style={{width:100,float:"right",marginTop:10}} onClick={customerSelected?handleUpdate:handleSave}>{customerSelected?"Update":"Add"}</button>
                                     </div>
                                 </div>
                             </form>
@@ -271,15 +697,24 @@ export default function QuoteAndOrdersManagement() {
                                     <div class="col-md-12">
                                         <div class="row form-group">
                                             <div class="col-md-6 col-lg-6">
-                                                <label>Search</label>
+                                                <label>Plant and Product Search</label>
                                                 <div class="searchInput">
-                                                    <button type="submit" class="btn btn-search">
+                                                    <button type="submit" class="btn btn-search"  style={{marginTop:"2%",marginLeft:"2%"}}>
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search Plants or Products"/>
+                                                    <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                                    getSuggestionValue={getSuggestionValue}
+                                                    renderSuggestion={renderSuggestion}
+                                                    inputProps={inputPropsPlant}
+                                                  
+                                                />
+                                                    {/* <input type="text" class="form-control" placeholder="Search Plants or Products"/> */}
                                                 </div>
                                                 <div class="row mt-3 align-items-center">
-                                                    <div class="col-md-12 d-flex">
+                                                    <div class="col-md-12 d-flex" style={{marginTop:"35px"}}>
                                                         {/* <div class="custom-control custom-radio">
                                                             <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
                                                             <label class="custom-control-label" for="customRadio1">Active Only</label>
@@ -302,10 +737,19 @@ export default function QuoteAndOrdersManagement() {
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Search SKU</label>
                                                 <div class="searchInput">
-                                                    <button type="submit" class="btn btn-search">
+                                                    <button type="submit" class="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search SKU"/>
+                                                    <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested1}
+                                                    //onSuggestionsClearRequested={onSuggestionsClearRequested1}
+                                                    getSuggestionValue={getSuggestionValue1}
+                                                    renderSuggestion={renderSuggestion1}
+                                                    inputProps={inputPropsSKU}
+                                                  
+                                                />
+                                                    {/* <input type="text" class="form-control" placeholder="Search SKU"/> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -345,14 +789,122 @@ export default function QuoteAndOrdersManagement() {
                                                             <th width="6%" class="text-center">Open POS</th>
                                                             <th width="8%" class="text-center">Future <br/>Available</th>
                                                             <th width="6%" class="text-center">Price</th>
-                                                            <th width="6%" class="text-center">Volume<br/>
-Rate</th>
+                                                            <th width="6%" class="text-center">Volume<br/>Rate</th>
                                                             <th width="6%" class="text-center">Dis%</th>
                                                             <th width="6%" class="text-center">Qty</th>
                                                             <th width="4%" class="text-center"></th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+
+
+
+
+
+                                                    {loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"white",width:"100%"}}><Loader/></div>:<tr>
+                                                  
+                                                            <td colspan="13" class="p-0">
+                                                                <table class="table table-striped mb-0" border="0" width="100%">
+                                                                {plantId.map((plantId,index1)=>{
+                                                       
+                                                       let count =0
+                                                            return searchData.map((plant,index)=>{
+                                                                
+                                                             
+                                                                if(JSON.parse(plantId)===parseInt(plant["plant_id"])){
+                                                                
+                                                                    let a = count++
+                                                                    return(
+                                                                        <div>
+                                                    
+                                                   { a ===0?<tr class="tblLinks" style={{backgroundColor:"gray"}}>
+                                                                        <td colspan="13" style={{backgroundColor:"#f2f2f2"}}>
+
+                                                                            <a href="">{plant.plant_name!==null?plant.plant_name:"No Name"}</a>
+                                                                        </td>
+                                                                    </tr>:""}
+                                                                    <tr>
+                                                                        <td width="6%">
+                                                                            <a href="">{plant.sku_code}</a>
+                                                                        </td>
+                                                                       
+                                                                        <td class="text-center" width="6%"><a href="" style={{width:"50px"}}>{plant.size}</a></td>
+                                                                        <td class="text-center" width="6%">{plant.on_hand}</td>
+                                                                        <td class="text-center" width="6%">{plant.customer_orders}</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">{plant.current_available}</b></td>
+                                                                        <td class="text-center" width="6%">{plant.on_quotes}</td>
+                                                                        <td class="text-center" width="6%">{plant.open_pos}</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">{plant.future_availability}</b></td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value={plant.sale_price} id={plant.sku_code+"^sale_price"} onChange={changeDataValue}/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value={plant.volume_price_per_unit} id={plant.sku_code+"^volume_price_per_unit"} onChange={changeDataValue}/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder=""  value={quoteDetails.discount} id={plant.sku_code+"^discount"} onChange={changeDataValue}/>
+                                                                        </td>
+                                                                        <td class="text-center" width="6%" >
+                                                                            <div class="d-flex align-items-center">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value={plant.volume_quantity} id={plant.sku_code+"^volume_quantity"} onChange={changeDataValue}/>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        
+                                                                        <td class="text-center" width="4%">
+                                                                            <a  class="ml-2" onClick={addToPlant} id={plant.sku_code} style={{cursor: 'pointer'}}>
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""  onClick={addToPlant} id={plant.sku_code} />
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                   
+                                                    </div>
+
+                                                    )
+
+                                                        
+                                                               
+                                                            }   
+                                                        })
+
+                                                       
+                                                    
+                                                    })}
+                                                        
+                                              
+                                                                </table>
+                                                            </td>
+                                                        </tr>}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* 
                                                         <tr>
                                                             <td colspan="13" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
@@ -546,7 +1098,12 @@ Rate</th>
                                                                     </tr>
                                                                 </table>
                                                             </td>
-                                                        </tr>
+                                                        </tr> */}
+
+
+
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1204,3 +1761,30 @@ Rate</th>
         </div>
     )
 }
+
+
+//export default QuoteAndOrdersManagement
+const mapStateToProps = (state)=>(
+    {
+        customerData:state.customerReducer,
+        QuoteReducerData:state.QuoteReducerData,
+        quoteOrderReducer:state.quoteOrderReducer,
+        // plantData:state.plantData,
+        plantCategoryList:state.inventoryManagementReducer.plantCategoryList,
+        locationList:state.inventoryManagementReducer.locationList,
+        supplierList:state.supplierData.supplierInfo,
+        plantInventoryData:state.inventoryManagementReducer.plantInventoryData,
+        plantData:state.inventoryManagementReducer,
+        
+    }
+)
+
+export default connect(mapStateToProps,{
+    updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall,
+    searchPlantProductAPI,addToquoteAPICall,
+    getAllPlantAction,
+    filterPlantManagerData,getCategoryList,getAllPlants,getLocationList,setPlantPageNumber,
+    resetFileds,getPlantList,getFilterResult,getCustomerByIdQuote,
+    getCustomerContacts,getcustomerAddress,getAllStatusMethods,
+    deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,
+    handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)

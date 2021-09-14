@@ -5,7 +5,7 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,
+     handleAplhabetFilterBySN,handlePOFilter,
      handlePurchaseOrderFilert,handlePoPageSelection,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
@@ -94,31 +94,31 @@ export class PurchaseOrders extends React.Component {
         if(event.target.name==="plantSearch"){
             this.setState({plantValue:newValue})
         // setLoaderMessage("No Records Found.")
-        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.props.handlePOFilter("plantSearch",newValue)
         // this.setState({newValue});
         }
         if(event.target.name==="supplierSearch"){
             this.setState({supplierValue:newValue})
         // setLoaderMessage("No Records Found.")
-        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.props.handlePOFilter("supplierSearch",newValue)
         // this.setState({newValue});
         }
         if(event.target.name==="jobSearch"){
             this.setState({jobValue:newValue})
         // setLoaderMessage("No Records Found.")
-        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.props.handlePOFilter("jobSearch",newValue)
         // this.setState({newValue});
         }
         if(event.target.name==="orderSearch"){
             this.setState({orderValue:newValue})
         // setLoaderMessage("No Records Found.")
-        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.props.handlePOFilter("orderSearch",newValue)
         // this.setState({newValue});
         }
         if(event.target.name==="supplierOrderSearch"){
             this.setState({supplierOrderValue:newValue})
         // setLoaderMessage("No Records Found.")
-        // this.props.serachPlant({plant: newValue, option: props.plantData.plantRadioButton, category: categoryId})
+        this.props.handlePOFilter("supplierOrderSearch",newValue)
         // this.setState({newValue});
         }
         
@@ -192,6 +192,7 @@ onSupplierOrderSuggestionsClearRequested = () => {
      onPlantSuggestionsFetchRequested = ({value}) => {  
            
         let plantSuggestions = this.getPlantSuggestions(value)
+
         console.log(plantSuggestions)   
         this.setState({plantSuggestions})
     };
@@ -572,6 +573,6 @@ const mapStateToProps = (state)=> (
 
 export default connect(mapStateToProps,{
     getAllPlantAction,getAllSuppliers,
-    handlePurchaseOrderFilert,handlePoPageSelection,
+    handlePurchaseOrderFilert,handlePoPageSelection,handlePOFilter,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 })(PurchaseOrders)

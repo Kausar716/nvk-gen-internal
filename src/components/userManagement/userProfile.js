@@ -123,24 +123,26 @@ class UserProfile extends React.Component {
 
 
     componentDidMount(){
+        this.props.showUser()
         this.props.getAllSubAttribute(18)
         this.props.getUsersList()
         this.props.getRolesList()
         this.props.getPermissionList()
-
+       
          
         // let blist = alist.map(e=>e.id)
-        let aList = this.props.showUserSpecificList && this.props.showUserSpecificList.data.user.location.map(e=>e.id)
+       // let aList = (this.props.showUserSpecificList) && (this.props.showUserSpecificList.data.user===undefined ?this.props.showUserSpecificList:this.props.showUserSpecificList.data.user || this.props.showUserSpecificList.data.user.location.map(e=>e.id))
 
         this.setState({
             locations: this.props.locationAddress,
             specificUser:this.props.selectedUser.location ,
-            checkList:aList
+            checkList:this.props.displaySelectedListOnly
+            //this.props.selectedUser.location
             //this.props.selectedUser.location
         })
 
         
-console.log("locationAddress",aList,this.props.specificdUser, this.props.locationAddress, this.props.selectedUser.location, this.state.checkList )
+console.log("locationAddress",this.props.specificdUser, this.props.locationAddress, this.props.selectedUser.location, this.state.checkList )
         //this.props.tabChangeValues();
 
         // if(this.props.tabChangeValues(1)){

@@ -16,6 +16,13 @@ import {
     GET_QUOTE_ORDER_LIST,
    
 
+    ADD_ITEM_TO_QUOTE,
+    GET_ORDER_ITEM_LIST,
+    ADD_NEW_ORDER,
+    UPDATE_NEW_ORDER,
+    HANDLE_INPUT_ORDER,
+    UPDATE_ORDER,
+
     
     // ADD_CUSTOMER, 
     // SHOW_CUSTOER, 
@@ -34,6 +41,37 @@ const initialSatate = {
    //radioFilter:"active",
    searchFilter:"",
    alphabetSearch:"All",
+   orderList:{items:[],order:[]},
+   orderDetails:{
+        source:"",
+        ordered_by:"",
+        bill_to:"",
+        purchase_order:"",
+        requested_date:"",
+        requested_time:"AM",
+        currency:"",
+        email_to:"",
+        job_description:"",
+    
+        units:"",
+        discount:"0.00",
+        customeraddress:[],
+        discount_by_line_item:1,
+        display_discount_column:1,
+        display_substitution_line:1,
+        show_pricing_op:1,
+        
+        //archive_quote_timeframe:"",
+        //show_pricing_op:0,
+        //flag_as_reminder:0,
+        order_notes:"",
+        status:"1",
+        customer_id: "",
+        quote_no: "",
+        quote_status: "",
+        //pricing_year: "",
+        //amount: null,
+    }
 
   }
 
@@ -102,7 +140,85 @@ const initialSatate = {
                     ...state,
                     quoteOrderList:searchedData1,
                     alphabetSearch:action.alphaDataQO
+                }       
+
+
+
+
+
+
+
+
+
+
+
+
+                case GET_ORDER_ITEM_LIST:
+            return{
+                ...state,
+                quoteList:action.payload.data
+            }
+
+            // case GET_ORDER_ITEM_LIST:
+            //     return{
+            //         ...state,
+            //         quoteList:action.payload.data
+            //     }
+
+                
+            case ADD_NEW_ORDER:
+               // debugger;
+                // let customerData = action.payload.data.customer
+                // customerData.units = customerData.unit_of_measurement
+                // delete customerData.id
+                // delete customerData.customer_id
+                // delete action.payload.data.customer
+                let customerData = action.payload.data
+                delete customerData.created_at
+                delete customerData.updated_at
+
+    
+                return{
+    
+                    ...state,
+                    orderDetails:{...state.orderDetails,...action.payload.data, ...customerData}
+    
                 }
+
+
+            // case SEARCH_PLANT_PRODUCT:
+            //     return{
+            //         ...state,
+            //         searchListDuplicate:action.payload.data,
+            //         searchList:action.payload.data
+    
+            //     }
+
+
+            case UPDATE_ORDER:
+                return{
+                    ...state,
+                    orderDetails:{...state.orderDetails,...action.payload}
+    
+                }
+
+
+            case HANDLE_INPUT_ORDER:
+                return{
+                    ...state,
+                    orderDetails:{...state.orderDetails, [action.id]:action.value}
+    
+                }
+                
+
+
+            case UPDATE_NEW_ORDER:
+                return{
+                    ...state,
+                    orderDetails:{...state.orderDetails, [action.id]:action.value}
+    
+                }
+                
     
         default:
                 return state

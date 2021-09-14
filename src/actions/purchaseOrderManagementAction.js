@@ -32,7 +32,13 @@ import {
     GET_SPECIFIED_PO_ORDER,
     HANDLE_PO_PAGE_SELECTION,
     UPDATE_PURCHASE_ORDER,
-    GET_DELIVERY_ADDRESS
+    GET_DELIVERY_ADDRESS,
+    GET_ADD_TO_CATEGORY_LIS,
+    HANDLE_PO_FILTER,
+    UPDATE_PURCHASE_ORDER_NOTES,
+    DELETE_PO,
+    DUPLICATE_PO,
+    SPLIT_PO_ORDER
 
     } from './types'
 
@@ -47,7 +53,7 @@ import {
       })
   }
     export const getPurchaseOrderList = () => dispatch => {
-        axios.get(`/api/purchase-order-list`,config).then(res=>{
+        axios.post(`/api/purchase-order-list`,{},config).then(res=>{
             console.log(res)
             dispatch({
                 type:GET_PURCHASE_ORDER_LIST,
@@ -68,6 +74,7 @@ import {
   
   }
   export const getSupplierDeliveryList = (supplierId)=> dispatch =>{
+    console.log(supplierId)
     return axios.get(`/api/delivery-supplier/${supplierId}`,config).then(res=>{ 
         console.log(res)
     dispatch({
@@ -89,6 +96,31 @@ import {
       })
   
   }
+  export const deletePo = (po_Id)=> dispatch =>{
+    return axios.post(`/api/delete-purchase-order/${po_Id}`,{},config).then(res=>{ 
+        console.log(res)
+        
+    dispatch({
+            type:DELETE_PO,
+            payload:res.data.data.active
+
+        })
+        
+    })
+
+}
+export const duplicatePo = (po_Id)=> dispatch =>{
+  return axios.post(`/api/duplicate-purchase-order/${po_Id}`,{},config).then(res=>{ 
+      console.log(res)
+  dispatch({
+          type:DUPLICATE_PO,
+          payload:res.data.data
+      })
+  })
+
+}
+
+  
     export const poPageReDirectAction = (page,actionType) => {
         return{
             type:PO_PAGE_REDIRECT_ACTION,
@@ -164,11 +196,11 @@ import {
       let errorArray=[];
       console.log(data)
       delete data.order_id
-      debugger;
       if(data){
       // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
       axios.post(`/api/add-purchase-order`,data,config).then(res=>{
           console.log(res)
+          alert(res.data.message)
           errorArray.push("Order Updated successfully")
           dispatch({
               type:ADD_PURCHASE_ORDER,
@@ -195,11 +227,11 @@ import {
     let errorArray=[];
     console.log(data)
     delete data.order_id
-    debugger;
     if(data){
     // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
     axios.post(`/api/update-purchase-order/${data.id}`,data,config).then(res=>{
         console.log(res)
+        alert(res.data.message)
         errorArray.push("Order Updated successfully")
         dispatch({
             type:UPDATE_PURCHASE_ORDER,
@@ -222,6 +254,38 @@ import {
 
 }
 }
+export const updatePoNotes = (data) => dispatch => {
+  let errorArray=[];
+  let id = data.id
+  console.log(data)
+  delete data.id
+  if(data){
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/update-purchase-order/${id}`,data,config).then(res=>{
+      console.log(res)
+      alert(res.data.message)
+      errorArray.push("Order Updated successfully")
+      dispatch({
+          type:UPDATE_PURCHASE_ORDER_NOTES,
+          payload:res.data.data
+
+      })
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+else{
+  dispatch({
+      type:ERROR_HANDLE,
+      message:errorArray,
+      status:true
+  })
+
+}
+}
   export const setSupplierToAddPo = (supplier)=>{
     return{
       type:SET_SUPPLIER_TO_ADD_PO,
@@ -241,11 +305,28 @@ export const handleOrderDetailsInput = (id,value)=>{
 export const getAddToOrderList = () => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
-  axios.get(`/api/add-to-purchase-order-search?type=plant`,config).then(res=>{
+  axios.post(`/api/global-plant-product-sku-search`,{},config).then(res=>{
+    console.log(res)
+      dispatch({
+          type:GET_ADD_TO_ORDER_LIST,
+          payload:res.data.data.result
+
+      })
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+export const getAddToPOCateries= () => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.get(`/api/add-to-purchase-order-search-categories`,config).then(res=>{
     console.log(res)
      
       dispatch({
-          type:GET_ADD_TO_ORDER_LIST,
+          type:GET_ADD_TO_CATEGORY_LIS,
           payload:res.data.data
 
       })
@@ -256,12 +337,26 @@ export const getAddToOrderList = () => dispatch => {
     })
   })
 }
+export const slpitPo= (result,item_id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/split-purchase-order-item/${item_id}`,result,config).then(res=>{
+    console.log(res)
+     debugger;
+      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
 export const getSpecifiedPurchaseOrder = (id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  console.log(id)
   axios.get(`/api/show-purchase-order/${id}`,config).then(res=>{
     console.log(res)
-     debugger;
       dispatch({
           type:GET_SPECIFIED_PO_ORDER,
           payload:res.data.data
@@ -282,6 +377,15 @@ export const serachOrderedList = (plant,sku)=>{
     sku
   }
 }
+export const handlePOFilter = (textBoxName,textBoxValue)=>{
+  return{
+    type:HANDLE_PO_FILTER,
+    name:textBoxName,
+    value:textBoxValue
+  }
+}
+
+
 export const handlePoPageSelection = (path,index)=>{
   return{
     type:HANDLE_PO_PAGE_SELECTION,
@@ -354,11 +458,12 @@ export const getCurrentOrder = (currentPoId)=> dispatch => {
 
 
 export const getOrderHistory = (currentPoId)=> dispatch => {
+  console.log(currentPoId)
   let errorArray = []
   if(currentPoId){
    axios.get(`/api/po-logs/${currentPoId}`,config).then(res=>{
      console.log(res)
-     
+     debugger;
        dispatch({
            type:GET_CURRENT_PO_ORDER_HISTORY,
            payload:res.data.data
@@ -375,23 +480,23 @@ export const getOrderHistory = (currentPoId)=> dispatch => {
 
 
 export const handleAddAll = (groupedArray,poId) => dispatch => {
+  console.log(groupedArray)
+  console.log(poId)
 let orderedListForUpdation = []
   groupedArray.map(order=>{
     order.map(subOrder=>{
       if(subOrder.dumyQty!==""){
         let inputObj={}
-        inputObj['plant_id'] = subOrder.plant_id
+        inputObj['id'] = subOrder.ID
         inputObj['qty'] = subOrder.dumyQty
-        inputObj['name'] = subOrder.plant_name
-        inputObj['size'] = subOrder.size
+        inputObj['name'] = subOrder.name
+        inputObj['size'] = subOrder.size?subOrder.size:""
+        inputObj['type'] = subOrder.type        
         inputObj['SKU'] = subOrder.sku_code
         inputObj['nvk_price'] = subOrder.nvk_price
-        inputObj['volume_rate'] = subOrder.volume_quantity_value
+        // inputObj['volume_rate'] = ""
         inputObj['item_customer_notes'] = ""
         inputObj['item_internal_notes'] = ""
-
-        
-
         orderedListForUpdation.push(inputObj)
       }
     })

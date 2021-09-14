@@ -66,14 +66,14 @@ class QuoteList extends React.Component {
             allChecked: false,
 
             list: [
-                { id: 1, name: "Open",label:"OPEN", isChecked: false },
-                { id: 2, name: "Pick", label:"PICKING",isChecked: false },
-                { id: 3, name: "Ready", label:"READY",isChecked: false },
-                { id: 4, name: "Ship", label:"SHIPPED",isChecked: false },
-                { id: 5, name: "Invoice", label:"INVOICE",isChecked: false },
-                { id: 6, name: "Closed", label:"CLOSED",isChecked: false },
-                { id: 7, name: "Cancel", label:"CANCEL",isChecked: false },
-                { id: 8, name: "Late", label:"LATE",isChecked: false },
+                { id: 1, name: "Open",label:"Open", isChecked: false },
+                { id: 2, name: "Pick", label:"Pick",isChecked: false },
+                { id: 3, name: "Ready", label:"Ready",isChecked: false },
+                { id: 4, name: "Ship", label:"Ship",isChecked: false },
+                { id: 5, name: "Invoice", label:"Invoice",isChecked: false },
+                { id: 6, name: "Closed", label:"Closed",isChecked: false },
+                { id: 7, name: "Cancel", label:"Cancel",isChecked: false },
+                { id: 8, name: "Late", label:"Late",isChecked: false },
               ],
 
               allCountList:[],
@@ -96,13 +96,14 @@ class QuoteList extends React.Component {
         this.props.getQuoteOrderList()
 
         this.setState({
-            initialDetailsQL: initialDetailsQL
+            initialDetailsQL: this.props.quoteOrderListTable
+            //initialDetailsQL
             //this.props.quoteOrderListTable
         });
-        this.refs.search.focus();
-        this.refs.ordSearch.focus();
+        this.refs.searchQ.focus();
+        this.refs.ordSearchQ.focus();
 
-        this.find_duplicate_in_array(initialDetailsQL);
+        this.find_duplicate_in_array2(this.props.quoteOrderListTable);
 
         let abc= this.state.allCountList
 
@@ -129,7 +130,8 @@ class QuoteList extends React.Component {
 
       onTextChange = e => {
           //debugger
-        let items = this.state.initialDetailsQL;
+        let items =this.props.quoteOrderListTable;
+        // this.state.initialDetailsQL;
         //this.props.quoteOrderListTable;
         //this.state.initialDetailsQL;
         let supName = items.map((e)=>e.customer_name)
@@ -201,7 +203,8 @@ class QuoteList extends React.Component {
 
       onTextChangeOrder = e => {
         //debugger
-      let items = this.state.initialDetailsQL;
+      let items = this.props.quoteOrderListTable
+      //this.state.initialDetailsQL;
       //this.props.quoteOrderListTable;
       //this.state.initialDetailsQL;
       let supName = items.map((e)=>e.order)
@@ -252,7 +255,8 @@ class QuoteList extends React.Component {
 
 
               if(!this.state.isChecked){
-                let initialDetailsQl = this.state.initialDetailsQL
+                let initialDetailsQl = this.props.quoteOrderListTable;
+                //this.state.initialDetailsQL
                 let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
     
                 this.setState({checkedData: newCheckedData})
@@ -269,7 +273,8 @@ class QuoteList extends React.Component {
 
 
         else if(e.target.id==="CLOSED"){
-            let initialDetailsQl = this.state.initialDetailsQL
+            let initialDetailsQl = this.props.quoteOrderListTable;
+            //this.state.initialDetailsQL
             let newCheckedData = initialDetailsQl.filter(newCheck => newCheck.status===e.target.name)
 
             this.setState({checkedData: newCheckedData})
@@ -373,34 +378,36 @@ class QuoteList extends React.Component {
     }
 
 
-    handleChangeCheckbox = e => {
-            //debugger
-        let itemName = e.target.name;
-        let checked = e.target.checked;
-        this.setState(prevState => {
-          let { list, allChecked } = prevState;
-          if (itemName === "checkAll") {
-            allChecked = checked;
-            list = list.map(item => ({ ...item, isChecked: checked }));
-          } else {
-            list = list.map(item =>
-              item.name === itemName ? { ...item, isChecked: checked } : item
-            );
-            allChecked = list.every(item => item.isChecked);
-          }
-          return { list, allChecked };
-        });
-    
-        console.log("items::",itemName , checked)
-      }
+
+
+      handleChangeCheckbox = e => {
+        //debugger
+            let itemName = e.target.name;
+            let checked = e.target.checked;
+            this.setState(prevState => {
+            let { list, allChecked } = prevState;
+            if (itemName === "checkAll") {
+                allChecked = checked;
+                list = list.map(item => ({ ...item, isChecked: checked }));
+            } else {
+                list = list.map(item =>
+                item.name === itemName ? { ...item, isChecked: checked } : item
+                );
+                allChecked = list.every(item => item.isChecked);
+            }
+            return { list, allChecked };
+            });
+
+            console.log("items::",itemName , checked)
+        }
 
 
       checkboxList = () => {
 
         return this.state.list.map(item => (
           
-            <div class="custom-control custom-checkbox" style={{marginRight:"3em"}}>
-                <input type="checkbox" class="custom-control-input" id={item.id}
+            <div className="custom-control custom-checkbox" style={{marginRight:"3em"}} key={item.id}>
+                <input type="checkbox" className="custom-control-input" id={item.id}
                     key={item.id}
                     name={item.name}
                     value={item.name}
@@ -408,34 +415,41 @@ class QuoteList extends React.Component {
                     onChange={this.handleChangeCheckbox}
                 // onChange={this.handleClickCheckBox} 
                 />
-                <label class="custom-control-label" for={item.id} >{item.name}</label>
+                <label className="custom-control-label" for={item.id} >{item.name}</label>
             </div>
         ));
       };
 
 
 
-       find_duplicate_in_array=(array)=>{
+       find_duplicate_in_array2=(arrayList)=>{
+          // debugger;
         // let statusList =this.state.initialDetailsQL;
-        let totalStatusList =array.map(e=>e.status)
+        let abcd =arrayList
+        if(abcd){
+            let totalStatusLists =abcd.map(ev=>ev.order_status)
+        
+        
         const {allCountList}=this.state
 
        // const count = {}
         const result = []
         
-        totalStatusList.forEach(item => {
-            if (allCountList[item]) {
-                allCountList[item] +=1
+        totalStatusLists.forEach(item2 => {
+            if (allCountList[item2]) {
+                allCountList[item2] +=1
                return
             }
-            allCountList[item] = 1
+            allCountList[item2] = 1
         })
         
-        for (let prop in allCountList){
-            if (allCountList[prop] >=2){
-                result.push(prop)
+        for (let prop2 in allCountList){
+            if (allCountList[prop2] >=2){
+                result.push(prop2)
             }
         }
+
+    
 
         // this.setState({
         //     allCountList:count
@@ -446,6 +460,8 @@ class QuoteList extends React.Component {
 
 
         return result;
+
+    }
         
         }
 
@@ -457,10 +473,10 @@ class QuoteList extends React.Component {
         // let statusList =this.state.initialDetailsQL;
         // let totalStatusList =statusList.map(e=>e.status)
             //console.log("ListofCheckbox", this.state.list)
-         //this.find_duplicate_in_array(totalStatusList)
+         //this.find_duplicate_in_array22(totalStatusList)
 
             let listValue = this.state.list
-            let deductingFinalValues =listValue.filter(e=>e.label==="OPEN" || e.label==="READY"|| e.label==="READY"|| e.label==="PICKING"|| e.label==="SHIPPED"|| e.label==="LATE");
+            let deductingFinalValues =listValue.filter(e=>e.label==="Open" || e.label==="Ready"|| e.label==="Ship"|| e.label==="Closed"|| e.label==="Pick"|| e.label==="Late");
 
             console.log("deductingFinalValues", deductingFinalValues)
 
@@ -499,10 +515,11 @@ class QuoteList extends React.Component {
 
         console.log("allCount", this.state.list)
             let totalNumbers =this.state.allCountList
-            let totalNumbersList =totalNumbers.filter(e=>e.OPEN);
+            let totalNumbersList =totalNumbers.filter(e=>e.Open);
         console.log("totalNumbersList",totalNumbers,totalNumbersList, this.state.allCountList)
         //console.log("alphabetInrender", this.state.checkedData, this.state.isChecked)
-        let _users = this.state.initialDetailsQL;
+        let _users = this.props.quoteOrderListTable
+        //this.state.initialDetailsQL;
         //this.props.quoteOrderListTable
         //this.state.initialDetailsQL;
 
@@ -518,13 +535,13 @@ class QuoteList extends React.Component {
 
         if (orderSearch.length > 0 ) {
             _users = _users.filter(function(user) {
-              return user.order.toLowerCase().match(orderSearch);
+              return user.order_id.toLowerCase().match(orderSearch);
             });
           }
 
         if (alphaVal.length>0 ) {
             _users = _users.filter(function(user) {
-              return user.order.toLowerCase().match(alphaVal);
+              return user.customer_name.toLowerCase().match(alphaVal);
             });
           }
 
@@ -536,7 +553,7 @@ class QuoteList extends React.Component {
                 console.log("checkedList",checkedList)
              // let labelC = chk.map(e=>e.label)
 
-             _users = _users.filter(value => checkedList.includes(value.status));
+             _users = _users.filter(value => checkedList.includes(value.order_status));
               
 
             //   _users=_users.filter(function(user) {
@@ -595,34 +612,34 @@ class QuoteList extends React.Component {
 
         
         <div>
-            <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
-				<h1 class="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote &amp; Order List</h1>
-				<div class="topbarCtrls mt-3 mt-md-0">
+            <div className="contentHeader bg-white d-md-flex justify-content-between align-items-center">
+				<h1 className="page-header mb-0"><img src="assets/img/quote-ic-green.svg" alt=""/> Quote &amp; Order List</h1>
+				<div className="topbarCtrls mt-3 mt-md-0">
                    
                     <Link to="/Quote">
-                    <a href="#" class="btn">
-                        <span class="d-flex align-items-center text-left">
+                    <a href="#" className="btn">
+                        <span className="d-flex align-items-center text-left">
                         <img src="assets/img/Quoteblue_small-Icon.svg" alt=""/>
-                            <span class="ml-2"><b>New Quote</b></span>
+                            <span className="ml-2"><b>New Quote</b></span>
                         </span>
                         </a>
                         </Link>
                     {/* </a> */}
                     <Link to="/QuoteAndOrdersManagement">
-                    <a href="#" class="btn ml-2">
-                        <span class="d-flex align-items-center text-left">
+                    <a href="#" className="btn ml-2">
+                        <span className="d-flex align-items-center text-left">
                             <img src="assets/img/PurchaseOrders-sm.svg" alt=""/>
-                            <span class="ml-2"><b>New Order</b></span>
+                            <span className="ml-2"><b>New Order</b></span>
                         </span>
                     </a>
                     </Link>
 				</div>
 			</div>
-            <div class="px-md-3 mt-3">
-            <div class="bg-white px-3 py-3 my-3 cardShadow">
-                <div class="row align-items-center">
-                    <div class="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
-                        <div class="ordersCard d-flex justify-content-md-between align-item-stretch w-100">
+            <div className="px-md-3 mt-3">
+            <div className="bg-white px-3 py-3 my-3 cardShadow">
+                <div className="row align-items-center">
+                    <div className="col-md-12 col-lg-6 d-md-flex justify-content-between editCustSec">
+                        <div className="ordersCard d-flex justify-content-md-between align-item-stretch w-100">
                             {/* <div class="cardBoxwide totalCard">
                                 <p>Total Orders</p>
                                 <span style={{fontSize: "32px"}}>61</span>
@@ -630,15 +647,15 @@ class QuoteList extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div> */}
-                            <div class="cardBoxwide individualCard totalCard" style={{minWidth:"130px"}}>
-                                <div class="stripe"></div>
+                            <div className="cardBoxwide individualCard totalCard" style={{minWidth:"130px"}}>
+                                <div className="stripe"></div>
                                 <p>Total Orders</p>
                                 <h4>{finalTotalValue}</h4>
                                 <div style={{marginTop:"24px"}}>
                                     <a href="#">View All</a>
                                 </div>
                             </div>
-                            <div class="equalSign2" >=</div>
+                            <div className="equalSign2" >=</div>
 
                             {/* <input type="checkbox" class="custom-control-input" id={item.id}
                     key={item.id}
@@ -651,20 +668,20 @@ class QuoteList extends React.Component {
                             
                                 {deductingFinalValues.map(item=>{
                                     
-                                    return <div className="boxCreation">
-                                          <span class="plusSignInQuote">+</span>
+                                    return <div className="boxCreation" key={item.id}>
+                                          <span className="plusSignInQuote">+</span>
                                          
-                                        <div  class="cardBox individualCard openStsCard">
+                                        <div  className="cardBox individualCard openStsCard">
 
-                                            <div class="stripe" 
+                                            <div className="stripe" 
                                             style={
-                                                item.label==="OPEN" ? {backgroundColor:"#345d99"} : 
-                                                item.label==="CLOSED" ? {backgroundColor:"#C4E9C4"} :
-                                                item.label==="READY" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
+                                                item.label==="Open" ? {backgroundColor:"#345d99"} : 
+                                                item.label==="Closed" ? {backgroundColor:"#C4E9C4"} :
+                                                item.label==="Ready" ? {backgroundColor:"#f28c3c", color:"#f28c3c"} :
 
-                                                item.label==="PICKING" ? {backgroundColor:"#4b9ef7"} :
-                                                item.label==="SHIPPED" ? {backgroundColor:"#e54dcd"} :
-                                                item.label==="LATE" ? {backgroundColor:"#ed3833"
+                                                item.label==="Pick" ? {backgroundColor:"#4b9ef7"} :
+                                                item.label==="Ship" ? {backgroundColor:"#e54dcd"} :
+                                                item.label==="Late" ? {backgroundColor:"#ed3833"
                                             } :
                                                 
                                                 
@@ -682,15 +699,16 @@ class QuoteList extends React.Component {
                                             } 
                                             ></div>
                                                 <p style={{marginTop:"5px"}}>{item.name}</p>
-                                            <h4>{ item.label==="OPEN" ? this.state.allCountList.OPEN :
-                                                    item.label==="CLOSED" ? this.state.allCountList.CLOSED :
-                                                    item.label==="READY" ? this.state.allCountList.READY :
-                                                    item.label==="LATE" ? this.state.allCountList.LATE :
+                                            <h4>{ 
+                                                    item.label==="Open" ? this.state.allCountList.Open :
+                                                    item.label==="Closed" ? this.state.allCountList.Closed :
+                                                    item.label==="Ready" ? this.state.allCountList.Ready :
+                                                    item.label==="Late" ? this.state.allCountList.Late :
 
-                                                    item.label==="SHIPPED" ? this.state.allCountList.SHIPPED :
-                                                    item.label==="PICKING" ? this.state.allCountList.PICKING :
-                                                    item.label==="INVOICE" ? this.state.allCountList.INVOICE :
-                                                    item.label==="CANCEL" ? this.state.allCountList.CANCEL :
+                                                    item.label==="Ship" ? this.state.allCountList.Ship :
+                                                    item.label==="Pick" ? this.state.allCountList.Pick :
+                                                    item.label==="Invoice" ? this.state.allCountList.Invoice :
+                                                    item.label==="Cancel" ? this.state.allCountList.Cancel :
                                             0}</h4>
                                             <div>
                                            
@@ -758,11 +776,11 @@ class QuoteList extends React.Component {
                             </div>*/}
 
 
-                            <div class="equalSign">&nbsp;</div>
-                            <div class="verDivider"></div>
-                            <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard activeQuotesCard" >
-                                <div class="stripe"></div>
+                            <div className="equalSign">&nbsp;</div>
+                            <div className="verDivider"></div>
+                            <div className="equalSign">&nbsp;</div>
+                            <div className="cardBoxwide individualCard activeQuotesCard" >
+                                <div className="stripe"></div>
                                 <p>Active Quotes</p>
                                 <h4>12</h4>
                                 <div>
@@ -776,9 +794,9 @@ class QuoteList extends React.Component {
                                     <a href="#">View All</a>
                                 </div>
                             </div> */}
-                            <div class="equalSign">&nbsp;</div>
-                            <div class="cardBoxwide individualCard quotesFlaggedCard" >
-                                <div class="stripe"></div>
+                            <div className="equalSign">&nbsp;</div>
+                            <div className="cardBoxwide individualCard quotesFlaggedCard" >
+                                <div className="stripe"></div>
                                 <p>Quotes Flagged</p>
                                 <h4><font color="red">12</font></h4>
                                 <div>
@@ -793,17 +811,17 @@ class QuoteList extends React.Component {
                     </div>
                 </div>
             </div>
-                <div class="bg-white px-3 py-3 mt-2">
+                <div className="bg-white px-3 py-3 mt-2">
                     <form>
                         <h2>Search Quotes &amp; Orders {this.state.abcdefg}</h2>
                         {/* {this.state.abcdefg} */}
                         
-                        <div class="row mt-3 align-items-center">
-                            <div class="col-md-12">
-                                <div class="row form-group">
-                                    <div class="col-md-12 col-lg-12">
+                        <div className="row mt-3 align-items-center">
+                            <div className="col-md-12">
+                                <div className="row form-group">
+                                    <div className="col-md-12 col-lg-12">
                                         <label><b>Orders</b></label>
-                                        <div class="d-flex flex-wrap mt-2">
+                                        <div className="d-flex flex-wrap mt-2">
                                             {/* <div class="custom-control custom-checkbox">
                                                 <input type="checkbox" class="custom-control-input" id="OPEN" 
                                                 name="OPEN"
@@ -844,19 +862,19 @@ class QuoteList extends React.Component {
                                     </div>
                                     
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-md-5 col-lg-5" style={{marginLeft:"-1em"}}>
-                                        <div class="d-flex flex-wrap mt-2">
-                                            <div class="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
+                                <div className="row form-group">
+                                    <div className="col-md-5 col-lg-5" style={{marginLeft:"-1em"}}>
+                                        <div className="d-flex flex-wrap mt-2">
+                                            <div className="custom-control custom-checkbox ml-0 ml-md-3 mt-2 mt-md-0">
                                             <input
-                                                    class="custom-control-input"
+                                                    className="custom-control-input"
                                                     type="checkbox"
                                                     name="checkAll"
                                                     id="checkAll"
                                                     checked={this.state.allChecked}
                                                     onChange={this.handleChangeCheckbox}
                                                     />
-                                                     <label class="custom-control-label" for="checkAll" style={{color:"#348fe2"}}>Select All/Select None</label>
+                                                     <label className="custom-control-label" for="checkAll" style={{color:"#348fe2"}}>Select All/Select None</label>
                                                 {/* <a href="" style={{cursor:"pointer"}}><label>Select All/Select None</label></a> */}
                                             </div>
                                             {/* <div><label>&nbsp;&nbsp;&nbsp;</label></div>
@@ -866,38 +884,38 @@ class QuoteList extends React.Component {
                                     </div>
                                 </div>
                                 <hr/>
-                                <div class="row form-group">
-                                    <div class="col-md-2 col-lg-2">
+                                <div className="row form-group">
+                                    <div className="col-md-2 col-lg-2">
                                         <label><b>Quotes</b></label>
-                                        <div class="d-flex flex-wrap mt-2">
-                                            <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="active" checked="checked"
+                                        <div className="d-flex flex-wrap mt-2">
+                                            <div className="custom-control custom-checkbox">
+                                                <input type="checkbox" className="custom-control-input" id="active" checked="checked"
                                                 name="active"
                                                 onChange={this.handleClickCheckBox} />
-                                                <label class="custom-control-label" for="active" >Active</label>
+                                                <label className="custom-control-label" for="active" >Active</label>
                                             </div>
-                                            <div class="custom-control custom-checkbox ml-3">
-                                                <input type="checkbox" class="custom-control-input" id="inactive" />
-                                                <label class="custom-control-label" for="inactive">InActive</label>
+                                            <div className="custom-control custom-checkbox ml-3">
+                                                <input type="checkbox" className="custom-control-input" id="inactive" />
+                                                <label className="custom-control-label" for="inactive">InActive</label>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-7 col-lg-7">
+                                    <div className="col-md-7 col-lg-7">
                                         <label><b>Date Range</b></label>
-                                        <div class="d-flex flex-wrap align-items-center">
-                                            <div class="custom-control custom-radio">
-                                                <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
-                                                <label class="custom-control-label" for="customRadio1">Last 7 Days</label>
+                                        <div className="d-flex flex-wrap align-items-center">
+                                            <div className="custom-control custom-radio">
+                                                <input type="radio" id="customRadio1" name="customRadio" className="custom-control-input" />
+                                                <label className="custom-control-label" for="customRadio1">Last 7 Days</label>
                                             </div>
-                                            <div class="custom-control custom-radio ml-3">
-                                                <input type="radio" id="customRadio2" name="customRadio" class="custom-control-input" />
-                                                <label class="custom-control-label" for="customRadio2">Last 30 Days</label>
+                                            <div className="custom-control custom-radio ml-3">
+                                                <input type="radio" id="customRadio2" name="customRadio" className="custom-control-input" />
+                                                <label className="custom-control-label" for="customRadio2">Last 30 Days</label>
                                             </div>
-                                            <div class="custom-control custom-radio ml-3">
-                                                <input type="radio" id="customRadio3" name="customRadio" class="custom-control-input" />
-                                                <label class="custom-control-label" for="customRadio3">Select Range</label>
+                                            <div className="custom-control custom-radio ml-3">
+                                                <input type="radio" id="customRadio3" name="customRadio" className="custom-control-input" />
+                                                <label className="custom-control-label" for="customRadio3">Select Range</label>
                                             </div>
-                                            <div class="ml-3">
+                                            <div className="ml-3">
                                                 {/* <DatePicker 
                                                 // onChange={onChange} value={value} 
                                                 /> */}
@@ -906,17 +924,17 @@ class QuoteList extends React.Component {
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row form-group">
-                                    <div class="col-md-4 col-lg-4">
+                                <div className="row form-group">
+                                    <div className="col-md-4 col-lg-4">
                                         <label><b>Customer</b></label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
+                                        <div className="searchInput">
+                                            <button type="submit" className="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
                                             <div>
-                                            <input type="text" class="form-control" 
+                                            <input type="text" className="form-control" 
                                              //onChange={this.onSearchInputChange2} 
-                                             ref="search"
+                                             ref="searchQ"
                                              //value={this.state.text}
                                              value={this.state.searchString} 
                                              onChange={this.onTextChange}
@@ -930,24 +948,24 @@ class QuoteList extends React.Component {
                                                   {this.renderSuggestions()}
                                         </span>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 ">
+                                    <div className="col-md-4 col-lg-4 ">
                                         <label><b>Job Description</b></label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
+                                        <div className="searchInput">
+                                            <button type="submit" className="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" placeholder="Search Job Description"/>
+                                            <input type="text" className="form-control" placeholder="Search Job Description"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 ">
+                                    <div className="col-md-4 col-lg-4 ">
                                         <label><b>Order#</b></label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
+                                        <div className="searchInput">
+                                            <button type="submit" className="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
 
-                                            <input type="text" class="form-control" 
-                                             ref="ordSearch"
+                                            <input type="text" className="form-control" 
+                                             ref="ordSearchQ"
                                              value={this.state.orderSearch} 
                                              onChange={this.onTextChangeOrder}
                                             // onChange={this.onSearchInputChange3} 
@@ -960,7 +978,7 @@ class QuoteList extends React.Component {
                                                 getOptionLabel={(option) => option.orderNumber}
                                                 renderInput={(params) => (
                                                     <div ref={params.InputProps.ref}>
-                                                    <input class="form-control"  style={{ width: 200 }} ref="ordSearch" type="text"
+                                                    <input className="form-control"  style={{ width: 200 }} ref="ordSearch" type="text"
                                                      {...params.inputProps} />
                                                     </div>
                                                 )}
@@ -972,28 +990,28 @@ class QuoteList extends React.Component {
                                         </span>
                                     </div>
                                 </div>
-                                <div class="row form-group mb-2">
-                                    <div class="col-md-4 col-lg-4">
+                                <div className="row form-group mb-2">
+                                    <div className="col-md-4 col-lg-4">
                                         <label><b>Search Plants or Products</b></label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
+                                        <div className="searchInput">
+                                            <button type="submit" className="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" placeholder="Search Plants or Products"/>
+                                            <input type="text" className="form-control" placeholder="Search Plants or Products"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 ">
+                                    <div className="col-md-4 col-lg-4 ">
                                         <label><b>SKU</b></label>
-                                        <div class="searchInput">
-                                            <button type="submit" class="btn btn-search">
+                                        <div className="searchInput">
+                                            <button type="submit" className="btn btn-search">
                                                 <img src="assets/img/search.svg" alt=""/>
                                             </button>
-                                            <input type="text" class="form-control" onChange={this.onSearchInputChange2} placeholder="Search SKU"/>
+                                            <input type="text" className="form-control" onChange={this.onSearchInputChange2} placeholder="Search SKU"/>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 col-lg-4 pt-md-1 mt-2 ">
+                                    <div className="col-md-4 col-lg-4 pt-md-1 mt-2 ">
                                         <label>&nbsp;</label>
-                                        <div class="searchInput">
+                                        <div className="searchInput">
                                         <a href="javascript:;" style={{cursor:"pointer"}}>Reset</a>
                                         </div>
                                     </div>
@@ -1022,8 +1040,8 @@ class QuoteList extends React.Component {
                                                 </select>
                                                 
                                                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <input type="checkbox" class="custom-control-input customer-checkbox" id="dispquote" />
-                                                <label class="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
+                                                <input type="checkbox" className="custom-control-input customer-checkbox" id="dispquote" />
+                                                <label className="custom-control-label" for="dispquote"><b>Display FLAGGED Quotes only</b></label>
                                         </div>
                                         <div style={{float:"right",marginBottom:15}}>
                                         <TablePagination pageChange={this.paginationChange} pageCount={pageCount1} pageNumber={pageCount1+1}/>
@@ -1031,10 +1049,10 @@ class QuoteList extends React.Component {
                                         </div>
                                
                             </div>
-                            <div class="form-group row mt-0">
-                                <div class="col-md-12 col-lg-12">
-                                    <ul class="list-unstyled searchAlpha d-flex flex-wrap">
-                                        {/* <li><a  class={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li> */}
+                            <div className="form-group row mt-0">
+                                <div className="col-md-12 col-lg-12">
+                                    <ul className="list-unstyled searchAlpha d-flex flex-wrap">
+                                        {/* <li><a  className={this.state.selectedAlpha =="All"?"active":""} onClick={this.handleAlphabetFilter} id="All" style={{cursor:"pointer"}}>All</a></li> */}
 
                                         <button type="button" className={this.state.button ? "selected_alphabet buttonStyles": "unselected_aplphabet buttonStyles"}  onClick={this.onSearchInputChange}>All</button>
                                             {this.prepareAlphabets()}
@@ -1043,38 +1061,46 @@ class QuoteList extends React.Component {
                             </div>
 
 
-                                <div class="form-group row" style={{marginBottom: "5px"}}>
-                                    <div class="col-md-12 table-responsive">
-                                        <table id="plantDetails" class="table table-striped w-100">
+                                <div className="form-group row" style={{marginBottom: "5px"}}>
+                                    <div className="col-md-12 table-responsive">
+                                        <table id="plantDetails" className="table table-striped w-100">
                                             <thead>
                                                 <tr>
-                                                    <th class="text-nowrap text-center">Status</th>
-                                                    <th class="text-nowrap text-center">Order#</th>
-                                                    <th class="text-nowrap text-center">Order Parts</th>
-                                                    <th class="text-nowrap text-left" width="20%">Customer Name</th>
-                                                    <th class="text-nowrap text-center">Type</th>
-                                                    <th class="text-nowrap text-center">PO#</th>
-                                                    <th class="text-nowrap text-center">Order Date</th>
-                                                    <th class="text-nowrap text-center">Requested Date</th>
-                                                    <th class="text-nowrap text-center">Remaining Balance</th>
-                                                    <th class="text-nowrap text-center">Actions</th>
+                                                    <th className="text-nowrap text-center">Status</th>
+                                                    <th className="text-nowrap text-center">Order#</th>
+                                                    <th className="text-nowrap text-center">Order Parts</th>
+                                                    <th className="text-nowrap text-left" width="20%">Customer Name</th>
+                                                    <th className="text-nowrap text-center">Type</th>
+                                                    <th className="text-nowrap text-center">PO#</th>
+                                                    <th className="text-nowrap text-center">Order Date</th>
+                                                    <th className="text-nowrap text-center">Requested Date</th>
+                                                    <th className="text-nowrap text-center">Remaining Balance</th>
+                                                    <th className="text-nowrap text-center">Actions</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 {displayPOList1.map(pQuoteList=>{
                                                     return <tr key={pQuoteList.orderNumber}>
-                                                    <td class="text-center"><span  class={pQuoteList.status==='CLOSED'?'stsBadge stsClosed':pQuoteList.status==='OPEN'?'stsBadge stsOpen':pQuoteList.status==='READY'?'stsBadge stsReady':pQuoteList.status==='RESERVE'?'stsBadge stsReserve':pQuoteList.status==='PICKING'?'stsBadge stsPicking':pQuoteList.status==='SHIPPED'?'stsBadge stsOpen':pQuoteList.status==='LATE'?'stsBadge stsPicking':pQuoteList.status==='QUOTE'?'stsBadge stsQuote':""}>{pQuoteList.status}</span></td>
+                                                    <td className="text-center"><span 
+                                                     className={pQuoteList.order_status==='Closed'?'stsBadge stsClosed':
+                                                    pQuoteList.order_status==='Open'?'stsBadge stsOpen'
+                                                    :pQuoteList.order_status==='Ready'?'stsBadge stsReady'
+                                                    :pQuoteList.order_status==='Reserve'?'stsBadge stsReserve'
+                                                    :pQuoteList.order_status==='Pick'?'stsBadge stsPicking'
+                                                    :pQuoteList.order_status==='Ship'?'stsBadge stsShip'
+                                                    :pQuoteList.order_status==='Late'?'stsBadge stsLate'
+                                                    :pQuoteList.order_status==='Quote'?'stsBadge stsQuote':""}>{pQuoteList.order_status}</span></td>
                                                     <td><a href="">{pQuoteList.order}</a></td>
-                                                    <td class="text-nowrap text-center">4</td>
+                                                    <td className="text-nowrap text-center">4</td>
                                                     <td>{pQuoteList.customer_name}</td>
-                                                    <td class="text-center">{pQuoteList.amount}</td>
-                                                    <td class="text-center">8458788</td>
-                                                    <td class="text-center">{pQuoteList.order_date}</td>
-                                                    <td class="text-center">{pQuoteList.requested_date}</td>
-                                                    <td class="text-center">{pQuoteList.amount}</td>
-                                                    {/* <td class="text-nowrap text-right">6,085.00 <br/>32,058.12</td> */}
-                                                    <td class="text-center">
+                                                    <td className="text-center">{pQuoteList.amount}</td>
+                                                    <td className="text-center">8458788</td>
+                                                    <td className="text-center">{pQuoteList.order_date}</td>
+                                                    <td className="text-center">{pQuoteList.requested_date}</td>
+                                                    <td className="text-center">{pQuoteList.amount}</td>
+                                                    {/* <td className="text-nowrap text-right">6,085.00 <br/>32,058.12</td> */}
+                                                    <td className="text-center">
                                                         <span>
                                                             <a href="javascript;">
                                                                 <img src="assets/img/edit.svg" alt=""/>
@@ -1106,7 +1132,7 @@ const mapStateToProps = (state)=> (
     // console.log(state.customerReducer.payload)
     {
         quoteOrderData:state.quoteOrderReducer,
-        quoteOrderListTable:state.quoteOrderReducer.quoteOrderList
+        quoteOrderListTable:state.quoteOrderReducer.quoteOrderList,
     }
 
 )
