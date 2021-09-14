@@ -139,10 +139,10 @@ export const addNewOrder = (data) => dispatch => {
 
 
 export const addToOrderUpdate = (data) => dispatch => {
-    //debugger;
+    debugger;
 
     return axios.post(`/api/update-order-details/${data.id}`,data,config).then(res=>{ 
-  
+  debugger
         console.log(res)
         dispatch({
             type:UPDATE_NEW_ORDER,

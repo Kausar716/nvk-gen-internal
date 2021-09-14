@@ -89,7 +89,8 @@ import {
             })
     
         }
-        const handleUpdate = ()=>{
+        const handleUpdate = (e)=>{
+            e.preventDefault();
             // //console.log(customerDataById1)
             // //console.log(quoteDetails)
             // let id = quoteDetails.id
@@ -101,13 +102,26 @@ import {
         }
 
         const handleCustomerData =(e)=>{
+            debugger;
+            let idNum = parseInt(e.target.value) 
+            let updateObject={}
+            updateObject.customer_id=idNum
+
             // alert(e.target.value)
             if(e.target.id ==="customer_id"){
                 // // //console.log(customerDataById1)
-                props.getCustomerByIdQuote(e.target.value).then(data=>{
+                props.getCustomerByIdQuote(idNum).then(data=>{
+
+                    console.log(data)
                     //console.log(customerDataById1)
                     // props.updateQuoteData(customerDataById1)
                 })
+
+                props.addNewOrder(updateObject).then(data=>{
+
+                    console.log("123456789",data)
+                })
+
                 props.getAllCustomerType()
                 props.getAllStatusMethods()
                 // props.getCustomerContacts(e.target.value)
