@@ -90,37 +90,37 @@ export class PurchaseOrders extends React.Component {
         
     } 
     handleChange = (event, { newValue }) => {
-        console.log(newValue)
-        if(event.target.name==="plantSearch"){
-            this.setState({plantValue:newValue})
-        // setLoaderMessage("No Records Found.")
-        this.props.handlePOFilter("plantSearch",newValue)
-        // this.setState({newValue});
-        }
-        if(event.target.name==="supplierSearch"){
-            this.setState({supplierValue:newValue})
-        // setLoaderMessage("No Records Found.")
-        this.props.handlePOFilter("supplierSearch",newValue)
-        // this.setState({newValue});
-        }
-        if(event.target.name==="jobSearch"){
-            this.setState({jobValue:newValue})
-        // setLoaderMessage("No Records Found.")
-        this.props.handlePOFilter("jobSearch",newValue)
-        // this.setState({newValue});
-        }
-        if(event.target.name==="orderSearch"){
-            this.setState({orderValue:newValue})
-        // setLoaderMessage("No Records Found.")
-        this.props.handlePOFilter("orderSearch",newValue)
-        // this.setState({newValue});
-        }
-        if(event.target.name==="supplierOrderSearch"){
-            this.setState({supplierOrderValue:newValue})
-        // setLoaderMessage("No Records Found.")
-        this.props.handlePOFilter("supplierOrderSearch",newValue)
-        // this.setState({newValue});
-        }
+        // console.log(newValue)
+        // if(event.target.name==="plantSearch"){
+        //     this.setState({plantValue:newValue})
+        // // setLoaderMessage("No Records Found.")
+        // this.props.handlePOFilter("plantSearch",newValue)
+        // // this.setState({newValue});
+        // }
+        // if(event.target.name==="supplierSearch"){
+        //     this.setState({supplierValue:newValue})
+        // // setLoaderMessage("No Records Found.")
+        // this.props.handlePOFilter("supplierSearch",newValue)
+        // // this.setState({newValue});
+        // }
+        // if(event.target.name==="jobSearch"){
+        //     this.setState({jobValue:newValue})
+        // // setLoaderMessage("No Records Found.")
+        // this.props.handlePOFilter("jobSearch",newValue)
+        // // this.setState({newValue});
+        // }
+        // if(event.target.name==="orderSearch"){
+        //     this.setState({orderValue:newValue})
+        // // setLoaderMessage("No Records Found.")
+        // this.props.handlePOFilter("orderSearch",newValue)
+        // // this.setState({newValue});
+        // }
+        // if(event.target.name==="supplierOrderSearch"){
+        //     this.setState({supplierOrderValue:newValue})
+        // // setLoaderMessage("No Records Found.")
+        // this.props.handlePOFilter("supplierOrderSearch",newValue)
+        // // this.setState({newValue});
+        // }
         
        
         

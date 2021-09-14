@@ -25,7 +25,6 @@ import ActionModal from '../Modal/ActionModal';
  const OrderHistory = (props) =>{
     const [value, onChange] = useState(new Date());
     useEffect(()=>{
-        alert("in")
         console.log(props.poData)
         props.getOrderHistory(props.poData.id)
     },[])
