@@ -2,15 +2,17 @@ import React, { useState,useEffect } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
+import Autosuggest from 'react-autosuggest';
 import DatePicker from 'react-date-picker';
+import Loader from '../ProductManager/Loader'
 
 import {
-    updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall 
+    updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall
 } from "../../actions/quoteOrderManagementAction"
 
 // import {getQuoteList,addToquoteAPICall,filterHandleData,searchPlantProductAPI,
 //     updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
-
+import {searchPlantProductAPI,addToquoteAPICall} from "../../actions/quoteAction";
 
 import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,
     getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,
@@ -53,13 +55,12 @@ import {
         props.getAllCustomerType()
         props.getLocationList()   
         props.getCategoryList()
-        // if(loading){
-        // props.searchPlantProductAPI().then(data=>{
-        //     // alert("ff")
-        //     // //console.log(data.data)
-        //     getAllData(data.data)
+       
+        props.searchPlantProductAPI().then(data=>{
+           
+            getAllData(data.data)
         
-        // })
+        })
 
         
 
@@ -81,7 +82,7 @@ import {
 
 
         const handleSave = (e)=>{
-            debugger
+           // debugger
             e.preventDefault();
     
             props.addNewOrder(orderDetails).then(data=>{
@@ -89,7 +90,154 @@ import {
             })
     
         }
-        const handleUpdate = ()=>{
+
+
+        const getFilterData = (id,value)=>{
+            let filterIds = plantFilterIds
+            filterIds[id] = value
+            let filterData =  searchDataDuplicate.filter(product =>{
+                let notFoundCount = 0 
+                Object.keys(filterIds).map(id=>{
+                    if(filterIds[id] !=="All" && filterIds[id] !==""){
+                        if((id ==="sku_code" || id ==="genus")  && product[id].toLowerCase().includes(filterIds[id].toLowerCase())){
+    
+                        }
+                        else if(parseInt(product[id]) === parseInt(filterIds[id])){
+                        }else notFoundCount++
+                    }
+                })
+                if(notFoundCount ===0)return product
+    
+            })
+            //console.log(filterData)
+            setSearchData(filterData)
+            setPlantFilterIds(filterIds)
+            // searchList:filterData,
+            // plantFilterIds:filterIds
+    
+        }
+
+
+
+
+
+        const onChange2 = (e, { newValue }) => {
+            // this.setState({plantNameValue:newValue});
+            setPlantSKUValue(newValue)
+            getFilterData("sku_code",newValue)  
+            // let plantName = {}
+            // plantName.plant_search =newValue
+            // props.searchPlantProductAPI(plantName)    
+        };
+
+
+        const onChange1 = (e, { newValue }) => {
+            // this.setState({plantNameValue:newValue});
+            setPlantNameValue(newValue)
+            getFilterData("genus",newValue)  
+            // let plantName = {}
+            // plantName.plant_search =newValue
+            // props.searchPlantProductAPI(plantName)    
+        };
+        const changeData = (id)=>{
+            // alert(id)
+            if(id ===2){
+                // alert("D")
+                props.getQuoteList(quoteDetails.id).then(data=>{
+                    // alert(JSON.stringify(data))
+                    let plantIdsAll = data.data.items.map(plantData=>plantData.plant_id)
+                    let plantId4 = plantIdsAll.filter(function( plant, index, array ) {
+                        // alert("FDs")
+                        return array.indexOf(plant) === index;
+                    });
+                    setSearchPalntId(plantId4)
+                })
+             
+                // quoteList
+                // alert("FDS")
+            }
+        }
+
+
+
+
+
+        const addToPlant = (e)=>{
+            // alert(e.target.id)
+            // let search = searchData
+            let filterData1 = searchData.filter(data=>data.sku_code===e.target.id)
+            // console.log(filterData1.plant_id)
+            let obj = {}
+            let obj1 = {}
+            let arr  = []
+            obj.type ="plant"
+            let skuSplit = filterData1[0].sku_code.split("-")
+            obj1["plant_id"]=parseInt(skuSplit[0])
+            obj1.name=filterData1[0].plant_name
+            obj1.size=filterData1[0].plant_size
+            obj1.SKU=filterData1[0].sku_code
+            obj1.price=filterData1[0].sale_price
+            obj1.volume_rate=filterData1[0].volume_price_per_unit
+            obj1.disc_percent=filterData1[0].discount
+            obj1.qty=filterData1[0].volume_quantity
+            // console.log(obj1)
+            arr[0] = obj1
+            obj.items = arr
+    
+    
+            console.log(filterData1)
+            props.addToquoteAPICall(quoteDetails.id,obj)
+            let filterData = searchData.filter(data=>data.sku_code!==e.target.id)
+            setSearchData(filterData)
+          
+           console.log(filterData1)
+        //     console.log(searchData[e.target.id])
+    
+        }
+
+
+        const changeDataValue  = (e)=>{
+            let result = e.target.id
+            // alert(result)
+            let value = result.split("^")
+            // alert(e.target.value)
+            let searchData1 = searchData
+            let data  =searchData1.map((seacrh,index)=>{
+                if(seacrh.sku_code == value[0]){
+                    let searchObj = seacrh
+                    searchObj[value[1]] = e.target.value
+                    searchData1[index] = searchObj
+    
+                }
+                return seacrh
+            })
+            console.log(data)
+            setSearchData(data)
+    
+        }
+
+
+        const inputPropsPlant = {
+            placeholder: 'Plant Name',
+            value:plantNameValue,
+            className:" form-control  btn btn-search ",
+            id:"genus",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: onChange1,
+            dataId: 'my-data-id',
+        };
+        const inputPropsSKU = {
+            placeholder: 'Plant Name',
+            value:plantSKUValue,
+            className:" form-control  btn btn-search ",
+            id:"sku_code",
+            style: {border:"1px solid gray",borderRadius:3,textAlign:"left",paddingLeft:"10%",border:"1px solid lightgray",paddingTop:8,height:"41.5px",fontSize:"15px",textDecoration:"none",fontWeight:"380"},
+            onChange: onChange2,
+            dataId: 'my-data-id',
+        };
+
+        const handleUpdate = (e)=>{
+            e.preventDefault();
             // //console.log(customerDataById1)
             // //console.log(quoteDetails)
             // let id = quoteDetails.id
@@ -101,13 +249,26 @@ import {
         }
 
         const handleCustomerData =(e)=>{
+           // debugger;
+            let idNum = parseInt(e.target.value) 
+            let updateObject={}
+            updateObject.customer_id=idNum
+
             // alert(e.target.value)
             if(e.target.id ==="customer_id"){
                 // // //console.log(customerDataById1)
-                props.getCustomerByIdQuote(e.target.value).then(data=>{
+                props.getCustomerByIdQuote(idNum).then(data=>{
+
+                    console.log(data)
                     //console.log(customerDataById1)
                     // props.updateQuoteData(customerDataById1)
                 })
+
+                props.addNewOrder(updateObject).then(data=>{
+
+                    console.log("123456789",data)
+                })
+
                 props.getAllCustomerType()
                 props.getAllStatusMethods()
                 // props.getCustomerContacts(e.target.value)
@@ -139,6 +300,69 @@ import {
      
     
         }
+
+
+
+        const onSuggestionsFetchRequested = ({ value }) =>{
+            // alert(value.length)
+           setSuggestions(getSuggestions(value))
+            // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+        }
+    
+        const onSuggestionsClearRequested = () =>  setSuggestions([])
+
+        const getSuggestions = (value,type) => {
+            const inputValue = value.toLowerCase().trim()
+            const inputLength = inputValue.length;
+            let result = searchList.reduce((unique, o) => {
+                if(!unique.some(obj => obj.genus === o.genus)) {
+                  unique.push(o);
+                }
+                return unique;
+            },[]);
+            return inputLength === 0 ? [] :  result.filter(lang =>lang.genus.toLowerCase().includes(inputValue))      
+        }
+
+
+       const getSuggestionValue = suggestion =>suggestion.genus
+    
+       const renderSuggestion = suggestion => (<span>{suggestion.genus}</span>);
+    
+       const onSuggestionsFetchRequested1 = ({ value }) =>{
+        // alert(value.length)
+       setSuggestions(getSuggestions1(value))
+        // this.setState({suggestions: this.getSuggestions(value),show:this.getSuggestions(value).length>3?1:0});
+    }
+
+    const onSuggestionsClearRequested1 = () =>  setSuggestions([])
+    // const customerHandle  =(e)=>{
+    //     //console.log(e.target.value,e.target.id)
+    //     if(e.target.id =="discount_by_line_item"){
+    //         let value = e.target.value ==0?true:false
+    //         props.handleExchangeData(value,e.target.id,"customerDataById1")
+
+    //     }else
+    //     props.handleExchangeData(e.target.value,e.target.id,"customerDataById1")
+        
+    // }
+    const getSuggestions1 = (value,type) => {
+       // debugger
+        const inputValue = value.toLowerCase().trim()
+        const inputLength = inputValue.length;
+        let result = searchList.reduce((unique, o) => {
+            if(!unique.some(obj => obj.sku_code === o.sku_code)) {
+              unique.push(o);
+            }
+            return unique;
+        },[]);
+        return inputLength === 0 ? [] :  result.filter(lang =>lang.sku_code.toLowerCase().includes(inputValue))      
+    };
+   const getSuggestionValue1 = suggestion =>suggestion.sku_code
+
+   const renderSuggestion1 = suggestion => (<span>{suggestion.sku_code}</span>);
+
+
+
 
 
         const {quoteDetails,searchList,searchListDuplicate,quoteList} = props.QuoteReducerData
@@ -439,10 +663,10 @@ import {
                                                 <label>Show Pricing on Output</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                    <input type="checkbox" name="show_pricing_on_output" id="show_pricing_on_output" 
-                                                     value={orderDetails.show_pricing_on_output} disabled={customerSelected?false:true} 
-                                                     checked={orderDetails.show_pricing_on_output===1?true:false} onChange={handleCustomerData}/>
-                                                        <label for="show_pricing_on_output"></label>
+                                                    <input type="checkbox" name="show_pricing_op" id="show_pricing_op" 
+                                                     value={orderDetails.show_pricing_op} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.show_pricing_op===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="show_pricing_op"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -473,15 +697,24 @@ import {
                                     <div class="col-md-12">
                                         <div class="row form-group">
                                             <div class="col-md-6 col-lg-6">
-                                                <label>Search</label>
+                                                <label>Plant and Product Search</label>
                                                 <div class="searchInput">
-                                                    <button type="submit" class="btn btn-search">
+                                                    <button type="submit" class="btn btn-search"  style={{marginTop:"2%",marginLeft:"2%"}}>
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search Plants or Products"/>
+                                                    <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested}
+                                                    onSuggestionsClearRequested={onSuggestionsClearRequested}
+                                                    getSuggestionValue={getSuggestionValue}
+                                                    renderSuggestion={renderSuggestion}
+                                                    inputProps={inputPropsPlant}
+                                                  
+                                                />
+                                                    {/* <input type="text" class="form-control" placeholder="Search Plants or Products"/> */}
                                                 </div>
                                                 <div class="row mt-3 align-items-center">
-                                                    <div class="col-md-12 d-flex">
+                                                    <div class="col-md-12 d-flex" style={{marginTop:"35px"}}>
                                                         {/* <div class="custom-control custom-radio">
                                                             <input type="radio" id="customRadio1" name="customRadio" class="custom-control-input" />
                                                             <label class="custom-control-label" for="customRadio1">Active Only</label>
@@ -504,10 +737,19 @@ import {
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Search SKU</label>
                                                 <div class="searchInput">
-                                                    <button type="submit" class="btn btn-search">
+                                                    <button type="submit" class="btn btn-search" style={{marginTop:"2%",marginLeft:"2%"}}>
                                                         <img src="assets/img/search.svg" alt=""/>
                                                     </button>
-                                                    <input type="text" class="form-control" placeholder="Search SKU"/>
+                                                    <Autosuggest
+                                                    suggestions={suggestions}
+                                                    onSuggestionsFetchRequested={onSuggestionsFetchRequested1}
+                                                    //onSuggestionsClearRequested={onSuggestionsClearRequested1}
+                                                    getSuggestionValue={getSuggestionValue1}
+                                                    renderSuggestion={renderSuggestion1}
+                                                    inputProps={inputPropsSKU}
+                                                  
+                                                />
+                                                    {/* <input type="text" class="form-control" placeholder="Search SKU"/> */}
                                                 </div>
                                             </div>
                                         </div>
@@ -554,6 +796,115 @@ import {
                                                         </tr>
                                                     </thead>
                                                     <tbody>
+
+
+
+
+
+                                                    {loading?  <div style={{height: "300px",lineHeight: "300px",textAlign: "center",backgroundColor:"white",width:"100%"}}><Loader/></div>:<tr>
+                                                  
+                                                            <td colspan="13" class="p-0">
+                                                                <table class="table table-striped mb-0" border="0" width="100%">
+                                                                {plantId.map((plantId,index1)=>{
+                                                       
+                                                       let count =0
+                                                            return searchData.map((plant,index)=>{
+                                                                
+                                                             
+                                                                if(JSON.parse(plantId)===parseInt(plant["plant_id"])){
+                                                                
+                                                                    let a = count++
+                                                                    return(
+                                                                        <div>
+                                                    
+                                                   { a ===0?<tr class="tblLinks" style={{backgroundColor:"gray"}}>
+                                                                        <td colspan="13" style={{backgroundColor:"#f2f2f2"}}>
+
+                                                                            <a href="">{plant.plant_name!==null?plant.plant_name:"No Name"}</a>
+                                                                        </td>
+                                                                    </tr>:""}
+                                                                    <tr>
+                                                                        <td width="6%">
+                                                                            <a href="">{plant.sku_code}</a>
+                                                                        </td>
+                                                                       
+                                                                        <td class="text-center" width="6%"><a href="" style={{width:"50px"}}>{plant.size}</a></td>
+                                                                        <td class="text-center" width="6%">{plant.on_hand}</td>
+                                                                        <td class="text-center" width="6%">{plant.customer_orders}</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">{plant.current_available}</b></td>
+                                                                        <td class="text-center" width="6%">{plant.on_quotes}</td>
+                                                                        <td class="text-center" width="6%">{plant.open_pos}</td>
+                                                                        <td class="text-center" width="8%"><b class="f-s-20">{plant.future_availability}</b></td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value={plant.sale_price} id={plant.sku_code+"^sale_price"} onChange={changeDataValue}/> 
+                                                                            <div>
+                                                                                <span class="text-green">3.18</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder="" value={plant.volume_price_per_unit} id={plant.sku_code+"^volume_price_per_unit"} onChange={changeDataValue}/>
+                                                                            <div>
+                                                                                <span class="text-green">3.07</span>
+                                                                            </div>   
+                                                                            <div>
+                                                                                <span class="text-red">25 Min</span>
+                                                                            </div>   
+                                                                        </td>
+                                                                        <td class="text-center" width="6%">
+                                                                            <input type="text" class="form-control textQtySm" placeholder=""  value={quoteDetails.discount} id={plant.sku_code+"^discount"} onChange={changeDataValue}/>
+                                                                        </td>
+                                                                        <td class="text-center" width="6%" >
+                                                                            <div class="d-flex align-items-center">
+                                                                                <input type="text" class="form-control textQtySm" placeholder="" value={plant.volume_quantity} id={plant.sku_code+"^volume_quantity"} onChange={changeDataValue}/>
+                                                                            </div>
+                                                                            <div>
+                                                                                <span class="text-red">Short 4</span>
+                                                                            </div>
+                                                                        </td>
+                                                                        
+                                                                        <td class="text-center" width="4%">
+                                                                            <a  class="ml-2" onClick={addToPlant} id={plant.sku_code} style={{cursor: 'pointer'}}>
+                                                                                <img src="assets/img/tbl-plus-ic.svg" alt=""  onClick={addToPlant} id={plant.sku_code} />
+                                                                            </a>
+                                                                        </td>
+                                                                    </tr>
+                                                   
+                                                    </div>
+
+                                                    )
+
+                                                        
+                                                               
+                                                            }   
+                                                        })
+
+                                                       
+                                                    
+                                                    })}
+                                                        
+                                              
+                                                                </table>
+                                                            </td>
+                                                        </tr>}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{/* 
                                                         <tr>
                                                             <td colspan="13" class="p-0">
                                                                 <table class="table table-striped mb-0" border="0" width="100%">
@@ -747,7 +1098,12 @@ import {
                                                                     </tr>
                                                                 </table>
                                                             </td>
-                                                        </tr>
+                                                        </tr> */}
+
+
+
+
+
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -1425,7 +1781,7 @@ const mapStateToProps = (state)=>(
 
 export default connect(mapStateToProps,{
     updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall,
-
+    searchPlantProductAPI,addToquoteAPICall,
     getAllPlantAction,
     filterPlantManagerData,getCategoryList,getAllPlants,getLocationList,setPlantPageNumber,
     resetFileds,getPlantList,getFilterResult,getCustomerByIdQuote,

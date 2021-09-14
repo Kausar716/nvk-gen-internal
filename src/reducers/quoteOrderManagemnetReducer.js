@@ -59,18 +59,18 @@ const initialSatate = {
         discount_by_line_item:1,
         display_discount_column:1,
         display_substitution_line:1,
-        show_pricing_on_output:1,
+        show_pricing_op:1,
         
-        archive_quote_timeframe:"",
-        show_pricing_op:0,
-        flag_as_reminder:0,
+        //archive_quote_timeframe:"",
+        //show_pricing_op:0,
+        //flag_as_reminder:0,
         order_notes:"",
         status:"1",
         customer_id: "",
         quote_no: "",
         quote_status: "",
-        pricing_year: "",
-        amount: null,
+        //pricing_year: "",
+        //amount: null,
     }
 
   }
@@ -167,16 +167,21 @@ const initialSatate = {
 
                 
             case ADD_NEW_ORDER:
-                let customerData = action.payload.data.customer
-                customerData.units = customerData.unit_of_measurement
-                delete customerData.id
-                delete customerData.customer_id
-                delete action.payload.data.customer
+               // debugger;
+                // let customerData = action.payload.data.customer
+                // customerData.units = customerData.unit_of_measurement
+                // delete customerData.id
+                // delete customerData.customer_id
+                // delete action.payload.data.customer
+                let customerData = action.payload.data
+                delete customerData.created_at
+                delete customerData.updated_at
+
     
                 return{
     
                     ...state,
-                    orderDetails:{...state.orderDetails,...action.payload.data,...customerData}
+                    orderDetails:{...state.orderDetails,...action.payload.data, ...customerData}
     
                 }
 
