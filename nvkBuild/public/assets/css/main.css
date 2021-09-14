@@ -16021,6 +16021,8 @@ textarea.form-control.is-valid {
 .custom-control-input.is-valid ~ .custom-control-label,
 .was-validated .custom-control-input:valid ~ .custom-control-label {
   color: #348fe2;
+  cursor: pointer;
+  
 }
 
 .custom-control-input.is-valid ~ .custom-control-label::before,

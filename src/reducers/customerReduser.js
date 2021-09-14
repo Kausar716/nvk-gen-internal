@@ -3,6 +3,7 @@ import {
     GET_CUSTOMER_LIST,
     SET_PAGE_NUMBER,
     HANDLE_ALL_FILTER,
+    ADD_PRIMARY,
     HANDLE_INPUT_EXCHANGE,
     FILTER_DATA_BY_RADIO,
     FILTER_DATA_BY_SEARCH,
@@ -34,6 +35,7 @@ import {
     EDIT_CUSTOMER,
     DELETE_CUSTOMER,
     TYPE_OF_ACTION,
+    EDIT_PRIMARY,
     GET_CUSTOMER_BY_ID,
     RESET_CUSTOMER_FILEDS,
     UPDATE_CUSTOMER,
@@ -91,7 +93,7 @@ DELETE_SUPPLIER_CONTACT
    
 
 const initialSatate = {
-
+    primaryContact:false,
     updatedCustomerSettingStatusLevel:[],
     showSpecificCustomerSettingSatausLevel:[],
 
@@ -167,10 +169,10 @@ const initialSatate = {
    customerReturnReason:{reason: "",return_to_inventory: 2},
    customerReturnReasonList:{active:[],inactive:[]},
 
-   customerDataById:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   customerDataById:{contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
-   customerDataById1:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   customerDataById1:{contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
    tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
    tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
 
@@ -227,7 +229,36 @@ const initialSatate = {
             return{
                 ...state,
             }
-        
+        case ADD_PRIMARY:
+            // alert(JSON.stringify(action.payload))
+            let data = action.payload
+            data.primary_contact=1
+            delete data.customer_id 
+            let customerDetails = state.customerDataById
+            customerDetails["contacts"] = []
+            customerDetails["contacts"][0] = data
+
+           
+            return{
+                ...state,
+                customerDataById:customerDetails,
+                primaryContact:false
+
+            }
+        case EDIT_PRIMARY:
+            let data1 = action.payload
+            // data.primary_contact=1
+            // delete data.customer_id 
+            // let customerDetails = state.customerDataById
+            // customerDetails["contacts"][0] = data
+                
+            return{
+                ...state,
+                customerContact:data1,
+                primaryContact:true
+
+            }
+
         case RESET_CONTACT:
             return{
                 ...state,
@@ -343,7 +374,22 @@ case ADD_NEW_CUSTOMER:
     console.log(action.payload)
     return{
         ...state,
-        customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customercontact:[],customeraddress:[]}
+        customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customeraddress:[]},
+        customerContact:{
+            customer_id: 0,
+            first_name: "",
+            last_name: "",
+            email: "",
+            phone1: "",
+            phone1_ext: "",
+            phone2: "",
+            phone2_ext: "",
+            notes: "",
+            primary_contact: 0,
+            all_communication: 0,
+            status: 1,
+        
+          },
         
     }
     case EDIT_CUSTOMER:
@@ -422,7 +468,7 @@ case ADD_NEW_CUSTOMER:
               },
               customerAddressList:{active:[],inactive:[]},
 
-              customerDataById:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
+              customerDataById:{contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
               tax_exempt: 0,fax:"",website_url:"",
               tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
         }

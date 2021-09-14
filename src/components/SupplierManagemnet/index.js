@@ -300,7 +300,7 @@ export class SupplierManagemnet extends React.Component {
                                                 <th class="text-nowrap">Status</th>
                                                 <th class="text-nowrap">Supplier ID</th>
                                                 <th class="text-nowrap">Supplier Name</th>
-                                                <th class="text-nowrap">Type</th>
+                                                {/* <th class="text-nowrap">Type</th> */}
                                                 <th class="text-nowrap">Telephone</th>
                                                 <th class="text-nowrap">Contact</th>
                                                 <th class="text-nowrap">Last Order</th>
@@ -314,7 +314,8 @@ export class SupplierManagemnet extends React.Component {
                                                          <td style={{color:customerData.status === 1?"":"red"}}>{customerData.status === 1?"Active":"Inactive" }</td>
                                                         <td>{customerData.id}</td>
                                                         <td>{customerData.supplier_name}</td>
-                                                        <td>{"--"}</td>
+                                                        {/* <td>{customerData
+                                                            }</td> */}
                                                         <td>{customerData.fax}</td>
                                                         <td>{customerData.contact_id}</td>
                                                         <td>N/A</td>

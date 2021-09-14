@@ -1108,8 +1108,27 @@ Rate</th>
                                                     <th class="text-center">Timestamp</th>
                                                 </tr>
                                             </thead>
-                                            <tbody>
-                                                <tr>
+                                            {/* <tbody> */}
+
+                                            {searchPalntId.map((plantId,index1)=>{
+                                                        //console.log(JSON.parse(plantId))
+                                                       let count =0
+                                                                 
+                                                                       return quoteList.items.map((data,index)=>{
+                                                                        if(JSON.parse(plantId)===parseInt(data["plant_id"])){
+                                                                            let a = count++
+                                                                           return(    <tr>
+                                                    <td class="text-center">New</td>
+                                                    <td class="text-center">B.Vanderkruk</td>
+                                                    <td class="text-center">{data.SKU} QTY:{data.qty}</td>
+                                                    <td class="text-center">16/05/2020   15:32</td>
+                                                </tr>)
+                                                                        }
+                                                                       })
+                                            })}
+                                                                           
+                                            
+                                                {/* <tr>
                                                     <td class="text-center">New</td>
                                                     <td class="text-center">B.Vanderkruk</td>
                                                     <td class="text-center">SKU GG063000000LT added with QTY:4</td>
@@ -1132,14 +1151,8 @@ Rate</th>
                                                     <td class="text-center">B.Vanderkruk</td>
                                                     <td class="text-center">SKU GG063000000LT added with QTY:4</td>
                                                     <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text-center">New</td>
-                                                    <td class="text-center">B.Vanderkruk</td>
-                                                    <td class="text-center">SKU GG063000000LT added with QTY:4</td>
-                                                    <td class="text-center">16/05/2020   15:32</td>
-                                                </tr>
-                                            </tbody>
+                                                </tr> */}
+                                            {/* </tbody> */}
                                         </table>
                                     </div>
                                 </div>

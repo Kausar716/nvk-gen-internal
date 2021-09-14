@@ -39,15 +39,15 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         Object.keys(validationList).map((object, i) => {
             var element = document.getElementById(object);
          
-            if (object === "notes") {
-                if (element.value === "") {
-                    document.getElementById("text-validtor").innerText = "Enter Notes"
-                    errorCount++;
+            // if (object === "notes") {
+            //     if (element.value === "") {
+            //         document.getElementById("text-validtor").innerText = "Enter Notes"
+            //         errorCount++;
 
-                } else {
-                    document.getElementById("text-validtor").innerText = ""
-                }
-            }
+            //     } else {
+            //         document.getElementById("text-validtor").innerText = ""
+            //     }
+            // }
 
 
             // }

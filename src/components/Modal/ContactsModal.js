@@ -3,11 +3,11 @@ import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
 import InputMask from 'react-input-mask';
-import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
+import {addPriamryContact,getCustomerById,addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
 
  const ContactsModal = (props) => {
      const {status,type} =props
-   const {customerContact,customerDataById} = props.customerData
+   const {customerContact,customerDataById,primaryContact} = props.customerData
    const [error,setError] = useState("")
    
    useEffect(() => {
@@ -77,23 +77,23 @@ import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,
                 }
 
             }
-            // if (object === "phone2") {
-            //     if(element.value !== ""){
-            //         let enteredNumber = element.value.trim().match(/\d/g)
-            //         if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
-            //             document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-            //             errorCount++;
-            //         } else {
-            //             document.getElementById("phone2-validtor").innerText = ""
-            //         }
+            if (object === "phone2") {
+                if(element.value !== ""){
+                    let enteredNumber = element.value.trim().match(/\d/g)
+                    if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+                        document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+                        errorCount++;
+                    } else {
+                        document.getElementById("phone2-validtor").innerText = ""
+                    }
     
-            //     }
-            //     else if(element.value === ""){
-            //         document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-            //         errorCount++;
-            //     }
+                }
+                // else if(element.value === ""){
+                //     document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+                //     errorCount++;
+                // }
 
-            // }
+            }
    
 
             // if (object === "phone2_ext") {
@@ -180,7 +180,7 @@ import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,
         if(errors!==0)
         return
        
-        if(customerDataById.id !== undefined){
+        if(customerDataById.id !== undefined && primaryContact==false){
             setError("")
             customerContact.customer_id  = customerDataById.id
             if(type=="add"){
@@ -207,7 +207,9 @@ import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,
         }
 
         }else{
-            setError("Please add customer first")
+            props.addPriamryContact(customerContact)
+            props.modalAction()
+           
         }
      
       
@@ -247,7 +249,7 @@ import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Phone1 Ext</label>
-                <input type="text" class="form-control" id="phone1_ext" value={""}  value={customerContact.phone1_ext}  onChange={handleInput} placeholder="Phone1 Ext"/>
+                <input type="number" class="form-control" id="phone1_ext" value={""}  value={customerContact.phone1_ext}  onChange={handleInput} placeholder="Phone1 Ext"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone1_ext-validtor"></span>}
             </div>
@@ -257,13 +259,13 @@ import {getCustomerById,addCustomerContact,handleExchangeData,savingContactData,
             <div class="col-md-6 col-lg-6">
                 <label>Phone 2<span class="text-danger"></span></label>
                 {/* <input type="number" class="form-control" id="phone2" value={""} value={customerContact.phone2}  onChange={handleInput}/> */}
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={"_"} id={"phone2"} value={customerContact.phone2} onChange={handleInput} placeholder="Phone 2"/>
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone2"} value={customerContact.phone2} onChange={handleInput} placeholder="Phone 2"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
                 <label>Phone 2 Ext<span class="text-danger"></span></label>
-                <input type="text" class="form-control" id="phone2_ext" value={""}  value={customerContact.phone2_ext}  onChange={handleInput} placeholder="Phone 2 Ext"/>
+                <input type="number" class="form-control" id="phone2_ext" value={""}  value={customerContact.phone2_ext}  onChange={handleInput} placeholder="Phone 2 Ext"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone2_ext-validtor"></span>}
             </div>
@@ -331,7 +333,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{getCustomerById,
+export default connect(mapStateToProps,{getCustomerById,addPriamryContact,
 addCustomerContact,handleExchangeData,updateContactData,getCustomerContacts
      
 

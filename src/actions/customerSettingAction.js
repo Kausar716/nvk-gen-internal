@@ -10,6 +10,7 @@
  FILTER_DATA_BY_ALPHA,
  HANLE_DATA_CHANGE,
  HANDLE_INPUT_EXCHANGE,
+ EDIT_PRIMARY,
  HANDLE_INPUT_EXCHANGE1,
  ADD_NOTIFICATION,
  ADD_FINANCES_DATA,
@@ -37,6 +38,7 @@
  GET_CUSTOMER_RETURN_REASON,
  GET_EXCHANGE_DATA,
  ADD_NEW_CUSTOMER,
+ ADD_PRIMARY,
  EDIT_CUSTOMER,
  TYPE_OF_ACTION,
  DELETE_CUSTOMER_ADDRESS,
@@ -128,6 +130,43 @@ export const customerStatusSort =(fromId, toId,type)=>dispatch => {
     })
 
 }
+export const addPriamryContact  =(data)=>dispatch => {
+    // alert(JSON.stringify(data))
+    dispatch({
+        type:ADD_PRIMARY,
+        payload:data
+    })
+
+    
+
+
+}
+export const editDataToContact  =(data)=>dispatch => {
+    // alert(JSON.stringify(data))
+    dispatch({
+        type:EDIT_PRIMARY,
+        payload:data
+    })
+
+    
+
+
+}
+
+// export const customerStatusSort =(fromId, toId,type)=>dispatch => {
+//     let attributeObject={}
+//     attributeObject.from=fromId;
+//     attributeObject.to=toId;
+//     attributeObject.position=type;
+//     return axios.post(`/api/drag-sort-customer-statuslevel`,attributeObject,config).then(res=>{ 
+//         console.log(res)
+//     dispatch({
+//             type:HANDLE_CUSTOMER_STATUS_SORT,
+//             payload:res.data
+//         })
+//     })
+
+// }
 export const customerReturnSort =(fromId, toId,type)=>dispatch => {
     let attributeObject={}
     attributeObject.from=fromId;
@@ -241,9 +280,10 @@ export const resetContact = () =>dispatch=>{
 }
 export const UpdateCustomerData = (data)=>dispatch=>{
     let id = data.id
-    delete data.id
+    // delete data.id
     return axios.post(`/api/update-customer/${id}`,data,config).then(res=>{ 
-        console.log(res)
+        // console.log(res)
+        // res.data["id"] = id
         dispatch({
                 type:UPDATE_CUSTOMER,
                 payload:res.data   
