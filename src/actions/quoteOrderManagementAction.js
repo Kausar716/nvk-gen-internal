@@ -11,6 +11,15 @@ import {
     GET_QUOTE_ORDER_LIST,
 
 
+
+    ADD_ITEM_TO_QUOTE,
+    GET_ORDER_ITEM_LIST,
+    ADD_NEW_ORDER,
+    UPDATE_NEW_ORDER,
+    HANDLE_INPUT_ORDER,
+    UPDATE_ORDER,
+
+
     axios,
     config
     } from './types'
@@ -18,7 +27,7 @@ import {
 
     export const getQuoteOrderList = () => dispatch => {
         //debugger;
-        axios.get(`/api/quote-list`,config).then(res=>{
+        axios.get(`/api/order-list`,config).then(res=>{
             console.log(res)
             dispatch({
                 type:GET_QUOTE_ORDER_LIST,
@@ -67,3 +76,101 @@ import {
           }
       
       }
+
+
+//NEW ADD ORDERLIST
+
+export const addToOrderItemAPICall =(orderId,data)=>dispatch => {
+    return axios.post(`/api/add-order-item/${orderId}`,data,config).then(res=>{ 
+  
+        console.log(res)
+        dispatch({
+            type:ADD_ITEM_TO_QUOTE,
+            payload:res.data
+        })
+
+        return res.data
+    })
+    
+}
+
+export const getOrderList =(orderId)=>dispatch => {
+    debugger
+    return  axios.get(`/api/order-item-list/${orderId}`,config).then(res=>{ 
+        console.log(res)
+
+    dispatch({
+            type:GET_ORDER_ITEM_LIST,
+            payload:res.data
+
+        })
+        return res.data
+    })
+
+
+    
+}
+export const searchPlantProductAPI =(data)=>dispatch => {
+    // return axios.post("/api/quote-plantsearch",null,config).then(res=>{ 
+  
+    //     console.log(res)
+    //     dispatch({
+    //         type:SEARCH_PLANT_PRODUCT,
+    //         payload:res.data
+    //     })
+
+    //     return res.data
+    // })
+    
+}
+
+
+export const addNewOrder = (data) => dispatch => {
+    //debugger;
+    return axios.post("/api/add-order",data,config).then(res=>{ 
+  
+        console.log(res)
+        dispatch({
+            type:ADD_NEW_ORDER,
+            payload:res.data
+        })
+    })
+}
+
+
+export const addToOrderUpdate = (data) => dispatch => {
+    //debugger;
+
+    return axios.post(`/api/update-order-details/${data.id}`,data,config).then(res=>{ 
+  
+        console.log(res)
+        dispatch({
+            type:UPDATE_NEW_ORDER,
+            payload:res.data.data
+        })
+    })
+
+    
+}
+
+export const handleInputChange = (id,value) =>dispatch=>{
+    dispatch({
+        type:HANDLE_INPUT_ORDER,
+        id:id,
+        value:value
+    })
+
+}
+
+
+export const updateQuoteData = (quoteData)=>dispatch=>{
+    console.log(quoteData)
+    dispatch({
+        type:UPDATE_ORDER,
+        payload:quoteData
+    })
+
+}
+
+
+
