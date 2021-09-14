@@ -159,11 +159,11 @@ console.log(new Date(poData.requested_date))
                                 </div>
                                 <div class="col-md-6 col-lg-4 d-flex mt-3 mt-md-0">
                                     <div class="custom-control custom-radio">
-                                        <input type="radio" id="overall" name="overall" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="0"?true:false} />
+                                        <input type="radio" id="overall" name="overall" class="custom-control-input" onClick={handleInputData} checked={(poData.discount_type==="0"||poData.discount_type===0)?true:false} />
                                         <label class="custom-control-label" for="overall">Overall</label>
                                     </div>
                                     <div class="custom-control custom-radio ml-3">
-                                        <input type="radio" id="individual" name="individual" class="custom-control-input" onClick={handleInputData} checked={poData.discount_type==="1"?true:false} />
+                                        <input type="radio" id="individual" name="individual" class="custom-control-input" onClick={handleInputData} checked={(poData.discount_type==="1"||poData.discount_type===1)?true:false} />
                                         <label class="custom-control-label" for="individual">Individual</label>
                                     </div>
                                 </div>
@@ -229,7 +229,7 @@ console.log(new Date(poData.requested_date))
                             <label>Include Royalty</label>
                             <div class="d-flex align-items-center flex-wrap ml-2 mt-2">Off
                                 <div class="switcher switcher-sm ml-2 pr-2">
-                                    <input type="checkbox" name="switcher_checkbox_date"  checked={props.poData.royalty==="1"?true:false} id="royalty" onClick={handleInputData}/>
+                                    <input type="checkbox" name="switcher_checkbox_date"  checked={(props.poData.royalty==="1"||props.poData.royalty===1)?true:false} id="royalty" onClick={handleInputData}/>
                                     <label for="royalty"></label>
                                 </div> On
                             </div>

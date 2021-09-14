@@ -7,6 +7,8 @@ import {connect} from "react-redux";
 import CurrentPo from "./currentPO"
 import AddToOrder from "./addToOrder"
 import OrderHistory from './orderHistory'
+import Notes from './internalNotes'
+
 
 
  const PurchaseOrderDetails =(props)=> {
@@ -18,7 +20,7 @@ import OrderHistory from './orderHistory'
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
 				<h1 class="page-header mb-0 d-flex flex-wrap align-items-center">
                     <img src="assets/img/PurchaseOrders-ic-lg-green.svg" alt="" class="mr-2"/>{props.pageToOpen ==="add"?"Add":"Edit"} Purchase Orders
-                    {props.pageToOpen !=="add"?<span class="text-green ml-3">{props.poData.po_number}</span>:""}</h1>
+                    {props.poData.po_number?<span class="text-green ml-3">{props.poData.po_number}</span>:""}</h1>
 				{props.pageToOpen !=="add"?<div class="topbarCtrls mt-3 mt-md-0">
                     <a href="#" class="btn"> 
                         <span class="d-flex align-items-center text-left">
@@ -68,11 +70,11 @@ import OrderHistory from './orderHistory'
                     <TabList>
                         <Tab in>Order Details</Tab>
                         <Tab disabled={props.pageToOpen === "add"} >Add to Order</Tab>
-                        <Tab>Current P.O
+                        <Tab disabled={props.pageToOpen === "add"}>Current P.O
                              {/* <span class="badge badge-pill badge-success">25</span> */}
                              </Tab>
-                        <Tab>Order History</Tab>
-                        <Tab>Notes</Tab>    
+                        <Tab disabled={props.pageToOpen === "add"}>Order History</Tab>
+                        <Tab disabled={props.pageToOpen === "add"}>Notes</Tab>    
                     </TabList>
                     <TabPanel >
                         <OrderDetails/>
@@ -88,22 +90,7 @@ import OrderHistory from './orderHistory'
                         
                     </TabPanel>
                     <TabPanel>
-                    <div class="bg-white px-3 py-3 mt-2">
-                            <form>
-                                <h2>Internal Notes <span class="f-s-14">(Not shown to customer)</span></h2>
-                                <hr/>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <textarea cols="10" rows="8" class="form-control"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-12 text-right">
-                                        <button type="button" class="btn btn-primary btn-lg ml-3">SAVE</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
+                   <Notes/>
                     </TabPanel>
                 </Tabs>
                 </div>                

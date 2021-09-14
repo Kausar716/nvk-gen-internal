@@ -25,7 +25,7 @@ import ActionModal from '../Modal/ActionModal';
  const OrderHistory = (props) =>{
     const [value, onChange] = useState(new Date());
     useEffect(()=>{
-        props.getOrderHistory(22)
+        props.getOrderHistory(props.poData.poData)
     },[])
 
 
@@ -112,7 +112,8 @@ console.log(props.currentPOHistory)
 
 const mapStateToProps = (state)=> ({ 
  
-    currentPOHistory:state.purchaseOrderManagementData.currentPOHistory
+    currentPOHistory:state.purchaseOrderManagementData.currentPOHistory,
+    poData:state.purchaseOrderManagementData.poData,
     
 
 })

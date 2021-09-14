@@ -28,8 +28,7 @@ import ActionModal from '../Modal/ActionModal';
         // props.getAddToOrderList()
         // props.poData.id
         props.getplantSku()
-        props.getCurrentOrder(6)
-       
+        props.getCurrentOrder(props.poData.id)
     },[])
     const handleCurrentPoUpdate=(e)=>{
         let {name,value,itemID} = e.target
@@ -46,13 +45,13 @@ let {currentOrder,plantSku} = props
 
 
 console.log(props.state.purchaseOrderManagementData)
-console.log(props.plantSku)
+console.log(props.currentItems)
     return (
         <div class="bg-white px-3 py-3 mt-2">
         <form>
             <div class="row">
                 <div class="col-md-8">
-                    <h2>Currently on thissfvzsfd Purchase Order</h2>
+                    <h2>Currently on this Purchase Order</h2>
                 </div>
                 <div class="col-md-4 text-right">
                     <a href="#" class="btn btnGrey">
@@ -115,29 +114,28 @@ console.log(props.plantSku)
                                                 </tr>
                                                 {/* Main Content Row starts here */}
                                                 {props.currentItems.map((item,i)=>{
-                                                    // {console.log(item)}
+                                                    {console.log(item)}
+                                                    let addedDateWithFormat= `${new Date(item.added).getDate()}-${new Date(item.added).getMonth()+1}-${new Date(item.added).getFullYear()}`                                                   
                                                     return<tr class={i%2===0?"tblBgWhite":"tblBgGrey"}>
                                                   
                                                   <table class="table table-striped table-no-border" width="100%">                                                        
                                                         <tr class="topTitleRow"> 
                                                             <td>{i+1}</td>
-                                                            <td  colspan="11">{item.plant_name}</td>
+                                                            <td  colspan="11">{item.name}</td>
                                                         </tr>
                                                         <tr>
                                                             <td width="4%"></td>
                                                             <td width="20%">
-                                                                <select class="form-control plantNameSel" name="SKU" id={item.item_id} onChange={handleCurrentPoUpdate} value={item.SKU}>
-                                                                    {console.log(item.plant_id)}
-                                                                    console.log(props.plantSku)
-
-                                                                    {props.plantSku.length>0?props.plantSku[item.plant_id].map(skuValue=>{
-                                                                        return <option value={skuValue}>{skuValue}</option>
-                                                                    }):""}
-                                                                    
+                                                                <select class="form-control plantNameSel" name="SKU" id={item.sku_code} onChange={handleCurrentPoUpdate} value={item.sku_code}>
+                                                                {/* <select class="form-control w-80" value={item.SKU} > */}
+                                                                    {item.sku_list.map(sku=>{
+                                                                        return<option value={sku.sku_code}>{sku.sku_code}</option>
+                                                                    })}
                                                                 </select>
+                                                                {/* </select> */}
                                                             </td>
                                                             <td width="10%" class="text-center">{item.size}</td>
-                                                            <td width="10%" class="text-center">{"-"}</td>
+                                                            <td width="10%" class="text-center">{addedDateWithFormat}</td>
                                                             <td width="6%" class="text-center">
                                                                 <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="disc_percent" onChange={handleCurrentPoUpdate} value={item.disc_percent}/>
                                                             </td>
@@ -188,8 +186,8 @@ console.log(props.plantSku)
                                                         <tr class="trBgWhite ">
                                                             <td width="4%"></td>
                                                             <td colspan="12"> 
-                                                                <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span>
+                                                                {/* <img src="assets/img/enter-arrow-red.svg" alt=""/>
+                                                                <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span> */}
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -231,7 +229,7 @@ console.log(props.plantSku)
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-8 d-flex justify-content-end">
-                                        <label class="mb-0 d-flex align-items-center">Adjustments  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes" value={"missing"}/> <span>$</span></label>
+                                        <label class="mb-0 d-flex align-items-center">Adjustments  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes" value={currentOrder.adjustment_notes}/> <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
                                         <input type="text" class="form-control mx-2 text-right" placeholder="" value={currentOrder.adjustment}/>
@@ -239,7 +237,7 @@ console.log(props.plantSku)
                                 </div>
                                 <div class="row mb-2">
                                     <div class="col-md-8 d-flex justify-content-end">
-                                        <label class="mb-0 d-flex align-items-center">Shipping  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes" value={"missing"}/> <span>$</span></label>
+                                        <label class="mb-0 d-flex align-items-center">Shipping  <input type="text" class="form-control mx-2 wid240" placeholder="Add Notes" value={currentOrder.shipping_notes}/> <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
                                         <input type="text" class="form-control mx-2 text-right" placeholder="" value="0.00" value={currentOrder.shipping}/>
@@ -250,7 +248,7 @@ console.log(props.plantSku)
                                         <label>Order Total (CAD) W/O taxes <span>$</span></label>
                                     </div>
                                     <div class="col-md-2 text-right">
-                                        <label class="f-s-24">544.50</label>
+                                        <label class="f-s-24">{currentOrder.total}</label>
                                     </div>
                                 </div>
                             </div>
