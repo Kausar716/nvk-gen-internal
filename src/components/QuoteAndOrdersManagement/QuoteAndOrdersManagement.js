@@ -1,10 +1,151 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import {connect} from "react-redux";
 import DatePicker from 'react-date-picker';
 
-export default function QuoteAndOrdersManagement() {
+import {
+    updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall 
+} from "../../actions/quoteOrderManagementAction"
+
+// import {getQuoteList,addToquoteAPICall,filterHandleData,searchPlantProductAPI,
+//     updateQuoteData,handleInputChange,addNewQuote,addToQuoteUpdate} from "../../actions/quoteAction";
+
+
+import {getCustomerByIdQuote,getCustomerContacts,getcustomerAddress,getAllStatusMethods,deleteCustomer,
+    getAllCustomer,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,
+    handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+
+
+import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,
+    getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
+
+
+
+
+import {
+    //plant actions
+    getAllPlantAction}from "../../actions/plantManagerAction";
+
+
+
+
+ function QuoteAndOrdersManagement(props) {
+   
+
     const [value, onChange] = useState(new Date());
+    const [plantNameValue,setPlantNameValue] =useState("")
+    const [plantSKUValue,setPlantSKUValue] =useState("")
+    const [loading,setLoading] = useState(true)
+    const [searchPalntId,setSearchPalntId] = useState([])
+    const [plantId,setPlantId] = useState([])
+    const [customerSelected,setCustomerSelected] = useState(false)
+
+    const [searchData,setSearchData] = useState([])
+    const [searchDataDuplicate,setSearchDataduplcaite] = useState([])
+    const [plantFilterIds,setPlantFilterIds] = useState({sku_code:"",genus:""})
+    const[suggestions,setSuggestions] = useState([])
+
+   
+
+    useEffect (()=>{
+        props.getAllCustomer()
+        props.getAllCustomerType()
+        props.getLocationList()   
+        props.getCategoryList()
+        // if(loading){
+        // props.searchPlantProductAPI().then(data=>{
+        //     // alert("ff")
+        //     // //console.log(data.data)
+        //     getAllData(data.data)
+        
+        // })
+
+        
+
+    },[value])
+
+    const getAllData = (data)=>{
+        setSearchData(data)
+        setSearchDataduplcaite(data)
+      
+                let plantIdsAll = data.map(plantData=>plantData.plant_id)
+            let plantId = plantIdsAll.filter(function( plant, index, array ) {
+                // alert("FDs")
+                return array.indexOf(plant) === index;
+            });
+            // console.log(plantId, plantId)
+            setPlantId(plantId)
+            setLoading(false)
+        }
+
+
+        const handleSave = (e)=>{
+            debugger
+            e.preventDefault();
+    
+            props.addNewOrder(orderDetails).then(data=>{
+                setCustomerSelected(true)
+            })
+    
+        }
+        const handleUpdate = ()=>{
+            // //console.log(customerDataById1)
+            // //console.log(quoteDetails)
+            // let id = quoteDetails.id
+            // let combineData = {...quoteDetails,...customerDataById1,id:id}
+            // //console.log(combineData)
+    
+            props.addToOrderUpdate(orderDetails)
+    
+        }
+
+        const handleCustomerData =(e)=>{
+            // alert(e.target.value)
+            if(e.target.id ==="customer_id"){
+                // // //console.log(customerDataById1)
+                props.getCustomerByIdQuote(e.target.value).then(data=>{
+                    //console.log(customerDataById1)
+                    // props.updateQuoteData(customerDataById1)
+                })
+                props.getAllCustomerType()
+                props.getAllStatusMethods()
+                // props.getCustomerContacts(e.target.value)
+                // props.getcustomerAddress(e.target.value)
+                props.handleInputChange(e.target.id,e.target.value)
+    
+            }else if(e.target.id ==="discount_by_line_item"){
+                let val = e.target.value===0?1:0
+                props.handleInputChange(e.target.id,val)
+    
+            }else if(e.target.id ==="show_pricing_op"){
+                let val = e.target.value===0?1:0
+                props.handleInputChange(e.target.id,val)
+    
+                
+            }
+            else if(e.target.id ==="flag_as_reminder"){
+                let val = e.target.value===0?1:0
+                props.handleInputChange(e.target.id,val)
+    
+                
+            }
+            else{
+                props.handleInputChange(e.target.id,e.target.value)
+            }
+    
+            // props.getAllTermsMethods()
+            // props.getAllReasonMethods()
+     
+    
+        }
+
+
+        const {quoteDetails,searchList,searchListDuplicate,quoteList} = props.QuoteReducerData
+        const {orderList, orderDetails } =props.quoteOrderReducer
+        const {deleteCustomer,customerDataByIdForOrder,customerTypeListForOrder,customerReasonList,customerDataById1,customerTypeList,action,customerStatusList,customerTermList,customerContact,customerContactList,customerAddress,customerAddressList} = props.customerData
+        console.log("customerData",props.quoteOrderReducer, props.quoteOrderReducer)
+
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -66,11 +207,16 @@ export default function QuoteAndOrdersManagement() {
                 <div class="">
                 <Tabs>
                     <TabList>
-                        <Tab>Order Details</Tab>
-                        <Tab>Add to Order</Tab>
+                        <Tab  eventKey="0">Order Details</Tab>
+                        {/* <Tab>Add to Order</Tab>
                         <Tab>Current Order <span class="badge badge-pill badge-success">02</span></Tab>
                         <Tab>Order History</Tab>
-                        <Tab>Notes</Tab>    
+                        <Tab>Notes</Tab>     */}
+
+                        <Tab  eventKey="1" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Add to Order</Tab>
+                        <Tab  eventKey="2" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Current Order<span class="badge badge-pill badge-success">{orderList.items.length}</span></Tab>
+                        <Tab  eventKey="3" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Order History</Tab>
+                        <Tab  eventKey="4" disabled={customerSelected?false:true} style={{backgroundColor:customerSelected?"white":"lightgray"}}>Notes</Tab>    
                     </TabList>
                     <TabPanel>
                         <div class="bg-white px-3 py-3">
@@ -80,17 +226,31 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="px-3 py-3 bg-grey-transparent-2">
                                     <div class="row ">
                                         <div class="col-md-12">
-                                            <h3>John Smith Landscaping</h3>
+                                            <h3>{customerDataByIdForOrder.name}</h3>
                                         </div>
                                     </div>
                                     <div class="row ">
                                         <div class="col-md-4 col-lg-6">
                                             <div class="row ">
                                                 <div class="col-md-1 col-lg-2 text-md-right">
-                                                    <b>Type:</b>
+                                                    <b>Type:
+                                                    </b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>Finished Plants, Liners</b></span>
+                                                    <span className="textGrey"><b>
+                                                        {/* Finished Plants, Liners */}
+                                                        <b>{
+                                                        customerDataByIdForOrder.type.map(type=>{
+                                                            return customerTypeListForOrder.active.map(typeId=>{
+                                                                if(parseInt(typeId.id)===parseInt(type)) 
+                                                                return(<span>{typeId.customer_type}</span>)
+                                                            })
+                                                          
+                                                           
+                                                        })
+                                                        }
+                                                        </b>
+                                                        </b></span>
                                                 </div>
                                             </div>
                                             <div class="row ">
@@ -98,20 +258,23 @@ export default function QuoteAndOrdersManagement() {
                                                     <b>Tax Exempt:</b>
                                                 </div>
                                                 <div class="col-md-10">
-                                                    <span className="textGrey"><b>No</b></span>
+                                                    <span className="textGrey"><b>{customerDataByIdForOrder.tax_exempt ===1?"Yes":"No"}</b></span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-md-4 col-lg-2">
                                             <div>
-                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>Net 20</b></span></div>
+                                                <div ><b class="mr-3">Terms:</b><span className="textGrey"><b>{customerDataByIdForOrder.payment_terms}</b></span></div>
                                                 <div class="mt-1"><b class="mr-3">Status:</b><span class="label bg-green f-s-14"><i class="fas fa-crown mr-2"></i>VIP</span></div>
                                             </div>
                                         </div>
                                         <div class="col-md-6 col-lg-4 text-md-right mt-3 mt-md-0">
                                             <div>
                                                 <div><b class="mr-3">Source:</b><span className="textGrey"><b>Internal</b></span></div>
-                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span className="textGrey"><b>2020</b></span></div>
+                                                <div class="mt-1"><b class="mr-3">Price Year:</b><span className="textGrey"><b>2020</b></span>
+                                                
+                                                
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -122,18 +285,31 @@ export default function QuoteAndOrdersManagement() {
                                     <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Ordered By<span class="text-danger">*</span></label>
-                                                <select class="form-control">
+                                                {/* <select class="form-control">
                                                     <option>John Smith</option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
+                                                </select> */}
+                                                    <select class="form-control" onChange={handleCustomerData} disabled={customerSelected?true:false} id="customer_id">
+                                                    <option value={0}>Select</option>
+                                                    {
+                                                        props.customerData.customerList.map(customer=>{
+                                                            return(<option value={customer.id} selected={orderDetails.ordered_by === customer.id?"selected":""}>{customer.name}</option>)
+                                                        })
+                                                    }
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6 mt-2 mt-md-0">
                                                 <label>Bill To<span class="text-danger">*</span></label>
-                                                <select class="form-control">
-                                                    <option>1234 Main St, Waterdown </option>
+                                                <select class="form-control" disabled={customerSelected?false:true} id="bill_to" onChange={handleCustomerData} >
+                                                <option>Select Address</option>
+                                                    {orderDetails.customeraddress.map(address=>{
+                                                      
+                                                        return( <option value={address.id} id={address.id} selected={orderDetails.bill_to===address.id?"selected":""}>{address.city} {address.country} {address.zip}</option>)
+                                                    })}
+                                                    {/* <option>1234 Main St, Waterdown </option>
                                                     <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                    <option>Option 2</option> */}
                                                 </select>
                                             </div>
                                            
@@ -143,18 +319,24 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row">
                                             <div class="col-md-6 col-lg-4">
                                                 <label>PO #</label>
-                                                <input type="text" class="form-control" placeholder=""></input>
+                                                {/* <input type="text" class="form-control" placeholder=""></input> */}
+                                                <input type="text" class="form-control" placeholder="" value={orderDetails.purchase_order} disabled={orderDetails.p_o_req===1?false:true} onChange={handleCustomerData} ></input>
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Date</label>
                                                 {/* <DatePicker onChange={onChange} value={value} /> */}
-                                                <input type="date" className="dateDesign"  />
+                                                {/* <input type="date" className="dateDesign"  /> */}
+                                                <input type="date" class="form-control" placeholder="" disabled={customerSelected?false:true} value={orderDetails.requested_date} onChange={handleCustomerData} id="requested_date"></input>
                                             </div>
                                             <div class="col-md-6 col-lg-4 mt-3 mt-md-0">
                                                 <label class="mr-2 mr-md-0">Requested Time</label>
-                                                <select class="form-control">
+                                                {/* <select class="form-control">
                                                     <option>AM</option>
                                                     <option>PM</option>
+                                                </select> */}
+                                                 <select class="form-control" disabled={customerSelected?false:true} id="requested_time" onChange={handleCustomerData} >
+                                                    <option value="AM" value={orderDetails.requested_time==="AM"?"selected":""}>AM</option>
+                                                    <option value="PM" value={orderDetails.requested_time==="PM"?"selected":""}>PM</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -165,25 +347,30 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Currency</label>
-                                                <select class="form-control">
+                                                {/* <select class="form-control">
                                                     <option>CAD</option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
+                                                </select> */}
+                                                 <select class="form-control" disabled={customerSelected?false:true} onChange={handleCustomerData} id="currency">
+                                                    <option value={"Canadian Doller"} selected={orderDetails.currency==="Canadian Doller"?"selected":""}>Canadian Doller</option>
+                                                    <option value={"U.S Doller"} selected={orderDetails.currency==="U.S Doller"?"selected":""}>U.S Doller</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Email To</label>
-                                                <select class="form-control">
+                                                <input type="text" class="form-control" placeholder="" value={orderDetails.email_to} disabled={customerSelected?false:true} id="email_to" onChange={handleCustomerData}></input>
+                                                {/* <select class="form-control">
                                                     <option>Select </option>
                                                     <option>Option 1</option>
                                                     <option>Option 2</option>
-                                                </select>
+                                                </select> */}
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-12 col-lg-7 col-xl-7">
                                         <label>Job Description</label>
-                                        <input type="text" class="form-control" placeholder=""></input>
+                                        <input type="text" class="form-control" placeholder="" disabled={customerSelected?false:true} value={orderDetails.job_description} id="job_description" onChange={handleCustomerData}></input>
                                     </div>
                                 </div>
                                 <div class="row mt-3">
@@ -191,21 +378,20 @@ export default function QuoteAndOrdersManagement() {
                                         <div class="row ">
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Units</label>
-                                                <select class="form-control">
-                                                    <option>Metric</option>
-                                                    <option>Option 1</option>
-                                                    <option>Option 2</option>
+                                                <select class="form-control" disabled={customerSelected?false:true} onChange={handleCustomerData} id="units">
+                                                    <option value={"Metric"} selected={ orderDetails.units==="Metric"?"selected":""}>Metric</option>
+                                                    <option value={"Imperial"} selected={orderDetails.units ==="Imperial"?"selected":""}>Imperial</option>
                                                 </select>
                                             </div>
                                             <div class="col-md-6 col-lg-6">
                                                 <label>Discount</label>
-                                                <input type="text" class="form-control text-right" placeholder="" value="0.00" />
+                                                <input type="text" class="form-control text-right" placeholder="0.00" value={orderDetails.discount} disabled={customerSelected?false:true} onChange={handleCustomerData} id="discount"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
+                                    {/* <div class="col-md-12 col-lg-7 col-xl-7 pt-md-4 mt-3">
                                         <a href="">Reset</a>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-5 col-xl-5">
@@ -214,7 +400,10 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Discount by Line Item</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="dislineitem" id="dislineitem" value="2" />
+                                                    <input type="checkbox" name="discount_by_line_item" id="discount_by_line_item" 
+                                                     value={orderDetails.discount_by_line_item} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.discount_by_line_item===1?true:false} onChange={handleCustomerData}/>
+                                                        {/* <input type="checkbox" name="dislineitem" id="dislineitem" value="2" /> */}
                                                         <label for="dislineitem"></label>
                                                     </div> On
                                                 </div>
@@ -223,8 +412,11 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Display Discount Column</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="dispdisccol" id="dispdisccol" value="2" />
-                                                        <label for="dispdisccol"></label>
+                                                        {/* <input type="checkbox" name="dispdisccol" id="dispdisccol" value="2" /> */}
+                                                        <input type="checkbox" name="display_discount_column" id="display_discount_column" 
+                                                     value={orderDetails.display_discount_column} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.display_discount_column===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="display_discount_column"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -236,8 +428,10 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Display Substitution Line</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="dispsubline" id="dispsubline" value="2" />
-                                                        <label for="dispsubline"></label>
+                                                    <input type="checkbox" name="display_substitution_line" id="display_substitution_line" 
+                                                     value={orderDetails.display_substitution_line} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.display_substitution_line===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="display_substitution_line"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -245,8 +439,10 @@ export default function QuoteAndOrdersManagement() {
                                                 <label>Show Pricing on Output</label>
                                                 <div class="d-flex align-items-center flex-wrap mt-2">Off
                                                     <div class="switcher switcher-sm ml-2 pr-2">
-                                                        <input type="checkbox" name="showpricout" id="showpricout" value="2" />
-                                                        <label for="showpricout"></label>
+                                                    <input type="checkbox" name="show_pricing_on_output" id="show_pricing_on_output" 
+                                                     value={orderDetails.show_pricing_on_output} disabled={customerSelected?false:true} 
+                                                     checked={orderDetails.show_pricing_on_output===1?true:false} onChange={handleCustomerData}/>
+                                                        <label for="show_pricing_on_output"></label>
                                                     </div> On
                                                 </div>
                                             </div>
@@ -256,7 +452,13 @@ export default function QuoteAndOrdersManagement() {
                                 <div class="row mt-3">
                                     <div class="col-md-12 col-lg-12 mt-2 mt-md-0">
                                         <label>Order Notes <small class="textGrey">(Internal Only)</small></label>
-                                        <textarea class="form-control"></textarea>
+                                        <textarea class="form-control" disabled={customerSelected?false:true} id="order_notes" 
+                                        value={orderDetails.order_notes} onChange={handleCustomerData}></textarea>
+                                        {/* <textarea class="form-control"></textarea> */}
+                                    </div>
+
+                                    <div style={{float:"left",width:"100%",marginBottom:4,paddingRight:10}}>
+                                    <button className="btn btn-primary btn-lg ml-3"  style={{width:100,float:"right",marginTop:10}} onClick={customerSelected?handleUpdate:handleSave}>{customerSelected?"Update":"Add"}</button>
                                     </div>
                                 </div>
                             </form>
@@ -345,8 +547,7 @@ export default function QuoteAndOrdersManagement() {
                                                             <th width="6%" class="text-center">Open POS</th>
                                                             <th width="8%" class="text-center">Future <br/>Available</th>
                                                             <th width="6%" class="text-center">Price</th>
-                                                            <th width="6%" class="text-center">Volume<br/>
-Rate</th>
+                                                            <th width="6%" class="text-center">Volume<br/>Rate</th>
                                                             <th width="6%" class="text-center">Dis%</th>
                                                             <th width="6%" class="text-center">Qty</th>
                                                             <th width="4%" class="text-center"></th>
@@ -1204,3 +1405,30 @@ Rate</th>
         </div>
     )
 }
+
+
+//export default QuoteAndOrdersManagement
+const mapStateToProps = (state)=>(
+    {
+        customerData:state.customerReducer,
+        QuoteReducerData:state.QuoteReducerData,
+        quoteOrderReducer:state.quoteOrderReducer,
+        // plantData:state.plantData,
+        plantCategoryList:state.inventoryManagementReducer.plantCategoryList,
+        locationList:state.inventoryManagementReducer.locationList,
+        supplierList:state.supplierData.supplierInfo,
+        plantInventoryData:state.inventoryManagementReducer.plantInventoryData,
+        plantData:state.inventoryManagementReducer,
+        
+    }
+)
+
+export default connect(mapStateToProps,{
+    updateQuoteData,handleInputChange,addToOrderUpdate,addNewOrder,getOrderList,addToOrderItemAPICall,
+
+    getAllPlantAction,
+    filterPlantManagerData,getCategoryList,getAllPlants,getLocationList,setPlantPageNumber,
+    resetFileds,getPlantList,getFilterResult,getCustomerByIdQuote,
+    getCustomerContacts,getcustomerAddress,getAllStatusMethods,
+    deleteCustomer,getAllCustomerType,getAllCustomer,handleExchangeData,getCustomerById,setPageNumber,
+    handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow})(QuoteAndOrdersManagement)
