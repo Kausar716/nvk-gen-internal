@@ -368,11 +368,10 @@ export const slpitPo= (result,item_id) => dispatch => {
 export const deleteItemPo= (item_id) => dispatch => {
   let errorArray=[];
   console.log(item_id)
-  debugger;
-  axios.post(`/api/delete-purchase-order-item/${item_id}`,config).then(res=>{
+  axios.post(`/api/delete-purchase-order-item/${item_id}`,{},config).then(res=>{
     console.log(res)
     alert("PO item deleted")
-      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch(getCurrentOrder(res.data.data.p_o_id))
       dispatch({
         type:ERROR_HANDLE,
         message:errorArray,
