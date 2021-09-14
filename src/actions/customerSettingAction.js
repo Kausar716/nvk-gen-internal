@@ -73,6 +73,7 @@ UPDATE_CUSTOMER_ACCOUNT_REASON_SETTING,
 SHOW_SPECIFIC_CUSTOMER_ACCOUNT_REASON_SETTING,
 
 UPDATE_CUSTOMER_TERMS_SETTING,
+ADD_CUSTOMER_CONTACT1,
 SHOW_SPECIFIC_CUSTOMER_TERMS_SETTING,
 
 HANDLE_CUSTOMER_TYPE_SORT,
@@ -538,6 +539,16 @@ export const addCustomerContact = (data)=>dispatch => {
                 payload:res.data   
             })
         }) 
+}
+export const addCustomerContact1 = (data)=>dispatch => {
+    // return axios.post(`/api/add-customer-contact`,data,config).then(res=>{ 
+    //     console.log(res)
+    alert(JSON.stringify(data))
+        dispatch({
+                type:ADD_CUSTOMER_CONTACT1,
+                payload:data   
+            })
+        // }) 
 }
 export const getCustomerContacts = (id) =>dispatch=>{
     // alert(id)

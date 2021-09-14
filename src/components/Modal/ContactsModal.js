@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import {modalAction} from "../../actions/productAction";
 import InputMask from 'react-input-mask';
-import {addPriamryContact,getCustomerById,addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
+import {addCustomerContact1,addPriamryContact,getCustomerById,addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
 
  const ContactsModal = (props) => {
      const {status,type} =props
@@ -207,8 +207,19 @@ import {addPriamryContact,getCustomerById,addCustomerContact,handleExchangeData,
         }
 
         }else{
+            props.addCustomerContact1(customerContact).then(data=>{
+                props.modalAction()
+             console.log(customerDataById)
+                // alert(customerDataById.customer_id)
+                props.getCustomerContacts(customerDataById.id)
+                props.getCustomerById(customerDataById.id)
+                // props.getCustomerContacts(customerDataById.customer_id)
+                
+            })
+            // alert(primaryContact)
+            // alert("gg")
             props.addPriamryContact(customerContact)
-            props.modalAction()
+            // props.modalAction()
            
         }
      

@@ -42,6 +42,7 @@ import {
     GET_INTEREST_DATA,
     GET_PRINT_DATA,
     ADD_CUSTOMER_CONTACT,
+    ADD_CUSTOMER_CONTACT1,
     GET_CUSTOMER_CONTACTS_LIST,
     GET_CUSTOMER_CONTACT_BY_ID,
     UPDATE_CUSTOMER_CONTACT,
@@ -323,6 +324,12 @@ const initialSatate = {
                 customerContactList:action.payload.data
 
             }
+
+            case ADD_CUSTOMER_CONTACT1:
+                return{
+                    ...state,
+                    customerContactList:{active:[action.payload]}
+                }     
         case ADD_CUSTOMER_CONTACT:
             return{
                 ...state,
