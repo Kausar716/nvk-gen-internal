@@ -5,8 +5,8 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,getplantSku,slpitPo,
-     handlePurchaseOrderFilert,handleCurrentPoOrderUpdate,
+     handleAplhabetFilterBySN,getplantSku,slpitPo,substitutionPo,
+     handlePurchaseOrderFilert,handleCurrentPoOrderUpdate,deleteItemPo,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,getCurrentOrder,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
@@ -50,19 +50,25 @@ const handleSplitClick = (item)=>{
     }
     
 }
-// const handleSubistutionClick = (item)=>{
-//     // let result = prompt("Enter split qty")
-//     console.log(result)
-
-//     if(result ){
-//         let splitObj = {}
-//         splitObj.split_qty = result
-//         splitObj.purpose = "sales-ready"
-
-//         props.slpitPo(result,item.po_item_id)
-//     }
+const handleDeleteClick = (item)=>{
+        props.deleteItemPo(item.po_item_id)
     
-// }
+    
+}
+const handleSubistutionClick = (item)=>{
+    // let result = prompt("Enter split qty")
+    // console.log(result)
+    // debugger;
+    // if(result ){
+        let splitObj = {}
+        splitObj.type = item.type
+        splitObj.id = item.id
+        splitObj.sku_id = item.sku_id
+
+        // props.substitutionPo(splitObj,item.po_item_id)
+    // }
+    
+}
 
 
 
@@ -199,8 +205,8 @@ console.log(props.currentItems)
                                                                         </a>
                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
                                                                             <a href="#" class="dropdown-item splitBg" type="button" onClick={()=>{handleSplitClick(item)}}><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                            <a href="#" class="dropdown-item substituteBg" type="button" onClick={()=>{handleSubistutionClick(item)}} ><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                            <a href="#" class="dropdown-item deleteBg" type="button" onClick={()=>{handleDeleteClick(item)}}><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -296,7 +302,7 @@ const mapStateToProps = (state)=> ({
 })
 export default connect(mapStateToProps,{
 
-    getAddToOrderList,slpitPo,
+    getAddToOrderList,slpitPo,substitutionPo,deleteItemPo,
     setSupplierToAddPo,getplantSku,handleCurrentPoOrderUpdate,
     handleOrderDetailsInput,addPo,getCurrentOrder
 

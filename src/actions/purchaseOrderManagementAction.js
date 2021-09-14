@@ -38,7 +38,8 @@ import {
     UPDATE_PURCHASE_ORDER_NOTES,
     DELETE_PO,
     DUPLICATE_PO,
-    SPLIT_PO_ORDER
+    SPLIT_PO_ORDER,
+    CLEAR_PO_DATA
 
     } from './types'
 
@@ -73,6 +74,17 @@ import {
       })
   
   }
+  export const clearPoData = ()=> dispatch =>{
+    return axios.get("/api/currency-list",config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:CLEAR_PO_DATA,
+            payload:res.data.data.active
+
+        })
+    })
+
+}
   export const getSupplierDeliveryList = (supplierId)=> dispatch =>{
     console.log(supplierId)
     return axios.get(`/api/delivery-supplier/${supplierId}`,config).then(res=>{ 
@@ -343,7 +355,7 @@ export const slpitPo= (result,item_id) => dispatch => {
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
   axios.post(`/api/split-purchase-order-item/${item_id}`,result,config).then(res=>{
     console.log(res)
-     debugger;
+    
       dispatch(getCurrentOrder(res.data.data.item.p_o_id))
       dispatch({
         type:ERROR_HANDLE,
@@ -352,6 +364,37 @@ export const slpitPo= (result,item_id) => dispatch => {
     })
   })
 }
+
+export const deleteItemPo= (item_id) => dispatch => {
+  let errorArray=[];
+  console.log(item_id)
+  axios.post(`/api/delete-purchase-order-item/${item_id}`,{},config).then(res=>{
+    console.log(res)
+    alert("PO item deleted")
+      dispatch(getCurrentOrder(res.data.data.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
+export const substitutionPo= (result,item_id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/subsitute-purchase-order/${item_id}`,result,config).then(res=>{
+    console.log(res)
+  
+      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
 export const getSpecifiedPurchaseOrder = (id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
