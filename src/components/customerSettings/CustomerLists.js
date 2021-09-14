@@ -346,8 +346,14 @@ export class CustomerSettings extends React.Component {
                                                             })}
                                                             
                                                         </td>
+                                                        
                                                         <td>{customerData.fax}</td>
-                                                        <td>{customerData.contact_id}</td>
+                                                        <td>
+                                                            {customerData.contacts.length>0?<div>
+                                                            <p style={{padding:0,margin:0}}>{customerData.contacts[0]["first_name"]+" "+customerData.contacts[0]["last_name"]}</p>
+                                                            <p style={{padding:0,margin:0,color:"#627884"}}>{customerData.contacts[0]["email"]}</p>
+                                                            <p style={{padding:0,margin:0,color:"#627884"}}>{customerData.contacts[0]["phone1"]}</p>
+                                                                </div>:""}</td>
                                                         <td>N/A</td>
                                                         <td>$0.00</td>
                                                         <td class="text-center">

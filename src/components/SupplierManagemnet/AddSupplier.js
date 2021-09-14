@@ -130,17 +130,17 @@ function AddSupplier(props) {
         //     errorCountForValidation++
         // }
       
-        if(supplierDataById.fax.trim().length == 0){
+        // if(supplierDataById.fax.trim().length == 0){
           
-            // errorObjforValidation.fax=1
-            errorCountForValidation++
-            message.push("Add Supplier Fax Number")
-        }
-        if(supplierDataById.alternative_id.trim().length ==0){
-            message.push("Add Supplier Alternative Id")
-            errorCountForValidation++
+        //     // errorObjforValidation.fax=1
+        //     errorCountForValidation++
+        //     message.push("Add Supplier Fax Number")
+        // }
+        // if(supplierDataById.alternative_id.trim().length ==0){
+        //     message.push("Add Supplier Alternative Id")
+        //     errorCountForValidation++
 
-        }
+        // }
         // var res = supplierDataById.website.match( /^(http[s]?:\/\/){0,1}(w{3,3}\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/);
         // if(res == null)
         //    {
@@ -538,6 +538,19 @@ const dataTochange =(e)=>{
         // setactionTypeAddress("edit")
         // setactionType("edit")
     }
+    const addPrimaryContact  = ()=>{
+        setactionType("add")
+        props.resetContact()
+        setisOpenContacs(!isOpenContacs)
+    }
+    const editPrimaryContact  = ()=>{
+        setactionType("add")
+        props.resetContact()
+        setisOpenContacs(!isOpenContacs)
+        // alert(JSON.stringify(customerDataById.contacts[0]))
+        // props.editDataToContact(supplierDataById.contacts[0])
+  
+    }
 console.log(props.supplierData.supplierCategoryList)
 console.log(props.supplierData.supplierReasonList)
     return (
@@ -793,14 +806,14 @@ console.log(props.supplierData.supplierReasonList)
                                 <div class="row mt-3">
                                     <div class="col-md-6 col-lg-6">
                                         <label>Primary Contact</label>
-                                        {supplierDataById.supplier_contact.map(contactData=>{
-                                            {/* alert("d") */}
+                                       
+                                        {supplierDataById.contacts?supplierDataById.contacts.length>0?supplierDataById.contacts.map(contactData=>{
                                             if(contactData.primary_contact==1){
-                                                return(<div>
+                                                return(<div style={{position:"relative"}}>
                                                     {/* <div class="col-md-6 col-lg-4"> */}
-                                                    <div class="contactCard" style={{border:"1px solid lightgray"}}>
-                                                    <p class="mb-0 f-w-600">{contactData.contact_name}</p>
-                                            <label class="text-muted f-w-400">{contactData.contact_email}</label>
+                                                    <div class="contactCard"  style={{border:"1px solid lightgray"}}>
+                                                    <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p>
+                                            <label class="text-muted f-w-400">{contactData.email}</label>
                                             <table>
                                                 <tr>
                                                     <td><strong>Phone 1:</strong> {contactData.phone1==null?" Not Available":contactData.phone1}</td>
@@ -811,17 +824,6 @@ console.log(props.supplierData.supplierReasonList)
                                                      <td  style={{paddingLeft:8}}> <strong> Xt:</strong> {contactData.phone2_ext==null?" Not Available":contactData.phone2_ext}</td>
                                                 </tr>
                                             </table>
-                                            {/* <div class="row">
-                                                <div class="col-md-12">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1==null?" Not Available":contactData.phone1}</label>
-                                                    <label class="text-muted f-w-400 mb-0">&nbsp;<strong style={{padding:5}}>Xt: </strong> {contactData.phone1_ext==null?" Not Available":contactData.phone1_ext}</label>
-                                                   
-                                                </div>
-                                                <div class="col-md-12">
-                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2==null?"Not Available":contactData.phone2}</label>
-                                                    <label class="text-muted f-w-400 mb-0">&nbsp;&nbsp;&nbsp;&nbsp;<strong style={{padding:2}}>Xt: </strong> {contactData.phone2_ext==null?"Not Available":contactData.phone2_ext}</label>
-                                                </div>
-                                            </div> */}
                                             {/* <div>
                                                 <div class="custom-control custom-checkbox mt-2">
                                                     <input type="checkbox" class="custom-control-input" id="customCheck1" checked={parseInt(contactData.primary_contact)==1?true:false} onChange={()=>changeCheckBox(contactData.id,index,"primary_contact")}/>
@@ -834,6 +836,10 @@ console.log(props.supplierData.supplierReasonList)
                                             </div> */}
                                    
                                                         </div>
+                                                        <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={editPrimaryContact}>
+                                         
+                                         Edit
+                                          </button>
                                                         {/* </div> */}
                                                     </div>);
                                                    
@@ -843,10 +849,18 @@ console.log(props.supplierData.supplierReasonList)
                                            
 
 
-                                        }
-                                        {/* {supplierDataById.suppliercontact.map(data=>{
-                                            return(<p>Primary DAta</p>)
-                                        })} */}
+                                        :<div  style={{border:"1px solid lightgray",height:"150px",borderRadius:5,position:"relative"}}>
+                                            
+                                            <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={addPrimaryContact}>
+                                         
+                                        Add
+                                         </button>
+                                            
+                                            
+                                        </div>:""}
+                                        {/* <input type="text" class="form-control" id="name" value={customerDataById.fax!==null?customerDataById.name+" "+customerDataById.fax:""} onChange={handleInput}  disabled placeholder="Primary Contact"/> */}
+ 
+                                           {/* </div> */}
                                      {/* <input type="text" class="form-control" name = "primaryContact" value={supplierDataById.fax !== null?supplierDataById.supplier_name+" "+supplierDataById.fax:""}  disabled placeholder="Primary Contact"/>  */}
                                     </div>
                                     <div class="col-md-6 col-lg-6">
@@ -1064,7 +1078,7 @@ console.log(props.supplierData.supplierReasonList)
                                         <div class="contactCard">
                                             <p class="mb-0 f-w-600">{contact.contact_name}</p>
                                             <label class="text-muted f-w-400">{contact.contact_email}</label>
-                                            <div class="row">
+                                            {/* <div class="row">
                                                 <div class="col-md-6">
                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong>{contact.phone1}</label>
                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong>{contact.phone2}</label>
@@ -1072,28 +1086,38 @@ console.log(props.supplierData.supplierReasonList)
                                                 <div class="col-md-6">
                                                     <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> 123</label>
                                                 </div>
-                                            </div>
+                                            </div> */}
+                                            <table>
+                                                    <tr>
+                                                        <td>  <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contact.phone1}</label></td>
+                                                        {contact.phone1_ext!==null?<td>  <label class="text-muted f-w-400 mb-0"><strong style={{paddingLeft:10}}>Xt: </strong> <span >{contact.phone1_ext}</span></label></td>:<td></td>}
+                                                    </tr>
+                                                    <tr>
+                                                        <td>  <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contact.phone2!==null?contact.phone2:"Not Available"}</label></td>
+                                                        {contact.phone2_ext!==null?<td>  <label class="text-muted f-w-400 mb-0"><strong style={{paddingLeft:10}}>Xt: </strong> <span >{contact.phone2_ext}</span></label></td>:<td></td>}
+                                                    </tr>
+                                                </table>
                                             <div>
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id={`primary_contact^${contact.id}`} checked={parseInt(contact.primary_contact)==1?true:false} onChange={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${contact.id}`}>This person is the primary contact</label>
+                                                <div class="custom-control custom-checkbox mt-2" style={{cursor:"pointer"}}>
+                                                    <input type="checkbox" className="custom-control-input" style={{cursor:"pointer"}} id={`primary_contact^${contact.id}`} checked={parseInt(contact.primary_contact)==1?true:false} onChange={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${contact.id}`} style={{cursor:"pointer"}}>This person is the primary contact</label>
                                                 </div>
-                                                <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id={`receives_all^${contact.id}`} checked={parseInt(contact.receives_all)==1?true:false} onChange={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" for={`receives_all^${contact.id}`}>This person receives all communication</label>
+                                                <div class="custom-control custom-checkbox mt-2" style={{cursor:"pointer"}}>
+                                                    <input type="checkbox" className="custom-control-input" style={{cursor:"pointer"}} id={`receives_all^${contact.id}`} checked={parseInt(contact.receives_all)==1?true:false} onChange={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`receives_all^${contact.id}`} style={{cursor:"pointer"}}>This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a  class="">
+                                                    <a  class="" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>editContactNotes(contact.id)}/>
                                                     </a>
-                                                    <a  class=" ml-2">
+                                                    <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>editContact(contact.id)}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right" onClick={()=>deleteContactData(contact.id)}>
-                                                    <a  class=" ml-2">
+                                                    <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/delete.svg" alt="" />
                                                     </a>
                                                 </div>
@@ -1123,40 +1147,40 @@ console.log(props.supplierData.supplierReasonList)
                                     {supplierAddressList.active.map((address,index)=>{
                                         return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
-                                            <p class="mb-0 f-s-16 f-w-600">{address.supplier_address}<br/>
-.</p>
+                                            <p class="mb-0 f-s-16 f-w-600">{address.city}<br/></p>
+                                            <p class="mb-0 f-s-16 f-w-600">{address.state}, {address.country} -{address.zip}<br/></p>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id={`billing_address^${address.id}`} checked={parseInt(address.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" for={`billing_address^${address.id}`}>Billing Address</label>
+                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`billing_address^${address.id}`} checked={parseInt(address.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`billing_address^${address.id}`} style={{cursor:"pointer"}}>Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id={`shipping_address^${address.id}`} checked={parseInt(address.shipping_address)==1?true:false} onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" for={`shipping_address^${address.id}`}>Delivery Address</label>
+                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`shipping_address^${address.id}`} checked={parseInt(address.shipping_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`shipping_address^${address.id}`} style={{cursor:"pointer"}}>Delivery Address</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-12">
-                                                    <a href="#" class="">
-                                                        <img src="assets/img/location-pin.svg" alt=""/> Show on Google Maps
+                                                    <a href="#" class="" style={{cursor:"pointer"}}>
+                                                        <img src="assets/img/location-pin.svg" alt="" /> Show on Google Maps
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a  class=""  onClick={()=>editAddressNotes(address.id)}>
+                                                    <a  class=""  onClick={()=>editAddressNotes(address.id)} style={{cursor:"pointer"}}>
                                                     {address.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                     </a>
-                                                    <a  class=" ml-2"  onClick={()=>editAddress(address.id)}>
+                                                    <a  class=" ml-2"  onClick={()=>editAddress(address.id)} style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt=""/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right" >
-                                                    <a  class=" ml-2" onClick={()=>deleteAddress(address.id)}>
+                                                    <a  class=" ml-2" onClick={()=>deleteAddress(address.id)} style={{cursor:"pointer"}}>
                                                         <img src="assets/img/delete.svg" alt=""/>
                                                     </a>
                                                 </div>

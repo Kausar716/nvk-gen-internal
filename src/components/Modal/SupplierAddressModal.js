@@ -233,7 +233,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-3 col-lg-3">
-                <label>State<span class="text-danger">*</span></label>
+                <label>Province/State<span class="text-danger">*</span></label>
                 <select className="form-control"  id="state"  value={supplierAddress.state}  onChange={handleInput}>
                 {/* <option id="">Select State</option> */}
                 {allStates && allStates.map((c, i)=>{
@@ -247,8 +247,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>
             <div class="col-md-3 col-lg-3">
-                <label>Zip<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="zip" value={""}  value={supplierAddress.zip}  onChange={handleInput} placeholder="Zip"/>
+                <label>Postal/Zip<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="zip" value={""}  value={supplierAddress.zip}  onChange={handleInput} placeholder="Postal/Zip"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="zip-validtor"></span>}
             </div>
@@ -276,8 +276,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
                 {<span style={{fontSize:"small",color:"red"}} id="lat-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>Lang</label>
-                <input type="number" class="form-control" id="long" value={""}  value={supplierAddress.long}  onChange={handleInput} placeholder="Lang"/>
+                <label>Long</label>
+                <input type="number" class="form-control" id="long" value={""}  value={supplierAddress.long}  onChange={handleInput} placeholder="Long"/>
                 {<span style={{fontSize:"small",color:"red"}} id="long-validtor"></span>}
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
             </div>

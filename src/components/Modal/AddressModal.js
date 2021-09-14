@@ -46,7 +46,29 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         let all = parseInt(customerAddress.delivery_address) ==1?0:1
         props.handleExchangeData(all,e.target.id,"customerAddress")
 
-       }else{
+       }else if(e.target.id=="zip"){
+        //    alert(customerAddress.zip)
+        //    if(customerAddress.zip.length<=5){
+            // if(e.target.value!==""){
+                let value = e.target.value.split(".")
+                // console.log(value[0],value[1])
+                // alert(value[0].length)
+                // if(value[1]!== undefined)
+                if(value[0].length>=7 )
+                // if(e.target.value.length>2){
+                  return
+                else{
+                    props.handleExchangeData(e.target.value,e.target.id,"customerAddress")
+
+                }
+           
+
+        //    }
+        
+           
+        // props.handleExchangeData(e.target.value,e.target.id,"customerAddress")
+       } 
+       else{
            
         props.handleExchangeData(e.target.value,e.target.id,"customerAddress")
        } 
@@ -61,7 +83,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
             var element = document.getElementById(object);
             if (object === "city") {
                 if (element.value === "") {
-                    document.getElementById("city-validtor").innerText = "Enter  City"
+                    document.getElementById("city-validtor").innerText = "Enter City"
                     errorCount++;
 
                 } else {
@@ -71,7 +93,7 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
             }
             if (object === "address1") {
                 if (element.value === "") {
-                    document.getElementById("address1-validtor").innerText = "Enter  Address 1"
+                    document.getElementById("address1-validtor").innerText = "Enter Address"
                     errorCount++;
 
                 } else {
@@ -150,7 +172,8 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
 
             }
             if (object === "zip") {
-                if(element.value == "" ||isNaN(element.value) ||element.value.length <6){
+                // alert(element.value.length>6)
+                if(element.value == "" ||isNaN(element.value) ||element.value.length <6 || element.value.length>6){
                 // if ( !element.value.trim().match(this.countZipRegix)) {
                     document.getElementById("zip-validtor").innerText = "Enter Valid Postal/ZIP  "
                     errorCount++;
@@ -273,13 +296,13 @@ console.log(validErrorList)
    
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
-                <label>Lat<span class="text-danger">*</span></label>
+                <label>Lat<span class="text-danger"></span></label>
                 <input type="number" class="form-control" id="lat" value={""} value={customerAddress.lat}  onChange={handleInput} placeholder="Lat"/>
                 {<span style={{fontSize:"small",color:"red"}} id="lat-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>Lang<span class="text-danger">*</span></label>
-                <input type="number" class="form-control" id="long" value={""}  value={customerAddress.long}  onChange={handleInput} placeholder="Lang"/>
+                <label>Long<span class="text-danger"></span></label>
+                <input type="number" class="form-control" id="long" value={""}  value={customerAddress.long}  onChange={handleInput} placeholder="Long"/>
                 {<span style={{fontSize:"small",color:"red"}} id="lang-validtor"></span>}
             </div>
         </div>

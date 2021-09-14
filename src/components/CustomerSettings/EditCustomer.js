@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
-import {updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,getCustomerById,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {getCustomerById,editDataToContact,updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -201,6 +201,12 @@ function AddCustomer(props) {
             return errosList
 
         }
+        if(customerDataById.contacts.length==0){
+            errosList.push("Please add Primary Contact")
+            return errosList
+
+        }
+
         if(customerDataById.website_url){
             // alert("fds")
             var patt = new RegExp(/^(https?|ftp):\/\/(\S+(:\S*)?@)?(([1-9]|[1-9]\d|1\d\d|2[0-1]\d|22[0-3])(\.([0-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-5])){2}(\.([1-9]|[1-9]\d|1\d\d|2[0-4]\d|25[0-4]))|(([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)(\.([a-z\u00a1-\uffff0-9]+-?)*[a-z\u00a1-\uffff0-9]+)*(\.([a-z\u00a1-\uffff]{2,})))(:\d{2,5})?(\/[^\s]*)?$/);
@@ -226,6 +232,7 @@ function AddCustomer(props) {
     
   
     const saveCustomerData1 = (type)=>{
+        // alert("saving")
         // validation()
         // e.preventDefault()
         // return
@@ -340,15 +347,41 @@ function AddCustomer(props) {
       
     }
     const deleteCustomerContactData =(id)=>{
-        props.deleteCustomerContact(id).then(data=>{
-            // props.getCustomerContacts(customerDataById.id)
-        })
+        confirmAlert({
+            title: 'Delete Customer Contac',
+            message: 'Are you sure want to delete the Customer Contact?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {props.deleteCustomerContact(id).then(data=>{
+                    // props.getCustomerContacts(customerDataById.id)
+                })}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
+ 
 
     }
     const deleteAddress =(id)=>{
-        props.deleteCustomerAddress(id).then(data=>{
-            props.getcustomerAddress(customerAddress.customer_id)
-        })
+        confirmAlert({
+            title: 'Delete Customer Address',
+            message: 'Are you sure want to delete the Customer Address?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {  props.deleteCustomerAddress(id).then(data=>{
+                    props.getcustomerAddress(customerAddress.customer_id)
+                })}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
+      
 
     }
     const editContact=(e)=>{
@@ -535,6 +568,16 @@ const dataTochange =(e)=>{
       return
     }
     const handleSelect=(key)=> {
+        // alert(key)
+        // alert(customerDataById.id)
+        if(key ==2){
+            props.getCustomerContacts(customerDataById.id)
+            props.getcustomerAddress(customerDataById.id)
+        //    
+        }
+        if (key==0){
+            props.getCustomerById(customerDataById.id)
+        }
         setexpanded(false)
         // alert("hh")
         // if (key === 1)
@@ -615,6 +658,20 @@ const dataTochange =(e)=>{
         //     console.log(customerContact)
         // })
 
+    }
+    const addPrimaryContact  = ()=>{
+        setactionType("add")
+        props.resetContact()
+        setisOpenContacs(!isOpenContacs)
+    }
+    const editPrimaryContact  = (e)=>{
+        e.preventDefault()
+        setactionType("add")
+        props.resetContact()
+        setisOpenContacs(!isOpenContacs)
+        // alert(JSON.stringify(customerDataById.contacts[0]))
+        props.editDataToContact(customerDataById.contacts[0])
+  
     }
 
     console.log(customerDataById)
@@ -787,10 +844,10 @@ const dataTochange =(e)=>{
                     <TabList>
                         <Tab>Customer Information</Tab>
                         <Tab>Order Settings</Tab>
-                        <Tab>Contacts</Tab>
+                        <Tab style={{backgroundColor:customerDataById.id!==undefined?"white":"lightgray",borderTop:"1px solid blue"}} disabled={customerDataById.id!==undefined?false:true}>Contacts</Tab>
                          {/* <Tab>Tags &amp; Labels</Tab> */}
-                        <Tab>Addresses</Tab>
-                        <Tab>Print Catalog</Tab>
+                        <Tab style={{backgroundColor:customerDataById.id!==undefined?"white":"lightgray",borderTop:"1px solid blue"}} disabled={customerDataById.id!==undefined?false:true}>Addresses</Tab>
+                        <Tab  style={{backgroundColor:customerDataById.id!==undefined?"white":"lightgray",borderTop:"1px solid blue"}} disabled={customerDataById.id!==undefined?false:true}>Print Catalog</Tab>
                     </TabList>
                     <TabPanel>
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
@@ -861,23 +918,23 @@ const dataTochange =(e)=>{
                  
                                 </div>
                                 <div class="row mt-3">
-                                    <div class="col-md-6 col-lg-6">
+                                    <div class="col-md-6 col-lg-6"  >
                                         <label>Primary Contact</label>
-                                        {customerDataById.customercontact.map(contactData=>{
+                                        {customerDataById.contacts.length>0?customerDataById.contacts.map(contactData=>{
                                             if(contactData.primary_contact==1){
-                                                return(<div>
+                                                return(<div style={{position:"relative",height:"150px"}}>
                                                     {/* <div class="col-md-6 col-lg-4"> */}
-                                                    <div class="contactCard" style={{border:"1px solid lightgray"}}>
+                                                    <div class="contactCard"  style={{border:"1px solid lightgray"}}>
                                                     <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p>
                                             <label class="text-muted f-w-400">{contactData.email}</label>
                                             <table>
                                                 <tr>
                                                     <td><strong>Phone 1:</strong> {contactData.phone1==null?" Not Available":contactData.phone1}</td>
-                                                     <td style={{paddingLeft:8}}><strong> Xt:</strong>  {contactData.phone1_ext==null?" Not Available":contactData.phone1_ext}</td>
+                                                     <td style={{paddingLeft:8}}>{contactData.phone1_ext!==null&&contactData.phone1_ext!==""?<><strong> Xt:</strong>  {contactData.phone1_ext==null?" Not Available":contactData.phone1_ext}</>:""}</td>
                                                 </tr>
                                                 <tr>
-                                                    <td><strong>Phone 1:</strong> {contactData.phone2==null?" Not Available":contactData.phone2}</td>
-                                                     <td  style={{paddingLeft:8}}> <strong> Xt:</strong> {contactData.phone2_ext==null?" Not Available":contactData.phone2_ext}</td>
+                                                    <td><strong> Phone 2:</strong> {contactData.phone2!==null&&contactData.phone2!=""?<> {contactData.phone2==null?" Not Available":contactData.phone2}</>:"Not Available"}</td>
+                                                     <td  style={{paddingLeft:8}}>{contactData.phone2_ext!==null&&contactData.phone2_ext!==""?<><strong> Xt:</strong>  {contactData.phone2_ext==null?" Not Available":contactData.phone2_ext}</>:""}</td>
                                                 </tr>
                                             </table>
                                             {/* <div>
@@ -892,6 +949,10 @@ const dataTochange =(e)=>{
                                             </div> */}
                                    
                                                         </div>
+                                                        <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={editPrimaryContact}>
+                                         
+                                         Edit
+                                          </button>
                                                         {/* </div> */}
                                                     </div>);
                                                    
@@ -901,7 +962,15 @@ const dataTochange =(e)=>{
                                            
 
 
-                                        }
+                                        :<div  style={{border:"1px solid lightgray",height:"150px",borderRadius:5,position:"relative"}}>
+                                            
+                                            <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={addPrimaryContact}>
+                                         
+                                        Add
+                                         </button>
+                                            
+                                            
+                                        </div>}
                                         {/* <input type="text" class="form-control" id="name" value={customerDataById.fax!==null?customerDataById.name+" "+customerDataById.fax:""} onChange={handleInput}  disabled placeholder="Primary Contact"/> */}
  
                                            {/* </div> */}
@@ -1147,37 +1216,54 @@ const dataTochange =(e)=>{
                                                     <div class="contactCard">
                                                     <p class="mb-0 f-w-600">{contactData.first_name+" "+contactData.last_name}</p>
                                             <label class="text-muted f-w-400">{contactData.email}</label>
-                                            <div class="row">
-                                                <div class="col-md-6">
+                                            {/* <div class="row"> */}
+                                                <table>
+                                                    <tr>
+                                                        <td>  <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1}</label></td>
+                                                        {contactData.phone1_ext!==null?<td>  <label class="text-muted f-w-400 mb-0"><strong style={{paddingLeft:10}}>Xt: </strong> <span >{contactData.phone1_ext}</span></label></td>:<td></td>}
+                                                    </tr>
+                                                    <tr>
+                                                        <td>  <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2!==null?contactData.phone2:"Not Available"}</label></td>
+                                                        {contactData.phone2_ext!==null?<td>  <label class="text-muted f-w-400 mb-0"><strong style={{paddingLeft:10}}>Xt: </strong> <span >{contactData.phone2_ext}</span></label></td>:<td></td>}
+                                                    </tr>
+                                                </table>
+                                                {/* <div class="col-md-6">
                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong> {contactData.phone1}</label>
                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 2:</strong> {contactData.phone2}</label>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong>88888 {contactData.phone1_ext}</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong>88888 {contactData.phone2_ext}</label>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-6">
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
+                                                    <label class="text-muted f-w-400 mb-0"><strong>Xt: </strong> {contactData.phone1_ext}</label>
+                                                    
+                                                </div>
+                                                 */}
+                                            {/* </div> */}
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
                                                     <input type="checkbox" class="custom-control-input" id={`primary_contact^${contactData.id}`} checked={parseInt(contactData.primary_contact)==1?true:false} onClick={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${contactData.id}`}>This person is the primary contact</label>
+                                                    <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`primary_contact^${contactData.id}`}>This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
                                                     <input type="checkbox" class="custom-control-input" id={`all_communication^${contactData.id}`}  checked={parseInt(contactData.all_communication)==1?true:false} onClick={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" for={`all_communication^${contactData.id}`}>This person receives all communication</label>
+                                                    <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`all_communication^${contactData.id}`}>This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a  class="" onClick={()=>editNotes(contactData.id)}>
-                                                    {contactData.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
+                                                    <a  class="" onClick={()=>editNotes(contactData.id)} style={{cursor:"pointer"}}>
+                                                    {contactData.notes==null || contactData.notes==""? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                         
                                                     </a>
-                                                    <a  class=" ml-2" onClick={editContact} id={contactData.id}>
+                                                    <a  class=" ml-2" onClick={editContact} id={contactData.id} style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt=""id={contactData.id}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
-                                                    <a  class=" ml-2">
+                                                    <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                       
                                                         <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(contactData.id)}/>
                                                     </a>
@@ -1196,7 +1282,7 @@ const dataTochange =(e)=>{
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact} disabled={customerDataById.id === undefined?true:false}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={toggleForContact} >Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -1211,41 +1297,42 @@ const dataTochange =(e)=>{
                                     {customerAddressList.active.map((data,index)=>{
                                         return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
-                                            <p class="mb-0 f-s-16 f-w-600">{data.address1}<br/>
-                                               </p>
+                                        <p class="mb-0 f-s-16 f-w-600">{data.city}<br/></p>
+                                            <p class="mb-0 f-s-16 f-w-600">{data.state}, {data.country} -{data.zip}<br/></p>
+                                              
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id={`billing_address^${data.id}`} checked={parseInt(data.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" for={`billing_address^${data.id}`}>Billing Address</label>
+                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`billing_address^${data.id}`} checked={parseInt(data.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`billing_address^${data.id}`}>Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" id={`delivery_address^${data.id}`} checked={parseInt(data.delivery_address)==1?true:false}  onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" for={`delivery_address^${data.id}`}>Delivery Address</label>
+                                                        <input type="checkbox" class="custom-control-input"style={{cursor:"pointer"}} id={`delivery_address^${data.id}`} checked={parseInt(data.delivery_address)==1?true:false}  onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`delivery_address^${data.id}`}>Delivery Address</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-12">
-                                                    <a href="#" class="">
+                                                    <a href="#" class="" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/location-pin.svg" alt=""/> Show on Google Maps
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a class="" onClick={()=>editAddressNotes(data.id)} >
-                                                    {data.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
+                                                    <a class="" onClick={()=>editAddressNotes(data.id)} style={{cursor:"pointer"}}>
+                                                    {data.notes==null || data.notes==""? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                         {/* <img src="assets/img/moreDetails-ic.svg" alt=""  */}
                                                     </a>
-                                                    <a  class=" ml-2">
+                                                    <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>{editAddress(data.id)}}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
-                                                    <a  class=" ml-2">
+                                                    <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/delete.svg" alt="" onClick={()=>{deleteAddress(data.id)}}/>
                                                     </a>
                                                 </div>
@@ -1257,7 +1344,7 @@ const dataTochange =(e)=>{
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Contact required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={customerDataById.id === undefined?true:false}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}  disabled={customerDataById.id?false:true}>Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -1303,7 +1390,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
+export default connect(mapStateToProps,{getCustomerById,editDataToContact,updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,getAllReasonMethods,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      
