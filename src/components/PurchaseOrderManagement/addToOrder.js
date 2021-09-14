@@ -205,7 +205,7 @@ const inputPropsSku = {
                                                 </select>
                                             </div>
                                             <div class="col-md-4 col-lg-4 mt-3 mt-md-0">
-                                                <label>Categfdgbfdgfory</label>
+                                                <label>Category</label>
                                                 <select class="form-control">
                                                     <option>All</option> 
                                                     {props.categoryList.map(category=>{
