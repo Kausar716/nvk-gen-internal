@@ -26,7 +26,8 @@ import {GET_PURCHASE_ORDER_LIST,
     UPDATE_PURCHASE_ORDER_NOTES,
     DELETE_PO,
     DUPLICATE_PO,
-    SPLIT_PO_ORDER
+    SPLIT_PO_ORDER,
+    CLEAR_PO_DATA
 
 } from '../actions/types';
 
@@ -427,6 +428,58 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             ...state,
                             currentItems:updateList,
                             // currentOrder:action.payload.order
+                        }
+                    case CLEAR_PO_DATA:
+                        return{
+  
+                            purchaseOrderList:[],
+                            purchaseOrderListBackup:[],
+                            groupedOrderListDate:[],
+                            orderListDateForSuggession:[],
+                            productPageNumber   :   0,
+                            pageNumber          :   0,  
+                            needAction          :   false,
+                            selectedAlphabet: "All",
+                            openPoCount:0,
+                            statusLevel:{open:0,draft:0,closed:0,cancelled:0},
+                            selectedSupplier:null,
+                            pageToOpen:"add",
+                            poData:{
+                                supplier_id:"",
+                                order_id:"",
+                                discount_type:"0",
+                                discount:"0.00",
+                                job_description:"",
+                                royalty:"0",
+                                order_notes:null,
+                                dispatch_type:null,
+                                currency:"Merits",
+                                supplier_order:"",
+                                requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                internal_notes:""
+                        
+                            },
+                            searchValuePlant:"",
+                            searchValueSku:"",
+                            currentPOHistory:[],
+                            currentItems:[],
+                            currentOrder:{
+                                adjustment:null,
+                                discount:"",
+                                shipping:"",
+                                subtotal:"",
+                                total:""
+                            },
+                            plantSku:[],
+                            unitList:[],
+                            path:"",
+                            poPageIndex:0,
+                            supplierDeliveryList:[],
+                            currencyList:[],
+                            deliveryAddress:[],
+                            orderListDateForSuggessionWithFilter:[],
+                            categoryList:[]
                         }
                    case GET_UNIT_LIST:
                        return{
