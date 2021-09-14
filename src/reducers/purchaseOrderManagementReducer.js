@@ -23,7 +23,10 @@ import {GET_PURCHASE_ORDER_LIST,
     GET_DELIVERY_ADDRESS,
     GET_ADD_TO_CATEGORY_LIS,
     HANDLE_PO_FILTER,
-    UPDATE_PURCHASE_ORDER_NOTES
+    UPDATE_PURCHASE_ORDER_NOTES,
+    DELETE_PO,
+    DUPLICATE_PO,
+    SPLIT_PO_ORDER
 
 } from '../actions/types';
 
@@ -82,10 +85,10 @@ const initialSatate = {
     categoryList:[]
 } 
 const filterBasedOnAlphabet = (poList,selectedAlphabet,statusLevel)=>{
-    console.log(selectedAlphabet)
+    console.log(poList)
     if(selectedAlphabet !== "All"&& selectedAlphabet !="")
-    return poList.filter(po=>po.supplier_name.charAt(0).toLocaleLowerCase() === selectedAlphabet.toLocaleLowerCase())
-    else
+    return poList.filter(po=>(po.supplier_name !== null && po.supplier_name.charAt(0).toLocaleLowerCase() === selectedAlphabet.toLocaleLowerCase()))
+    else 
     return poList
 }
 const filterBsedOnCheckBox =(filteredData,statusLevel)=>{
@@ -393,6 +396,13 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             currentItems:action.payload.items,
                             currentOrder:action.payload.order
                         }
+                    case SPLIT_PO_ORDER:
+                        console.log(action)
+                        return{
+                            ...state,
+                            currentItems:action.payload.items,
+                            currentOrder:action.payload.order
+                        }
                     case GET_PLANT_SKU:
                         let groupedSku = groupSku(action.payload)
                         console.log(groupedSku)
@@ -440,8 +450,51 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                             poData:action.payload,
                             path:"PurchaseOrder",
                             poPageIndex:0,
-                            selectedSupplier:action.payload.supplier_name
+                            selectedSupplier:action.payload
 
+                        }
+                    case DELETE_PO:
+                        return{
+                            ...state,
+                            pageToOpen:"add",
+                            poData:{
+                                supplier_id:"",
+                                order_id:"",
+                                discount_type:"0",
+                                discount:"0.00",
+                                job_description:"",
+                                royalty:"0",
+                                order_notes:null,
+                                dispatch_type:null,
+                                currency:"Merits",
+                                supplier_order:"",
+                                requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                internal_notes:""
+                            },
+                            selectedSupplier:null
+                        }
+                    case DUPLICATE_PO:
+                    console.log(action.payload)    
+                    return{
+                        ...state,
+                        pageToOpen:"add",
+                        poData:{
+                            supplier_id:"",
+                            order_id:"",
+                            discount_type:"0",
+                            discount:"0.00",
+                            job_description:"",
+                            royalty:"0",
+                            order_notes:null,
+                            dispatch_type:null,
+                            currency:"Merits",
+                            supplier_order:"",
+                            requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                            latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                            internal_notes:""
+                        },
+                        selectedSupplier:null
                         }
                     case HANDLE_PO_PAGE_SELECTION:
                         console.log(action)

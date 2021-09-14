@@ -35,7 +35,10 @@ import {
     GET_DELIVERY_ADDRESS,
     GET_ADD_TO_CATEGORY_LIS,
     HANDLE_PO_FILTER,
-    UPDATE_PURCHASE_ORDER_NOTES
+    UPDATE_PURCHASE_ORDER_NOTES,
+    DELETE_PO,
+    DUPLICATE_PO,
+    SPLIT_PO_ORDER
 
     } from './types'
 
@@ -50,7 +53,7 @@ import {
       })
   }
     export const getPurchaseOrderList = () => dispatch => {
-        axios.get(`/api/purchase-order-list`,config).then(res=>{
+        axios.post(`/api/purchase-order-list`,{},config).then(res=>{
             console.log(res)
             dispatch({
                 type:GET_PURCHASE_ORDER_LIST,
@@ -93,6 +96,31 @@ import {
       })
   
   }
+  export const deletePo = (po_Id)=> dispatch =>{
+    return axios.post(`/api/delete-purchase-order/${po_Id}`,{},config).then(res=>{ 
+        console.log(res)
+        
+    dispatch({
+            type:DELETE_PO,
+            payload:res.data.data.active
+
+        })
+        
+    })
+
+}
+export const duplicatePo = (po_Id)=> dispatch =>{
+  return axios.post(`/api/duplicate-purchase-order/${po_Id}`,{},config).then(res=>{ 
+      console.log(res)
+  dispatch({
+          type:DUPLICATE_PO,
+          payload:res.data.data
+      })
+  })
+
+}
+
+  
     export const poPageReDirectAction = (page,actionType) => {
         return{
             type:PO_PAGE_REDIRECT_ACTION,
@@ -309,9 +337,24 @@ export const getAddToPOCateries= () => dispatch => {
     })
   })
 }
+export const slpitPo= (result,item_id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/split-purchase-order-item/${item_id}`,result,config).then(res=>{
+    console.log(res)
+     debugger;
+      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
 export const getSpecifiedPurchaseOrder = (id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  console.log(id)
   axios.get(`/api/show-purchase-order/${id}`,config).then(res=>{
     console.log(res)
       dispatch({
@@ -415,11 +458,12 @@ export const getCurrentOrder = (currentPoId)=> dispatch => {
 
 
 export const getOrderHistory = (currentPoId)=> dispatch => {
+  console.log(currentPoId)
   let errorArray = []
   if(currentPoId){
    axios.get(`/api/po-logs/${currentPoId}`,config).then(res=>{
      console.log(res)
-     
+     debugger;
        dispatch({
            type:GET_CURRENT_PO_ORDER_HISTORY,
            payload:res.data.data
@@ -436,23 +480,23 @@ export const getOrderHistory = (currentPoId)=> dispatch => {
 
 
 export const handleAddAll = (groupedArray,poId) => dispatch => {
+  console.log(groupedArray)
+  console.log(poId)
 let orderedListForUpdation = []
   groupedArray.map(order=>{
     order.map(subOrder=>{
       if(subOrder.dumyQty!==""){
         let inputObj={}
-        // inputObj['plant_id'] = subOrder.plant_id
+        inputObj['id'] = subOrder.ID
         inputObj['qty'] = subOrder.dumyQty
         inputObj['name'] = subOrder.name
-        // inputObj['size'] = subOrder.size
+        inputObj['size'] = subOrder.size?subOrder.size:""
+        inputObj['type'] = subOrder.type        
         inputObj['SKU'] = subOrder.sku_code
         inputObj['nvk_price'] = subOrder.nvk_price
-        inputObj['volume_rate'] = subOrder.volume_quantity_value
+        // inputObj['volume_rate'] = ""
         inputObj['item_customer_notes'] = ""
         inputObj['item_internal_notes'] = ""
-
-        
-
         orderedListForUpdation.push(inputObj)
       }
     })

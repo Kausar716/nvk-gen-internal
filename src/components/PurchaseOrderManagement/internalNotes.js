@@ -54,7 +54,7 @@ import ActionModal from '../Modal/ActionModal';
             </div>
             <div class="row mt-3">
                 <div class="col-md-12 text-right">
-                    <button type="button" class="btn btn-primary btn-lg ml-3">SAVE</button>
+                    <button type="button" class="btn btn-primary btn-lg ml-3" onClick={updateNotes}>SAVE</button>
                 </div>
             </div>
         </form>

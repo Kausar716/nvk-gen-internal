@@ -8,6 +8,8 @@ import CurrentPo from "./currentPO"
 import AddToOrder from "./addToOrder"
 import OrderHistory from './orderHistory'
 import Notes from './internalNotes'
+import{deletePo,duplicatePo
+} from "../../actions/purchaseOrderManagementAction";
 
 
 
@@ -15,6 +17,16 @@ import Notes from './internalNotes'
     const [value, onChange] = useState(new Date());
     console.log(props.pageToOpen)
     let index=0
+    const handlePoDelete = ()=>{
+        console.log(props.poData)
+        let poToBeDeleted = props.poData.id
+        props.deletePo(poToBeDeleted)
+    }
+    const handlePoDuplicate = ()=>{
+        let poToBeDuplicated = props.poData.id
+        props.duplicatePo(poToBeDuplicated)
+    }
+    
     return (
         <div>
             <div class="contentHeader bg-white d-md-flex justify-content-between align-items-center">
@@ -59,8 +71,8 @@ import Notes from './internalNotes'
                             </div>
                         </div>
                         {props.pageToOpen !=="add"? <div class="col-md-6 d-flex justify-content-md-end">
-                            <a href="" class="mx-2"><img src="assets/img/copy-ic.svg" alt=""/></a>
-                            <a href="" class="mx-2"><img src="assets/img/trash-ic.svg" alt=""/></a>
+                            <a href="#" class="mx-2"><img src="assets/img/copy-ic.svg" alt="" onClick={handlePoDuplicate}/></a>
+                            <a href="#" class="mx-2"><img src="assets/img/trash-ic.svg" alt="" onClick={handlePoDelete}/></a>
                         </div>:""}
                     </div>
                 </div>
@@ -106,8 +118,8 @@ const mapStateToProps = (state)=> ({
 
 })
 export default connect(mapStateToProps,{
-
-
+    deletePo,
+    duplicatePo
 
 
 

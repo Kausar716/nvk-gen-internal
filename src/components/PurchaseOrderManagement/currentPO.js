@@ -5,15 +5,13 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,getplantSku,
+     handleAplhabetFilterBySN,getplantSku,slpitPo,
      handlePurchaseOrderFilert,handleCurrentPoOrderUpdate,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,getCurrentOrder,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
 } from "../../actions/purchaseOrderManagementAction";
-// import {getAddToOrderList} from "../../actions/supplierManagementAction"
-// import initialDetails from './initialDetails';
-// import './style.css'
+
 import '../PlantManager/index.css'
 import { Link } from "react-router-dom";
 import Autosuggest from 'react-autosuggest';
@@ -39,7 +37,19 @@ import ActionModal from '../Modal/ActionModal';
     
 let {currentOrder,plantSku} = props
 
+const handleSplitClick = (item)=>{
+    let result = prompt("Enter split qty")
+    console.log(result)
 
+    if(result ){
+        let splitObj = {}
+        splitObj.split_qty = result
+        splitObj.purpose = "sales-ready"
+
+        props.slpitPo(result,item.po_item_id)
+    }
+    
+}
 
 
 
@@ -152,7 +162,7 @@ console.log(props.currentItems)
                                                             <td width="6%" class="text-center">{item.royality}</td>
                                                             <td width="7%" class="text-center">{item.nvk_price}</td>
                                                             <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.item_id} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
+                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.each_price} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
                                                                     <span>8.25</span>
@@ -175,7 +185,7 @@ console.log(props.currentItems)
                                                                             <i class="fas fa-ellipsis-v"></i>
                                                                         </a>
                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
-                                                                            <a href="#" class="dropdown-item splitBg" type="button"><span><img src="assets/img/split-ic.svg"/></span> Split</a>
+                                                                            <a href="#" class="dropdown-item splitBg" type="button" onClick={()=>{handleSplitClick(item)}}><span><img src="assets/img/split-ic.svg"/></span> Split</a>
                                                                             <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
                                                                             <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
                                                                         </div>
@@ -273,7 +283,7 @@ const mapStateToProps = (state)=> ({
 })
 export default connect(mapStateToProps,{
 
-    getAddToOrderList,
+    getAddToOrderList,slpitPo,
     setSupplierToAddPo,getplantSku,handleCurrentPoOrderUpdate,
     handleOrderDetailsInput,addPo,getCurrentOrder
 
