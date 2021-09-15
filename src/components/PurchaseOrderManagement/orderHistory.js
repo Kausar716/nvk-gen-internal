@@ -59,7 +59,7 @@ console.log(props.currentPOHistory)
                                                     <td class="text-center">{po.action}</td>
                                                     <td class="text-center">{po.source}</td>
                                                     <td class="text-center">{po.item}</td>
-                                                    <td class="text-center">{time}</td>
+                                                    <td class="text-center">{po.updated_at}</td>
                                                 </tr>
                                                 }):
                                                 // let timestamp=new Date(po.updated_at)

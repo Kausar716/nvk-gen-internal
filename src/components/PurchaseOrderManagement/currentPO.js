@@ -145,6 +145,13 @@ console.log(props.currentItems)
                                                 {/* Main Content Row starts here */}
                                                 {props.currentItems.map((item,i)=>{
                                                     {console.log(item)}
+                                                    let disc_percent =parseInt(item.disc_percent)
+                                                    let eactPriceDiscount = 0
+                                                    let totalDiscount=0
+                                                    if(disc_percent>0) {
+                                                        eactPriceDiscount =  item.disc_percent *parseInt(item.each_price)*.01
+                                                        totalDiscount = item.disc_percent *parseInt(item.item_total)*.01
+                                                    }
                                                     let addedDateWithFormat= `${new Date(item.added).getDate()}-${new Date(item.added).getMonth()+1}-${new Date(item.added).getFullYear()}`                                                   
                                                     return<tr class={i%2===0?"tblBgWhite":"tblBgGrey"}>
                                                   
@@ -185,20 +192,20 @@ console.log(props.currentItems)
                                                                 <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.po_item_id} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
+                                                                    <span>{eactPriceDiscount}</span>
                                                                 </div>
                                                             </td>
                                                             <td width="8%" class="text-center">
                                                                 <span class="text-green controlLabel text-right">{item.item_total}</span>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
+                                                                    <span>{totalDiscount}</span>
                                                                 </div>
                                                             </td>
                                                             <td width="8%" class="text-center actionTd">
                                                                 <div class="d-flex justify-content-center">
                                                                     <a href="#" class="">
-                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                        <img src="assets/img/copy-ic-blue.svg" alt="" />
                                                                     </a>
                                                                     <div class="dropdown actionDropdown  ml-2">
                                                                         <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -216,8 +223,8 @@ console.log(props.currentItems)
                                                         <tr class="trBgWhite ">
                                                             <td width="4%"></td>
                                                             <td colspan="12"> 
-                                                                {/* <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span> */}
+                                                                {item.subsitutued_ids!=null?<img src="assets/img/enter-arrow-red.svg" alt=""/>:""}
+                                                                <span class="ml-2">{item.subsitutued_ids!=null?typeof(item.subsitutued_ids)==="object"?item.subsitutued_ids.join():"":""}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
