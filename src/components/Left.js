@@ -10,6 +10,7 @@ import {pageReDirectAction} from '../actions/productAction'
 import {plantPageReDirectAction} from '../actions/plantManagerAction'
 import {typeOfActionShow,resetCustomerFilds} from '../actions/customerSettingAction'
 import {typeOfsupplierActionShow,resetSupplierFilds} from '../actions/supplierManagementAction'
+import {clearPoData} from '../actions/purchaseOrderManagementAction'
 
 
 
@@ -63,6 +64,7 @@ const handleMainSelection= (id) => {
     props.pageReDirectAction("product","add")
     props.plantPageReDirectAction("all","plant")
   }
+  props.clearPoData()
 }
 
  
@@ -86,6 +88,7 @@ const handleMainSelection= (id) => {
     props.pageReDirectAction("product","add")
     props.plantPageReDirectAction("all","plant")
   }
+  props.clearPoData()
  }
 
  const handleSideMenuEnter=() => {
@@ -271,4 +274,5 @@ const mapStateToProps = (state)=> (
 }
 )
 
-export default connect(mapStateToProps,{resetCustomerFilds,typeOfsupplierActionShow,resetSupplierFilds,typeOfActionShow,getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)
+export default connect(mapStateToProps,{resetCustomerFilds,typeOfsupplierActionShow,resetSupplierFilds,
+  clearPoData,typeOfActionShow,getMenuItems,updateMenuItems,checkLogin,pageReDirectAction,plantPageReDirectAction})(Left)

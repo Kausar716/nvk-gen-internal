@@ -38,7 +38,8 @@ import {
     UPDATE_PURCHASE_ORDER_NOTES,
     DELETE_PO,
     DUPLICATE_PO,
-    SPLIT_PO_ORDER
+    SPLIT_PO_ORDER,
+    CLEAR_PO_DATA
 
     } from './types'
 
@@ -73,6 +74,17 @@ import {
       })
   
   }
+  export const clearPoData = ()=> dispatch =>{
+    return axios.get("/api/currency-list",config).then(res=>{ 
+        console.log(res)
+    dispatch({
+            type:CLEAR_PO_DATA,
+            payload:res.data.data.active
+
+        })
+    })
+
+}
   export const getSupplierDeliveryList = (supplierId)=> dispatch =>{
     console.log(supplierId)
     return axios.get(`/api/delivery-supplier/${supplierId}`,config).then(res=>{ 
@@ -193,6 +205,7 @@ export const duplicatePo = (po_Id)=> dispatch =>{
           statusLevel:statusLevel,
         }
     }
+    
     export const addPo = (data) => dispatch => {
       let errorArray=[];
       console.log(data)
@@ -224,6 +237,50 @@ export const duplicatePo = (po_Id)=> dispatch =>{
 
   }
   }
+  
+    export const handleAddPoLineItem = (lineItemData,poId) => dispatch => {
+      console.log(lineItemData)
+      console.log(poId)
+    let orderedListForUpdation = []
+    
+          if(lineItemData.dumyQty!==""){
+            let inputObj={}
+            inputObj['id'] = lineItemData.ID
+            inputObj['qty'] = lineItemData.dumyQty
+            inputObj['name'] = lineItemData.name
+            inputObj['size'] = lineItemData.size?lineItemData.size:""
+            inputObj['type'] = lineItemData.type        
+            inputObj['SKU'] = lineItemData.sku_code
+            inputObj['nvk_price'] = lineItemData.nvk_price
+            // inputObj['volume_rate'] = ""
+            inputObj['item_customer_notes'] = ""
+            inputObj['item_internal_notes'] = ""
+            orderedListForUpdation.push(inputObj)
+          }      
+     
+      let orderedObject = {}
+     
+      orderedObject['items']  = orderedListForUpdation
+      console.log(orderedObject)
+     
+      let errorArray=[];
+      // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+      if(orderedListForUpdation.length>0){
+      axios.post(`/api/add-purchase-order-item/${poId}`,orderedObject,config).then(res=>{
+        console.log(res)
+       
+         
+          dispatch(getAddToOrderList)
+          dispatch({
+            type:ERROR_HANDLE,
+            message:errorArray,
+            status:true
+        })
+      })
+    }
+    
+}
+
   export const updatePo = (data) => dispatch => {
     let errorArray=[];
     console.log(data)
@@ -341,9 +398,11 @@ export const getAddToPOCateries= () => dispatch => {
 export const slpitPo= (result,item_id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  console.log(result)
+  console.log(item_id)
   axios.post(`/api/split-purchase-order-item/${item_id}`,result,config).then(res=>{
     console.log(res)
-     debugger;
+    
       dispatch(getCurrentOrder(res.data.data.item.p_o_id))
       dispatch({
         type:ERROR_HANDLE,
@@ -352,6 +411,52 @@ export const slpitPo= (result,item_id) => dispatch => {
     })
   })
 }
+
+export const deleteItemPo= (item_id) => dispatch => {
+  let errorArray=[];
+  console.log(item_id)
+  axios.post(`/api/delete-purchase-order-item/${item_id}`,{},config).then(res=>{
+    console.log(res)
+    alert("PO item deleted")
+      dispatch(getCurrentOrder(res.data.data.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
+export const substitutionPo= (result,item_id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/subsitute-purchase-order/${item_id}`,result,config).then(res=>{
+    console.log(res)
+  
+      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
+export const updatePoItemNotes= (result,item_id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/update-purchase-order-item/${item_id}`,result,config).then(res=>{
+    console.log(res)
+  
+      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
 export const getSpecifiedPurchaseOrder = (id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
@@ -464,7 +569,7 @@ export const getOrderHistory = (currentPoId)=> dispatch => {
   if(currentPoId){
    axios.get(`/api/po-logs/${currentPoId}`,config).then(res=>{
      console.log(res)
-     debugger;
+     
        dispatch({
            type:GET_CURRENT_PO_ORDER_HISTORY,
            payload:res.data.data
@@ -503,7 +608,7 @@ let orderedListForUpdation = []
     })
   })
   let orderedObject = {}
-  orderedObject['type'] = "plant"
+  // orderedObject['type'] = "plant"
   orderedObject['items']  = orderedListForUpdation
   console.log(orderedObject)
  

@@ -6,7 +6,7 @@ import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
      handleAplhabetFilterBySN,getAddToPOCateries,
-     handlePurchaseOrderFilert,serachOrderedList,handleAddAll,
+     handlePurchaseOrderFilert,serachOrderedList,handleAddAll,handleAddPoLineItem,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,handledumyQty,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
@@ -106,6 +106,10 @@ import ActionModal from '../Modal/ActionModal';
         else{
             props.handleAddAll(props.orderedList,22)
         }
+    }
+    const addSingleLineItem = (lineItemData)=>{
+        console.log(lineItemData)
+        props.handleAddPoLineItem(lineItemData,props.poData.id)
     }
 
 
@@ -278,7 +282,7 @@ const inputPropsSku = {
                                                                         <td class="text-center" width="7%">
                                                                             <div class="d-flex align-items-center">
                                                                                 <input type="text" class="form-control textQtySm" placeholder="" onChange={(e)=>{props.handledumyQty(order.sku_code,e.target.value)}} value={order.dumyQty}/>
-                                                                                <a href="" class="ml-2">
+                                                                                <a href="#" class="ml-2" onClick={()=>{addSingleLineItem(order)}}>
                                                                                     <img src="assets/img/tbl-plus-ic.svg" alt=""/>
                                                                                 </a>
                                                                             </div>
@@ -450,7 +454,8 @@ export default connect(mapStateToProps,{
     handledumyQty,
     handleAddAll,
     getAddToPOCateries,
-    getAllSubAttribute
+    getAllSubAttribute,
+    handleAddPoLineItem
 
 
 

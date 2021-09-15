@@ -26,7 +26,8 @@ import {GET_PURCHASE_ORDER_LIST,
     UPDATE_PURCHASE_ORDER_NOTES,
     DELETE_PO,
     DUPLICATE_PO,
-    SPLIT_PO_ORDER
+    SPLIT_PO_ORDER,
+    CLEAR_PO_DATA
 
 } from '../actions/types';
 
@@ -412,21 +413,90 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         }
                     case HANDE_CURRENT_PO_ORDER_UPDATE:
                         let selectedId=-1
-                        let updateItem = state.currentItems.filter((item,i)=>{
-                            if(item.item_id === action.currentItemId){
+                        console.log(action.currentItemId)
+                        console.log(state.currentItems)
+                       let currentItemsForLoop=state.currentItems
+                        let updateItem = {}
+                        currentItemsForLoop.map((item,i)=>{
+                            console.log(item.po_item_id)
+                            console.log(action.currentItemId)
+                            if(parseInt(item.po_item_id) === parseInt(action.currentItemId)){
                                 selectedId = i
-                                return
+                                updateItem = item
                             }})
+                            console.log(selectedId)
+                            console.log(action.currentItemName === "sku_id")
                             if(selectedId>=0){
-                                updateItem.currentItemName = action.currentItemValue
+                                if(action.currentItemName === "sku_id"){
+                                    console.log(action.currentItemValue)
+                                    updateItem.sku_id = parseInt(action.currentItemValue)
+                                }
+                                else{
+                                    console.log(action.currentItemValue)
+                                    updateItem.currentItemName = action.currentItemValue
+                                }
                             }
                             let updateList = state.currentItems
+                            console.log(updateItem) 
                             updateList.splice(selectedId,1,updateItem)
+                            console.log(updateList)
                             
                         return{
                             ...state,
                             currentItems:updateList,
                             // currentOrder:action.payload.order
+                        }
+                    case CLEAR_PO_DATA:
+                        return{
+  
+                            purchaseOrderList:[],
+                            purchaseOrderListBackup:[],
+                            groupedOrderListDate:[],
+                            orderListDateForSuggession:[],
+                            productPageNumber   :   0,
+                            pageNumber          :   0,  
+                            needAction          :   false,
+                            selectedAlphabet: "All",
+                            openPoCount:0,
+                            statusLevel:{open:0,draft:0,closed:0,cancelled:0},
+                            selectedSupplier:null,
+                            pageToOpen:"add",
+                            poData:{
+                                supplier_id:"",
+                                order_id:"",
+                                discount_type:"0",
+                                discount:"0.00",
+                                job_description:"",
+                                royalty:"0",
+                                order_notes:null,
+                                dispatch_type:null,
+                                currency:"Merits",
+                                supplier_order:"",
+                                requested_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                latest_date:`${new Date().getDate()}-${new Date().getMonth()+1}-${new Date().getFullYear()}`,
+                                internal_notes:""
+                        
+                            },
+                            searchValuePlant:"",
+                            searchValueSku:"",
+                            currentPOHistory:[],
+                            currentItems:[],
+                            currentOrder:{
+                                adjustment:null,
+                                discount:"",
+                                shipping:"",
+                                subtotal:"",
+                                total:""
+                            },
+                            plantSku:[],
+                            unitList:[],
+                            path:"",
+                            poPageIndex:0,
+                            supplierDeliveryList:[],
+                            currencyList:[],
+                            deliveryAddress:[],
+                            orderListDateForSuggessionWithFilter:[],
+                            categoryList:[]
                         }
                    case GET_UNIT_LIST:
                        return{
