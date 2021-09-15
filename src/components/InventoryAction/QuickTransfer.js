@@ -5,7 +5,7 @@ import {modalAction} from "../../actions/productAction";
 import InputMask from 'react-input-mask';
 import {addCustomerContact1,addPriamryContact,getCustomerById,addCustomerContact,handleExchangeData,savingContactData,updateContactData,getCustomerContacts} from "../../actions/customerSettingAction";
 
- const ContactsModal = (props) => {
+ const QuickTransfer = (props) => {
      const {status,type} =props
    const {customerContact,customerDataById,primaryContact} = props.customerData
    const [error,setError] = useState("")
@@ -180,57 +180,48 @@ import {addCustomerContact1,addPriamryContact,getCustomerById,addCustomerContact
         if(errors!==0)
         return
        
-        // if(customerDataById.id !== undefined){
-        //     setError("")
-        //     customerContact.customer_id  = customerDataById.id
-        //     if(type=="add"){
-        //         props.addCustomerContact(customerContact).then(data=>{
-        //             props.modalAction()
-        //          console.log(customerDataById)
-        //             // alert(customerDataById.customer_id)
-        //             props.getCustomerContacts(customerDataById.id)
-        //             props.getCustomerById(customerDataById.id)
-        //             // props.getCustomerContacts(customerDataById.customer_id)
-                    
-        //         })
-    
-        //     }else{
-        //         props.updateContactData(customerContact).then(data=>{
-        //             props.modalAction()
-        //             console.log(customerDataById)
-        //             props.getCustomerContacts(customerDataById.id)
-        //             props.getCustomerById(customerDataById.id)
-                    
-        //         })
-    
-
-        // }
-
-        // }else{
+        if(customerDataById.id !== undefined && primaryContact==false){
+            setError("")
+            customerContact.customer_id  = customerDataById.id
             if(type=="add"){
-                props.addPriamryContact(customerContact)
-                props.modalAction()
-               
+                props.addCustomerContact(customerContact).then(data=>{
+                    props.modalAction()
+                 console.log(customerDataById)
+                    // alert(customerDataById.customer_id)
+                    props.getCustomerContacts(customerDataById.id)
+                    props.getCustomerById(customerDataById.id)
+                    // props.getCustomerContacts(customerDataById.customer_id)
+                    
+                })
+    
             }else{
-                props.updateContactData(customerContact)
-                // alert("edit")
+                props.updateContactData(customerContact).then(data=>{
+                    props.modalAction()
+                    console.log(customerDataById)
+                    props.getCustomerContacts(customerDataById.id)
+                    props.getCustomerById(customerDataById.id)
+                    
+                })
+    
+
+        }
+
+        }else{
+            props.addCustomerContact1(customerContact).then(data=>{
                 props.modalAction()
-            }
-            // props.addCustomerContact1(customerContact).then(data=>{
-            //     
-            //  console.log(customerDataById)
-            //     // alert(customerDataById.customer_id)
-            //     props.getCustomerContacts(customerDataById.id)
-            //     props.getCustomerById(customerDataById.id)
-            //     // props.getCustomerContacts(customerDataById.customer_id)
+             console.log(customerDataById)
+                // alert(customerDataById.customer_id)
+                props.getCustomerContacts(customerDataById.id)
+                props.getCustomerById(customerDataById.id)
+                // props.getCustomerContacts(customerDataById.customer_id)
                 
-            // })
+            })
             // alert(primaryContact)
             // alert("gg")
-            // props.addPriamryContact(customerContact)
+            props.addPriamryContact(customerContact)
             // props.modalAction()
            
-        // }
+        }
      
       
 
@@ -361,4 +352,4 @@ addCustomerContact,handleExchangeData,updateContactData,getCustomerContacts
 
 
 
-})(ContactsModal)
+})(QuickTransfer)

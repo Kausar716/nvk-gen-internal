@@ -11,6 +11,7 @@ import {
     HANDLE_INPUT,
     GET_CUSTOMER_BY_ID1,
     ADD_NOTIFICATION,
+    UPDATE_CONTACT,
     ADD_EMAIL,
     GET_CUSTOMER_NOTIFICATION,
     GET_EMAIL_NOTIFICATION,
@@ -114,7 +115,8 @@ const initialSatate = {
     updatedCustomerSettingDeliveryMethod:[],
     showSpecificCustomerDeliveryMethod:[],
 
-
+    customerContactIndex:"",
+    customerAddressIndex:"",
     CustomerSettingName1:{},
     CustomerSettingName2:{},
     name:"",
@@ -124,6 +126,7 @@ const initialSatate = {
    activeData:[],
    inactiveData:[],
    radioFilter:"active",
+   
    searchFilter:"",
    alphabetSearch:"All",
    ready_to_late_notice:0,
@@ -171,16 +174,16 @@ const initialSatate = {
    customerReturnReason:{reason: "",return_to_inventory: 2},
    customerReturnReasonList:{active:[],inactive:[]},
 
-   customerDataById:{contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-   tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
-   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
-   customerDataById1:{contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-   tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
-   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
+   customerDataById:{addresses:[],contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   tax_exempt: 0,fax:"",website_url:"",print:0,quantity:"0",
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:1,fee_percent:"0.00"},
+   customerDataById1:{addresses:[],contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
+   tax_exempt: 0,fax:"",website_url:"",print:0,quantity:"0",
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:1,fee_percent:"0.00"},
 
    customerDataByIdForOrder:{customercontact:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",prospect:0,level:0,status:1,dispatch_type:"Delivery" ,
-   tax_exempt: 0,fax:"",website_url:"",print:"0",quantity:"0",
-   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
+   tax_exempt: 0,fax:"",website_url:"",print:0,quantity:"0",
+   tax_exempt_no: "",currency:"Canadian Dollar",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:1,fee_percent:"0.00"},
 
     action:"",
     customerContact:{
@@ -209,6 +212,7 @@ const initialSatate = {
         zip: "",
         lat: "",
         long: "",
+        status:1,
         notes: "",
         billing_address: 0,
         delivery_address: 0,
@@ -225,6 +229,31 @@ const initialSatate = {
     // alert(action.type)x
     
     switch(action.type){
+        case DELETE_CUSTOMER_CONTACT:
+            let customerContactDetail = state.customerDataById
+            customerContactDetail["contacts"].splice(action.payload,1)
+            return{
+                ...state,
+                customerDataById:customerContactDetail
+
+
+            }
+        case DELETE_CUSTOMER_ADDRESS:
+            let customerAddressDetail = state.customerDataById
+            customerAddressDetail["addresses"].splice(action.payload,1)
+            return{
+                ...state,
+                customerDataById:customerContactDetail
+
+
+            }
+        case UPDATE_CONTACT:
+            
+            return{
+                ...state,
+                customerDataById:{...state.customerDataById,contacts:action.payload}
+
+            }
         case HANDLE_INPUT_CUSTOMER:
             return{
                 ...state,
@@ -238,16 +267,28 @@ const initialSatate = {
         case ADD_PRIMARY:
             // alert(JSON.stringify(action.payload))
             let data = action.payload
-            data.primary_contact=1
+            // data.primary_contact=1
             delete data.customer_id 
             let customerDetails = state.customerDataById
-            customerDetails["contacts"] = []
-            customerDetails["contacts"][0] = data
+            customerDetails["contacts"].push(data)
+            // customerDetails["contacts"][0] = data
 
            
             return{
                 ...state,
                 customerDataById:customerDetails,
+                primaryContact:false
+
+            }
+        case  ADD_CONTACT_ADDRESS:
+            let address = action.payload
+            // data.primary_contact=1
+            // delete data.customer_id 
+            let customerDetails1 = state.customerDataById
+            customerDetails1["addresses"].push(address)
+            return{
+                ...state,
+                customerDataById:customerDetails1,
                 primaryContact:false
 
             }
@@ -296,6 +337,7 @@ const initialSatate = {
                     country: "Canada",
                     state: "Alberta",
                     zip: "",
+                    status:1,
                     lat: "",
                     long: "",
                     notes: "",
@@ -304,19 +346,27 @@ const initialSatate = {
                   },
             }
         case GET_CONTACT_ADDRESSES_BY_CONTACTID:
+
+            let customerDataNew =  state.customerDataById
+            let addes  = customerDataNew["addresses"][action.payload]
             return{
                 ...state,
-                customerAddress: action.payload.data
+                customerAddress:addes,
+                customerAddressIndex:action.payload
             }
+          
         case GET_CONTACT_ADDRESSES:
             return{
                 ...state,
                 customerAddressList:action.payload.data
             }
         case GET_CUSTOMER_CONTACT_BY_ID:
+            let customerData =  state.customerDataById
+            let contact  = customerData["contacts"][action.payload]
             return{
                 ...state,
-                customerContact: action.payload.data
+                customerContact:contact,
+                customerContactIndex:action.payload
             }
         case GET_CUSTOMER_CONTACTS_LIST:
             return{
@@ -349,9 +399,35 @@ const initialSatate = {
                 
                   },
             }
-        case UPDATE_CUSTOMER_CONTACT:
+        case UPDATE_CONTACT_ADDRESS:
+            let customer  = state.customerDataById
+            customer["addresses"][state.customerAddressIndex] = action.payload
             return{
                 ...state,
+                customerDataById:customer,
+                customerAddress:{
+                    customer_id: 0,
+                    address1: "",
+                    address2: "",
+                    city: "",
+                    status:1,
+                    country: "Canada",
+                    state: "Alberta",
+                    zip: "",
+                    lat: "",
+                    long: "",
+                    notes: "",
+                    billing_address: 0,
+                    delivery_address: 0,
+                  },
+
+            }
+        case UPDATE_CUSTOMER_CONTACT:
+            let customerData1  = state.customerDataById
+            customerData1["contacts"][state.customerContactIndex] = action.payload
+            return{
+                ...state,
+                customerDataById:customerData1,
                 customerContact:{
                     customer_id: 0,
                     first_name: "",
@@ -386,7 +462,7 @@ case ADD_NEW_CUSTOMER:
     console.log(action.payload)
     return{
         ...state,
-        customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customeraddress:[]},
+        customerDataById:{...action.payload,type:JSON.parse(action.payload.type),customeraddress:[],print:0,quantity:0,addresses:[]},
         customerContact:{
             customer_id: 0,
             first_name: "",
@@ -422,13 +498,13 @@ case ADD_NEW_CUSTOMER:
     case GET_CUSTOMER_BY_ID:
         return{
             ...state,
-            customerDataById:{...action.payload,type:JSON.parse(action.payload.type)}
+            customerDataById:{...action.payload,type:JSON.parse(action.payload.type),print:0,quantity:0}
 
         }
         case GET_CUSTOMER_BY_ID1:
             return{
                 ...state,
-                customerDataById1:{...action.payload,type:JSON.parse(action.payload.type)},
+                customerDataById1:{...action.payload,type:JSON.parse(action.payload.type),print:0,quantity:0},
                 customerDataByIdForOrder:{...action.payload,type:JSON.parse(action.payload.type)}
     
             }
@@ -462,6 +538,7 @@ case ADD_NEW_CUSTOMER:
                 lat: "",
                 long: "",
                 notes: "",
+                status:1,
                 billing_address: 0,
                 delivery_address: 0,
               },
@@ -474,16 +551,18 @@ case ADD_NEW_CUSTOMER:
                 state: "Alberta",
                 zip: "",
                 lat: "",
+                status:1,
                 long: "",
                 notes: "",
+    
                 billing_address: 0,
                 delivery_address: 0,
               },
               customerAddressList:{active:[],inactive:[]},
 
-              customerDataById:{contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
-              tax_exempt: 0,fax:"",website_url:"",
-              tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:0,fee_percent:"0.00"},
+              customerDataById:{addresses:[],contacts:[],name:"",customer_details:"",type:[],address_id:0,contact_id:0,alternative_id:"",alert:"",reason:"",status:1,prospect:0,level:0,dispatch_type:"Delivery" ,
+              tax_exempt: 0,fax:"",website_url:"",print:0,quantity:0,
+              tax_exempt_no: "",p_o_req:0,unit_of_measurement:"Metric",payment_terms:0,discount:"0.00",discount_by_line_item:1,restock_fee:1,fee_percent:"0.00"},
         }
     case UPDATE_CUSTOMER:
         return {

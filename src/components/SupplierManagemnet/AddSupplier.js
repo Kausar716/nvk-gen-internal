@@ -836,10 +836,7 @@ console.log(props.supplierData.supplierReasonList)
                                             </div> */}
                                    
                                                         </div>
-                                                        <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={editPrimaryContact}>
-                                         
-                                         Edit
-                                          </button>
+                                                       
                                                         {/* </div> */}
                                                     </div>);
                                                    
@@ -850,11 +847,7 @@ console.log(props.supplierData.supplierReasonList)
 
 
                                         :<div  style={{border:"1px solid lightgray",height:"150px",borderRadius:5,position:"relative"}}>
-                                            
-                                            <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={addPrimaryContact}>
-                                         
-                                        Add
-                                         </button>
+                                           
                                             
                                             
                                         </div>:""}
@@ -1072,7 +1065,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <h2>Contacts</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    {supplierContactList.active.map((contact,index)=>{
+                                    {supplierDataById.contacts.map((contact,index)=>{
                                         return(
                                             <div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
@@ -1099,24 +1092,24 @@ console.log(props.supplierData.supplierReasonList)
                                                 </table>
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2" style={{cursor:"pointer"}}>
-                                                    <input type="checkbox" className="custom-control-input" style={{cursor:"pointer"}} id={`primary_contact^${contact.id}`} checked={parseInt(contact.primary_contact)==1?true:false} onChange={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${contact.id}`} style={{cursor:"pointer"}}>This person is the primary contact</label>
+                                                    <input type="checkbox" className="custom-control-input" style={{cursor:"pointer"}} id={`primary_contact^${index}`} checked={parseInt(contact.primary_contact)==1?true:false} onChange={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`primary_contact^${index}`} style={{cursor:"pointer"}}>This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2" style={{cursor:"pointer"}}>
-                                                    <input type="checkbox" className="custom-control-input" style={{cursor:"pointer"}} id={`receives_all^${contact.id}`} checked={parseInt(contact.receives_all)==1?true:false} onChange={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" for={`receives_all^${contact.id}`} style={{cursor:"pointer"}}>This person receives all communication</label>
+                                                    <input type="checkbox" className="custom-control-input" style={{cursor:"pointer"}} id={`receives_all^${index}`} checked={parseInt(contact.receives_all)==1?true:false} onChange={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" for={`receives_all^${index}`} style={{cursor:"pointer"}}>This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
                                                     <a  class="" style={{cursor:"pointer"}}>
-                                                        <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>editContactNotes(contact.id)}/>
+                                                        <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>editContactNotes(index)}/>
                                                     </a>
                                                     <a  class=" ml-2" style={{cursor:"pointer"}}>
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>editContact(contact.id)}/>
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>editContact(index)}/>
                                                     </a>
                                                 </div>
-                                                <div class="col-md-6 text-right" onClick={()=>deleteContactData(contact.id)}>
+                                                <div class="col-md-6 text-right" onClick={()=>deleteContactData(index)}>
                                                     <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/delete.svg" alt="" />
                                                     </a>
@@ -1144,7 +1137,7 @@ console.log(props.supplierData.supplierReasonList)
                                 <h2>Addresses</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    {supplierAddressList.active.map((address,index)=>{
+                                    {supplierDataById.addresses.map((address,index)=>{
                                         return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
                                             <p class="mb-0 f-s-16 f-w-600">{address.city}<br/></p>
@@ -1152,14 +1145,14 @@ console.log(props.supplierData.supplierReasonList)
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`billing_address^${address.id}`} checked={parseInt(address.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" for={`billing_address^${address.id}`} style={{cursor:"pointer"}}>Billing Address</label>
+                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`billing_address^${index}`} checked={parseInt(address.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`billing_address^${index}`} style={{cursor:"pointer"}}>Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`shipping_address^${address.id}`} checked={parseInt(address.shipping_address)==1?true:false} onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" for={`shipping_address^${address.id}`} style={{cursor:"pointer"}}>Delivery Address</label>
+                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`shipping_address^${index}`} checked={parseInt(address.shipping_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" for={`shipping_address^${index}`} style={{cursor:"pointer"}}>Delivery Address</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1172,15 +1165,15 @@ console.log(props.supplierData.supplierReasonList)
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a  class=""  onClick={()=>editAddressNotes(address.id)} style={{cursor:"pointer"}}>
+                                                    <a  class=""  onClick={()=>editAddressNotes(index)} style={{cursor:"pointer"}}>
                                                     {address.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                     </a>
-                                                    <a  class=" ml-2"  onClick={()=>editAddress(address.id)} style={{cursor:"pointer"}}>
+                                                    <a  class=" ml-2"  onClick={()=>editAddress(index)} style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt=""/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right" >
-                                                    <a  class=" ml-2" onClick={()=>deleteAddress(address.id)} style={{cursor:"pointer"}}>
+                                                    <a  class=" ml-2" onClick={()=>deleteAddress(index)} style={{cursor:"pointer"}}>
                                                         <img src="assets/img/delete.svg" alt=""/>
                                                     </a>
                                                 </div>
@@ -1193,7 +1186,7 @@ console.log(props.supplierData.supplierReasonList)
                                 </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
-                                        <span>Minimum 1 Contact required</span>
+                                        <span>Minimum 1 Address required</span>
                                         <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} disabled={supplierDataById.id==""?true:false}>Add</button>
                                     </div>
                                 </div>

@@ -200,30 +200,46 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         let errors = onSaveClicked()
         if(errors !== 0)
         return
-        if(customerDataById.id !== undefined){
-            customerAddress.customer_id  = customerDataById.id
-            customerAddress.status  = 1
-            if(type=="add"){
-            props.addcustomerAddress(customerAddress).then(data=>{
+    //     if(customerDataById.id !== undefined){
+    //         customerAddress.customer_id  = customerDataById.id
+    //         customerAddress.status  = 1
+    //         if(type=="add"){
+    //         props.addcustomerAddress(customerAddress).then(data=>{
+    //             props.modalAction()
+    //             // alert(customerDataById.customer_id)
+    //             props.getcustomerAddress(customerDataById.id)
+    //             // props.getCustomerContacts(customerDataById.customer_id)
+                
+    //         })
+
+    //     }else{
+    //         props.updatecustomerAddress(customerAddress).then(data=>{
+    //             props.modalAction()
+    //             console.log(customerDataById)
+    //             props.getcustomerAddress(customerDataById.id)
+                
+    //         })
+
+    //     }
+    // }else{
+        if(type=="add"){
+            props.addcustomerAddress(customerAddress)
                 props.modalAction()
                 // alert(customerDataById.customer_id)
-                props.getcustomerAddress(customerDataById.id)
+                // props.getcustomerAddress(customerDataById.id)
                 // props.getCustomerContacts(customerDataById.customer_id)
                 
-            })
-
         }else{
-            props.updatecustomerAddress(customerAddress).then(data=>{
+            props.updatecustomerAddress(customerAddress)
                 props.modalAction()
                 console.log(customerDataById)
-                props.getcustomerAddress(customerDataById.id)
+                // props.getcustomerAddress(customerDataById.id)
                 
-            })
+            
 
         }
-    }else{
-        setError("Please add customer first")
-    }
+        // setError("Please add customer first")
+    // }
      
       
 

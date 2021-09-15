@@ -14,6 +14,7 @@ import {
     GET_PLANT_DATA,
     FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
     RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
+    GET_PLANT_DATA_INVENTORY,
     GET_ALL_PRODUCT_INVENTORY_ACTION_SKU,
     SET_PLANT_PAGE_NUMBER_INVENTORY,
 SET_PRODUCT_PAGE_NUMBER_INVENTORY
@@ -190,6 +191,12 @@ const inventoryManagementReducer = (state = initialSatate, action)=> {
                 plantData:action.payload.data,
                 plantBackup:action.payload.data
             }
+            case GET_PLANT_DATA_INVENTORY:
+                return{
+                    ...state,
+                    plantData:action.payload.data,
+                    plantBackup:action.payload.data
+                }
           
         case GET_LOCATION_LIST:
             return{

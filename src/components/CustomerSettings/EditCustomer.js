@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
-import {getCustomerById,editDataToContact,updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {updateContacts,getCustomerById,editDataToContact,updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -353,9 +353,7 @@ function AddCustomer(props) {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => {props.deleteCustomerContact(id).then(data=>{
-                    // props.getCustomerContacts(customerDataById.id)
-                })}
+                onClick: () => {props.deleteCustomerContact(id)}
               },
               {
                 label: 'No'
@@ -372,9 +370,7 @@ function AddCustomer(props) {
             buttons: [
               {
                 label: 'Yes',
-                onClick: () => {  props.deleteCustomerAddress(id).then(data=>{
-                    props.getcustomerAddress(customerAddress.customer_id)
-                })}
+                onClick: () => {  props.deleteCustomerAddress(id)}
               },
               {
                 label: 'No'
@@ -570,14 +566,14 @@ const dataTochange =(e)=>{
     const handleSelect=(key)=> {
         // alert(key)
         // alert(customerDataById.id)
-        if(key ==2){
-            props.getCustomerContacts(customerDataById.id)
-            props.getcustomerAddress(customerDataById.id)
-        //    
-        }
-        if (key==0){
-            props.getCustomerById(customerDataById.id)
-        }
+        // if(key ==2){
+        //     props.getCustomerContacts(customerDataById.id)
+        //     props.getcustomerAddress(customerDataById.id)
+        // //    
+        // }
+        // if (key==0){
+        //     props.getCustomerById(customerDataById.id)
+        // }
         setexpanded(false)
         // alert("hh")
         // if (key === 1)
@@ -587,32 +583,40 @@ const dataTochange =(e)=>{
     }
     const changeCheckBox =(e)=>{
         // alert(e.target.id)
+        let contacts  = customerDataById.contacts
         let value = e.target.id.split("^")
         // alert(value[1])
-        // if(value[0]=="primary_contact"){
-        //     let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
-        //     primaryData.map(priamry=>{
-        //         priamry["primary_contact"] =0
-        //         props.updateContactData(priamry).then(data=>{
-        //         })
-    
-        //     })
-
-        // }
+        let primaryData = customerDataById.contacts
+        if(customerDataById.contacts.length>1 && value[0]== "primary_contact"){
+            primaryData = customerDataById.contacts.map((data,i)=>{
+                if(parseInt(data[value[0]]) ==1 && i !==value[1]){
+                    data[value[0]] = 0
+                    return data
+                }else{
+                    return data
+                }
+            })
+        }
      
         // alert(index)
         // console.log(customerContactList,index)
         // let data  = customerContactList.active[index]
-        let data =customerContactList.active.filter(data=>data.id == value[1])
+        let data = primaryData[value[1]]
+        // alert(JSON.stringify(data))
         
         // console.log( data[type])
-        data[0][value[0]] =  data[0][value[0]]==0?1:0
-        console.log( data[0][value[0]])
-        props.updateContactData(data[0]).then(data=>{
-            props.getCustomerContacts(customerDataById.id)
+        data[value[0]] =  parseInt(data[value[0]])==0?1:0
+        // alert( data[value[0]])
+        primaryData[value[1]] = data
+        // alert(JSON.stringify(primaryData))
+        // console.log(primaryData)
+        props.updateContacts(primaryData)
+        // let updatesContacts = customerDataById.contacts[value[1]][]
+        // props.updateContactData(data[0]).then(data=>{
+        //     props.getCustomerContacts(customerDataById.id)
             
-            console.log(customerContact)
-        })
+        //     console.log(customerContact)
+        // })
 
     }
     const changeCheckBoxAddress =(e)=>{
@@ -675,6 +679,7 @@ const dataTochange =(e)=>{
     }
 
     console.log(customerDataById)
+    let a = ""
     return (
         <div style={{position: 'relative'}} onClickCapture={showClose} id="fullbody">
             	<InfoModal status={isOpen1} message={message} modalAction={toggle1}/>
@@ -844,10 +849,10 @@ const dataTochange =(e)=>{
                     <TabList>
                         <Tab>Customer Information</Tab>
                         <Tab>Order Settings</Tab>
-                        <Tab style={{backgroundColor:customerDataById.id!==undefined?"white":"lightgray",borderTop:"1px solid blue"}} disabled={customerDataById.id!==undefined?false:true}>Contacts</Tab>
+                        <Tab >Contacts</Tab>
                          {/* <Tab>Tags &amp; Labels</Tab> */}
-                        <Tab style={{backgroundColor:customerDataById.id!==undefined?"white":"lightgray",borderTop:"1px solid blue"}} disabled={customerDataById.id!==undefined?false:true}>Addresses</Tab>
-                        <Tab  style={{backgroundColor:customerDataById.id!==undefined?"white":"lightgray",borderTop:"1px solid blue"}} disabled={customerDataById.id!==undefined?false:true}>Print Catalog</Tab>
+                        <Tab>Addresses</Tab>
+                        <Tab>Print Catalog</Tab>
                     </TabList>
                     <TabPanel>
                         <div class="bg-white cardShadow px-3 py-3 mt-3">
@@ -874,9 +879,22 @@ const dataTochange =(e)=>{
                                             {/* <select> */}
                                             {/* <div class=" col-md-8 col-lg-8 mt-2 mt-md-0"> */}
                                             <div class="selectBox" id="setBox">
-                                            <select class="form-control" id="setBox">
-                                                <option>Select Type</option>
+                                            <select class="form-control" id="setBox" style={{position:"relative"}}>
+                                                {customerDataById.type.length==0?<option>Select Type...</option>:""}
+                                        
                                             </select>
+                                            <p style={{position:"absolute",top:40,left:20}}>
+                                                {
+                                                    a = customerTypeList.active.map(type=>{
+                                                    console.log(type.customer_type)
+                                                   
+                                                if(customerDataById.type.filter(id=>parseInt(id) ===parseInt(type.id)).length>0){
+                                                    return(<span style={{background:"lightgray",padding:3,margin:3,borderRadius:3,color:"black"}}>{type.customer_type}  </span>)
+
+                                                }
+                                              
+                                                })}
+                                                </p>
                                             <div class="overSelect" id="setBox"></div>
                                             </div>
                                             <div id="checkboxes" style={{position: 'absolute',display:expanded?"block":"",overflowY:"scroll",height:customerTypeList.active.length>5?"200px":"auto"}}>
@@ -949,10 +967,7 @@ const dataTochange =(e)=>{
                                             </div> */}
                                    
                                                         </div>
-                                                        <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={editPrimaryContact}>
-                                         
-                                         Edit
-                                          </button>
+                                                     
                                                         {/* </div> */}
                                                     </div>);
                                                    
@@ -964,10 +979,7 @@ const dataTochange =(e)=>{
 
                                         :<div  style={{border:"1px solid lightgray",height:"150px",borderRadius:5,position:"relative"}}>
                                             
-                                            <button class="btn btn-outline-primary btn-lg ml-2" type="button" style={{position:"absolute",bottom:"20px",right:"10px"}}  onClick={addPrimaryContact}>
-                                         
-                                        Add
-                                         </button>
+                                           
                                             
                                             
                                         </div>}
@@ -1109,7 +1121,7 @@ const dataTochange =(e)=>{
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label>Units</label>
-                                                <select class="form-control-order" disabled={customerDataById.p_o_req ==1?false:true} onChange={handleInput} id="unit_of_measurement">
+                                                <select class="form-control-order"  onChange={handleInput} id="unit_of_measurement">
                                                     <option selected={customerDataById.unit_of_measurement =="Metric"?"selected":""} value="Metric">Metric</option>
                                                     <option selected={customerDataById.unit_of_measurement =="Imperial"?"selected":""} value="Imperial">Imperial</option>
         
@@ -1193,7 +1205,7 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="col-md-4 mt-3 mt-md-0"  style={{marginLeft:"-5%"}}>
                                 {/* <div class="col-md-4 mt-3 mt-md-0"> */}
-                                                <label>Fee%</label>
+                                                <label>Fee %</label>
                                                 <input type="text" class="form-control-order" style={{textAlign:"right"}} value={customerDataById.fee_percent} id="fee_percent" step="0.01" onChange={handleInput} disabled={customerDataById.restock_fee==1?false:true} placeholder="0.00" onBlur={dataTochange} onKeyPress={thirdMethod1}/>
                                             </div>
                                             </div>
@@ -1210,7 +1222,7 @@ const dataTochange =(e)=>{
                                 <div class="row mt-3">
                                     {/* <div class="col-md-6 col-lg-4"> */}
                                         {/* <div class="contactCard"> */}
-                                            {customerContactList.active.map((contactData,index)=>{
+                                            {customerDataById.contacts.map((contactData,index)=>{
                                                 return(
                                                     <div class="col-md-6 col-lg-4">
                                                     <div class="contactCard">
@@ -1244,28 +1256,28 @@ const dataTochange =(e)=>{
                                             {/* </div> */}
                                             <div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id={`primary_contact^${contactData.id}`} checked={parseInt(contactData.primary_contact)==1?true:false} onClick={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`primary_contact^${contactData.id}`}>This person is the primary contact</label>
+                                                    <input type="checkbox" class="custom-control-input" id={`primary_contact^${index}`} checked={parseInt(contactData.primary_contact)==1?true:false} onClick={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`primary_contact^${index}`}>This person is the primary contact</label>
                                                 </div>
                                                 <div class="custom-control custom-checkbox mt-2">
-                                                    <input type="checkbox" class="custom-control-input" id={`all_communication^${contactData.id}`}  checked={parseInt(contactData.all_communication)==1?true:false} onClick={changeCheckBox}/>
-                                                    <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`all_communication^${contactData.id}`}>This person receives all communication</label>
+                                                    <input type="checkbox" class="custom-control-input" id={`all_communication^${index}`}  checked={parseInt(contactData.all_communication)==1?true:false} onClick={changeCheckBox}/>
+                                                    <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`all_communication^${index}`}>This person receives all communication</label>
                                                 </div>
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a  class="" onClick={()=>editNotes(contactData.id)} style={{cursor:"pointer"}}>
+                                                    <a  class="" onClick={()=>editNotes(index)} style={{cursor:"pointer"}}>
                                                     {contactData.notes==null || contactData.notes==""? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                         
                                                     </a>
-                                                    <a  class=" ml-2" onClick={editContact} id={contactData.id} style={{cursor:"pointer"}}>
-                                                        <img src="assets/img/edit.svg" alt=""id={contactData.id}/>
+                                                    <a  class=" ml-2" onClick={editContact} id={index} style={{cursor:"pointer"}}>
+                                                        <img src="assets/img/edit.svg" alt=""id={index}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                       
-                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(contactData.id)}/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>deleteCustomerContactData(index)}/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -1294,7 +1306,7 @@ const dataTochange =(e)=>{
                                 <h2>Addresses</h2>
                                 <hr/>
                                 <div class="row mt-3">
-                                    {customerAddressList.active.map((data,index)=>{
+                                    {customerDataById.addresses.map((data,index)=>{
                                         return(<div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
                                         <p class="mb-0 f-s-16 f-w-600">{data.city}<br/></p>
@@ -1323,17 +1335,17 @@ const dataTochange =(e)=>{
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a class="" onClick={()=>editAddressNotes(data.id)} style={{cursor:"pointer"}}>
+                                                    <a class="" onClick={()=>editAddressNotes(index)} style={{cursor:"pointer"}}>
                                                     {data.notes==null || data.notes==""? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                         {/* <img src="assets/img/moreDetails-ic.svg" alt=""  */}
                                                     </a>
                                                     <a  class=" ml-2" style={{cursor:"pointer"}}>
-                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>{editAddress(data.id)}}/>
+                                                        <img src="assets/img/edit.svg" alt="" onClick={()=>{editAddress(index)}}/>
                                                     </a>
                                                 </div>
                                                 <div class="col-md-6 text-right">
                                                     <a  class=" ml-2" style={{cursor:"pointer"}}>
-                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>{deleteAddress(data.id)}}/>
+                                                        <img src="assets/img/delete.svg" alt="" onClick={()=>{deleteAddress(index)}}/>
                                                     </a>
                                                 </div>
                                             </div>
@@ -1343,7 +1355,7 @@ const dataTochange =(e)=>{
                                   </div>
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
-                                        <span>Minimum 1 Contact required</span>
+                                        <span>Minimum 1 Address required</span>
                                         <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}  disabled={customerDataById.id?false:true}>Add</button>
                                     </div>
                                 </div>
@@ -1372,7 +1384,7 @@ const dataTochange =(e)=>{
                                     </div>
                                     <div class="col-md-2 mt-2 mt-md-0">
                                         <label>Quantity</label>
-                                        <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.quantity} onChange={handleInput} id="quantity" step="0" placeholder={"0"}/>
+                                        <input type="number" class="form-control" style={{textAlign:"right"}} value={customerDataById.quantity} onChange={handleInput} disabled={customerDataById.print ==0?true:false} id="quantity" step="0" placeholder={"0"}/>
                                     </div>
                                 </div>
                                 
@@ -1390,7 +1402,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{getCustomerById,editDataToContact,updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
+export default connect(mapStateToProps,{updateContacts,getCustomerById,editDataToContact,updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,getAllReasonMethods,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      

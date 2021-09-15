@@ -94,32 +94,14 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         if(errors!==0)
         return
        
-        if(customerDataById.id !== undefined){
-            setError("")
-            customerContact.customer_id  = customerDataById.id
-            // if(type=="add"){
-            //     props.addCustomerContact(customerContact).then(data=>{
-            //         props.modalAction()
-            //      console.log(customerDataById)
-            //         // alert(customerDataById.customer_id)
-            //         props.getCustomerContacts(customerDataById.id)
-            //         // props.getCustomerContacts(customerDataById.customer_id)
-                    
-            //     })
-    
-            // }else{
-                props.updateContactData(customerContact).then(data=>{
-                    props.modalAction()
-                    console.log(customerContact)
-                    props.getCustomerContacts(customerDataById.id)
-                    
-                })
-    
-
-        // }
-
+        if(type=="add"){
+            props.addPriamryContact(customerContact)
+            props.modalAction()
+           
         }else{
-            setError("Please add customer first")
+            props.updateContactData(customerContact)
+            // alert("edit")
+            props.modalAction()
         }
      
       

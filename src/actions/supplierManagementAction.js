@@ -294,14 +294,14 @@ export const resetSupplierContact=()=>dispatch => {
 
 }
 export const getSupplierContact=(id)=>dispatch => {
-    return axios.get(`api/supplier-contact/${id}`,config).then(res=>{ 
-        console.log(res.data)
+    // return axios.get(`api/supplier-contact/${id}`,config).then(res=>{ 
+        // console.log(res.data)
     dispatch({
             type:GET_SUPPLIER_CONTACT,
-            payload:res.data,
+            payload:id,
 
         })
-    })
+    // })
 
 
 }
@@ -340,13 +340,13 @@ export const updateSupplierContact=(data)=>dispatch => {
 // }
 
 export const addSuppplierContact=(data)=>dispatch => {
-    return axios.post(`/api/add-supplier-contact`,data,config).then(res=>{ 
-        console.log(res)
+    // return axios.post(`/api/add-supplier-contact`,data,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:ADD_SUPPLIER_CONTACT,
-                payload:res.data   
+                payload:data   
             })
-        }) 
+        // }) 
 
 }
 

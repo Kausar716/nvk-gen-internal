@@ -10,6 +10,7 @@
  FILTER_DATA_BY_ALPHA,
  HANLE_DATA_CHANGE,
  HANDLE_INPUT_EXCHANGE,
+ UPDATE_CONTACT,
  EDIT_PRIMARY,
  HANDLE_INPUT_EXCHANGE1,
  ADD_NOTIFICATION,
@@ -142,6 +143,13 @@ export const addPriamryContact  =(data)=>dispatch => {
 
 
 }
+export const updateContacts  = (data)=>dispatch => {
+    dispatch({
+        type:UPDATE_CONTACT,
+        payload:data
+    })
+
+}
 export const editDataToContact  =(data)=>dispatch => {
     // alert(JSON.stringify(data))
     dispatch({
@@ -227,24 +235,24 @@ export const typeOfActionShow = (type) =>dispatch=>{
 }
 export const deleteCustomerContact= (id) => dispatch => {
     // console.log(customerData)
-    return axios.post(`/api/delete-customer-contact/${id}`,null,config).then(res=>{ 
-        console.log(res)
+    // return axios.post(`/api/delete-customer-contact/${id}`,null,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:DELETE_CUSTOMER_CONTACT,
-                payload:res.data   
+                payload:id   
             })
-        }) 
+        // }) 
      
 }
 export const deleteCustomerAddress= (id) => dispatch => {
     // console.log(customerData)
-    return axios.post(`/api/delete-customer-address/${id}`,null,config).then(res=>{ 
-        console.log(res)
+    // return axios.post(`/api/delete-customer-address/${id}`,null,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:DELETE_CUSTOMER_ADDRESS,
-                payload:res.data   
+                payload:id
             })
-        }) 
+        // }) 
      
 }
 export const getCustomerByIdQuote= (id) =>dispatch=>{
@@ -569,39 +577,39 @@ export const getCustomerContacts = (id) =>dispatch=>{
 }
 
 export const getDataByContactId = (id) =>dispatch =>{
-    return axios.get(`api/customer-contact/${id}`,config).then(res=>{ 
-        console.log(res.data)
+    // return axios.get(`api/customer-contact/${id}`,config).then(res=>{ 
+        // console.log(res.data)
     dispatch({
             type:GET_CUSTOMER_CONTACT_BY_ID,
-            payload:res.data,
+            payload:id,
 
         })
-    })
+    // })
 
 }
 export const updateContactData =(data) =>dispatch => {
-    let id = data.id
-    delete data.id
-    return axios.post(`/api/update-customer-contact/${id}`,data,config).then(res=>{ 
-        console.log(res)
+    // let id = data.id
+    // delete data.id
+    // return axios.post(`/api/update-customer-contact/${id}`,data,config).then(res=>{ 
+    //     console.log(res)
         dispatch({
                 type:UPDATE_CUSTOMER_CONTACT,
-                payload:res.data   
+                payload:data   
             })
-        }) 
+        // }) 
 
 }
 
 //customer addresses
 
 export const addcustomerAddress =(data)=>dispatch => {
-    return axios.post("/api/add-customer-address",data,config).then(res=>{ 
-        console.log(res)
+    // return axios.post("/api/add-customer-address",data,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:ADD_CONTACT_ADDRESS,
-                payload:res.data   
+                payload:data   
             })
-        })
+        // })
     }
     // customer-addresses?customer_id=3 
     // dispatch({
@@ -628,26 +636,26 @@ export const getcustomerAddress =(id)=>dispatch => {
 
 }
 export const updatecustomerAddress =(data)=>dispatch => {
-    let id = data.id
-    delete data.id
-    return axios.post(`/api/update-customer-address/${id}`,data,config).then(res=>{ 
-        console.log(res)
+    // let id = data.id
+    // delete data.id
+    // return axios.post(`/api/update-customer-address/${id}`,data,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:UPDATE_CONTACT_ADDRESS,
-                payload:res.data   
+                payload:data   
             })
-        }) 
+        // }) 
 
 }
 export const getcustomerAddressByaddressId =(id)=>dispatch => {
-    return axios.get(`api/customer-address/${id}`,config).then(res=>{ 
-        console.log(res.data)
+    // return axios.get(`api/customer-address/${id}`,config).then(res=>{ 
+        // console.log(data)
         dispatch({
             type:GET_CONTACT_ADDRESSES_BY_CONTACTID ,
-            payload:res.data,
+            payload:id,
     
         })
-    })
+    // })
 
 
 }

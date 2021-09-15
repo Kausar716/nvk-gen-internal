@@ -35,55 +35,64 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
         return
         // //alert("saving")
        
-        if(supplierDataById.id !== undefined){
-            setError("")
-            supplierContact.supplier_id  = supplierDataById.id
-            if(supplierContact.id == undefined){
-                props.addSuppplierContact(supplierContact).then(data=>{
-                    //alert("data")
-                    props.modalAction()
-                 console.log(supplierDataById)
-                    // //alert(customerDataById.customer_id)
-                    props.getAllSuppliersContact(supplierDataById.id)
-                    props.getsupplierById(supplierDataById.id)
-                    // props.getsupplierContacts(customerDataById.customer_id)
+       
+       
+            if(type=="add"){
+                alert(type)
+                props.addSuppplierContact(supplierContact)
+                // .then(data=>{
+                //     //alert("data")
+                //     props.modalAction()
+                //  console.log(supplierDataById)
+                //     // //alert(customerDataById.customer_id)
+                //     props.getAllSuppliersContact(supplierDataById.id)
+                //     props.getsupplierById(supplierDataById.id)
+                //     // props.getsupplierContacts(customerDataById.customer_id)
                     
-                })
+                // })
     
             }else{
-                props.updateSupplierContact(supplierContact).then(data=>{
-                    props.modalAction()
-                    console.log(supplierDataById)
-                    props.getsupplierById(supplierDataById.id)
-                    props.getAllSuppliersContact(supplierDataById.id)
+                alert(type)
+                // props.updateSupplierContact(supplierContact).then(data=>{
+                //     props.modalAction()
+                //     console.log(supplierDataById)
+                //     props.getsupplierById(supplierDataById.id)
+                //     props.getAllSuppliersContact(supplierDataById.id)
                     
-                })
+                // })
     
 
         }
 
-        }else{
-            setError("Please add customer first")
-        }
+      
      
       
 
     }
     const onSaveClicked = () => {
         // let clientDetailsData = JSON.parse(JSON.stringify(this.state.clientData));
-
         let errorList = "";
         let errorCount = 0;
-        let validationList = {  "contact_name": "contact_name", "phone1": "phone1", "phone2": "phone2","contact_email":"contact_email"};
+        let validationList = {  "first_name": "first_name", "last_name": "last_name", "phone1": "phone1", "phone2": "phone2","email":"email","text":"text","phone1_ext":"phone1_ext","phone2_ext":"phone2_ext" };
         Object.keys(validationList).map((object, i) => {
             var element = document.getElementById(object);
-            if (object === "contact_name") {
+            if (object === "first_name") {
                 if (element.value === "") {
-                    document.getElementById("contact_name-validtor").innerText = "Enter  First Name"
+                    document.getElementById("first_name-validtor").innerText = "Enter  First Name"
                     errorCount++;
 
                 } else {
-                    document.getElementById("contact_name-validtor").innerText = ""
+                    document.getElementById("first_name-validtor").innerText = ""
+                }
+
+            }
+            if (object === "last_name") {
+                if (element.value === "") {
+                    document.getElementById("last_name-validtor").innerText = "Enter Last Name"
+                    errorCount++;
+
+                } else {
+                    document.getElementById("last_name-validtor").innerText = ""
                 }
 
             }
@@ -96,7 +105,7 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
                         document.getElementById("phone1-validtor").innerText = "Phone Number is not valid"
                         errorCount++;
                     } else {
-                        // //alert("ff")
+                        // alert("ff")
                         document.getElementById("phone1-validtor").innerText = ""
                     }
     
@@ -107,23 +116,23 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
                 }
 
             }
-            // if (object === "phone2") {
-            //     if(element.value !== ""){
-            //         let enteredNumber = element.value.trim().match(/\d/g)
-            //         if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
-            //             document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-            //             errorCount++;
-            //         } else {
-            //             document.getElementById("phone2-validtor").innerText = ""
-            //         }
+            if (object === "phone2") {
+                if(element.value !== ""){
+                    let enteredNumber = element.value.trim().match(/\d/g)
+                    if (!enteredNumber ||  enteredNumber.join("").length<10 || enteredNumber.value === "") {
+                        document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+                        errorCount++;
+                    } else {
+                        document.getElementById("phone2-validtor").innerText = ""
+                    }
     
-            //     }
-            //     else if(element.value === ""){
-            //         document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
-            //         errorCount++;
-            //     }
+                }
+                // else if(element.value === ""){
+                //     document.getElementById("phone2-validtor").innerText = "Phone Number is not valid"
+                //     errorCount++;
+                // }
 
-            // }
+            }
    
 
             // if (object === "phone2_ext") {
@@ -146,13 +155,13 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
             //     }
 
             // }
-            if (object === "contact_email") {
+            if (object === "email") {
                 if (element.value === "") {
-                    document.getElementById("contact_email-validtor").innerText = "Enter Email"
+                    document.getElementById("email-validtor").innerText = "Enter Email"
                     errorCount++;
 
                 } else {
-                    document.getElementById("contact_email-validtor").innerText = ""
+                    document.getElementById("email-validtor").innerText = ""
                 }
             }
             // if (object === "text") {
@@ -215,44 +224,58 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
             <p style={{color:"red"}}>{error}</p>
           
         <div class="row mt-3">
-            <div class="col-md-12 col-lg-12">
-                <label>Contact Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="contact_name" value={supplierContact.contact_name} onChange={handleInput} placeholder="Contact Name"/>
-                {<span style={{fontSize:"small",color:"red"}} id="contact_name-validtor"></span>}
+            <div class="col-md-6 col-lg-6">
+                <label>First Name<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="first_name" value={supplierContact.first_name} onChange={handleInput} placeholder="First Name"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="first_name-validtor"></span>}
             </div>
-            {/* <div class="col-md-6 col-lg-6">
+            <div class="col-md-6 col-lg-6">
                 <label>Last Name<span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="last_name" value={""}  value={supplierContact.last_name}  onChange={handleInput}/>
+                <input type="text" class="form-control" id="last_name" value={""}  value={supplierContact.last_name}  onChange={handleInput} placeholder="Last Name"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
-            {/* </div> */}
-        </div>
-        <div class="row mt-3">
-            <div class="col-md-12 col-lg-12">
-                <label>Email <span class="text-danger">*</span></label>
-                <input type="email" class="form-control" id="contact_email" value={""} value={supplierContact.contact_email}  onChange={handleInput} placeholder="Example@gamil.com"/>
-                {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
-                
-                {<span style={{fontSize:"small",color:"red"}} id="contact_email-validtor"></span>}
+                {<span style={{fontSize:"small",color:"red"}} id="last_name-validtor"></span>}
             </div>
-        
         </div>
         <div class="row mt-3">
             <div class="col-md-6 col-lg-6">
                 <label>Phone 1<span class="text-danger">*</span></label>
-                {/* <input type="number" class="form-control" id="phone1" value={""} value={supplierContact.phone1}  onChange={handleInput}/> */}
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone1"} value={supplierContact.phone1} onChange={handleInput} placeholder="Phone1"/>
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone1"} value={supplierContact.phone1} onChange={handleInput} placeholder="(xxx) xxx xxxx"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
                 {<span style={{fontSize:"small",color:"red"}} id="phone1-validtor"></span>}
             </div>
             <div class="col-md-6 col-lg-6">
-                <label>Phone 2<span class="text-danger">*</span></label>
-                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone2"} value={supplierContact.phone2} onChange={handleInput} placeholder="Phone2"/>
-                {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
+                <label>Phone1 Ext</label>
+                <input type="number" class="form-control" id="phone1_ext" value={""}  value={supplierContact.phone1_ext}  onChange={handleInput} placeholder="Phone1 Ext"/>
                 {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone1_ext-validtor"></span>}
             </div>
         </div>
    
+        <div class="row mt-3">
+            <div class="col-md-6 col-lg-6">
+                <label>Phone 2<span class="text-danger"></span></label>
+                {/* <input type="number" class="form-control" id="phone2" value={""} value={customerContact.phone2}  onChange={handleInput}/> */}
+                <InputMask className={"form-control"} mask="(999) 999-9999" maskChar={""} id={"phone2"} value={supplierContact.phone2} onChange={handleInput} placeholder="Phone 2"/>
+                {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone2-validtor"></span>}
+            </div>
+            <div class="col-md-6 col-lg-6">
+                <label>Phone 2 Ext<span class="text-danger"></span></label>
+                <input type="number" class="form-control" id="phone2_ext" value={""}  value={supplierContact.phone2_ext}  onChange={handleInput} placeholder="Phone 2 Ext"/>
+                {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="phone2_ext-validtor"></span>}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 col-lg-12">
+                <label>Email <span class="text-danger">*</span></label>
+                <input type="email" class="form-control" id="email" value={""} value={supplierContact.email}  onChange={handleInput} placeholder="Example@gamil.com"/>
+                {/* {errorObj.customer_name!==0?<span style={{fontSize:"small",color:"red"}}>Enter Valid Name</span>:""} */}
+                {<span style={{fontSize:"small",color:"red"}} id="email-validtor"></span>}
+            </div>
+        
+        </div>
   
   
         {/* <div class="row mt-3"> */}

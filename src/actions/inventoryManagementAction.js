@@ -15,6 +15,7 @@ import {
     FILTER_PRODUCT_MANAGER_INVENTORY_ACTION,
     RESET_PRODUCT_MANAGER_INVENTORY_ACTION,
     GET_ALL_PRODUCT_INVENTORY_ACTION_SKU,
+    GET_PLANT_DATA_INVENTORY,
     SET_PLANT_PAGE_NUMBER_INVENTORY,
     SET_PRODUCT_PAGE_NUMBER_INVENTORY,
 
@@ -70,6 +71,19 @@ import {
                })
            })
    }
+   export const getAllPlantsInventory = () => dispatch => {
+    // return axios.post("/api/inventories/plants",null,config).then(res=>{ 
+        axios.get("/api/inventories/plants",config).then(res=>{ 
+        console.log(res)
+        
+     
+        dispatch({
+                type:GET_PLANT_DATA_INVENTORY,
+                payload:res.data
+    
+            })
+        })
+}
    
    export const getLocationList = () => dispatch => {
     axios.get("/api/location-list",config).then(res=>{ 

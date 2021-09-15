@@ -88,31 +88,22 @@ import {addCustomerContact,handleExchangeData,getcustomerAddress,addcustomerAddr
         let errors = onSaveClicked()
         if(errors !== 0)
         return
-        if(customerDataById.id !== undefined){
-            customerAddress.customer_id  = customerDataById.id
-            customerAddress.status  = 1
-            // if(type=="add"){
-            // props.addcustomerAddress(customerAddress).then(data=>{
-            //     props.modalAction()
-            //     // alert(customerDataById.customer_id)
-            //     props.getcustomerAddress(customerDataById.id)
+        if(type=="add"){
+            props.addcustomerAddress(customerAddress)
+                props.modalAction()
+                // alert(customerDataById.customer_id)
+                // props.getcustomerAddress(customerDataById.id)
                 // props.getCustomerContacts(customerDataById.customer_id)
                 
-            // })
-            console.log(customerAddress)
-
-        // }else{
-            props.updatecustomerAddress(customerAddress).then(data=>{
+        }else{
+            props.updatecustomerAddress(customerAddress)
                 props.modalAction()
                 console.log(customerDataById)
-                props.getcustomerAddress(customerDataById.id)
+                // props.getcustomerAddress(customerDataById.id)
                 
-            })
+            
 
-        // }
-    }else{
-        setError("Please add customer first")
-    }
+        }
      
       
 

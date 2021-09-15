@@ -2,7 +2,7 @@
 import {
     ADD_SUPPLIER,
     // ADD_SUPPLIER_DELIVERY_LOCATION,
-    // ADD_SUPPLIER_CONTACT ,
+    // ADD_contacts ,
     // ADD_SUPPLIER_CATEGORY, 
     // CREATE_SUPPLIER_ADDRESS,
     // ADD_SUPPLIER_REASON, 
@@ -105,6 +105,7 @@ GET_ALL_SUPPLIER_DELIVERY_LOCATION,
 
 const defaultState={
     supplierInfo:[],
+    supplierContactIndex:"",
     specificSupplierDeliveryList:[],
     supplierUpdatedDeliveryList:[],
     specificSubAttribute:[],
@@ -168,7 +169,7 @@ const defaultState={
     supplier_notes: "",
     dispatch_type: 0,
     discount: "0.00",
-    supplier_contact:[],supplier_address:[],
+    contacts:[],addresses:[],
     currency: "",
     units: "",
     status: 1,
@@ -179,12 +180,17 @@ const defaultState={
     },
     supplierContact:{
         supplier_id: 0,
-        contact_name: "",
-        contact_email: "",
+        first_name: "",
+        last_name: "",
+        email: "",
         phone1: "",
+        phone1_ext: "",
+        phone2: "",
+        phone2_ext: "",
+        notes: "",
         primary_contact: 0,
-        receives_all: 0,
-        status: 1,
+        all_communication: 0,
+        status: 1
     
       },
     supplierContactList:{active:[],inactive:[]},
@@ -247,7 +253,14 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     supplierAddress:action.payload.data
 
                 }
-
+                case GET_SUPPLIER_CONTACT:
+                    let supplierData =  state.supplierDataById
+                    let contact  = supplierData["contacts"][action.payload]
+                    return{
+                        ...state,
+                        supplierContact:contact,
+                        supplierContactIndex:action.payload
+                    }
             case DELETE_SUPPLIER_ADDRESS:
                 {
                     return{
@@ -270,12 +283,17 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     ...state,
                     supplierContact:{
                         supplier_id: 0,
-                        contact_name: "",
-                        contact_email: "",
+                        first_name: "",
+                        last_name: "",
+                        email: "",
                         phone1: "",
+                        phone1_ext: "",
+                        phone2: "",
+                        phone2_ext: "",
+                        notes: "",
                         primary_contact: 0,
-                        receives_all: 0,
-                        status: 1,
+                        all_communication: 0,
+                        status: 1
                     
                       },
                 }
@@ -294,19 +312,19 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         notes: "",
                         primary_contact: 0,
                         all_communication: 0,
-                        status: 1,
+                        status: 1
                     
                       }
 
                 }
             
-            case GET_SUPPLIER_CONTACT:{
-                return{
-                    ...state,
-                    supplierContact:action.payload.data
-                }
+            // case GET_SUPPLIER_CONTACT:{
+            //     return{
+            //         ...state,
+            //         supplierContact:action.payload.data
+            //     }
                 
-            }
+            // }
             case UPDATE_SUPPLIER_ADDRESS:
                 return{
                     ...state,
@@ -356,7 +374,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                     supplierDataById:{
                         supplier_name: "",
                         fax: "",
-                        supplier_contact:[],supplier_address:[],
+                        contacts:[],addresses:[],
                         primary_contact: 0,
                         alternative_id: "",
                         website: "",
@@ -373,12 +391,17 @@ const supplierManagementReducer =(state=defaultState, action)=>{
                         },
                         supplierContact:{
                             supplier_id: 0,
-                            contact_name: "",
-                            contact_email: "",
+                            first_name: "",
+                            last_name: "",
+                            email: "",
                             phone1: "",
+                            phone1_ext: "",
+                            phone2: "",
+                            phone2_ext: "",
+                            notes: "",
                             primary_contact: 0,
-                            receives_all: 0,
-                            status: 1,
+                            all_communication: 0,
+                            status: 1
                         
                           },
                         supplierContactList:{active:[],inactive:[]},
@@ -701,7 +724,7 @@ const supplierManagementReducer =(state=defaultState, action)=>{
             case ADD_SUPPLIER:
                         return{
                             ...state,
-                            supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories),supplier_contact:[],supplier_address:[]}
+                            supplierDataById:{...action.payload.data,product_categories:JSON.parse(action.payload.data.product_categories),contacts:[],addresses:[]}
                         }
 
             default:
