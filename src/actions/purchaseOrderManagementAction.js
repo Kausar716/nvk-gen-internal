@@ -205,6 +205,7 @@ export const duplicatePo = (po_Id)=> dispatch =>{
           statusLevel:statusLevel,
         }
     }
+    
     export const addPo = (data) => dispatch => {
       let errorArray=[];
       console.log(data)
@@ -236,6 +237,50 @@ export const duplicatePo = (po_Id)=> dispatch =>{
 
   }
   }
+  
+    export const handleAddPoLineItem = (lineItemData,poId) => dispatch => {
+      console.log(lineItemData)
+      console.log(poId)
+    let orderedListForUpdation = []
+    
+          if(lineItemData.dumyQty!==""){
+            let inputObj={}
+            inputObj['id'] = lineItemData.ID
+            inputObj['qty'] = lineItemData.dumyQty
+            inputObj['name'] = lineItemData.name
+            inputObj['size'] = lineItemData.size?lineItemData.size:""
+            inputObj['type'] = lineItemData.type        
+            inputObj['SKU'] = lineItemData.sku_code
+            inputObj['nvk_price'] = lineItemData.nvk_price
+            // inputObj['volume_rate'] = ""
+            inputObj['item_customer_notes'] = ""
+            inputObj['item_internal_notes'] = ""
+            orderedListForUpdation.push(inputObj)
+          }      
+     
+      let orderedObject = {}
+     
+      orderedObject['items']  = orderedListForUpdation
+      console.log(orderedObject)
+     
+      let errorArray=[];
+      // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+      if(orderedListForUpdation.length>0){
+      axios.post(`/api/add-purchase-order-item/${poId}`,orderedObject,config).then(res=>{
+        console.log(res)
+       
+         
+          dispatch(getAddToOrderList)
+          dispatch({
+            type:ERROR_HANDLE,
+            message:errorArray,
+            status:true
+        })
+      })
+    }
+    
+}
+
   export const updatePo = (data) => dispatch => {
     let errorArray=[];
     console.log(data)
@@ -353,6 +398,8 @@ export const getAddToPOCateries= () => dispatch => {
 export const slpitPo= (result,item_id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  console.log(result)
+  console.log(item_id)
   axios.post(`/api/split-purchase-order-item/${item_id}`,result,config).then(res=>{
     console.log(res)
     
@@ -507,7 +554,7 @@ export const getOrderHistory = (currentPoId)=> dispatch => {
   if(currentPoId){
    axios.get(`/api/po-logs/${currentPoId}`,config).then(res=>{
      console.log(res)
-     debugger;
+     
        dispatch({
            type:GET_CURRENT_PO_ORDER_HISTORY,
            payload:res.data.data
@@ -546,7 +593,7 @@ let orderedListForUpdation = []
     })
   })
   let orderedObject = {}
-  orderedObject['type'] = "plant"
+  // orderedObject['type'] = "plant"
   orderedObject['items']  = orderedListForUpdation
   console.log(orderedObject)
  
