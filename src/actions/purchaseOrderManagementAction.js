@@ -442,6 +442,21 @@ export const substitutionPo= (result,item_id) => dispatch => {
   })
 }
 
+export const updatePoItemNotes= (result,item_id) => dispatch => {
+  let errorArray=[];
+  // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
+  axios.post(`/api/update-purchase-order-item/${item_id}`,result,config).then(res=>{
+    console.log(res)
+  
+      dispatch(getCurrentOrder(res.data.data.item.p_o_id))
+      dispatch({
+        type:ERROR_HANDLE,
+        message:errorArray,
+        status:true
+    })
+  })
+}
+
 export const getSpecifiedPurchaseOrder = (id) => dispatch => {
   let errorArray=[];
   // if(plantData.genus.trim().length ===0 ) errorArray.push("Add plant genus")
