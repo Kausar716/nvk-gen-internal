@@ -25,7 +25,6 @@ import ActionModal from '../Modal/ActionModal';
  const OrderHistory = (props) =>{
     const [value, onChange] = useState(new Date());
     useEffect(()=>{
-        alert("in")
         console.log(props.poData)
         props.getOrderHistory(props.poData.id)
     },[])
@@ -60,7 +59,7 @@ console.log(props.currentPOHistory)
                                                     <td class="text-center">{po.action}</td>
                                                     <td class="text-center">{po.source}</td>
                                                     <td class="text-center">{po.item}</td>
-                                                    <td class="text-center">{time}</td>
+                                                    <td class="text-center">{po.updated_at}</td>
                                                 </tr>
                                                 }):
                                                 // let timestamp=new Date(po.updated_at)

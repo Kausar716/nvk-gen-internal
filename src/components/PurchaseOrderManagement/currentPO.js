@@ -5,8 +5,8 @@ import DatePicker from 'react-date-picker';
 import {connect} from "react-redux";
 import TablePagination from '../Pagination/index';
 import {getAllCustomer,handleRadioFilter,handleSearchFilter,handleAlphabetFilter, 
-     handleAplhabetFilterBySN,getplantSku,slpitPo,
-     handlePurchaseOrderFilert,handleCurrentPoOrderUpdate,
+     handleAplhabetFilterBySN,getplantSku,slpitPo,substitutionPo,
+     handlePurchaseOrderFilert,handleCurrentPoOrderUpdate,deleteItemPo,
      setSupplierToAddPo,handleOrderDetailsInput,addPo,getAddToOrderList,getCurrentOrder,
     getPoSupplierFilter,getPoJobDescription,getPoOrderFilter,getPoPlantProductFilter,getPoSkuFilter,getSupplierOrderFilter
 
@@ -29,10 +29,10 @@ import ActionModal from '../Modal/ActionModal';
         props.getCurrentOrder(props.poData.id)
     },[])
     const handleCurrentPoUpdate=(e)=>{
-        let {name,value,itemID} = e.target
-        console.log(name,value)
-
-        props.handleCurrentPoOrderUpdate(name,value,itemID)
+        let {name,value,id} = e.target
+        console.log(name,value,id)
+        console.log()
+        props.handleCurrentPoOrderUpdate(name,value,id)
     }
     
 let {currentOrder,plantSku} = props
@@ -46,8 +46,28 @@ const handleSplitClick = (item)=>{
         splitObj.split_qty = result
         splitObj.purpose = "sales-ready"
 
-        props.slpitPo(result,item.po_item_id)
+        props.slpitPo(splitObj,item.po_item_id)
     }
+    
+}
+const handleDeleteClick = (item)=>{
+        props.deleteItemPo(item.po_item_id)
+    
+    
+}
+const handleSubistutionClick = (item)=>{
+    // let result = prompt("Enter split qty")
+    // console.log(result)
+    // if(result ){
+        console.log(item)
+        console.log(item.type,item.id,item.sku_id)
+        let splitObj = {}
+        splitObj.type = item.type
+        splitObj.id = item.item_id
+        splitObj.sku_id = item.sku_id
+        console.log(splitObj)
+        props.substitutionPo(splitObj,item.po_item_id)
+    // }
     
 }
 
@@ -125,6 +145,13 @@ console.log(props.currentItems)
                                                 {/* Main Content Row starts here */}
                                                 {props.currentItems.map((item,i)=>{
                                                     {console.log(item)}
+                                                    let disc_percent =parseInt(item.disc_percent)
+                                                    let eactPriceDiscount = 0
+                                                    let totalDiscount=0
+                                                    if(disc_percent>0) {
+                                                        eactPriceDiscount =  item.disc_percent *parseInt(item.each_price)*.01
+                                                        totalDiscount = item.disc_percent *parseInt(item.item_total)*.01
+                                                    }
                                                     let addedDateWithFormat= `${new Date(item.added).getDate()}-${new Date(item.added).getMonth()+1}-${new Date(item.added).getFullYear()}`                                                   
                                                     return<tr class={i%2===0?"tblBgWhite":"tblBgGrey"}>
                                                   
@@ -136,10 +163,10 @@ console.log(props.currentItems)
                                                         <tr>
                                                             <td width="4%"></td>
                                                             <td width="20%">
-                                                                <select class="form-control plantNameSel" name="SKU" id={item.sku_code} onChange={handleCurrentPoUpdate} value={item.sku_code}>
+                                                                <select class="form-control plantNameSel" name="sku_id" id={item.po_item_id} onChange={handleCurrentPoUpdate} value={item.sku_id}>
                                                                 {/* <select class="form-control w-80" value={item.SKU} > */}
                                                                     {item.sku_list.map(sku=>{
-                                                                        return<option value={sku.sku_code}>{sku.sku_code}</option>
+                                                                        return<option value={sku.sku_id}>{sku.sku_code}</option>
                                                                     })}
                                                                 </select>
                                                                 {/* </select> */}
@@ -147,7 +174,7 @@ console.log(props.currentItems)
                                                             <td width="10%" class="text-center">{item.size}</td>
                                                             <td width="10%" class="text-center">{addedDateWithFormat}</td>
                                                             <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="disc_percent" onChange={handleCurrentPoUpdate} value={item.disc_percent}/>
+                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.po_item_id} name="disc_percent" onChange={handleCurrentPoUpdate} value={item.disc_percent}/>
                                                             </td>
                                                             <td width="8%" class="text-center">
                                                                 <select class="form-control w-80">
@@ -157,28 +184,28 @@ console.log(props.currentItems)
                                                                 </select>
                                                             </td>
                                                             <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="qty" onChange={handleCurrentPoUpdate} value={item.qty}/>
+                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.po_item_id} name="qty" onChange={handleCurrentPoUpdate} value={item.qty}/>
                                                             </td>
                                                             <td width="6%" class="text-center">{item.royality}</td>
                                                             <td width="7%" class="text-center">{item.nvk_price}</td>
                                                             <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.each_price} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
+                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.po_item_id} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
+                                                                    <span>{eactPriceDiscount}</span>
                                                                 </div>
                                                             </td>
                                                             <td width="8%" class="text-center">
                                                                 <span class="text-green controlLabel text-right">{item.item_total}</span>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
-                                                                    <span>8.25</span>
+                                                                    <span>{totalDiscount}</span>
                                                                 </div>
                                                             </td>
                                                             <td width="8%" class="text-center actionTd">
                                                                 <div class="d-flex justify-content-center">
                                                                     <a href="#" class="">
-                                                                        <img src="assets/img/copy-ic-blue.svg" alt=""/>
+                                                                        <img src="assets/img/copy-ic-blue.svg" alt="" />
                                                                     </a>
                                                                     <div class="dropdown actionDropdown  ml-2">
                                                                         <a href="#" class="dropdown-toggle" id="actionDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -186,8 +213,8 @@ console.log(props.currentItems)
                                                                         </a>
                                                                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="actionDropdown">
                                                                             <a href="#" class="dropdown-item splitBg" type="button" onClick={()=>{handleSplitClick(item)}}><span><img src="assets/img/split-ic.svg"/></span> Split</a>
-                                                                            <a href="#" class="dropdown-item substituteBg" type="button"><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
-                                                                            <a href="#" class="dropdown-item deleteBg" type="button"><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
+                                                                            <a href="#" class="dropdown-item substituteBg" type="button" onClick={()=>{handleSubistutionClick(item)}} ><span><img src="assets/img/substitute-ic.svg"/></span> Substitute</a>
+                                                                            <a href="#" class="dropdown-item deleteBg" type="button" onClick={()=>{handleDeleteClick(item)}}><span><img src="assets/img/delete-ic.svg"/></span> Delete</a>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -196,8 +223,8 @@ console.log(props.currentItems)
                                                         <tr class="trBgWhite ">
                                                             <td width="4%"></td>
                                                             <td colspan="12"> 
-                                                                {/* <img src="assets/img/enter-arrow-red.svg" alt=""/>
-                                                                <span class="ml-2">Substitution for Buxus microphla Peergold (Golden Dream Boxwood): 645-1G</span> */}
+                                                                {item.subsitutued_ids!=null?<img src="assets/img/enter-arrow-red.svg" alt=""/>:""}
+                                                                <span class="ml-2">{item.subsitutued_ids!=null?typeof(item.subsitutued_ids)==="object"?item.subsitutued_ids.join():"":""}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -283,7 +310,7 @@ const mapStateToProps = (state)=> ({
 })
 export default connect(mapStateToProps,{
 
-    getAddToOrderList,slpitPo,
+    getAddToOrderList,slpitPo,substitutionPo,deleteItemPo,
     setSupplierToAddPo,getplantSku,handleCurrentPoOrderUpdate,
     handleOrderDetailsInput,addPo,getCurrentOrder
 
