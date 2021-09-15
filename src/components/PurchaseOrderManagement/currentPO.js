@@ -29,10 +29,10 @@ import ActionModal from '../Modal/ActionModal';
         props.getCurrentOrder(props.poData.id)
     },[])
     const handleCurrentPoUpdate=(e)=>{
-        let {name,value,itemID} = e.target
-        console.log(name,value)
-
-        // props.handleCurrentPoOrderUpdate(name,value,itemID)
+        let {name,value,id} = e.target
+        console.log(name,value,id)
+        console.log()
+        props.handleCurrentPoOrderUpdate(name,value,id)
     }
     
 let {currentOrder,plantSku} = props
@@ -46,7 +46,7 @@ const handleSplitClick = (item)=>{
         splitObj.split_qty = result
         splitObj.purpose = "sales-ready"
 
-        props.slpitPo(result,item.po_item_id)
+        props.slpitPo(splitObj,item.po_item_id)
     }
     
 }
@@ -58,14 +58,15 @@ const handleDeleteClick = (item)=>{
 const handleSubistutionClick = (item)=>{
     // let result = prompt("Enter split qty")
     // console.log(result)
-    // debugger;
     // if(result ){
+        console.log(item)
+        console.log(item.type,item.id,item.sku_id)
         let splitObj = {}
         splitObj.type = item.type
-        splitObj.id = item.id
+        splitObj.id = item.item_id
         splitObj.sku_id = item.sku_id
-
-        // props.substitutionPo(splitObj,item.po_item_id)
+        console.log(splitObj)
+        props.substitutionPo(splitObj,item.po_item_id)
     // }
     
 }
@@ -155,10 +156,10 @@ console.log(props.currentItems)
                                                         <tr>
                                                             <td width="4%"></td>
                                                             <td width="20%">
-                                                                <select class="form-control plantNameSel" name="SKU" id={item.sku_code} onChange={handleCurrentPoUpdate} value={item.sku_code}>
+                                                                <select class="form-control plantNameSel" name="sku_id" id={item.po_item_id} onChange={handleCurrentPoUpdate} value={item.sku_id}>
                                                                 {/* <select class="form-control w-80" value={item.SKU} > */}
                                                                     {item.sku_list.map(sku=>{
-                                                                        return<option value={sku.sku_code}>{sku.sku_code}</option>
+                                                                        return<option value={sku.sku_id}>{sku.sku_code}</option>
                                                                     })}
                                                                 </select>
                                                                 {/* </select> */}
@@ -166,7 +167,7 @@ console.log(props.currentItems)
                                                             <td width="10%" class="text-center">{item.size}</td>
                                                             <td width="10%" class="text-center">{addedDateWithFormat}</td>
                                                             <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="disc_percent" onChange={handleCurrentPoUpdate} value={item.disc_percent}/>
+                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.po_item_id} name="disc_percent" onChange={handleCurrentPoUpdate} value={item.disc_percent}/>
                                                             </td>
                                                             <td width="8%" class="text-center">
                                                                 <select class="form-control w-80">
@@ -176,12 +177,12 @@ console.log(props.currentItems)
                                                                 </select>
                                                             </td>
                                                             <td width="6%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.item_id} name="qty" onChange={handleCurrentPoUpdate} value={item.qty}/>
+                                                                <input type="text" class="form-control w-60 text-right" placeholder="" id={item.po_item_id} name="qty" onChange={handleCurrentPoUpdate} value={item.qty}/>
                                                             </td>
                                                             <td width="6%" class="text-center">{item.royality}</td>
                                                             <td width="7%" class="text-center">{item.nvk_price}</td>
                                                             <td width="7%" class="text-center">
-                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.each_price} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
+                                                                <input type="text" class="form-control w-60 text-right mx-auto text-green" placeholder="" id={item.po_item_id} name="each_price" onChange={handleCurrentPoUpdate} value={item.each_price}/>
                                                                 <div class="">
                                                                     <span class="mr-2">Disc</span>
                                                                     <span>8.25</span>

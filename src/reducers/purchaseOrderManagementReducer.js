@@ -413,16 +413,33 @@ export default  function purchaseOrderManagement(state = initialSatate, action){
                         }
                     case HANDE_CURRENT_PO_ORDER_UPDATE:
                         let selectedId=-1
-                        let updateItem = state.currentItems.filter((item,i)=>{
-                            if(item.item_id === action.currentItemId){
+                        console.log(action.currentItemId)
+                        console.log(state.currentItems)
+                       let currentItemsForLoop=state.currentItems
+                        let updateItem = {}
+                        currentItemsForLoop.map((item,i)=>{
+                            console.log(item.po_item_id)
+                            console.log(action.currentItemId)
+                            if(parseInt(item.po_item_id) === parseInt(action.currentItemId)){
                                 selectedId = i
-                                return
+                                updateItem = item
                             }})
+                            console.log(selectedId)
+                            console.log(action.currentItemName === "sku_id")
                             if(selectedId>=0){
-                                updateItem.currentItemName = action.currentItemValue
+                                if(action.currentItemName === "sku_id"){
+                                    console.log(action.currentItemValue)
+                                    updateItem.sku_id = parseInt(action.currentItemValue)
+                                }
+                                else{
+                                    console.log(action.currentItemValue)
+                                    updateItem.currentItemName = action.currentItemValue
+                                }
                             }
                             let updateList = state.currentItems
+                            console.log(updateItem) 
                             updateList.splice(selectedId,1,updateItem)
+                            console.log(updateList)
                             
                         return{
                             ...state,
