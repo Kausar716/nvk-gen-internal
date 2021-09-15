@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
-import {UpdateAddress,getAllSuppliersContact,updateSupplierContact,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
+import {UpdateAddressData,updateSupplierContactData,UpdateAddress,getAllSuppliersContact,updateSupplierContact,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAddressById,resetSupplierFilds,getAllAddress,getSupplierContact,resetSupplierContact,updateSupplierData,handleSupplierExchnageData,addSupplierDetails,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow} from "../../actions/supplierManagementAction";
 import {getAllCategoriesAction} from "../../actions/categoryAction";
 
 import SupplierAddressNotes from "../../components/Modal/SupplierAddressNotes"
 // import {getAllSupplierCategoryMethods}
+import { confirmAlert } from 'react-confirm-alert'; 
 
 import {getAllTermsMethods} from "../../actions/customerSettingAction";
 import {connect} from "react-redux";
@@ -102,6 +103,7 @@ function AddSupplier(props) {
 	// const [message2,setMessage2] = useState([]);
 	const toggleForAddress = () => {
         setactionTypeAddress("add")
+        props.resetSupplierContact()
         setisOpenAddress(!isOpenAddress)
         // ////alert("hi")
     }
@@ -411,9 +413,20 @@ function AddSupplier(props) {
     }
     const deleteAddress =(id)=>{
         // setisOpenAddress(true)
-        props.deleteSupplierAddress(id).then(data=>{
-            props.getAllAddress(supplierDataById.id)
-        })
+        // props.deleteSupplierAddress(id)
+        confirmAlert({
+            title: 'Delete Supplier Address',
+            message: 'Are you sure want to delete the Supplier Address?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {props.deleteSupplierAddress(id)}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
         // setactionTypeAddress("edit")
     }
     const addAdrress=()=>{
@@ -422,10 +435,21 @@ function AddSupplier(props) {
 
     }
     const deleteContactData =(id)=>{
-        props.deleteContact(id).then(data=>{
-            props.getAllSuppliersContact(supplierDataById.id)
+      
 
-        })
+        confirmAlert({
+            title: 'Delete Supplier Contact',
+            message: 'Are you sure want to delete the Supplier Contact?',
+            buttons: [
+              {
+                label: 'Yes',
+                onClick: () => {props.deleteContact(id)}
+              },
+              {
+                label: 'No'
+              }
+            ]
+          });
     }
     // const getSupplierAddressById = (id)=>{
         const deleteCustomerData =(id)=>{
@@ -469,16 +493,45 @@ const dataTochange =(e)=>{
       return
     }
     const changeCheckBox =(e)=>{
+        // let value = e.target.id.split("^")
+        // let data =supplierContactList.active.filter(data=>data.id == value[1])
+        
+        // // console.log( data[type])
+        // data[0][value[0]] =  data[0][value[0]]==0?1:0
+        // console.log( data[0][value[0]])
+        // props.updateSupplierContact(data[0]).then(data=>{
+        //     props.getAllSuppliersContact(supplierDataById.id)
+        //     console.log(supplierDataById)
+        // })
+
+        let contacts  = supplierDataById.contacts
         let value = e.target.id.split("^")
-        let data =supplierContactList.active.filter(data=>data.id == value[1])
+        // alert(value[1])
+        let primaryData = supplierDataById.contacts
+        if(supplierDataById.contacts.length>1 && value[0]== "primary_contact"){
+            primaryData = supplierDataById.contacts.map((data,i)=>{
+                if(parseInt(data[value[0]]) ==1 && i !==value[1]){
+                    data[value[0]] = 0
+                    return data
+                }else{
+                    return data
+                }
+            })
+        }
+     
+        // alert(index)
+        // console.log(customerContactList,index)
+        // let data  = customerContactList.active[index]
+        let data = primaryData[value[1]]
+        // alert(JSON.stringify(data))
         
         // console.log( data[type])
-        data[0][value[0]] =  data[0][value[0]]==0?1:0
-        console.log( data[0][value[0]])
-        props.updateSupplierContact(data[0]).then(data=>{
-            props.getAllSuppliersContact(supplierDataById.id)
-            console.log(supplierDataById)
-        })
+        data[value[0]] =  parseInt(data[value[0]])==0?1:0
+        // alert( data[value[0]])
+        primaryData[value[1]] = data
+        // alert(JSON.stringify(primaryData))
+        // console.log(primaryData)
+        props.updateSupplierContactData(primaryData)
 
         // }
         // console.log( data[type])
@@ -501,28 +554,54 @@ const dataTochange =(e)=>{
 
     }
     const changeCheckBoxAddress =(e)=>{
+        // let value = e.target.id.split("^")
+        // let data =supplierAddressList.active.filter(data=>data.id == value[1])
+        
+        // // console.log( data[type])
+        // data[0][value[0]] =  data[0][value[0]]==0?1:0
+        // console.log( data[0][value[0]])
+        // props.UpdateAddress(data[0]).then(data=>{
+        //     props.getAllAddress(supplierDataById.id)
+        //     console.log(supplierDataById)
+        // })
+        let addresses  = supplierDataById.addresses
         let value = e.target.id.split("^")
-        let data =supplierAddressList.active.filter(data=>data.id == value[1])
+        // alert(value[1])
+        let primaryData = supplierDataById.addresses
+        if(supplierDataById.addresses.length>1){
+            primaryData = supplierDataById.addresses.map((data,i)=>{
+                if(parseInt(data[value[0]]) ==1 && i !==value[1]){
+                    data[value[0]] = 0
+                    return data
+                }else{
+                    return data
+                }
+            })
+        }
+     
+        // alert(index)
+        // console.log(customerContactList,index)
+        // let data  = customerContactList.active[index]
+        let data = primaryData[value[1]]
+        // alert(JSON.stringify(data))
         
         // console.log( data[type])
-        data[0][value[0]] =  data[0][value[0]]==0?1:0
-        console.log( data[0][value[0]])
-        props.UpdateAddress(data[0]).then(data=>{
-            props.getAllAddress(supplierDataById.id)
-            console.log(supplierDataById)
-        })
+        data[value[0]] =  parseInt(data[value[0]])==0?1:0
+        // alert( data[value[0]])
+        primaryData[value[1]] = data
+        // alert(JSON.stringify(primaryData))
+        // console.log(primaryData)
+        props.UpdateAddressData(primaryData)
 
 
-        // alert(index)
-        // console.log(supplierAddressList,index)
-        // let data  = supplierAddressList.active[index]
-        // console.log( data[type])
-        // data[type] =  data[type]==0?1:0
-        // console.log( data[type])
-        // props.UpdateAddress(data).then(data=>{
-        //     props.getAllAddress(supplierDataById.id)
-        //     // console.log(customerContact)
-        // })
+
+
+
+
+
+
+
+        
 
     }
     const editAddressNotes=(id)=>{
@@ -1069,8 +1148,8 @@ console.log(props.supplierData.supplierReasonList)
                                         return(
                                             <div class="col-md-6 col-lg-4">
                                         <div class="contactCard">
-                                            <p class="mb-0 f-w-600">{contact.contact_name}</p>
-                                            <label class="text-muted f-w-400">{contact.contact_email}</label>
+                                            <p class="mb-0 f-w-600">{contact.first_name} {contact.last_name}</p>
+                                            <label class="text-muted f-w-400">{contact.email}</label>
                                             {/* <div class="row">
                                                 <div class="col-md-6">
                                                     <label class="text-muted f-w-400 mb-0"><strong>Phone 1:</strong>{contact.phone1}</label>
@@ -1232,4 +1311,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{UpdateAddress,updateSupplierContact,getAllSuppliersContact,getAllTermsMethods,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)
+export default connect(mapStateToProps,{UpdateAddressData,updateSupplierContactData,UpdateAddress,updateSupplierContact,getAllSuppliersContact,getAllTermsMethods,getAllSupplierReasonMethods,getAllSupplierCategoryMethods,deleteSupplier,deleteSupplierAddress,deleteContact,getAllAddress,getAddressById,getSupplierContact,resetSupplierFilds,resetSupplierContact,getAllSuppliersContact,updateSupplierData,addSupplierDetails,handleSupplierExchnageData,getAllCategoriesAction,getAllSuppliers,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfsupplierActionShow})(AddSupplier)

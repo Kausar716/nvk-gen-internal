@@ -13,6 +13,8 @@ import {
     FILTER_SUPPLIER_DATA_BY_RADIO,
     FILTER_SUPPLIER_BY_SEARCH,
     FILTER_SUPPLIER_BY_ALPHA, 
+    UPDATE_SUPPLIER_CONTACT_CHECK,
+    UPDATE_SUPPLIER_ADDRESS_CHECK,
     GET_CUSTOMER_LIST, 
     ADD_CUSTOMER, 
     SHOW_CUSTOER, 
@@ -229,58 +231,70 @@ export const getAllAddress =(id)=>dispatch => {
 }
 
 export const deleteContact= (id)=>dispatch => {
-    return axios.post(`/api/delete-supplier-contact/${id}`,null,config).then(res=>{ 
-        console.log(res)
+    // return axios.post(`/api/delete-supplier-contact/${id}`,null,config).then(res=>{ 
+    //     console.log(res)
         dispatch({
                 type:DELETE_SUPPLIER_CONTACT,
-                payload:res.data   
+                payload:id   
             })
-        }) 
+        // }) 
 
 
 }
 export const deleteSupplierAddress= (id)=>dispatch => {
-    return axios.post(`/api/delete-supplier-address/${id}`,null,config).then(res=>{ 
-        console.log(res)
+    // return axios.post(`/api/delete-supplier-address/${id}`,null,config).then(res=>{ 
+    //     console.log(res)
         dispatch({
                 type:DELETE_SUPPLIER_ADDRESS,
-                payload:res.data   
+                payload:id   
             })
-        }) 
+        // }) 
 
 
 }
 export const addSupplierAddress= (data)=>dispatch => {
-    return axios.post(`/api/add-supplier-address`,data,config).then(res=>{ 
-        console.log(res)
+    // return axios.post(`/api/add-supplier-address`,data,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:ADD_SUPPLIER_ADDRESS,
-                payload:res.data   
+                payload:data   
             })
-        }) 
+        // }) 
 
 }
 export const getAddressById =(id)=>dispatch => {
-    return axios.get(`/api/supplier-address/${id}`,config).then(res=>{ 
-        console.log(res.data)
+    // return axios.get(`/api/supplier-address/${id}`,config).then(res=>{ 
+    //     console.log(res.data)
     dispatch({
             type:GET_SUPPLIER_ADDRESS,
-            payload:res.data,
+            payload:id,
 
         })
-    })
+    // })
     
 }
 export const UpdateAddress =(data)=>dispatch => {
-    let id = data.id
-    delete data.id
-    return axios.post(`/api/update-supplier-address/${id}`,data,config).then(res=>{ 
-        console.log(res)
+    // let id = data.id
+    // delete data.id
+    // return axios.post(`/api/update-supplier-address/${id}`,data,config).then(res=>{ 
+    //     console.log(res)
         dispatch({
                 type:UPDATE_SUPPLIER_ADDRESS,
-                payload:res.data   
+                payload:data   
             })
-        }) 
+        // }) 
+    
+}
+export const UpdateAddressData =(data)=>dispatch => {
+    // let id = data.id
+    // delete data.id
+    // return axios.post(`/api/update-supplier-address/${id}`,data,config).then(res=>{ 
+    //     console.log(res)
+        dispatch({
+                type:UPDATE_SUPPLIER_ADDRESS_CHECK,
+                payload:data   
+            })
+        // }) 
     
 }
 export const getAddressBysupplierId =(id)=>dispatch => {
@@ -321,17 +335,23 @@ export const getAllSuppliersContact=(id)=>dispatch => {
     }
 
 }
+export const updateSupplierContactData =(data)=>dispatch => {
+    dispatch({
+        type:UPDATE_SUPPLIER_CONTACT_CHECK,
+        payload:data   
+    })
 
+}
 export const updateSupplierContact=(data)=>dispatch => {
-    let id = data.id
-    delete data.id
-    return axios.post(`/api/update-supplier-contact/${id}`,data,config).then(res=>{ 
-        console.log(res)
+    // let id = data.id
+    // delete data.id
+    // return axios.post(`/api/update-supplier-contact/${id}`,data,config).then(res=>{ 
+        // console.log(res)
         dispatch({
                 type:UPDATE_SUPPLIER_CONTACT,
-                payload:res.data   
+                payload:data   
             })
-        }) 
+        // }) 
 
 }
 

@@ -620,32 +620,60 @@ const dataTochange =(e)=>{
 
     }
     const changeCheckBoxAddress =(e)=>{
-
+        let contacts  = customerDataById.addresses
         let value = e.target.id.split("^")
         // alert(value[1])
-        // if(value[0]=="primary_contact"){
-        //     let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
-        //     primaryData.map(priamry=>{
-        //         priamry["primary_contact"] =0
-        //         props.updateContactData(priamry).then(data=>{
-        //         })
-    
-        //     })
-
-        // }
+        let primaryData = customerDataById.addresses
+        if(customerDataById.addresses.length>1){
+            primaryData = customerDataById.addresses.map((data,i)=>{
+                if(parseInt(data[value[0]]) ==1 && i !==value[1]){
+                    data[value[0]] = 0
+                    return data
+                }else{
+                    return data
+                }
+            })
+        }
      
         // alert(index)
         // console.log(customerContactList,index)
         // let data  = customerContactList.active[index]
-        let data =customerAddressList.active.filter(data=>data.id == value[1])
+        let data = primaryData[value[1]]
+        // alert(JSON.stringify(data))
         
         // console.log( data[type])
-        data[0][value[0]] =  data[0][value[0]]==0?1:0
-        console.log( data[0][value[0]])
-        props.updatecustomerAddress(data[0]).then(data=>{
-            props.getcustomerAddress(customerDataById.id)
-            console.log(customerContact)
-        })
+        data[value[0]] =  parseInt(data[value[0]])==0?1:0
+        // alert( data[value[0]])
+        primaryData[value[1]] = data
+        // alert(JSON.stringify(primaryData))
+        // console.log(primaryData)
+        // props.updatecustomerAddressData(primaryData)//////changes tomorrow
+
+        // let value = e.target.id.split("^")
+        // // alert(value[1])
+        // // if(value[0]=="primary_contact"){
+        // //     let primaryData = customerContactList.active.filter(data=>data[value[0]] ==1)
+        // //     primaryData.map(priamry=>{
+        // //         priamry["primary_contact"] =0
+        // //         props.updateContactData(priamry).then(data=>{
+        // //         })
+    
+        // //     })
+
+        // // }
+     
+        // // alert(index)
+        // // console.log(customerContactList,index)
+        // // let data  = customerContactList.active[index]
+        // let data =customerAddressList.active.filter(data=>data.id == value[1])
+        
+        // // console.log( data[type])
+        // data[0][value[0]] =  data[0][value[0]]==0?1:0
+        // console.log( data[0][value[0]])
+        // props.updatecustomerAddress(data[0]).then(data=>{
+        //     props.getcustomerAddress(customerDataById.id)
+        //     console.log(customerContact)
+        // })
         // alert(index)
         // let data =customerAddressList.active.filter(data=>data.id == id)
         

@@ -38,11 +38,11 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
        
        
             if(type=="add"){
-                alert(type)
+                // alert(type)
                 props.addSuppplierContact(supplierContact)
                 // .then(data=>{
                 //     //alert("data")
-                //     props.modalAction()
+                    props.modalAction()
                 //  console.log(supplierDataById)
                 //     // //alert(customerDataById.customer_id)
                 //     props.getAllSuppliersContact(supplierDataById.id)
@@ -52,9 +52,10 @@ import {getsupplierById,handleSupplierExchnageData,getAllSuppliersContact,update
                 // })
     
             }else{
-                alert(type)
+                // alert(type)
+                props.updateSupplierContact(supplierContact)
                 // props.updateSupplierContact(supplierContact).then(data=>{
-                //     props.modalAction()
+                    props.modalAction()
                 //     console.log(supplierDataById)
                 //     props.getsupplierById(supplierDataById.id)
                 //     props.getAllSuppliersContact(supplierDataById.id)

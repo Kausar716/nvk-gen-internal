@@ -35,23 +35,33 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
         return
         // //alert("saving")
        
-        if(supplierDataById.id !== undefined){
-            setError("")
-            supplierContact.supplier_id  = supplierDataById.id
-    
-                props.updateSupplierContact(supplierContact).then(data=>{
-                    props.modalAction()
-                    console.log(supplierDataById)
-                    props.getAllSuppliersContact(supplierDataById.id)
-                    
-                })
-    
-
-        
+        if(type=="add"){
+            // alert(type)
+            props.addSuppplierContact(supplierContact)
+            // .then(data=>{
+            //     //alert("data")
+                props.modalAction()
+            //  console.log(supplierDataById)
+            //     // //alert(customerDataById.customer_id)
+            //     props.getAllSuppliersContact(supplierDataById.id)
+            //     props.getsupplierById(supplierDataById.id)
+            //     // props.getsupplierContacts(customerDataById.customer_id)
+                
+            // })
 
         }else{
-            setError("Please add customer first")
-        }
+            // alert(type)
+            props.updateSupplierContact(supplierContact)
+            // props.updateSupplierContact(supplierContact).then(data=>{
+                props.modalAction()
+            //     console.log(supplierDataById)
+            //     props.getsupplierById(supplierDataById.id)
+            //     props.getAllSuppliersContact(supplierDataById.id)
+                
+            // })
+
+
+    }
      
       
 
@@ -119,7 +129,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
     <div>
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
-        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Contact</p> </ModalHeader>
+        <ModalHeader><p style={{textAlign:"center",fontSize:25}}>Notes</p> </ModalHeader>
         <form onSubmit={saveData}>
         <ModalBody >
             <p style={{color:"red"}}>{error}</p>

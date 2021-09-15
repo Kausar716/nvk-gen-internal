@@ -169,37 +169,65 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         return
         // //alert("saving")
        
-        if(supplierDataById.id !== undefined){
+        // if(supplierDataById.id !== undefined){
             setError("")
-            supplierAddress.supplier_id  = supplierDataById.id
-            if(supplierAddress.id == undefined){
-                props.addSupplierAddress(supplierAddress).then(data=>{
+            if(type=="add"){
+                // alert(type)
+                props.addSupplierAddress(supplierAddress)
+                // .then(data=>{
+                //     //alert("data")
                     props.modalAction()
-                 console.log(supplierDataById)
-                    // //alert(customerDataById.customer_id)
-                    props.getAllAddress(supplierDataById.id)
-                    // props.getsupplierContacts(customerDataById.customer_id)
+                //  console.log(supplierDataById)
+                //     // //alert(customerDataById.customer_id)
+                //     props.getAllSuppliersContact(supplierDataById.id)
+                //     props.getsupplierById(supplierDataById.id)
+                //     // props.getsupplierContacts(customerDataById.customer_id)
                     
-                })
+                // })
     
             }else{
-                props.UpdateAddress(supplierAddress).then(data=>{
+                // alert(type)
+                props.UpdateAddress(supplierAddress)
+                // props.updateSupplierContact(supplierContact).then(data=>{
                     props.modalAction()
-                    console.log(supplierDataById)
-                    props.getAllAddress(supplierDataById.id)
+                //     console.log(supplierDataById)
+                //     props.getsupplierById(supplierDataById.id)
+                //     props.getAllSuppliersContact(supplierDataById.id)
                     
-                })
+                // })
     
 
         }
+    }
+        //     supplierAddress.supplier_id  = supplierDataById.id
+        //     if(supplierAddress.id == undefined){
+        //         props.addSupplierAddress(supplierAddress).then(data=>{
+        //             props.modalAction()
+        //          console.log(supplierDataById)
+        //             // //alert(customerDataById.customer_id)
+        //             props.getAllAddress(supplierDataById.id)
+        //             // props.getsupplierContacts(customerDataById.customer_id)
+                    
+        //         })
+    
+        //     }else{
+        //         props.UpdateAddress(supplierAddress).then(data=>{
+        //             props.modalAction()
+        //             console.log(supplierDataById)
+        //             props.getAllAddress(supplierDataById.id)
+                    
+        //         })
+    
 
-        }else{
-            setError("Please add Supplier first")
-        }
+        // }
+
+        // }else{
+        //     setError("Please add Supplier first")
+        // }
      
       
 
-    }
+    // }
 
   return (
   

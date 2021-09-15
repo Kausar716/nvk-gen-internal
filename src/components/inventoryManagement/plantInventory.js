@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import {connect} from "react-redux";
-import {getAllPlantsInventory,setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
+import {setPlantPageNumber,resetFileds,getLocationList,getCategoryList,getPlantList,getFilterResult,getAllPlants,filterPlantManagerData} from "../../actions/inventoryManagementAction";
 import {getAllSupplierAction} from "../../actions/supplierManagementAction";
 
 import ActionModal from '../Modal/ActionModal' 
@@ -37,7 +37,7 @@ export class PlantInventory extends Component {
         this.props.getLocationList()   
         this.props.getCategoryList()
         this.props.getAllSupplierAction()
-        this.props.getAllPlantsInventory()
+        this.props.getAllPlants()
         
     }
     //common suggestion function
@@ -173,7 +173,7 @@ export class PlantInventory extends Component {
 
         // console.log()
         const {plantData,plantFilterIds,plantPageNumber} = this.props.plantData
-        let plantIdsAll = plantData.active.map(plantData=>plantData.plant_id)
+        let plantIdsAll = plantData.map(plantData=>plantData.plant_id)
         let plantId = plantIdsAll.filter(function( plant, index, array ) {
             console.log(array.indexOf(plant) +""+index)
             return array.indexOf(plant) === index;
@@ -472,7 +472,7 @@ export class PlantInventory extends Component {
                                                     {displayPlantList.map(plantId=>{
                                                         console.log(JSON.parse(plantId))
                                                        let count =0
-                                                            return plantData.active.map((plant,index)=>{
+                                                            return plantData.map((plant,index)=>{
                                                              
                                                                 if(JSON.parse(plantId)===parseInt(plant["plant_id"])){
                                                                 if(count===0){
@@ -594,4 +594,4 @@ const mapStateToProps = (state)=> (
 
 )
 
-export default connect(mapStateToProps,{getAllPlantsInventory,setPlantPageNumber,resetFileds,filterPlantManagerData,getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
+export default connect(mapStateToProps,{setPlantPageNumber,resetFileds,filterPlantManagerData,getAllPlants,getCategoryList,getLocationList,getAllSupplierAction,getPlantList,getFilterResult})(PlantInventory)
