@@ -22,16 +22,16 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
     let validationList = {  "notes": "notes"};
     Object.keys(validationList).map((object, i) => {
         var element = document.getElementById(object);
-        if (object === "notes") {
-            if (element.value === "") {
-                document.getElementById("notes-validtor").innerText = "Enter  Notes"
-                errorCount++;
+        // if (object === "notes") {
+        //     if (element.value === "") {
+        //         document.getElementById("notes-validtor").innerText = "Enter  Notes"
+        //         errorCount++;
 
-            } else {
-                document.getElementById("notes-validtor").innerText = ""
-            }
+        //     } else {
+        //         document.getElementById("notes-validtor").innerText = ""
+        //     }
 
-        }
+        // }
         // if (object === "address2") {
         //     if (element.value === "") {
         //         document.getElementById("address2-validtor").innerText = "Enter  Address 2"
@@ -138,12 +138,8 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
             //     })
     
             // }else{
-                props.UpdateAddress(supplierAddress).then(data=>{
-                    props.modalAction()
-                    console.log(supplierDataById)
-                    props.getAllAddress(supplierDataById.id)
-                    
-                })
+                props.UpdateAddress(supplierAddress)
+                props.modalAction()
     
 
         // }
@@ -162,7 +158,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
         <ModalHeader><p style={{textAlign:"center",fontSize:25}}>{type==="add"?"Add":"Edit"} Address</p> </ModalHeader>
-        <form onSubmit={saveData}>
+        <form >
         <ModalBody >
         <p style={{color:"red"}}>{error}</p>
           
@@ -181,7 +177,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
 
         </ModalBody>
         <ModalFooter>
-        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+        <button className="btn btn-primary btn-md ml-3" onClick={saveData} style={{width:100}}>{type==="add"?"Save":"Update"}</button>
           <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>

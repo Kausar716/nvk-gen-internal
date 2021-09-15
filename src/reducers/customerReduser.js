@@ -12,6 +12,7 @@ import {
     GET_CUSTOMER_BY_ID1,
     ADD_NOTIFICATION,
     UPDATE_CONTACT,
+    UPDATE_CONTACT1,
     ADD_EMAIL,
     GET_CUSTOMER_NOTIFICATION,
     GET_EMAIL_NOTIFICATION,
@@ -254,6 +255,13 @@ const initialSatate = {
                 customerDataById:{...state.customerDataById,contacts:action.payload}
 
             }
+            case UPDATE_CONTACT1:
+            
+                return{
+                    ...state,
+                    customerDataById:{...state.customerDataById,addresses:action.payload}
+    
+                }
         case HANDLE_INPUT_CUSTOMER:
             return{
                 ...state,
@@ -310,7 +318,7 @@ const initialSatate = {
             return{
                 ...state,
                 customerContact:{
-                    customer_id: 0,
+                 
                     first_name: "",
                     last_name: "",
                     email: "",
@@ -551,10 +559,9 @@ case ADD_NEW_CUSTOMER:
                 state: "Alberta",
                 zip: "",
                 lat: "",
-                status:1,
                 long: "",
                 notes: "",
-    
+                status:1,
                 billing_address: 0,
                 delivery_address: 0,
               },

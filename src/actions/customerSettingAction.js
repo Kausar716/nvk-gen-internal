@@ -9,6 +9,7 @@
  FILTER_DATA_BY_SEARCH,
  FILTER_DATA_BY_ALPHA,
  HANLE_DATA_CHANGE,
+ UPDATE_CONTACT1,
  HANDLE_INPUT_EXCHANGE,
  UPDATE_CONTACT,
  EDIT_PRIMARY,
@@ -146,6 +147,13 @@ export const addPriamryContact  =(data)=>dispatch => {
 export const updateContacts  = (data)=>dispatch => {
     dispatch({
         type:UPDATE_CONTACT,
+        payload:data
+    })
+
+}
+export const updatecustomerAddressData = (data)=>dispatch => {
+    dispatch({
+        type:UPDATE_CONTACT1,
         payload:data
     })
 

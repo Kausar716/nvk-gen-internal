@@ -94,15 +94,15 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
         if(errors!==0)
         return
        
-        if(type=="add"){
-            props.addPriamryContact(customerContact)
-            props.modalAction()
-           
-        }else{
-            props.updateContactData(customerContact)
-            // alert("edit")
-            props.modalAction()
-        }
+       if(type=="add"){
+                props.addPriamryContact(customerContact)
+                props.modalAction()
+               
+            }else{
+                props.updateContactData(customerContact)
+                // alert("edit")
+                props.modalAction()
+            }
      
       
 
@@ -114,7 +114,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
         <ModalHeader><p style={{textAlign:"center",fontSize:25}}> Notes</p> </ModalHeader>
-        <form onSubmit={saveData}>
+        <form >
         <ModalBody >
             <p style={{color:"red"}}>{error}</p>
           
@@ -158,7 +158,7 @@ import {addCustomerContact,handleExchangeData,savingContactData,updateContactDat
 
         </ModalBody>
         <ModalFooter>
-        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>Save</button>
+        <button className="btn btn-primary btn-md ml-3"  style={{width:100}}  onClick={saveData}>Save</button>
           <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>

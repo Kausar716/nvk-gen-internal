@@ -75,15 +75,15 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
         Object.keys(validationList).map((object, i) => {
             var element = document.getElementById(object);
 
-            if (object === "notes") {
-                if (element.value === "") {
-                    document.getElementById("notes-validtor").innerText = "Enter Notes"
-                    errorCount++;
+            // if (object === "notes") {
+            //     if (element.value === "") {
+            //         document.getElementById("notes-validtor").innerText = "Enter Notes"
+            //         errorCount++;
 
-                } else {
-                    document.getElementById("notes-validtor").innerText = ""
-                }
-            }
+            //     } else {
+            //         document.getElementById("notes-validtor").innerText = ""
+            //     }
+            // }
 
 
             // }
@@ -130,7 +130,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
       {/* <Button color="danger" onClick={toggle}>{buttonLabel}</Button> */}
       <Modal isOpen={status} size="lg">
         <ModalHeader><p style={{textAlign:"center",fontSize:25}}>Notes</p> </ModalHeader>
-        <form onSubmit={saveData}>
+        <form>
         <ModalBody >
             <p style={{color:"red"}}>{error}</p>
           
@@ -148,7 +148,7 @@ import {handleSupplierExchnageData,getAllSuppliersContact,updateSupplierContact,
 
         </ModalBody>
         <ModalFooter>
-        <button className="btn btn-primary btn-md ml-3" type="submit" style={{width:100}}>{type==="add"?"Save":"Update"}</button>
+        <button className="btn btn-primary btn-md ml-3" onClick={saveData} style={{width:100}}>{type==="add"?"Save":"Update"}</button>
           <button onClick={props.modalAction} class="btn btn-outline-secondary btn-md" style={{width:100}}>Cancel</button>
         </ModalFooter>
         </form>

@@ -1181,8 +1181,9 @@ console.log(props.supplierData.supplierReasonList)
                                             </div>
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
-                                                    <a  class="" style={{cursor:"pointer"}}>
-                                                        <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>editContactNotes(index)}/>
+                                                <a  class=""   onClick={()=>editContactNotes(index)} style={{cursor:"pointer"}}>
+                                                    {contact.notes==null||contact.notes==""? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
+                                                        {/* <img src="assets/img/moreDetails-ic.svg" alt="" onClick={()=>editContactNotes(index)}/> */}
                                                     </a>
                                                     <a  class=" ml-2" style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt="" onClick={()=>editContact(index)}/>
@@ -1245,7 +1246,7 @@ console.log(props.supplierData.supplierReasonList)
                                             <div class="row mt-3">
                                                 <div class="col-md-6">
                                                     <a  class=""  onClick={()=>editAddressNotes(index)} style={{cursor:"pointer"}}>
-                                                    {address.notes==null? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
+                                                    {address.notes==null||address.notes==""? <img src="assets/img/Notes-grey.png" alt=""/>:<img src="assets/img/Notes-Blue.png" alt=""/> }
                                                     </a>
                                                     <a  class=" ml-2"  onClick={()=>editAddress(index)} style={{cursor:"pointer"}}>
                                                         <img src="assets/img/edit.svg" alt=""/>

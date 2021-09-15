@@ -4,7 +4,7 @@ import 'react-tabs/style/react-tabs.css';
 import DatePicker from 'react-date-picker';
 import { confirmAlert } from 'react-confirm-alert'; 
 import {connect} from "react-redux";
-import {updateContacts,getCustomerById,editDataToContact,updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
+import {updatecustomerAddressData,updateContacts,getCustomerById,editDataToContact,updatecustomerAddress,addcustomerAddress,deleteCustomerAddress,deleteCustomer,deleteCustomerContact,UpdateCustomerData,getAllCustomer,resetContact,getcustomerAddressByaddressId,resetAddressFileds,getAllReasonMethods,getDataByContactId,getcustomerAddress,updateContactData,getCustomerContacts,getAllTermsMethods,getAllStatusMethods,resetCustomerFilds,addCustomerData,handleExchangeData,getAllCustomerType,setPageNumber,handleRadioFilter,handleSearchFilter,handleAplhabetFilter,typeOfActionShow} from "../../actions/customerSettingAction";
 import { saveSupplierData } from '../../actions/supplierManagementAction';
 import InfoModal from "../../components/Modal/InfoModal"
 import SuccessModal from "../../components/Modal/SuccessModal"
@@ -59,6 +59,7 @@ function AddCustomer(props) {
         // alert("ds")
         setactionType("add")
         props.resetContact()
+        // alert("fd")
         setisOpenNotes(!isOpenNotes)
     }
     const toggleForAddressNotes = () => {
@@ -390,7 +391,7 @@ function AddCustomer(props) {
         // alert("Gg")
         setisOpenNotes(true)
         props.getDataByContactId(id)
-        // setactionType("edit")
+        setactionType("edit")
     }
     const editAddressNotes=(id)=>{
         // alert("Gg")
@@ -624,16 +625,16 @@ const dataTochange =(e)=>{
         let value = e.target.id.split("^")
         // alert(value[1])
         let primaryData = customerDataById.addresses
-        if(customerDataById.addresses.length>1){
-            primaryData = customerDataById.addresses.map((data,i)=>{
-                if(parseInt(data[value[0]]) ==1 && i !==value[1]){
-                    data[value[0]] = 0
-                    return data
-                }else{
-                    return data
-                }
-            })
-        }
+        // if(customerDataById.addresses.length>1){
+            // primaryData = customerDataById.addresses.map((data,i)=>{
+            //     if(parseInt(data[value[0]]) ==1 && i !==value[1]){
+            //         data[value[0]] = 0
+            //         return data
+            //     }else{
+            //         return data
+            //     }
+            // })
+        // }
      
         // alert(index)
         // console.log(customerContactList,index)
@@ -647,7 +648,7 @@ const dataTochange =(e)=>{
         primaryData[value[1]] = data
         // alert(JSON.stringify(primaryData))
         // console.log(primaryData)
-        // props.updatecustomerAddressData(primaryData)//////changes tomorrow
+        props.updatecustomerAddressData(primaryData)//////changes tomorrow
 
         // let value = e.target.id.split("^")
         // // alert(value[1])
@@ -1343,14 +1344,14 @@ const dataTochange =(e)=>{
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`billing_address^${data.id}`} checked={parseInt(data.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`billing_address^${data.id}`}>Billing Address</label>
+                                                        <input type="checkbox" class="custom-control-input" style={{cursor:"pointer"}} id={`billing_address^${index}`} checked={parseInt(data.billing_address)==1?true:false} onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`billing_address^${index}`}>Billing Address</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="custom-control custom-checkbox mt-2">
-                                                        <input type="checkbox" class="custom-control-input"style={{cursor:"pointer"}} id={`delivery_address^${data.id}`} checked={parseInt(data.delivery_address)==1?true:false}  onChange={changeCheckBoxAddress}/>
-                                                        <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`delivery_address^${data.id}`}>Delivery Address</label>
+                                                        <input type="checkbox" class="custom-control-input"style={{cursor:"pointer"}} id={`delivery_address^${index}`} checked={parseInt(data.delivery_address)==1?true:false}  onChange={changeCheckBoxAddress}/>
+                                                        <label class="custom-control-label f-w-400" style={{cursor:"pointer"}} for={`delivery_address^${index}`}>Delivery Address</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1384,7 +1385,7 @@ const dataTochange =(e)=>{
                                 <div class="row mt-3">
                                     <div class="col-md-12 text-right">
                                         <span>Minimum 1 Address required</span>
-                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress}  disabled={customerDataById.id?false:true}>Add</button>
+                                        <button type="button" class="btn btn-primary btn-lg ml-3" onClick={addAdrress} >Add</button>
                                     </div>
                                 </div>
                             </form>
@@ -1430,7 +1431,7 @@ const mapStateToProps = (state)=>(
         customerData:state.customerReducer
     }
 )
-export default connect(mapStateToProps,{updateContacts,getCustomerById,editDataToContact,updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
+export default connect(mapStateToProps,{updatecustomerAddressData,updateContacts,getCustomerById,editDataToContact,updatecustomerAddress,updateContactData,deleteCustomer,deleteCustomerContact,deleteCustomerAddress,
     typeOfActionShow, getAllCustomerType,UpdateCustomerData,resetContact,getAllReasonMethods,
     handleExchangeData,addCustomerData,getcustomerAddress,resetAddressFileds,getcustomerAddressByaddressId,getDataByContactId,resetCustomerFilds,getAllCustomer,getAllStatusMethods,getAllTermsMethods,getCustomerContacts,updateContactData
      

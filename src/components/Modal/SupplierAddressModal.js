@@ -112,16 +112,16 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
 
         }
         if (object === "zip") {
-            if(element.value == "" ||isNaN(element.value) ||element.value.length <6){
+            // alert(element.value.length>6)
+            if(element.value == "" ||isNaN(element.value) ||element.value.length <6 || element.value.length>6){
             // if ( !element.value.trim().match(this.countZipRegix)) {
-                document.getElementById("zip-validtor").innerText = "Enter Postal/ZIP "
+                document.getElementById("zip-validtor").innerText = "Enter Valid Postal/ZIP  "
                 errorCount++;
 
             }else {
                 document.getElementById("zip-validtor").innerText = ""
             }
         }
-
         // }
 
     });
@@ -158,7 +158,29 @@ import {handleSupplierExchnageData,getAllSuppliersContact,UpdateAddress,addSuppl
         let all = parseInt(supplierAddress.shipping_address) ==1?0:1
         props.handleSupplierExchnageData(all,e.target.id,"supplierAddress")
 
-       }else{
+       }else if(e.target.id=="zip"){
+        //    alert(customerAddress.zip)
+        //    if(customerAddress.zip.length<=5){
+            // if(e.target.value!==""){
+                let value = e.target.value.split(".")
+                // console.log(value[0],value[1])
+                // alert(value[0].length)
+                // if(value[1]!== undefined)
+                if(value[0].length>=7 )
+                // if(e.target.value.length>2){
+                  return
+                else{
+                    props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierAddress")
+
+                }
+           
+
+        //    }
+        
+           
+        // props.handleExchangeData(e.target.value,e.target.id,"customerAddress")
+       }
+       else{
         props.handleSupplierExchnageData(e.target.value,e.target.id,"supplierAddress")
        } 
     }
